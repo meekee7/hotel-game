@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<personas>
+
+    <persona>
+
+        <nombre>Devjoker!</nombre>
+
+        <apellido1>El apellido de Devjoker</apellido1>
+
+        <apellido2>El segundo apellido de Devjoker</apellido2>
+
+    </persona>
+
+    <persona>
+
+        <nombre>Otra persona</nombre>
+
+        <apellido1>Apellido 1 de otra persona</apellido1>
+
+        <apellido2>Apellidos 2 de otra persona</apellido2>
+
+    </persona>
+
+</personas>
