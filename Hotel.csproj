@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,7 +12,10 @@
     <AssemblyName>Hotel</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +56,30 @@
     <Compile Include="Casilla.cs" />
     <Compile Include="Dado.cs" />
     <Compile Include="Dado_construccion.cs" />
-    <Compile Include="Entrada.cs" />
+    <Compile Include="ComprarHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarHotel.Designer.cs">
+      <DependentUpon>ComprarHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Construir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Construir.Designer.cs">
+      <DependentUpon>Construir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sel_colores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sel_colores.Designer.cs">
+      <DependentUpon>Sel_colores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PedirPago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PedirPago.Designer.cs">
+      <DependentUpon>PedirPago.cs</DependentUpon>
+    </Compile>
     <Compile Include="Hotel.cs" />
     <Compile Include="Juego.cs" />
     <Compile Include="Jugador.cs" />
@@ -65,6 +91,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ComprarHotel.resx">
+      <DependentUpon>ComprarHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Construir.resx">
+      <DependentUpon>Construir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sel_colores.resx">
+      <DependentUpon>Sel_colores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PedirPago.resx">
+      <DependentUpon>PedirPago.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
@@ -72,9 +110,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sel_colores.resx">
-      <DependentUpon>Sel_colores.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -91,14 +126,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Tablero.cs" />
     <Compile Include="Tipos.cs" />
-    <Compile Include="Sel_colores.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Sel_colores.Designer.cs">
-      <DependentUpon>Sel_colores.cs</DependentUpon>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Billete_50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Billete_100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Billete_500.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Tablero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Fleha_amarilla.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Fleha_azul.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Fleha_roja.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Fleha_verde.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

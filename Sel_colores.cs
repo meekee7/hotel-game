@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
 namespace Juego_Hotel
 {
-    public partial class Sel_colores : UserControl
+    public partial class Sel_colores : Form
     {
+
         public Tipos.Tcolor color_j1, color_j2, color_j3, color_j4;
+        short n_jugadores;
 
         public Sel_colores()
         {
@@ -25,35 +27,36 @@ namespace Juego_Hotel
 
         public void habilitarControles(short n_jugadores)
         {
-            switch (n_jugadores)
+            this.n_jugadores = n_jugadores;
+            switch (this.n_jugadores)
             {
                 case 2: j3Rojo.Enabled = false;
-                        j3Azul.Enabled = false;
-                        j3Verde.Enabled = false;
-                        j3Amarillo.Enabled = false;
-                        j4Rojo.Enabled = false;
-                        j4Azul.Enabled = false;
-                        j4Verde.Enabled = false;
-                        j4Amarillo.Enabled = false;
-                        break;
+                    j3Azul.Enabled = false;
+                    j3Verde.Enabled = false;
+                    j3Amarillo.Enabled = false;
+                    j4Rojo.Enabled = false;
+                    j4Azul.Enabled = false;
+                    j4Verde.Enabled = false;
+                    j4Amarillo.Enabled = false;
+                    break;
                 case 3: j3Rojo.Enabled = true;
-                        j3Azul.Enabled = true;
-                        j3Verde.Enabled = true;
-                        j3Amarillo.Enabled = true;
-                        j4Rojo.Enabled = false;
-                        j4Azul.Enabled = false;
-                        j4Verde.Enabled = false;
-                        j4Amarillo.Enabled = false;
-                        break;
+                    j3Azul.Enabled = true;
+                    j3Verde.Enabled = true;
+                    j3Amarillo.Enabled = true;
+                    j4Rojo.Enabled = false;
+                    j4Azul.Enabled = false;
+                    j4Verde.Enabled = false;
+                    j4Amarillo.Enabled = false;
+                    break;
                 case 4: j3Rojo.Enabled = true;
-                        j3Azul.Enabled = true;
-                        j3Verde.Enabled = true;
-                        j3Amarillo.Enabled = true;
-                        j4Rojo.Enabled = true;
-                        j4Azul.Enabled = true;
-                        j4Verde.Enabled = true;
-                        j4Amarillo.Enabled = true;
-                        break;
+                    j3Azul.Enabled = true;
+                    j3Verde.Enabled = true;
+                    j3Amarillo.Enabled = true;
+                    j4Rojo.Enabled = true;
+                    j4Azul.Enabled = true;
+                    j4Verde.Enabled = true;
+                    j4Amarillo.Enabled = true;
+                    break;
             }
         }
 
@@ -104,17 +107,7 @@ namespace Juego_Hotel
 
         private void j4Rojo_CheckedChanged(object sender, EventArgs e)
         {
-            if (j4Rojo.Checked)
-            {
-                this.color_j4 = Tipos.Tcolor.rojo;
-                // Si ponemos J4 a rojo, no puede haber otro a rojo
-                if (j1Rojo.Checked)
-                    j1Rojo.Checked = false;
-                if (j2Rojo.Checked)
-                    j2Rojo.Checked = false;
-                if (j3Rojo.Checked)
-                    j3Rojo.Checked = false;
-            }
+
         }
 
         private void j1Azul_CheckedChanged(object sender, EventArgs e)
@@ -305,11 +298,17 @@ namespace Juego_Hotel
             else if (!j2Rojo.Checked && !j2Verde.Checked && !j2Amarillo.Checked && !j2Azul.Checked)
                 MessageBox.Show("El jugador 2 no tiene color asociado");
             else if (!j3Rojo.Checked && !j3Verde.Checked && !j3Amarillo.Checked && !j3Azul.Checked)
-                MessageBox.Show("El jugador 3 no tiene color asociado");
+                if (this.n_jugadores >= 3)
+                    MessageBox.Show("El jugador 3 no tiene color asociado");
+                else
+                    this.Hide();
             else if (!j4Rojo.Checked && !j4Verde.Checked && !j4Amarillo.Checked && !j4Azul.Checked)
-                MessageBox.Show("El jugador 4 no tiene color asociado");
+                if (this.n_jugadores >= 4)
+                    MessageBox.Show("El jugador 4 no tiene color asociado");
+                else
+                    this.Hide();
             else
-                this.Hide();            
+                this.Hide();
         }
     }
 }

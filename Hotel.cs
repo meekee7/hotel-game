@@ -72,8 +72,86 @@ namespace Juego_Hotel
                                                             { 200, 400, 600, 800, 1000, 1200 },
                                                             { 300, 600, 900, 1200, 1500, 1800 } };
                     break;
+                case Tipos.Tnombre_hotel.Waikiki :
+                    this.precio = 2500;
+                    this.precio_expropiacion = 1250;
+                    this.precio_entrada = 200;
+                    this.n_ampliaciones_max = 6;
+                    // Ahora a meter datos de precios específicos del hotel
+                    this.precios_ampliaciones = new short[6] { 3500, 2500, 2500, 1750, 1750, 2500 };
+                    this.matriz_precios = new short[6, 6] { { 200, 400, 600, 800, 1000, 1200 },
+                                                            { 350, 700, 1050, 1400, 1750, 2100 },
+                                                            { 500, 1000, 1500, 2000, 2500, 3000 },
+                                                            { 500, 1000, 1500, 2000, 2500, 3000 },
+                                                            { 650, 1300, 1950, 2600, 3250, 3900 },
+                                                            { 1000, 2000, 3000, 4000, 5000, 6000 } };
+                    break;
+                case Tipos.Tnombre_hotel.Royal:
+                    this.precio = 2500;
+                    this.precio_expropiacion = 1250;
+                    this.precio_entrada = 200;
+                    this.n_ampliaciones_max = 5;
+                    // Ahora a meter datos de precios específicos del hotel
+                    this.precios_ampliaciones = new short[5] { 3600, 2600, 1800, 1800, 3000 };
+                    this.matriz_precios = new short[5, 6] { { 150, 300, 450, 600, 750, 900 },
+                                                            { 300, 600, 900, 1200, 1500, 1800 },
+                                                            { 300, 600, 900, 1200, 1500, 1800 },
+                                                            { 450, 900, 1350, 1800, 2250, 2700 },
+                                                            { 600, 1200, 1800, 2400, 3000, 3600 } };
+                    break;
+                case Tipos.Tnombre_hotel.Safari:
+                    this.precio = 2000;
+                    this.precio_expropiacion = 1000;
+                    this.precio_entrada = 150;
+                    this.n_ampliaciones_max = 4;
+                    // Ahora a meter datos de precios específicos del hotel
+                    this.precios_ampliaciones = new short[4] { 2600, 1200, 1200, 2000 };
+                    this.matriz_precios = new short[4, 6] { { 100, 200, 300, 400, 500, 600 },
+                                                            { 100, 200, 300, 400, 500, 600 },
+                                                            { 250, 500, 750, 1000, 1250, 1500 },
+                                                            { 500, 1000, 1500, 2000, 2500, 3000 } };
+                    break;
+                case Tipos.Tnombre_hotel.Letoile:
+                    this.precio = 3000;
+                    this.precio_expropiacion = 1500;
+                    this.precio_entrada = 250;
+                    this.n_ampliaciones_max = 6;
+                    // Ahora a meter datos de precios específicos del hotel
+                    this.precios_ampliaciones = new short[6] { 3300, 2200, 1800, 1800, 1800, 4000 };
+                    this.matriz_precios = new short[6, 6] { { 150, 300, 450, 600, 750, 900 },
+                                                            { 300, 600, 900, 1200, 1500, 1800 },
+                                                            { 300, 600, 900, 1200, 1500, 1800 },
+                                                            { 300, 600, 900, 1200, 1500, 1800 },
+                                                            { 450, 900, 1350, 1800, 2250, 2700 },
+                                                            { 750, 1500, 2250, 3000, 3750, 4500 } };
+                    break;
                 default: break;
             }
+        }
+
+        public short Ampliar()
+        {
+            // Se presupone que sólo será llamado cuando se pueda ampliar, no se comprueba
+            // Devuelve el precio que cuesta
+            this.n_ampliaciones_construidas++;
+            if (this.n_ampliaciones_construidas == this.n_ampliaciones_max)
+                this.suelo_comprado = true;
+            return this.precios_ampliaciones[this.n_ampliaciones_construidas - 1];
+        }
+
+        public short Precio_Sig_Ampliacion()
+        {
+            return this.precios_ampliaciones[this.n_ampliaciones_construidas];
+        }
+
+        public bool Ampliable()
+        {
+            return !this.suelo_comprado;
+        }
+
+        public short Calcular_noches(short cuantas)
+        {
+            return this.matriz_precios[this.n_ampliaciones_construidas, cuantas];
         }
     }
 }
