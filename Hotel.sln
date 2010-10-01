@@ -7,6 +7,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Description = Juego de mesa similar al Monopoly
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B288E662-665B-4486-AD5A-4D8CDB6BB61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

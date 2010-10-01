@@ -95,6 +95,20 @@ namespace Juego_Hotel.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Boomerang_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Boomerang_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Entrada {
+            get {
+                object obj = ResourceManager.GetObject("Entrada", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Fleha_amarilla {
             get {
                 object obj = ResourceManager.GetObject("Fleha_amarilla", resourceCulture);
@@ -123,9 +137,37 @@ namespace Juego_Hotel.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Fujiyama_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Fujiyama_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap President_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("President_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Reglas {
+            get {
+                object obj = ResourceManager.GetObject("Reglas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Tablero {
             get {
                 object obj = ResourceManager.GetObject("Tablero", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Taj_Mahal_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Taj_Mahal_tarjeta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

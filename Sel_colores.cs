@@ -13,7 +13,7 @@ namespace Juego_Hotel
     {
 
         public Tipos.Tcolor color_j1, color_j2, color_j3, color_j4;
-        short n_jugadores;
+        int n_jugadores;
 
         public Sel_colores()
         {
@@ -25,7 +25,7 @@ namespace Juego_Hotel
             this.color_j4 = Tipos.Tcolor.amarillo;
         }
 
-        public void habilitarControles(short n_jugadores)
+        public void habilitarControles(int n_jugadores)
         {
             this.n_jugadores = n_jugadores;
             switch (this.n_jugadores)

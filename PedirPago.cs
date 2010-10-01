@@ -11,7 +11,7 @@ namespace Juego_Hotel
 {
     public partial class PedirPago : Form
     {
-        public short n_50, n_100, n_500, n_1000, n_5000;
+        public int n_50, n_100, n_500, n_1000, n_5000;
         public int dinero_necesario, total_seleccionado;
         public Boolean cancelado;
         Juego juego;

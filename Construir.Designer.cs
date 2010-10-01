@@ -37,7 +37,7 @@
             this.bAmpli4 = new System.Windows.Forms.Button();
             this.bSuelo = new System.Windows.Forms.Button();
             this.nombreHotel = new System.Windows.Forms.Label();
-            this.listaHoteles = new System.Windows.Forms.ListBox();
+            this.listaHoteles = new System.Windows.Forms.ComboBox();
             this.HotelSeleccionado = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -139,10 +139,11 @@
             // 
             // listaHoteles
             // 
+            this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
             this.listaHoteles.Location = new System.Drawing.Point(203, 15);
             this.listaHoteles.Name = "listaHoteles";
-            this.listaHoteles.Size = new System.Drawing.Size(101, 17);
+            this.listaHoteles.Size = new System.Drawing.Size(101, 21);
             this.listaHoteles.TabIndex = 10;
             this.listaHoteles.Visible = false;
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
@@ -192,7 +193,7 @@
         private System.Windows.Forms.Button bAmpli4;
         private System.Windows.Forms.Button bSuelo;
         private System.Windows.Forms.Label nombreHotel;
-        private System.Windows.Forms.ListBox listaHoteles;
+        private System.Windows.Forms.ComboBox listaHoteles;
         private System.Windows.Forms.Label HotelSeleccionado;
     }
 }

@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Casilla.cs" />
     <Compile Include="Dado.cs" />
-    <Compile Include="Dado_construccion.cs" />
     <Compile Include="ComprarHotel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +66,31 @@
     </Compile>
     <Compile Include="Construir.Designer.cs">
       <DependentUpon>Construir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dado_construccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dado_construccion.Designer.cs">
+      <DependentUpon>Dado_construccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reglas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reglas.Designer.cs">
+      <DependentUpon>Reglas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Math3D.cs" />
+    <Compile Include="PonerEntradas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PonerEntradas.Designer.cs">
+      <DependentUpon>PonerEntradas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerHoteles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerHoteles.Designer.cs">
+      <DependentUpon>VerHoteles.cs</DependentUpon>
     </Compile>
     <Compile Include="Sel_colores.cs">
       <SubType>Form</SubType>
@@ -96,6 +120,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Construir.resx">
       <DependentUpon>Construir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dado_construccion.resx">
+      <DependentUpon>Dado_construccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PonerEntradas.resx">
+      <DependentUpon>PonerEntradas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reglas.resx">
+      <DependentUpon>Reglas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerHoteles.resx">
+      <DependentUpon>VerHoteles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sel_colores.resx">
       <DependentUpon>Sel_colores.cs</DependentUpon>
@@ -151,6 +187,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Fleha_verde.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Taj_Mahal_tarjeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Boomerang_tarjeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\President_tarjeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Fujiyama_tarjeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Entrada.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Reglas.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

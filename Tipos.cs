@@ -10,5 +10,6 @@ namespace Juego_Hotel
         public enum Tcolor { rojo, azul, amarillo, verde, banca };
         public enum Tcasilla { salida, comprar, construir, entrada_gratis, fase_gratis };
         public enum Tnombre_hotel { Fujiyama, Boomerang, Letoile, President, Royal, Waikiki, Taj_Mahal, Safari, Ninguno };
+        public enum Resultado_dado_cons { Permitido, Gratis, Doble, Denegado };
     }
 }

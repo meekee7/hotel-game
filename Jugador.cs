@@ -7,18 +7,21 @@ namespace Juego_Hotel
 {
     public class Jugador
     {
-        public short n_billetes_50 = 0;
-        public short n_billetes_100 = 0;
-        public short n_billetes_500 = 0;
-        public short n_billetes_1000 = 0;
-        public short n_billetes_5000 = 0;
+        public int n_billetes_50 = 0;
+        public int n_billetes_100 = 0;
+        public int n_billetes_500 = 0;
+        public int n_billetes_1000 = 0;
+        public int n_billetes_5000 = 0;
         public int dinero_total = 0;
         public LinkedList <Hotel> hoteles;
-        public short n_hoteles;
+        public int n_hoteles;
         public Casilla posicion;
         public Tipos.Tcolor color;
+        public Boolean activo; // Por si es eliminado
+        public Boolean pago_ultimo_turno;
+        public Boolean eliminado;
 
-        public Jugador (short n_50, short n_100, short n_500, short n_1000, short n_5000, Tipos.Tcolor color)
+        public Jugador (int n_5000, int n_1000, int n_500, int n_100, int n_50, Tipos.Tcolor color)
         {
             this.n_billetes_50 = n_50;
             this.n_billetes_100 = n_100;
@@ -30,6 +33,9 @@ namespace Juego_Hotel
             this.n_hoteles = 0;
             this.posicion = new Casilla (0);
             this.calcular_dinero_total ();
+            this.activo = true;
+            this.pago_ultimo_turno = false;
+            this.eliminado = false;
         }
 
         public void calcular_dinero_total ()
@@ -39,7 +45,7 @@ namespace Juego_Hotel
                                 (50 * this.n_billetes_50);
         }
 
-        public void Comprar_Hotel (ref Hotel hotel, short n5000, short n1000, short n500, short n100, short n50)
+        public void Comprar_Hotel (ref Hotel hotel, int n5000, int n1000, int n500, int n100, int n50)
         {
             // Se supone que el hotel no tenía dueño o es expropiable y que hay fondos, todo ya comprobado desde la IU
             this.hoteles.AddLast(hotel);
@@ -53,21 +59,41 @@ namespace Juego_Hotel
             this.calcular_dinero_total();
         }
 
-        public void Pagar_Noches (ref Jugador jugador, short n5000, short n1000, short n500, short n100, short n50)
+        public void Comprar_Hotel(ref Hotel hotel, ref Jugador dueño, int n5000, int n1000, int n500, int n100, int n50)
         {
-            // Transfiere los fondos del jugador que paga a los que cobra, el precio viene calculado de la IU
-            jugador.n_billetes_5000 += n5000;
-            jugador.n_billetes_1000 += n1000;
-            jugador.n_billetes_500 += n500;
-            jugador.n_billetes_100 += n100;
-            jugador.n_billetes_50 += n50;
-            jugador.calcular_dinero_total();
+            // Se supone que el hotel no tenía dueño o es expropiable y que hay fondos, todo ya comprobado desde la IU
+            this.hoteles.AddLast(hotel);
+            this.n_hoteles++;
+            hotel.dueño = this;
             this.n_billetes_5000 -= n5000;
             this.n_billetes_1000 -= n1000;
             this.n_billetes_500 -= n500;
             this.n_billetes_100 -= n100;
             this.n_billetes_50 -= n50;
             this.calcular_dinero_total();
+            dueño.n_billetes_5000 += n5000;
+            dueño.n_billetes_1000 += n1000;
+            dueño.n_billetes_500 += n500;
+            dueño.n_billetes_100 += n100;
+            dueño.n_billetes_50 += n50;
+            dueño.calcular_dinero_total();
+        }
+
+        public void Pagar_Noches (ref Jugador al_jugador, int n5000, int n1000, int n500, int n100, int n50)
+        {
+            // Transfiere los fondos del jugador que paga al que cobra, el precio viene calculado de la IU
+            this.n_billetes_5000 -= n5000;
+            this.n_billetes_1000 -= n1000;
+            this.n_billetes_500 -= n500;
+            this.n_billetes_100 -= n100;
+            this.n_billetes_50 -= n50;
+            this.calcular_dinero_total();
+            al_jugador.n_billetes_5000 += n5000;
+            al_jugador.n_billetes_1000 += n1000;
+            al_jugador.n_billetes_500 += n500;
+            al_jugador.n_billetes_100 += n100;
+            al_jugador.n_billetes_50 += n50;
+            al_jugador.calcular_dinero_total();
         }
 
         public void Hotel_Expropiado (ref Hotel hotel)
@@ -77,7 +103,7 @@ namespace Juego_Hotel
             // El dueño será cambiado automáticamente por la IU
         }
 
-        public void Devolver_cambio(short n_5000, short n_1000, short n_500, short n_100, short n_50)
+        public void Devolver_cambio(int n_5000, int n_1000, int n_500, int n_100, int n_50)
         {
             this.n_billetes_5000 += n_5000;
             this.n_billetes_1000 += n_1000;
@@ -93,7 +119,7 @@ namespace Juego_Hotel
             this.calcular_dinero_total();
         }
 
-        public void Pagar_Ampliacion(short n5000, short n1000, short n500, short n100, short n50)
+        public void Pagar_Ampliacion_o_Entrada(int n5000, int n1000, int n500, int n100, int n50)
         {
             this.n_billetes_5000 -= n5000;
             this.n_billetes_1000 -= n1000;
@@ -101,6 +127,105 @@ namespace Juego_Hotel
             this.n_billetes_100 -= n100;
             this.n_billetes_50 -= n50;
             this.calcular_dinero_total();
+        }
+
+        public void Quitar_5000_sin_tener_b5000(out int n_1000, out int n_500, out int n_100, out int n_50)
+        {
+            n_1000 = 0;
+            n_500 = 0;
+            n_100 = 0;
+            n_50 = 0;
+
+            int acumulado = 0;
+
+            while (acumulado < 5000)
+            {
+                if (this.n_billetes_1000 > 0)
+                {
+                    acumulado += 1000;
+                    n_1000--;
+                    this.n_billetes_1000--;
+                }
+                else if (this.n_billetes_500 > 0)
+                {
+                    acumulado += 500;
+                    n_500--;
+                    this.n_billetes_500--;
+                }
+                else if (this.n_billetes_100 > 0)
+                {
+                    acumulado += 100;
+                    n_100--;
+                    this.n_billetes_100--;
+                }
+                else if (this.n_billetes_50 > 0)
+                {
+                    acumulado += 50;
+                    n_50--;
+                    this.n_billetes_50--;
+                }
+            }
+        }
+
+        public void Quitar_1000_sin_tener_b1000(out int n_500, out int n_100, out int n_50)
+        {
+            n_500 = 0;
+            n_100 = 0;
+            n_50 = 0;
+
+            int acumulado = 0;
+
+            while (acumulado < 5000)
+            {
+                if (this.n_billetes_500 > 0)
+                {
+                    acumulado += 500;
+                    n_500--;
+                    this.n_billetes_500--;
+                }
+                else if (this.n_billetes_100 > 0)
+                {
+                    acumulado += 100;
+                    n_100--;
+                    this.n_billetes_100--;
+                }
+                else if (this.n_billetes_50 > 0)
+                {
+                    acumulado += 50;
+                    n_50--;
+                    this.n_billetes_50--;
+                }
+            }
+        }
+
+        public void Quitar_500_sin_tener_b500(out int n_100, out int n_50)
+        {
+            n_100 = 0;
+            n_50 = 0;
+
+            int acumulado = 0;
+
+            while (acumulado < 5000)
+            {
+                if (this.n_billetes_100 > 0)
+                {
+                    acumulado += 100;
+                    n_100--;
+                    this.n_billetes_100--;
+                }
+                else if (this.n_billetes_50 > 0)
+                {
+                    acumulado += 50;
+                    n_50--;
+                    this.n_billetes_50--;
+                }
+            }
+        }
+
+        public void Quitar_100_sin_tener_b100(out int n_50)
+        {
+            n_50 = 2;
+            this.n_billetes_50 -= 2;
         }
 
         ~Jugador()
