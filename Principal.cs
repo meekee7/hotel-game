@@ -165,16 +165,31 @@ namespace Juego_Hotel
             this.controlJ4.Enabled = false;
         }
 
+        public int Sig_jugador_Activo()
+        {
+            int sig_jugador = this.juego.jug_actual;
+            Boolean valido = false;
+
+            while (!valido)
+            {
+                if (sig_jugador < this.juego.n_jugadores)
+                    sig_jugador = sig_jugador + 1;
+                else
+                    sig_jugador = 1;
+                if (this.juego.jugadores[sig_jugador-1].Eliminado() == false)
+                    valido = true;
+            }
+
+            return sig_jugador;
+        }
+
         public void Pasar_turno()
         {
             if (Todos_Eliminados())
                 Finalizar_Partida();
             else
             {
-                if (this.juego.jug_actual < this.juego.n_jugadores)
-                    this.juego.jug_actual++;
-                else
-                    this.juego.jug_actual = 1;
+                this.juego.jug_actual = Sig_jugador_Activo();
                 this.Establecer_Te_Toca();
                 this.juego.Cambiar_jugador_actual();
                 this.bDado.Enabled = true;

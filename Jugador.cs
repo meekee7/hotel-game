@@ -45,6 +45,16 @@ namespace Juego_Hotel
                                 (50 * this.n_billetes_50);
         }
 
+        public void Eliminar()
+        {
+            this.eliminado = true;
+        }
+
+        public Boolean Eliminado()
+        {
+            return this.eliminado;
+        }
+
         public void Comprar_Hotel (ref Hotel hotel, int n5000, int n1000, int n500, int n100, int n50)
         {
             // Se supone que el hotel no tenía dueño o es expropiable y que hay fondos, todo ya comprobado desde la IU
