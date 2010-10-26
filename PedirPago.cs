@@ -144,5 +144,12 @@ namespace Juego_Hotel
         {
             this.Inicializar();
         }
+
+        private void bSubastar_Click(object sender, EventArgs e)
+        {
+            Subastas frm_subastas = new Subastas(ref this.juego);
+            frm_subastas.ShowDialog();
+            // Refrescar valores después de la subasta
+        }
     }
 }

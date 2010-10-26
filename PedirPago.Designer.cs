@@ -48,6 +48,7 @@
             this.n1000j = new System.Windows.Forms.Label();
             this.bReset = new System.Windows.Forms.Button();
             this.necesario = new System.Windows.Forms.Label();
+            this.bSubastar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.img100)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img50)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img500)).BeginInit();
@@ -122,7 +123,7 @@
             // 
             // bOk
             // 
-            this.bOk.Location = new System.Drawing.Point(12, 176);
+            this.bOk.Location = new System.Drawing.Point(10, 176);
             this.bOk.Name = "bOk";
             this.bOk.Size = new System.Drawing.Size(75, 23);
             this.bOk.TabIndex = 5;
@@ -134,7 +135,7 @@
             // 
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancelar.Enabled = false;
-            this.bCancelar.Location = new System.Drawing.Point(150, 176);
+            this.bCancelar.Location = new System.Drawing.Point(101, 176);
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.Size = new System.Drawing.Size(75, 23);
             this.bCancelar.TabIndex = 6;
@@ -243,7 +244,7 @@
             // 
             // bReset
             // 
-            this.bReset.Location = new System.Drawing.Point(280, 176);
+            this.bReset.Location = new System.Drawing.Point(191, 176);
             this.bReset.Name = "bReset";
             this.bReset.Size = new System.Drawing.Size(80, 23);
             this.bReset.TabIndex = 18;
@@ -260,6 +261,16 @@
             this.necesario.TabIndex = 19;
             this.necesario.Text = "Necesario:";
             // 
+            // bSubastar
+            // 
+            this.bSubastar.Location = new System.Drawing.Point(283, 176);
+            this.bSubastar.Name = "bSubastar";
+            this.bSubastar.Size = new System.Drawing.Size(75, 23);
+            this.bSubastar.TabIndex = 20;
+            this.bSubastar.Text = "Subastar";
+            this.bSubastar.UseVisualStyleBackColor = true;
+            this.bSubastar.Click += new System.EventHandler(this.bSubastar_Click);
+            // 
             // PedirPago
             // 
             this.AcceptButton = this.bOk;
@@ -268,6 +279,7 @@
             this.CancelButton = this.bCancelar;
             this.ClientSize = new System.Drawing.Size(372, 208);
             this.ControlBox = false;
+            this.Controls.Add(this.bSubastar);
             this.Controls.Add(this.necesario);
             this.Controls.Add(this.bReset);
             this.Controls.Add(this.n1000j);
@@ -323,6 +335,7 @@
         private System.Windows.Forms.Label n1000j;
         private System.Windows.Forms.Button bReset;
         private System.Windows.Forms.Label necesario;
+        private System.Windows.Forms.Button bSubastar;
 
     }
 }
