@@ -147,9 +147,23 @@ namespace Juego_Hotel
 
         private void bSubastar_Click(object sender, EventArgs e)
         {
-            Subastas frm_subastas = new Subastas(ref this.juego);
-            frm_subastas.ShowDialog();
-            // Refrescar valores después de la subasta
+            if (this.juego.jugador_actual.hoteles.Count != 0)
+            {
+                Subastas frm_subastas = new Subastas(ref this.juego);
+                frm_subastas.ShowDialog();
+                // Refrescar valores después de la subasta
+            }
+            else
+            {
+                if (this.juego.jugador_actual.dinero_total < this.dinero_necesario)
+                {
+                    MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida", "Oh-Oh");
+                }
+                else
+                {
+                    MessageBox.Show("No tienes propiedades para subastar", "Subastas");
+                }
+            }
         }
     }
 }
