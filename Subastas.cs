@@ -73,8 +73,17 @@ namespace Juego_Hotel
 
         private void bVender_Click(object sender, EventArgs e)
         {
-            if (this.precio_mayor.Text.ToString() == "")
+            if (this.precio_mayor.Text.ToString().Trim() == "")
                 MessageBox.Show("No se ha pujado todavía");
+            else
+            {
+                if (MessageBox.Show("¿Estás seguro de que quieres realizar la venta final? No puede deshacerse" +
+                                    "El jugador " + this.mayor_postor + " deberá abonar " + this.precio_mayor,
+                                    "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    
+                }
+            }
         }
 
         private void bJ1_Click(object sender, EventArgs e)
@@ -89,9 +98,13 @@ namespace Juego_Hotel
                 MessageBox.Show("No se pueden introducir cantidades negativas");
             else if (cantidad_num <= n_precio_mayor)
                 MessageBox.Show("La cantidad es menor o igual que la puja máxima");
+            else if (cantidad_num > this.juego.jugadores[0].dinero_total)
+                MessageBox.Show("La cantidad es mayor que el dinero poseído por J1");
+            else if (cantidad_num % 50 != 0)
+                MessageBox.Show("La cantidad no es múltiplo de 50");
             else
             {
-                if (MessageBox.Show("¿Estás seguro de que quieres realizar la puja?",
+                if (MessageBox.Show("¿Estás seguro de que quieres realizar la puja? No puede deshacerse",
                                     "Confirmación de puja", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     this.n_precio_mayor = cantidad_num;
@@ -114,6 +127,10 @@ namespace Juego_Hotel
                 MessageBox.Show("No se pueden introducir cantidades negativas");
             else if (cantidad_num <= n_precio_mayor)
                 MessageBox.Show("La cantidad es menor o igual que la puja máxima");
+            else if (cantidad_num > this.juego.jugadores[1].dinero_total)
+                MessageBox.Show("La cantidad es mayor que el dinero poseído por J2");
+            else if (cantidad_num % 50 != 0)
+                MessageBox.Show("La cantidad no es múltiplo de 50");
             else
             {
                 if (MessageBox.Show("¿Estás seguro de que quieres realizar la puja?",
@@ -139,6 +156,10 @@ namespace Juego_Hotel
                 MessageBox.Show("No se pueden introducir cantidades negativas");
             else if (cantidad_num <= n_precio_mayor)
                 MessageBox.Show("La cantidad es menor o igual que la puja máxima");
+            else if (cantidad_num > this.juego.jugadores[2].dinero_total)
+                MessageBox.Show("La cantidad es mayor que el dinero poseído por J2");
+            else if (cantidad_num % 50 != 0)
+                MessageBox.Show("La cantidad no es múltiplo de 50");
             else
             {
                 if (MessageBox.Show("¿Estás seguro de que quieres realizar la puja?",
@@ -164,6 +185,10 @@ namespace Juego_Hotel
                 MessageBox.Show("No se pueden introducir cantidades negativas");
             else if (cantidad_num <= n_precio_mayor)
                 MessageBox.Show("La cantidad es menor o igual que la puja máxima");
+            else if (cantidad_num > this.juego.jugadores[3].dinero_total)
+                MessageBox.Show("La cantidad es mayor que el dinero poseído por J4");
+            else if (cantidad_num % 50 != 0)
+                MessageBox.Show("La cantidad no es múltiplo de 50");
             else
             {
                 if (MessageBox.Show("¿Estás seguro de que quieres realizar la puja?",
