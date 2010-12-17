@@ -81,7 +81,16 @@ namespace Juego_Hotel
                                     "El jugador " + this.mayor_postor + " deberá abonar " + this.precio_mayor,
                                     "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    
+                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego);
+                    frm_pago.ShowDialog();
+                    int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
+                    //this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                    if (frm_pago.total_seleccionado > this.n_precio_mayor)
+                    {
+                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.n_precio_mayor), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                        this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                    }
+                    frm_pago.Close();
                 }
             }
         }

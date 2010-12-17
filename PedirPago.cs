@@ -156,13 +156,10 @@ namespace Juego_Hotel
             else
             {
                 if (this.juego.jugador_actual.dinero_total < this.dinero_necesario)
-                {
-                    MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida", "Oh-Oh");
-                }
+                    MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida", ":(");
+                    // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
                 else
-                {
                     MessageBox.Show("No tienes propiedades para subastar", "Subastas");
-                }
             }
         }
     }
