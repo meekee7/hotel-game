@@ -152,6 +152,12 @@ namespace Juego_Hotel
                 Subastas frm_subastas = new Subastas(ref this.juego);
                 frm_subastas.ShowDialog();
                 // Refrescar valores después de la subasta
+                this.juego.jugador_actual.calcular_dinero_total();
+                this.n50j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_50.ToString();
+                this.n100j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_100.ToString();
+                this.n500j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_500.ToString();
+                this.n1000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_1000.ToString();
+                this.n5000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_5000.ToString();
             }
             else
             {

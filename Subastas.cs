@@ -19,6 +19,7 @@ namespace Juego_Hotel
         Juego juego;
         int n_mayor_postor; // nº de jugador
         int n_precio_mayor = 0;
+        Hotel hotel_seleccionado;
 
         public Subastas(ref Juego juego)
         {
@@ -40,6 +41,7 @@ namespace Juego_Hotel
         private void listaHoteles_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.bHotel.Enabled = true;
+            this.hotel_seleccionado = this.juego.hoteles.First(Hotel => Hotel.nombre_txt == this.listaHoteles.SelectedItem.ToString());
         }
 
         private void bHotel_Click(object sender, EventArgs e)
@@ -83,12 +85,14 @@ namespace Juego_Hotel
                 {
                     PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego);
                     frm_pago.ShowDialog();
-                    int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                    //this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                    Jugador dueño_ant = hotel_seleccionado.dueño;
+                    dueño_ant.Hotel_Expropiado(ref hotel_seleccionado);
+                    this.juego.jugadores[n_mayor_postor].Comprar_Hotel(ref hotel_seleccionado, ref dueño_ant, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
                     if (frm_pago.total_seleccionado > this.n_precio_mayor)
                     {
-                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.n_precio_mayor), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                        this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
+                        Principal.Calcular_Devolucion(ref dueño_ant, (frm_pago.total_seleccionado - this.n_precio_mayor), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                        this.juego.jugadores[n_mayor_postor].Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
                     }
                     frm_pago.Close();
                 }
