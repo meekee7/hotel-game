@@ -79,8 +79,8 @@ namespace Juego_Hotel
                 MessageBox.Show("No se ha pujado todavía");
             else
             {
-                if (MessageBox.Show("¿Estás seguro de que quieres realizar la venta final? No puede deshacerse" +
-                                    "El jugador " + this.mayor_postor + " deberá abonar " + this.precio_mayor,
+                if (MessageBox.Show("¿Estás seguro de que quieres realizar la venta final? No puede deshacerse\n" +
+                                    "El jugador " + this.mayor_postor.Text + " deberá abonar " + this.precio_mayor.Text,
                                     "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego);
