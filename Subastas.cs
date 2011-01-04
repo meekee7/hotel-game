@@ -19,7 +19,7 @@ namespace Juego_Hotel
         Juego juego;
         int n_mayor_postor; // nº de jugador
         int n_precio_mayor = 0;
-        Hotel hotel_seleccionado;
+        public Hotel hotel_seleccionado;
 
         public Subastas(ref Juego juego)
         {
@@ -30,6 +30,11 @@ namespace Juego_Hotel
             this.n_100 = 0;
             this.n_50 = 0;
             this.juego = juego;
+            this.Rellenar_Lista_Hoteles();
+        }
+
+        private void Rellenar_Lista_Hoteles()
+        {
             LinkedList<Hotel> lista = this.juego.jugador_actual.hoteles;
             this.listaHoteles.BeginUpdate();
             this.listaHoteles.Items.Clear();
@@ -57,7 +62,6 @@ namespace Juego_Hotel
                     bJ3.Enabled = true;
                 if (this.juego.n_jugadores > 3)
                     bJ4.Enabled = true;
-
             }
         }
 
@@ -70,7 +74,7 @@ namespace Juego_Hotel
         private void bVerHoteles_Click(object sender, EventArgs e)
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
-            frm_ver_hoteles.ShowDialog();
+            frm_ver_hoteles.Show();
         }
 
         private void bVender_Click(object sender, EventArgs e)
@@ -95,6 +99,7 @@ namespace Juego_Hotel
                         this.juego.jugadores[n_mayor_postor].Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
                     }
                     frm_pago.Close();
+                    this.Rellenar_Lista_Hoteles();
                 }
             }
         }
@@ -213,6 +218,11 @@ namespace Juego_Hotel
                     this.n_mayor_postor = 3;
                 }
             }
+        }
+
+        private void bCerrar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

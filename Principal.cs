@@ -706,7 +706,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[0].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, false);
-                frm_ver_hoteles.ShowDialog();
+                frm_ver_hoteles.Show();
             }
             else
                 MessageBox.Show ("No posees ningún hotel", "No es posible mostrar tus hoteles");
@@ -717,7 +717,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[1].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 1, false);
-                frm_ver_hoteles.ShowDialog();
+                frm_ver_hoteles.Show();
             }
             else
                 MessageBox.Show("No posees ningún hotel", "No es posible mostrar tus hoteles");
@@ -728,7 +728,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[2].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 2, false);
-                frm_ver_hoteles.ShowDialog();
+                frm_ver_hoteles.Show();
             }
             else
                 MessageBox.Show("No posees ningún hotel", "No es posible mostrar tus hoteles");
@@ -739,7 +739,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[3].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 3, false);
-                frm_ver_hoteles.ShowDialog();
+                frm_ver_hoteles.Show();
             }
             else
                 MessageBox.Show("No posees ningún hotel", "No es posible mostrar tus hoteles");
@@ -748,7 +748,7 @@ namespace Juego_Hotel
         private void bVerHoteles_Click(object sender, EventArgs e)
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
-            frm_ver_hoteles.ShowDialog();
+            frm_ver_hoteles.Show();
         }
 
         private void bEntradasJ1_Click(object sender, EventArgs e)

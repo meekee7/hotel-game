@@ -14,17 +14,39 @@ namespace Juego_Hotel
         public int n_50, n_100, n_500, n_1000, n_5000;
         public int dinero_necesario, total_seleccionado;
         public Boolean cancelado;
+        private Boolean subasta_deshabilitada = false;
         Juego juego;
+        public Hotel hotel_en_construccion;
 
         public PedirPago(int dinero_necesario, ref Juego juego)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
-            Inicializar();
+            this.hotel_en_construccion = null;
+            Inicializar(false);
         }
 
-        public void Inicializar()
+        public PedirPago(int dinero_necesario, ref Juego juego, ref Hotel hotel_en_construccion)
+        {
+            InitializeComponent();
+            this.juego = juego;
+            this.dinero_necesario = dinero_necesario;
+            this.hotel_en_construccion = hotel_en_construccion;
+            Inicializar(false);
+        }
+
+        public PedirPago(int dinero_necesario, ref Juego juego, Boolean deshabilitar_subasta)
+        {
+            InitializeComponent();
+            this.juego = juego;
+            this.dinero_necesario = dinero_necesario;
+            this.hotel_en_construccion = null;
+            this.subasta_deshabilitada = deshabilitar_subasta;
+            Inicializar(deshabilitar_subasta);
+        }
+
+        public void Inicializar(Boolean deshabilitar_subasta)
         {
             this.n_50 = 0;
             this.n_100 = 0;
@@ -44,6 +66,10 @@ namespace Juego_Hotel
             this.total.Text = "Total: 0";
             this.total_seleccionado = 0;
             this.necesario.Text = "Necesario: " + this.dinero_necesario;
+            if (this.subasta_deshabilitada)
+                this.bSubastar.Enabled = false;
+            else
+                this.bSubastar.Enabled = true;
         }
 
         private void img50_Click(object sender, EventArgs e)
@@ -142,7 +168,7 @@ namespace Juego_Hotel
 
         private void bReset_Click(object sender, EventArgs e)
         {
-            this.Inicializar();
+            this.Inicializar(this.subasta_deshabilitada);
         }
 
         private void bSubastar_Click(object sender, EventArgs e)
@@ -152,10 +178,17 @@ namespace Juego_Hotel
                 Subastas frm_subastas = new Subastas(ref this.juego);
                 frm_subastas.ShowDialog();
                 // Refrescar valores después de la subasta
+                if (frm_subastas.hotel_seleccionado.nombre_txt == this.hotel_en_construccion.nombre_txt)
+                {
+                    MessageBox.Show("Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción.", "Construcción cancelada");
+                    this.cancelado = true;
+                    this.Hide();
+                }
+                frm_subastas.Close();
                 this.juego.jugador_actual.calcular_dinero_total();
-                this.n50j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_50.ToString();
-                this.n100j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_100.ToString();
-                this.n500j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_500.ToString();
+                this.n50j.Text   = "Tienes: " + this.juego.jugador_actual.n_billetes_50.ToString();
+                this.n100j.Text  = "Tienes: " + this.juego.jugador_actual.n_billetes_100.ToString();
+                this.n500j.Text  = "Tienes: " + this.juego.jugador_actual.n_billetes_500.ToString();
                 this.n1000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_1000.ToString();
                 this.n5000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_5000.ToString();
             }

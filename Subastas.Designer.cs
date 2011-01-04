@@ -43,9 +43,9 @@
             this.txt_precio_mayor = new System.Windows.Forms.Label();
             this.precio_mayor = new System.Windows.Forms.Label();
             this.grupoEstado = new System.Windows.Forms.GroupBox();
-            this.txt_mayor_postor = new System.Windows.Forms.Label();
-            this.mayor_postor = new System.Windows.Forms.Label();
             this.bVender = new System.Windows.Forms.Button();
+            this.mayor_postor = new System.Windows.Forms.Label();
+            this.txt_mayor_postor = new System.Windows.Forms.Label();
             this.grupoHotel.SuspendLayout();
             this.grupoEstado.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +59,7 @@
             this.bCerrar.TabIndex = 0;
             this.bCerrar.Text = "Cerrar";
             this.bCerrar.UseVisualStyleBackColor = true;
+            this.bCerrar.Click += new System.EventHandler(this.bCerrar_Click);
             // 
             // etiHotel
             // 
@@ -209,23 +210,6 @@
             this.grupoEstado.TabStop = false;
             this.grupoEstado.Text = "Estado de la subasta";
             // 
-            // txt_mayor_postor
-            // 
-            this.txt_mayor_postor.AutoSize = true;
-            this.txt_mayor_postor.Location = new System.Drawing.Point(47, 141);
-            this.txt_mayor_postor.Name = "txt_mayor_postor";
-            this.txt_mayor_postor.Size = new System.Drawing.Size(71, 13);
-            this.txt_mayor_postor.TabIndex = 14;
-            this.txt_mayor_postor.Text = "Mayor postor:";
-            // 
-            // mayor_postor
-            // 
-            this.mayor_postor.AutoSize = true;
-            this.mayor_postor.Location = new System.Drawing.Point(121, 141);
-            this.mayor_postor.Name = "mayor_postor";
-            this.mayor_postor.Size = new System.Drawing.Size(0, 13);
-            this.mayor_postor.TabIndex = 15;
-            // 
             // bVender
             // 
             this.bVender.Location = new System.Drawing.Point(79, 166);
@@ -235,6 +219,23 @@
             this.bVender.Text = "Vender";
             this.bVender.UseVisualStyleBackColor = true;
             this.bVender.Click += new System.EventHandler(this.bVender_Click);
+            // 
+            // mayor_postor
+            // 
+            this.mayor_postor.AutoSize = true;
+            this.mayor_postor.Location = new System.Drawing.Point(121, 141);
+            this.mayor_postor.Name = "mayor_postor";
+            this.mayor_postor.Size = new System.Drawing.Size(0, 13);
+            this.mayor_postor.TabIndex = 15;
+            // 
+            // txt_mayor_postor
+            // 
+            this.txt_mayor_postor.AutoSize = true;
+            this.txt_mayor_postor.Location = new System.Drawing.Point(47, 141);
+            this.txt_mayor_postor.Name = "txt_mayor_postor";
+            this.txt_mayor_postor.Size = new System.Drawing.Size(71, 13);
+            this.txt_mayor_postor.TabIndex = 14;
+            this.txt_mayor_postor.Text = "Mayor postor:";
             // 
             // Subastas
             // 
