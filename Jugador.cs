@@ -48,6 +48,12 @@ namespace Juego_Hotel
         public void Eliminar()
         {
             this.eliminado = true;
+            foreach (Hotel hotel in this.hoteles)
+            {
+                hotel.Devolver_a_banca();
+                this.hoteles.Remove(hotel);
+            }
+            this.n_hoteles = 0;
         }
 
         public Boolean Eliminado()

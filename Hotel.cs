@@ -14,6 +14,7 @@ namespace Juego_Hotel
         public int n_ampliaciones_max;
         public int n_ampliaciones_construidas;
         public int precio_entrada;
+        public int n_entradas;
         public Jugador dueño;
         int[,] matriz_precios;
         int[] precios_ampliaciones;
@@ -24,6 +25,7 @@ namespace Juego_Hotel
             this.nombre = nombre;
             this.suelo_comprado = false;
             this.n_ampliaciones_construidas = 0;
+            this.n_entradas = 0;
             this.dueño = null;
             switch (this.nombre)
             {
@@ -160,6 +162,13 @@ namespace Juego_Hotel
         public int Calcular_noches(int cuantas)
         {
             return this.matriz_precios[this.n_ampliaciones_construidas, cuantas];
+        }
+
+        public void Devolver_a_banca()
+        {
+            // El hotel de queda con las entradas que tenía, solo hay que desasignarlo del dueño
+            // Se dará la opción al recomprarlo con o sin entradas
+            this.dueño = null;
         }
     }
 }

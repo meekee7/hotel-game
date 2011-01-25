@@ -52,6 +52,7 @@ namespace Juego_Hotel
             this.n_amplis.Text = "Nº de ampliaciones\r\nconstruidas: " + this.hotel_seleccionado.n_ampliaciones_construidas.ToString();
             this.sueloComprado.Text = "Suelo comprado: " + ((this.hotel_seleccionado.suelo_comprado) ? "Sí" : "No");
             this.dueño.Text = "Dueño: " + ((this.hotel_seleccionado.dueño == null) ? "-" : "Jugador " + this.hotel_seleccionado.dueño.color.ToString());
+            this.n_entradas.Text = "Nº de entradas: " + this.hotel_seleccionado.n_entradas.ToString();
         }
 
         private void bOK_Click(object sender, EventArgs e)

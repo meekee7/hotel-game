@@ -130,6 +130,7 @@ namespace Juego_Hotel
                 this.juego.casillas[n_casilla].entrada_en_izq = true;
                 this.principal.Dibujar_Entrada(ref this.juego.casillas[n_casilla], false);
             }
+            this.hotel_seleccionado.n_entradas++;
         }
     }
 }

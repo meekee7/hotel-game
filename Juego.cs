@@ -75,8 +75,14 @@ namespace Juego_Hotel
             this.jugador_actual = this.jugadores[this.jug_actual - 1];
         }
 
+        public void Eliminar_Jugador(Jugador jugador)
+        {
+             jugador.Eliminar();
+        }
+
         public void Eliminar_Jugador(Jugador jugador, Jugador jugador_que_cobra)
         {
+             jugador.Eliminar(); // Por terminar
         }
 
         ~Juego()

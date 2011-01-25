@@ -35,6 +35,7 @@
             this.n_amplis = new System.Windows.Forms.Label();
             this.sueloComprado = new System.Windows.Forms.Label();
             this.dueño = new System.Windows.Forms.Label();
+            this.n_entradas = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imgTarjeta)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,6 +102,14 @@
             this.dueño.Size = new System.Drawing.Size(0, 13);
             this.dueño.TabIndex = 7;
             // 
+            // n_entradas
+            // 
+            this.n_entradas.AutoSize = true;
+            this.n_entradas.Location = new System.Drawing.Point(10, 173);
+            this.n_entradas.Name = "n_entradas";
+            this.n_entradas.Size = new System.Drawing.Size(0, 13);
+            this.n_entradas.TabIndex = 8;
+            // 
             // VerHoteles
             // 
             this.AcceptButton = this.bOK;
@@ -109,6 +118,7 @@
             this.CancelButton = this.bOK;
             this.ClientSize = new System.Drawing.Size(657, 352);
             this.ControlBox = false;
+            this.Controls.Add(this.n_entradas);
             this.Controls.Add(this.dueño);
             this.Controls.Add(this.sueloComprado);
             this.Controls.Add(this.n_amplis);
@@ -134,5 +144,6 @@
         private System.Windows.Forms.Label n_amplis;
         private System.Windows.Forms.Label sueloComprado;
         private System.Windows.Forms.Label dueño;
+        private System.Windows.Forms.Label n_entradas;
     }
 }
