@@ -56,19 +56,34 @@ namespace Juego_Hotel
             if (res == DialogResult.Yes)
             {
                 cantidad.Enabled = true;
-                bJ1.Enabled = true;
-                bJ2.Enabled = true;
+                if (this.juego.jug_actual != 1)
+                    bJ1.Enabled = true;
+                else
+                    bJ1.Enabled = false;
+                if (this.juego.jug_actual != 2)
+                    bJ2.Enabled = true;
+                else
+                    bJ2.Enabled = false;
                 if (this.juego.n_jugadores > 2)
-                    bJ3.Enabled = true;
+                {
+                    if (this.juego.jug_actual != 3)
+                        bJ3.Enabled = true;
+                    else
+                        bJ3.Enabled = false;
+                }
+                else
+                    bJ3.Enabled = false;
                 if (this.juego.n_jugadores > 3)
-                    bJ4.Enabled = true;
+                {
+                    if (this.juego.jug_actual != 4)
+                        bJ4.Enabled = true;
+                    else
+                        bJ4.Enabled = false;
+                }
+                else
+                    bJ4.Enabled = false;
+                this.bVender.Enabled = true;
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
-            frm_ver_hoteles.ShowDialog();
         }
 
         private void bVerHoteles_Click(object sender, EventArgs e)
@@ -87,7 +102,7 @@ namespace Juego_Hotel
                                     "El jugador " + this.mayor_postor.Text + " deberá abonar " + this.precio_mayor.Text,
                                     "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego);
+                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego); // TODO: Se está pidiendo el pago al jugador actual, hay que modificar PedirPago para que permita sobre cualquiera
                     frm_pago.ShowDialog();
                     Jugador dueño_ant = hotel_seleccionado.dueño;
                     dueño_ant.Hotel_Expropiado(ref hotel_seleccionado);
@@ -100,6 +115,11 @@ namespace Juego_Hotel
                     }
                     frm_pago.Close();
                     this.Rellenar_Lista_Hoteles();
+                    this.bJ1.Enabled = false;
+                    this.bJ2.Enabled = false;
+                    this.bJ3.Enabled = false;
+                    this.bJ4.Enabled = false;
+                    this.bVender.Enabled = false;
                 }
             }
         }

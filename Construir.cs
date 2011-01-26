@@ -127,6 +127,7 @@ namespace Juego_Hotel
                         if (frm_pago.cancelado)
                         {
                             frm_pago.Close();
+                            this.Close();
                             return;
                         }
                         int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
@@ -174,6 +175,7 @@ namespace Juego_Hotel
                         if (frm_pago.cancelado)
                         {
                             frm_pago.Close();
+                            this.Close();
                             return;
                         }
                         int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
@@ -221,6 +223,7 @@ namespace Juego_Hotel
                         if (frm_pago.cancelado)
                         {
                             frm_pago.Close();
+                            this.Close();
                             return;
                         }
                         int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
@@ -268,6 +271,7 @@ namespace Juego_Hotel
                         if (frm_pago.cancelado)
                         {
                             frm_pago.Close();
+                            this.Close();
                             return;
                         }
                         int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
@@ -315,6 +319,7 @@ namespace Juego_Hotel
                         if (frm_pago.cancelado)
                         {
                             frm_pago.Close();
+                            this.Close();
                             return;
                         }
                         int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
@@ -344,7 +349,7 @@ namespace Juego_Hotel
                                                     "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes)
                 {
-                    Dado_construccion dado_cons = new Dado_construccion();
+                    Dado_construccion dado_cons = new Dado_construccion(); // TODO: quitar esto porque no necesita permiso de construcción
                     dado_cons.ShowDialog();
                     if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
                         this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
@@ -362,6 +367,7 @@ namespace Juego_Hotel
                         if (frm_pago.cancelado)
                         {
                             frm_pago.Close();
+                            this.Close();
                             return;
                         }
                         int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
