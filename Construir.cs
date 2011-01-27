@@ -122,7 +122,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -170,7 +170,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -218,7 +218,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -266,7 +266,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -314,7 +314,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -362,7 +362,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {

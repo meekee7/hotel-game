@@ -108,7 +108,7 @@ namespace Juego_Hotel
             this.listaCasillas.Enabled = false;
             this.listaHoteles.Enabled = false;
             int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-            PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego);
+            PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual);
             frm_pago.ShowDialog();
             if (frm_pago.total_seleccionado > this.hotel_seleccionado.precio_entrada)
             {

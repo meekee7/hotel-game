@@ -10,6 +10,7 @@ namespace Juego_Hotel
         public int n_hoteles;
         public Hotel[] hoteles;
         public int n_jugadores;
+        public int n_jugadores_activos;
         public Jugador[] jugadores;
         public Jugador banca;
         public Dado dado = new Dado(6);
@@ -23,6 +24,7 @@ namespace Juego_Hotel
         public Juego()
         {
             this.n_jugadores = 0;
+            this.n_jugadores_activos = 0;
             this.n_hoteles = Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1;
             this.hoteles = new Hotel[this.n_hoteles];
             Crear_Hoteles(ref this.hoteles);
@@ -77,14 +79,15 @@ namespace Juego_Hotel
 
         public void Eliminar_Jugador(Jugador jugador)
         {
-             jugador.Eliminar();
+            jugador.Eliminar();
+            this.n_jugadores_activos--;
         }
 
         public void Eliminar_Jugador(Jugador jugador, Jugador jugador_que_cobra)
         {
-             jugador.Eliminar(); // Por terminar
+             jugador.Eliminar();
+             this.n_jugadores_activos--; // TODO: Por terminar
         }
-
         ~Juego()
         {
             this.hoteles = null;

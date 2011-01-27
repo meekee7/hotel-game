@@ -102,7 +102,7 @@ namespace Juego_Hotel
                                     "El jugador " + this.mayor_postor.Text + " deberá abonar " + this.precio_mayor.Text,
                                     "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego); // TODO: Se está pidiendo el pago al jugador actual, hay que modificar PedirPago para que permita sobre cualquiera
+                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego, this.juego.jugadores[n_mayor_postor]);
                     frm_pago.ShowDialog();
                     Jugador dueño_ant = hotel_seleccionado.dueño;
                     dueño_ant.Hotel_Expropiado(ref hotel_seleccionado);

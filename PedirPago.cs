@@ -17,32 +17,36 @@ namespace Juego_Hotel
         private Boolean subasta_deshabilitada = false;
         Juego juego;
         public Hotel hotel_en_construccion;
+        public Jugador pagador;
 
-        public PedirPago(int dinero_necesario, ref Juego juego)
+        public PedirPago(int dinero_necesario, ref Juego juego, Jugador pagador)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
             this.hotel_en_construccion = null;
+            this.pagador = pagador;
             Inicializar(false);
         }
 
-        public PedirPago(int dinero_necesario, ref Juego juego, ref Hotel hotel_en_construccion)
+        public PedirPago(int dinero_necesario, ref Juego juego, ref Hotel hotel_en_construccion, Jugador pagador)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
             this.hotel_en_construccion = hotel_en_construccion;
+            this.pagador = pagador;
             Inicializar(false);
         }
 
-        public PedirPago(int dinero_necesario, ref Juego juego, Boolean deshabilitar_subasta)
+        public PedirPago(int dinero_necesario, ref Juego juego, Boolean deshabilitar_subasta, Jugador pagador)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
             this.hotel_en_construccion = null;
             this.subasta_deshabilitada = deshabilitar_subasta;
+            this.pagador = pagador;
             Inicializar(deshabilitar_subasta);
         }
 
@@ -53,11 +57,11 @@ namespace Juego_Hotel
             this.n_500 = 0;
             this.n_1000 = 0;
             this.n_5000 = 0;
-            this.n50j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_50.ToString();
-            this.n100j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_100.ToString();
-            this.n500j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_500.ToString();
-            this.n1000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_1000.ToString();
-            this.n5000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_5000.ToString();
+            this.n50j.Text = "Tienes: " + this.pagador.n_billetes_50.ToString();
+            this.n100j.Text = "Tienes: " + this.pagador.n_billetes_100.ToString();
+            this.n500j.Text = "Tienes: " + this.pagador.n_billetes_500.ToString();
+            this.n1000j.Text = "Tienes: " + this.pagador.n_billetes_1000.ToString();
+            this.n5000j.Text = "Tienes: " + this.pagador.n_billetes_5000.ToString();
             this.n50.Text = "Usas: 0";
             this.n100.Text = "Usas: 0";
             this.n500.Text = "Usas: 0";
@@ -74,7 +78,7 @@ namespace Juego_Hotel
 
         private void img50_Click(object sender, EventArgs e)
         {
-            if (this.n_50 < this.juego.jugador_actual.n_billetes_50)
+            if (this.n_50 < this.pagador.n_billetes_50)
             {
                 this.n_50++;
                 this.n50.Text = "Usas: " + this.n_50.ToString();
@@ -88,7 +92,7 @@ namespace Juego_Hotel
 
         private void img100_Click(object sender, EventArgs e)
         {
-            if (this.n_100 < this.juego.jugador_actual.n_billetes_100)
+            if (this.n_100 < this.pagador.n_billetes_100)
             {
                 this.n_100++;
                 this.n100.Text = "Usas: " + this.n_100.ToString();
@@ -102,7 +106,7 @@ namespace Juego_Hotel
 
         private void img500_Click(object sender, EventArgs e)
         {
-            if (this.n_500 < this.juego.jugador_actual.n_billetes_500)
+            if (this.n_500 < this.pagador.n_billetes_500)
             {
                 this.n_500++;
                 this.n500.Text = "Usas: " + this.n_500.ToString();
@@ -116,7 +120,7 @@ namespace Juego_Hotel
 
         private void img1000_Click(object sender, EventArgs e)
         {
-            if (this.n_1000 < this.juego.jugador_actual.n_billetes_1000)
+            if (this.n_1000 < this.pagador.n_billetes_1000)
             {
                 this.n_1000++;
                 this.n1000.Text = "Usas: " + this.n_1000.ToString();
@@ -130,7 +134,7 @@ namespace Juego_Hotel
 
         private void img5000_Click(object sender, EventArgs e)
         {
-            if (this.n_5000 < this.juego.jugador_actual.n_billetes_5000)
+            if (this.n_5000 < this.pagador.n_billetes_5000)
             {
                 this.n_5000++;
                 this.n5000.Text = "Usas: " + this.n_5000.ToString();
@@ -173,7 +177,7 @@ namespace Juego_Hotel
 
         private void bSubastar_Click(object sender, EventArgs e)
         {
-            if (this.juego.jugador_actual.hoteles.Count != 0)
+            if (this.pagador.hoteles.Count != 0)
             {
                 Subastas frm_subastas = new Subastas(ref this.juego);
                 frm_subastas.ShowDialog();
@@ -185,20 +189,20 @@ namespace Juego_Hotel
                     this.Hide();
                 }
                 frm_subastas.Close();
-                this.juego.jugador_actual.calcular_dinero_total();
-                this.n50j.Text   = "Tienes: " + this.juego.jugador_actual.n_billetes_50.ToString();
-                this.n100j.Text  = "Tienes: " + this.juego.jugador_actual.n_billetes_100.ToString();
-                this.n500j.Text  = "Tienes: " + this.juego.jugador_actual.n_billetes_500.ToString();
-                this.n1000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_1000.ToString();
-                this.n5000j.Text = "Tienes: " + this.juego.jugador_actual.n_billetes_5000.ToString();
+                this.pagador.calcular_dinero_total();
+                this.n50j.Text   = "Tienes: " + this.pagador.n_billetes_50.ToString();
+                this.n100j.Text  = "Tienes: " + this.pagador.n_billetes_100.ToString();
+                this.n500j.Text  = "Tienes: " + this.pagador.n_billetes_500.ToString();
+                this.n1000j.Text = "Tienes: " + this.pagador.n_billetes_1000.ToString();
+                this.n5000j.Text = "Tienes: " + this.pagador.n_billetes_5000.ToString();
             }
             else
             {
-                if (this.juego.jugador_actual.dinero_total < this.dinero_necesario)
+                if (this.pagador.dinero_total < this.dinero_necesario)
                 {
                     MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida :(", "Jugador eliminado");
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
-                    this.juego.Eliminar_Jugador(this.juego.jugador_actual, null);
+                    this.juego.Eliminar_Jugador(this.pagador, null);
                 }
                 else
                     MessageBox.Show("No tienes propiedades para subastar", "Subastas");

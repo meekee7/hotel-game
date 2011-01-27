@@ -17,6 +17,7 @@ namespace Juego_Hotel
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();
         Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
+        // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal()
         {
@@ -142,13 +143,14 @@ namespace Juego_Hotel
 
         public Boolean Todos_Eliminados()
         {
-            Boolean lo_estan = true;
+            /*Boolean lo_estan = true;
             foreach (Jugador jugador in this.juego.jugadores)
             {
                 if (!jugador.eliminado)
                     lo_estan = false;
             }
-            return lo_estan;
+            return lo_estan;*/
+            return this.juego.n_jugadores_activos == 0;
         }
 
         public void Finalizar_Partida()
@@ -204,6 +206,7 @@ namespace Juego_Hotel
         public void Crear_Jugadores()
         {
             this.juego.jugadores = new Jugador[this.juego.n_jugadores];
+            this.juego.n_jugadores_activos = this.juego.n_jugadores;
             XmlDocument configuracion = new XmlDocument();
             configuracion.Load ("../../Config.xml");
             XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
@@ -468,7 +471,7 @@ namespace Juego_Hotel
             else
                 dinero_necesario = hotel.precio;
 
-            PedirPago frm_pago = new PedirPago (dinero_necesario, ref this.juego);
+            PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, this.juego.jugador_actual);
             frm_pago.ShowDialog();
             if (expropiando)
             {
@@ -691,14 +694,19 @@ namespace Juego_Hotel
 
         private void bCobrarBanca_Click(object sender, EventArgs e)
         {
-            int pos = this.juego.jugador_actual.posicion.numero;
-            if ((pos >= 8) && ((pos - this.juego.ultimo_res_dado) < 8))
+            if (this.juego.n_jugadores_activos > 2)
             {
-                this.juego.jugador_actual.Cobrar_Banco();
-                this.Actualizar_Dinero_Jugador();
+                int pos = this.juego.jugador_actual.posicion.numero;
+                if ((pos >= 8) && ((pos - this.juego.ultimo_res_dado) < 8))
+                {
+                    this.juego.jugador_actual.Cobrar_Banco();
+                    this.Actualizar_Dinero_Jugador();
+                }
+                else
+                    MessageBox.Show("No puedes cobrar si no acabas de pasar por la línea del banco");
             }
             else
-                MessageBox.Show("No puedes cobrar si no acabas de pasar por la línea del banco");
+                MessageBox.Show("No se puede cobrar de la banca cuando solo quedan dos jugadores");
         }
 
         private void bVerHotelesJ1_Click(object sender, EventArgs e)
@@ -850,7 +858,7 @@ namespace Juego_Hotel
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
                                     MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[0].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego);
+                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
                                     jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
@@ -895,7 +903,7 @@ namespace Juego_Hotel
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
                                     MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[1].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego);
+                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
                                     jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
@@ -940,7 +948,7 @@ namespace Juego_Hotel
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
                                     MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[2].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego);
+                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
                                     jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
@@ -985,7 +993,7 @@ namespace Juego_Hotel
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
                                     MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[3].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego);
+                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
                                     jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
