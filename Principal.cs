@@ -143,17 +143,10 @@ namespace Juego_Hotel
 
         public Boolean Todos_Eliminados()
         {
-            /*Boolean lo_estan = true;
-            foreach (Jugador jugador in this.juego.jugadores)
-            {
-                if (!jugador.eliminado)
-                    lo_estan = false;
-            }
-            return lo_estan;*/
-            return this.juego.n_jugadores_activos == 0;
+            return this.juego.n_jugadores_activos == 1;
         }
 
-        public void Finalizar_Partida()
+        public void Finalizar_Partida(Jugador ganador)
         {
             foreach (Control control in this.Controls)
             {
@@ -165,6 +158,7 @@ namespace Juego_Hotel
             this.controlJ2.Enabled = false;
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
+            MessageBox.Show("Partida finalizada. Ha ganado el jugador " + ganador.color.ToString(), "Hotel");
         }
 
         public int Sig_jugador_Activo()
@@ -188,7 +182,7 @@ namespace Juego_Hotel
         public void Pasar_turno()
         {
             if (Todos_Eliminados())
-                Finalizar_Partida();
+                Finalizar_Partida(this.juego.jugadores[Sig_jugador_Activo()-1]);
             else
             {
                 this.juego.jug_actual = Sig_jugador_Activo();
@@ -694,7 +688,7 @@ namespace Juego_Hotel
 
         private void bCobrarBanca_Click(object sender, EventArgs e)
         {
-            if (this.juego.n_jugadores_activos > 2)
+            if ((this.juego.n_jugadores == 2) || ((this.juego.n_jugadores_activos > 2) && (this.juego.n_jugadores > 2)))
             {
                 int pos = this.juego.jugador_actual.posicion.numero;
                 if ((pos >= 8) && ((pos - this.juego.ultimo_res_dado) < 8))

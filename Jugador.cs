@@ -17,7 +17,6 @@ namespace Juego_Hotel
         public int n_hoteles;
         public Casilla posicion;
         public Tipos.Tcolor color;
-        public Boolean activo; // Por si es eliminado
         public Boolean pago_ultimo_turno;
         public Boolean eliminado;
 
@@ -33,7 +32,6 @@ namespace Juego_Hotel
             this.n_hoteles = 0;
             this.posicion = new Casilla (0);
             this.calcular_dinero_total ();
-            this.activo = true;
             this.pago_ultimo_turno = false;
             this.eliminado = false;
         }
