@@ -39,12 +39,13 @@
             this.nombreHotel = new System.Windows.Forms.Label();
             this.listaHoteles = new System.Windows.Forms.ComboBox();
             this.HotelSeleccionado = new System.Windows.Forms.Label();
+            this.bVerHoteles = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // bCancelar
             // 
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancelar.Location = new System.Drawing.Point(129, 170);
+            this.bCancelar.Location = new System.Drawing.Point(56, 170);
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.Size = new System.Drawing.Size(75, 23);
             this.bCancelar.TabIndex = 1;
@@ -156,6 +157,16 @@
             this.HotelSeleccionado.Size = new System.Drawing.Size(0, 13);
             this.HotelSeleccionado.TabIndex = 11;
             // 
+            // bVerHoteles
+            // 
+            this.bVerHoteles.Location = new System.Drawing.Point(207, 170);
+            this.bVerHoteles.Name = "bVerHoteles";
+            this.bVerHoteles.Size = new System.Drawing.Size(83, 23);
+            this.bVerHoteles.TabIndex = 26;
+            this.bVerHoteles.Text = "Ver hoteles";
+            this.bVerHoteles.UseVisualStyleBackColor = true;
+            this.bVerHoteles.Click += new System.EventHandler(this.bVerHoteles_Click);
+            // 
             // Construir
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,6 +174,7 @@
             this.CancelButton = this.bCancelar;
             this.ClientSize = new System.Drawing.Size(360, 205);
             this.ControlBox = false;
+            this.Controls.Add(this.bVerHoteles);
             this.Controls.Add(this.HotelSeleccionado);
             this.Controls.Add(this.listaHoteles);
             this.Controls.Add(this.nombreHotel);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.Label nombreHotel;
         private System.Windows.Forms.ComboBox listaHoteles;
         private System.Windows.Forms.Label HotelSeleccionado;
+        private System.Windows.Forms.Button bVerHoteles;
     }
 }

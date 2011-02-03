@@ -388,5 +388,11 @@ namespace Juego_Hotel
                 MessageBox.Show("No tienes el suficiente dinero para comprar los complejos recreativos", "No es posible construir");
             this.Hide();
         }
+
+        private void bVerHoteles_Click(object sender, EventArgs e)
+        {
+            VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, this.juego.jug_actual - 1, false);
+            frm_ver_hoteles.Show();
+        }
     }
 }
