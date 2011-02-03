@@ -109,30 +109,30 @@ namespace Juego_Hotel.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Fleha_amarilla {
+        internal static System.Drawing.Bitmap Flecha_amarilla {
             get {
-                object obj = ResourceManager.GetObject("Fleha_amarilla", resourceCulture);
+                object obj = ResourceManager.GetObject("Flecha_amarilla", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap Fleha_azul {
+        internal static System.Drawing.Bitmap Flecha_azul {
             get {
-                object obj = ResourceManager.GetObject("Fleha_azul", resourceCulture);
+                object obj = ResourceManager.GetObject("Flecha_azul", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap Fleha_roja {
+        internal static System.Drawing.Bitmap Flecha_roja {
             get {
-                object obj = ResourceManager.GetObject("Fleha_roja", resourceCulture);
+                object obj = ResourceManager.GetObject("Flecha_roja", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap Fleha_verde {
+        internal static System.Drawing.Bitmap Flecha_verde {
             get {
-                object obj = ResourceManager.GetObject("Fleha_verde", resourceCulture);
+                object obj = ResourceManager.GetObject("Flecha_verde", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -632,7 +632,7 @@
             // 
             // posVerde
             // 
-            this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Fleha_verde;
+            this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
             this.posVerde.Location = new System.Drawing.Point(80, 322);
             this.posVerde.Name = "posVerde";
             this.posVerde.Size = new System.Drawing.Size(20, 20);
@@ -642,7 +642,7 @@
             // 
             // posAmarillo
             // 
-            this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Fleha_amarilla;
+            this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
             this.posAmarillo.Location = new System.Drawing.Point(100, 322);
             this.posAmarillo.Name = "posAmarillo";
             this.posAmarillo.Size = new System.Drawing.Size(20, 20);
@@ -652,7 +652,7 @@
             // 
             // posAzul
             // 
-            this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Fleha_azul;
+            this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
             this.posAzul.Location = new System.Drawing.Point(60, 322);
             this.posAzul.Name = "posAzul";
             this.posAzul.Size = new System.Drawing.Size(20, 20);
@@ -662,7 +662,7 @@
             // 
             // posRojo
             // 
-            this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Fleha_roja;
+            this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
             this.posRojo.Location = new System.Drawing.Point(40, 322);
             this.posRojo.Name = "posRojo";
             this.posRojo.Size = new System.Drawing.Size(20, 20);

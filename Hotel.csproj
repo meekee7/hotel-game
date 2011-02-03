@@ -186,18 +186,6 @@
     <None Include="Images\Tablero.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\Fleha_amarilla.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Fleha_azul.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Fleha_roja.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Fleha_verde.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Images\Taj_Mahal_tarjeta.png" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +202,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Reglas.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Flecha_amarilla.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Flecha_azul.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Flecha_roja.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Flecha_verde.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
