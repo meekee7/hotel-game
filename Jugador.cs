@@ -143,8 +143,9 @@ namespace Juego_Hotel
             this.calcular_dinero_total();
         }
 
-        public void Quitar_5000_sin_tener_b5000(out int n_1000, out int n_500, out int n_100, out int n_50)
+        public void Quitar_5000_sin_tener_b5000(out int n_5000, out int n_1000, out int n_500, out int n_100, out int n_50)
         {
+            n_5000 = 0;
             n_1000 = 0;
             n_500 = 0;
             n_100 = 0;
@@ -154,34 +155,86 @@ namespace Juego_Hotel
 
             while (acumulado < 5000)
             {
-                if (this.n_billetes_1000 > 0)
+                if (this.n_billetes_5000 > 0)
+                {
+                    acumulado += 5000;
+                    n_5000++;
+                    this.n_billetes_5000--;
+                }
+                else if (this.n_billetes_1000 > 0)
                 {
                     acumulado += 1000;
-                    n_1000--;
+                    n_1000++;
                     this.n_billetes_1000--;
                 }
                 else if (this.n_billetes_500 > 0)
                 {
                     acumulado += 500;
-                    n_500--;
+                    n_500++;
                     this.n_billetes_500--;
                 }
                 else if (this.n_billetes_100 > 0)
                 {
                     acumulado += 100;
-                    n_100--;
+                    n_100++;
                     this.n_billetes_100--;
                 }
                 else if (this.n_billetes_50 > 0)
                 {
                     acumulado += 50;
-                    n_50--;
+                    n_50++;
                     this.n_billetes_50--;
                 }
             }
         }
 
-        public void Quitar_1000_sin_tener_b1000(out int n_500, out int n_100, out int n_50)
+        public void Quitar_1000_sin_tener_b1000(out int n_1000, out int n_500, out int n_100, out int n_50)
+        {
+            n_1000 = 0;
+            n_500 = 0;
+            n_100 = 0;
+            n_50 = 0;
+
+            int acumulado = 0;
+
+            while (acumulado < 1000)
+            {
+                if (this.n_billetes_1000 > 0)
+                {
+                    acumulado += 1000;
+                    n_1000++;
+                    this.n_billetes_1000--;
+                }
+                else if (this.n_billetes_500 > 0)
+                {
+                    acumulado += 500;
+                    n_500++;
+                    this.n_billetes_500--;
+                }
+                else if (this.n_billetes_100 > 0)
+                {
+                    acumulado += 100;
+                    n_100++;
+                    this.n_billetes_100--;
+                }
+                else if (this.n_billetes_50 > 0)
+                {
+                    acumulado += 50;
+                    n_50++;
+                    this.n_billetes_50--;
+                }
+                else // Caso para cuando no hay billetes disponibles y hay que cambiar los que hay por otros usando la banca
+                {
+                    if (this.n_billetes_5000 > 0)
+                    {
+                        this.n_billetes_5000--;
+                        this.n_billetes_1000 += 5;
+                    }
+                }
+            }
+        }
+
+        public void Quitar_500_sin_tener_b500(out int n_500, out int n_100, out int n_50)
         {
             n_500 = 0;
             n_100 = 0;
@@ -189,57 +242,122 @@ namespace Juego_Hotel
 
             int acumulado = 0;
 
-            while (acumulado < 5000)
+            while (acumulado < 500)
             {
                 if (this.n_billetes_500 > 0)
                 {
                     acumulado += 500;
-                    n_500--;
+                    n_500++;
                     this.n_billetes_500--;
                 }
                 else if (this.n_billetes_100 > 0)
                 {
                     acumulado += 100;
-                    n_100--;
+                    n_100++;
                     this.n_billetes_100--;
                 }
                 else if (this.n_billetes_50 > 0)
                 {
                     acumulado += 50;
-                    n_50--;
+                    n_50++;
                     this.n_billetes_50--;
+                }
+                else // Caso para cuando no hay billetes disponibles y hay que cambiar los que hay por otros usando la banca
+                {
+                    if (this.n_billetes_1000 > 0)
+                    {
+                        this.n_billetes_1000--;
+                        this.n_billetes_500 += 2;
+                    }
+                    else if (this.n_billetes_5000 > 0)
+                    {
+                        this.n_billetes_5000--;
+                        this.n_billetes_1000 += 5;
+                    }
                 }
             }
         }
 
-        public void Quitar_500_sin_tener_b500(out int n_100, out int n_50)
+        public void Quitar_100_sin_tener_b100(out int n_100, out int n_50)
         {
             n_100 = 0;
             n_50 = 0;
 
             int acumulado = 0;
 
-            while (acumulado < 5000)
+            while (acumulado < 100)
             {
                 if (this.n_billetes_100 > 0)
                 {
                     acumulado += 100;
-                    n_100--;
+                    n_100++;
                     this.n_billetes_100--;
                 }
                 else if (this.n_billetes_50 > 0)
                 {
                     acumulado += 50;
-                    n_50--;
+                    n_50++;
                     this.n_billetes_50--;
+                }
+                else // Caso para cuando no hay billetes disponibles y hay que cambiar los que hay por otros usando la banca
+                {
+                    if (this.n_billetes_500 > 0)
+                    {
+                        this.n_billetes_500--;
+                        this.n_billetes_100 += 5;
+                    }
+                    else if (this.n_billetes_1000 > 0)
+                    {
+                        this.n_billetes_1000--;
+                        this.n_billetes_500 += 2;
+                    }
+                    else if (this.n_billetes_5000 > 0)
+                    {
+                        this.n_billetes_5000--;
+                        this.n_billetes_1000 += 5;
+                    }
                 }
             }
         }
 
-        public void Quitar_100_sin_tener_b100(out int n_50)
+        public void Quitar_50_sin_tener_b50(out int n_50)
         {
-            n_50 = 2;
-            this.n_billetes_50 -= 2;
+            n_50 = 0;
+
+            int acumulado = 0;
+
+            while (acumulado < 50)
+            {
+                if (this.n_billetes_50 > 0)
+                {
+                    acumulado += 50;
+                    n_50++;
+                    this.n_billetes_50--;
+                }
+                else // Caso para cuando no hay billetes disponibles y hay que cambiar los que hay por otros usando la banca
+                {
+                    if (this.n_billetes_100 > 0)
+                    {
+                        this.n_billetes_100--;
+                        this.n_billetes_50 += 2;
+                    }
+                    else if (this.n_billetes_500 > 0)
+                    {
+                        this.n_billetes_500--;
+                        this.n_billetes_100 += 5;
+                    }
+                    else if (this.n_billetes_1000 > 0)
+                    {
+                        this.n_billetes_1000--;
+                        this.n_billetes_500 += 2;
+                    }
+                    else if (this.n_billetes_5000 > 0)
+                    {
+                        this.n_billetes_5000--;
+                        this.n_billetes_1000 += 5;
+                    }
+                }
+            }
         }
 
         ~Jugador()

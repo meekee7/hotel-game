@@ -452,7 +452,7 @@ namespace Juego_Hotel
                 }
             }
             frm_comprar_hotel.Close();
-            this.Actualizar_Dinero_Jugador();
+            this.Actualizar_Dinero_Jugador_Actual();
         }
 
         void Comprar_hotel (ref Hotel hotel, ref Jugador jugador, Boolean expropiando)
@@ -536,14 +536,13 @@ namespace Juego_Hotel
         {
             // Al restar la devolución a un jugador, hay que haber ingresado los fondos previamente por si acaso el jugador
             // no tiene fondos suficientes para devolver antes de haber recibido el cobro
-            // En el caso de que no tenga cambio justo, el sistema automáticamente obtendrá los billetes necesarios para que así sea
-            // AVISO ----------------- Posible error al sacar billetes de 100 sin tener de 50, no estoy seguro de si se puede siempre
+            // En el caso de que no tenga cambio justo, el sistema automáticamente obtendrá los billetes necesarios para que así sea, cambiando billetes con la banca
             n_5000 = 0;
             n_1000 = 0;
             n_500 = 0;
             n_100 = 0;
             n_50 = 0;
-            int n_1000_, n_500_, n_100_, n_50_;
+            int n_5000_, n_1000_, n_500_, n_100_, n_50_;
 
             while (cantidad > 0)
             {
@@ -556,7 +555,8 @@ namespace Juego_Hotel
                     }
                     else
                     {
-                        jugador.Quitar_5000_sin_tener_b5000(out n_1000_, out n_500_, out n_100_, out n_50_);
+                        jugador.Quitar_5000_sin_tener_b5000(out n_5000_, out n_1000_, out n_500_, out n_100_, out n_50_);
+                        n_5000 += n_5000_;
                         n_1000 += n_1000_;
                         n_500 += n_500_;
                         n_100 += n_100_;
@@ -573,7 +573,8 @@ namespace Juego_Hotel
                     }
                     else
                     {
-                        jugador.Quitar_1000_sin_tener_b1000(out n_500_, out n_100_, out n_50_);
+                        jugador.Quitar_1000_sin_tener_b1000(out n_1000_, out n_500_, out n_100_, out n_50_);
+                        n_1000 += n_1000_;
                         n_500 += n_500_;
                         n_100 += n_100_;
                         n_50 += n_50_;
@@ -589,7 +590,8 @@ namespace Juego_Hotel
                     }
                     else
                     {
-                        jugador.Quitar_500_sin_tener_b500(out n_100_, out n_50_);
+                        jugador.Quitar_500_sin_tener_b500(out n_500_, out n_100_, out n_50_);
+                        n_500 += n_500_;
                         n_100 += n_100_;
                         n_50 += n_50_;
                     }
@@ -604,7 +606,8 @@ namespace Juego_Hotel
                     }
                     else
                     {
-                        jugador.Quitar_100_sin_tener_b100(out n_50_);
+                        jugador.Quitar_100_sin_tener_b100(out n_100_, out n_50_);
+                        n_100 += n_100_;
                         n_50 += n_50_;
                     }
                     cantidad -= 100;
@@ -613,17 +616,21 @@ namespace Juego_Hotel
                 {
                     if (jugador.n_billetes_50 > 0)
                     {
-                        cantidad -= 50;
-                        n_50++;
                         jugador.n_billetes_50--;
+                        n_50++;
                     }
-                    // No se si se puede dar el caso de no tener billetes de 50, ya que el dinero restante del jugador sería 0
+                    else
+                    {
+                        jugador.Quitar_50_sin_tener_b50(out n_50_);
+                        n_50 += n_50_;
+                    }
+                    cantidad -= 50;
                 }
             }
             jugador.calcular_dinero_total();
         }
 
-        public void Actualizar_Dinero_Jugador()
+        public void Actualizar_Dinero_Jugador_Actual()
         {
             switch (this.juego.jug_actual)
             {
@@ -656,7 +663,7 @@ namespace Juego_Hotel
         {
             Construir frm_construir = new Construir(ref this.juego, false);
             frm_construir.ShowDialog();
-            this.Actualizar_Dinero_Jugador();
+            this.Actualizar_Dinero_Jugadores();
             this.bConstruir.Enabled = false;
         }
 
@@ -664,7 +671,7 @@ namespace Juego_Hotel
         {
             Construir frm_construir = new Construir(ref this.juego, true);
             frm_construir.ShowDialog();
-            this.Actualizar_Dinero_Jugador();
+            this.Actualizar_Dinero_Jugadores();
             this.bComprarSuelo.Enabled = false;
         }
 
@@ -694,7 +701,7 @@ namespace Juego_Hotel
                 if ((pos >= 8) && ((pos - this.juego.ultimo_res_dado) < 8))
                 {
                     this.juego.jugador_actual.Cobrar_Banco();
-                    this.Actualizar_Dinero_Jugador();
+                    this.Actualizar_Dinero_Jugador_Actual();
                 }
                 else
                     MessageBox.Show("No puedes cobrar si no acabas de pasar por la línea del banco");

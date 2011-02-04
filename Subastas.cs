@@ -41,6 +41,7 @@ namespace Juego_Hotel
             foreach (Hotel hotel in lista)
                 this.listaHoteles.Items.Add(hotel.nombre_txt);
             this.listaHoteles.EndUpdate();
+            this.listaHoteles.SelectedText = "";
         }
 
         private void listaHoteles_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,6 +121,7 @@ namespace Juego_Hotel
                     this.bJ3.Enabled = false;
                     this.bJ4.Enabled = false;
                     this.bVender.Enabled = false;
+                    this.bHotel.Enabled = false;
                 }
             }
         }
