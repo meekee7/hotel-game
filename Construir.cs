@@ -16,13 +16,15 @@ namespace Juego_Hotel
         Hotel hotel_seleccionado;
         public Boolean cancelado;
         public int total_a_pagar;
+        Principal interfaz;
 
-        public Construir(ref Juego juego, Boolean comprando_suelo)
+        public Construir(ref Juego juego, Boolean comprando_suelo, Principal interfaz)
         {
             InitializeComponent();
             this.comprando_suelo = comprando_suelo;
             this.juego = juego;
             this.cancelado = false;
+            this.interfaz = interfaz;
         }
 
         private void bCancelar_Click(object sender, EventArgs e)
@@ -122,7 +124,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -170,7 +172,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -218,7 +220,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -266,7 +268,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -314,7 +316,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {
@@ -362,7 +364,7 @@ namespace Juego_Hotel
                     dado_cons.Close();
                     if (this.total_a_pagar > 0)
                     {
-                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual);
+                        PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                         frm_pago.ShowDialog();
                         if (frm_pago.cancelado)
                         {

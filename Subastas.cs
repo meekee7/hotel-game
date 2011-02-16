@@ -20,8 +20,9 @@ namespace Juego_Hotel
         int n_mayor_postor; // nº de jugador
         int n_precio_mayor = 0;
         public Hotel hotel_seleccionado;
+        private Principal interfaz;
 
-        public Subastas(ref Juego juego)
+        public Subastas(ref Juego juego, Principal interfaz)
         {
             InitializeComponent();
             this.n_5000 = 0;
@@ -30,6 +31,7 @@ namespace Juego_Hotel
             this.n_100 = 0;
             this.n_50 = 0;
             this.juego = juego;
+            this.interfaz = interfaz;
             this.Rellenar_Lista_Hoteles();
         }
 
@@ -84,6 +86,7 @@ namespace Juego_Hotel
                 else
                     bJ4.Enabled = false;
                 this.bVender.Enabled = true;
+                this.bCerrar.Enabled = false;
             }
         }
 
@@ -103,7 +106,7 @@ namespace Juego_Hotel
                                     "El jugador " + this.mayor_postor.Text + " deberá abonar " + this.precio_mayor.Text,
                                     "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego, this.juego.jugadores[n_mayor_postor]);
+                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego, true, this.juego.jugadores[n_mayor_postor], this.interfaz); // Subasta deshabilitada al estar ya en una subasta
                     frm_pago.ShowDialog();
                     Jugador dueño_ant = hotel_seleccionado.dueño;
                     dueño_ant.Hotel_Expropiado(ref hotel_seleccionado);
@@ -122,6 +125,7 @@ namespace Juego_Hotel
                     this.bJ4.Enabled = false;
                     this.bVender.Enabled = false;
                     this.bHotel.Enabled = false;
+                    this.bCerrar.Enabled = true;
                 }
             }
         }
@@ -179,7 +183,7 @@ namespace Juego_Hotel
                     this.n_precio_mayor = cantidad_num;
                     this.precio_mayor.Text = cantidad_num.ToString();
                     this.mayor_postor.Text = "J2 - " + this.juego.jugadores[1].color.ToString();
-                    this.n_mayor_postor = 0;
+                    this.n_mayor_postor = 1;
                 }
             }
         }

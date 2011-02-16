@@ -14,13 +14,13 @@ namespace Juego_Hotel
         public int n_billetes_5000 = 0;
         public int dinero_total = 0;
         public LinkedList <Hotel> hoteles;
-        public int n_hoteles;
+        public int n_hoteles, n_jugador;
         public Casilla posicion;
         public Tipos.Tcolor color;
         public Boolean pago_ultimo_turno;
         public Boolean eliminado;
 
-        public Jugador (int n_5000, int n_1000, int n_500, int n_100, int n_50, Tipos.Tcolor color)
+        public Jugador (int n_5000, int n_1000, int n_500, int n_100, int n_50, Tipos.Tcolor color, int n_jugador)
         {
             this.n_billetes_50 = n_50;
             this.n_billetes_100 = n_100;
@@ -34,6 +34,7 @@ namespace Juego_Hotel
             this.calcular_dinero_total ();
             this.pago_ultimo_turno = false;
             this.eliminado = false;
+            this.n_jugador = n_jugador;
         }
 
         public void calcular_dinero_total ()

@@ -28,7 +28,7 @@ namespace Juego_Hotel
             this.n_hoteles = Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1;
             this.hoteles = new Hotel[this.n_hoteles];
             Crear_Hoteles(ref this.hoteles);
-            this.banca = new Jugador(5, 5, 5, 5, 5, Tipos.Tcolor.banca);
+            this.banca = new Jugador(5, 5, 5, 5, 5, Tipos.Tcolor.banca, -1);
             // Creando casillas
             this.casillas = new Casilla[32];
             for (int i = 0 ; i < 32 ; i++)

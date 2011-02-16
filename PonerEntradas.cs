@@ -13,10 +13,10 @@ namespace Juego_Hotel
     {
         Juego juego;
         Hotel hotel_seleccionado;
-        Principal principal;
+        Principal interfaz;
         Jugador jugador;
 
-        public PonerEntradas(ref Juego juego, int jugador, Principal principal)
+        public PonerEntradas(ref Juego juego, int jugador, Principal interfaz)
         {
             InitializeComponent();
             this.juego = juego;
@@ -24,7 +24,7 @@ namespace Juego_Hotel
             Hotel[] lista = new Hotel[this.jugador.hoteles.Count];
             this.juego.jugadores[jugador].hoteles.CopyTo(lista, 0);
             this.Rellenar_lista(ref lista);
-            this.principal = principal;
+            this.interfaz = interfaz;
         }
 
         void Rellenar_lista(ref Hotel[] lista)
@@ -108,7 +108,7 @@ namespace Juego_Hotel
             this.listaCasillas.Enabled = false;
             this.listaHoteles.Enabled = false;
             int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-            PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual);
+            PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz);
             frm_pago.ShowDialog();
             if (frm_pago.total_seleccionado > this.hotel_seleccionado.precio_entrada)
             {
@@ -117,18 +117,18 @@ namespace Juego_Hotel
             this.jugador.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
             this.jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
             frm_pago.Close();
-            this.principal.Actualizar_Dinero_Jugador();
+            this.interfaz.Actualizar_Dinero_Jugadores();
             // Hay que saber en que lado de la casilla se pone la entrada
             int n_casilla = Convert.ToInt16(this.listaCasillas.SelectedItem);
             if (this.juego.casillas[n_casilla].hotel_der == this.hotel_seleccionado.nombre)
             {
                 this.juego.casillas[n_casilla].entrada_en_der = true;
-                this.principal.Dibujar_Entrada(ref this.juego.casillas[n_casilla], true);
+                this.interfaz.Dibujar_Entrada(ref this.juego.casillas[n_casilla], true);
             }
             else
             {
                 this.juego.casillas[n_casilla].entrada_en_izq = true;
-                this.principal.Dibujar_Entrada(ref this.juego.casillas[n_casilla], false);
+                this.interfaz.Dibujar_Entrada(ref this.juego.casillas[n_casilla], false);
             }
             this.hotel_seleccionado.n_entradas++;
         }

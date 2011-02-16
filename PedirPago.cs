@@ -18,28 +18,31 @@ namespace Juego_Hotel
         Juego juego;
         public Hotel hotel_en_construccion;
         public Jugador pagador;
+        private Principal interfaz;
 
-        public PedirPago(int dinero_necesario, ref Juego juego, Jugador pagador)
+        public PedirPago(int dinero_necesario, ref Juego juego, Jugador pagador, Principal interfaz)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
             this.hotel_en_construccion = null;
             this.pagador = pagador;
+            this.interfaz = interfaz;
             Inicializar(false);
         }
 
-        public PedirPago(int dinero_necesario, ref Juego juego, ref Hotel hotel_en_construccion, Jugador pagador)
+        public PedirPago(int dinero_necesario, ref Juego juego, ref Hotel hotel_en_construccion, Jugador pagador, Principal interfaz)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
             this.hotel_en_construccion = hotel_en_construccion;
             this.pagador = pagador;
+            this.interfaz = interfaz;
             Inicializar(false);
         }
 
-        public PedirPago(int dinero_necesario, ref Juego juego, Boolean deshabilitar_subasta, Jugador pagador)
+        public PedirPago(int dinero_necesario, ref Juego juego, Boolean deshabilitar_subasta, Jugador pagador, Principal interfaz)
         {
             InitializeComponent();
             this.juego = juego;
@@ -47,6 +50,7 @@ namespace Juego_Hotel
             this.hotel_en_construccion = null;
             this.subasta_deshabilitada = deshabilitar_subasta;
             this.pagador = pagador;
+            this.interfaz = interfaz;
             Inicializar(deshabilitar_subasta);
         }
 
@@ -179,16 +183,17 @@ namespace Juego_Hotel
         {
             if (this.pagador.hoteles.Count != 0)
             {
-                Subastas frm_subastas = new Subastas(ref this.juego);
+                Subastas frm_subastas = new Subastas(ref this.juego, this.interfaz);
                 frm_subastas.ShowDialog();
+                frm_subastas.Close();
                 // Refrescar valores después de la subasta
                 if (frm_subastas.hotel_seleccionado.nombre_txt == this.hotel_en_construccion.nombre_txt)
                 {
                     MessageBox.Show("Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción.", "Construcción cancelada");
                     this.cancelado = true;
                     this.Hide();
+                    return;
                 }
-                frm_subastas.Close();
                 this.pagador.calcular_dinero_total();
                 this.n50j.Text   = "Tienes: " + this.pagador.n_billetes_50.ToString();
                 this.n100j.Text  = "Tienes: " + this.pagador.n_billetes_100.ToString();
@@ -203,6 +208,10 @@ namespace Juego_Hotel
                     MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida :(", "Jugador eliminado");
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
                     this.juego.Eliminar_Jugador(this.pagador, null);
+                    this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
+                    this.cancelado = true;
+                    this.Hide();
+                    return;
                 }
                 else
                     MessageBox.Show("No tienes propiedades para subastar", "Subastas");
