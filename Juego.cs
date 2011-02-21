@@ -19,6 +19,7 @@ namespace Juego_Hotel
         public int jug_actual;
         public Jugador jugador_actual;
         public int ultimo_res_dado;
+        public int ultimo_avance_auto;
         public Casilla[] casillas;
 
         public Juego()

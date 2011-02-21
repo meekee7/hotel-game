@@ -42,6 +42,7 @@
             this.bReiniciar = new System.Windows.Forms.Button();
             this.colorJugIni = new System.Windows.Forms.Label();
             this.controlJ1 = new System.Windows.Forms.GroupBox();
+            this.bRetirarseJ1 = new System.Windows.Forms.Button();
             this.colorJ1 = new System.Windows.Forms.Label();
             this.bPedirNochesJ1 = new System.Windows.Forms.Button();
             this.bEntradasJ1 = new System.Windows.Forms.Button();
@@ -51,6 +52,7 @@
             this.turnoJ1 = new System.Windows.Forms.Label();
             this.bVerHotelesJ2 = new System.Windows.Forms.Button();
             this.controlJ2 = new System.Windows.Forms.GroupBox();
+            this.bRetirarseJ2 = new System.Windows.Forms.Button();
             this.colorJ2 = new System.Windows.Forms.Label();
             this.bPedirNochesJ2 = new System.Windows.Forms.Button();
             this.bEntradasJ2 = new System.Windows.Forms.Button();
@@ -59,6 +61,7 @@
             this.turnoJ2 = new System.Windows.Forms.Label();
             this.bVerHotelesJ3 = new System.Windows.Forms.Button();
             this.controlJ3 = new System.Windows.Forms.GroupBox();
+            this.bRetirarseJ3 = new System.Windows.Forms.Button();
             this.colorJ3 = new System.Windows.Forms.Label();
             this.bPedirNochesJ3 = new System.Windows.Forms.Button();
             this.bEntradasJ3 = new System.Windows.Forms.Button();
@@ -67,6 +70,7 @@
             this.turnoJ3 = new System.Windows.Forms.Label();
             this.bVerHotelesJ4 = new System.Windows.Forms.Button();
             this.controlJ4 = new System.Windows.Forms.GroupBox();
+            this.bRetirarseJ4 = new System.Windows.Forms.Button();
             this.colorJ4 = new System.Windows.Forms.Label();
             this.bPedirNochesJ4 = new System.Windows.Forms.Button();
             this.bEntradasJ4 = new System.Windows.Forms.Button();
@@ -188,7 +192,7 @@
             // resDado
             // 
             this.resDado.AutoSize = true;
-            this.resDado.Location = new System.Drawing.Point(705, 312);
+            this.resDado.Location = new System.Drawing.Point(708, 329);
             this.resDado.Name = "resDado";
             this.resDado.Size = new System.Drawing.Size(39, 13);
             this.resDado.TabIndex = 10;
@@ -197,7 +201,7 @@
             // jug_ini
             // 
             this.jug_ini.AutoSize = true;
-            this.jug_ini.Location = new System.Drawing.Point(705, 340);
+            this.jug_ini.Location = new System.Drawing.Point(708, 357);
             this.jug_ini.Name = "jug_ini";
             this.jug_ini.Size = new System.Drawing.Size(80, 13);
             this.jug_ini.TabIndex = 11;
@@ -216,7 +220,7 @@
             // 
             // bReiniciar
             // 
-            this.bReiniciar.Location = new System.Drawing.Point(708, 416);
+            this.bReiniciar.Location = new System.Drawing.Point(708, 446);
             this.bReiniciar.Name = "bReiniciar";
             this.bReiniciar.Size = new System.Drawing.Size(83, 23);
             this.bReiniciar.TabIndex = 14;
@@ -227,13 +231,14 @@
             // colorJugIni
             // 
             this.colorJugIni.AutoSize = true;
-            this.colorJugIni.Location = new System.Drawing.Point(793, 340);
+            this.colorJugIni.Location = new System.Drawing.Point(796, 357);
             this.colorJugIni.Name = "colorJugIni";
             this.colorJugIni.Size = new System.Drawing.Size(0, 13);
             this.colorJugIni.TabIndex = 15;
             // 
             // controlJ1
             // 
+            this.controlJ1.Controls.Add(this.bRetirarseJ1);
             this.controlJ1.Controls.Add(this.colorJ1);
             this.controlJ1.Controls.Add(this.bPedirNochesJ1);
             this.controlJ1.Controls.Add(this.bEntradasJ1);
@@ -243,10 +248,20 @@
             this.controlJ1.Enabled = false;
             this.controlJ1.Location = new System.Drawing.Point(13, 531);
             this.controlJ1.Name = "controlJ1";
-            this.controlJ1.Size = new System.Drawing.Size(150, 100);
+            this.controlJ1.Size = new System.Drawing.Size(150, 128);
             this.controlJ1.TabIndex = 19;
             this.controlJ1.TabStop = false;
             this.controlJ1.Text = "Jugador 1";
+            // 
+            // bRetirarseJ1
+            // 
+            this.bRetirarseJ1.Location = new System.Drawing.Point(9, 100);
+            this.bRetirarseJ1.Name = "bRetirarseJ1";
+            this.bRetirarseJ1.Size = new System.Drawing.Size(70, 23);
+            this.bRetirarseJ1.TabIndex = 34;
+            this.bRetirarseJ1.Text = "Retirarse";
+            this.bRetirarseJ1.UseVisualStyleBackColor = true;
+            this.bRetirarseJ1.Click += new System.EventHandler(this.bRetirarseJ1_Click);
             // 
             // colorJ1
             // 
@@ -259,7 +274,7 @@
             // 
             // bPedirNochesJ1
             // 
-            this.bPedirNochesJ1.Location = new System.Drawing.Point(87, 11);
+            this.bPedirNochesJ1.Location = new System.Drawing.Point(85, 40);
             this.bPedirNochesJ1.Name = "bPedirNochesJ1";
             this.bPedirNochesJ1.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ1.TabIndex = 27;
@@ -269,7 +284,7 @@
             // 
             // bEntradasJ1
             // 
-            this.bEntradasJ1.Location = new System.Drawing.Point(87, 60);
+            this.bEntradasJ1.Location = new System.Drawing.Point(85, 89);
             this.bEntradasJ1.Name = "bEntradasJ1";
             this.bEntradasJ1.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ1.TabIndex = 4;
@@ -325,6 +340,7 @@
             // 
             // controlJ2
             // 
+            this.controlJ2.Controls.Add(this.bRetirarseJ2);
             this.controlJ2.Controls.Add(this.colorJ2);
             this.controlJ2.Controls.Add(this.bPedirNochesJ2);
             this.controlJ2.Controls.Add(this.bEntradasJ2);
@@ -334,10 +350,20 @@
             this.controlJ2.Enabled = false;
             this.controlJ2.Location = new System.Drawing.Point(183, 531);
             this.controlJ2.Name = "controlJ2";
-            this.controlJ2.Size = new System.Drawing.Size(150, 100);
+            this.controlJ2.Size = new System.Drawing.Size(150, 128);
             this.controlJ2.TabIndex = 20;
             this.controlJ2.TabStop = false;
             this.controlJ2.Text = "Jugador 2";
+            // 
+            // bRetirarseJ2
+            // 
+            this.bRetirarseJ2.Location = new System.Drawing.Point(10, 99);
+            this.bRetirarseJ2.Name = "bRetirarseJ2";
+            this.bRetirarseJ2.Size = new System.Drawing.Size(70, 23);
+            this.bRetirarseJ2.TabIndex = 35;
+            this.bRetirarseJ2.Text = "Retirarse";
+            this.bRetirarseJ2.UseVisualStyleBackColor = true;
+            this.bRetirarseJ2.Click += new System.EventHandler(this.bRetirarseJ2_Click);
             // 
             // colorJ2
             // 
@@ -350,7 +376,7 @@
             // 
             // bPedirNochesJ2
             // 
-            this.bPedirNochesJ2.Location = new System.Drawing.Point(87, 11);
+            this.bPedirNochesJ2.Location = new System.Drawing.Point(85, 40);
             this.bPedirNochesJ2.Name = "bPedirNochesJ2";
             this.bPedirNochesJ2.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ2.TabIndex = 28;
@@ -360,7 +386,7 @@
             // 
             // bEntradasJ2
             // 
-            this.bEntradasJ2.Location = new System.Drawing.Point(87, 60);
+            this.bEntradasJ2.Location = new System.Drawing.Point(85, 89);
             this.bEntradasJ2.Name = "bEntradasJ2";
             this.bEntradasJ2.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ2.TabIndex = 5;
@@ -406,6 +432,7 @@
             // 
             // controlJ3
             // 
+            this.controlJ3.Controls.Add(this.bRetirarseJ3);
             this.controlJ3.Controls.Add(this.colorJ3);
             this.controlJ3.Controls.Add(this.bPedirNochesJ3);
             this.controlJ3.Controls.Add(this.bEntradasJ3);
@@ -415,10 +442,20 @@
             this.controlJ3.Enabled = false;
             this.controlJ3.Location = new System.Drawing.Point(354, 531);
             this.controlJ3.Name = "controlJ3";
-            this.controlJ3.Size = new System.Drawing.Size(150, 100);
+            this.controlJ3.Size = new System.Drawing.Size(150, 128);
             this.controlJ3.TabIndex = 21;
             this.controlJ3.TabStop = false;
             this.controlJ3.Text = "Jugador 3";
+            // 
+            // bRetirarseJ3
+            // 
+            this.bRetirarseJ3.Location = new System.Drawing.Point(10, 99);
+            this.bRetirarseJ3.Name = "bRetirarseJ3";
+            this.bRetirarseJ3.Size = new System.Drawing.Size(70, 23);
+            this.bRetirarseJ3.TabIndex = 36;
+            this.bRetirarseJ3.Text = "Retirarse";
+            this.bRetirarseJ3.UseVisualStyleBackColor = true;
+            this.bRetirarseJ3.Click += new System.EventHandler(this.bRetirarseJ3_Click);
             // 
             // colorJ3
             // 
@@ -431,7 +468,7 @@
             // 
             // bPedirNochesJ3
             // 
-            this.bPedirNochesJ3.Location = new System.Drawing.Point(86, 11);
+            this.bPedirNochesJ3.Location = new System.Drawing.Point(85, 40);
             this.bPedirNochesJ3.Name = "bPedirNochesJ3";
             this.bPedirNochesJ3.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ3.TabIndex = 32;
@@ -441,7 +478,7 @@
             // 
             // bEntradasJ3
             // 
-            this.bEntradasJ3.Location = new System.Drawing.Point(86, 60);
+            this.bEntradasJ3.Location = new System.Drawing.Point(85, 89);
             this.bEntradasJ3.Name = "bEntradasJ3";
             this.bEntradasJ3.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ3.TabIndex = 25;
@@ -487,6 +524,7 @@
             // 
             // controlJ4
             // 
+            this.controlJ4.Controls.Add(this.bRetirarseJ4);
             this.controlJ4.Controls.Add(this.colorJ4);
             this.controlJ4.Controls.Add(this.bPedirNochesJ4);
             this.controlJ4.Controls.Add(this.bEntradasJ4);
@@ -496,10 +534,20 @@
             this.controlJ4.Enabled = false;
             this.controlJ4.Location = new System.Drawing.Point(524, 531);
             this.controlJ4.Name = "controlJ4";
-            this.controlJ4.Size = new System.Drawing.Size(150, 100);
+            this.controlJ4.Size = new System.Drawing.Size(150, 128);
             this.controlJ4.TabIndex = 22;
             this.controlJ4.TabStop = false;
             this.controlJ4.Text = "Jugador 4";
+            // 
+            // bRetirarseJ4
+            // 
+            this.bRetirarseJ4.Location = new System.Drawing.Point(10, 99);
+            this.bRetirarseJ4.Name = "bRetirarseJ4";
+            this.bRetirarseJ4.Size = new System.Drawing.Size(70, 23);
+            this.bRetirarseJ4.TabIndex = 37;
+            this.bRetirarseJ4.Text = "Retirarse";
+            this.bRetirarseJ4.UseVisualStyleBackColor = true;
+            this.bRetirarseJ4.Click += new System.EventHandler(this.bRetirarseJ4_Click);
             // 
             // colorJ4
             // 
@@ -512,7 +560,7 @@
             // 
             // bPedirNochesJ4
             // 
-            this.bPedirNochesJ4.Location = new System.Drawing.Point(87, 11);
+            this.bPedirNochesJ4.Location = new System.Drawing.Point(85, 40);
             this.bPedirNochesJ4.Name = "bPedirNochesJ4";
             this.bPedirNochesJ4.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ4.TabIndex = 32;
@@ -522,7 +570,7 @@
             // 
             // bEntradasJ4
             // 
-            this.bEntradasJ4.Location = new System.Drawing.Point(87, 60);
+            this.bEntradasJ4.Location = new System.Drawing.Point(85, 89);
             this.bEntradasJ4.Name = "bEntradasJ4";
             this.bEntradasJ4.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ4.TabIndex = 25;
@@ -559,7 +607,7 @@
             // bComprar
             // 
             this.bComprar.Enabled = false;
-            this.bComprar.Location = new System.Drawing.Point(708, 515);
+            this.bComprar.Location = new System.Drawing.Point(708, 545);
             this.bComprar.Name = "bComprar";
             this.bComprar.Size = new System.Drawing.Size(83, 23);
             this.bComprar.TabIndex = 23;
@@ -570,7 +618,7 @@
             // bConstruir
             // 
             this.bConstruir.Enabled = false;
-            this.bConstruir.Location = new System.Drawing.Point(708, 544);
+            this.bConstruir.Location = new System.Drawing.Point(708, 574);
             this.bConstruir.Name = "bConstruir";
             this.bConstruir.Size = new System.Drawing.Size(83, 23);
             this.bConstruir.TabIndex = 24;
@@ -580,7 +628,7 @@
             // 
             // bVerHoteles
             // 
-            this.bVerHoteles.Location = new System.Drawing.Point(708, 486);
+            this.bVerHoteles.Location = new System.Drawing.Point(708, 516);
             this.bVerHoteles.Name = "bVerHoteles";
             this.bVerHoteles.Size = new System.Drawing.Size(83, 23);
             this.bVerHoteles.TabIndex = 25;
@@ -591,7 +639,7 @@
             // bComprarSuelo
             // 
             this.bComprarSuelo.Enabled = false;
-            this.bComprarSuelo.Location = new System.Drawing.Point(708, 573);
+            this.bComprarSuelo.Location = new System.Drawing.Point(708, 603);
             this.bComprarSuelo.Name = "bComprarSuelo";
             this.bComprarSuelo.Size = new System.Drawing.Size(85, 23);
             this.bComprarSuelo.TabIndex = 30;
@@ -601,7 +649,7 @@
             // 
             // bSalir
             // 
-            this.bSalir.Location = new System.Drawing.Point(708, 602);
+            this.bSalir.Location = new System.Drawing.Point(708, 632);
             this.bSalir.Name = "bSalir";
             this.bSalir.Size = new System.Drawing.Size(83, 23);
             this.bSalir.TabIndex = 31;
@@ -612,7 +660,7 @@
             // bCobrarBanca
             // 
             this.bCobrarBanca.Enabled = false;
-            this.bCobrarBanca.Location = new System.Drawing.Point(708, 457);
+            this.bCobrarBanca.Location = new System.Drawing.Point(708, 487);
             this.bCobrarBanca.Name = "bCobrarBanca";
             this.bCobrarBanca.Size = new System.Drawing.Size(83, 23);
             this.bCobrarBanca.TabIndex = 32;
@@ -622,7 +670,7 @@
             // 
             // bNormas
             // 
-            this.bNormas.Location = new System.Drawing.Point(708, 387);
+            this.bNormas.Location = new System.Drawing.Point(708, 417);
             this.bNormas.Name = "bNormas";
             this.bNormas.Size = new System.Drawing.Size(83, 23);
             this.bNormas.TabIndex = 33;
@@ -684,7 +732,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 640);
+            this.ClientSize = new System.Drawing.Size(849, 665);
             this.Controls.Add(this.bNormas);
             this.Controls.Add(this.bCobrarBanca);
             this.Controls.Add(this.bSalir);
@@ -718,7 +766,6 @@
             this.MaximizeBox = false;
             this.Name = "Principal";
             this.Text = "Hotel - Construye tu propio imperio hotelero";
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Principal_KeyPress);
             this.grupoNJugadores.ResumeLayout(false);
             this.grupoNJugadores.PerformLayout();
             this.controlJ1.ResumeLayout(false);
@@ -798,5 +845,9 @@
         private System.Windows.Forms.Label colorJ3;
         private System.Windows.Forms.Label colorJ4;
         private System.Windows.Forms.Button bNormas;
+        private System.Windows.Forms.Button bRetirarseJ1;
+        private System.Windows.Forms.Button bRetirarseJ2;
+        private System.Windows.Forms.Button bRetirarseJ3;
+        private System.Windows.Forms.Button bRetirarseJ4;
     }
 }

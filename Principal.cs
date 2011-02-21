@@ -63,15 +63,24 @@ namespace Juego_Hotel
                 this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
                 this.juego.jug_actual = this.juego.jug_inicial;
                 this.juego.Cambiar_jugador_actual();
-                this.Establecer_Te_Toca();
+                this.Establecer_Turno();
                 this.bIniciar.Enabled = false;
                 this.bColores.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
                 this.grupoNJugadores.Enabled = false;
+                this.bCobrarBanca.Enabled = false;
                 this.posJ1.Text = "Casilla: 0";
                 this.posJ2.Text = "Casilla: 0";
                 this.posJ3.Text = "Casilla: 0";
                 this.posJ4.Text = "Casilla: 0";
+                this.bEntradasJ1.Enabled = false;
+                this.bEntradasJ2.Enabled = false;
+                this.bEntradasJ3.Enabled = false;
+                this.bEntradasJ4.Enabled = false;
+                this.bPedirNochesJ1.Enabled = false;
+                this.bPedirNochesJ2.Enabled = false;
+                this.bPedirNochesJ3.Enabled = false;
+                this.bPedirNochesJ4.Enabled = false;
                 this.colorJ1.Text = "Color: " + this.juego.jugadores[0].color.ToString();
                 this.colorJ2.Text = "Color: " + this.juego.jugadores[1].color.ToString();
                 this.dineroJ1.Text = "Dinero: " + this.juego.jugadores[0].dinero_total;
@@ -87,7 +96,6 @@ namespace Juego_Hotel
                     this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
                 }
                 this.bDado.Enabled = true;
-                this.bCobrarBanca.Enabled = true;
             }
         }
 
@@ -122,22 +130,26 @@ namespace Juego_Hotel
             return rotatedBmp;
         }
 
-        public void Establecer_Te_Toca()
+        public void Establecer_Turno()
         {
             this.turnoJ1.Text = "";
             this.turnoJ2.Text = "";
             this.turnoJ3.Text = "";
             this.turnoJ4.Text = "";
+            this.bEntradasJ1.Enabled = false;
+            this.bEntradasJ2.Enabled = false;
+            this.bEntradasJ3.Enabled = false;
+            this.bEntradasJ4.Enabled = false;
             switch (this.juego.jug_actual)
             {
                 case 1: this.turnoJ1.Text = "Te toca";
-                    break;
+                        break;
                 case 2: this.turnoJ2.Text = "Te toca";
-                    break;
+                        break;
                 case 3: this.turnoJ3.Text = "Te toca";
-                    break;
+                        break;
                 case 4: this.turnoJ4.Text = "Te toca";
-                    break;
+                        break;
             }
         }
 
@@ -186,13 +198,18 @@ namespace Juego_Hotel
             else
             {
                 this.juego.jug_actual = Sig_jugador_Activo();
-                this.Establecer_Te_Toca();
+                this.Establecer_Turno();
                 this.juego.Cambiar_jugador_actual();
                 this.bDado.Enabled = true;
                 this.bTurno.Enabled = false;
                 this.bComprar.Enabled = false;
                 this.bConstruir.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
+                this.bCobrarBanca.Enabled = false;
+                this.bPedirNochesJ1.Enabled = false;
+                this.bPedirNochesJ2.Enabled = false;
+                this.bPedirNochesJ3.Enabled = false;
+                this.bPedirNochesJ4.Enabled = false;
                 this.juego.jugador_actual.pago_ultimo_turno = false;
             }
         }
@@ -246,9 +263,14 @@ namespace Juego_Hotel
             {
                 jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado - 31];
             }
+            this.juego.ultimo_avance_auto = 0;
             while (jugador.posicion.ocupada) // Hay que avanzar una porque está ocupada
             {
-                jugador.posicion = this.juego.casillas[jugador.posicion.numero + 1];
+                if (jugador.posicion.numero < 31) // Proteger la vuelta al tablero
+                    jugador.posicion = this.juego.casillas[jugador.posicion.numero + 1];
+                else
+                    jugador.posicion = this.juego.casillas[1];
+                this.juego.ultimo_avance_auto++;
             }
             jugador.posicion.ocupada = true; // Ocupamos la casilla
             // Pintamos el coche en su lugar
@@ -275,7 +297,6 @@ namespace Juego_Hotel
                                                                           this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
                                         break;
             }
-            this.bTurno.Enabled = true;
             // Poner casilla actual a cada uno
             switch (this.juego.jug_actual)
             {
@@ -289,14 +310,33 @@ namespace Juego_Hotel
                         break;
             }
             // Activar botones según el tipo de casilla
+            this.bEntradasJ1.Enabled = false;
+            this.bEntradasJ2.Enabled = false;
+            this.bEntradasJ3.Enabled = false;
+            this.bEntradasJ4.Enabled = false;
+            if (this.Puede_poner_entradas(this.juego.jugador_actual))
+                this.Activar_Poner_Entradas(this.juego.jug_actual);
+            this.bPedirNochesJ1.Enabled = true;
+            this.bPedirNochesJ2.Enabled = true;
+            this.bPedirNochesJ3.Enabled = true;
+            this.bPedirNochesJ4.Enabled = true;
+            if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
+                this.bCobrarBanca.Enabled = true;
             switch (jugador.posicion.tipo)
             {
                 case Tipos.Tcasilla.comprar: this.bComprar.Enabled = true;
+                                             this.bConstruir.Enabled = false;
                                              break;
                 case Tipos.Tcasilla.construir: this.bConstruir.Enabled = true;
+                                               this.bComprar.Enabled = false;
                                                break;
                 case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
+                                                 this.bComprar.Enabled = false;
                                                  break;
+                case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
+                                                    this.bComprar.Enabled = false;
+                                                    this.Activar_Poner_Entradas(this.juego.jug_actual);
+                                                    break;
                 default: this.bConstruir.Enabled = false;
                          this.bComprar.Enabled = false;
                          break;
@@ -308,6 +348,22 @@ namespace Juego_Hotel
             }
             else
                 this.bDado.Enabled = false;
+            this.bTurno.Enabled = true;
+        }
+
+        private void Activar_Poner_Entradas(int num_jugador)
+        {
+            switch (num_jugador)
+            {
+                case 1: this.bEntradasJ1.Enabled = true;
+                        break;
+                case 2: this.bEntradasJ2.Enabled = true;
+                        break;
+                case 3: this.bEntradasJ3.Enabled = true;
+                        break;
+                case 4: this.bEntradasJ4.Enabled = true;
+                        break;
+            }
         }
 
         private void bReiniciar_Click(object sender, EventArgs e)
@@ -680,34 +736,43 @@ namespace Juego_Hotel
             this.Close();
         }
 
-        private void Principal_KeyPress(object sender, KeyPressEventArgs e)
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (e.KeyChar == 't') // Pasar turno
+            /* Ejemplo de captura de "Ctrl+Alt+O"
+            if ((int)keyData == (int)Keys.O + (int)Keys.Control + (int)Keys.Alt)
             {
-                this.bTurno_Click(sender, e);
-            }
-            else if (e.KeyChar == 'd') // Tirar dado
+                // do whatever, return true to show keystroke processed, false to allow further processing
+                MessageBox.Show("Hey");
+                return true;
+            }*/
+
+            if (keyData == Keys.T)
+                this.bTurno.PerformClick();
+            else if (keyData == Keys.E)
+                this.bDado.PerformClick();
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private Boolean Puede_Cobrar_Banca(int num_jugador)
+        {
+            if ((this.juego.n_jugadores == 2) || ((this.juego.n_jugadores_activos > 2) && (this.juego.n_jugadores > 2)))
             {
-                this.bDado_Click(sender, e);
+                int pos = this.juego.jugadores[num_jugador - 1].posicion.numero;
+                if ((pos >= 8) && ((pos - this.juego.ultimo_res_dado - this.juego.ultimo_avance_auto) < 8))
+                    return true;
+                else
+                    return false;
             }
-            e.Handled = true;
+            else
+                return false;
         }
 
         private void bCobrarBanca_Click(object sender, EventArgs e)
         {
-            if ((this.juego.n_jugadores == 2) || ((this.juego.n_jugadores_activos > 2) && (this.juego.n_jugadores > 2)))
-            {
-                int pos = this.juego.jugador_actual.posicion.numero;
-                if ((pos >= 8) && ((pos - this.juego.ultimo_res_dado) < 8))
-                {
-                    this.juego.jugador_actual.Cobrar_Banco();
-                    this.Actualizar_Dinero_Jugador_Actual();
-                }
-                else
-                    MessageBox.Show("No puedes cobrar si no acabas de pasar por la línea del banco");
-            }
-            else
-                MessageBox.Show("No se puede cobrar de la banca cuando solo quedan dos jugadores");
+            this.juego.jugador_actual.Cobrar_Banco();
+            this.Actualizar_Dinero_Jugador_Actual();
+            this.bCobrarBanca.Enabled = false;
         }
 
         private void bVerHotelesJ1_Click(object sender, EventArgs e)
@@ -758,6 +823,15 @@ namespace Juego_Hotel
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
             frm_ver_hoteles.Show();
+        }
+
+        private Boolean Puede_poner_entradas(Jugador jugador)
+        {
+            int pos = jugador.posicion.numero;
+            if ((pos >= 27) && ((pos - this.juego.ultimo_res_dado - this.juego.ultimo_avance_auto) < 27))
+                return true;
+            else
+                return false;
         }
 
         private void bEntradasJ1_Click(object sender, EventArgs e)
@@ -1027,6 +1101,30 @@ namespace Juego_Hotel
                 case 3: this.controlJ4.Enabled = false;
                     break;
             }
+        }
+
+        private void bRetirarseJ1_Click(object sender, EventArgs e)
+        {
+            this.juego.Eliminar_Jugador(this.juego.jugadores[0]);
+            this.Marcar_Jugador_Eliminado(0);
+        }
+
+        private void bRetirarseJ2_Click(object sender, EventArgs e)
+        {
+            this.juego.Eliminar_Jugador(this.juego.jugadores[1]);
+            this.Marcar_Jugador_Eliminado(1);
+        }
+
+        private void bRetirarseJ3_Click(object sender, EventArgs e)
+        {
+            this.juego.Eliminar_Jugador(this.juego.jugadores[2]);
+            this.Marcar_Jugador_Eliminado(2);
+        }
+
+        private void bRetirarseJ4_Click(object sender, EventArgs e)
+        {
+            this.juego.Eliminar_Jugador(this.juego.jugadores[3]);
+            this.Marcar_Jugador_Eliminado(3);
         }
     }
 }
