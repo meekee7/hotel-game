@@ -40,7 +40,14 @@ namespace Juego_Hotel
             }
             else
             {
-                this.Crear_Jugadores();
+                try
+                {
+                    this.Crear_Jugadores();
+                }
+                catch
+                {
+                    return; //Se trata en la función Crear_Jugadores
+                }
                 // Decidir quien empieza
                 this.tiradas_ini = new int [this.juego.n_jugadores];
                 int i;
@@ -226,7 +233,22 @@ namespace Juego_Hotel
             this.juego.jugadores = new Jugador[this.juego.n_jugadores];
             this.juego.n_jugadores_activos = this.juego.n_jugadores;
             XmlDocument configuracion = new XmlDocument();
-            configuracion.Load ("../../Config.xml");
+            try
+            {
+                configuracion.Load("../../Config.xml");
+            }
+            catch
+            {
+                try
+                {
+                    configuracion.Load("Config.xml");
+                }
+                catch
+                {
+                    MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
+                    throw;
+                }
+            }
             XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
             XmlNode nodo_cantidades;
             if (this.juego.n_jugadores == 2)
@@ -528,7 +550,7 @@ namespace Juego_Hotel
             else
                 dinero_necesario = hotel.precio;
 
-            PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, this.juego.jugador_actual, this);
+            PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, this.juego.jugador_actual, this, null);
             frm_pago.ShowDialog();
             if (expropiando)
             {
@@ -936,11 +958,11 @@ namespace Juego_Hotel
                                 {
                                     // El jugador encontrado debe pagar las noches correspondientes
                                     MessageBox.Show("El jugador " + jugador.color + " debe pagar las noches al jugador " +
-                                        this.juego.jugadores[n_jugador].color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
+                                        hotel.dueño.color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[n_jugador].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this);
+                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + hotel.dueño.color);
+                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this, hotel.dueño);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
                                     jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
@@ -1005,7 +1027,7 @@ namespace Juego_Hotel
         {
             if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[0]);
+                this.juego.Eliminar_Jugador(this.juego.jugadores[0], null);
                 this.Marcar_Jugador_Eliminado(0);
             }
         }
@@ -1014,7 +1036,7 @@ namespace Juego_Hotel
         {
             if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[1]);
+                this.juego.Eliminar_Jugador(this.juego.jugadores[1], null);
                 this.Marcar_Jugador_Eliminado(1);
             }
         }
@@ -1023,7 +1045,7 @@ namespace Juego_Hotel
         {
             if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[2]);
+                this.juego.Eliminar_Jugador(this.juego.jugadores[2], null);
                 this.Marcar_Jugador_Eliminado(2);
             }
         }
@@ -1032,7 +1054,7 @@ namespace Juego_Hotel
         {
             if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[3]);
+                this.juego.Eliminar_Jugador(this.juego.jugadores[3], null);
                 this.Marcar_Jugador_Eliminado(3);
             }
         }

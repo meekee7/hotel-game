@@ -15,18 +15,19 @@ namespace Juego_Hotel
         public int dinero_necesario, total_seleccionado;
         public Boolean cancelado;
         private Boolean subasta_deshabilitada = false;
-        Juego juego;
-        public Hotel hotel_en_construccion;
-        public Jugador pagador;
+        private Juego juego;
+        private Hotel hotel_en_construccion;
+        private Jugador pagador, receptor;
         private Principal interfaz;
 
-        public PedirPago(int dinero_necesario, ref Juego juego, Jugador pagador, Principal interfaz)
+        public PedirPago(int dinero_necesario, ref Juego juego, Jugador pagador, Principal interfaz, Jugador receptor)
         {
             InitializeComponent();
             this.juego = juego;
             this.dinero_necesario = dinero_necesario;
             this.hotel_en_construccion = null;
             this.pagador = pagador;
+            this.receptor = receptor;
             this.interfaz = interfaz;
             Inicializar(false);
         }
@@ -207,8 +208,9 @@ namespace Juego_Hotel
                 {
                     MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida :(", "Jugador eliminado");
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
-                    this.juego.Eliminar_Jugador(this.pagador);
+                    this.juego.Eliminar_Jugador(this.pagador, this.receptor);
                     this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
+                    this.interfaz.Actualizar_Dinero_Jugadores();
                     this.cancelado = true;
                     this.Hide();
                     return;

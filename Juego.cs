@@ -78,16 +78,12 @@ namespace Juego_Hotel
             this.jugador_actual = this.jugadores[this.jug_actual - 1];
         }
 
-        public void Eliminar_Jugador(Jugador jugador)
+        public void Eliminar_Jugador(Jugador jugador, Jugador jugador_que_cobra)
         {
             jugador.Eliminar();
             this.n_jugadores_activos--;
-        }
-
-        public void Eliminar_Jugador(Jugador jugador, Jugador jugador_que_cobra)
-        {
-             jugador.Eliminar();
-             this.n_jugadores_activos--; // TODO: Por terminar
+            if (jugador_que_cobra != null) // Hay que darle todo el dinero del jugador al jugador que cobra
+                jugador.Pagar_Noches(ref jugador_que_cobra, jugador.n_billetes_5000, jugador.n_billetes_1000, jugador.n_billetes_500, jugador.n_billetes_100, jugador.n_billetes_50);
         }
         ~Juego()
         {
