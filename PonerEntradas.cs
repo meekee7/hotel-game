@@ -33,7 +33,10 @@ namespace Juego_Hotel
             this.listaHoteles.BeginUpdate();
             this.listaHoteles.Items.Clear();
             foreach (Hotel hotel in lista)
-                this.listaHoteles.Items.Add(hotel.nombre_txt);
+            {
+                if (!hotel.entrada_comprada_ultimo_turno)
+                    this.listaHoteles.Items.Add(hotel.nombre_txt);
+            }
             this.listaHoteles.EndUpdate();
             // No se necesita para ComboBox
             //this.listaHoteles.Height = (this.listaHoteles.Items.Count + 1) * this.listaHoteles.ItemHeight;
@@ -131,6 +134,11 @@ namespace Juego_Hotel
                 this.interfaz.Dibujar_Entrada(ref this.juego.casillas[n_casilla], false);
             }
             this.hotel_seleccionado.n_entradas++;
+            // Desactivar el hotel de la lista para no comprar más entradas en este turno
+            this.listaHoteles.Items.Remove(this.listaHoteles.SelectedItem);
+            this.listaHoteles.SelectedIndex = -1;
+            this.listaHoteles.Refresh();
+            this.hotel_seleccionado.entrada_comprada_ultimo_turno = true;
         }
     }
 }

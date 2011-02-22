@@ -170,7 +170,10 @@ namespace Juego_Hotel
             this.controlJ2.Enabled = false;
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
-            MessageBox.Show("Partida finalizada. Ha ganado el jugador " + ganador.color.ToString(), "Hotel");
+            if (ganador != null)
+                MessageBox.Show("Partida finalizada. Ha ganado el jugador " + ganador.color.ToString(), "Hotel");
+            else
+                MessageBox.Show("Partida finalizada porque todos los jugadores se han retirado");
         }
 
         public int Sig_jugador_Activo()
@@ -195,6 +198,8 @@ namespace Juego_Hotel
         {
             if (Todos_Eliminados())
                 Finalizar_Partida(this.juego.jugadores[Sig_jugador_Activo()-1]);
+            else if (this.juego.n_jugadores_activos == 0)
+                Finalizar_Partida(null);
             else
             {
                 this.juego.jug_actual = Sig_jugador_Activo();
@@ -211,6 +216,8 @@ namespace Juego_Hotel
                 this.bPedirNochesJ3.Enabled = false;
                 this.bPedirNochesJ4.Enabled = false;
                 this.juego.jugador_actual.pago_ultimo_turno = false;
+                foreach (Hotel hotel in this.juego.hoteles)
+                    hotel.entrada_comprada_ultimo_turno = false;
             }
         }
 
@@ -908,10 +915,10 @@ namespace Juego_Hotel
             frm_reglas.Show();
         }
 
-        private void bPedirNochesJ1_Click(object sender, EventArgs e)
+        private void Pedir_Noches(int n_jugador)
         {
             // Hay que buscar si hay alguien en alguna de tus casillas con entrada
-            foreach (Hotel hotel in this.juego.jugadores[0].hoteles)
+            foreach (Hotel hotel in this.juego.jugadores[n_jugador].hoteles)
             {
                 // Hay que obtener todas las casillas de un Hotel, buscando el hotel entre todas las casillas
                 Casilla casilla;
@@ -925,14 +932,14 @@ namespace Juego_Hotel
                             // Buscar el jugador que esté en la casilla
                             foreach (Jugador jugador in this.juego.jugadores)
                             {
-                                if ((jugador.color != this.juego.jugadores[0].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
+                                if ((jugador.color != this.juego.jugadores[n_jugador].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
                                 {
                                     // El jugador encontrado debe pagar las noches correspondientes
                                     MessageBox.Show("El jugador " + jugador.color + " debe pagar las noches al jugador " +
-                                        this.juego.jugadores[0].color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
+                                        this.juego.jugadores[n_jugador].color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[0].color);
+                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[n_jugador].color);
                                     PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
@@ -951,141 +958,26 @@ namespace Juego_Hotel
                 }
             }
             this.Actualizar_Dinero_Jugadores();
+        }
+
+        private void bPedirNochesJ1_Click(object sender, EventArgs e)
+        {
+            this.Pedir_Noches(0);
         }
 
         private void bPedirNochesJ2_Click(object sender, EventArgs e)
         {
-            // Hay que buscar si hay alguien en alguna de tus casillas con entrada
-            foreach (Hotel hotel in this.juego.jugadores[1].hoteles)
-            {
-                // Hay que obtener todas las casillas de un Hotel, buscando el hotel entre todas las casillas
-                Casilla casilla;
-                for (int i = 0; i < 32; i++)
-                {
-                    casilla = this.juego.casillas[i];
-                    if ((casilla.hotel_izq == hotel.nombre) || (casilla.hotel_der == hotel.nombre))
-                    {
-                        if (casilla.ocupada == true)
-                        {
-                            // Buscar el jugador que esté en la casilla
-                            foreach (Jugador jugador in this.juego.jugadores)
-                            {
-                                if ((jugador.color != this.juego.jugadores[1].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
-                                {
-                                    // El jugador encontrado debe pagar las noches correspondientes
-                                    MessageBox.Show("El jugador " + jugador.color + " debe pagar las noches al jugador " +
-                                        this.juego.jugadores[1].color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
-                                    int num_noches = this.juego.dado.tirar();
-                                    int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[1].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this);
-                                    frm_pago.ShowDialog();
-                                    jugador.pago_ultimo_turno = true;
-                                    jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                                    if (frm_pago.total_seleccionado > dinero_necesario)
-                                    {
-                                        int n_5000, n_1000, n_500, n_100, n_50;
-                                        Principal.Calcular_Devolucion(ref hotel.dueño, (frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                        jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                                    }
-                                    frm_pago.Close();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            this.Actualizar_Dinero_Jugadores();
+            this.Pedir_Noches(1);
         }
 
         private void bPedirNochesJ3_Click(object sender, EventArgs e)
         {
-            // Hay que buscar si hay alguien en alguna de tus casillas con entrada
-            foreach (Hotel hotel in this.juego.jugadores[2].hoteles)
-            {
-                // Hay que obtener todas las casillas de un Hotel, buscando el hotel entre todas las casillas
-                Casilla casilla;
-                for (int i = 0; i < 32; i++)
-                {
-                    casilla = this.juego.casillas[i];
-                    if ((casilla.hotel_izq == hotel.nombre) || (casilla.hotel_der == hotel.nombre))
-                    {
-                        if (casilla.ocupada == true)
-                        {
-                            // Buscar el jugador que esté en la casilla
-                            foreach (Jugador jugador in this.juego.jugadores)
-                            {
-                                if ((jugador.color != this.juego.jugadores[2].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
-                                {
-                                    // El jugador encontrado debe pagar las noches correspondientes
-                                    MessageBox.Show("El jugador " + jugador.color + " debe pagar las noches al jugador " +
-                                        this.juego.jugadores[2].color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
-                                    int num_noches = this.juego.dado.tirar();
-                                    int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[2].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this);
-                                    frm_pago.ShowDialog();
-                                    jugador.pago_ultimo_turno = true;
-                                    jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                                    if (frm_pago.total_seleccionado > dinero_necesario)
-                                    {
-                                        int n_5000, n_1000, n_500, n_100, n_50;
-                                        Principal.Calcular_Devolucion(ref hotel.dueño, (frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                        jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                                    }
-                                    frm_pago.Close();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            this.Actualizar_Dinero_Jugadores();
+            this.Pedir_Noches(2);
         }
 
         private void bPedirNochesJ4_Click(object sender, EventArgs e)
         {
-            // Hay que buscar si hay alguien en alguna de tus casillas con entrada
-            foreach (Hotel hotel in this.juego.jugadores[3].hoteles)
-            {
-                // Hay que obtener todas las casillas de un Hotel, buscando el hotel entre todas las casillas
-                Casilla casilla;
-                for (int i = 0; i < 32; i++)
-                {
-                    casilla = this.juego.casillas[i];
-                    if ((casilla.hotel_izq == hotel.nombre) || (casilla.hotel_der == hotel.nombre))
-                    {
-                        if (casilla.ocupada == true)
-                        {
-                            // Buscar el jugador que esté en la casilla
-                            foreach (Jugador jugador in this.juego.jugadores)
-                            {
-                                if ((jugador.color != this.juego.jugadores[3].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
-                                {
-                                    // El jugador encontrado debe pagar las noches correspondientes
-                                    MessageBox.Show("El jugador " + jugador.color + " debe pagar las noches al jugador " +
-                                        this.juego.jugadores[3].color + ". Pulsa OK para lanzar el dado.", "Pagar noches", MessageBoxButtons.OK);
-                                    int num_noches = this.juego.dado.tirar();
-                                    int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show("Has sacado un " + num_noches + ", por lo que el jugador " + jugador.color + " debe abonar " + dinero_necesario + " al jugador " + this.juego.jugadores[3].color);
-                                    PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this);
-                                    frm_pago.ShowDialog();
-                                    jugador.pago_ultimo_turno = true;
-                                    jugador.Pagar_Noches(ref hotel.dueño, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                                    if (frm_pago.total_seleccionado > dinero_necesario)
-                                    {
-                                        int n_5000, n_1000, n_500, n_100, n_50;
-                                        Principal.Calcular_Devolucion(ref hotel.dueño, (frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                        jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                                    }
-                                    frm_pago.Close();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            this.Actualizar_Dinero_Jugadores();
+            this.Pedir_Noches(3);
         }
 
         public void Marcar_Jugador_Eliminado(int n_jugador)
@@ -1101,30 +993,48 @@ namespace Juego_Hotel
                 case 3: this.controlJ4.Enabled = false;
                     break;
             }
+            if (n_jugador + 1 == this.juego.jug_actual)
+            {
+                this.bTurno.Enabled = true;
+                this.bTurno.PerformClick();
+                this.bTurno.Enabled = false;
+            }
         }
 
         private void bRetirarseJ1_Click(object sender, EventArgs e)
         {
-            this.juego.Eliminar_Jugador(this.juego.jugadores[0]);
-            this.Marcar_Jugador_Eliminado(0);
+            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.juego.Eliminar_Jugador(this.juego.jugadores[0]);
+                this.Marcar_Jugador_Eliminado(0);
+            }
         }
 
         private void bRetirarseJ2_Click(object sender, EventArgs e)
         {
-            this.juego.Eliminar_Jugador(this.juego.jugadores[1]);
-            this.Marcar_Jugador_Eliminado(1);
+            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.juego.Eliminar_Jugador(this.juego.jugadores[1]);
+                this.Marcar_Jugador_Eliminado(1);
+            }
         }
 
         private void bRetirarseJ3_Click(object sender, EventArgs e)
         {
-            this.juego.Eliminar_Jugador(this.juego.jugadores[2]);
-            this.Marcar_Jugador_Eliminado(2);
+            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.juego.Eliminar_Jugador(this.juego.jugadores[2]);
+                this.Marcar_Jugador_Eliminado(2);
+            }
         }
 
         private void bRetirarseJ4_Click(object sender, EventArgs e)
         {
-            this.juego.Eliminar_Jugador(this.juego.jugadores[3]);
-            this.Marcar_Jugador_Eliminado(3);
+            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.juego.Eliminar_Jugador(this.juego.jugadores[3]);
+                this.Marcar_Jugador_Eliminado(3);
+            }
         }
     }
 }

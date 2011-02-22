@@ -207,7 +207,7 @@ namespace Juego_Hotel
                 {
                     MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida :(", "Jugador eliminado");
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
-                    this.juego.Eliminar_Jugador(this.pagador, null);
+                    this.juego.Eliminar_Jugador(this.pagador);
                     this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
                     this.cancelado = true;
                     this.Hide();

@@ -92,11 +92,11 @@ namespace Juego_Hotel
         ~Juego()
         {
             this.hoteles = null;
-            this.n_hoteles = 0;
             this.hoteles = null;
-            this.n_jugadores = 0;
-            this.jugadores = null;
             this.casillas = null;
+            this.jugadores = null;
+            this.n_jugadores = 0;
+            this.n_hoteles = 0;
         }
     }
 }

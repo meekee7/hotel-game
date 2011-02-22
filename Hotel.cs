@@ -10,7 +10,8 @@ namespace Juego_Hotel
         public Tipos.Tnombre_hotel nombre;
         public String nombre_txt;
         public int precio, precio_expropiacion;
-        public bool suelo_comprado;
+        public Boolean suelo_comprado;
+        public Boolean entrada_comprada_ultimo_turno;
         public int n_ampliaciones_max;
         public int n_ampliaciones_construidas;
         public int precio_entrada;
@@ -24,6 +25,7 @@ namespace Juego_Hotel
         {
             this.nombre = nombre;
             this.suelo_comprado = false;
+            this.entrada_comprada_ultimo_turno = false;
             this.n_ampliaciones_construidas = 0;
             this.n_entradas = 0;
             this.dueño = null;
