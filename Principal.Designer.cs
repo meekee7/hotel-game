@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.labelTablero = new System.Windows.Forms.Label();
             this.bIniciar = new System.Windows.Forms.Button();
             this.dos_jugadores = new System.Windows.Forms.RadioButton();
@@ -763,6 +764,7 @@
             this.Controls.Add(this.bIniciar);
             this.Controls.Add(this.imgTablero);
             this.Controls.Add(this.labelTablero);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Principal";
             this.Text = "Hotel - Construye tu propio imperio hotelero";

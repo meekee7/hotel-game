@@ -235,13 +235,13 @@ namespace Juego_Hotel
             XmlDocument configuracion = new XmlDocument();
             try
             {
-                configuracion.Load("../../Config.xml");
+                configuracion.Load("Config.xml");
             }
             catch
             {
                 try
                 {
-                    configuracion.Load("Config.xml");
+                    configuracion.Load("../../Config.xml");
                 }
                 catch
                 {

@@ -102,6 +102,34 @@ namespace Juego_Hotel.Properties {
             }
         }
         
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///
+        ///&lt;config&gt;
+        ///   &lt;money_per_player&gt;
+        ///      &lt;two_players&gt;
+        ///         &lt;n_5000&gt;2&lt;/n_5000&gt;
+        ///         &lt;n_1000&gt;11&lt;/n_1000&gt;
+        ///         &lt;n_500&gt;6&lt;/n_500&gt;
+        ///         &lt;n_100&gt;8&lt;/n_100&gt;
+        ///         &lt;n_50&gt;4&lt;/n_50&gt;
+        ///      &lt;/two_players&gt;
+        ///      &lt;three_or_four_players&gt;
+        ///         &lt;n_5000&gt;1&lt;/n_5000&gt;
+        ///         &lt;n_1000&gt;5&lt;/n_1000&gt;
+        ///         &lt;n_500&gt;3&lt;/n_500&gt;
+        ///         &lt;n_100&gt;4&lt;/n_100&gt;
+        ///         &lt;n_50&gt;2&lt;/n_50&gt;
+        ///      &lt;/three_or_four_players&gt;
+        ///   &lt;/money_per_player&gt;
+        ///&lt;/config&gt;.
+        /// </summary>
+        internal static string Config {
+            get {
+                return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap Entrada {
             get {
                 object obj = ResourceManager.GetObject("Entrada", resourceCulture);
@@ -141,6 +169,13 @@ namespace Juego_Hotel.Properties {
             get {
                 object obj = ResourceManager.GetObject("Fujiyama_tarjeta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon Icono {
+            get {
+                object obj = ResourceManager.GetObject("Icono", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
