@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Juego_Hotel.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -214,6 +217,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Flecha_verde.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Letoile_tarjeta.png" />
+    <Content Include="Images\Royal_tarjeta.png" />
+    <Content Include="Images\Safari_tarjeta.png" />
+    <Content Include="Images\Waikiki_tarjeta.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -52,21 +52,17 @@ namespace Juego_Hotel
                             break;
                         case "President": hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.President_tarjeta;
                             break;
-                        case "Royal":     //hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Royal_tarjeta;
-                            hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Boomerang_tarjeta;
+                        case "Royal":     hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Royal_tarjeta;
                             break;
-                        case "Letoile":   //hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Letoile_tarjeta;
-                            hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Boomerang_tarjeta;
+                        case "Letoile":   hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Letoile_tarjeta;
                             break;
-                        case "Fujiyama": hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Fujiyama_tarjeta;
+                        case "Fujiyama":  hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Fujiyama_tarjeta;
                             break;
-                        case "Waikiki":   //hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Waikiki_tarjeta;
-                            hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Boomerang_tarjeta;
+                        case "Waikiki":   hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Waikiki_tarjeta;
                             break;
                         case "Taj_Mahal": hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Taj_Mahal_tarjeta;
                             break;
-                        case "Safari":    //hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Safari_tarjeta;
-                            hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Boomerang_tarjeta;
+                        case "Safari":    hoteles[(int)nombre].img_tarjeta = global::Juego_Hotel.Properties.Resources.Safari_tarjeta;
                             break;
                     }
                 }

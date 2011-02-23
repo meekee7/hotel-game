@@ -144,6 +144,13 @@ namespace Juego_Hotel.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Letoile_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Letoile_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap President_tarjeta {
             get {
                 object obj = ResourceManager.GetObject("President_tarjeta", resourceCulture);
@@ -158,6 +165,20 @@ namespace Juego_Hotel.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Royal_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Royal_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Safari_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Safari_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Tablero {
             get {
                 object obj = ResourceManager.GetObject("Tablero", resourceCulture);
@@ -168,6 +189,13 @@ namespace Juego_Hotel.Properties {
         internal static System.Drawing.Bitmap Taj_Mahal_tarjeta {
             get {
                 object obj = ResourceManager.GetObject("Taj_Mahal_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Waikiki_tarjeta {
+            get {
+                object obj = ResourceManager.GetObject("Waikiki_tarjeta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
