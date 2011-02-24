@@ -239,15 +239,9 @@ namespace Juego_Hotel
             }
             catch
             {
-                try
-                {
-                    configuracion.Load("../../Config.xml");
-                }
-                catch
-                {
-                    MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
-                    throw;
-                }
+                MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
+                this.juego.jugador_actual = null;
+                throw;
             }
             XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
             XmlNode nodo_cantidades;
