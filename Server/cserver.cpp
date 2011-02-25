@@ -33,12 +33,14 @@ void cserver::write_packet(int n,char* packet)
    while (i<MAX_CLIENTS)
    {
       if ((n==1) || (n==connections[i].get_id()))
+      {
          if (strlen(connections[i].get_sb())+strlen(packet)+1<MAX_BUFFER)
          {
-            strcat_s(connections[i].get_sb(),strlen(header),header);
-            strcat_s(connections[i].get_sb(),strlen(packet),packet);
+            strcat(connections[i].get_sb(),header);
+            strcat(connections[i].get_sb(),packet);
          }
-         else connections[i].reset();
+         else {connections[i].reset();}
+      }
 
       if (n==connections[i].get_id()) i=MAX_CLIENTS;
       else i++;
@@ -84,13 +86,13 @@ void cserver::update()
          if ((bytes>0) && (strlen(connections[i].get_rb())+bytes<MAX_BUFFER))
          {
             buffer[bytes]=0;
-            strcat_s(connections[i].get_rb(),strlen(buffer),buffer);
+            strcat(connections[i].get_rb(),buffer);
          }
          else
          {
             char packet[2]={connections[i].get_id(),0};
             connections[i].reset();
-            strcat_s(ids,strlen(packet),packet);
+            strcat(ids,packet);
          }
       }
       /* read data and remove disconnected connections */
@@ -100,7 +102,7 @@ void cserver::update()
       if ((connections[i].get_id()!=-1) && (FD_ISSET(connections[i].get_s(),&write_sockets)))
       {
          int bytes=send(connections[i].get_s(),connections[i].get_sb(),strlen(connections[i].get_sb()),0);
-         strcpy_s(connections[i].get_sb(),strlen(connections[i].get_sb()+bytes),connections[i].get_sb()+bytes);
+         strcpy(connections[i].get_sb(),connections[i].get_sb()+bytes);
       }
       /* send data and remove it from the sendbuffer */
 
@@ -129,7 +131,7 @@ void cserver::update()
             while (connections[i].get_id()!=-1) i++;
             connections[i].create(accept(s,0,0),n);
             char packet[2]={n,0};
-            strcat_s(ids,strlen(packet),packet);
+            strcat(ids,packet);
             /* create new connection and send new id to server */
          }
          else
@@ -153,7 +155,7 @@ int cserver::read_packet(char* packet)
    {
       packet[0]=0;
       n=ids[0];
-      strcpy_s(ids,strlen(ids+1),ids+1);
+      strcpy(ids,ids+1);
    }
    /* connected/disconnected clients */
 
@@ -168,8 +170,8 @@ int cserver::read_packet(char* packet)
             int length=connections[i].get_rb()[0];
             if ((int)strlen(connections[i].get_rb())>(int)length)
             {
-               strncpy_s(packet,strlen(packet),connections[i].get_rb()+1,length);
-               strcpy_s(connections[i].get_rb(),strlen(connections[i].get_rb()+length+1),connections[i].get_rb()+length+1);
+               strncpy(packet,connections[i].get_rb()+1,length);
+               strcpy(connections[i].get_rb(),connections[i].get_rb()+length+1);
                packet[length]=0;
                n=connections[i].get_id();
                i=MAX_CLIENTS;
