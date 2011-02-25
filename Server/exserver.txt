@@ -1,16 +1,10 @@
-#include <iostream>
 #include <stdio.h>
 #include "cserver.h"
-
-using namespace std;
-
-int main(int argc, char* argv[])
-{
-	cout << "Hola" << endl;
-
 // don't forget to add cbase.cpp, cconnection.cpp and cserver.cpp to your project
 
-   cserver* server=new cserver(12345);
+int main()
+{
+   cbase* server=new cserver(12345);
    // create server listening on port 12345
 
    while (1)
