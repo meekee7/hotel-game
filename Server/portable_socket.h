@@ -12,6 +12,7 @@
    #include <arpa/inet.h>
    #include <sys/select.h>
    #include <unistd.h>
+   #include <errno.h>
    #define SOCKET int
    #define closesocket close
 #endif

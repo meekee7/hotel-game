@@ -13,7 +13,7 @@ int hacer_de_server()
    server_info.sin_addr.s_addr=INADDR_ANY;
    socket->pbind((sockaddr*) &server_info,sizeof(server_info));
    socket->plisten(SOMAXCONN);
-   cout << "Hecho" << endl;
+   cout << "Hecho, error: " << socket->get_error() << endl;
    return 0;
 }
 
