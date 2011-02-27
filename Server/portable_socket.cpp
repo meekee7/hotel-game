@@ -3,18 +3,22 @@
 portable_socket::portable_socket(void)
 {
    #ifdef _WIN32
-   /* start winsock 2.2 */
-   WSAData winsock_info;
-   wsaerror = WSAStartup(MAKEWORD(2,2),&winsock_info);
-   /* start winsock 2.2 */
+      /* start winsock 2.2 */
+      WSAData winsock_info;
+      this->error = WSAStartup(MAKEWORD(2,2),&winsock_info);
+      /* start winsock 2.2 */
    #endif
 
    /* create socket */
    s=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
    /* create socket */
 
+   #ifndef _WIN32
+      this->error = errno;
+   #endif
+
    /* init delay */
-   delay.tv_sec=delay.tv_usec=0;
+   this->delay.tv_sec=this->delay.tv_usec=0;
    /* init delay */
 }
 
@@ -58,8 +62,8 @@ portable_socket::~portable_socket(void)
    /* close socket */
 
    #ifdef _WIN32
-   /* exit winsock */
-   WSACleanup();
-   /* exit winsock */
+      /* exit winsock */
+      WSACleanup();
+      /* exit winsock */
    #endif
 }

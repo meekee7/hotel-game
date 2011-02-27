@@ -19,7 +19,7 @@
 class portable_socket
 {
 protected:
-   int wsaerror; // Check after creating new instance
+   int error; // Check after creating new instance
    SOCKET s;
 	timeval delay;
 public:
