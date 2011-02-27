@@ -2,8 +2,8 @@
 #define CBASE_H
 
 #ifdef _WIN32
-   #include <winsock.h>
-   #pragma comment(lib, "wsock32.lib")
+   #include <winsock2.h>
+   #pragma comment(lib, "Ws2_32.lib")
 #else
    #include <sys/types.h>
    #include <sys/socket.h>

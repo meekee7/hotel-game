@@ -3,10 +3,10 @@
 cbase::cbase()
 {
    #ifdef _WIN32
-   /* start winsock 1.1 */
+   /* start winsock 2.2 */
    WSAData winsock_info;
-   WSAStartup(MAKEWORD(1,1),&winsock_info);
-   /* start winsock 1.1 */
+   WSAStartup(MAKEWORD(2,2),&winsock_info);
+   /* start winsock 2.2 */
    #endif
 
    /* create socket */
