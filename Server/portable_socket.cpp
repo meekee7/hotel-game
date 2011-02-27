@@ -37,6 +37,11 @@ int portable_socket::paccept(struct sockaddr *addr, socklen_t *addrlen)
    return accept(this->s, addr, addrlen);
 }
 
+int portable_socket::pconnect(const struct sockaddr *addr, socklen_t addrlen)
+{
+   return connect(this->s, addr, addrlen);
+}
+
 ssize_t portable_socket::precv(void *buf, size_t len, int flags)
 {
    #ifdef _WIN32

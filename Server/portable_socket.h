@@ -28,6 +28,7 @@ public:
    int pbind (const struct sockaddr *addr, socklen_t addrlen);
    int plisten(int backlog);
    int paccept(struct sockaddr *addr, socklen_t *addrlen);
+   int pconnect(const struct sockaddr *addr, socklen_t addrlen);
    ssize_t precv(void *buf, size_t len, int flags);
    ssize_t psend(const void *buf, size_t len, int flags);
    int get_error();
