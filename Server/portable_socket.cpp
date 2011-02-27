@@ -60,9 +60,15 @@ ssize_t portable_socket::psend(const void *buf, size_t len, int flags)
    #endif
 }
 
-int portable_socket::get_error()
+int portable_socket::get_last_error()
 {
-   return this->error;
+   #ifdef _WIN32
+      this->error = WSAGetLastError();
+      return this->error;
+   #else
+      this->error = errno;
+      return this->error;
+   #endif
 }
 
 portable_socket::~portable_socket(void)

@@ -31,7 +31,7 @@ public:
    int pconnect(const struct sockaddr *addr, socklen_t addrlen);
    ssize_t precv(void *buf, size_t len, int flags);
    ssize_t psend(const void *buf, size_t len, int flags);
-   int get_error();
+   int get_last_error();
 	~portable_socket(void);
 };
 
