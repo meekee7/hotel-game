@@ -55,6 +55,11 @@ ssize_t portable_socket::psend(const void *buf, size_t len, int flags)
    #endif
 }
 
+int portable_socket::get_error()
+{
+   return this->error;
+}
+
 portable_socket::~portable_socket(void)
 {
    /* close socket */
