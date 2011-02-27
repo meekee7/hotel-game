@@ -14,6 +14,7 @@ int hacer_de_server()
    socket->pbind((sockaddr*) &server_info,sizeof(server_info));
    socket->plisten(SOMAXCONN);
    cout << "Hecho, error: " << socket->get_error() << endl;
+   delete socket;
    return 0;
 }
 
