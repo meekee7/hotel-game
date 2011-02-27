@@ -89,6 +89,7 @@
     <ClCompile Include="cclient.cpp" />
     <ClCompile Include="cconnection.cpp" />
     <ClCompile Include="cserver.cpp" />
+    <ClCompile Include="portable_socket.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +97,7 @@
     <ClInclude Include="cclient.h" />
     <ClInclude Include="cconnection.h" />
     <ClInclude Include="cserver.h" />
+    <ClInclude Include="portable_socket.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

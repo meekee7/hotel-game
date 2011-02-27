@@ -34,6 +34,9 @@
     <ClCompile Include="cserver.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="portable_socket.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cbase.h">
@@ -46,6 +49,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="cserver.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="portable_socket.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
