@@ -27,10 +27,12 @@ public:
 	portable_socket(void);
    int pbind (const struct sockaddr *addr, socklen_t addrlen);
    int plisten(int backlog);
-   int paccept(struct sockaddr *addr, socklen_t *addrlen);
+   portable_socket* paccept(struct sockaddr *addr, socklen_t *addrlen);
    int pconnect(const struct sockaddr *addr, socklen_t addrlen);
    ssize_t precv(void *buf, size_t len, int flags);
    ssize_t psend(const void *buf, size_t len, int flags);
+   void set_descriptor(SOCKET s);
+   SOCKET get_descriptor();
    int get_last_error();
 	~portable_socket(void);
 };

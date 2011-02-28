@@ -16,8 +16,12 @@ void hacer_de_server()
    cout << "Hecho, error: " << socket->get_last_error() << endl;
    sockaddr_in client_info;
    socklen_t addrlen = sizeof(client_info);
-   socket->paccept((sockaddr*) &client_info, &addrlen);
+   portable_socket* socket_cliente = socket->paccept((sockaddr*) &client_info, &addrlen);
    printf("Conexión de cliente desde %s:%d\n", inet_ntoa(client_info.sin_addr), ntohs(client_info.sin_port));
+   char* data = (char*) malloc(sizeof(char)*200);
+   int bytes = socket_cliente->precv(data, 200, 0);
+   printf("Recibidos %i bytes: %s|\n", bytes, data);
+   printf("Enviados %i bytes\n", socket_cliente->psend ("Adios!", 7, 0));
    delete socket;
 }
 
@@ -41,5 +45,5 @@ void hacer_de_cliente()
 int main(int argc, char* argv[])
 {
    cout << "Hola" << endl;
-   hacer_de_cliente();
+   hacer_de_server();
 }
