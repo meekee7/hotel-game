@@ -36,7 +36,7 @@ portable_socket* portable_socket::paccept(struct sockaddr *addr, socklen_t *addr
 {
    int s = accept(this->s, addr, addrlen);
    portable_socket* socket_cliente = new portable_socket();
-   socket_cliente->set_descriptor(s);
+   socket_cliente->set_fd(s);
    return socket_cliente;
 }
 
@@ -45,30 +45,12 @@ int portable_socket::pconnect(const struct sockaddr *addr, socklen_t addrlen)
    return connect(this->s, addr, addrlen);
 }
 
-ssize_t portable_socket::precv(void *buf, size_t len, int flags)
-{
-   #ifdef _WIN32
-      return recv(this->s,(char*) buf, len, flags);
-   #else
-      return recv(this->s, buf, len, flags);
-   #endif
-}
-
-ssize_t portable_socket::psend(const void *buf, size_t len, int flags)
-{
-   #ifdef _WIN32
-      return send(this->s,(char*)& buf, len, flags);
-   #else
-      return send(this->s, buf, len, flags);
-   #endif
-}
-
-void portable_socket::set_descriptor(SOCKET s)
+void portable_socket::set_fd(SOCKET s)
 {
    this->s = s;
 }
 
-SOCKET portable_socket::get_descriptor()
+SOCKET portable_socket::get_fd()
 {
    return this->s;
 }

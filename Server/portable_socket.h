@@ -4,7 +4,6 @@
    #include <winsock2.h>
    #pragma comment(lib, "Ws2_32.lib")
    #define socklen_t int
-   #define ssize_t int
 #else
    #include <sys/types.h>
    #include <sys/socket.h>
@@ -29,10 +28,8 @@ public:
    int plisten(int backlog);
    portable_socket* paccept(struct sockaddr *addr, socklen_t *addrlen);
    int pconnect(const struct sockaddr *addr, socklen_t addrlen);
-   ssize_t precv(void *buf, size_t len, int flags);
-   ssize_t psend(const void *buf, size_t len, int flags);
-   void set_descriptor(SOCKET s);
-   SOCKET get_descriptor();
+   void set_fd(SOCKET s);
+   SOCKET get_fd();
    int get_last_error();
 	~portable_socket(void);
 };
