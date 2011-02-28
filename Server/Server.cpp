@@ -14,7 +14,7 @@ void cerrar (int signum)
 	cerrando = 1;
 }
 
-void capturar_señales()
+void hook_signals()
 {
 	signal(SIGINT, cerrar);
     signal(SIGTERM, cerrar);
@@ -23,7 +23,7 @@ void capturar_señales()
     #endif
 }
 
-void quitar_captura_señales()
+void unhook_signals()
 {
     signal(SIGINT, 0);
     signal(SIGTERM, 0);
@@ -53,12 +53,12 @@ void hacer_de_server()
    }
    sockaddr_in client_info;
    socklen_t addrlen = sizeof(client_info);
-   capturar_señales();
+   hook_signals();
    while (cerrando == 0)
    {
    }
    printf ("Cerrando\n");
-   quitar_captura_señales();
+   unhook_signals();
    portable_socket* socket_cliente = socket->paccept((sockaddr*) &client_info, &addrlen);
    printf("Conexión de cliente desde %s:%d\n", inet_ntoa(client_info.sin_addr), ntohs(client_info.sin_port));
    /*char* data = (char*) malloc(sizeof(char)*200);
