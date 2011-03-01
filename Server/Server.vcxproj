@@ -85,18 +85,15 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cbase.cpp" />
-    <ClCompile Include="cclient.cpp" />
-    <ClCompile Include="cconnection.cpp" />
-    <ClCompile Include="cserver.cpp" />
+    <ClCompile Include="dlib\all\source.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="portable_socket.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cbase.h" />
-    <ClInclude Include="cclient.h" />
-    <ClInclude Include="cconnection.h" />
-    <ClInclude Include="cserver.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="portable_socket.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

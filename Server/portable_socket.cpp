@@ -35,9 +35,14 @@ int portable_socket::plisten(int backlog)
 portable_socket* portable_socket::paccept(struct sockaddr *addr, socklen_t *addrlen)
 {
    int s = accept(this->s, addr, addrlen);
-   portable_socket* socket_cliente = new portable_socket();
-   socket_cliente->set_fd(s);
-   return socket_cliente;
+   if (s >= 0)
+   {
+      portable_socket* socket_cliente = new portable_socket();
+      socket_cliente->set_fd(s);
+      return socket_cliente;
+   }
+   else
+      return NULL;
 }
 
 int portable_socket::pconnect(const struct sockaddr *addr, socklen_t addrlen)

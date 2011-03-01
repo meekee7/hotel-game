@@ -1,17 +1,41 @@
 #include <iostream>
+#include <list>
+#include <string>
 #include <stdio.h>
-#include "portable_socket.h"
 #include <cstdlib>
 #include <signal.h>
-#include <windows.h>
+#include "portable_socket.h"
+#include "player.h"
+#include "game.h"
+#include "dlib\threads.h"
 
 using namespace std;
+using namespace dlib;
 
-volatile int cerrando = 0;
+volatile int closing = 0;
+portable_socket* socket_server;
+portable_socket* socket_cliente;
+list<player*> player_list;
+list<game*> game_list;
+
+void unhook_signals()
+{
+    signal(SIGINT, 0);
+    signal(SIGTERM, 0);
+    #ifdef _WIN32
+		signal(SIGBREAK, 0);
+    #endif
+}
 
 void cerrar (int signum)
 {
-	cerrando = 1;
+	closing = 1;
+   printf ("Closing server\n");
+   unhook_signals();
+   delete socket_server;
+   if (socket_cliente != NULL)
+      delete socket_cliente;
+   exit(0);
 }
 
 void hook_signals()
@@ -23,50 +47,61 @@ void hook_signals()
     #endif
 }
 
-void unhook_signals()
+void tratar_cliente(void*)
 {
-    signal(SIGINT, 0);
-    signal(SIGTERM, 0);
-    #ifdef _WIN32
-		signal(SIGBREAK, 0);
-    #endif
+   cout << "Thread!" << endl;
 }
 
 void hacer_de_server()
 {
-   portable_socket* socket = new portable_socket();
+   socket_server = new portable_socket();
    sockaddr_in server_info;
+   sockaddr_in client_info;
+   socklen_t addrlen;
+
    server_info.sin_family=AF_INET;
    server_info.sin_port=htons(12345);
    server_info.sin_addr.s_addr=INADDR_ANY;
-   if (socket->pbind((sockaddr*) &server_info,sizeof(server_info)) < 0)
+   if (socket_server->pbind((sockaddr*) &server_info,sizeof(server_info)) < 0)
    {
-	   cout << "Error en bind: " << socket->get_last_error() << endl;
-	   delete socket;
+	   cout << "bind error: " << socket_server->get_last_error() << endl;
+	   delete socket_server;
 	   return;
    }
-   if (socket->plisten(SOMAXCONN) < 0)
+   if (socket_server->plisten(SOMAXCONN) < 0)
    {
-	   cout << "Error en listen: " << socket->get_last_error() << endl;
-	   delete socket;
+	   cout << "listen error: " << socket_server->get_last_error() << endl;
+	   delete socket_server;
 	   return;
    }
-   sockaddr_in client_info;
-   socklen_t addrlen = sizeof(client_info);
+
+   // Ejemplo iterador (recordatorio)
+   /*list<player*>::iterator i;
+   for (i=player_list.begin(); i != player_list.end(); ++i)
+   {
+      player* player = *i;
+      cout << player->name << " "; cout << endl;
+   }*/
+
    hook_signals();
-   while (cerrando == 0)
+   while (closing == 0)
    {
+      addrlen = sizeof(client_info);
+      create_new_thread(tratar_cliente, 0);
+      socket_cliente = socket_server->paccept((sockaddr*) &client_info, &addrlen);
+      if (socket_cliente != NULL)
+         cout << "Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
+      else
+      {
+         cout << "accept error: " << socket_server->get_last_error() << endl;
+         delete socket_server;
+         return;
+      }
+      player* p = new player();
+      p->ip = inet_ntoa(client_info.sin_addr);
+      player_list.push_back(p);
+      
    }
-   printf ("Cerrando\n");
-   unhook_signals();
-   portable_socket* socket_cliente = socket->paccept((sockaddr*) &client_info, &addrlen);
-   printf("Conexión de cliente desde %s:%d\n", inet_ntoa(client_info.sin_addr), ntohs(client_info.sin_port));
-   /*char* data = (char*) malloc(sizeof(char)*200);
-   int bytes = recv(socket_cliente->get_fd(),data, 200, 0);
-   printf("Recibidos %i bytes: %s|\n", bytes, data);
-   printf("Enviados %i bytes\n", send(socket_cliente->get_fd(), "Adios", 6, 0));*/
-   system("pause");
-   delete socket;
 }
 
 void hacer_de_cliente()
@@ -80,19 +115,19 @@ void hacer_de_cliente()
    server_info.sin_addr.s_addr=inet_addr("78.47.226.210");
    error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
    if (error > 0)
-      cout << "Conexión correcta" << endl;
+      cout << "Connection successful" << endl;
    else
-      cout << "Error en la conexión: " << socket->get_last_error() << endl;
+      cout << "Connection error: " << socket->get_last_error() << endl;
    /* connect to server */
-   cout << "Bytes enviados: " << send(socket->get_fd(),"Hola", 5, 0) << endl;
+   cout << "Bytes sent: " << send(socket->get_fd(),"Hola", 5, 0) << endl;
    char* data = (char*) malloc(sizeof(char)*200);
    //printf("Bytes recibidos: %i, len data: %i %s\n", socket->precv(data, 200, 0), strlen(data), data);
-   printf("Bytes recibidos: %i, len data: %s\n", recv(socket->get_fd(),data, 200, 0), data);
+   printf("Bytes received: %i, data: %s\n", recv(socket->get_fd(),data, 200, 0), data);
    delete socket;
 }
 
 int main(int argc, char* argv[])
 {
-   cout << "Hola" << endl;
+   cout << "Starting Hotel server" << endl;
    hacer_de_server();
 }
