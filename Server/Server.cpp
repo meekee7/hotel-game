@@ -2,7 +2,6 @@
 #include <list>
 #include <string>
 #include <stdio.h>
-#include <cstdlib>
 #include <signal.h>
 #include "portable_socket.h"
 #include "player.h"
@@ -14,7 +13,7 @@ using namespace dlib;
 
 volatile int closing = 0;
 portable_socket* socket_server;
-portable_socket* socket_cliente;
+portable_socket* socket_client;
 list<player*> player_list;
 list<game*> game_list;
 
@@ -33,8 +32,8 @@ void cerrar (int signum)
    printf ("Closing server\n");
    unhook_signals();
    delete socket_server;
-   if (socket_cliente != NULL)
-      delete socket_cliente;
+   if (socket_client != NULL)
+      delete socket_client;
    exit(0);
 }
 
@@ -47,12 +46,13 @@ void hook_signals()
    #endif
 }
 
-void tratar_cliente(player* p)
+void handle_client(player* p)
 {
-   cout << "Tratando player con ip " << p->ip << endl;
+   cout << "Handling new player" << p->ip << endl;
+
 }
 
-void hacer_de_server()
+void run_server()
 {
    socket_server = new portable_socket();
    sockaddr_in server_info;
@@ -87,8 +87,8 @@ void hacer_de_server()
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
-      socket_cliente = socket_server->paccept((sockaddr*) &client_info, &addrlen);
-      if (socket_cliente != NULL)
+      socket_client = socket_server->paccept((sockaddr*) &client_info, &addrlen);
+      if (socket_client != NULL)
          cout << "Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
       else
       {
@@ -98,12 +98,13 @@ void hacer_de_server()
       }
       player* p = new player();
       p->ip = inet_ntoa(client_info.sin_addr);
+	  p->socket = socket_client;
       player_list.push_back(p);
-      thread_function(tratar_cliente, p);
+      thread_function(handle_client, p);
    }
 }
 
-void hacer_de_cliente()
+void run_client()
 {
    int error;
    /* connect to server */
@@ -124,5 +125,5 @@ void hacer_de_cliente()
 int main(int argc, char* argv[])
 {
    cout << "Starting Hotel server" << endl;
-   hacer_de_cliente();
+   run_server();
 }
