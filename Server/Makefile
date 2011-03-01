@@ -20,5 +20,5 @@ portable_socket.o: portable_socket.cpp portable_socket.h
 server.o: Server.cpp
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 
-server: server.o portable_socket.o game.o player.o
+server: portable_socket.o game.o player.o server.o
 	$(CC) -o server portable_socket.o game.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT

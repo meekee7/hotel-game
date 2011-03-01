@@ -48,8 +48,17 @@ void hook_signals()
 
 void handle_client(player* p)
 {
-   cout << "Handling new player" << p->ip << endl;
+   cout << "Handling new player. Player name: ";
+   char* data = (char*) malloc(sizeof(char)*100);
+   int bytes_received;
+   bytes_received = recv(p->socket->get_fd(), data, 100, 0);
+   p->name = data;
+   cout << p->name << endl;
+}
 
+int add_player_to_list (player* p)
+{
+   
 }
 
 void run_server()
@@ -98,8 +107,7 @@ void run_server()
       }
       player* p = new player();
       p->ip = inet_ntoa(client_info.sin_addr);
-	  p->socket = socket_client;
-      player_list.push_back(p);
+      p->socket = socket_client;
       thread_function(handle_client, p);
    }
 }
