@@ -7,7 +7,7 @@
 #include "portable_socket.h"
 #include "player.h"
 #include "game.h"
-#include "dlib\threads.h"
+#include "dlib/threads.h"
 
 using namespace std;
 using namespace dlib;
@@ -20,11 +20,11 @@ list<game*> game_list;
 
 void unhook_signals()
 {
-    signal(SIGINT, 0);
-    signal(SIGTERM, 0);
-    #ifdef _WIN32
-		signal(SIGBREAK, 0);
-    #endif
+   signal(SIGINT, 0);
+   signal(SIGTERM, 0);
+   #ifdef _WIN32
+      signal(SIGBREAK, 0);
+   #endif
 }
 
 void cerrar (int signum)
@@ -40,11 +40,11 @@ void cerrar (int signum)
 
 void hook_signals()
 {
-	signal(SIGINT, cerrar);
-    signal(SIGTERM, cerrar);
-    #ifdef _WIN32
-		signal(SIGBREAK, cerrar);
-    #endif
+   signal(SIGINT, cerrar);
+   signal(SIGTERM, cerrar);
+   #ifdef _WIN32
+      signal(SIGBREAK, cerrar);
+   #endif
 }
 
 void tratar_cliente(player* p)
@@ -111,22 +111,18 @@ void hacer_de_cliente()
    sockaddr_in server_info;
    server_info.sin_family=AF_INET;
    server_info.sin_port=htons(12345);
-   server_info.sin_addr.s_addr=inet_addr("78.47.226.210");
+   server_info.sin_addr.s_addr=inet_addr("88.14.160.181");
    error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
    if (error > 0)
       cout << "Connection successful" << endl;
    else
       cout << "Connection error: " << socket->get_last_error() << endl;
    /* connect to server */
-   cout << "Bytes sent: " << send(socket->get_fd(),"Hola", 5, 0) << endl;
-   char* data = (char*) malloc(sizeof(char)*200);
-   //printf("Bytes recibidos: %i, len data: %i %s\n", socket->precv(data, 200, 0), strlen(data), data);
-   printf("Bytes received: %i, data: %s\n", recv(socket->get_fd(),data, 200, 0), data);
    delete socket;
 }
 
 int main(int argc, char* argv[])
 {
    cout << "Starting Hotel server" << endl;
-   hacer_de_server();
+   hacer_de_cliente();
 }

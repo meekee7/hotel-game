@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-g -Wall
-LDOPT=
+LDOPT= -lpthread -lnsl
 
 all: server
 
@@ -8,14 +8,11 @@ clean:
 	rm -rf *.o
 	rm -rf server
 
-cbase.o: cbase.cpp cbase.h
-	$(CC) -c $(FLAGS) -o cbase.o cbase.cpp
+player.o: player.cpp player.h
+	$(CC) -c $(FLAGS) -o player.o player.cpp
 
-cconnection.o: cconnection.cpp cconnection.h
-	$(CC) -c $(FLAGS) -o cconnection.o cconnection.cpp
-
-cserver.o: cserver.cpp cserver.h
-	$(CC) -c $(FLAGS) -o cserver.o cserver.cpp
+game.o: game.cpp game.h
+	$(CC) -c $(FLAGS) -o game.o game.cpp
 
 portable_socket.o: portable_socket.cpp portable_socket.h
 	$(CC) -c $(FLAGS) -o portable_socket.o portable_socket.cpp
@@ -23,8 +20,5 @@ portable_socket.o: portable_socket.cpp portable_socket.h
 server.o: Server.cpp
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 
-#server: server.o cbase.o cconnection.o cserver.o
-#	$(CC) -o server cbase.o cconnection.o cserver.o Server.o $(LDOPT)
-
-server: server.o portable_socket.o
-	$(CC) -o server portable_socket.o Server.o $(LDOPT)
+server: server.o portable_socket.o game.o player.o
+	$(CC) -o server portable_socket.o game.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
