@@ -14,8 +14,8 @@ using namespace dlib;
 volatile int closing = 0;
 portable_socket* socket_server;
 portable_socket* socket_client;
-list<player*> player_list;
-list<game*> game_list;
+list<player> player_list;
+list<game> game_list;
 
 void unhook_signals()
 {
@@ -56,9 +56,25 @@ void handle_client(player* p)
    cout << p->name << endl;
 }
 
+struct is_in_list: public std::binary_function< player, string, bool > {
+  bool operator () ( const player &p, const string &name ) const {
+    return p.name == name;
+    }
+  };
+
 int add_player_to_list (player* p)
 {
-   
+	list<player>::iterator found = find_if(player_list.begin(), player_list.end(), bind2nd(is_in_list(), p->name));
+	if (found != player_list.end())
+	{
+		cout << "Player already connected" << endl;
+		return 0;
+	}
+	else
+	{
+		cout << "Player accepted" << endl;
+		return -1;
+	}
 }
 
 void run_server()
@@ -120,18 +136,19 @@ void run_client()
    sockaddr_in server_info;
    server_info.sin_family=AF_INET;
    server_info.sin_port=htons(12345);
-   server_info.sin_addr.s_addr=inet_addr("88.14.160.181");
+   server_info.sin_addr.s_addr=inet_addr("78.47.226.210");
    error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
    if (error > 0)
       cout << "Connection successful" << endl;
    else
       cout << "Connection error: " << socket->get_last_error() << endl;
    /* connect to server */
+   send(socket->get_fd(), "Hola!", 6, 0);
    delete socket;
 }
 
 int main(int argc, char* argv[])
 {
    cout << "Starting Hotel server" << endl;
-   run_server();
+   run_client();
 }
