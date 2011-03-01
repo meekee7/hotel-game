@@ -9,6 +9,8 @@
 #include "dlib/threads.h"
 #include "dlib/misc_api.h"
 #include "dlib/ref.h"
+#define MAXCONN 100
+#define MAXDATALEN 100
 
 using namespace std;
 using namespace dlib;
@@ -80,19 +82,59 @@ int add_player_to_list (player* p)
 	}
 }
 
-void handle_client(player* p)
+void delete_player_from_list(player* p)
 {
+   bool found = false;
+	list<player>::iterator i = plist.begin();
+	while (!found && i != plist.end())
+	{
+		if (i->name == p->name)
+			found = true;
+	}
+	if (!found)
+	{
+		cout << "Player not found" << endl;
+	}
+	else
+	{
+		cout << "Player deleted from list" << endl;
+		plist.erase(i);
+	}
+}
+
+void handle_client(void* arg)
+{
+   player* p = (player*) arg;
    cout << "Handling new player. Player name: ";
-   char* data = (char*) malloc(sizeof(char)*100);
-   int* bytes_received = (int*) malloc(sizeof(int));
-   *bytes_received = recv(p->socket->get_fd(), data, 100, 0);
+   char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
+   int bytes_received;
+   bytes_received = recv(p->socket->get_fd(), data, MAXDATALEN, 0);
    p->name = data;
    delete data;
-   delete bytes_received;
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
+   {
+      send(p->socket->get_fd(), "username in use", 16, 0);
 	   delete p;
-   dlib::sleep(1000);
+   }
+   else
+   {
+      send(p->socket->get_fd(), "login ok", 9, 0);
+      bool online = true;
+      while (online)
+      {
+         char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
+         cout << "Awaiting data" << endl;
+         if (recv(p->socket->get_fd(), data, MAXDATALEN, 0))
+            cout << "Received: " << data << endl;
+         else
+         {
+            online = false;
+            cout << "Client disconnected" << endl;
+            delete_player_from_list(p);
+         }
+      }
+   }
 }
 
 void run_server()
@@ -111,20 +153,12 @@ void run_server()
 	   delete socket_server;
 	   return;
    }
-   if (socket_server->plisten(SOMAXCONN) < 0)
+   if (socket_server->plisten(MAXCONN) < 0)
    {
 	   cout << "listen error: " << socket_server->get_last_error() << endl;
 	   delete socket_server;
 	   return;
    }
-
-   // Ejemplo iterador (recordatorio)
-   /*list<player*>::iterator i;
-   for (i=player_list.begin(); i != player_list.end(); ++i)
-   {
-      player* player = *i;
-      cout << player->name << " "; cout << endl;
-   }*/
 
    hook_signals();
    player* p;
@@ -143,8 +177,7 @@ void run_server()
       p = new player();
       p->ip = inet_ntoa(client_info.sin_addr);
       p->socket = socket_client;
-      thread_function thread(handle_client, p);
-	  cout << "Volviendo de la llamada al thread" << endl;
+      create_new_thread(handle_client, (void*) p);
    }
 }
 
@@ -156,19 +189,58 @@ void run_client()
    sockaddr_in server_info;
    server_info.sin_family=AF_INET;
    server_info.sin_port=htons(12345);
-   server_info.sin_addr.s_addr=inet_addr("140.0.24.92");
+   server_info.sin_addr.s_addr=inet_addr("192.168.0.3");
    error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
    if (error > 0)
       cout << "Connection successful" << endl;
    else
       cout << "Connection error: " << socket->get_last_error() << endl;
    /* connect to server */
-   send(socket->get_fd(), "Hola!", 6, 0);
-   delete socket;
+   string name;
+   cout << "Enter your name:" << endl;
+   cin >> name;
+   send(socket->get_fd(), name.c_str(), name.length()+1, 0);
+   // Wait for successul login
+   char* data = (char*) malloc (sizeof(char)*MAXDATALEN);
+   if (!recv(socket->get_fd(), data, MAXDATALEN, 0))
+   {
+      cout << "Connection error" << endl;
+      delete socket;
+      return;
+   }
+   if (strcmp(data, "username in use") == 0)
+   {
+      cout << "Username already in use" << endl;
+      delete socket;
+      return;
+   }
+   cout << "Login ok" << endl;
+   bool online = true;
+   string input;
+   while (online)
+   {
+      cout << "Enter data to send: ('exit' to disconnect)" << endl;
+      cin >> input;
+      if (input == "exit")
+      {
+         online = false;
+         delete socket;
+      }
+      else
+         send(socket->get_fd(), input.c_str(), input.length()+1, 0);
+   }
 }
 
 int main(int argc, char* argv[])
 {
    cout << "Starting Hotel server" << endl;
-   run_server();
+   cout << "Type in mode: " << endl << " 1 -> server" << endl << " 2 -> client" << endl;
+   int mode;
+   cin >> mode;
+   if (mode == 1)
+      run_server();
+   else if (mode == 2)
+      run_client();
+   else
+      cout << "Invalid mode" << endl;
 }
