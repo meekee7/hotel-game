@@ -47,9 +47,9 @@ void hook_signals()
     #endif
 }
 
-void tratar_cliente(void*)
+void tratar_cliente(player* p)
 {
-   cout << "Thread!" << endl;
+   cout << "Tratando player con ip " << p->ip << endl;
 }
 
 void hacer_de_server()
@@ -87,7 +87,6 @@ void hacer_de_server()
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
-      create_new_thread(tratar_cliente, 0);
       socket_cliente = socket_server->paccept((sockaddr*) &client_info, &addrlen);
       if (socket_cliente != NULL)
          cout << "Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
@@ -100,7 +99,7 @@ void hacer_de_server()
       player* p = new player();
       p->ip = inet_ntoa(client_info.sin_addr);
       player_list.push_back(p);
-      
+      thread_function(tratar_cliente, p);
    }
 }
 
