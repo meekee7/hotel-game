@@ -7,6 +7,8 @@
 #include "player.h"
 #include "game.h"
 #include "dlib/threads.h"
+#include "dlib/misc_api.h"
+#include "dlib/ref.h"
 
 using namespace std;
 using namespace dlib;
@@ -14,8 +16,8 @@ using namespace dlib;
 volatile int closing = 0;
 portable_socket* socket_server;
 portable_socket* socket_client;
-list<player> player_list;
-list<game> game_list;
+list<player> plist; // Player list
+list<game> glist; // Game list
 
 void unhook_signals()
 {
@@ -26,6 +28,15 @@ void unhook_signals()
    #endif
 }
 
+void empty_plist()
+{
+	list<player>::iterator i;
+	for (i = plist.begin() ; i != plist.end() ; ++i)
+	{
+		delete i->socket;
+	}
+}
+
 void cerrar (int signum)
 {
 	closing = 1;
@@ -34,6 +45,7 @@ void cerrar (int signum)
    delete socket_server;
    if (socket_client != NULL)
       delete socket_client;
+   empty_plist();
    exit(0);
 }
 
@@ -46,24 +58,25 @@ void hook_signals()
    #endif
 }
 
-struct is_in_list: public std::binary_function< player, string, bool > {
-  bool operator () ( const player &p, const string &name ) const {
-    return p.name == name;
-    }
-  };
-
 int add_player_to_list (player* p)
 {
-	list<player>::iterator found = find_if(player_list.begin(), player_list.end(), bind2nd(is_in_list(), p->name));
-	if (found != player_list.end())
+	bool found = false;
+	list<player>::iterator i = plist.begin();
+	while (!found && i != plist.end())
+	{
+		if (i->name == p->name)
+			found = true;
+	}
+	if (found)
 	{
 		cout << "Player already connected" << endl;
-		return 0;
+		return -1;
 	}
 	else
 	{
 		cout << "Player accepted" << endl;
-		return -1;
+		plist.push_back(*p);
+		return 0;
 	}
 }
 
@@ -71,11 +84,15 @@ void handle_client(player* p)
 {
    cout << "Handling new player. Player name: ";
    char* data = (char*) malloc(sizeof(char)*100);
-   int bytes_received;
-   bytes_received = recv(p->socket->get_fd(), data, 100, 0);
+   int* bytes_received = (int*) malloc(sizeof(int));
+   *bytes_received = recv(p->socket->get_fd(), data, 100, 0);
    p->name = data;
+   delete data;
+   delete bytes_received;
    cout << p->name << endl;
-   add_player_to_list(p);
+   if (add_player_to_list(p) == -1)
+	   delete p;
+   dlib::sleep(1000);
 }
 
 void run_server()
@@ -110,6 +127,7 @@ void run_server()
    }*/
 
    hook_signals();
+   player* p;
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
@@ -122,10 +140,11 @@ void run_server()
          delete socket_server;
          return;
       }
-      player* p = new player();
+      p = new player();
       p->ip = inet_ntoa(client_info.sin_addr);
       p->socket = socket_client;
-      thread_function(handle_client, p);
+      thread_function thread(handle_client, p);
+	  cout << "Volviendo de la llamada al thread" << endl;
    }
 }
 
@@ -137,7 +156,7 @@ void run_client()
    sockaddr_in server_info;
    server_info.sin_family=AF_INET;
    server_info.sin_port=htons(12345);
-   server_info.sin_addr.s_addr=inet_addr("78.47.226.210");
+   server_info.sin_addr.s_addr=inet_addr("140.0.24.92");
    error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
    if (error > 0)
       cout << "Connection successful" << endl;
@@ -151,5 +170,5 @@ void run_client()
 int main(int argc, char* argv[])
 {
    cout << "Starting Hotel server" << endl;
-   run_client();
+   run_server();
 }
