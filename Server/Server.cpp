@@ -46,16 +46,6 @@ void hook_signals()
    #endif
 }
 
-void handle_client(player* p)
-{
-   cout << "Handling new player. Player name: ";
-   char* data = (char*) malloc(sizeof(char)*100);
-   int bytes_received;
-   bytes_received = recv(p->socket->get_fd(), data, 100, 0);
-   p->name = data;
-   cout << p->name << endl;
-}
-
 struct is_in_list: public std::binary_function< player, string, bool > {
   bool operator () ( const player &p, const string &name ) const {
     return p.name == name;
@@ -75,6 +65,17 @@ int add_player_to_list (player* p)
 		cout << "Player accepted" << endl;
 		return -1;
 	}
+}
+
+void handle_client(player* p)
+{
+   cout << "Handling new player. Player name: ";
+   char* data = (char*) malloc(sizeof(char)*100);
+   int bytes_received;
+   bytes_received = recv(p->socket->get_fd(), data, 100, 0);
+   p->name = data;
+   cout << p->name << endl;
+   add_player_to_list(p);
 }
 
 void run_server()
