@@ -68,6 +68,8 @@ int add_player_to_list (player* p)
 	{
 		if (i->name == p->name)
 			found = true;
+      else
+         ++i;
 	}
 	if (found)
 	{
@@ -90,6 +92,8 @@ void delete_player_from_list(player* p)
 	{
 		if (i->name == p->name)
 			found = true;
+      else
+         ++i;
 	}
 	if (!found)
 	{
@@ -139,6 +143,7 @@ void handle_client(void* arg)
 
 void run_server()
 {
+   cout << "Starting Hotel server..." << endl;
    socket_server = new portable_socket();
    sockaddr_in server_info;
    sockaddr_in client_info;
@@ -159,6 +164,7 @@ void run_server()
 	   delete socket_server;
 	   return;
    }
+   cout << "Listening for connections" << endl;
 
    hook_signals();
    player* p;
@@ -183,13 +189,17 @@ void run_server()
 
 void run_client()
 {
+   cout << "Starting test client" << endl;
    int error;
    /* connect to server */
    portable_socket* socket = new portable_socket();
    sockaddr_in server_info;
    server_info.sin_family=AF_INET;
    server_info.sin_port=htons(12345);
-   server_info.sin_addr.s_addr=inet_addr("192.168.0.3");
+   string ip;
+   cout << "Type server ip address:" << endl;
+   cin >> ip;
+   server_info.sin_addr.s_addr=inet_addr(ip.c_str());
    error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
    if (error > 0)
       cout << "Connection successful" << endl;
@@ -233,7 +243,6 @@ void run_client()
 
 int main(int argc, char* argv[])
 {
-   cout << "Starting Hotel server" << endl;
    cout << "Type in mode: " << endl << " 1 -> server" << endl << " 2 -> client" << endl;
    int mode;
    cin >> mode;
