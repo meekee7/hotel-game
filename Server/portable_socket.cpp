@@ -1,3 +1,4 @@
+/* Developed by Alberto Salinas, please keep this line */
 #include "portable_socket.h"
 
 portable_socket::portable_socket(void)

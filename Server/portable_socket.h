@@ -1,3 +1,4 @@
+/* Developed by Alberto Salinas, please keep this line */
 #pragma once
 
 #ifdef _WIN32
