@@ -112,24 +112,24 @@ void handle_client(void* arg)
    cout << "Handling new player. Player name: ";
    char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
    int bytes_received;
-   bytes_received = recv(p->socket->get_fd(), data, MAXDATALEN, 0);
+   bytes_received = p->socket->precv(data, MAXDATALEN, 0);
    p->name = data;
    delete data;
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
    {
-      send(p->socket->get_fd(), "username in use", 16, 0);
+      p->socket->psend("username in use", 16, 0);
 	   delete p;
    }
    else
    {
-      send(p->socket->get_fd(), "login ok", 9, 0);
+      p->socket->psend("login ok", 9, 0);
       bool online = true;
       while (online)
       {
          char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
          cout << "Awaiting data" << endl;
-         if (recv(p->socket->get_fd(), data, MAXDATALEN, 0))
+         if (p->socket->precv(data, MAXDATALEN, 0))
             cout << "Received: " << data << endl;
          else
          {
@@ -209,10 +209,11 @@ void run_client()
    string name;
    cout << "Enter your name:" << endl;
    cin >> name;
-   send(socket->get_fd(), name.c_str(), name.length()+1, 0);
+   //send(socket->get_fd(), name.c_str(), name.length()+1, 0);
+   socket->psend(name.c_str(), name.length()+1, 0);
    // Wait for successul login
    char* data = (char*) malloc (sizeof(char)*MAXDATALEN);
-   if (!recv(socket->get_fd(), data, MAXDATALEN, 0))
+   if (!socket->precv(data, MAXDATALEN, 0))
    {
       cout << "Connection error" << endl;
       delete socket;
@@ -237,7 +238,7 @@ void run_client()
          delete socket;
       }
       else
-         send(socket->get_fd(), input.c_str(), input.length()+1, 0);
+         socket->psend(input.c_str(), input.length()+1, 0);
    }
 }
 

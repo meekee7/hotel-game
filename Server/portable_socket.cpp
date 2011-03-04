@@ -50,6 +50,16 @@ int portable_socket::pconnect(const struct sockaddr *addr, socklen_t addrlen)
    return connect(this->s, addr, addrlen);
 }
 
+int portable_socket::psend(const void *buf, size_t len, int flags)
+{
+   return send(this->get_fd(), (char*) buf, len, flags);
+}
+
+int portable_socket::precv(void *buf, size_t len, int flags)
+{
+   return recv(this->get_fd(), (char*) buf, len, flags);
+}
+
 void portable_socket::set_fd(SOCKET s)
 {
    this->s = s;

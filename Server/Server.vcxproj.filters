@@ -16,7 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="ReadMe Sockets.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server.cpp">

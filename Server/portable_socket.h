@@ -28,6 +28,8 @@ public:
    int plisten(int backlog);
    portable_socket* paccept(struct sockaddr *addr, socklen_t *addrlen);
    int pconnect(const struct sockaddr *addr, socklen_t addrlen);
+   int psend(const void *buf, size_t len, int flags);
+   int precv(void *buf, size_t len, int flags);
    void set_fd(SOCKET s);
    SOCKET get_fd();
    int get_last_error();
