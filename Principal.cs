@@ -1052,5 +1052,11 @@ namespace Juego_Hotel
                 this.Marcar_Jugador_Eliminado(3);
             }
         }
+
+        private void bOnline_Click(object sender, EventArgs e)
+        {
+            Online frm_online = new Online(this);
+            frm_online.Show();
+        }
     }
 }

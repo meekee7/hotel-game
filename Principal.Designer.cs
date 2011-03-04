@@ -90,6 +90,7 @@
             this.posAzul = new System.Windows.Forms.PictureBox();
             this.posRojo = new System.Windows.Forms.PictureBox();
             this.imgTablero = new System.Windows.Forms.PictureBox();
+            this.bOnline = new System.Windows.Forms.Button();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -729,11 +730,22 @@
             this.imgTablero.TabIndex = 1;
             this.imgTablero.TabStop = false;
             // 
+            // bOnline
+            // 
+            this.bOnline.Location = new System.Drawing.Point(708, 28);
+            this.bOnline.Name = "bOnline";
+            this.bOnline.Size = new System.Drawing.Size(83, 23);
+            this.bOnline.TabIndex = 34;
+            this.bOnline.Text = "Online";
+            this.bOnline.UseVisualStyleBackColor = true;
+            this.bOnline.Click += new System.EventHandler(this.bOnline_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 665);
+            this.Controls.Add(this.bOnline);
             this.Controls.Add(this.bNormas);
             this.Controls.Add(this.bCobrarBanca);
             this.Controls.Add(this.bSalir);
@@ -851,5 +863,6 @@
         private System.Windows.Forms.Button bRetirarseJ2;
         private System.Windows.Forms.Button bRetirarseJ3;
         private System.Windows.Forms.Button bRetirarseJ4;
+        private System.Windows.Forms.Button bOnline;
     }
 }

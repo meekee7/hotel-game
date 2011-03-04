@@ -94,6 +94,12 @@
     <Compile Include="Dado_construccion.Designer.cs">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Online.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Online.Designer.cs">
+      <DependentUpon>Online.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subastas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +157,9 @@
     <EmbeddedResource Include="Dado_construccion.resx">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Online.resx">
+      <DependentUpon>Online.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PonerEntradas.resx">
       <DependentUpon>PonerEntradas.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +191,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

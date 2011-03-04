@@ -7,8 +7,6 @@
 #include "player.h"
 #include "game.h"
 #include "dlib/threads.h"
-#include "dlib/misc_api.h"
-#include "dlib/ref.h"
 #define MAXCONN 100
 #define MAXDATALEN 100
 
@@ -106,6 +104,12 @@ void delete_player_from_list(player* p)
 	}
 }
 
+string prepare_data (char* data, int length)
+{
+	data[length] = '\0';
+	return string(data);
+}
+
 void handle_client(void* arg)
 {
    player* p = (player*) arg;
@@ -113,7 +117,7 @@ void handle_client(void* arg)
    char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
    int bytes_received;
    bytes_received = p->socket->precv(data, MAXDATALEN, 0);
-   p->name = data;
+   p->name = prepare_data(data, bytes_received);
    delete data;
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
@@ -129,8 +133,11 @@ void handle_client(void* arg)
       {
          char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
          cout << "Awaiting data" << endl;
-         if (p->socket->precv(data, MAXDATALEN, 0))
-            cout << "Received: " << data << endl;
+		 int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+         if (bytes_received >= 0)
+		 {
+             cout << "Received: " << prepare_data(data, bytes_received) << endl;
+		 }
          else
          {
             online = false;
