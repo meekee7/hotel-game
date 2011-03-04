@@ -134,7 +134,7 @@ void handle_client(void* arg)
          char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
          cout << "Awaiting data" << endl;
          int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
-         if (bytes_received >= 0)
+         if (bytes_received > 0)
          {
             cout << "Received: " << prepare_data(data, bytes_received) << endl;
 		   }
