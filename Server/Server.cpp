@@ -122,22 +122,22 @@ void handle_client(void* arg)
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
    {
-      p->socket->psend("username in use", 16, 0);
+      p->socket->psend("username in use", 15, 0);
 	   delete p;
    }
    else
    {
-      p->socket->psend("login ok", 9, 0);
+      p->socket->psend("login ok", 8, 0);
       bool online = true;
       while (online)
       {
          char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
          cout << "Awaiting data" << endl;
-		 int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+         int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
          if (bytes_received >= 0)
-		 {
-             cout << "Received: " << prepare_data(data, bytes_received) << endl;
-		 }
+         {
+            cout << "Received: " << prepare_data(data, bytes_received) << endl;
+		   }
          else
          {
             online = false;
