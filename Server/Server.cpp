@@ -110,6 +110,26 @@ string prepare_data (char* data, int length)
 	return string(data);
 }
 
+void handle_command(string command, player* p)
+{
+	if (command == "get_users")
+	{
+		// Get all users and join into a string with the separator ~
+		string res = "";
+		list<player>::iterator i;
+		for (i = plist.begin() ; i != plist.end() ; ++i)
+		{
+			res += i->name;
+			if (!(i != plist.end() && (next(i) == plist.end())))
+				res += '~';
+		}
+		cout << res << endl;
+		int res_len = htonl(res.length());
+		p->socket->psend(&res_len, sizeof(res_len), 0);
+		p->socket->psend(res.c_str(), res.length(), 0);
+	}
+}
+
 void handle_client(void* arg)
 {
    player* p = (player*) arg;
@@ -132,12 +152,14 @@ void handle_client(void* arg)
       while (online)
       {
          char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
-         cout << "Awaiting data" << endl;
+         cout << "Awaiting commands" << endl;
          int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+		 string command = prepare_data(data, bytes_received);
          if (bytes_received > 0)
          {
-            cout << "Received: " << prepare_data(data, bytes_received) << endl;
-		   }
+            cout << "Received: " << command << endl;
+			handle_command(command, p);
+		 }
          else
          {
             online = false;

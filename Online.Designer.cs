@@ -32,6 +32,7 @@
             this.bLogin = new System.Windows.Forms.Button();
             this.bConectar = new System.Windows.Forms.Button();
             this.txtServidor = new System.Windows.Forms.TextBox();
+            this.listaUsuarios = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // txtLogin
@@ -69,11 +70,21 @@
             this.txtServidor.Size = new System.Drawing.Size(100, 20);
             this.txtServidor.TabIndex = 3;
             // 
+            // listaUsuarios
+            // 
+            this.listaUsuarios.FormattingEnabled = true;
+            this.listaUsuarios.HorizontalScrollbar = true;
+            this.listaUsuarios.Location = new System.Drawing.Point(12, 72);
+            this.listaUsuarios.Name = "listaUsuarios";
+            this.listaUsuarios.Size = new System.Drawing.Size(181, 277);
+            this.listaUsuarios.TabIndex = 4;
+            // 
             // Online
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(379, 431);
+            this.ClientSize = new System.Drawing.Size(321, 358);
+            this.Controls.Add(this.listaUsuarios);
             this.Controls.Add(this.txtServidor);
             this.Controls.Add(this.bConectar);
             this.Controls.Add(this.bLogin);
@@ -92,5 +103,6 @@
         private System.Windows.Forms.Button bLogin;
         private System.Windows.Forms.Button bConectar;
         private System.Windows.Forms.TextBox txtServidor;
+        private System.Windows.Forms.ListBox listaUsuarios;
     }
 }

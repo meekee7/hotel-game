@@ -38,6 +38,8 @@ namespace Juego_Hotel
                     {
                         MessageBox.Show("El apodo ya está en uso");
                     }
+                    else
+                        this.Rellenar_lista_usuarios();
                     data = null;
                 }
             }
@@ -55,13 +57,37 @@ namespace Juego_Hotel
                 socket.Connect(Ep);
                 this.bLogin.Enabled = true;
             }
-            catch (SocketException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error conectando: " + ex.Message);
             }
-            catch (ArgumentException ex)
+        }
+
+        private void Rellenar_lista_usuarios()
+        {
+            try
             {
-                MessageBox.Show("Error conectando: " + ex.Message);
+                socket.Send(Encoding.UTF8.GetBytes("get_users"));
+                // Primero se recibe la longitud de la cadena de usuarios aplanada
+                byte[] b_long_cadena = new byte[4];
+                socket.Receive(b_long_cadena);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_long_cadena);
+                int long_cadena = BitConverter.ToInt32(b_long_cadena, 0);
+                byte[] b_lista_jugadores = new byte[long_cadena];
+                int bytes_recibidos;
+                bytes_recibidos = socket.Receive(b_lista_jugadores);
+                string s_lista_jugadores = Encoding.UTF8.GetString(b_lista_jugadores, 0, bytes_recibidos);
+                string[] lista_jugadores = s_lista_jugadores.Split('~');
+                this.listaUsuarios.BeginUpdate();
+                this.listaUsuarios.Items.Clear();
+                foreach (string nombre in lista_jugadores)
+                    this.listaUsuarios.Items.Add(nombre);
+                this.listaUsuarios.EndUpdate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error obteniendo lista de usuarios: " + ex.Message);
             }
         }
 
