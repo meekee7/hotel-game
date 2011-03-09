@@ -5,11 +5,11 @@
 
 class game
 {
-	int id;
-	string name;
-	player* creator;
-	list<player*> plist;
 public:
+   string name;
+   player creator;
+   int n_players;
+   list<player> plist;
    game(void);
    ~game(void);
 };

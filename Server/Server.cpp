@@ -104,10 +104,10 @@ void delete_player_from_list(player* p)
 	}
 }
 
-string prepare_data (char* data, int length)
+void prepare_data (char* data, int length)
 {
 	data[length] = '\0';
-	return string(data);
+	//return string(data);
 }
 
 void handle_command(string command, player* p)
@@ -123,11 +123,45 @@ void handle_command(string command, player* p)
 			if (!(i != plist.end() && (next(i) == plist.end())))
 				res += '~';
 		}
-		cout << res << endl;
 		int res_len = htonl(res.length());
 		p->socket->psend(&res_len, sizeof(res_len), 0);
 		p->socket->psend(res.c_str(), res.length(), 0);
 	}
+	else if (command == "get_games")
+	{
+		// Get all users and join into a string with the separator ~
+		string res = "";
+		list<game>::iterator i;
+		for (i = glist.begin() ; i != glist.end() ; ++i)
+		{
+			res += i->name;
+			if (!(i != glist.end() && (next(i) == glist.end())))
+				res += '~';
+		}
+		int res_len = htonl(res.length());
+		p->socket->psend(&res_len, sizeof(res_len), 0);
+		if (res.length() != 0)
+			p->socket->psend(res.c_str(), res.length(), 0);
+	}
+	else if (command == "create_game")
+	{
+      int n_players;
+      char* data = (char*) malloc(sizeof(char) * MAXDATALEN);
+      int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+      prepare_data(data, bytes_received);
+      bytes_received--;
+      n_players = atoi(&data[bytes_received]);
+      data[bytes_received] = '\0';
+      string name(data);
+      cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
+      game new_game;
+      new_game.name = name;
+      new_game.n_players = n_players;
+      new_game.creator = *p;
+      new_game.plist.push_back(*p);
+      glist.push_back(new_game);
+      free (data);
+   }
 }
 
 void handle_client(void* arg)
@@ -137,8 +171,9 @@ void handle_client(void* arg)
    char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
    int bytes_received;
    bytes_received = p->socket->precv(data, MAXDATALEN, 0);
-   p->name = prepare_data(data, bytes_received);
-   delete data;
+   prepare_data(data, bytes_received);
+   p->name = string(data);
+   free (data);
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
    {
@@ -154,18 +189,20 @@ void handle_client(void* arg)
          char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
          cout << "Awaiting commands" << endl;
          int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
-		 string command = prepare_data(data, bytes_received);
+         prepare_data(data, bytes_received);
+         string command (data);
          if (bytes_received > 0)
          {
             cout << "Received: " << command << endl;
-			handle_command(command, p);
-		 }
+            handle_command(command, p);
+         }
          else
          {
             online = false;
             cout << "Client disconnected" << endl;
             delete_player_from_list(p);
          }
+		   free (data);
       }
    }
 }

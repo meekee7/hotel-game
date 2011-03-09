@@ -39,7 +39,13 @@ namespace Juego_Hotel
                         MessageBox.Show("El apodo ya está en uso");
                     }
                     else
+                    {
                         this.Rellenar_lista_usuarios();
+                        this.Rellenar_lista_partidas();
+                        this.bLogin.Enabled = false;
+                        this.bCrearPartida.Enabled = true;
+                        this.bChatear.Enabled = true;
+                    }
                     data = null;
                 }
             }
@@ -56,6 +62,8 @@ namespace Juego_Hotel
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(Ep);
                 this.bLogin.Enabled = true;
+                this.bConectar.Enabled = false;
+                this.bDesconectar.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -84,17 +92,135 @@ namespace Juego_Hotel
                 foreach (string nombre in lista_jugadores)
                     this.listaUsuarios.Items.Add(nombre);
                 this.listaUsuarios.EndUpdate();
+                b_long_cadena = null;
+                s_lista_jugadores = null;
+                lista_jugadores = null;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error obteniendo lista de usuarios: " + ex.Message);
+                this.listaUsuarios.Items.Clear();
+                this.bDesconectar.PerformClick();
+            }
+        }
+
+        private void Rellenar_lista_partidas()
+        {
+            try
+            {
+                this.socket.Send(Encoding.UTF8.GetBytes("get_games"));
+                // Primero se recibe la longitud de la cadena de usuarios aplanada
+                byte[] b_long_cadena = new byte[4];
+                socket.Receive(b_long_cadena);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_long_cadena);
+                int long_cadena = BitConverter.ToInt32(b_long_cadena, 0);
+                if (long_cadena == 0)
+                {
+                    b_long_cadena = null;
+                    return;
+                }
+                byte[] b_lista_partidas = new byte[long_cadena];
+                int bytes_recibidos;
+                bytes_recibidos = socket.Receive(b_lista_partidas);
+                string s_lista_partidas = Encoding.UTF8.GetString(b_lista_partidas, 0, bytes_recibidos);
+                string[] lista_partidas = s_lista_partidas.Split('~');
+                this.listaPartidas.BeginUpdate();
+                this.listaPartidas.Items.Clear();
+                foreach (string nombre in lista_partidas)
+                    this.listaPartidas.Items.Add(nombre);
+                this.listaPartidas.EndUpdate();
+                b_lista_partidas = null;
+                s_lista_partidas = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error obteniendo lista de partidas: " + ex.Message);
+                this.listaPartidas.Items.Clear();
+                this.bDesconectar.PerformClick();
             }
         }
 
         private void Online_FormClosing(object sender, FormClosingEventArgs e)
         {
+            this.bDesconectar.PerformClick();
+        }
+
+        private void bDesconectar_Click(object sender, EventArgs e)
+        {
             if (this.socket.Connected)
+            {
+                try
+                {
+                    this.socket.Shutdown(SocketShutdown.Both);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al desconectar: " + ex.Message);
+                    this.socket.Close();
+                    this.socket = null;
+                    this.bConectar.Enabled = true;
+                    this.bDesconectar.Enabled = false;
+                }
                 this.socket.Close();
+                this.socket = null;
+                this.bConectar.Enabled = true;
+                this.bDesconectar.Enabled = false;
+                this.bCrearPartida.Enabled = false;
+                this.bChatear.Enabled = false;
+            }
+        }
+
+        public string InputBox(string prompt, string title, string defaultValue)
+        {
+            InputBoxDialog ib = new InputBoxDialog();
+            ib.FormPrompt = prompt;
+            ib.FormCaption = title;
+            ib.DefaultValue = defaultValue;
+            ib.ShowDialog();
+            string s = ib.InputResponse;
+            ib.Close();
+            return s;
+        }
+
+        private void bCrearPartida_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string nombre = this.InputBox("Nombre de la partida:", "Crear partida", "");
+                string n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
+                try
+                {
+                    if (Convert.ToInt32(n_jugadores) < 2)
+                    {
+                        MessageBox.Show("El número mínimo de jugadores es 2");
+                        return;
+                    }
+                    if (Convert.ToInt32(n_jugadores) > 4)
+                    {
+                        MessageBox.Show("El número máximo de jugadores es 4");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Datos incorrectos: " + ex.Message);
+                    return;
+                }
+                this.socket.Send(Encoding.UTF8.GetBytes("create_game"));
+                this.socket.Send(Encoding.UTF8.GetBytes((nombre + n_jugadores).ToCharArray()));
+                //byte[] b_n_players = BitConverter.GetBytes(n_jugadores);
+                //this.socket.Send(Encoding.UTF8.GetBytes(n_jugadores.ToCharArray()));
+                //if (BitConverter.IsLittleEndian)
+                    //Array.Reverse(b_n_players);
+                //this.socket.Send(b_n_players);
+                this.Rellenar_lista_partidas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de conexión: " + ex.Message);
+                this.bDesconectar.PerformClick();
+            }
         }
     }
 }
