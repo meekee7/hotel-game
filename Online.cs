@@ -15,6 +15,7 @@ namespace Juego_Hotel
     {
         Principal interfaz;
         Socket socket;
+
         public Online(Principal interfaz)
         {
             InitializeComponent();
@@ -31,22 +32,35 @@ namespace Juego_Hotel
                     MessageBox.Show("El apodo no puede superar 20 caracteres");
                 else
                 {
-                    socket.Send(Encoding.UTF8.GetBytes(this.txtLogin.Text.ToCharArray()));
-                    byte[] data = new byte[20];
-                    int bytes_recibidos = socket.Receive(data);
-                    if (System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos) == "username in use")
+                    try
                     {
-                        MessageBox.Show("El apodo ya está en uso");
+                        byte[] b_long_login = BitConverter.GetBytes(this.txtLogin.Text.Length);
+                        //if (BitConverter.IsLittleEndian)
+                            //Array.Reverse(b_long_login);
+                        socket.Send(b_long_login);
+                        socket.Send(Encoding.UTF8.GetBytes(this.txtLogin.Text.ToCharArray()));
+                        byte[] data = new byte[8];
+                        int bytes_recibidos = socket.Receive(data);
+                        if (System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos) == "login ko")
+                        {
+                            MessageBox.Show("El apodo ya está en uso");
+                            this.bDesconectar.PerformClick();
+                        }
+                        else
+                        {
+                            this.Rellenar_lista_usuarios();
+                            this.Rellenar_lista_partidas();
+                            this.bLogin.Enabled = false;
+                            this.bCrearPartida.Enabled = true;
+                            this.bChatear.Enabled = true;
+                            this.refrescoListas.Start();
+                        }
+                        data = null;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        this.Rellenar_lista_usuarios();
-                        this.Rellenar_lista_partidas();
-                        this.bLogin.Enabled = false;
-                        this.bCrearPartida.Enabled = true;
-                        this.bChatear.Enabled = true;
+                        MessageBox.Show("Error haciendo login: " + ex.Message);
                     }
-                    data = null;
                 }
             }
             else
@@ -75,16 +89,20 @@ namespace Juego_Hotel
         {
             try
             {
-                socket.Send(Encoding.UTF8.GetBytes("get_users"));
+                byte[] b_long_comando = BitConverter.GetBytes("get_users".Length);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_long_comando);
+                this.socket.Send(b_long_comando);
+                this.socket.Send(Encoding.UTF8.GetBytes("get_users"));
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 byte[] b_long_cadena = new byte[4];
-                socket.Receive(b_long_cadena);
+                this.socket.Receive(b_long_cadena);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(b_long_cadena);
                 int long_cadena = BitConverter.ToInt32(b_long_cadena, 0);
                 byte[] b_lista_jugadores = new byte[long_cadena];
                 int bytes_recibidos;
-                bytes_recibidos = socket.Receive(b_lista_jugadores);
+                bytes_recibidos = this.socket.Receive(b_lista_jugadores);
                 string s_lista_jugadores = Encoding.UTF8.GetString(b_lista_jugadores, 0, bytes_recibidos);
                 string[] lista_jugadores = s_lista_jugadores.Split('~');
                 this.listaUsuarios.BeginUpdate();
@@ -92,6 +110,7 @@ namespace Juego_Hotel
                 foreach (string nombre in lista_jugadores)
                     this.listaUsuarios.Items.Add(nombre);
                 this.listaUsuarios.EndUpdate();
+                b_long_comando = null;
                 b_long_cadena = null;
                 s_lista_jugadores = null;
                 lista_jugadores = null;
@@ -108,10 +127,14 @@ namespace Juego_Hotel
         {
             try
             {
+                byte[] b_long_comando = BitConverter.GetBytes("get_games".Length);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_long_comando);
+                this.socket.Send(b_long_comando);
                 this.socket.Send(Encoding.UTF8.GetBytes("get_games"));
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 byte[] b_long_cadena = new byte[4];
-                socket.Receive(b_long_cadena);
+                this.socket.Receive(b_long_cadena);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(b_long_cadena);
                 int long_cadena = BitConverter.ToInt32(b_long_cadena, 0);
@@ -122,7 +145,7 @@ namespace Juego_Hotel
                 }
                 byte[] b_lista_partidas = new byte[long_cadena];
                 int bytes_recibidos;
-                bytes_recibidos = socket.Receive(b_lista_partidas);
+                bytes_recibidos = this.socket.Receive(b_lista_partidas);
                 string s_lista_partidas = Encoding.UTF8.GetString(b_lista_partidas, 0, bytes_recibidos);
                 string[] lista_partidas = s_lista_partidas.Split('~');
                 this.listaPartidas.BeginUpdate();
@@ -137,6 +160,7 @@ namespace Juego_Hotel
             {
                 MessageBox.Show("Error obteniendo lista de partidas: " + ex.Message);
                 this.listaPartidas.Items.Clear();
+                this.listaUsuarios.Items.Clear();
                 this.bDesconectar.PerformClick();
             }
         }
@@ -148,27 +172,22 @@ namespace Juego_Hotel
 
         private void bDesconectar_Click(object sender, EventArgs e)
         {
-            if (this.socket.Connected)
+            try
             {
-                try
-                {
-                    this.socket.Shutdown(SocketShutdown.Both);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al desconectar: " + ex.Message);
-                    this.socket.Close();
-                    this.socket = null;
-                    this.bConectar.Enabled = true;
-                    this.bDesconectar.Enabled = false;
-                }
-                this.socket.Close();
-                this.socket = null;
-                this.bConectar.Enabled = true;
-                this.bDesconectar.Enabled = false;
-                this.bCrearPartida.Enabled = false;
-                this.bChatear.Enabled = false;
+                this.socket.Shutdown(SocketShutdown.Both);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al desconectar: " + ex.Message);
+            }
+            this.refrescoListas.Stop();
+            this.socket.Close();
+            this.socket = null;
+            this.bConectar.Enabled = true;
+            this.bLogin.Enabled = false;
+            this.bDesconectar.Enabled = false;
+            this.bCrearPartida.Enabled = false;
+            this.bChatear.Enabled = false;
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
@@ -188,7 +207,11 @@ namespace Juego_Hotel
             try
             {
                 string nombre = this.InputBox("Nombre de la partida:", "Crear partida", "");
+                if (nombre == "")
+                    return;
                 string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
+                if (s_n_jugadores == "")
+                    return;
                 int n_jugadores;
                 try
                 {
@@ -209,12 +232,20 @@ namespace Juego_Hotel
                     MessageBox.Show("El número máximo de jugadores es 4");
                     return;
                 }
-                MessageBox.Show(this.socket.Send(Encoding.UTF8.GetBytes("create_game")).ToString());
-                MessageBox.Show(this.socket.Send(Encoding.UTF8.GetBytes(nombre.ToCharArray())).ToString());
-                byte[] b_n_jugadores = BitConverter.GetBytes(n_jugadores);
+                byte[] b_long_comando = BitConverter.GetBytes("create_game".Length);
                 if (BitConverter.IsLittleEndian)
-                    Array.Reverse(b_n_jugadores);
-                MessageBox.Show(this.socket.Send(b_n_jugadores).ToString());
+                    Array.Reverse(b_long_comando);
+                socket.Send(b_long_comando);
+                this.socket.Send(Encoding.UTF8.GetBytes("create_game"));
+                byte[] bytes = BitConverter.GetBytes(nombre.Length);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(bytes);
+                this.socket.Send(bytes);
+                this.socket.Send(Encoding.UTF8.GetBytes(nombre.ToCharArray()));
+                bytes = BitConverter.GetBytes(n_jugadores);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(bytes);
+                this.socket.Send(bytes);
                 this.Rellenar_lista_partidas();
             }
             catch (Exception ex)
@@ -222,6 +253,24 @@ namespace Juego_Hotel
                 MessageBox.Show("Error de conexión: " + ex.Message);
                 this.bDesconectar.PerformClick();
             }
+        }
+
+        private void txtServidor_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                this.bConectar.PerformClick();
+        }
+
+        private void txtLogin_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                this.bLogin.PerformClick();
+        }
+
+        private void refrescoListas_Tick(object sender, EventArgs e)
+        {
+            this.Rellenar_lista_usuarios();
+            this.Rellenar_lista_partidas();
         }
     }
 }

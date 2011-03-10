@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.bLogin = new System.Windows.Forms.Button();
             this.bConectar = new System.Windows.Forms.Button();
@@ -39,6 +40,7 @@
             this.listaPartidas = new System.Windows.Forms.ListBox();
             this.LUsuarios = new System.Windows.Forms.Label();
             this.LPartidas = new System.Windows.Forms.Label();
+            this.refrescoListas = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // txtLogin
@@ -46,7 +48,8 @@
             this.txtLogin.Location = new System.Drawing.Point(93, 44);
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(100, 20);
-            this.txtLogin.TabIndex = 0;
+            this.txtLogin.TabIndex = 2;
+            this.txtLogin.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtLogin_PreviewKeyDown);
             // 
             // bLogin
             // 
@@ -54,7 +57,7 @@
             this.bLogin.Location = new System.Drawing.Point(12, 42);
             this.bLogin.Name = "bLogin";
             this.bLogin.Size = new System.Drawing.Size(75, 23);
-            this.bLogin.TabIndex = 1;
+            this.bLogin.TabIndex = 3;
             this.bLogin.Text = "Login";
             this.bLogin.UseVisualStyleBackColor = true;
             this.bLogin.Click += new System.EventHandler(this.bLogin_Click);
@@ -64,7 +67,7 @@
             this.bConectar.Location = new System.Drawing.Point(12, 13);
             this.bConectar.Name = "bConectar";
             this.bConectar.Size = new System.Drawing.Size(75, 23);
-            this.bConectar.TabIndex = 2;
+            this.bConectar.TabIndex = 1;
             this.bConectar.Text = "Conectar";
             this.bConectar.UseVisualStyleBackColor = true;
             this.bConectar.Click += new System.EventHandler(this.bConectar_Click);
@@ -74,7 +77,8 @@
             this.txtServidor.Location = new System.Drawing.Point(93, 15);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(100, 20);
-            this.txtServidor.TabIndex = 3;
+            this.txtServidor.TabIndex = 0;
+            this.txtServidor.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtServidor_PreviewKeyDown);
             // 
             // listaUsuarios
             // 
@@ -91,7 +95,7 @@
             this.bDesconectar.Location = new System.Drawing.Point(210, 353);
             this.bDesconectar.Name = "bDesconectar";
             this.bDesconectar.Size = new System.Drawing.Size(80, 23);
-            this.bDesconectar.TabIndex = 5;
+            this.bDesconectar.TabIndex = 8;
             this.bDesconectar.Text = "Desconectar";
             this.bDesconectar.UseVisualStyleBackColor = true;
             this.bDesconectar.Click += new System.EventHandler(this.bDesconectar_Click);
@@ -102,7 +106,7 @@
             this.bCrearPartida.Location = new System.Drawing.Point(210, 242);
             this.bCrearPartida.Name = "bCrearPartida";
             this.bCrearPartida.Size = new System.Drawing.Size(80, 23);
-            this.bCrearPartida.TabIndex = 6;
+            this.bCrearPartida.TabIndex = 7;
             this.bCrearPartida.Text = "Crear partida";
             this.bCrearPartida.UseVisualStyleBackColor = true;
             this.bCrearPartida.Click += new System.EventHandler(this.bCrearPartida_Click);
@@ -113,7 +117,7 @@
             this.bChatear.Location = new System.Drawing.Point(210, 88);
             this.bChatear.Name = "bChatear";
             this.bChatear.Size = new System.Drawing.Size(80, 23);
-            this.bChatear.TabIndex = 7;
+            this.bChatear.TabIndex = 5;
             this.bChatear.Text = "Chatear";
             this.bChatear.UseVisualStyleBackColor = true;
             // 
@@ -124,7 +128,7 @@
             this.listaPartidas.Location = new System.Drawing.Point(12, 242);
             this.listaPartidas.Name = "listaPartidas";
             this.listaPartidas.Size = new System.Drawing.Size(181, 134);
-            this.listaPartidas.TabIndex = 8;
+            this.listaPartidas.TabIndex = 6;
             // 
             // LUsuarios
             // 
@@ -143,6 +147,11 @@
             this.LPartidas.Size = new System.Drawing.Size(89, 13);
             this.LPartidas.TabIndex = 10;
             this.LPartidas.Text = "Partidas creadas:";
+            // 
+            // refrescoListas
+            // 
+            this.refrescoListas.Interval = 5000;
+            this.refrescoListas.Tick += new System.EventHandler(this.refrescoListas_Tick);
             // 
             // Online
             // 
@@ -181,5 +190,6 @@
         private System.Windows.Forms.ListBox listaPartidas;
         private System.Windows.Forms.Label LUsuarios;
         private System.Windows.Forms.Label LPartidas;
+        private System.Windows.Forms.Timer refrescoListas;
     }
 }

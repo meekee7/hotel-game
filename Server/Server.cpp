@@ -146,11 +146,14 @@ void handle_command(string command, player* p)
 	else if (command == "create_game")
 	{
       int n_players;
-      char* data = (char*) malloc(sizeof(char) * MAXDATALEN);
-      int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+      int long_nombre;
+      int bytes_received = p->socket->precv(&long_nombre, sizeof(long_nombre), 0);
+      long_nombre = ntohl(long_nombre);
+      char* data = new char[long_nombre+1];
+      bytes_received = p->socket->precv(data, long_nombre, 0);
       prepare_data(data, bytes_received);
       string name(data);
-      free (data);
+      delete (data);
       bytes_received = p->socket->precv(&n_players, sizeof(n_players), 0);
       n_players = ntohl(n_players);
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
@@ -167,17 +170,21 @@ void handle_client(void* arg)
 {
    player* p = (player*) arg;
    cout << "Handling new player. Player name: ";
-   char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
+   int long_name;
    int bytes_received;
-   bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+   bytes_received = p->socket->precv(&long_name, sizeof(long_name), 0);
+   long_name = ntohl(long_name);
+   char* data = new char[long_name+1];
+   bytes_received = p->socket->precv(data, long_name, 0);
    prepare_data(data, bytes_received);
    p->name = string(data);
-   free (data);
+   delete data;
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
    {
-      p->socket->psend("username in use", 15, 0);
+      p->socket->psend("login ko", 8, 0);
 	   delete p;
+      cout << "Disconnecting client" << endl;
    }
    else
    {
@@ -185,14 +192,18 @@ void handle_client(void* arg)
       bool online = true;
       while (online)
       {
-         char* data = (char*) malloc(sizeof(char)*MAXDATALEN);
-         cout << "Awaiting commands" << endl;
-         int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
+         int long_command;
+         int bytes_received;
+         bytes_received = p->socket->precv(&long_command, sizeof(long_command), 0);
+         long_command = ntohl(long_command);
+         data = new char[long_command+1];
+         bytes_received = p->socket->precv(data, long_command, 0);
          prepare_data(data, bytes_received);
          string command (data);
+         delete data;
          if (bytes_received > 0)
          {
-            cout << "Received: " << command << endl;
+            cout << "Received command: " << command << endl;
             handle_command(command, p);
          }
          else
@@ -201,7 +212,6 @@ void handle_client(void* arg)
             cout << "Client disconnected" << endl;
             delete_player_from_list(p);
          }
-		   free (data);
       }
    }
 }
@@ -252,70 +262,7 @@ void run_server()
    }
 }
 
-void run_client()
-{
-   cout << "Starting test client" << endl;
-   int error;
-   /* connect to server */
-   portable_socket* socket = new portable_socket();
-   sockaddr_in server_info;
-   server_info.sin_family=AF_INET;
-   server_info.sin_port=htons(12345);
-   string ip;
-   cout << "Type server ip address:" << endl;
-   cin >> ip;
-   server_info.sin_addr.s_addr=inet_addr(ip.c_str());
-   error = socket->pconnect((sockaddr*) &server_info,sizeof(server_info))==0;
-   if (error > 0)
-      cout << "Connection successful" << endl;
-   else
-      cout << "Connection error: " << socket->get_last_error() << endl;
-   /* connect to server */
-   string name;
-   cout << "Enter your name:" << endl;
-   cin >> name;
-   //send(socket->get_fd(), name.c_str(), name.length()+1, 0);
-   socket->psend(name.c_str(), name.length()+1, 0);
-   // Wait for successul login
-   char* data = (char*) malloc (sizeof(char)*MAXDATALEN);
-   if (!socket->precv(data, MAXDATALEN, 0))
-   {
-      cout << "Connection error" << endl;
-      delete socket;
-      return;
-   }
-   if (strcmp(data, "username in use") == 0)
-   {
-      cout << "Username already in use" << endl;
-      delete socket;
-      return;
-   }
-   cout << "Login ok" << endl;
-   bool online = true;
-   string input;
-   while (online)
-   {
-      cout << "Enter data to send: ('exit' to disconnect)" << endl;
-      cin >> input;
-      if (input == "exit")
-      {
-         online = false;
-         delete socket;
-      }
-      else
-         socket->psend(input.c_str(), input.length()+1, 0);
-   }
-}
-
 int main(int argc, char* argv[])
 {
-   cout << "Type in mode: " << endl << " 1 -> server" << endl << " 2 -> client" << endl;
-   int mode;
-   cin >> mode;
-   if (mode == 1)
-      run_server();
-   else if (mode == 2)
-      run_client();
-   else
-      cout << "Invalid mode" << endl;
+   run_server();
 }
