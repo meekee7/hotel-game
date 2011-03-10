@@ -35,8 +35,8 @@ namespace Juego_Hotel
                     try
                     {
                         byte[] b_long_login = BitConverter.GetBytes(this.txtLogin.Text.Length);
-                        //if (BitConverter.IsLittleEndian)
-                            //Array.Reverse(b_long_login);
+                        if (BitConverter.IsLittleEndian)
+                            Array.Reverse(b_long_login);
                         socket.Send(b_long_login);
                         socket.Send(Encoding.UTF8.GetBytes(this.txtLogin.Text.ToCharArray()));
                         byte[] data = new byte[8];

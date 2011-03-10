@@ -104,10 +104,42 @@ void delete_player_from_list(player* p)
 	}
 }
 
-void prepare_data (char* data, int length)
+string receive_string (player* p, int length, int* bytes_received)
 {
-	data[length] = '\0';
-	//return string(data);
+   char* data = new char[length+1];
+   *bytes_received = p->socket->precv(data, length, 0);
+   string s_data;
+   if (*bytes_received > 0)
+   {
+      data[length] = '\0';
+      s_data = string(data);
+   }
+   else
+      s_data = string("");
+   delete data;
+   return s_data;
+}
+
+int receive_int (player* p, int* bytes_received)
+{
+   int data;
+   *bytes_received = p->socket->precv(&data, sizeof(data), 0);
+   if (*bytes_received > 0)
+      data = ntohl(data);
+   else
+      data = 0;
+   return data;
+}
+
+int send_string (player* p, string data)
+{
+   return p->socket->psend(data.c_str(), data.length(), 0);
+}
+
+int send_int (player* p, int data)
+{
+   data = htonl(data);
+   return p->socket->psend(&data, sizeof(data), 0);
 }
 
 void handle_command(string command, player* p)
@@ -123,9 +155,8 @@ void handle_command(string command, player* p)
 			if (!(i != plist.end() && (next(i) == plist.end())))
 				res += '~';
 		}
-		int res_len = htonl(res.length());
-		p->socket->psend(&res_len, sizeof(res_len), 0);
-		p->socket->psend(res.c_str(), res.length(), 0);
+      send_int(p, res.length());
+      send_string(p, res);
 	}
 	else if (command == "get_games")
 	{
@@ -138,24 +169,16 @@ void handle_command(string command, player* p)
 			if (!(i != glist.end() && (next(i) == glist.end())))
 				res += '~';
 		}
-		int res_len = htonl(res.length());
-		p->socket->psend(&res_len, sizeof(res_len), 0);
+      send_int(p, res.length());
 		if (res.length() != 0)
-			p->socket->psend(res.c_str(), res.length(), 0);
+         send_string(p, res);
 	}
 	else if (command == "create_game")
 	{
-      int n_players;
-      int long_nombre;
-      int bytes_received = p->socket->precv(&long_nombre, sizeof(long_nombre), 0);
-      long_nombre = ntohl(long_nombre);
-      char* data = new char[long_nombre+1];
-      bytes_received = p->socket->precv(data, long_nombre, 0);
-      prepare_data(data, bytes_received);
-      string name(data);
-      delete (data);
-      bytes_received = p->socket->precv(&n_players, sizeof(n_players), 0);
-      n_players = ntohl(n_players);
+      int bytes_received;
+      int long_name = receive_int(p, &bytes_received);
+      string name = receive_string(p, long_name, &bytes_received);
+      int n_players = receive_int(p, &bytes_received);
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
       game new_game;
       new_game.name = name;
@@ -170,15 +193,9 @@ void handle_client(void* arg)
 {
    player* p = (player*) arg;
    cout << "Handling new player. Player name: ";
-   int long_name;
    int bytes_received;
-   bytes_received = p->socket->precv(&long_name, sizeof(long_name), 0);
-   long_name = ntohl(long_name);
-   char* data = new char[long_name+1];
-   bytes_received = p->socket->precv(data, long_name, 0);
-   prepare_data(data, bytes_received);
-   p->name = string(data);
-   delete data;
+   int long_name = receive_int(p, &bytes_received);
+   p->name = receive_string(p, long_name, &bytes_received);
    cout << p->name << endl;
    if (add_player_to_list(p) == -1)
    {
@@ -192,15 +209,8 @@ void handle_client(void* arg)
       bool online = true;
       while (online)
       {
-         int long_command;
-         int bytes_received;
-         bytes_received = p->socket->precv(&long_command, sizeof(long_command), 0);
-         long_command = ntohl(long_command);
-         data = new char[long_command+1];
-         bytes_received = p->socket->precv(data, long_command, 0);
-         prepare_data(data, bytes_received);
-         string command (data);
-         delete data;
+         int long_command = receive_int(p, &bytes_received);
+         string command = receive_string(p, long_command, &bytes_received);
          if (bytes_received > 0)
          {
             cout << "Received command: " << command << endl;
