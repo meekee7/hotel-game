@@ -149,10 +149,10 @@ void handle_command(string command, player* p)
       char* data = (char*) malloc(sizeof(char) * MAXDATALEN);
       int bytes_received = p->socket->precv(data, MAXDATALEN, 0);
       prepare_data(data, bytes_received);
-      bytes_received--;
-      n_players = atoi(&data[bytes_received]);
-      data[bytes_received] = '\0';
       string name(data);
+      free (data);
+      bytes_received = p->socket->precv(&n_players, sizeof(n_players), 0);
+      n_players = ntohl(n_players);
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
       game new_game;
       new_game.name = name;
@@ -160,7 +160,6 @@ void handle_command(string command, player* p)
       new_game.creator = *p;
       new_game.plist.push_back(*p);
       glist.push_back(new_game);
-      free (data);
    }
 }
 

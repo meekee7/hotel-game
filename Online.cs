@@ -188,32 +188,33 @@ namespace Juego_Hotel
             try
             {
                 string nombre = this.InputBox("Nombre de la partida:", "Crear partida", "");
-                string n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
+                string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
+                int n_jugadores;
                 try
                 {
-                    if (Convert.ToInt32(n_jugadores) < 2)
-                    {
-                        MessageBox.Show("El número mínimo de jugadores es 2");
-                        return;
-                    }
-                    if (Convert.ToInt32(n_jugadores) > 4)
-                    {
-                        MessageBox.Show("El número máximo de jugadores es 4");
-                        return;
-                    }
+                    n_jugadores = Convert.ToInt32(s_n_jugadores);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Datos incorrectos: " + ex.Message);
                     return;
                 }
-                this.socket.Send(Encoding.UTF8.GetBytes("create_game"));
-                this.socket.Send(Encoding.UTF8.GetBytes((nombre + n_jugadores).ToCharArray()));
-                //byte[] b_n_players = BitConverter.GetBytes(n_jugadores);
-                //this.socket.Send(Encoding.UTF8.GetBytes(n_jugadores.ToCharArray()));
-                //if (BitConverter.IsLittleEndian)
-                    //Array.Reverse(b_n_players);
-                //this.socket.Send(b_n_players);
+                if (n_jugadores < 2)
+                {
+                    MessageBox.Show("El número mínimo de jugadores es 2");
+                    return;
+                }
+                if (n_jugadores > 4)
+                {
+                    MessageBox.Show("El número máximo de jugadores es 4");
+                    return;
+                }
+                MessageBox.Show(this.socket.Send(Encoding.UTF8.GetBytes("create_game")).ToString());
+                MessageBox.Show(this.socket.Send(Encoding.UTF8.GetBytes(nombre.ToCharArray())).ToString());
+                byte[] b_n_jugadores = BitConverter.GetBytes(n_jugadores);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_n_jugadores);
+                MessageBox.Show(this.socket.Send(b_n_jugadores).ToString());
                 this.Rellenar_lista_partidas();
             }
             catch (Exception ex)
