@@ -120,6 +120,7 @@
             this.bChatear.TabIndex = 5;
             this.bChatear.Text = "Chatear";
             this.bChatear.UseVisualStyleBackColor = true;
+            this.bChatear.Click += new System.EventHandler(this.bChatear_Click);
             // 
             // listaPartidas
             // 

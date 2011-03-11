@@ -272,5 +272,12 @@ namespace Juego_Hotel
             this.Rellenar_lista_usuarios();
             this.Rellenar_lista_partidas();
         }
+
+        private void bChatear_Click(object sender, EventArgs e)
+        {
+            Chat frm_chat = new Chat();
+            frm_chat.añadir_jugador(this.listaUsuarios.SelectedItem.ToString());
+            frm_chat.Show();
+        }
     }
 }
