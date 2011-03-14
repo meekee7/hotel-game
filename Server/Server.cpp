@@ -155,7 +155,6 @@ void handle_command(string command, player* p)
 			if (i != --plist.end())
 				res += '~';
 		}
-      cout << "User list: " << res << endl;
       send_int(p, res.length());
       send_string(p, res);
 	}
@@ -170,7 +169,6 @@ void handle_command(string command, player* p)
 			if (i != --glist.end())
 				res += '~';
 		}
-      cout << "Game list: " << res << endl;
       send_int(p, res.length());
 		if (res.length() != 0)
          send_string(p, res);
