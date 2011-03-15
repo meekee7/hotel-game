@@ -12,27 +12,53 @@ namespace Juego_Hotel
     public partial class Chat : Form
     {
         LinkedList<String> jugadores;
-        public Chat()
+        Boolean global;
+        Online frm_online;
+        public Chat(Boolean global)
         {
             InitializeComponent();
             this.jugadores = new LinkedList<String>();
+            this.global = global;
+            this.frm_online = null;
+        }
+
+        public Chat(Boolean global, Online frm_online)
+        {
+            InitializeComponent();
+            this.jugadores = new LinkedList<String>();
+            this.global = global;
+            this.frm_online = frm_online;
         }
 
         public void rellenar_lista()
         {
-            this.listaJugadores.BeginUpdate();
-            this.listaJugadores.Items.Clear();
-            foreach (String nombre in this.jugadores)
+            if (this.global)
             {
-                this.listaJugadores.Items.Add(nombre);
+
             }
-            this.listaJugadores.EndUpdate();
+            else
+            {
+                this.listaJugadores.BeginUpdate();
+                this.listaJugadores.Items.Clear();
+                foreach (String nombre in this.jugadores)
+                {
+                    this.listaJugadores.Items.Add(nombre);
+                }
+                this.listaJugadores.EndUpdate();
+            }
         }
 
         public void añadir_jugador(String nombre)
         {
             this.jugadores.AddLast(nombre);
             this.rellenar_lista();
+        }
+
+        private void Chat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.global)
+                this.frm_online.chat_cerrado();
+            //this.Close();
         }
     }
 }

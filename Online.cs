@@ -22,6 +22,41 @@ namespace Juego_Hotel
             this.interfaz = interfaz;
         }
 
+        public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
+        {
+            byte[] data = new byte[longitud];
+            bytes_recibidos = s.Receive(data);
+            String s_data;
+            if (bytes_recibidos > 0)
+                s_data = System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos);
+            else
+                s_data = "";
+            data = null;
+            return s_data;
+        }
+
+        int recibir_int(Socket s, ref int bytes_recibidos)
+        {
+            byte[] b_int = new byte[4];
+            bytes_recibidos = s.Receive(b_int);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(b_int);
+            return BitConverter.ToInt32(b_int, 0);
+        }
+
+        int enviar_string(Socket s, String texto)
+        {
+            return s.Send(Encoding.UTF8.GetBytes(texto));
+        }
+
+        int enviar_int(Socket s, int num)
+        {
+            byte[] b_int = BitConverter.GetBytes(num);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(b_int);
+            return s.Send(b_int);
+        }
+
         private void bLogin_Click(object sender, EventArgs e)
         {
             if (socket.Connected)
@@ -34,17 +69,15 @@ namespace Juego_Hotel
                 {
                     try
                     {
-                        byte[] b_long_login = BitConverter.GetBytes(this.txtLogin.Text.Length);
-                        if (BitConverter.IsLittleEndian)
-                            Array.Reverse(b_long_login);
-                        socket.Send(b_long_login);
-                        socket.Send(Encoding.UTF8.GetBytes(this.txtLogin.Text.ToCharArray()));
-                        byte[] data = new byte[8];
-                        int bytes_recibidos = socket.Receive(data);
-                        if (System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos) == "login ko")
+                        enviar_int(this.socket, this.txtLogin.Text.Length);
+                        enviar_string(this.socket, this.txtLogin.Text);
+                        int bytes_recibidos = 0;
+                        String res_login = recibir_string(this.socket, 8, ref bytes_recibidos);
+                        if (res_login == "login ko")
                         {
                             MessageBox.Show("El apodo ya está en uso");
                             this.bDesconectar.PerformClick();
+                            this.txtLogin.Enabled = true;
                         }
                         else
                         {
@@ -52,10 +85,11 @@ namespace Juego_Hotel
                             this.Rellenar_lista_partidas();
                             this.bLogin.Enabled = false;
                             this.bCrearPartida.Enabled = true;
-                            this.bChatear.Enabled = true;
+                            this.bCrearConv.Enabled = true;
+                            this.txtLogin.Enabled = false;
                             this.refrescoListas.Start();
                         }
-                        data = null;
+                        //data = null;
                     }
                     catch (Exception ex)
                     {
@@ -187,7 +221,8 @@ namespace Juego_Hotel
             this.bLogin.Enabled = false;
             this.bDesconectar.Enabled = false;
             this.bCrearPartida.Enabled = false;
-            this.bChatear.Enabled = false;
+            this.bCrearConv.Enabled = false;
+            this.txtLogin.Enabled = true;
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
@@ -273,11 +308,40 @@ namespace Juego_Hotel
             this.Rellenar_lista_partidas();
         }
 
-        private void bChatear_Click(object sender, EventArgs e)
+        private void bCrearConv_Click(object sender, EventArgs e)
         {
-            Chat frm_chat = new Chat();
-            frm_chat.añadir_jugador(this.listaUsuarios.SelectedItem.ToString());
+            Chat frm_chat = new Chat(false);
+            if ((this.listaUsuarios.SelectedItems.Count < 1) ||
+                ((this.listaUsuarios.SelectedItems.Count == 1) && (this.listaUsuarios.SelectedItem.ToString() == this.txtLogin.Text)))
+            {
+                MessageBox.Show("Has de seleccionar al menos un usuario diferente del tuyo");
+                return;
+            }
+            frm_chat.añadir_jugador(this.txtLogin.Text.ToString());
+            foreach (Object nombre in this.listaUsuarios.SelectedItems)
+            {
+                if (nombre.ToString() != this.txtLogin.Text)
+                    frm_chat.añadir_jugador(nombre.ToString());
+            }
             frm_chat.Show();
+        }
+
+        private void bChatGlobal_Click(object sender, EventArgs e)
+        {
+            Chat frm_chat = new Chat(true, this);
+            byte[] b_long_comando = BitConverter.GetBytes("join_chat".Length);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(b_long_comando);
+            this.socket.Send(b_long_comando);
+            this.socket.Send(Encoding.UTF8.GetBytes("join_chat"));
+            this.bChatGlobal.Enabled = false;
+            frm_chat.rellenar_lista();
+            frm_chat.Show();
+        }
+
+        public void chat_cerrado()
+        {
+            this.bChatGlobal.Enabled = true;
         }
     }
 }

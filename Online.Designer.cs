@@ -36,11 +36,12 @@
             this.listaUsuarios = new System.Windows.Forms.ListBox();
             this.bDesconectar = new System.Windows.Forms.Button();
             this.bCrearPartida = new System.Windows.Forms.Button();
-            this.bChatear = new System.Windows.Forms.Button();
+            this.bCrearConv = new System.Windows.Forms.Button();
             this.listaPartidas = new System.Windows.Forms.ListBox();
             this.LUsuarios = new System.Windows.Forms.Label();
             this.LPartidas = new System.Windows.Forms.Label();
             this.refrescoListas = new System.Windows.Forms.Timer(this.components);
+            this.bChatGlobal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtLogin
@@ -86,6 +87,7 @@
             this.listaUsuarios.HorizontalScrollbar = true;
             this.listaUsuarios.Location = new System.Drawing.Point(12, 88);
             this.listaUsuarios.Name = "listaUsuarios";
+            this.listaUsuarios.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listaUsuarios.Size = new System.Drawing.Size(181, 134);
             this.listaUsuarios.TabIndex = 4;
             // 
@@ -111,16 +113,16 @@
             this.bCrearPartida.UseVisualStyleBackColor = true;
             this.bCrearPartida.Click += new System.EventHandler(this.bCrearPartida_Click);
             // 
-            // bChatear
+            // bCrearConv
             // 
-            this.bChatear.Enabled = false;
-            this.bChatear.Location = new System.Drawing.Point(210, 88);
-            this.bChatear.Name = "bChatear";
-            this.bChatear.Size = new System.Drawing.Size(80, 23);
-            this.bChatear.TabIndex = 5;
-            this.bChatear.Text = "Chatear";
-            this.bChatear.UseVisualStyleBackColor = true;
-            this.bChatear.Click += new System.EventHandler(this.bChatear_Click);
+            this.bCrearConv.Enabled = false;
+            this.bCrearConv.Location = new System.Drawing.Point(210, 88);
+            this.bCrearConv.Name = "bCrearConv";
+            this.bCrearConv.Size = new System.Drawing.Size(80, 35);
+            this.bCrearConv.TabIndex = 5;
+            this.bCrearConv.Text = "Crear conversación";
+            this.bCrearConv.UseVisualStyleBackColor = true;
+            this.bCrearConv.Click += new System.EventHandler(this.bCrearConv_Click);
             // 
             // listaPartidas
             // 
@@ -154,15 +156,26 @@
             this.refrescoListas.Interval = 5000;
             this.refrescoListas.Tick += new System.EventHandler(this.refrescoListas_Tick);
             // 
+            // bChatGlobal
+            // 
+            this.bChatGlobal.Location = new System.Drawing.Point(210, 129);
+            this.bChatGlobal.Name = "bChatGlobal";
+            this.bChatGlobal.Size = new System.Drawing.Size(80, 23);
+            this.bChatGlobal.TabIndex = 11;
+            this.bChatGlobal.Text = "Chat global";
+            this.bChatGlobal.UseVisualStyleBackColor = true;
+            this.bChatGlobal.Click += new System.EventHandler(this.bChatGlobal_Click);
+            // 
             // Online
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(303, 388);
+            this.Controls.Add(this.bChatGlobal);
             this.Controls.Add(this.LPartidas);
             this.Controls.Add(this.LUsuarios);
             this.Controls.Add(this.listaPartidas);
-            this.Controls.Add(this.bChatear);
+            this.Controls.Add(this.bCrearConv);
             this.Controls.Add(this.bCrearPartida);
             this.Controls.Add(this.bDesconectar);
             this.Controls.Add(this.listaUsuarios);
@@ -187,10 +200,11 @@
         private System.Windows.Forms.ListBox listaUsuarios;
         private System.Windows.Forms.Button bDesconectar;
         private System.Windows.Forms.Button bCrearPartida;
-        private System.Windows.Forms.Button bChatear;
+        private System.Windows.Forms.Button bCrearConv;
         private System.Windows.Forms.ListBox listaPartidas;
         private System.Windows.Forms.Label LUsuarios;
         private System.Windows.Forms.Label LPartidas;
         private System.Windows.Forms.Timer refrescoListas;
+        private System.Windows.Forms.Button bChatGlobal;
     }
 }

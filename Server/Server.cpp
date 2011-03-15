@@ -18,6 +18,7 @@ portable_socket* socket_server;
 portable_socket* socket_client;
 list<player> plist; // Player list
 list<game> glist; // Game list
+list<player> chat_list; // Players in global chat
 
 void unhook_signals()
 {
@@ -186,6 +187,10 @@ void handle_command(string command, player* p)
       new_game.creator = *p;
       new_game.plist.push_back(*p);
       glist.push_back(new_game);
+   }
+   else if (command == "join_chat")
+   {
+      chat_list.push_back(*p);
    }
 }
 
