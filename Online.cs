@@ -13,8 +13,8 @@ namespace Juego_Hotel
 {
     public partial class Online : Form
     {
-        Principal interfaz;
-        Socket socket;
+        public Principal interfaz;
+        public Socket socket;
 
         public Online(Principal interfaz)
         {
@@ -35,7 +35,7 @@ namespace Juego_Hotel
             return s_data;
         }
 
-        int recibir_int(Socket s, ref int bytes_recibidos)
+        public int recibir_int(Socket s, ref int bytes_recibidos)
         {
             byte[] b_int = new byte[4];
             bytes_recibidos = s.Receive(b_int);
@@ -44,12 +44,12 @@ namespace Juego_Hotel
             return BitConverter.ToInt32(b_int, 0);
         }
 
-        int enviar_string(Socket s, String texto)
+        public int enviar_string(Socket s, String texto)
         {
             return s.Send(Encoding.UTF8.GetBytes(texto));
         }
 
-        int enviar_int(Socket s, int num)
+        public int enviar_int(Socket s, int num)
         {
             byte[] b_int = BitConverter.GetBytes(num);
             if (BitConverter.IsLittleEndian)
@@ -69,7 +69,7 @@ namespace Juego_Hotel
                 {
                     try
                     {
-                        enviar_int(this.socket, this.txtLogin.Text.Length);
+                        enviar_int(this.socket, Encoding.UTF8.GetBytes(this.txtLogin.Text).Length);
                         enviar_string(this.socket, this.txtLogin.Text);
                         int bytes_recibidos = 0;
                         String res_login = recibir_string(this.socket, 8, ref bytes_recibidos);
@@ -89,7 +89,6 @@ namespace Juego_Hotel
                             this.txtLogin.Enabled = false;
                             this.refrescoListas.Start();
                         }
-                        //data = null;
                     }
                     catch (Exception ex)
                     {
@@ -123,29 +122,18 @@ namespace Juego_Hotel
         {
             try
             {
-                byte[] b_long_comando = BitConverter.GetBytes("get_users".Length);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(b_long_comando);
-                this.socket.Send(b_long_comando);
-                this.socket.Send(Encoding.UTF8.GetBytes("get_users"));
+                this.enviar_int(this.socket, 9);
+                this.enviar_string(this.socket, "get_users");
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
-                byte[] b_long_cadena = new byte[4];
-                this.socket.Receive(b_long_cadena);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(b_long_cadena);
-                int long_cadena = BitConverter.ToInt32(b_long_cadena, 0);
-                byte[] b_lista_jugadores = new byte[long_cadena];
-                int bytes_recibidos;
-                bytes_recibidos = this.socket.Receive(b_lista_jugadores);
-                string s_lista_jugadores = Encoding.UTF8.GetString(b_lista_jugadores, 0, bytes_recibidos);
-                string[] lista_jugadores = s_lista_jugadores.Split('~');
+                int bytes_recibidos = 0;
+                int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
+                String s_lista_jugadores = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                String[] lista_jugadores = s_lista_jugadores.Split('~');
                 this.listaUsuarios.BeginUpdate();
                 this.listaUsuarios.Items.Clear();
-                foreach (string nombre in lista_jugadores)
+                foreach (String nombre in lista_jugadores)
                     this.listaUsuarios.Items.Add(nombre);
                 this.listaUsuarios.EndUpdate();
-                b_long_comando = null;
-                b_long_cadena = null;
                 s_lista_jugadores = null;
                 lista_jugadores = null;
             }
@@ -161,33 +149,20 @@ namespace Juego_Hotel
         {
             try
             {
-                byte[] b_long_comando = BitConverter.GetBytes("get_games".Length);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(b_long_comando);
-                this.socket.Send(b_long_comando);
-                this.socket.Send(Encoding.UTF8.GetBytes("get_games"));
+                this.enviar_int(this.socket, 9);
+                this.enviar_string(this.socket, "get_games");
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
-                byte[] b_long_cadena = new byte[4];
-                this.socket.Receive(b_long_cadena);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(b_long_cadena);
-                int long_cadena = BitConverter.ToInt32(b_long_cadena, 0);
+                int bytes_recibidos = 0;
+                int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
                 if (long_cadena == 0)
-                {
-                    b_long_cadena = null;
                     return;
-                }
-                byte[] b_lista_partidas = new byte[long_cadena];
-                int bytes_recibidos;
-                bytes_recibidos = this.socket.Receive(b_lista_partidas);
-                string s_lista_partidas = Encoding.UTF8.GetString(b_lista_partidas, 0, bytes_recibidos);
-                string[] lista_partidas = s_lista_partidas.Split('~');
+                String s_lista_partidas = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                String[] lista_partidas = s_lista_partidas.Split('~');
                 this.listaPartidas.BeginUpdate();
                 this.listaPartidas.Items.Clear();
-                foreach (string nombre in lista_partidas)
+                foreach (String nombre in lista_partidas)
                     this.listaPartidas.Items.Add(nombre);
                 this.listaPartidas.EndUpdate();
-                b_lista_partidas = null;
                 s_lista_partidas = null;
             }
             catch (Exception ex)
@@ -267,7 +242,12 @@ namespace Juego_Hotel
                     MessageBox.Show("El número máximo de jugadores es 4");
                     return;
                 }
-                byte[] b_long_comando = BitConverter.GetBytes("create_game".Length);
+                this.enviar_int(this.socket, 11);
+                this.enviar_string(this.socket, "create_game");
+                this.enviar_int(this.socket, nombre.Length);
+                this.enviar_string(this.socket, nombre);
+                this.enviar_int(this.socket, n_jugadores);
+                /*byte[] b_long_comando = BitConverter.GetBytes("create_game".Length);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(b_long_comando);
                 socket.Send(b_long_comando);
@@ -280,7 +260,7 @@ namespace Juego_Hotel
                 bytes = BitConverter.GetBytes(n_jugadores);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(bytes);
-                this.socket.Send(bytes);
+                this.socket.Send(bytes);*/
                 this.Rellenar_lista_partidas();
             }
             catch (Exception ex)
@@ -329,11 +309,8 @@ namespace Juego_Hotel
         private void bChatGlobal_Click(object sender, EventArgs e)
         {
             Chat frm_chat = new Chat(true, this);
-            byte[] b_long_comando = BitConverter.GetBytes("join_chat".Length);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(b_long_comando);
-            this.socket.Send(b_long_comando);
-            this.socket.Send(Encoding.UTF8.GetBytes("join_chat"));
+            enviar_int(this.socket, 9);
+            enviar_string(this.socket, "join_chat");
             this.bChatGlobal.Enabled = false;
             frm_chat.rellenar_lista();
             frm_chat.Show();

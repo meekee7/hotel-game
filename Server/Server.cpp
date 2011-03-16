@@ -18,7 +18,7 @@ portable_socket* socket_server;
 portable_socket* socket_client;
 list<player> plist; // Player list
 list<game> glist; // Game list
-list<player> chat_list; // Players in global chat
+list<player*> chat_list; // Players in global chat
 
 void unhook_signals()
 {
@@ -29,12 +29,30 @@ void unhook_signals()
    #endif
 }
 
+void empty_chat_list()
+{
+   list<player*>::iterator i;
+	for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+	{
+		*i = NULL;
+	}
+}
+
+void empty_glist()
+{
+   list<game>::iterator i;
+	for (i = glist.begin() ; i != glist.end() ; ++i)
+	{
+      glist.erase(i);
+	}
+}
+
 void empty_plist()
 {
 	list<player>::iterator i;
 	for (i = plist.begin() ; i != plist.end() ; ++i)
 	{
-		delete i->socket;
+      plist.erase(i);
 	}
 }
 
@@ -46,6 +64,7 @@ void cerrar (int signum)
    delete socket_server;
    if (socket_client != NULL)
       delete socket_client;
+   empty_chat_list();
    empty_plist();
    exit(0);
 }
@@ -190,7 +209,23 @@ void handle_command(string command, player* p)
    }
    else if (command == "join_chat")
    {
-      chat_list.push_back(*p);
+      chat_list.push_back(p);
+   }
+   else if (command == "get_chat_users")
+   {
+      // Get all users and join into a string with the separator ~
+		string res = "";
+		list<player*>::iterator i;
+      player* temp_p;
+		for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+		{
+         temp_p = *i;
+			res += temp_p->name;
+			if (i != --chat_list.end())
+				res += '~';
+		}
+      send_int(p, res.length());
+      send_string(p, res);
    }
 }
 

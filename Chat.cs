@@ -34,7 +34,17 @@ namespace Juego_Hotel
         {
             if (this.global)
             {
-
+                frm_online.enviar_int(frm_online.socket, 14);
+                frm_online.enviar_string(frm_online.socket, "get_chat_users");
+                int bytes_recibidos = 0;
+                int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
+                String[] lista_jugadores = lista.Split('~');
+                this.listaJugadores.BeginUpdate();
+                this.listaJugadores.Items.Clear();
+                foreach (String nombre in lista_jugadores)
+                    this.listaJugadores.Items.Add(nombre);
+                this.listaJugadores.EndUpdate();
             }
             else
             {
@@ -58,7 +68,6 @@ namespace Juego_Hotel
         {
             if (this.global)
                 this.frm_online.chat_cerrado();
-            //this.Close();
         }
     }
 }
