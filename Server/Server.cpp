@@ -43,8 +43,8 @@ void empty_glist()
    list<game*>::iterator i;
 	for (i = glist.begin() ; i != glist.end() ; ++i)
 	{
-      //delete (i);
-      glist.erase(i);
+      game* g = *i;;
+      delete g;
 	}
 }
 
@@ -53,15 +53,15 @@ void empty_plist()
 	list<player*>::iterator i;
 	for (i = plist.begin() ; i != plist.end() ; ++i)
 	{
-      //delete (i);
-      plist.erase(i);
+      player* p = *i;
+      delete p;
 	}
 }
 
 void cerrar (int signum)
 {
 	closing = 1;
-   cout << "Closing server" << endl;
+   cout << endl << "Closing server" << endl;
    unhook_signals();
    delete socket_server;
 }
@@ -300,11 +300,13 @@ void run_server()
             cout << "accept error: " << socket_server->get_last_error() << endl;
          else
          {
-            cout << "Continue closing" << endl;
-            // The server is really closed
+            // The server is really closing
             empty_chat_list();
+            cout << "Chat list cleaned" << endl;
             empty_glist();
+            cout << "Game list cleaned" << endl;
             empty_plist();
+            cout << "Player list cleaned" << endl;
             return;
          }
       }
