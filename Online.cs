@@ -155,7 +155,10 @@ namespace Juego_Hotel
                 int bytes_recibidos = 0;
                 int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
                 if (long_cadena == 0)
+                {
+                    this.listaPartidas.Items.Clear();
                     return;
+                }
                 String s_lista_partidas = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 String[] lista_partidas = s_lista_partidas.Split('~');
                 this.listaPartidas.BeginUpdate();
@@ -181,6 +184,7 @@ namespace Juego_Hotel
 
         private void bDesconectar_Click(object sender, EventArgs e)
         {
+            this.refrescoListas.Stop();
             try
             {
                 this.socket.Shutdown(SocketShutdown.Both);
@@ -189,7 +193,6 @@ namespace Juego_Hotel
             {
                 MessageBox.Show("Error al desconectar: " + ex.Message);
             }
-            this.refrescoListas.Stop();
             this.socket.Close();
             this.socket = null;
             this.bConectar.Enabled = true;
@@ -247,20 +250,6 @@ namespace Juego_Hotel
                 this.enviar_int(this.socket, nombre.Length);
                 this.enviar_string(this.socket, nombre);
                 this.enviar_int(this.socket, n_jugadores);
-                /*byte[] b_long_comando = BitConverter.GetBytes("create_game".Length);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(b_long_comando);
-                socket.Send(b_long_comando);
-                this.socket.Send(Encoding.UTF8.GetBytes("create_game"));
-                byte[] bytes = BitConverter.GetBytes(nombre.Length);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(bytes);
-                this.socket.Send(bytes);
-                this.socket.Send(Encoding.UTF8.GetBytes(nombre.ToCharArray()));
-                bytes = BitConverter.GetBytes(n_jugadores);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(bytes);
-                this.socket.Send(bytes);*/
                 this.Rellenar_lista_partidas();
             }
             catch (Exception ex)

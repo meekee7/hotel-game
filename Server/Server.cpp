@@ -208,6 +208,10 @@ void handle_command(string command, player* p)
    {
       chat_list.push_back(p);
    }
+   else if (command == "leave_chat")
+   {
+      chat_list.remove(p);
+   }
    else if (command == "get_chat_users")
    {
       // Get all users and join into a string with the separator ~
@@ -300,7 +304,7 @@ void run_server()
             cout << "accept error: " << socket_server->get_last_error() << endl;
          else
          {
-            // The server is really closing
+            // The server is closing
             empty_chat_list();
             cout << "Chat list cleaned" << endl;
             empty_glist();
