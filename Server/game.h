@@ -7,9 +7,9 @@ class game
 {
 public:
    string name;
-   player creator;
+   player* creator;
    int n_players;
-   list<player> plist;
+   list<player*> plist;
    game(void);
    ~game(void);
 };

@@ -16,8 +16,8 @@ using namespace dlib;
 volatile int closing = 0;
 portable_socket* socket_server;
 portable_socket* socket_client;
-list<player> plist; // Player list
-list<game> glist; // Game list
+list<player*> plist; // Player list
+list<game*> glist; // Game list
 list<player*> chat_list; // Players in global chat
 
 void unhook_signals()
@@ -40,18 +40,20 @@ void empty_chat_list()
 
 void empty_glist()
 {
-   list<game>::iterator i;
+   list<game*>::iterator i;
 	for (i = glist.begin() ; i != glist.end() ; ++i)
 	{
+      //delete (i);
       glist.erase(i);
 	}
 }
 
 void empty_plist()
 {
-	list<player>::iterator i;
+	list<player*>::iterator i;
 	for (i = plist.begin() ; i != plist.end() ; ++i)
 	{
+      //delete (i);
       plist.erase(i);
 	}
 }
@@ -59,14 +61,9 @@ void empty_plist()
 void cerrar (int signum)
 {
 	closing = 1;
-   printf ("Closing server\n");
+   cout << "Closing server" << endl;
    unhook_signals();
    delete socket_server;
-   if (socket_client != NULL)
-      delete socket_client;
-   empty_chat_list();
-   empty_plist();
-   exit(0);
 }
 
 void hook_signals()
@@ -81,10 +78,10 @@ void hook_signals()
 int add_player_to_list (player* p)
 {
 	bool found = false;
-	list<player>::iterator i = plist.begin();
+	list<player*>::iterator i = plist.begin();
 	while (!found && i != plist.end())
 	{
-		if (i->name == p->name)
+		if ((*i)->name == p->name)
 			found = true;
       else
          ++i;
@@ -97,7 +94,7 @@ int add_player_to_list (player* p)
 	else
 	{
 		cout << "Player accepted" << endl;
-		plist.push_back(*p);
+		plist.push_back(p);
 		return 0;
 	}
 }
@@ -105,10 +102,10 @@ int add_player_to_list (player* p)
 void delete_player_from_list(player* p)
 {
    bool found = false;
-	list<player>::iterator i = plist.begin();
+	list<player*>::iterator i = plist.begin();
 	while (!found && i != plist.end())
 	{
-		if (i->name == p->name)
+		if ((*i)->name == p->name)
 			found = true;
       else
          ++i;
@@ -168,10 +165,10 @@ void handle_command(string command, player* p)
 	{
 		// Get all users and join into a string with the separator ~
 		string res = "";
-		list<player>::iterator i;
+		list<player*>::iterator i;
 		for (i = plist.begin() ; i != plist.end() ; ++i)
 		{
-			res += i->name;
+			res += (*i)->name;
 			if (i != --plist.end())
 				res += '~';
 		}
@@ -182,10 +179,10 @@ void handle_command(string command, player* p)
 	{
 		// Get all users and join into a string with the separator ~
 		string res = "";
-		list<game>::iterator i;
+		list<game*>::iterator i;
 		for (i = glist.begin() ; i != glist.end() ; ++i)
 		{
-			res += i->name;
+			res += (*i)->name;
 			if (i != --glist.end())
 				res += '~';
 		}
@@ -200,11 +197,11 @@ void handle_command(string command, player* p)
       string name = receive_string(p, long_name, &bytes_received);
       int n_players = receive_int(p, &bytes_received);
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
-      game new_game;
-      new_game.name = name;
-      new_game.n_players = n_players;
-      new_game.creator = *p;
-      new_game.plist.push_back(*p);
+      game* new_game = new game();
+      new_game->name = name;
+      new_game->n_players = n_players;
+      new_game->creator = p;
+      new_game->plist.push_back(p);
       glist.push_back(new_game);
    }
    else if (command == "join_chat")
@@ -216,11 +213,9 @@ void handle_command(string command, player* p)
       // Get all users and join into a string with the separator ~
 		string res = "";
 		list<player*>::iterator i;
-      player* temp_p;
 		for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
 		{
-         temp_p = *i;
-			res += temp_p->name;
+			res += (*i)->name;
 			if (i != --chat_list.end())
 				res += '~';
 		}
@@ -301,9 +296,17 @@ void run_server()
          cout << "Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
       else
       {
-         cout << "accept error: " << socket_server->get_last_error() << endl;
-         delete socket_server;
-         return;
+         if (closing == 0)
+            cout << "accept error: " << socket_server->get_last_error() << endl;
+         else
+         {
+            cout << "Continue closing" << endl;
+            // The server is really closed
+            empty_chat_list();
+            empty_glist();
+            empty_plist();
+            return;
+         }
       }
       p = new player();
       p->ip = inet_ntoa(client_info.sin_addr);
