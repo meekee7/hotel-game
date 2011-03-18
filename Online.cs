@@ -15,11 +15,14 @@ namespace Juego_Hotel
     {
         public Principal interfaz;
         public Socket socket;
+        Chat frm_chat_global;
+        LinkedList<Chat> chats_abiertos;
 
         public Online(Principal interfaz)
         {
             InitializeComponent();
             this.interfaz = interfaz;
+            this.chats_abiertos = new LinkedList<Chat>();
         }
 
         public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
@@ -184,6 +187,19 @@ namespace Juego_Hotel
 
         private void bDesconectar_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar") == DialogResult.Yes)
+            {
+                this.frm_chat_global.Close();
+                foreach (Chat chat in this.chats_abiertos)
+                    chat.Close();
+                this.chats_abiertos.Clear();
+            }
+            else // Desactivar el botón Enviar de cada chat
+            {
+                this.frm_chat_global.desactivar_envio();
+                foreach (Chat chat in this.chats_abiertos)
+                    chat.desactivar_envio();
+            }
             this.refrescoListas.Stop();
             try
             {
@@ -200,6 +216,7 @@ namespace Juego_Hotel
             this.bDesconectar.Enabled = false;
             this.bCrearPartida.Enabled = false;
             this.bCrearConv.Enabled = false;
+            this.bChatGlobal.Enabled = false;
             this.txtLogin.Enabled = true;
         }
 
@@ -293,19 +310,20 @@ namespace Juego_Hotel
                     frm_chat.añadir_jugador(nombre.ToString());
             }
             frm_chat.Show();
+            this.chats_abiertos.AddFirst(frm_chat);
         }
 
         private void bChatGlobal_Click(object sender, EventArgs e)
         {
-            Chat frm_chat = new Chat(true, this);
+            this.frm_chat_global = new Chat(true, this);
             enviar_int(this.socket, 9);
             enviar_string(this.socket, "join_chat");
             this.bChatGlobal.Enabled = false;
-            frm_chat.rellenar_lista();
-            frm_chat.Show();
+            frm_chat_global.rellenar_lista();
+            frm_chat_global.Show();
         }
 
-        public void chat_cerrado()
+        public void chat_global_cerrado()
         {
             this.bChatGlobal.Enabled = true;
         }

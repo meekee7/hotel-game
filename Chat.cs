@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Juego_Hotel
 {
@@ -28,6 +29,11 @@ namespace Juego_Hotel
             this.jugadores = new LinkedList<String>();
             this.global = global;
             this.frm_online = frm_online;
+        }
+
+        public void desactivar_envio()
+        {
+            this.bEnviar.Enabled = false;
         }
 
         public void rellenar_lista()
@@ -78,9 +84,10 @@ namespace Juego_Hotel
             {
                 frm_online.enviar_int(frm_online.socket, 10);
                 frm_online.enviar_string(frm_online.socket, "leave_chat");
-                this.frm_online.chat_cerrado();
+                this.frm_online.chat_global_cerrado();
                 this.refrescoLista.Stop();
             }
+            MessageBox.Show("Cerrando chat");
         }
 
         private void refrescoLista_Tick(object sender, EventArgs e)
@@ -91,6 +98,31 @@ namespace Juego_Hotel
         private void Chat_Load(object sender, EventArgs e)
         {
             this.refrescoLista.Start();
+            Thread thread_recepcion = new Thread(esperar_mensajes);
+        }
+
+        private void esperar_mensajes()
+        {
+            String msg;
+            do
+            {
+                int bytes_recibidos = 0;
+                int long_msg = this.frm_online.recibir_int(this.frm_online.socket, ref bytes_recibidos);
+                msg = this.frm_online.recibir_string(this.frm_online.socket, long_msg, ref bytes_recibidos);
+                this.mensajes.AppendText(msg + Environment.NewLine);
+            }
+            while (msg != "##desconectar##");
+        }
+
+        private void bEnviar_Click(object sender, EventArgs e)
+        {
+            if (this.global)
+            {
+                this.frm_online.enviar_int(this.frm_online.socket, 15);
+                this.frm_online.enviar_string(this.frm_online.socket, "send_global_msg");
+                this.frm_online.enviar_int(this.frm_online.socket, this.mensaje.Text.Length);
+                this.frm_online.enviar_string(this.frm_online.socket, this.mensaje.Text);
+            }
         }
     }
 }

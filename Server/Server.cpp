@@ -226,6 +226,18 @@ void handle_command(string command, player* p)
       send_int(p, res.length());
       send_string(p, res);
    }
+   else if (command == "send_global_msg")
+   {
+      int bytes_received;
+      int long_msg = receive_int(p, &bytes_received);
+      string msg = receive_string(p, long_msg, &bytes_received);
+      msg = p->name + ": " + msg;
+      list<player*>::iterator i;
+		for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+      {
+         send_int(p, msg.length());
+      }
+   }
 }
 
 void handle_client(void* arg)

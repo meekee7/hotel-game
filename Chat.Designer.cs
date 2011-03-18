@@ -66,6 +66,7 @@
             this.bEnviar.TabIndex = 2;
             this.bEnviar.Text = "Enviar";
             this.bEnviar.UseVisualStyleBackColor = true;
+            this.bEnviar.Click += new System.EventHandler(this.bEnviar_Click);
             // 
             // listaJugadores
             // 
