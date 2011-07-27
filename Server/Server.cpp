@@ -233,7 +233,7 @@ void handle_command(string command, player* p)
       string msg = receive_string(p, long_msg, &bytes_received);
       msg = p->name + ": " + msg;
       list<player*>::iterator i;
-		for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+      for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
       {
          send_int(p, msg.length());
       }
