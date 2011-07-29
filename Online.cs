@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Juego_Hotel
 {
@@ -17,6 +18,9 @@ namespace Juego_Hotel
         public Socket socket;
         Chat frm_chat_global;
         LinkedList<Chat> chats_abiertos;
+        Thread thread_recepcion;
+        bool continuar_thread;
+        Mutex en_comunicacion;
 
         public Online(Principal interfaz)
         {
@@ -91,6 +95,10 @@ namespace Juego_Hotel
                             this.bCrearConv.Enabled = true;
                             this.txtLogin.Enabled = false;
                             this.refrescoListas.Start();
+                            thread_recepcion = new Thread(esperar_mensajes);
+                            this.continuar_thread = true;
+                            thread_recepcion.Start();
+                            this.en_comunicacion = new Mutex();
                         }
                     }
                     catch (Exception ex)
@@ -114,6 +122,7 @@ namespace Juego_Hotel
                 this.bLogin.Enabled = true;
                 this.bConectar.Enabled = false;
                 this.bDesconectar.Enabled = true;
+                this.txtLogin.Focus();
             }
             catch (Exception ex)
             {
@@ -125,8 +134,8 @@ namespace Juego_Hotel
         {
             try
             {
-                this.enviar_int(this.socket, 9);
-                this.enviar_string(this.socket, "get_users");
+                /*this.enviar_int(this.socket, 9);
+                this.enviar_string(this.socket, "get_users");*/
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 int bytes_recibidos = 0;
                 int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
@@ -152,8 +161,8 @@ namespace Juego_Hotel
         {
             try
             {
-                this.enviar_int(this.socket, 9);
-                this.enviar_string(this.socket, "get_games");
+                /*this.enviar_int(this.socket, 9);
+                this.enviar_string(this.socket, "get_games");*/
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 int bytes_recibidos = 0;
                 int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
@@ -196,11 +205,13 @@ namespace Juego_Hotel
             }
             else // Desactivar el botón Enviar de cada chat
             {
-                this.frm_chat_global.desactivar_envio();
+                if (this.frm_chat_global != null)
+                    this.frm_chat_global.desactivar_envio();
                 foreach (Chat chat in this.chats_abiertos)
                     chat.desactivar_envio();
             }
             this.refrescoListas.Stop();
+            this.continuar_thread = false;
             try
             {
                 this.socket.Shutdown(SocketShutdown.Both);
@@ -290,8 +301,15 @@ namespace Juego_Hotel
 
         private void refrescoListas_Tick(object sender, EventArgs e)
         {
-            this.Rellenar_lista_usuarios();
-            this.Rellenar_lista_partidas();
+            /*this.Rellenar_lista_usuarios();
+            this.Rellenar_lista_partidas();*/
+            // Cambiar esto para que sólo envíe la petición y se procese la respuesta en las funciones existentes
+            this.en_comunicacion.WaitOne(15000);
+            this.enviar_int(this.socket, 9);
+            this.enviar_string(this.socket, "get_users");
+            this.en_comunicacion.WaitOne(15000);
+            this.enviar_int(this.socket, 9);
+            this.enviar_string(this.socket, "get_games");
         }
 
         private void bCrearConv_Click(object sender, EventArgs e)
@@ -326,6 +344,18 @@ namespace Juego_Hotel
         public void chat_global_cerrado()
         {
             this.bChatGlobal.Enabled = true;
+        }
+
+        private void esperar_mensajes()
+        {
+            String msg = null;
+            do
+            {
+                if (msg == "##desconectar##")
+                    this.continuar_thread = false;
+                this.en_comunicacion.ReleaseMutex();
+            }
+            while (this.continuar_thread);
         }
     }
 }

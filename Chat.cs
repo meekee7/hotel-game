@@ -98,7 +98,7 @@ namespace Juego_Hotel
         private void Chat_Load(object sender, EventArgs e)
         {
             this.refrescoLista.Start();
-            Thread thread_recepcion = new Thread(esperar_mensajes);
+            //Thread thread_recepcion = new Thread(esperar_mensajes);
         }
 
         private void esperar_mensajes()
