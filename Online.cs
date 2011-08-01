@@ -20,7 +20,10 @@ namespace Juego_Hotel
         LinkedList<Chat> chats_abiertos;
         Thread thread_recepcion;
         bool continuar_thread;
-        Mutex en_comunicacion;
+        //static readonly object en_comunicacion = new object();
+        //Mutex mut_en_comunicacion;
+        Semaphore sem_en_comunicacion;
+        //static bool en_comunicacion;
 
         public Online(Principal interfaz)
         {
@@ -31,37 +34,69 @@ namespace Juego_Hotel
 
         public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
         {
-            byte[] data = new byte[longitud];
-            bytes_recibidos = s.Receive(data);
-            String s_data;
-            if (bytes_recibidos > 0)
-                s_data = System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos);
-            else
-                s_data = "";
-            data = null;
-            return s_data;
+            try
+            {
+                byte[] data = new byte[longitud];
+                bytes_recibidos = s.Receive(data);
+                String s_data;
+                if (bytes_recibidos > 0)
+                    s_data = System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos);
+                else
+                    s_data = "";
+                data = null;
+                return s_data;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                return null;
+            }
         }
 
         public int recibir_int(Socket s, ref int bytes_recibidos)
         {
-            byte[] b_int = new byte[4];
-            bytes_recibidos = s.Receive(b_int);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(b_int);
-            return BitConverter.ToInt32(b_int, 0);
+            try
+            {
+                byte[] b_int = new byte[4];
+                bytes_recibidos = s.Receive(b_int);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_int);
+                return BitConverter.ToInt32(b_int, 0);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                return 0;
+            }
         }
 
         public int enviar_string(Socket s, String texto)
         {
-            return s.Send(Encoding.UTF8.GetBytes(texto));
+            try
+            {
+                return s.Send(Encoding.UTF8.GetBytes(texto));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                return 0;
+            }
         }
 
         public int enviar_int(Socket s, int num)
         {
-            byte[] b_int = BitConverter.GetBytes(num);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(b_int);
-            return s.Send(b_int);
+            try
+            {
+                byte[] b_int = BitConverter.GetBytes(num);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(b_int);
+                return s.Send(b_int);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                return 0;
+            }
         }
 
         private void bLogin_Click(object sender, EventArgs e)
@@ -88,17 +123,17 @@ namespace Juego_Hotel
                         }
                         else
                         {
-                            this.Rellenar_lista_usuarios();
-                            this.Rellenar_lista_partidas();
                             this.bLogin.Enabled = false;
                             this.bCrearPartida.Enabled = true;
                             this.bCrearConv.Enabled = true;
                             this.txtLogin.Enabled = false;
-                            this.refrescoListas.Start();
+                            //this.mut_en_comunicacion = new Mutex();
+                            this.sem_en_comunicacion = new Semaphore(1, 1);
                             thread_recepcion = new Thread(esperar_mensajes);
                             this.continuar_thread = true;
                             thread_recepcion.Start();
-                            this.en_comunicacion = new Mutex();
+                            Thread.Sleep(200);
+                            this.refrescoListas.Start();
                         }
                     }
                     catch (Exception ex)
@@ -130,22 +165,35 @@ namespace Juego_Hotel
             }
         }
 
+        delegate void Actualizar_lista_usuarios_Callback(String[] lista);
+
+        private void Actualizar_lista_usuarios(String[] lista)
+        {
+            if (this.listaUsuarios.InvokeRequired)
+            {
+                Actualizar_lista_usuarios_Callback d = new Actualizar_lista_usuarios_Callback(Actualizar_lista_usuarios);
+                this.Invoke(d, new object[] { lista });
+            }
+            else
+            {
+                this.listaUsuarios.BeginUpdate();
+                this.listaUsuarios.Items.Clear();
+                foreach (String nombre in lista)
+                    this.listaUsuarios.Items.Add(nombre);
+                this.listaUsuarios.EndUpdate();
+            }
+        }
+
         private void Rellenar_lista_usuarios()
         {
             try
             {
-                /*this.enviar_int(this.socket, 9);
-                this.enviar_string(this.socket, "get_users");*/
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 int bytes_recibidos = 0;
                 int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
                 String s_lista_jugadores = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 String[] lista_jugadores = s_lista_jugadores.Split('~');
-                this.listaUsuarios.BeginUpdate();
-                this.listaUsuarios.Items.Clear();
-                foreach (String nombre in lista_jugadores)
-                    this.listaUsuarios.Items.Add(nombre);
-                this.listaUsuarios.EndUpdate();
+                this.Actualizar_lista_usuarios(lista_jugadores);
                 s_lista_jugadores = null;
                 lista_jugadores = null;
             }
@@ -157,27 +205,55 @@ namespace Juego_Hotel
             }
         }
 
+        delegate void Actualizar_lista_partidas_Callback(String[] lista);
+
+        private void Actualizar_lista_partidas(String[] lista)
+        {
+            if (this.listaPartidas.InvokeRequired)
+            {
+                Actualizar_lista_partidas_Callback d = new Actualizar_lista_partidas_Callback(Actualizar_lista_partidas);
+                this.Invoke(d, new object[] { lista });
+            }
+            else
+            {
+                this.listaPartidas.BeginUpdate();
+                this.listaPartidas.Items.Clear();
+                foreach (String nombre in lista)
+                    this.listaPartidas.Items.Add(nombre);
+                this.listaPartidas.EndUpdate();
+            }
+        }
+
+        delegate void Borrar_lista_partidas_Callback();
+
+        private void Borrar_lista_partidas()
+        {
+            if (this.listaPartidas.InvokeRequired)
+            {
+                Borrar_lista_partidas_Callback d = new Borrar_lista_partidas_Callback(Borrar_lista_partidas);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.listaPartidas.Items.Clear();
+            }
+        }
+
         private void Rellenar_lista_partidas()
         {
             try
             {
-                /*this.enviar_int(this.socket, 9);
-                this.enviar_string(this.socket, "get_games");*/
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 int bytes_recibidos = 0;
                 int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
                 if (long_cadena == 0)
                 {
-                    this.listaPartidas.Items.Clear();
+                    this.Borrar_lista_partidas();
                     return;
                 }
                 String s_lista_partidas = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 String[] lista_partidas = s_lista_partidas.Split('~');
-                this.listaPartidas.BeginUpdate();
-                this.listaPartidas.Items.Clear();
-                foreach (String nombre in lista_partidas)
-                    this.listaPartidas.Items.Add(nombre);
-                this.listaPartidas.EndUpdate();
+                this.Actualizar_lista_partidas(lista_partidas);
                 s_lista_partidas = null;
             }
             catch (Exception ex)
@@ -211,7 +287,8 @@ namespace Juego_Hotel
                     chat.desactivar_envio();
             }
             this.refrescoListas.Stop();
-            this.continuar_thread = false;
+            this.enviar_comando("#disconnect#");
+            Thread.Sleep(500);
             try
             {
                 this.socket.Shutdown(SocketShutdown.Both);
@@ -278,7 +355,7 @@ namespace Juego_Hotel
                 this.enviar_int(this.socket, nombre.Length);
                 this.enviar_string(this.socket, nombre);
                 this.enviar_int(this.socket, n_jugadores);
-                this.Rellenar_lista_partidas();
+                //this.Rellenar_lista_partidas();
             }
             catch (Exception ex)
             {
@@ -301,15 +378,8 @@ namespace Juego_Hotel
 
         private void refrescoListas_Tick(object sender, EventArgs e)
         {
-            /*this.Rellenar_lista_usuarios();
-            this.Rellenar_lista_partidas();*/
-            // Cambiar esto para que sólo envíe la petición y se procese la respuesta en las funciones existentes
-            this.en_comunicacion.WaitOne(15000);
-            this.enviar_int(this.socket, 9);
-            this.enviar_string(this.socket, "get_users");
-            this.en_comunicacion.WaitOne(15000);
-            this.enviar_int(this.socket, 9);
-            this.enviar_string(this.socket, "get_games");
+            this.enviar_comando("get_users");
+            this.enviar_comando("get_games");
         }
 
         private void bCrearConv_Click(object sender, EventArgs e)
@@ -349,13 +419,40 @@ namespace Juego_Hotel
         private void esperar_mensajes()
         {
             String msg = null;
+            int bytes_recibidos = 0;
             do
             {
-                if (msg == "##desconectar##")
+                int long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
+                msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
+                if (msg == "#disconnect#")
                     this.continuar_thread = false;
-                this.en_comunicacion.ReleaseMutex();
+                else if (msg == "player_list")
+                    this.Rellenar_lista_usuarios();
+                else if (msg == "game_list")
+                    this.Rellenar_lista_partidas();
+                msg = null;
+                this.sem_en_comunicacion.Release();
             }
             while (this.continuar_thread);
+        }
+
+        public void enviar_comando(String comando, params String[] parametros)
+        {
+            List<String> lista_parametros = new List<String>();
+            lista_parametros.Add(comando);
+            foreach (String parametro in parametros)
+                lista_parametros.Add(parametro);
+            Thread thread_envio_comando = new Thread(enviar_comando_t);
+            thread_envio_comando.Start(lista_parametros);
+        }
+
+        private void enviar_comando_t(object lista_parametros)
+        {
+            this.sem_en_comunicacion.WaitOne();
+            List<String> lista = (List<String>)lista_parametros;
+            String comando = lista[0];
+            this.enviar_int(this.socket, comando.Length);
+            this.enviar_string(this.socket,comando);
         }
     }
 }

@@ -161,19 +161,26 @@ int send_int (player* p, int data)
 
 void handle_command(string command, player* p)
 {
-	if (command == "get_users")
+	if (command == "#disconnect#")
 	{
-		// Get all users and join into a string with the separator ~
-		string res = "";
-		list<player*>::iterator i;
-		for (i = plist.begin() ; i != plist.end() ; ++i)
-		{
-			res += (*i)->name;
-			if (i != --plist.end())
-				res += '~';
-		}
-      send_int(p, res.length());
-      send_string(p, res);
+		send_int(p, 12);
+        send_string(p, "#disconnect#");
+	}
+    else if (command == "get_users")
+    {
+        // Get all users and join into a string with the separator ~
+        string res = "";
+        list<player*>::iterator i;
+        for (i = plist.begin() ; i != plist.end() ; ++i)
+        {
+            res += (*i)->name;
+            if (i != --plist.end())
+               res += '~';
+	    }
+		send_int(p, 11);
+        send_string(p, "player_list");
+        send_int(p, res.length());
+        send_string(p, res);
 	}
 	else if (command == "get_games")
 	{
@@ -186,9 +193,11 @@ void handle_command(string command, player* p)
 			if (i != --glist.end())
 				res += '~';
 		}
-      send_int(p, res.length());
+		send_int(p, 9);
+        send_string(p, "game_list");
+        send_int(p, res.length());
 		if (res.length() != 0)
-         send_string(p, res);
+            send_string(p, res);
 	}
 	else if (command == "create_game")
 	{
@@ -236,6 +245,7 @@ void handle_command(string command, player* p)
       for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
       {
          send_int(p, msg.length());
+		 send_string(p, msg);
       }
    }
 }
