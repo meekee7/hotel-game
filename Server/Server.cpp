@@ -159,28 +159,33 @@ int send_int (player* p, int data)
    return p->socket->psend(&data, sizeof(data), 0);
 }
 
+void enviar_comando(string comando, player* p)
+{
+	cout << "Sending command: " << comando << endl;
+   send_int(p, comando.length());
+   send_string(p, comando);
+}
+
 void handle_command(string command, player* p)
 {
-	if (command == "#disconnect#")
-	{
-		send_int(p, 12);
-        send_string(p, "#disconnect#");
+   if (command == "#disconnect#")
+   {
+      enviar_comando("#disconnect#", p);
 	}
-    else if (command == "get_users")
-    {
-        // Get all users and join into a string with the separator ~
-        string res = "";
-        list<player*>::iterator i;
-        for (i = plist.begin() ; i != plist.end() ; ++i)
-        {
-            res += (*i)->name;
-            if (i != --plist.end())
-               res += '~';
-	    }
-		send_int(p, 11);
-        send_string(p, "player_list");
-        send_int(p, res.length());
-        send_string(p, res);
+   else if (command == "get_users")
+   {
+      // Get all users and join into a string with the separator ~
+      string res = "";
+      list<player*>::iterator i;
+      for (i = plist.begin() ; i != plist.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --plist.end())
+            res += '~';
+      }
+      enviar_comando("player_list", p);
+      send_int(p, res.length());
+      send_string(p, res);
 	}
 	else if (command == "get_games")
 	{
@@ -193,11 +198,10 @@ void handle_command(string command, player* p)
 			if (i != --glist.end())
 				res += '~';
 		}
-		send_int(p, 9);
-        send_string(p, "game_list");
-        send_int(p, res.length());
-		if (res.length() != 0)
-            send_string(p, res);
+      enviar_comando("game_list", p);
+      send_int(p, res.length());
+		if (res.length() != 0)      
+         send_string(p, res);
 	}
 	else if (command == "create_game")
 	{
@@ -224,14 +228,15 @@ void handle_command(string command, player* p)
    else if (command == "get_chat_users")
    {
       // Get all users and join into a string with the separator ~
-		string res = "";
-		list<player*>::iterator i;
-		for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
-		{
-			res += (*i)->name;
-			if (i != --chat_list.end())
-				res += '~';
-		}
+      string res = "";
+      list<player*>::iterator i;
+      for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+      {
+      res += (*i)->name;
+      if (i != --chat_list.end())
+		res += '~';
+      }
+      enviar_comando("global_chat_userlist", p);
       send_int(p, res.length());
       send_string(p, res);
    }
@@ -240,12 +245,14 @@ void handle_command(string command, player* p)
       int bytes_received;
       int long_msg = receive_int(p, &bytes_received);
       string msg = receive_string(p, long_msg, &bytes_received);
-      msg = p->name + ": " + msg;
       list<player*>::iterator i;
+      enviar_comando("new_global_chat_msg", p);
       for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
       {
+         send_int(p, p->name.length());
+         send_string(p, p->name);
          send_int(p, msg.length());
-		 send_string(p, msg);
+         send_string(p, msg);
       }
    }
 }
@@ -282,6 +289,7 @@ void handle_client(void* arg)
             online = false;
             cout << "Client disconnected" << endl;
             delete_player_from_list(p);
+            chat_list.remove(p);
          }
       }
    }

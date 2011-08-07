@@ -23,7 +23,7 @@ namespace Juego_Hotel
         //static readonly object en_comunicacion = new object();
         //Mutex mut_en_comunicacion;
         Semaphore sem_en_comunicacion;
-        //static bool en_comunicacion;
+        bool en_comunicacion;
 
         public Online(Principal interfaz)
         {
@@ -127,13 +127,14 @@ namespace Juego_Hotel
                             this.bCrearPartida.Enabled = true;
                             this.bCrearConv.Enabled = true;
                             this.txtLogin.Enabled = false;
-                            //this.mut_en_comunicacion = new Mutex();
                             this.sem_en_comunicacion = new Semaphore(1, 1);
                             thread_recepcion = new Thread(esperar_mensajes);
                             this.continuar_thread = true;
                             thread_recepcion.Start();
                             Thread.Sleep(200);
                             this.refrescoListas.Start();
+                            this.enviar_comando("get_users", true);
+                            this.enviar_comando("get_games", true);
                         }
                     }
                     catch (Exception ex)
@@ -157,6 +158,7 @@ namespace Juego_Hotel
                 this.bLogin.Enabled = true;
                 this.bConectar.Enabled = false;
                 this.bDesconectar.Enabled = true;
+                this.txtServidor.Enabled = false;
                 this.txtLogin.Focus();
             }
             catch (Exception ex)
@@ -287,7 +289,7 @@ namespace Juego_Hotel
                     chat.desactivar_envio();
             }
             this.refrescoListas.Stop();
-            this.enviar_comando("#disconnect#");
+            this.enviar_comando("#disconnect#", true);
             Thread.Sleep(500);
             try
             {
@@ -306,6 +308,7 @@ namespace Juego_Hotel
             this.bCrearConv.Enabled = false;
             this.bChatGlobal.Enabled = false;
             this.txtLogin.Enabled = true;
+            this.txtServidor.Enabled = true;
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
@@ -355,7 +358,6 @@ namespace Juego_Hotel
                 this.enviar_int(this.socket, nombre.Length);
                 this.enviar_string(this.socket, nombre);
                 this.enviar_int(this.socket, n_jugadores);
-                //this.Rellenar_lista_partidas();
             }
             catch (Exception ex)
             {
@@ -378,8 +380,8 @@ namespace Juego_Hotel
 
         private void refrescoListas_Tick(object sender, EventArgs e)
         {
-            this.enviar_comando("get_users");
-            this.enviar_comando("get_games");
+            this.enviar_comando("get_users", true);
+            this.enviar_comando("get_games", true);
         }
 
         private void bCrearConv_Click(object sender, EventArgs e)
@@ -404,10 +406,9 @@ namespace Juego_Hotel
         private void bChatGlobal_Click(object sender, EventArgs e)
         {
             this.frm_chat_global = new Chat(true, this);
-            enviar_int(this.socket, 9);
-            enviar_string(this.socket, "join_chat");
+            this.enviar_comando("join_chat", false);
             this.bChatGlobal.Enabled = false;
-            frm_chat_global.rellenar_lista();
+            this.enviar_comando("get_chat_users", true);
             frm_chat_global.Show();
         }
 
@@ -430,16 +431,22 @@ namespace Juego_Hotel
                     this.Rellenar_lista_usuarios();
                 else if (msg == "game_list")
                     this.Rellenar_lista_partidas();
+                else if (msg == "global_chat_userlist")
+                    this.frm_chat_global.rellenar_lista();
+                else if (msg == "new_global_chat_msg")
+                    this.Nuevo_mensaje_chat_global();
                 msg = null;
-                this.sem_en_comunicacion.Release();
+                if (this.en_comunicacion)
+                    this.sem_en_comunicacion.Release();
             }
             while (this.continuar_thread);
         }
 
-        public void enviar_comando(String comando, params String[] parametros)
+        public void enviar_comando(String comando, Boolean necesita_respuesta, params String[] parametros)
         {
             List<String> lista_parametros = new List<String>();
             lista_parametros.Add(comando);
+            lista_parametros.Add(necesita_respuesta.ToString());
             foreach (String parametro in parametros)
                 lista_parametros.Add(parametro);
             Thread thread_envio_comando = new Thread(enviar_comando_t);
@@ -451,8 +458,54 @@ namespace Juego_Hotel
             this.sem_en_comunicacion.WaitOne();
             List<String> lista = (List<String>)lista_parametros;
             String comando = lista[0];
+            Boolean necesita_respuesta = Convert.ToBoolean(lista[1]);
             this.enviar_int(this.socket, comando.Length);
-            this.enviar_string(this.socket,comando);
+            this.enviar_string(this.socket, comando);
+            // Comprobación de existencia de parámetros.
+            // El protocolo es este: Si existen parámetros, se supone que son cadenas para enviar
+            // Para cada cadena, primero se envía su longitud y luego la cadena en sí
+            // Nos quitamos los dos primeros elementos, que ya han sido tratados, se repite el indice
+            // porque al quitar el primero, el segundo se convierte en primero
+            // El bucle solo entrará si hay parámetros
+            lista.RemoveAt(0);
+            lista.RemoveAt(0);
+            foreach (String parametro in lista)
+            {
+                this.enviar_int(this.socket, parametro.Length);
+                this.enviar_string(this.socket, parametro);
+            }
+            if (necesita_respuesta)
+                this.en_comunicacion = true;
+            else
+            {
+                this.en_comunicacion = false;
+                this.sem_en_comunicacion.Release();
+            }
+        }
+
+        private void Nuevo_mensaje_chat_global()
+        {
+            try
+            {
+                // Primero se recibe la longitud de la cadena con el remitente
+                int bytes_recibidos = 0;
+                int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
+                // Después se recibe la cadena con el remitente
+                String remitente = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                // Después se recibe la longitud de la cadena con el mensaje
+                bytes_recibidos = 0;
+                long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
+                // Después se recibe el mensaje
+                String msg = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                this.frm_chat_global.nuevo_mensaje(remitente, msg);
+                remitente = null;
+                msg = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error obteniendo lista de usuarios: " + ex.Message);
+                //this.bDesconectar.PerformClick();
+            }
         }
     }
 }

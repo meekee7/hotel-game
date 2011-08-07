@@ -36,33 +36,59 @@ namespace Juego_Hotel
             this.bEnviar.Enabled = false;
         }
 
+        delegate void Actualizar_lista_jugadores_global_Callback(String[] lista);
+
+        private void Actualizar_lista_jugadores(String[] lista)
+        {
+            if (this.listaJugadores.InvokeRequired)
+            {
+                Actualizar_lista_jugadores_global_Callback d = new Actualizar_lista_jugadores_global_Callback(Actualizar_lista_jugadores);
+                this.Invoke(d, new object[] { lista });
+            }
+            else
+            {
+                this.listaJugadores.BeginUpdate();
+                this.listaJugadores.Items.Clear();
+                foreach (String nombre in lista)
+                    this.listaJugadores.Items.Add(nombre);
+                this.listaJugadores.EndUpdate();
+            }
+        }
+
+        delegate void Actualizar_lista_jugadores_Callback(LinkedList<String> lista);
+
+        private void Actualizar_lista_jugadores(LinkedList<String> lista)
+        {
+            if (this.listaJugadores.InvokeRequired)
+            {
+                Actualizar_lista_jugadores_Callback d = new Actualizar_lista_jugadores_Callback(Actualizar_lista_jugadores);
+                this.Invoke(d, new object[] { lista });
+            }
+            else
+            {
+                this.listaJugadores.BeginUpdate();
+                this.listaJugadores.Items.Clear();
+                foreach (String nombre in lista)
+                    this.listaJugadores.Items.Add(nombre);
+                this.listaJugadores.EndUpdate();
+            }
+        }
+
         public void rellenar_lista()
         {
             try
             {
                 if (this.global)
                 {
-                    frm_online.enviar_int(frm_online.socket, 14);
-                    frm_online.enviar_string(frm_online.socket, "get_chat_users");
                     int bytes_recibidos = 0;
                     int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                     String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
                     String[] lista_jugadores = lista.Split('~');
-                    this.listaJugadores.BeginUpdate();
-                    this.listaJugadores.Items.Clear();
-                    foreach (String nombre in lista_jugadores)
-                        this.listaJugadores.Items.Add(nombre);
-                    this.listaJugadores.EndUpdate();
+                    this.Actualizar_lista_jugadores(lista_jugadores);
                 }
                 else
                 {
-                    this.listaJugadores.BeginUpdate();
-                    this.listaJugadores.Items.Clear();
-                    foreach (String nombre in this.jugadores)
-                    {
-                        this.listaJugadores.Items.Add(nombre);
-                    }
-                    this.listaJugadores.EndUpdate();
+                    this.Actualizar_lista_jugadores(this.jugadores);
                 }
             }
             catch (Exception ex)
@@ -75,7 +101,6 @@ namespace Juego_Hotel
         public void añadir_jugador(String nombre)
         {
             this.jugadores.AddLast(nombre);
-            this.rellenar_lista();
         }
 
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
@@ -92,36 +117,40 @@ namespace Juego_Hotel
 
         private void refrescoLista_Tick(object sender, EventArgs e)
         {
-            this.rellenar_lista();
+            this.frm_online.enviar_comando("get_chat_users", true);
         }
 
         private void Chat_Load(object sender, EventArgs e)
         {
-            this.refrescoLista.Start();
-            //Thread thread_recepcion = new Thread(esperar_mensajes);
+            if (this.global)
+                this.refrescoLista.Start();
         }
 
-        private void esperar_mensajes()
+        delegate void Nuevo_mensaje_Callback(String msg);
+
+        private void Nuevo_mensaje(String msg)
         {
-            String msg;
-            do
+            if (this.mensajes.InvokeRequired)
             {
-                int bytes_recibidos = 0;
-                int long_msg = this.frm_online.recibir_int(this.frm_online.socket, ref bytes_recibidos);
-                msg = this.frm_online.recibir_string(this.frm_online.socket, long_msg, ref bytes_recibidos);
-                this.mensajes.AppendText(msg + Environment.NewLine);
+                Nuevo_mensaje_Callback d = new Nuevo_mensaje_Callback(Nuevo_mensaje);
+                this.Invoke(d);
             }
-            while (msg != "##desconectar##");
+            else
+            {
+                this.mensajes.AppendText(msg);
+            }
+        }
+
+        public void nuevo_mensaje(String remitente, String msg)
+        {
+            this.Nuevo_mensaje(remitente + ": " + msg + Environment.NewLine);
         }
 
         private void bEnviar_Click(object sender, EventArgs e)
         {
             if (this.global)
             {
-                this.frm_online.enviar_int(this.frm_online.socket, 15);
-                this.frm_online.enviar_string(this.frm_online.socket, "send_global_msg");
-                this.frm_online.enviar_int(this.frm_online.socket, this.mensaje.Text.Length);
-                this.frm_online.enviar_string(this.frm_online.socket, this.mensaje.Text);
+                this.frm_online.enviar_comando("send_global_msg", false, this.mensaje.Text);
             }
         }
     }
