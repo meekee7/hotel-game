@@ -863,6 +863,6 @@
         private System.Windows.Forms.Button bRetirarseJ2;
         private System.Windows.Forms.Button bRetirarseJ3;
         private System.Windows.Forms.Button bRetirarseJ4;
-        private System.Windows.Forms.Button bOnline;
+        public System.Windows.Forms.Button bOnline;
     }
 }

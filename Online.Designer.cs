@@ -186,6 +186,7 @@
             this.Name = "Online";
             this.Text = "Online";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Online_FormClosing);
+            this.Load += new System.EventHandler(this.Online_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

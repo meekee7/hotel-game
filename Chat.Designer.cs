@@ -38,9 +38,10 @@
             // 
             // mensajes
             // 
-            this.mensajes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.mensajes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mensajes.Enabled = false;
             this.mensajes.Location = new System.Drawing.Point(12, 12);
             this.mensajes.Multiline = true;
             this.mensajes.Name = "mensajes";
@@ -50,12 +51,13 @@
             // 
             // mensaje
             // 
-            this.mensaje.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.mensaje.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mensaje.Location = new System.Drawing.Point(12, 230);
             this.mensaje.Name = "mensaje";
             this.mensaje.Size = new System.Drawing.Size(242, 20);
             this.mensaje.TabIndex = 1;
+            this.mensaje.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mensaje_PreviewKeyDown);
             // 
             // bEnviar
             // 
@@ -70,8 +72,8 @@
             // 
             // listaJugadores
             // 
-            this.listaJugadores.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listaJugadores.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listaJugadores.FormattingEnabled = true;
             this.listaJugadores.Location = new System.Drawing.Point(265, 11);
             this.listaJugadores.Name = "listaJugadores";

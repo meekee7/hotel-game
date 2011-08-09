@@ -43,7 +43,7 @@ void empty_glist()
    list<game*>::iterator i;
 	for (i = glist.begin() ; i != glist.end() ; ++i)
 	{
-      game* g = *i;;
+      game* g = *i;
       delete g;
 	}
 }
@@ -161,7 +161,7 @@ int send_int (player* p, int data)
 
 void enviar_comando(string comando, player* p)
 {
-	cout << "Sending command: " << comando << endl;
+	cout << "Sending command to player " << p->name << ": " << comando << endl;
    send_int(p, comando.length());
    send_string(p, comando);
 }
@@ -232,9 +232,9 @@ void handle_command(string command, player* p)
       list<player*>::iterator i;
       for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
       {
-      res += (*i)->name;
-      if (i != --chat_list.end())
-		res += '~';
+         res += (*i)->name;
+         if (i != --chat_list.end())
+            res += '~';
       }
       enviar_comando("global_chat_userlist", p);
       send_int(p, res.length());
@@ -246,13 +246,15 @@ void handle_command(string command, player* p)
       int long_msg = receive_int(p, &bytes_received);
       string msg = receive_string(p, long_msg, &bytes_received);
       list<player*>::iterator i;
-      enviar_comando("new_global_chat_msg", p);
+      player* dest;
       for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
       {
-         send_int(p, p->name.length());
-         send_string(p, p->name);
-         send_int(p, msg.length());
-         send_string(p, msg);
+         dest = *i;
+         enviar_comando("new_global_chat_msg", dest);
+         send_int(dest, p->name.length());
+         send_string(dest, p->name);
+         send_int(dest, msg.length());
+         send_string(dest, msg);
       }
    }
 }
@@ -275,13 +277,14 @@ void handle_client(void* arg)
    {
       p->socket->psend("login ok", 8, 0);
       bool online = true;
+      int long_command;
       while (online)
       {
-         int long_command = receive_int(p, &bytes_received);
+         long_command = receive_int(p, &bytes_received);
          string command = receive_string(p, long_command, &bytes_received);
          if (bytes_received > 0)
          {
-            cout << "Received command: " << command << endl;
+            cout << "Received command from player " << p->name << ": " << command << endl;
             handle_command(command, p);
          }
          else

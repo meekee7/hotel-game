@@ -23,13 +23,23 @@ namespace Juego_Hotel
         //static readonly object en_comunicacion = new object();
         //Mutex mut_en_comunicacion;
         Semaphore sem_en_comunicacion;
-        bool en_comunicacion;
+        //Boolean en_comunicacion;
+        Boolean conectado = false;
 
         public Online(Principal interfaz)
         {
             InitializeComponent();
             this.interfaz = interfaz;
             this.chats_abiertos = new LinkedList<Chat>();
+        }
+
+        private void Online_Load(object sender, EventArgs e)
+        {
+            this.bChatGlobal.Enabled = false;
+            this.bDesconectar.Enabled = false;
+            this.bCrearConv.Enabled = false;
+            this.bLogin.Enabled = false;
+            this.bCrearPartida.Enabled = false;
         }
 
         public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
@@ -48,7 +58,11 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                if (this.continuar_thread == true)
+                {
+                    this.Pulsar_Desconectar();
+                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                }
                 return null;
             }
         }
@@ -65,7 +79,11 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                if (this.continuar_thread == true)
+                {
+                    this.Pulsar_Desconectar();
+                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                }
                 return 0;
             }
         }
@@ -78,7 +96,11 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                if (this.continuar_thread == true)
+                {
+                    this.Pulsar_Desconectar();
+                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                }
                 return 0;
             }
         }
@@ -94,7 +116,11 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                if (this.continuar_thread == true)
+                {
+                    this.Pulsar_Desconectar();
+                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                }
                 return 0;
             }
         }
@@ -123,10 +149,12 @@ namespace Juego_Hotel
                         }
                         else
                         {
+                            this.conectado = true;
                             this.bLogin.Enabled = false;
                             this.bCrearPartida.Enabled = true;
                             this.bCrearConv.Enabled = true;
                             this.txtLogin.Enabled = false;
+                            this.bChatGlobal.Enabled = true;
                             this.sem_en_comunicacion = new Semaphore(1, 1);
                             thread_recepcion = new Thread(esperar_mensajes);
                             this.continuar_thread = true;
@@ -140,6 +168,7 @@ namespace Juego_Hotel
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error haciendo login: " + ex.Message);
+                        this.Pulsar_Desconectar();
                     }
                 }
             }
@@ -164,6 +193,7 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error conectando: " + ex.Message);
+                this.Pulsar_Desconectar();
             }
         }
 
@@ -202,8 +232,7 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error obteniendo lista de usuarios: " + ex.Message);
-                this.listaUsuarios.Items.Clear();
-                this.bDesconectar.PerformClick();
+                this.Pulsar_Desconectar();
             }
         }
 
@@ -261,35 +290,32 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error obteniendo lista de partidas: " + ex.Message);
-                this.listaPartidas.Items.Clear();
-                this.listaUsuarios.Items.Clear();
-                this.bDesconectar.PerformClick();
+                this.Pulsar_Desconectar();
             }
         }
 
         private void Online_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.bDesconectar.PerformClick();
-        }
-
-        private void bDesconectar_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar") == DialogResult.Yes)
+            if (((this.frm_chat_global != null) ||
+                (this.chats_abiertos.Count > 0)) &&
+                (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 this.frm_chat_global.Close();
                 foreach (Chat chat in this.chats_abiertos)
                     chat.Close();
                 this.chats_abiertos.Clear();
             }
-            else // Desactivar el botón Enviar de cada chat
-            {
-                if (this.frm_chat_global != null)
-                    this.frm_chat_global.desactivar_envio();
-                foreach (Chat chat in this.chats_abiertos)
-                    chat.desactivar_envio();
-            }
+            this.interfaz.bOnline.Enabled = true;
+        }
+
+        private void bDesconectar_Click(object sender, EventArgs e)
+        {
+            this.continuar_thread = false;
+            //this.en_comunicacion = false;
             this.refrescoListas.Stop();
-            this.enviar_comando("#disconnect#", true);
+            if (this.conectado)
+                this.enviar_comando("#disconnect#", true);
             Thread.Sleep(500);
             try
             {
@@ -301,6 +327,7 @@ namespace Juego_Hotel
             }
             this.socket.Close();
             this.socket = null;
+            this.conectado = false;
             this.bConectar.Enabled = true;
             this.bLogin.Enabled = false;
             this.bDesconectar.Enabled = false;
@@ -309,6 +336,11 @@ namespace Juego_Hotel
             this.bChatGlobal.Enabled = false;
             this.txtLogin.Enabled = true;
             this.txtServidor.Enabled = true;
+            // Desactivar el botón Enviar de cada chat
+            if (this.frm_chat_global != null)
+                this.frm_chat_global.desactivar_envio();
+            foreach (Chat chat in this.chats_abiertos)
+                chat.desactivar_envio();
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
@@ -362,7 +394,7 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error de conexión: " + ex.Message);
-                this.bDesconectar.PerformClick();
+                this.Pulsar_Desconectar();
             }
         }
 
@@ -436,8 +468,16 @@ namespace Juego_Hotel
                 else if (msg == "new_global_chat_msg")
                     this.Nuevo_mensaje_chat_global();
                 msg = null;
-                if (this.en_comunicacion)
-                    this.sem_en_comunicacion.Release();
+                /*try
+                {
+                    if (this.en_comunicacion)
+                        this.sem_en_comunicacion.Release();
+                }
+                catch (Exception ex)
+                {
+                    if (this.conectado)
+                        MessageBox.Show("Error de sincronización: " + ex.Message);
+                }*/
             }
             while (this.continuar_thread);
         }
@@ -455,7 +495,7 @@ namespace Juego_Hotel
 
         private void enviar_comando_t(object lista_parametros)
         {
-            this.sem_en_comunicacion.WaitOne();
+            this.sem_en_comunicacion.WaitOne(10000);
             List<String> lista = (List<String>)lista_parametros;
             String comando = lista[0];
             Boolean necesita_respuesta = Convert.ToBoolean(lista[1]);
@@ -474,13 +514,14 @@ namespace Juego_Hotel
                 this.enviar_int(this.socket, parametro.Length);
                 this.enviar_string(this.socket, parametro);
             }
-            if (necesita_respuesta)
+            this.sem_en_comunicacion.Release();
+            /*if (necesita_respuesta)
                 this.en_comunicacion = true;
             else
             {
                 this.en_comunicacion = false;
-                this.sem_en_comunicacion.Release();
-            }
+                
+            }*/
         }
 
         private void Nuevo_mensaje_chat_global()
@@ -493,7 +534,6 @@ namespace Juego_Hotel
                 // Después se recibe la cadena con el remitente
                 String remitente = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 // Después se recibe la longitud de la cadena con el mensaje
-                bytes_recibidos = 0;
                 long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
                 // Después se recibe el mensaje
                 String msg = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
@@ -503,8 +543,23 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obteniendo lista de usuarios: " + ex.Message);
-                //this.bDesconectar.PerformClick();
+                MessageBox.Show("Error recibiendo nuevo mensaje de chat global: " + ex.Message);
+                this.Pulsar_Desconectar();
+            }
+        }
+
+        delegate void Pulsar_Desconectar_Callback();
+
+        private void Pulsar_Desconectar()
+        {
+            if (this.bDesconectar.InvokeRequired)
+            {
+                Pulsar_Desconectar_Callback d = new Pulsar_Desconectar_Callback(Pulsar_Desconectar);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.bDesconectar.PerformClick();
             }
         }
     }

@@ -112,7 +112,6 @@ namespace Juego_Hotel
                 this.frm_online.chat_global_cerrado();
                 this.refrescoLista.Stop();
             }
-            MessageBox.Show("Cerrando chat");
         }
 
         private void refrescoLista_Tick(object sender, EventArgs e)
@@ -133,7 +132,7 @@ namespace Juego_Hotel
             if (this.mensajes.InvokeRequired)
             {
                 Nuevo_mensaje_Callback d = new Nuevo_mensaje_Callback(Nuevo_mensaje);
-                this.Invoke(d);
+                this.Invoke(d, new object[] { msg });
             }
             else
             {
@@ -148,10 +147,22 @@ namespace Juego_Hotel
 
         private void bEnviar_Click(object sender, EventArgs e)
         {
+            if (this.mensaje.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("No puedes enviar un mensaje vacío");
+                return;
+            }
             if (this.global)
             {
                 this.frm_online.enviar_comando("send_global_msg", false, this.mensaje.Text);
             }
+            this.mensaje.Text = "";
+        }
+
+        private void mensaje_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                this.bEnviar.PerformClick();
         }
     }
 }

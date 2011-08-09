@@ -1057,6 +1057,7 @@ namespace Juego_Hotel
         {
             Online frm_online = new Online(this);
             frm_online.Show();
+            this.bOnline.Enabled = false;
         }
     }
 }
