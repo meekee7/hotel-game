@@ -12,21 +12,14 @@ namespace Juego_Hotel
 {
     public partial class Chat : Form
     {
-        LinkedList<String> jugadores;
         Boolean global;
         Online frm_online;
-        public Chat(Boolean global)
-        {
-            InitializeComponent();
-            this.jugadores = new LinkedList<String>();
-            this.global = global;
-            this.frm_online = null;
-        }
+        public int id;
+        public String creador;
 
         public Chat(Boolean global, Online frm_online)
         {
             InitializeComponent();
-            this.jugadores = new LinkedList<String>();
             this.global = global;
             this.frm_online = frm_online;
         }
@@ -36,28 +29,9 @@ namespace Juego_Hotel
             this.bEnviar.Enabled = false;
         }
 
-        delegate void Actualizar_lista_jugadores_global_Callback(String[] lista);
+        delegate void Actualizar_lista_jugadores_Callback(String[] lista);
 
         private void Actualizar_lista_jugadores(String[] lista)
-        {
-            if (this.listaJugadores.InvokeRequired)
-            {
-                Actualizar_lista_jugadores_global_Callback d = new Actualizar_lista_jugadores_global_Callback(Actualizar_lista_jugadores);
-                this.Invoke(d, new object[] { lista });
-            }
-            else
-            {
-                this.listaJugadores.BeginUpdate();
-                this.listaJugadores.Items.Clear();
-                foreach (String nombre in lista)
-                    this.listaJugadores.Items.Add(nombre);
-                this.listaJugadores.EndUpdate();
-            }
-        }
-
-        delegate void Actualizar_lista_jugadores_Callback(LinkedList<String> lista);
-
-        private void Actualizar_lista_jugadores(LinkedList<String> lista)
         {
             if (this.listaJugadores.InvokeRequired)
             {
@@ -78,18 +52,11 @@ namespace Juego_Hotel
         {
             try
             {
-                if (this.global)
-                {
-                    int bytes_recibidos = 0;
-                    int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
-                    String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
-                    String[] lista_jugadores = lista.Split('~');
-                    this.Actualizar_lista_jugadores(lista_jugadores);
-                }
-                else
-                {
-                    this.Actualizar_lista_jugadores(this.jugadores);
-                }
+                int bytes_recibidos = 0;
+                int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
+                String[] lista_jugadores = lista.Split('~');
+                this.Actualizar_lista_jugadores(lista_jugadores);
             }
             catch (Exception ex)
             {
@@ -98,31 +65,27 @@ namespace Juego_Hotel
             }
         }
 
-        public void añadir_jugador(String nombre)
-        {
-            this.jugadores.AddLast(nombre);
-        }
-
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
+            this.refrescoLista.Stop();
             if (this.global)
             {
-                frm_online.enviar_int(frm_online.socket, 10);
-                frm_online.enviar_string(frm_online.socket, "leave_chat");
+                this.frm_online.enviar_comando("leave_global_chat");
                 this.frm_online.chat_global_cerrado();
-                this.refrescoLista.Stop();
+            }
+            else
+            {
+                this.frm_online.enviar_comando("leave_chat", this.id.ToString());
+                this.frm_online.chats_abiertos.Remove(this);
             }
         }
 
         private void refrescoLista_Tick(object sender, EventArgs e)
         {
-            this.frm_online.enviar_comando("get_chat_users", true);
-        }
-
-        private void Chat_Load(object sender, EventArgs e)
-        {
             if (this.global)
-                this.refrescoLista.Start();
+                this.frm_online.enviar_comando("get_global_chat_users");
+            else
+                this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);
@@ -154,7 +117,7 @@ namespace Juego_Hotel
             }
             if (this.global)
             {
-                this.frm_online.enviar_comando("send_global_msg", false, this.mensaje.Text);
+                this.frm_online.enviar_comando("send_global_msg", this.mensaje.Text);
             }
             this.mensaje.Text = "";
         }
@@ -163,6 +126,11 @@ namespace Juego_Hotel
         {
             if (e.KeyCode == Keys.Enter)
                 this.bEnviar.PerformClick();
+        }
+
+        private void Chat_Shown(object sender, EventArgs e)
+        {
+            this.refrescoLista.Start();
         }
     }
 }

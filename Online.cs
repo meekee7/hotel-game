@@ -17,14 +17,10 @@ namespace Juego_Hotel
         public Principal interfaz;
         public Socket socket;
         Chat frm_chat_global;
-        LinkedList<Chat> chats_abiertos;
+        public LinkedList<Chat> chats_abiertos;
         Thread thread_recepcion;
-        bool continuar_thread;
-        //static readonly object en_comunicacion = new object();
-        //Mutex mut_en_comunicacion;
         Semaphore sem_en_comunicacion;
-        //Boolean en_comunicacion;
-        Boolean conectado = false;
+        Boolean continuar_thread, conectado = false;
 
         public Online(Principal interfaz)
         {
@@ -133,6 +129,8 @@ namespace Juego_Hotel
                     MessageBox.Show("El apodo no puede estar vacío");
                 else if (this.txtLogin.Text.Length > 20)
                     MessageBox.Show("El apodo no puede superar 20 caracteres");
+                else if (this.txtLogin.Text.Contains('~'))
+                    MessageBox.Show("El apodo no puede contener el carácter '~'");
                 else
                 {
                     try
@@ -147,6 +145,12 @@ namespace Juego_Hotel
                             this.bDesconectar.PerformClick();
                             this.txtLogin.Enabled = true;
                         }
+                        else if (res_login == "login no")
+                        {
+                            MessageBox.Show("El apodo contiene el carácter '~' y no es válido");
+                            this.bDesconectar.PerformClick();
+                            this.txtLogin.Enabled = true;
+                        }
                         else
                         {
                             this.conectado = true;
@@ -156,13 +160,13 @@ namespace Juego_Hotel
                             this.txtLogin.Enabled = false;
                             this.bChatGlobal.Enabled = true;
                             this.sem_en_comunicacion = new Semaphore(1, 1);
-                            thread_recepcion = new Thread(esperar_mensajes);
+                            thread_recepcion = new Thread(esperar_comandos);
                             this.continuar_thread = true;
                             thread_recepcion.Start();
                             Thread.Sleep(200);
                             this.refrescoListas.Start();
-                            this.enviar_comando("get_users", true);
-                            this.enviar_comando("get_games", true);
+                            this.enviar_comando("get_users");
+                            this.enviar_comando("get_games");
                         }
                     }
                     catch (Exception ex)
@@ -312,10 +316,9 @@ namespace Juego_Hotel
         private void bDesconectar_Click(object sender, EventArgs e)
         {
             this.continuar_thread = false;
-            //this.en_comunicacion = false;
             this.refrescoListas.Stop();
             if (this.conectado)
-                this.enviar_comando("#disconnect#", true);
+                this.enviar_comando("#disconnect#");
             Thread.Sleep(500);
             try
             {
@@ -362,6 +365,11 @@ namespace Juego_Hotel
                 string nombre = this.InputBox("Nombre de la partida:", "Crear partida", "");
                 if (nombre == "")
                     return;
+                else if (nombre.Contains('~'))
+                {
+                    MessageBox.Show("El nombre de la partida no puede contener el carácter '~'");
+                    return;
+                }
                 string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
                 if (s_n_jugadores == "")
                     return;
@@ -412,35 +420,34 @@ namespace Juego_Hotel
 
         private void refrescoListas_Tick(object sender, EventArgs e)
         {
-            this.enviar_comando("get_users", true);
-            this.enviar_comando("get_games", true);
+            this.enviar_comando("get_users");
+            this.enviar_comando("get_games");
         }
 
         private void bCrearConv_Click(object sender, EventArgs e)
         {
-            Chat frm_chat = new Chat(false);
-            if ((this.listaUsuarios.SelectedItems.Count < 1) ||
-                ((this.listaUsuarios.SelectedItems.Count == 1) && (this.listaUsuarios.SelectedItem.ToString() == this.txtLogin.Text)))
+            /*if ((this.listaUsuarios.SelectedItems.Count < 1) ||
+                (this.listaUsuarios.SelectedItems.Contains(this.txtLogin.Text)))
             {
-                MessageBox.Show("Has de seleccionar al menos un usuario diferente del tuyo");
+                MessageBox.Show("Has de seleccionar al menos un usuario sin incluir el tuyo");
                 return;
-            }
-            frm_chat.añadir_jugador(this.txtLogin.Text.ToString());
+            }*/
+            // Este mecanismo funciona así:
+            // Se crea una cadena con todos los usuarios seleccionados y así enviarles la petición
+            String lista = this.txtLogin.Text.ToString();
             foreach (Object nombre in this.listaUsuarios.SelectedItems)
             {
-                if (nombre.ToString() != this.txtLogin.Text)
-                    frm_chat.añadir_jugador(nombre.ToString());
+                lista += '~' + nombre.ToString();
             }
-            frm_chat.Show();
-            this.chats_abiertos.AddFirst(frm_chat);
+            this.enviar_comando("create_chat", lista);
         }
 
         private void bChatGlobal_Click(object sender, EventArgs e)
         {
             this.frm_chat_global = new Chat(true, this);
-            this.enviar_comando("join_chat", false);
+            this.enviar_comando("join_global_chat");
             this.bChatGlobal.Enabled = false;
-            this.enviar_comando("get_chat_users", true);
+            this.enviar_comando("get_global_chat_users");
             frm_chat_global.Show();
         }
 
@@ -449,7 +456,55 @@ namespace Juego_Hotel
             this.bChatGlobal.Enabled = true;
         }
 
-        private void esperar_mensajes()
+        private void Unirse_a_chat()
+        {
+            int bytes_recibidos = 0;
+            int id_chat = recibir_int(this.socket, ref bytes_recibidos);
+            int long_creador = recibir_int(this.socket, ref bytes_recibidos);
+            String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
+            if (creador != this.txtLogin.Text)
+            {
+                if (MessageBox.Show("El jugador " + creador + " quiere que te unas a un chat privado. ¿Deseas hacerlo?", "Nuevo chat", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    this.enviar_comando("join_chat", id_chat.ToString());
+                    Chat chat = new Chat(false, this);
+                    chat.id = id_chat;
+                    chat.creador = creador;
+                    this.chats_abiertos.AddFirst(chat);
+                    chat.Show();
+                }
+            }
+            else
+            {
+                this.enviar_comando("join_chat", id_chat.ToString());
+                Chat chat = new Chat(false, this);
+                chat.id = id_chat;
+                chat.creador = creador;
+                this.chats_abiertos.AddFirst(chat);
+                return; // Crear el chat en un thread a ver si es eso
+                chat.Show();
+            }
+        }
+
+        private Chat Buscar_chat(int id)
+        {
+            foreach (Chat chat in chats_abiertos)
+            {
+                if (chat.id == id)
+                    return chat;
+            }
+            return null;
+        }
+
+        private void rellenar_lista_chat()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            Chat chat = Buscar_chat(id);
+            chat.rellenar_lista();
+        }
+
+        private void esperar_comandos()
         {
             String msg = null;
             int bytes_recibidos = 0;
@@ -457,6 +512,7 @@ namespace Juego_Hotel
             {
                 int long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
                 msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
+                //this.sem_en_comunicacion.WaitOne(10000);
                 if (msg == "#disconnect#")
                     this.continuar_thread = false;
                 else if (msg == "player_list")
@@ -465,28 +521,22 @@ namespace Juego_Hotel
                     this.Rellenar_lista_partidas();
                 else if (msg == "global_chat_userlist")
                     this.frm_chat_global.rellenar_lista();
+                else if (msg == "chat_userlist")
+                    this.rellenar_lista_chat();
                 else if (msg == "new_global_chat_msg")
                     this.Nuevo_mensaje_chat_global();
+                else if (msg == "ask_join_chat")
+                    this.Unirse_a_chat();
                 msg = null;
-                /*try
-                {
-                    if (this.en_comunicacion)
-                        this.sem_en_comunicacion.Release();
-                }
-                catch (Exception ex)
-                {
-                    if (this.conectado)
-                        MessageBox.Show("Error de sincronización: " + ex.Message);
-                }*/
+                //this.sem_en_comunicacion.Release();
             }
             while (this.continuar_thread);
         }
 
-        public void enviar_comando(String comando, Boolean necesita_respuesta, params String[] parametros)
+        public void enviar_comando(String comando, params String[] parametros)
         {
             List<String> lista_parametros = new List<String>();
             lista_parametros.Add(comando);
-            lista_parametros.Add(necesita_respuesta.ToString());
             foreach (String parametro in parametros)
                 lista_parametros.Add(parametro);
             Thread thread_envio_comando = new Thread(enviar_comando_t);
@@ -498,16 +548,13 @@ namespace Juego_Hotel
             this.sem_en_comunicacion.WaitOne(10000);
             List<String> lista = (List<String>)lista_parametros;
             String comando = lista[0];
-            Boolean necesita_respuesta = Convert.ToBoolean(lista[1]);
             this.enviar_int(this.socket, comando.Length);
             this.enviar_string(this.socket, comando);
             // Comprobación de existencia de parámetros.
             // El protocolo es este: Si existen parámetros, se supone que son cadenas para enviar
             // Para cada cadena, primero se envía su longitud y luego la cadena en sí
-            // Nos quitamos los dos primeros elementos, que ya han sido tratados, se repite el indice
-            // porque al quitar el primero, el segundo se convierte en primero
+            // Nos quitamos el primer elemento, que es el comando en sí
             // El bucle solo entrará si hay parámetros
-            lista.RemoveAt(0);
             lista.RemoveAt(0);
             foreach (String parametro in lista)
             {
@@ -515,13 +562,6 @@ namespace Juego_Hotel
                 this.enviar_string(this.socket, parametro);
             }
             this.sem_en_comunicacion.Release();
-            /*if (necesita_respuesta)
-                this.en_comunicacion = true;
-            else
-            {
-                this.en_comunicacion = false;
-                
-            }*/
         }
 
         private void Nuevo_mensaje_chat_global()

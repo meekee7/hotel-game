@@ -6,7 +6,9 @@
 #include "portable_socket.h"
 #include "player.h"
 #include "game.h"
+#include "chat.h"
 #include "dlib/threads.h"
+#include "dlib/string.h"
 #define MAXCONN 100
 #define MAXDATALEN 100
 
@@ -18,7 +20,8 @@ portable_socket* socket_server;
 portable_socket* socket_client;
 list<player*> plist; // Player list
 list<game*> glist; // Game list
-list<player*> chat_list; // Players in global chat
+list<player*> global_chat_list; // Players in global chat
+list<chat*> chat_list;
 
 void unhook_signals()
 {
@@ -29,10 +32,10 @@ void unhook_signals()
    #endif
 }
 
-void empty_chat_list()
+void empty_global_chat_list()
 {
    list<player*>::iterator i;
-	for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+	for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
 	{
 		*i = NULL;
 	}
@@ -111,14 +114,102 @@ void delete_player_from_list(player* p)
          ++i;
 	}
 	if (!found)
-	{
 		cout << "Player not found" << endl;
-	}
 	else
 	{
 		cout << "Player deleted from list" << endl;
 		plist.erase(i);
 	}
+}
+
+chat* get_chat_from_id(int id)
+{
+   bool found = false;
+	list<chat*>::iterator i = chat_list.begin();
+	while (!found && i != chat_list.end())
+	{
+		if ((*i)->id == id)
+			found = true;
+      else
+         ++i;
+	}
+   if (!found)
+      return NULL;
+   else
+      return (*i);
+}
+
+void add_player_to_chat(int id, player* p)
+{
+   /*bool found = false;
+	list<chat*>::iterator i = chat_list.begin();
+	while (!found && i != chat_list.end())
+	{
+		if ((*i)->id == id)
+			found = true;
+      else
+         ++i;
+	}
+	if (!found)
+		cout << "Chat "<< id << " not found" << endl;
+	else
+	{*/
+   chat* chat = get_chat_from_id(id);
+   chat->players.push_back(p);
+   cout << "Player "<< p->name <<" joined chat " << id << endl;
+	//}
+}
+
+void delete_player_from_chat(int id, player* p)
+{
+   /*bool found = false;
+	list<chat*>::iterator i1 = chat_list.begin();
+	while (!found && i1 != chat_list.end())
+	{
+		if ((*i1)->id == id)
+			found = true;
+      else
+         ++i1;
+	}
+	if (!found)
+		cout << "Chat " << id << " not found" << endl;
+	else
+	{*/
+   chat* chat = get_chat_from_id(id);
+      bool found = false;
+      list<player*>::iterator i = chat->players.begin();
+	   while (!found && i != chat->players.end())
+	   {
+         if ((*i)->name == p->name)
+			   found = true;
+         else
+            ++i;
+	   }
+	   if (!found)
+		   cout << "Player " << p->name << " not found in chat " << id << endl;
+      else
+      {
+         chat->players.erase(i);
+		   cout << "Player "<< p->name <<" left chat " << id << endl;
+      }
+	//}
+}
+
+player* get_player_from_name(string name)
+{
+   bool found = false;
+	list<player*>::iterator i = plist.begin();
+	while (!found && i != plist.end())
+	{
+		if ((*i)->name == name)
+			found = true;
+      else
+         ++i;
+	}
+	if (!found)
+		return NULL;
+	else
+		return (*i);
 }
 
 string receive_string (player* p, int length, int* bytes_received)
@@ -159,7 +250,7 @@ int send_int (player* p, int data)
    return p->socket->psend(&data, sizeof(data), 0);
 }
 
-void enviar_comando(string comando, player* p)
+void send_command(string comando, player* p)
 {
 	cout << "Sending command to player " << p->name << ": " << comando << endl;
    send_int(p, comando.length());
@@ -170,7 +261,7 @@ void handle_command(string command, player* p)
 {
    if (command == "#disconnect#")
    {
-      enviar_comando("#disconnect#", p);
+      send_command("#disconnect#", p);
 	}
    else if (command == "get_users")
    {
@@ -183,7 +274,7 @@ void handle_command(string command, player* p)
          if (i != --plist.end())
             res += '~';
       }
-      enviar_comando("player_list", p);
+      send_command("player_list", p);
       send_int(p, res.length());
       send_string(p, res);
 	}
@@ -198,7 +289,7 @@ void handle_command(string command, player* p)
 			if (i != --glist.end())
 				res += '~';
 		}
-      enviar_comando("game_list", p);
+      send_command("game_list", p);
       send_int(p, res.length());
 		if (res.length() != 0)      
          send_string(p, res);
@@ -209,6 +300,11 @@ void handle_command(string command, player* p)
       int long_name = receive_int(p, &bytes_received);
       string name = receive_string(p, long_name, &bytes_received);
       int n_players = receive_int(p, &bytes_received);
+      if (name.find('~') != string::npos)
+      {
+         cout << "New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
+         return;
+      }
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
       game* new_game = new game();
       new_game->name = name;
@@ -217,26 +313,84 @@ void handle_command(string command, player* p)
       new_game->plist.push_back(p);
       glist.push_back(new_game);
    }
+   else if (command == "create_chat")
+   {
+      int bytes_received;
+      int long_list = receive_int(p, &bytes_received);
+      string plist = receive_string(p, long_list, &bytes_received);
+      vector<string> player_list = split(plist, "~");
+      player_list.clear();
+      player_list.push_back("Beto");
+      cout << "New chat. Number of players: " << player_list.size() << endl;
+      chat* new_chat = new chat();
+      new_chat->id = rand();
+      new_chat->creator = p;
+      chat_list.push_back(new_chat);
+      // Send commands to selected players to ask them to join the chat
+      player* dest;
+      for each (string player in player_list)
+      {
+         dest = get_player_from_name(player);
+         send_command("ask_join_chat", dest);
+         send_int(dest, new_chat->id);
+         send_int(dest, p->name.length());
+         send_string(dest, p->name);
+      }
+   }
+   else if (command == "join_global_chat")
+   {
+      global_chat_list.push_back(p);
+   }
    else if (command == "join_chat")
    {
-      chat_list.push_back(p);
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      string id = receive_string(p, long_id, &bytes_received);
+      add_player_to_chat(atoi(id.c_str()), p);
+   }
+   else if (command == "leave_global_chat")
+   {
+      global_chat_list.remove(p);
    }
    else if (command == "leave_chat")
    {
-      chat_list.remove(p);
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      string id = receive_string(p, long_id, &bytes_received);
+      delete_player_from_chat(atoi(id.c_str()), p);
    }
-   else if (command == "get_chat_users")
+   else if (command == "get_global_chat_users")
    {
       // Get all users and join into a string with the separator ~
       string res = "";
       list<player*>::iterator i;
-      for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
       {
          res += (*i)->name;
-         if (i != --chat_list.end())
+         if (i != --global_chat_list.end())
             res += '~';
       }
-      enviar_comando("global_chat_userlist", p);
+      send_command("global_chat_userlist", p);
+      send_int(p, res.length());
+      send_string(p, res);
+   }
+   else if (command == "get_chat_users")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      // Get all users and join into a string with the separator ~
+      chat* chat = get_chat_from_id(id);
+      string res = "";
+      list<player*>::iterator i;
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --chat->players.end())
+            res += '~';
+      }
+      send_command("chat_userlist", p);
+      send_int(p, id);
       send_int(p, res.length());
       send_string(p, res);
    }
@@ -247,10 +401,10 @@ void handle_command(string command, player* p)
       string msg = receive_string(p, long_msg, &bytes_received);
       list<player*>::iterator i;
       player* dest;
-      for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
       {
          dest = *i;
-         enviar_comando("new_global_chat_msg", dest);
+         send_command("new_global_chat_msg", dest);
          send_int(dest, p->name.length());
          send_string(dest, p->name);
          send_int(dest, msg.length());
@@ -262,12 +416,18 @@ void handle_command(string command, player* p)
 void handle_client(void* arg)
 {
    player* p = (player*) arg;
-   cout << "Handling new player. Player name: ";
    int bytes_received;
    int long_name = receive_int(p, &bytes_received);
    p->name = receive_string(p, long_name, &bytes_received);
-   cout << p->name << endl;
-   if (add_player_to_list(p) == -1)
+   cout << "Handling new player. Player name: " << p->name << endl;
+   if (p->name.find('~') != string::npos)
+   {
+      cout << "Player " << p->name << " rejected because the name contained invalid character '~' (WARNING: possible hacked client)" << endl;
+      p->socket->psend("login no", 8, 0);
+	   delete p;
+      cout << "Disconnecting client" << endl;
+   }
+   else if (add_player_to_list(p) == -1)
    {
       p->socket->psend("login ko", 8, 0);
 	   delete p;
@@ -290,9 +450,9 @@ void handle_client(void* arg)
          else
          {
             online = false;
-            cout << "Client disconnected" << endl;
+            global_chat_list.remove(p);
             delete_player_from_list(p);
-            chat_list.remove(p);
+            cout << "Client disconnected" << endl;
          }
       }
    }
@@ -338,7 +498,7 @@ void run_server()
          else
          {
             // The server is closing
-            empty_chat_list();
+            empty_global_chat_list();
             cout << "Chat list cleaned" << endl;
             empty_glist();
             cout << "Game list cleaned" << endl;

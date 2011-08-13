@@ -98,7 +98,7 @@
             this.Name = "Chat";
             this.Text = "Chat";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Chat_FormClosing);
-            this.Load += new System.EventHandler(this.Chat_Load);
+            this.Shown += new System.EventHandler(this.Chat_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
