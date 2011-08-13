@@ -116,9 +116,9 @@ namespace Juego_Hotel
                 return;
             }
             if (this.global)
-            {
-                this.frm_online.enviar_comando("send_global_msg", this.mensaje.Text);
-            }
+                this.frm_online.enviar_comando("send_global_chat_msg", this.mensaje.Text);
+            else
+                this.frm_online.enviar_comando("send_chat_msg", this.id.ToString(), this.mensaje.Text);
             this.mensaje.Text = "";
         }
 

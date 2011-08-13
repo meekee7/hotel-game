@@ -426,14 +426,14 @@ namespace Juego_Hotel
 
         private void bCrearConv_Click(object sender, EventArgs e)
         {
-            /*if ((this.listaUsuarios.SelectedItems.Count < 1) ||
+            if ((this.listaUsuarios.SelectedItems.Count < 1) ||
                 (this.listaUsuarios.SelectedItems.Contains(this.txtLogin.Text)))
             {
                 MessageBox.Show("Has de seleccionar al menos un usuario sin incluir el tuyo");
                 return;
-            }*/
+            }
             // Este mecanismo funciona así:
-            // Se crea una cadena con todos los usuarios seleccionados y así enviarles la petición
+            // Se crea una cadena con todos los usuarios seleccionados se parados con un '~' para así enviarles la petición
             String lista = this.txtLogin.Text.ToString();
             foreach (Object nombre in this.listaUsuarios.SelectedItems)
             {
@@ -467,23 +467,32 @@ namespace Juego_Hotel
                 if (MessageBox.Show("El jugador " + creador + " quiere que te unas a un chat privado. ¿Deseas hacerlo?", "Nuevo chat", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     this.enviar_comando("join_chat", id_chat.ToString());
-                    Chat chat = new Chat(false, this);
-                    chat.id = id_chat;
-                    chat.creador = creador;
-                    this.chats_abiertos.AddFirst(chat);
-                    chat.Show();
+                    List<String> lista_params = new List<String>(2);
+                    lista_params.Add(id_chat.ToString());
+                    lista_params.Add(creador);
+                    Thread thread_chat = new Thread(Manejar_nuevo_chat);
+                    thread_chat.Start(lista_params);
                 }
             }
             else
             {
                 this.enviar_comando("join_chat", id_chat.ToString());
-                Chat chat = new Chat(false, this);
-                chat.id = id_chat;
-                chat.creador = creador;
-                this.chats_abiertos.AddFirst(chat);
-                return; // Crear el chat en un thread a ver si es eso
-                chat.Show();
+                List<String> lista_params = new List<String>(2);
+                lista_params.Add(id_chat.ToString());
+                lista_params.Add(creador);
+                Thread thread_chat = new Thread(Manejar_nuevo_chat);
+                thread_chat.Start(lista_params);
             }
+        }
+
+        private void Manejar_nuevo_chat(object parametros)
+        {
+            List<String> lista_params = (List<String>) parametros;
+            Chat chat = new Chat(false, this);
+            chat.id = Convert.ToInt32(lista_params[0]);
+            chat.creador = lista_params[1];
+            this.chats_abiertos.AddFirst(chat);
+            chat.ShowDialog();
         }
 
         private Chat Buscar_chat(int id)
@@ -525,6 +534,8 @@ namespace Juego_Hotel
                     this.rellenar_lista_chat();
                 else if (msg == "new_global_chat_msg")
                     this.Nuevo_mensaje_chat_global();
+                else if (msg == "new_chat_msg")
+                    this.Nuevo_mensaje_chat();
                 else if (msg == "ask_join_chat")
                     this.Unirse_a_chat();
                 msg = null;
@@ -578,6 +589,32 @@ namespace Juego_Hotel
                 // Después se recibe el mensaje
                 String msg = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 this.frm_chat_global.nuevo_mensaje(remitente, msg);
+                remitente = null;
+                msg = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error recibiendo nuevo mensaje de chat global: " + ex.Message);
+                this.Pulsar_Desconectar();
+            }
+        }
+
+        private void Nuevo_mensaje_chat()
+        {
+            try
+            {
+                // Primero se recibe el id del chat y después la longitud de la cadena con el remitente
+                int bytes_recibidos = 0;
+                int id = this.recibir_int(this.socket, ref bytes_recibidos);
+                int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
+                // Después se recibe la cadena con el remitente
+                String remitente = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                // Después se recibe la longitud de la cadena con el mensaje
+                long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
+                // Después se recibe el mensaje
+                String msg = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                Chat chat = Buscar_chat(id);
+                chat.nuevo_mensaje(remitente, msg);
                 remitente = null;
                 msg = null;
             }

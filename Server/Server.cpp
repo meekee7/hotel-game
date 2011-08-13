@@ -319,8 +319,6 @@ void handle_command(string command, player* p)
       int long_list = receive_int(p, &bytes_received);
       string plist = receive_string(p, long_list, &bytes_received);
       vector<string> player_list = split(plist, "~");
-      player_list.clear();
-      player_list.push_back("Beto");
       cout << "New chat. Number of players: " << player_list.size() << endl;
       chat* new_chat = new chat();
       new_chat->id = rand();
@@ -394,7 +392,7 @@ void handle_command(string command, player* p)
       send_int(p, res.length());
       send_string(p, res);
    }
-   else if (command == "send_global_msg")
+   else if (command == "send_global_chat_msg")
    {
       int bytes_received;
       int long_msg = receive_int(p, &bytes_received);
@@ -405,6 +403,27 @@ void handle_command(string command, player* p)
       {
          dest = *i;
          send_command("new_global_chat_msg", dest);
+         send_int(dest, p->name.length());
+         send_string(dest, p->name);
+         send_int(dest, msg.length());
+         send_string(dest, msg);
+      }
+   }
+   else if (command == "send_chat_msg")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      int long_msg = receive_int(p, &bytes_received);
+      string msg = receive_string(p, long_msg, &bytes_received);
+      chat* chat = get_chat_from_id(id);
+      list<player*>::iterator i;
+      player* dest;
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         dest = *i;
+         send_command("new_chat_msg", dest);
+         send_int(dest, id);
          send_int(dest, p->name.length());
          send_string(dest, p->name);
          send_int(dest, msg.length());
