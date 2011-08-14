@@ -326,9 +326,10 @@ void handle_command(string command, player* p)
       chat_list.push_back(new_chat);
       // Send commands to selected players to ask them to join the chat
       player* dest;
-      for each (string player in player_list)
+      vector<string>::iterator i;
+      for (i = player_list.begin() ; i != player_list.end() ; ++i)
       {
-         dest = get_player_from_name(player);
+         dest = get_player_from_name(*i);
          send_command("ask_join_chat", dest);
          send_int(dest, new_chat->id);
          send_int(dest, p->name.length());
