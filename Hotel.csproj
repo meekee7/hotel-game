@@ -97,7 +97,7 @@
     <Compile Include="Dado_construccion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dado_construccion.designer.cs">
+    <Compile Include="Dado_construccion.Designer.cs">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
     </Compile>
     <Compile Include="InputBoxDialog.cs">
