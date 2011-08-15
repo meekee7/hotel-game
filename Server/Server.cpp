@@ -141,58 +141,30 @@ chat* get_chat_from_id(int id)
 
 void add_player_to_chat(int id, player* p)
 {
-   /*bool found = false;
-	list<chat*>::iterator i = chat_list.begin();
-	while (!found && i != chat_list.end())
+   chat* chat = get_chat_from_id(id);
+   chat->players.push_back(p);
+   cout << "Player "<< p->name <<" joined chat " << id << endl;
+}
+
+void delete_player_from_chat(int id, player* p)
+{
+   chat* chat = get_chat_from_id(id);
+   bool found = false;
+   list<player*>::iterator i = chat->players.begin();
+	while (!found && i != chat->players.end())
 	{
-		if ((*i)->id == id)
+      if ((*i)->name == p->name)
 			found = true;
       else
          ++i;
 	}
 	if (!found)
-		cout << "Chat "<< id << " not found" << endl;
-	else
-	{*/
-   chat* chat = get_chat_from_id(id);
-   chat->players.push_back(p);
-   cout << "Player "<< p->name <<" joined chat " << id << endl;
-	//}
-}
-
-void delete_player_from_chat(int id, player* p)
-{
-   /*bool found = false;
-	list<chat*>::iterator i1 = chat_list.begin();
-	while (!found && i1 != chat_list.end())
-	{
-		if ((*i1)->id == id)
-			found = true;
-      else
-         ++i1;
-	}
-	if (!found)
-		cout << "Chat " << id << " not found" << endl;
-	else
-	{*/
-   chat* chat = get_chat_from_id(id);
-      bool found = false;
-      list<player*>::iterator i = chat->players.begin();
-	   while (!found && i != chat->players.end())
-	   {
-         if ((*i)->name == p->name)
-			   found = true;
-         else
-            ++i;
-	   }
-	   if (!found)
-		   cout << "Player " << p->name << " not found in chat " << id << endl;
-      else
-      {
-         chat->players.erase(i);
-		   cout << "Player "<< p->name <<" left chat " << id << endl;
-      }
-	//}
+		cout << "Player " << p->name << " not found in chat " << id << endl;
+   else
+   {
+      chat->players.erase(i);
+		cout << "Player "<< p->name <<" left chat " << id << endl;
+   }
 }
 
 player* get_player_from_name(string name)
@@ -210,6 +182,15 @@ player* get_player_from_name(string name)
 		return NULL;
 	else
 		return (*i);
+}
+
+void delete_chat_if_empty(chat* chat)
+{
+   if (chat->players.empty())
+   {
+      chat_list.remove(chat);
+      delete chat;
+   }
 }
 
 string receive_string (player* p, int length, int* bytes_received)
@@ -357,6 +338,7 @@ void handle_command(string command, player* p)
       int long_id = receive_int(p, &bytes_received);
       string id = receive_string(p, long_id, &bytes_received);
       delete_player_from_chat(atoi(id.c_str()), p);
+      delete_chat_if_empty(get_chat_from_id(atoi(id.c_str())));
    }
    else if (command == "get_global_chat_users")
    {

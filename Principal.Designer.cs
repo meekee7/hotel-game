@@ -780,6 +780,7 @@
             this.MaximizeBox = false;
             this.Name = "Principal";
             this.Text = "Hotel - Construye tu propio imperio hotelero";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Principal_FormClosing);
             this.grupoNJugadores.ResumeLayout(false);
             this.grupoNJugadores.PerformLayout();
             this.controlJ1.ResumeLayout(false);

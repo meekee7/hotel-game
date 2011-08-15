@@ -305,7 +305,11 @@ namespace Juego_Hotel
                 (this.chats_abiertos.Count > 0)) &&
                 (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
-                this.frm_chat_global.Close();
+                if (this.frm_chat_global != null)
+                {
+                    this.frm_chat_global.Close();
+                    this.frm_chat_global = null;
+                }
                 foreach (Chat chat in this.chats_abiertos)
                     chat.Close();
                 this.chats_abiertos.Clear();
@@ -454,6 +458,7 @@ namespace Juego_Hotel
         public void chat_global_cerrado()
         {
             this.bChatGlobal.Enabled = true;
+            this.frm_chat_global = null;
         }
 
         private void Unirse_a_chat()

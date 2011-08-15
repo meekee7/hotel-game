@@ -1057,7 +1057,13 @@ namespace Juego_Hotel
         {
             Online frm_online = new Online(this);
             frm_online.Show();
+            this.AddOwnedForm(frm_online);
             this.bOnline.Enabled = false;
+        }
+
+        private void Principal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.OwnedForms[0].Close();
         }
     }
 }
