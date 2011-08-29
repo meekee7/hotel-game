@@ -193,6 +193,23 @@ void delete_chat_if_empty(chat* chat)
    }
 }
 
+game* get_game_from_name(string name)
+{
+   bool found = false;
+   list<game*>::iterator i = glist.begin();
+   while (!found && i != glist.end())
+   {
+      if ((*i)->name == name)
+         found = true;
+      else
+         ++i;
+   }
+   if (!found)
+      return NULL;
+   else
+      return (*i);
+}
+
 string receive_string (player* p, int length, int* bytes_received)
 {
    char* data = new char[length+1];
@@ -280,7 +297,8 @@ void handle_command(string command, player* p)
       int bytes_received;
       int long_name = receive_int(p, &bytes_received);
       string name = receive_string(p, long_name, &bytes_received);
-      int n_players = receive_int(p, &bytes_received);
+      int long_n_players = receive_int(p, &bytes_received);
+      int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
       if (name.find('~') != string::npos)
       {
          cout << "New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
@@ -293,6 +311,17 @@ void handle_command(string command, player* p)
       new_game->creator = p;
       new_game->plist.push_back(p);
       glist.push_back(new_game);
+   }
+   else if (command == "join_game")
+   {
+      int bytes_received;
+      int long_name = receive_int(p, &bytes_received);
+      string name = receive_string(p, long_name, &bytes_received);
+      game* game = get_game_from_name(name);
+      game->plist.push_back(p);
+      send_command("joined_game", p);
+      send_int(p, name.length());
+      send_string(p, name);
    }
    else if (command == "create_chat")
    {

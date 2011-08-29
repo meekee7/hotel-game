@@ -256,6 +256,7 @@ namespace Juego_Hotel
                 foreach (String nombre in lista)
                     this.listaPartidas.Items.Add(nombre);
                 this.listaPartidas.EndUpdate();
+                this.bUnirse.Enabled = false;
             }
         }
 
@@ -271,6 +272,7 @@ namespace Juego_Hotel
             else
             {
                 this.listaPartidas.Items.Clear();
+                this.bUnirse.Enabled = false;
             }
         }
 
@@ -397,11 +399,7 @@ namespace Juego_Hotel
                     MessageBox.Show("El número máximo de jugadores es 4");
                     return;
                 }
-                this.enviar_int(this.socket, 11);
-                this.enviar_string(this.socket, "create_game");
-                this.enviar_int(this.socket, nombre.Length);
-                this.enviar_string(this.socket, nombre);
-                this.enviar_int(this.socket, n_jugadores);
+                this.enviar_comando("create_game", nombre, n_jugadores.ToString());
             }
             catch (Exception ex)
             {
@@ -490,6 +488,14 @@ namespace Juego_Hotel
             }
         }
 
+        private void Unirse_a_partida()
+        {
+            int bytes_recibidos = 0;
+            int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
+            String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            MessageBox.Show("Unido a la partida " + nombre);
+        }
+
         private void Manejar_nuevo_chat(object parametros)
         {
             List<String> lista_params = (List<String>) parametros;
@@ -543,6 +549,8 @@ namespace Juego_Hotel
                     this.Nuevo_mensaje_chat();
                 else if (msg == "ask_join_chat")
                     this.Unirse_a_chat();
+                else if (msg == "joined_game")
+                    this.Unirse_a_partida();
                 msg = null;
                 //this.sem_en_comunicacion.Release();
             }
@@ -643,6 +651,19 @@ namespace Juego_Hotel
             {
                 this.bDesconectar.PerformClick();
             }
+        }
+
+        private void bUnirse_Click(object sender, EventArgs e)
+        {
+            this.enviar_comando("join_game", this.listaPartidas.SelectedItem.ToString());
+        }
+
+        private void listaPartidas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.listaPartidas.SelectedIndex < 0)
+                this.bUnirse.Enabled = false;
+            else
+                this.bUnirse.Enabled = true;
         }
     }
 }

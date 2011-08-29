@@ -42,6 +42,7 @@
             this.LPartidas = new System.Windows.Forms.Label();
             this.refrescoListas = new System.Windows.Forms.Timer(this.components);
             this.bChatGlobal = new System.Windows.Forms.Button();
+            this.bUnirse = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtLogin
@@ -132,6 +133,7 @@
             this.listaPartidas.Name = "listaPartidas";
             this.listaPartidas.Size = new System.Drawing.Size(181, 134);
             this.listaPartidas.TabIndex = 6;
+            this.listaPartidas.SelectedIndexChanged += new System.EventHandler(this.listaPartidas_SelectedIndexChanged);
             // 
             // LUsuarios
             // 
@@ -166,11 +168,23 @@
             this.bChatGlobal.UseVisualStyleBackColor = true;
             this.bChatGlobal.Click += new System.EventHandler(this.bChatGlobal_Click);
             // 
+            // bUnirse
+            // 
+            this.bUnirse.Enabled = false;
+            this.bUnirse.Location = new System.Drawing.Point(210, 272);
+            this.bUnirse.Name = "bUnirse";
+            this.bUnirse.Size = new System.Drawing.Size(80, 34);
+            this.bUnirse.TabIndex = 12;
+            this.bUnirse.Text = "Unirse a partida";
+            this.bUnirse.UseVisualStyleBackColor = true;
+            this.bUnirse.Click += new System.EventHandler(this.bUnirse_Click);
+            // 
             // Online
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(303, 388);
+            this.Controls.Add(this.bUnirse);
             this.Controls.Add(this.bChatGlobal);
             this.Controls.Add(this.LPartidas);
             this.Controls.Add(this.LUsuarios);
@@ -207,5 +221,6 @@
         private System.Windows.Forms.Label LPartidas;
         private System.Windows.Forms.Timer refrescoListas;
         private System.Windows.Forms.Button bChatGlobal;
+        private System.Windows.Forms.Button bUnirse;
     }
 }
