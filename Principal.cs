@@ -1063,7 +1063,8 @@ namespace Juego_Hotel
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.OwnedForms[0].Close();
+            if (this.OwnedForms.Length > 0)
+                this.OwnedForms[0].Close();
         }
     }
 }

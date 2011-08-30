@@ -11,7 +11,7 @@ public:
    string ip;
    portable_socket* socket;
 
-   player(void);
+   player(string ip, portable_socket* socket_client);
    ~player(void);
 };
 

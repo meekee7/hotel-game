@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <list>
+#include <iostream>
 #include "player.h"
 using namespace std;
 
@@ -12,7 +13,10 @@ public:
    player* creator;
    list<player*> players;
 
-   chat(void);
+   bool join(player* p);
+   bool leave(player* p);
+
+   chat(player* creator);
    ~chat(void);
 };
 

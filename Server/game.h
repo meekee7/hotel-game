@@ -10,6 +10,10 @@ public:
    player* creator;
    int n_players;
    list<player*> plist;
-   game(void);
+
+   bool join(player* p);
+   bool leave(player* p);
+
+   game(string name, int n_players, player* creator);
    ~game(void);
 };
