@@ -61,7 +61,7 @@ void empty_plist()
 	}
 }
 
-void cerrar (int signum)
+void close (int signum)
 {
    closing = 1;
    cout << endl << "Closing server" << endl;
@@ -71,10 +71,10 @@ void cerrar (int signum)
 
 void hook_signals()
 {
-   signal(SIGINT, cerrar);
-   signal(SIGTERM, cerrar);
+   signal(SIGINT, close);
+   signal(SIGTERM, close);
    #ifdef _WIN32
-      signal(SIGBREAK, cerrar);
+      signal(SIGBREAK, close);
    #endif
 }
 
@@ -114,10 +114,10 @@ void delete_player_from_list(player* p)
          ++i;
 	}
 	if (!found)
-		cout << "Player not found" << endl;
+		cout << "Player not found in user list" << endl;
 	else
 	{
-		cout << "Player deleted from list" << endl;
+		cout << "Player deleted from user list" << endl;
 		plist.erase(i);
 	}
 }
@@ -182,6 +182,28 @@ game* get_game_from_name(string name)
       return (*i);
 }
 
+void disconnect_client(player* p)
+{
+   if (!p->connected)
+      return;
+   // Leave all normal chats and global chat
+   list<chat*>::iterator i;
+   for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+   {
+      (*i)->leave(p);
+      delete_chat_if_empty(get_chat_from_id((*i)->id));
+   }
+   global_chat_list.remove(p);
+   // Leave games
+   list<game*>::iterator i2;
+   for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
+   {
+      (*i2)->leave(p);
+   }
+   delete_player_from_list(p);
+   p->connected = false;
+}
+
 string receive_string (player* p, int length, int* bytes_received)
 {
    char* data = new char[length+1];
@@ -231,6 +253,7 @@ void handle_command(string command, player* p)
 {
    if (command == "#disconnect#")
    {
+      disconnect_client(p);
       send_command("#disconnect#", p);
 	}
    else if (command == "get_users")
@@ -279,6 +302,9 @@ void handle_command(string command, player* p)
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
       game* new_game = new game(name, n_players, p);
       glist.push_back(new_game);
+      send_command("joined_game", p);
+      send_int(p, name.length());
+      send_string(p, name);
    }
    else if (command == "join_game")
    {
@@ -286,10 +312,18 @@ void handle_command(string command, player* p)
       int long_name = receive_int(p, &bytes_received);
       string name = receive_string(p, long_name, &bytes_received);
       game* game = get_game_from_name(name);
-      game->join(p);
-      send_command("joined_game", p);
-      send_int(p, name.length());
-      send_string(p, name);
+      if (game->join(p))
+      {
+         send_command("joined_game", p);
+         send_int(p, name.length());
+         send_string(p, name);
+      }
+      else
+      {
+         send_command("cant_join_game_full", p);
+         send_int(p, name.length());
+         send_string(p, name);
+      }
    }
    else if (command == "create_chat")
    {
@@ -298,7 +332,7 @@ void handle_command(string command, player* p)
       string plist = receive_string(p, long_list, &bytes_received);
       vector<string> player_list = split(plist, "~");
       cout << "New chat. Number of players: " << player_list.size() << endl;
-      chat* new_chat = new chat(p);
+      chat* new_chat = new chat(p, true);
       chat_list.push_back(new_chat);
       // Send commands to selected players to ask them to join the chat
       player* dest;
@@ -449,8 +483,8 @@ void handle_client(void* arg)
          else
          {
             online = false;
-            global_chat_list.remove(p);
-            delete_player_from_list(p);
+            disconnect_client(p);
+            delete p;
             cout << "Client disconnected" << endl;
          }
       }

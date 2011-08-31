@@ -12,9 +12,17 @@ game::game(string name, int n_players, player* creator)
 
 bool game::join(player* p)
 {
-   this->plist.push_back(p);
-   cout << "Player "<< p->name <<" joined game " << this->name << endl;
-   return true;
+   if ((int) this->plist.size() < this->n_players)
+   {
+      this->plist.push_back(p);
+      cout << "Player "<< p->name <<" joined game " << this->name << endl;
+      return true;
+   }
+   else
+   {
+      cout << "Player "<< p->name <<" cant join game " << this->name << " because it's full" << endl;
+      return false;
+   }
 }
 
 bool game::leave(player* p)

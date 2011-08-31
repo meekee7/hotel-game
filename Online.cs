@@ -400,6 +400,8 @@ namespace Juego_Hotel
                     return;
                 }
                 this.enviar_comando("create_game", nombre, n_jugadores.ToString());
+                this.bUnirse.Enabled = false;
+                this.bCrearPartida.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -488,12 +490,19 @@ namespace Juego_Hotel
             }
         }
 
-        private void Unirse_a_partida()
+        private void Unirse_a_partida(Boolean ok)
         {
             int bytes_recibidos = 0;
             int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
             String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-            MessageBox.Show("Unido a la partida " + nombre);
+            if (ok)
+                MessageBox.Show("Unido a la partida " + nombre);
+            else
+            {
+                MessageBox.Show("La partida " + nombre + " está llena");
+                this.Activar_bUnirse();
+                this.Activar_bCrearPartida();
+            }
         }
 
         private void Manejar_nuevo_chat(object parametros)
@@ -550,7 +559,9 @@ namespace Juego_Hotel
                 else if (msg == "ask_join_chat")
                     this.Unirse_a_chat();
                 else if (msg == "joined_game")
-                    this.Unirse_a_partida();
+                    this.Unirse_a_partida(true);
+                else if (msg == "cant_join_game_full")
+                    this.Unirse_a_partida(false);
                 msg = null;
                 //this.sem_en_comunicacion.Release();
             }
@@ -653,9 +664,41 @@ namespace Juego_Hotel
             }
         }
 
+        delegate void Activar_bUnirse_Callback();
+
+        private void Activar_bUnirse()
+        {
+            if (this.bUnirse.InvokeRequired)
+            {
+                Activar_bUnirse_Callback d = new Activar_bUnirse_Callback(Activar_bUnirse);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.bUnirse.Enabled = true;
+            }
+        }
+
+        delegate void Activar_bCrearPartida_Callback();
+
+        private void Activar_bCrearPartida()
+        {
+            if (this.bUnirse.InvokeRequired)
+            {
+                Activar_bCrearPartida_Callback d = new Activar_bCrearPartida_Callback(Activar_bCrearPartida);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.bCrearPartida.Enabled = true;
+            }
+        }
+
         private void bUnirse_Click(object sender, EventArgs e)
         {
             this.enviar_comando("join_game", this.listaPartidas.SelectedItem.ToString());
+            this.bUnirse.Enabled = false;
+            this.bCrearPartida.Enabled = false;
         }
 
         private void listaPartidas_SelectedIndexChanged(object sender, EventArgs e)

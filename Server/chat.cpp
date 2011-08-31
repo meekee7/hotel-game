@@ -1,9 +1,10 @@
 #include "chat.h"
 
-chat::chat(player* creator)
+chat::chat(player* creator, bool normal_chat)
 {
    this->id = rand();
    this->creator = creator;
+   this->normal_chat = normal_chat;
 }
 
 bool chat::join(player* p)

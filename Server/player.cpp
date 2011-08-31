@@ -5,6 +5,7 @@ player::player(string ip, portable_socket* socket_client)
 {
    this->ip = ip;
    this->socket = socket_client;
+   this->connected = true;
 }
 
 
