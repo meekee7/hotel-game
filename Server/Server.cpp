@@ -78,7 +78,7 @@ void hook_signals()
    #endif
 }
 
-int add_player_to_list (player* p)
+int add_player_to_player_list (player* p)
 {
 	bool found = false;
 	list<player*>::iterator i = plist.begin();
@@ -102,7 +102,7 @@ int add_player_to_list (player* p)
 	}
 }
 
-void delete_player_from_list(player* p)
+void delete_player_from_player_list(player* p)
 {
    bool found = false;
 	list<player*>::iterator i = plist.begin();
@@ -200,7 +200,7 @@ void disconnect_client(player* p)
    {
       (*i2)->leave(p);
    }
-   delete_player_from_list(p);
+   delete_player_from_player_list(p);
    p->connected = false;
 }
 
@@ -455,12 +455,12 @@ void handle_client(void* arg)
    cout << "Handling new player. Player name: " << p->name << endl;
    if (p->name.find('~') != string::npos)
    {
-      cout << "Player " << p->name << " rejected because the name contained invalid character '~' (WARNING: possible hacked client)" << endl;
+      cout << "Player " << p->name << " rejected because the name contains invalid character '~' (WARNING: possible hacked client)" << endl;
       p->socket->psend("login no", 8, 0);
 	   delete p;
       cout << "Disconnecting client" << endl;
    }
-   else if (add_player_to_list(p) == -1)
+   else if (add_player_to_player_list(p) == -1)
    {
       p->socket->psend("login ko", 8, 0);
 	   delete p;
