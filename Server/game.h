@@ -2,18 +2,21 @@
 #include <list>
 #include <string>
 #include "player.h"
+#include "chat.h"
 
-class game
+class Game
 {
 public:
+   int id;
    string name;
-   player* creator;
+   Player* creator;
    int n_players;
-   list<player*> plist;
+   list<Player*> plist;
+   Chat* chat;
 
-   bool join(player* p);
-   bool leave(player* p);
+   bool join(Player* p);
+   bool leave(Player* p);
 
-   game(string name, int n_players, player* creator);
-   ~game(void);
+   Game(string name, int n_players, Player* creator, list<Chat*>* chat_list);
+   ~Game(void);
 };

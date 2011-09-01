@@ -2,15 +2,19 @@
 #include <iostream>
 
 
-game::game(string name, int n_players, player* creator)
+Game::Game(string name, int n_players, Player* creator, list<Chat*>* chat_list)
 {
    this->name = name;
    this->n_players = n_players;
    this->creator = creator;
    this->plist.push_back(creator);
+   this->chat = new Chat(this->creator, false);
+   this->chat->join(this->creator);
+   this->id = this->chat->id;
+   chat_list->push_back(this->chat);
 }
 
-bool game::join(player* p)
+bool Game::join(Player* p)
 {
    if ((int) this->plist.size() < this->n_players)
    {
@@ -25,10 +29,10 @@ bool game::join(player* p)
    }
 }
 
-bool game::leave(player* p)
+bool Game::leave(Player* p)
 {
    bool found = false;
-   list<player*>::iterator i = this->plist.begin();
+   list<Player*>::iterator i = this->plist.begin();
 	while (!found && i != this->plist.end())
 	{
       if ((*i)->name == p->name)
@@ -46,10 +50,10 @@ bool game::leave(player* p)
    return found;
 }
 
-game::~game(void)
+Game::~Game(void)
 {
    this->creator = NULL;
-   list<player*>::iterator i;
+   list<Player*>::iterator i;
 	for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
 	{
       *i = NULL;

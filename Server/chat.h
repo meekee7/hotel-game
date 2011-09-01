@@ -5,19 +5,19 @@
 #include "player.h"
 using namespace std;
 
-class chat
+class Chat
 {
 
 public:
    int id;
-   player* creator;
-   list<player*> players;
+   Player* creator;
+   list<Player*> players;
    bool normal_chat; // True: standard chat; False: game chat
 
-   bool join(player* p);
-   bool leave(player* p);
+   bool join(Player* p);
+   bool leave(Player* p);
 
-   chat(player* creator, bool normal_chat);
-   ~chat(void);
+   Chat(Player* creator, bool normal_chat);
+   ~Chat(void);
 };
 

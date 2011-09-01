@@ -109,6 +109,12 @@
     <Compile Include="Online.Designer.cs">
       <DependentUpon>Online.cs</DependentUpon>
     </Compile>
+    <Compile Include="PartidaOnline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PartidaOnline.Designer.cs">
+      <DependentUpon>PartidaOnline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subastas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Online.resx">
       <DependentUpon>Online.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartidaOnline.resx">
+      <DependentUpon>PartidaOnline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PonerEntradas.resx">
       <DependentUpon>PonerEntradas.cs</DependentUpon>

@@ -3,16 +3,16 @@
 #include "portable_socket.h"
 using namespace std;
 
-class player
+class Player
 {
 
 public:
    string name;
    string ip;
-   portable_socket* socket;
+   Portable_socket* socket;
    bool connected;
 
-   player(string ip, portable_socket* socket_client);
-   ~player(void);
+   Player(string ip, Portable_socket* socket_client);
+   ~Player(void);
 };
 

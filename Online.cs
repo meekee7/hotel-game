@@ -18,6 +18,7 @@ namespace Juego_Hotel
         public Socket socket;
         Chat frm_chat_global;
         public LinkedList<Chat> chats_abiertos;
+        public LinkedList<PartidaOnline> lista_partidas;
         Thread thread_recepcion;
         Semaphore sem_en_comunicacion;
         Boolean continuar_thread, conectado = false;
@@ -27,6 +28,7 @@ namespace Juego_Hotel
             InitializeComponent();
             this.interfaz = interfaz;
             this.chats_abiertos = new LinkedList<Chat>();
+            this.lista_partidas = new LinkedList<PartidaOnline>();
         }
 
         private void Online_Load(object sender, EventArgs e)
@@ -437,7 +439,7 @@ namespace Juego_Hotel
                 return;
             }
             // Este mecanismo funciona así:
-            // Se crea una cadena con todos los usuarios seleccionados se parados con un '~' para así enviarles la petición
+            // Se crea una cadena con todos los usuarios seleccionados separados con un '~' para así enviarles la petición
             String lista = this.txtLogin.Text.ToString();
             foreach (Object nombre in this.listaUsuarios.SelectedItems)
             {
@@ -496,7 +498,18 @@ namespace Juego_Hotel
             int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
             String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             if (ok)
+            {
+                int id_chat = recibir_int(this.socket, ref bytes_recibidos);
+                int long_creador = recibir_int(this.socket, ref bytes_recibidos);
+                String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
                 MessageBox.Show("Unido a la partida " + nombre);
+                List<String> lista_params = new List<String>(3);
+                lista_params.Add(id_chat.ToString());
+                lista_params.Add(creador);
+                lista_params.Add(nombre);
+                Thread thread_partida = new Thread(Manejar_nueva_partida);
+                thread_partida.Start(lista_params);
+            }
             else
             {
                 MessageBox.Show("La partida " + nombre + " está llena");
@@ -515,6 +528,17 @@ namespace Juego_Hotel
             chat.ShowDialog();
         }
 
+        private void Manejar_nueva_partida(object parametros)
+        {
+            List<String> lista_params = (List<String>)parametros;
+            PartidaOnline partida = new PartidaOnline(this);
+            partida.id = Convert.ToInt32(lista_params[0]);
+            partida.creador = lista_params[1];
+            partida.nombre = lista_params[2];
+            this.lista_partidas.AddFirst(partida);
+            partida.ShowDialog();
+        }
+
         private Chat Buscar_chat(int id)
         {
             foreach (Chat chat in chats_abiertos)
@@ -525,12 +549,28 @@ namespace Juego_Hotel
             return null;
         }
 
+        private PartidaOnline Buscar_partida(int id)
+        {
+            foreach (PartidaOnline partida in lista_partidas)
+            {
+                if (partida.id == id)
+                    return partida;
+            }
+            return null;
+        }
+
         private void rellenar_lista_chat()
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             Chat chat = Buscar_chat(id);
-            chat.rellenar_lista();
+            if (chat != null)
+                chat.rellenar_lista();
+            else //Es el chat de una partida creada
+            {
+                PartidaOnline partida = Buscar_partida(id);
+                partida.rellenar_lista();
+            }
         }
 
         private void esperar_comandos()
@@ -541,7 +581,6 @@ namespace Juego_Hotel
             {
                 int long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
                 msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
-                //this.sem_en_comunicacion.WaitOne(10000);
                 if (msg == "#disconnect#")
                     this.continuar_thread = false;
                 else if (msg == "player_list")
@@ -563,7 +602,6 @@ namespace Juego_Hotel
                 else if (msg == "cant_join_game_full")
                     this.Unirse_a_partida(false);
                 msg = null;
-                //this.sem_en_comunicacion.Release();
             }
             while (this.continuar_thread);
         }
@@ -638,7 +676,13 @@ namespace Juego_Hotel
                 // Después se recibe el mensaje
                 String msg = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 Chat chat = Buscar_chat(id);
-                chat.nuevo_mensaje(remitente, msg);
+                if (chat != null)
+                    chat.nuevo_mensaje(remitente, msg);
+                else //Es el chat de una partida creada
+                {
+                    PartidaOnline partida = Buscar_partida(id);
+                    partida.nuevo_mensaje(remitente, msg);
+                }
                 remitente = null;
                 msg = null;
             }

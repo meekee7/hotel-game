@@ -1,23 +1,23 @@
 #include "chat.h"
 
-chat::chat(player* creator, bool normal_chat)
+Chat::Chat(Player* creator, bool normal_chat)
 {
    this->id = rand();
    this->creator = creator;
    this->normal_chat = normal_chat;
 }
 
-bool chat::join(player* p)
+bool Chat::join(Player* p)
 {
    this->players.push_back(p);
    cout << "Player "<< p->name <<" joined chat " << this->id << endl;
 	return true;
 }
 
-bool chat::leave(player* p)
+bool Chat::leave(Player* p)
 {
    bool found = false;
-   list<player*>::iterator i = this->players.begin();
+   list<Player*>::iterator i = this->players.begin();
 	while (!found && i != this->players.end())
 	{
       if ((*i)->name == p->name)
@@ -35,7 +35,7 @@ bool chat::leave(player* p)
    return found;
 }
 
-chat::~chat(void)
+Chat::~Chat(void)
 {
    this->players.clear();
 }

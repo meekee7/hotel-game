@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-player::player(string ip, portable_socket* socket_client)
+Player::Player(string ip, Portable_socket* socket_client)
 {
    this->ip = ip;
    this->socket = socket_client;
@@ -9,7 +9,7 @@ player::player(string ip, portable_socket* socket_client)
 }
 
 
-player::~player(void)
+Player::~Player(void)
 {
    if (this->socket != NULL)
       delete this->socket;
