@@ -35,6 +35,9 @@
             this.mensajes = new System.Windows.Forms.TextBox();
             this.grupoChat = new System.Windows.Forms.GroupBox();
             this.refrescoLista = new System.Windows.Forms.Timer(this.components);
+            this.txtNombre = new System.Windows.Forms.Label();
+            this.bAbandonar = new System.Windows.Forms.Button();
+            this.bIniciar = new System.Windows.Forms.Button();
             this.grupoChat.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,13 +77,14 @@
             this.mensajes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mensajes.Enabled = false;
             this.mensajes.Location = new System.Drawing.Point(6, 19);
             this.mensajes.Multiline = true;
             this.mensajes.Name = "mensajes";
             this.mensajes.ReadOnly = true;
+            this.mensajes.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.mensajes.Size = new System.Drawing.Size(281, 264);
             this.mensajes.TabIndex = 4;
+            this.mensajes.WordWrap = false;
             // 
             // grupoChat
             // 
@@ -100,19 +104,51 @@
             this.refrescoLista.Interval = 2500;
             this.refrescoLista.Tick += new System.EventHandler(this.refrescoLista_Tick_1);
             // 
+            // txtNombre
+            // 
+            this.txtNombre.AutoSize = true;
+            this.txtNombre.Location = new System.Drawing.Point(15, 21);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(47, 13);
+            this.txtNombre.TabIndex = 9;
+            this.txtNombre.Text = "Nombre:";
+            // 
+            // bAbandonar
+            // 
+            this.bAbandonar.Location = new System.Drawing.Point(109, 65);
+            this.bAbandonar.Name = "bAbandonar";
+            this.bAbandonar.Size = new System.Drawing.Size(75, 23);
+            this.bAbandonar.TabIndex = 10;
+            this.bAbandonar.Text = "Abandonar";
+            this.bAbandonar.UseVisualStyleBackColor = true;
+            this.bAbandonar.Click += new System.EventHandler(this.bAbandonar_Click);
+            // 
+            // bIniciar
+            // 
+            this.bIniciar.Location = new System.Drawing.Point(18, 65);
+            this.bIniciar.Name = "bIniciar";
+            this.bIniciar.Size = new System.Drawing.Size(75, 23);
+            this.bIniciar.TabIndex = 11;
+            this.bIniciar.Text = "Iniciar";
+            this.bIniciar.UseVisualStyleBackColor = true;
+            // 
             // PartidaOnline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(398, 440);
+            this.Controls.Add(this.bIniciar);
+            this.Controls.Add(this.bAbandonar);
+            this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.grupoChat);
             this.Name = "PartidaOnline";
-            this.Text = "PartidaOnline";
+            this.Text = "Partida Online";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PartidaOnline_FormClosing);
             this.Shown += new System.EventHandler(this.PartidaOnline_Shown);
             this.grupoChat.ResumeLayout(false);
             this.grupoChat.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -124,5 +160,8 @@
         private System.Windows.Forms.TextBox mensajes;
         private System.Windows.Forms.GroupBox grupoChat;
         private System.Windows.Forms.Timer refrescoLista;
+        private System.Windows.Forms.Label txtNombre;
+        private System.Windows.Forms.Button bAbandonar;
+        private System.Windows.Forms.Button bIniciar;
     }
 }

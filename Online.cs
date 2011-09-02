@@ -463,6 +463,27 @@ namespace Juego_Hotel
             this.frm_chat_global = null;
         }
 
+        delegate void Reactivar_crear_unirse_Callback();
+
+        private void Reactivar_crear_unirse()
+        {
+            if (this.bUnirse.InvokeRequired || this.bCrearPartida.InvokeRequired)
+            {
+                Reactivar_crear_unirse_Callback d = new Reactivar_crear_unirse_Callback(Reactivar_crear_unirse);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.bCrearPartida.Enabled = true;
+                this.bUnirse.Enabled = true;
+            }
+        }
+
+        public void salir_de_partida()
+        {
+            this.Reactivar_crear_unirse();
+        }
+
         private void Unirse_a_chat()
         {
             int bytes_recibidos = 0;
@@ -502,7 +523,6 @@ namespace Juego_Hotel
                 int id_chat = recibir_int(this.socket, ref bytes_recibidos);
                 int long_creador = recibir_int(this.socket, ref bytes_recibidos);
                 String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
-                MessageBox.Show("Unido a la partida " + nombre);
                 List<String> lista_params = new List<String>(3);
                 lista_params.Add(id_chat.ToString());
                 lista_params.Add(creador);

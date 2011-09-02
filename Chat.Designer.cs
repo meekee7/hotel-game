@@ -41,13 +41,14 @@
             this.mensajes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mensajes.Enabled = false;
             this.mensajes.Location = new System.Drawing.Point(12, 12);
             this.mensajes.Multiline = true;
             this.mensajes.Name = "mensajes";
             this.mensajes.ReadOnly = true;
+            this.mensajes.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.mensajes.Size = new System.Drawing.Size(242, 211);
             this.mensajes.TabIndex = 0;
+            this.mensajes.WordWrap = false;
             // 
             // mensaje
             // 

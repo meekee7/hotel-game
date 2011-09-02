@@ -77,8 +77,11 @@ namespace Juego_Hotel
 
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
             this.refrescoLista.Stop();
-            this.frm_online.enviar_comando("leave_chat", this.id.ToString());
+            this.frm_online.enviar_comando("leave_game", this.id.ToString());
+            this.frm_online.lista_partidas.Remove(this);
+            this.frm_online.salir_de_partida();
         }
 
         private void refrescoLista_Tick_1(object sender, EventArgs e)
@@ -115,6 +118,11 @@ namespace Juego_Hotel
         {
             if (e.KeyCode == Keys.Enter)
                 this.bEnviar.PerformClick();
+        }
+
+        private void bAbandonar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

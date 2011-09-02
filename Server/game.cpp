@@ -19,6 +19,7 @@ bool Game::join(Player* p)
    if ((int) this->plist.size() < this->n_players)
    {
       this->plist.push_back(p);
+      this->chat->join(p);
       cout << "Player "<< p->name <<" joined game " << this->name << endl;
       return true;
    }
@@ -44,6 +45,7 @@ bool Game::leave(Player* p)
 		cout << "Player " << p->name << " not found in game " << this->name << endl;
    else
    {
+      this->chat->leave(p);
       this->plist.erase(i);
 		cout << "Player "<< p->name <<" left game " << this->name << endl;
    }
@@ -53,9 +55,6 @@ bool Game::leave(Player* p)
 Game::~Game(void)
 {
    this->creator = NULL;
-   list<Player*>::iterator i;
-	for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
-	{
-      *i = NULL;
-	}
+   delete this->chat;
+   this->plist.clear();
 }

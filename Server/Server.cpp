@@ -165,6 +165,15 @@ void delete_chat_if_empty(Chat* chat)
    }
 }
 
+void delete_game_if_empty(Game* game)
+{
+   if (game->plist.empty())
+   {
+      glist.remove(game);
+      delete game;
+   }
+}
+
 Game* get_game_from_name(string name)
 {
    bool found = false;
@@ -172,6 +181,23 @@ Game* get_game_from_name(string name)
    while (!found && i != glist.end())
    {
       if ((*i)->name == name)
+         found = true;
+      else
+         ++i;
+   }
+   if (!found)
+      return NULL;
+   else
+      return (*i);
+}
+
+Game* get_game_from_id(int id)
+{
+   bool found = false;
+   list<Game*>::iterator i = glist.begin();
+   while (!found && i != glist.end())
+   {
+      if ((*i)->id == id)
          found = true;
       else
          ++i;
@@ -331,6 +357,17 @@ void handle_command(string command, Player* p)
          send_string(p, name);
       }
    }
+   else if (command == "leave_game")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      string id = receive_string(p, long_id, &bytes_received);
+      Game* game = get_game_from_id(atoi(id.c_str()));
+      game->leave(p);
+      Chat* chat = game->chat;
+      delete_game_if_empty(game);
+      delete_chat_if_empty(chat);
+   }
    else if (command == "create_chat")
    {
       int bytes_received;
@@ -375,7 +412,7 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, long_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->leave(p);
-      delete_chat_if_empty(get_chat_from_id(atoi(id.c_str())));
+      delete_chat_if_empty(chat);
    }
    else if (command == "get_global_chat_users")
    {

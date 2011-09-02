@@ -37,5 +37,6 @@ bool Chat::leave(Player* p)
 
 Chat::~Chat(void)
 {
+   this->creator = NULL;
    this->players.clear();
 }
