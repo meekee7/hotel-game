@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Game::Game(string name, int n_players, Player* creator, list<Chat*>* chat_list)
+Game::Game(string name, int n_players, Player* creator)
 {
    this->name = name;
    this->n_players = n_players;
@@ -11,7 +11,6 @@ Game::Game(string name, int n_players, Player* creator, list<Chat*>* chat_list)
    this->chat = new Chat(this->creator, false);
    this->chat->join(this->creator);
    this->id = this->chat->id;
-   chat_list->push_back(this->chat);
 }
 
 bool Game::join(Player* p)

@@ -122,23 +122,6 @@ void delete_player_from_player_list(Player* p)
 	}
 }
 
-Chat* get_chat_from_id(int id)
-{
-   bool found = false;
-	list<Chat*>::iterator i = chat_list.begin();
-	while (!found && i != chat_list.end())
-	{
-		if ((*i)->id == id)
-			found = true;
-      else
-         ++i;
-	}
-   if (!found)
-      return NULL;
-   else
-      return (*i);
-}
-
 Player* get_player_from_name(string name)
 {
    bool found = false;
@@ -161,6 +144,7 @@ void delete_chat_if_empty(Chat* chat)
    if (chat->players.empty())
    {
       chat_list.remove(chat);
+	  cout << "Chat " << chat->id << " deleted because it's empty" << endl;
       delete chat;
    }
 }
@@ -170,6 +154,7 @@ void delete_game_if_empty(Game* game)
    if (game->plist.empty())
    {
       glist.remove(game);
+	  cout << "Game " << game->id << " deleted because it's empty" << endl;
       delete game;
    }
 }
@@ -204,6 +189,26 @@ Game* get_game_from_id(int id)
    }
    if (!found)
       return NULL;
+   else
+      return (*i);
+}
+
+Chat* get_chat_from_id(int id)
+{
+   bool found = false;
+	list<Chat*>::iterator i = chat_list.begin();
+	while (!found && i != chat_list.end())
+	{
+		if ((*i)->id == id)
+			found = true;
+      else
+         ++i;
+	}
+   if (!found)
+   {
+      // If not found it should be a game chat
+      return get_game_from_id(id)->chat;
+   }
    else
       return (*i);
 }
@@ -268,11 +273,11 @@ int send_int (Player* p, int data)
    return p->socket->psend(&data, sizeof(data), 0);
 }
 
-void send_command(string comando, Player* p)
+void send_command(string command, Player* p)
 {
-	cout << "Sending command to player " << p->name << ": " << comando << endl;
-   send_int(p, comando.length());
-   send_string(p, comando);
+	cout << "Sending command to player " << p->name << ": " << command << endl;
+   send_int(p, command.length());
+   send_string(p, command);
 }
 
 void handle_command(string command, Player* p)
@@ -309,9 +314,9 @@ void handle_command(string command, Player* p)
 				res += '~';
 		}
       send_command("game_list", p);
-      send_int(p, res.length());
-		if (res.length() != 0)      
-         send_string(p, res);
+		send_int(p, res.length());
+		if (res.length() != 0)
+			send_string(p, res);
 	}
 	else if (command == "create_game")
 	{
@@ -326,7 +331,7 @@ void handle_command(string command, Player* p)
          return;
       }
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
-      Game* new_game = new Game(name, n_players, p, &chat_list);
+      Game* new_game = new Game(name, n_players, p);
       glist.push_back(new_game);
       send_command("joined_game", p);
       send_int(p, name.length());
@@ -364,9 +369,7 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, long_id, &bytes_received);
       Game* game = get_game_from_id(atoi(id.c_str()));
       game->leave(p);
-      Chat* chat = game->chat;
       delete_game_if_empty(game);
-      delete_chat_if_empty(chat);
    }
    else if (command == "create_chat")
    {

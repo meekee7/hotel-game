@@ -17,6 +17,6 @@ public:
    bool join(Player* p);
    bool leave(Player* p);
 
-   Game(string name, int n_players, Player* creator, list<Chat*>* chat_list);
+   Game(string name, int n_players, Player* creator);
    ~Game(void);
 };
