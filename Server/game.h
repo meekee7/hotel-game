@@ -13,6 +13,7 @@ public:
    int n_players;
    list<Player*> plist;
    Chat* chat;
+   bool started;
 
    bool join(Player* p);
    bool leave(Player* p);

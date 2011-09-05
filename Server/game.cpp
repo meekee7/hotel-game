@@ -11,6 +11,7 @@ Game::Game(string name, int n_players, Player* creator)
    this->chat = new Chat(this->creator, false);
    this->chat->join(this->creator);
    this->id = this->chat->id;
+   this->started = false;
 }
 
 bool Game::join(Player* p)
