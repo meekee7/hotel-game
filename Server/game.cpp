@@ -52,6 +52,15 @@ bool Game::leave(Player* p)
    return found;
 }
 
+void Game::start()
+{
+}
+
+int Game::dice()
+{
+   return (rand() % 6) + 1;
+}
+
 Game::~Game(void)
 {
    this->creator = NULL;

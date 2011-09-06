@@ -17,6 +17,8 @@ public:
 
    bool join(Player* p);
    bool leave(Player* p);
+   void start();
+   int dice();
 
    Game(string name, int n_players, Player* creator);
    ~Game(void);

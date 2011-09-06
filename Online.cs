@@ -621,6 +621,8 @@ namespace Juego_Hotel
                     this.Unirse_a_partida(true);
                 else if (msg == "cant_join_game_full")
                     this.Unirse_a_partida(false);
+                else if (msg == "rolled_dice")
+                    this.Dado_tirado();
                 msg = null;
             }
             while (this.continuar_thread);
@@ -771,6 +773,13 @@ namespace Juego_Hotel
                 this.bUnirse.Enabled = false;
             else
                 this.bUnirse.Enabled = true;
+        }
+
+        private void Dado_tirado()
+        {
+            int bytes_recibidos = 0;
+            int res = this.recibir_int(this.socket, ref bytes_recibidos);
+            MessageBox.Show(res.ToString());
         }
     }
 }

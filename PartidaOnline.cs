@@ -124,5 +124,10 @@ namespace Juego_Hotel
         {
             this.Close();
         }
+
+        private void bDado_Click(object sender, EventArgs e)
+        {
+            this.frm_online.enviar_comando("roll_dice", this.id.ToString());
+        }
     }
 }

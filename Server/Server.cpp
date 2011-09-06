@@ -490,6 +490,14 @@ void handle_command(string command, Player* p)
          send_string(dest, msg);
       }
    }
+   else if (command == "roll_dice")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      send_command("rolled_dice", p);
+      send_int(p, get_game_from_id(id)->dice());
+   }
 }
 
 void handle_client(void* arg)
@@ -564,6 +572,7 @@ void run_server()
 
    hook_signals();
    Player* p;
+   srand(time(NULL));
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
