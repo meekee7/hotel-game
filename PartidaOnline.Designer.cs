@@ -132,6 +132,7 @@
             this.bIniciar.TabIndex = 11;
             this.bIniciar.Text = "Iniciar";
             this.bIniciar.UseVisualStyleBackColor = true;
+            this.bIniciar.Click += new System.EventHandler(this.bIniciar_Click);
             // 
             // bDado
             // 

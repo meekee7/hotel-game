@@ -17,6 +17,7 @@ namespace Juego_Hotel
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();
         Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
+        Boolean online;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal()
@@ -28,81 +29,102 @@ namespace Juego_Hotel
             posVerde_orig = (Image) posVerde.Image.Clone();
             posAmarillo_orig = (Image) posAmarillo.Image.Clone();
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
+            this.online = false;
+        }
+
+        delegate void Iniciar_Callback();
+
+        public void Iniciar()
+        {
+            if (this.bIniciar.InvokeRequired)
+            {
+                Iniciar_Callback d = new Iniciar_Callback(Iniciar);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.bIniciar.PerformClick();
+            }
         }
 
         private void bIniciar_Click(object sender, EventArgs e)
         {
-            // Buscar número de jugadores
-            if (this.juego.n_jugadores == 0)
-            {
-                MessageBox.Show("Seleccione el nº de jugadores", "No es posible iniciar");
-                return;
-            }
+            if (this.online)
+                MessageBox.Show("Comenzando partida online");
             else
             {
-                try
+                // Buscar número de jugadores
+                if (this.juego.n_jugadores == 0)
                 {
-                    this.Crear_Jugadores();
+                    MessageBox.Show("Seleccione el nº de jugadores", "No es posible iniciar");
+                    return;
                 }
-                catch
+                else
                 {
-                    return; //Se trata en la función Crear_Jugadores
-                }
-                // Decidir quien empieza
-                this.tiradas_ini = new int [this.juego.n_jugadores];
-                int i;
-                for (i = 0 ; i < this.juego.n_jugadores ; i++)
-                {
-                    this.tiradas_ini[i] = this.juego.dado.tirar();
-                }
-                // Encontrando el mayor
-                int max = 0;
-                for (i = 0; i < this.juego.n_jugadores; i++)
-                {
-                    if (this.tiradas_ini[i] > max)
+                    try
                     {
-                        max = this.tiradas_ini[i];
-                        this.juego.jug_inicial = i;
+                        this.Crear_Jugadores();
                     }
+                    catch
+                    {
+                        return; //Se trata en la función Crear_Jugadores
+                    }
+                    // Decidir quien empieza
+                    this.tiradas_ini = new int[this.juego.n_jugadores];
+                    int i;
+                    for (i = 0; i < this.juego.n_jugadores; i++)
+                    {
+                        this.tiradas_ini[i] = this.juego.dado.tirar();
+                    }
+                    // Encontrando el mayor
+                    int max = 0;
+                    for (i = 0; i < this.juego.n_jugadores; i++)
+                    {
+                        if (this.tiradas_ini[i] > max)
+                        {
+                            max = this.tiradas_ini[i];
+                            this.juego.jug_inicial = i;
+                        }
+                    }
+                    this.juego.jug_inicial++; // Para no comenzar en 0
+                    this.jug_ini.Text = "Jugador inicial: " + this.juego.jug_inicial.ToString();
+                    this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
+                    this.juego.jug_actual = this.juego.jug_inicial;
+                    this.juego.Cambiar_jugador_actual();
+                    this.Establecer_Turno();
+                    this.bIniciar.Enabled = false;
+                    this.bColores.Enabled = false;
+                    this.bComprarSuelo.Enabled = false;
+                    this.grupoNJugadores.Enabled = false;
+                    this.bCobrarBanca.Enabled = false;
+                    this.posJ1.Text = "Casilla: 0";
+                    this.posJ2.Text = "Casilla: 0";
+                    this.posJ3.Text = "Casilla: 0";
+                    this.posJ4.Text = "Casilla: 0";
+                    this.bEntradasJ1.Enabled = false;
+                    this.bEntradasJ2.Enabled = false;
+                    this.bEntradasJ3.Enabled = false;
+                    this.bEntradasJ4.Enabled = false;
+                    this.bPedirNochesJ1.Enabled = false;
+                    this.bPedirNochesJ2.Enabled = false;
+                    this.bPedirNochesJ3.Enabled = false;
+                    this.bPedirNochesJ4.Enabled = false;
+                    this.colorJ1.Text = "Color: " + this.juego.jugadores[0].color.ToString();
+                    this.colorJ2.Text = "Color: " + this.juego.jugadores[1].color.ToString();
+                    this.dineroJ1.Text = "Dinero: " + this.juego.jugadores[0].dinero_total;
+                    this.dineroJ2.Text = "Dinero: " + this.juego.jugadores[1].dinero_total;
+                    if (this.juego.n_jugadores > 2)
+                    {
+                        this.dineroJ3.Text = "Dinero: " + this.juego.jugadores[2].dinero_total;
+                        this.colorJ3.Text = "Color: " + this.juego.jugadores[2].color.ToString();
+                    }
+                    if (this.juego.n_jugadores > 3)
+                    {
+                        this.dineroJ4.Text = "Dinero: " + this.juego.jugadores[3].dinero_total;
+                        this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
+                    }
+                    this.bDado.Enabled = true;
                 }
-                this.juego.jug_inicial++; // Para no comenzar en 0
-                this.jug_ini.Text = "Jugador inicial: " + this.juego.jug_inicial.ToString();
-                this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
-                this.juego.jug_actual = this.juego.jug_inicial;
-                this.juego.Cambiar_jugador_actual();
-                this.Establecer_Turno();
-                this.bIniciar.Enabled = false;
-                this.bColores.Enabled = false;
-                this.bComprarSuelo.Enabled = false;
-                this.grupoNJugadores.Enabled = false;
-                this.bCobrarBanca.Enabled = false;
-                this.posJ1.Text = "Casilla: 0";
-                this.posJ2.Text = "Casilla: 0";
-                this.posJ3.Text = "Casilla: 0";
-                this.posJ4.Text = "Casilla: 0";
-                this.bEntradasJ1.Enabled = false;
-                this.bEntradasJ2.Enabled = false;
-                this.bEntradasJ3.Enabled = false;
-                this.bEntradasJ4.Enabled = false;
-                this.bPedirNochesJ1.Enabled = false;
-                this.bPedirNochesJ2.Enabled = false;
-                this.bPedirNochesJ3.Enabled = false;
-                this.bPedirNochesJ4.Enabled = false;
-                this.colorJ1.Text = "Color: " + this.juego.jugadores[0].color.ToString();
-                this.colorJ2.Text = "Color: " + this.juego.jugadores[1].color.ToString();
-                this.dineroJ1.Text = "Dinero: " + this.juego.jugadores[0].dinero_total;
-                this.dineroJ2.Text = "Dinero: " + this.juego.jugadores[1].dinero_total;
-                if (this.juego.n_jugadores > 2)
-                {
-                    this.dineroJ3.Text = "Dinero: " + this.juego.jugadores[2].dinero_total;
-                    this.colorJ3.Text = "Color: " + this.juego.jugadores[2].color.ToString();
-                }
-                if (this.juego.n_jugadores > 3)
-                {
-                    this.dineroJ4.Text = "Dinero: " + this.juego.jugadores[3].dinero_total;
-                    this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
-                }
-                this.bDado.Enabled = true;
             }
         }
 

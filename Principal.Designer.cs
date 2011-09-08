@@ -805,7 +805,6 @@
 
         private System.Windows.Forms.Label labelTablero;
         private System.Windows.Forms.PictureBox imgTablero;
-        private System.Windows.Forms.Button bIniciar;
         private System.Windows.Forms.RadioButton dos_jugadores;
         private System.Windows.Forms.RadioButton tres_jugadores;
         private System.Windows.Forms.RadioButton cuatro_jugadores;
@@ -865,5 +864,6 @@
         private System.Windows.Forms.Button bRetirarseJ3;
         private System.Windows.Forms.Button bRetirarseJ4;
         public System.Windows.Forms.Button bOnline;
+        public System.Windows.Forms.Button bIniciar;
     }
 }

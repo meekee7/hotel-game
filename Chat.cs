@@ -61,13 +61,13 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error actualizando lista de jugadores: " + ex.Message);
-                this.refrescoLista.Stop();
+                //this.refrescoLista.Stop();
             }
         }
 
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.refrescoLista.Stop();
+            //this.refrescoLista.Stop();
             if (this.global)
             {
                 this.frm_online.enviar_comando("leave_global_chat");
@@ -130,7 +130,7 @@ namespace Juego_Hotel
 
         private void Chat_Shown(object sender, EventArgs e)
         {
-            this.refrescoLista.Start();
+            //this.refrescoLista.Start();
         }
     }
 }

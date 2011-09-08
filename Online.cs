@@ -166,7 +166,7 @@ namespace Juego_Hotel
                             this.continuar_thread = true;
                             thread_recepcion.Start();
                             Thread.Sleep(200);
-                            this.refrescoListas.Start();
+                            //this.refrescoListas.Start();
                             this.enviar_comando("get_users");
                             this.enviar_comando("get_games");
                         }
@@ -324,7 +324,7 @@ namespace Juego_Hotel
         private void bDesconectar_Click(object sender, EventArgs e)
         {
             this.continuar_thread = false;
-            this.refrescoListas.Stop();
+            //this.refrescoListas.Stop();
             if (this.conectado)
                 this.enviar_comando("#disconnect#");
             Thread.Sleep(500);
@@ -453,7 +453,7 @@ namespace Juego_Hotel
             this.frm_chat_global = new Chat(true, this);
             this.enviar_comando("join_global_chat");
             this.bChatGlobal.Enabled = false;
-            this.enviar_comando("get_global_chat_users");
+            //this.enviar_comando("get_global_chat_users");
             frm_chat_global.Show();
         }
 
@@ -623,6 +623,8 @@ namespace Juego_Hotel
                     this.Unirse_a_partida(false);
                 else if (msg == "rolled_dice")
                     this.Dado_tirado();
+                else if (msg == "game_started")
+                    this.Iniciar_partida();
                 msg = null;
             }
             while (this.continuar_thread);
@@ -780,6 +782,13 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int res = this.recibir_int(this.socket, ref bytes_recibidos);
             MessageBox.Show(res.ToString());
+        }
+
+        private void Iniciar_partida()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            this.Buscar_partida(id).Iniciar();
         }
     }
 }

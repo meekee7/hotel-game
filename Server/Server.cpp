@@ -78,7 +78,7 @@ void hook_signals()
    #endif
 }
 
-int add_player_to_player_list (Player* p)
+bool add_player_to_player_list (Player* p)
 {
 	bool found = false;
 	list<Player*>::iterator i = plist.begin();
@@ -92,17 +92,17 @@ int add_player_to_player_list (Player* p)
 	if (found)
 	{
 		cout << "Player already connected" << endl;
-		return -1;
+		return false;
 	}
 	else
 	{
 		cout << "Player accepted" << endl;
 		plist.push_back(p);
-		return 0;
+		return true;
 	}
 }
 
-void delete_player_from_player_list(Player* p)
+bool delete_player_from_player_list(Player* p)
 {
    bool found = false;
 	list<Player*>::iterator i = plist.begin();
@@ -114,11 +114,15 @@ void delete_player_from_player_list(Player* p)
          ++i;
 	}
 	if (!found)
+   {
 		cout << "Player not found in user list" << endl;
+      return false;
+   }
 	else
 	{
 		cout << "Player deleted from user list" << endl;
 		plist.erase(i);
+      return true;
 	}
 }
 
@@ -139,24 +143,29 @@ Player* get_player_from_name(string name)
 		return (*i);
 }
 
-void delete_chat_if_empty(Chat* chat)
+bool delete_chat_if_empty(Chat* chat)
 {
    if (chat->players.empty())
    {
       chat_list.remove(chat);
-	  cout << "Chat " << chat->id << " deleted because it's empty" << endl;
+      cout << "Chat " << chat->id << " deleted because it's empty" << endl;
       delete chat;
+      return true;
    }
+   return false;
 }
 
-void delete_game_if_empty(Game* game)
+bool delete_game_if_empty(Game* game)
 {
    if (game->plist.empty())
    {
       glist.remove(game);
-	  cout << "Game " << game->id << " deleted because it's empty" << endl;
+      cout << "Game " << game->name << " deleted because it's empty" << endl;
       delete game;
+      return true;
    }
+   else
+      return false;
 }
 
 Game* get_game_from_name(string name)
@@ -230,6 +239,8 @@ void disconnect_client(Player* p)
    for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
    {
       (*i2)->leave(p);
+      if (delete_game_if_empty(*i2))
+         i2 = glist.begin(); // Al eliminar un juego, prefiero volver a comenzar la lista para evitar punterazos
    }
    delete_player_from_player_list(p);
    p->connected = false;
@@ -395,6 +406,23 @@ void handle_command(string command, Player* p)
    else if (command == "join_global_chat")
    {
       global_chat_list.push_back(p);
+      // Get all global chat users and join into a string with the separator ~
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --global_chat_list.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+      {
+         dest = *i;
+         send_command("global_chat_userlist", dest);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
    }
    else if (command == "join_chat")
    {
@@ -407,6 +435,23 @@ void handle_command(string command, Player* p)
    else if (command == "leave_global_chat")
    {
       global_chat_list.remove(p);
+      // Get all global chat users and join into a string with the separator ~
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --global_chat_list.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+      {
+         dest = *i;
+         send_command("global_chat_userlist", dest);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
    }
    else if (command == "leave_chat")
    {
@@ -419,7 +464,7 @@ void handle_command(string command, Player* p)
    }
    else if (command == "get_global_chat_users")
    {
-      // Get all users and join into a string with the separator ~
+      // Get all global chat users and join into a string with the separator ~
       string res = "";
       list<Player*>::iterator i;
       for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
@@ -498,6 +543,22 @@ void handle_command(string command, Player* p)
       send_command("rolled_dice", p);
       send_int(p, get_game_from_id(id)->dice());
    }
+   else if (command == "start_game")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      Game* game = get_game_from_id(id);
+      game->start();
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = *i;
+         send_command("game_started", dest);
+         send_int(dest, id);
+      }
+   }
 }
 
 void handle_client(void* arg)
@@ -514,7 +575,7 @@ void handle_client(void* arg)
 	   delete p;
       cout << "Disconnecting client" << endl;
    }
-   else if (add_player_to_player_list(p) == -1)
+   else if (add_player_to_player_list(p) == false)
    {
       p->socket->psend("login ko", 8, 0);
 	   delete p;

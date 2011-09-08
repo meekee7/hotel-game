@@ -60,7 +60,7 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error actualizando lista de jugadores: " + ex.Message);
-                this.refrescoLista.Stop();
+                //this.refrescoLista.Stop();
             }
         }
 
@@ -78,7 +78,7 @@ namespace Juego_Hotel
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
             //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
-            this.refrescoLista.Stop();
+            //this.refrescoLista .Stop();
             this.frm_online.enviar_comando("leave_game", this.id.ToString());
             this.frm_online.lista_partidas.Remove(this);
             this.frm_online.salir_de_partida();
@@ -111,7 +111,8 @@ namespace Juego_Hotel
 
         private void PartidaOnline_Shown(object sender, EventArgs e)
         {
-            this.refrescoLista.Start();
+            //this.refrescoLista.Start();
+            this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
 
         private void bEnviar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -128,6 +129,16 @@ namespace Juego_Hotel
         private void bDado_Click(object sender, EventArgs e)
         {
             this.frm_online.enviar_comando("roll_dice", this.id.ToString());
+        }
+
+        private void bIniciar_Click(object sender, EventArgs e)
+        {
+            this.frm_online.enviar_comando("start_game", this.id.ToString());
+        }
+
+        public void Iniciar()
+        {
+            this.frm_online.interfaz.Iniciar();
         }
     }
 }
