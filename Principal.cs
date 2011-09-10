@@ -17,7 +17,7 @@ namespace Juego_Hotel
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();
         Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
-        Boolean online;
+        public Boolean online;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal()

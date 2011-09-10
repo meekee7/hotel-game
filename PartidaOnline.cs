@@ -138,6 +138,7 @@ namespace Juego_Hotel
 
         public void Iniciar()
         {
+            this.frm_online.interfaz.online = true;
             this.frm_online.interfaz.Iniciar();
         }
     }
