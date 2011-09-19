@@ -3,6 +3,7 @@
 #include <string>
 #include "player.h"
 #include "chat.h"
+#include "dlib/threads.h"
 
 class Game
 {
@@ -20,6 +21,6 @@ public:
    void start();
    int dice();
 
-   Game(string name, int n_players, Player* creator);
+   Game(string name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count);
    ~Game(void);
 };

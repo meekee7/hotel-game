@@ -2,13 +2,13 @@
 #include <iostream>
 
 
-Game::Game(string name, int n_players, Player* creator)
+Game::Game(string name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count)
 {
    this->name = name;
    this->n_players = n_players;
    this->creator = creator;
    this->plist.push_back(creator);
-   this->chat = new Chat(this->creator, false);
+   this->chat = new Chat(this->creator, false, mutex_ids, id_count);
    this->chat->join(this->creator);
    this->id = this->chat->id;
    this->started = false;

@@ -22,6 +22,8 @@ list<Player*> plist; // Player list
 list<Game*> glist; // Game list
 list<Player*> global_chat_list; // Players in global chat
 list<Chat*> chat_list;
+dlib::mutex mutex_ids;
+int id_count = 0;
 
 void unhook_signals()
 {
@@ -360,7 +362,7 @@ void handle_command(string command, Player* p)
          return;
       }
       cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
-      Game* new_game = new Game(name, n_players, p);
+      Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count);
       glist.push_back(new_game);
       send_command("joined_game", p);
       send_int(p, name.length());
@@ -426,7 +428,7 @@ void handle_command(string command, Player* p)
       string plist = receive_string(p, long_list, &bytes_received);
       vector<string> player_list = split(plist, "~");
       cout << "New chat. Number of players: " << player_list.size() << endl;
-      Chat* new_chat = new Chat(p, true);
+      Chat* new_chat = new Chat(p, true, &mutex_ids, &id_count);
       chat_list.push_back(new_chat);
       // Send commands to selected players to ask them to join the chat
       Player* dest;

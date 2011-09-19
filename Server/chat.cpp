@@ -1,8 +1,11 @@
 #include "chat.h"
 
-Chat::Chat(Player* creator, bool normal_chat)
+Chat::Chat(Player* creator, bool normal_chat, dlib::mutex* mutex_ids, int* id_count)
 {
-   this->id = rand();
+   mutex_ids->lock();
+   this->id = *id_count;
+   ++(*id_count);
+   mutex_ids->unlock();
    this->creator = creator;
    this->normal_chat = normal_chat;
 }

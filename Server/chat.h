@@ -3,6 +3,7 @@
 #include <list>
 #include <iostream>
 #include "player.h"
+#include "dlib/threads.h"
 using namespace std;
 
 class Chat
@@ -17,7 +18,7 @@ public:
    bool join(Player* p);
    bool leave(Player* p);
 
-   Chat(Player* creator, bool normal_chat);
+   Chat(Player* creator, bool normal_chat, dlib::mutex* mutex_ids, int* id_count);
    ~Chat(void);
 };
 
