@@ -75,7 +75,7 @@ void hook_signals()
    signal(SIGINT, close_server);
    signal(SIGTERM, close_server);
    #ifdef _WIN32
-      signal(SIGBREAK, close);
+      signal(SIGBREAK, close_server);
    #endif
 }
 
