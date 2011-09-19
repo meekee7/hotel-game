@@ -62,8 +62,7 @@ void empty_plist()
       delete p;
 	}
 }
-
-void close (int signum)
+void close_server (int signum)
 {
    closing = 1;
    cout << endl << "Closing server" << endl;
@@ -73,8 +72,8 @@ void close (int signum)
 
 void hook_signals()
 {
-   signal(SIGINT, close);
-   signal(SIGTERM, close);
+   signal(SIGINT, close_server);
+   signal(SIGTERM, close_server);
    #ifdef _WIN32
       signal(SIGBREAK, close);
    #endif
