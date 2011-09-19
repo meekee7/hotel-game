@@ -297,8 +297,26 @@ void handle_command(string command, Player* p)
    {
       disconnect_client(p);
       send_command("#disconnect#", p);
+      // Send player list to all players, so they are notified about the diconnected user
+      // Get all users and join into a string with the separator ~
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = plist.begin() ; i != plist.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --plist.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = plist.begin() ; i != plist.end() ; ++i)
+      {
+         dest = *i;
+         send_command("player_list", dest);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
 	}
-   else if (command == "get_users")
+   else if (command == "get_players")
    {
       // Get all users and join into a string with the separator ~
       string res = "";
@@ -315,7 +333,7 @@ void handle_command(string command, Player* p)
 	}
 	else if (command == "get_games")
 	{
-		// Get all users and join into a string with the separator ~
+		// Get all games and join into a string with the separator ~
 		string res = "";
 		list<Game*>::iterator i;
 		for (i = glist.begin() ; i != glist.end() ; ++i)
@@ -350,6 +368,25 @@ void handle_command(string command, Player* p)
       send_int(p, new_game->chat->id);
       send_int(p, new_game->creator->name.length());
       send_string(p, new_game->creator->name);
+      // Get all games and join into a string with the separator ~
+		string res = "";
+		list<Game*>::iterator i;
+		for (i = glist.begin() ; i != glist.end() ; ++i)
+		{
+			res += (*i)->name;
+			if (i != --glist.end())
+				res += '~';
+		}
+      list<Player*>::iterator i2;
+      Player* dest;
+      for (i2 = plist.begin() ; i2 != plist.end() ; ++i2)
+      {
+         dest = *i2;
+         send_command("game_list", dest);
+		   send_int(dest, res.length());
+		   if (res.length() != 0)
+			   send_string(dest, res);
+      }
    }
    else if (command == "join_game")
    {
@@ -585,6 +622,24 @@ void handle_client(void* arg)
    {
       p->socket->psend("login ok", 8, 0);
       bool online = true;
+      // Send player list to all players, so they are notified about the new user
+      // Get all users and join into a string with the separator ~
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = plist.begin() ; i != plist.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --plist.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = plist.begin() ; i != plist.end() ; ++i)
+      {
+         dest = *i;
+         send_command("player_list", dest);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
       int long_command;
       while (online)
       {

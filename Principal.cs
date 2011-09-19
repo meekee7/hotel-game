@@ -50,7 +50,9 @@ namespace Juego_Hotel
         private void bIniciar_Click(object sender, EventArgs e)
         {
             if (this.online)
+            {
                 MessageBox.Show("Comenzando partida online");
+            }
             else
             {
                 // Buscar número de jugadores
