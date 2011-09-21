@@ -208,7 +208,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.Button bLogin;
         private System.Windows.Forms.Button bConectar;
         private System.Windows.Forms.TextBox txtServidor;
@@ -222,5 +221,6 @@
         private System.Windows.Forms.Timer refrescoListas;
         private System.Windows.Forms.Button bChatGlobal;
         private System.Windows.Forms.Button bUnirse;
+        public System.Windows.Forms.TextBox txtLogin;
     }
 }

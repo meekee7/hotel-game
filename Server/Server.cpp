@@ -43,6 +43,16 @@ void empty_global_chat_list()
 	}
 }
 
+void empty_chat_list()
+{
+   list<Chat*>::iterator i;
+	for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+	{
+      Chat* c = *i;
+      delete c;
+	}
+}
+
 void empty_glist()
 {
    list<Game*>::iterator i;
@@ -360,8 +370,8 @@ void handle_command(string command, Player* p)
          cout << "New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
          return;
       }
-      cout << "New game! Name: " << name << " | Number of players: " << n_players << endl;
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count);
+      cout << "New game! Name: " << name << "(ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
       send_command("joined_game", p);
       send_int(p, name.length());
@@ -394,15 +404,37 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int long_name = receive_int(p, &bytes_received);
       string name = receive_string(p, long_name, &bytes_received);
-      Game* new_game = get_game_from_name(name);
-      if (new_game->join(p))
+      Game* game = get_game_from_name(name);
+      if (game->join(p))
       {
          send_command("joined_game", p);
          send_int(p, name.length());
          send_string(p, name);
-         send_int(p, new_game->chat->id);
-         send_int(p, new_game->creator->name.length());
-         send_string(p, new_game->creator->name);
+         send_int(p, game->chat->id);
+         send_int(p, game->creator->name.length());
+         send_string(p, game->creator->name);
+         string res = "";
+         list<Player*>::iterator i;
+         for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+         {
+            res += (*i)->name;
+            if (i != --game->plist.end())
+               res += '~';
+         }
+         Player* dest;
+         for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+         {
+            // We exclude recently joined player because the command is sent too quickly.
+            // He will ask for player list just after joining
+            dest = *i;
+            if (dest != p)
+            {
+               send_command("chat_userlist", dest);
+               send_int(dest, game->id);
+               send_int(dest, res.length());
+               send_string(dest, res);
+            }
+         }
       }
       else
       {
@@ -418,6 +450,23 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, long_id, &bytes_received);
       Game* game = get_game_from_id(atoi(id.c_str()));
       game->leave(p);
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --game->plist.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = *i;
+         send_command("chat_userlist", dest);
+         send_int(dest, game->id);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
       delete_game_if_empty(game);
    }
    else if (command == "create_chat")
@@ -426,9 +475,9 @@ void handle_command(string command, Player* p)
       int long_list = receive_int(p, &bytes_received);
       string plist = receive_string(p, long_list, &bytes_received);
       vector<string> player_list = split(plist, "~");
-      cout << "New chat. Number of players: " << player_list.size() << endl;
       Chat* new_chat = new Chat(p, true, &mutex_ids, &id_count);
       chat_list.push_back(new_chat);
+      cout << "New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
       // Send commands to selected players to ask them to join the chat
       Player* dest;
       vector<string>::iterator i;
@@ -469,6 +518,23 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, long_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->join(p);
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --chat->players.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         dest = *i;
+         send_command("chat_userlist", dest);
+         send_int(dest, chat->id);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
    }
    else if (command == "leave_global_chat")
    {
@@ -498,6 +564,23 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, long_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->leave(p);
+      string res = "";
+      list<Player*>::iterator i;
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         res += (*i)->name;
+         if (i != --chat->players.end())
+            res += '~';
+      }
+      Player* dest;
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         dest = *i;
+         send_command("chat_userlist", dest);
+         send_int(dest, chat->id);
+         send_int(dest, res.length());
+         send_string(dest, res);
+      }
       delete_chat_if_empty(chat);
    }
    else if (command == "get_global_chat_users")
@@ -704,6 +787,8 @@ void run_server()
          {
             // The server is closing
             empty_global_chat_list();
+            cout << "Global Chat cleaned" << endl;
+            empty_chat_list();
             cout << "Chat list cleaned" << endl;
             empty_glist();
             cout << "Game list cleaned" << endl;

@@ -131,6 +131,11 @@ namespace Juego_Hotel
         private void Chat_Shown(object sender, EventArgs e)
         {
             //this.refrescoLista.Start();
+            if (this.global)
+                this.Text += " global";
+            else
+                this.Text += ' ' + this.id;
+            this.Text += ": " + frm_online.txtLogin.Text;
         }
     }
 }

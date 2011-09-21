@@ -18,6 +18,7 @@ namespace Juego_Hotel
         Sel_colores frm_colores = new Sel_colores();
         Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
         public Boolean online;
+        Online frm_online;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal()
@@ -1079,16 +1080,15 @@ namespace Juego_Hotel
 
         private void bOnline_Click(object sender, EventArgs e)
         {
-            Online frm_online = new Online(this);
+            this.frm_online = new Online(this);
             frm_online.Show();
-            this.AddOwnedForm(frm_online);
             this.bOnline.Enabled = false;
         }
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.OwnedForms.Length > 0)
-                this.OwnedForms[0].Close();
+            if (this.frm_online != null)
+                this.frm_online.Close();
         }
     }
 }

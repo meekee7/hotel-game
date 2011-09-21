@@ -165,7 +165,8 @@ namespace Juego_Hotel
                             thread_recepcion = new Thread(esperar_comandos);
                             this.continuar_thread = true;
                             thread_recepcion.Start();
-                            Thread.Sleep(200);
+                            this.Text += ": " + this.txtLogin.Text;
+                            //Thread.Sleep(200);
                             //this.refrescoListas.Start();
                             //this.enviar_comando("get_players");
                             this.enviar_comando("get_games");
@@ -347,6 +348,7 @@ namespace Juego_Hotel
             this.bChatGlobal.Enabled = false;
             this.txtLogin.Enabled = true;
             this.txtServidor.Enabled = true;
+            this.Text = "Online";
             // Desactivar el botón Enviar de cada chat
             if (this.frm_chat_global != null)
                 this.frm_chat_global.desactivar_envio();
