@@ -61,13 +61,11 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error actualizando lista de jugadores: " + ex.Message);
-                //this.refrescoLista.Stop();
             }
         }
 
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //this.refrescoLista.Stop();
             if (this.global)
             {
                 this.frm_online.enviar_comando("leave_global_chat");
@@ -78,14 +76,6 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("leave_chat", this.id.ToString());
                 this.frm_online.chats_abiertos.Remove(this);
             }
-        }
-
-        private void refrescoLista_Tick(object sender, EventArgs e)
-        {
-            if (this.global)
-                this.frm_online.enviar_comando("get_global_chat_users");
-            else
-                this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);
@@ -130,7 +120,6 @@ namespace Juego_Hotel
 
         private void Chat_Shown(object sender, EventArgs e)
         {
-            //this.refrescoLista.Start();
             if (this.global)
                 this.Text += " global";
             else

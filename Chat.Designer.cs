@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mensajes = new System.Windows.Forms.TextBox();
             this.mensaje = new System.Windows.Forms.TextBox();
             this.bEnviar = new System.Windows.Forms.Button();
             this.listaJugadores = new System.Windows.Forms.ListBox();
-            this.refrescoLista = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // mensajes
@@ -81,11 +79,6 @@
             this.listaJugadores.Size = new System.Drawing.Size(75, 212);
             this.listaJugadores.TabIndex = 3;
             // 
-            // refrescoLista
-            // 
-            this.refrescoLista.Interval = 2500;
-            this.refrescoLista.Tick += new System.EventHandler(this.refrescoLista_Tick);
-            // 
             // Chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,6 +104,5 @@
         private System.Windows.Forms.TextBox mensaje;
         private System.Windows.Forms.Button bEnviar;
         private System.Windows.Forms.ListBox listaJugadores;
-        private System.Windows.Forms.Timer refrescoLista;
     }
 }

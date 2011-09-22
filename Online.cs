@@ -166,9 +166,6 @@ namespace Juego_Hotel
                             this.continuar_thread = true;
                             thread_recepcion.Start();
                             this.Text += ": " + this.txtLogin.Text;
-                            //Thread.Sleep(200);
-                            //this.refrescoListas.Start();
-                            //this.enviar_comando("get_players");
                             this.enviar_comando("get_games");
                         }
                     }
@@ -325,7 +322,6 @@ namespace Juego_Hotel
         private void bDesconectar_Click(object sender, EventArgs e)
         {
             this.continuar_thread = false;
-            //this.refrescoListas.Stop();
             if (this.conectado)
                 this.enviar_comando("#disconnect#");
             Thread.Sleep(500);
@@ -426,12 +422,6 @@ namespace Juego_Hotel
                 this.bLogin.PerformClick();
         }
 
-        private void refrescoListas_Tick(object sender, EventArgs e)
-        {
-            this.enviar_comando("get_players");
-            this.enviar_comando("get_games");
-        }
-
         private void bCrearConv_Click(object sender, EventArgs e)
         {
             if ((this.listaUsuarios.SelectedItems.Count < 1) ||
@@ -455,7 +445,6 @@ namespace Juego_Hotel
             this.frm_chat_global = new Chat(true, this);
             this.enviar_comando("join_global_chat");
             this.bChatGlobal.Enabled = false;
-            //this.enviar_comando("get_global_chat_users");
             frm_chat_global.Show();
         }
 
@@ -591,7 +580,9 @@ namespace Juego_Hotel
             else //Es el chat de una partida creada
             {
                 PartidaOnline partida = Buscar_partida(id);
-                partida.rellenar_lista();
+                // El comando puede llegar desfasado y no existir la partida ya
+                if (partida != null)
+                    partida.rellenar_lista();
             }
         }
 

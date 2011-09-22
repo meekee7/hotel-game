@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.bLogin = new System.Windows.Forms.Button();
             this.bConectar = new System.Windows.Forms.Button();
@@ -40,7 +39,6 @@
             this.listaPartidas = new System.Windows.Forms.ListBox();
             this.LUsuarios = new System.Windows.Forms.Label();
             this.LPartidas = new System.Windows.Forms.Label();
-            this.refrescoListas = new System.Windows.Forms.Timer(this.components);
             this.bChatGlobal = new System.Windows.Forms.Button();
             this.bUnirse = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -153,11 +151,6 @@
             this.LPartidas.TabIndex = 10;
             this.LPartidas.Text = "Partidas creadas:";
             // 
-            // refrescoListas
-            // 
-            this.refrescoListas.Interval = 5000;
-            this.refrescoListas.Tick += new System.EventHandler(this.refrescoListas_Tick);
-            // 
             // bChatGlobal
             // 
             this.bChatGlobal.Location = new System.Drawing.Point(210, 129);
@@ -218,7 +211,6 @@
         private System.Windows.Forms.ListBox listaPartidas;
         private System.Windows.Forms.Label LUsuarios;
         private System.Windows.Forms.Label LPartidas;
-        private System.Windows.Forms.Timer refrescoListas;
         private System.Windows.Forms.Button bChatGlobal;
         private System.Windows.Forms.Button bUnirse;
         public System.Windows.Forms.TextBox txtLogin;

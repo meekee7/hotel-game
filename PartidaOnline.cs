@@ -44,6 +44,10 @@ namespace Juego_Hotel
                 foreach (String nombre in lista)
                     this.listaJugadores.Items.Add(nombre);
                 this.listaJugadores.EndUpdate();
+                if ((this.listaJugadores.Items.Count >= 2) && (this.creador == this.frm_online.txtLogin.Text))
+                    this.bIniciar.Enabled = true;
+                else
+                    this.bIniciar.Enabled = false;
             }
         }
 
@@ -60,7 +64,6 @@ namespace Juego_Hotel
             catch (Exception ex)
             {
                 MessageBox.Show("Error actualizando lista de jugadores: " + ex.Message);
-                //this.refrescoLista.Stop();
             }
         }
 
@@ -78,15 +81,9 @@ namespace Juego_Hotel
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
             //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
-            //this.refrescoLista .Stop();
             this.frm_online.enviar_comando("leave_game", this.id.ToString());
             this.frm_online.lista_partidas.Remove(this);
             this.frm_online.salir_de_partida();
-        }
-
-        private void refrescoLista_Tick_1(object sender, EventArgs e)
-        {
-            this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);
@@ -111,14 +108,7 @@ namespace Juego_Hotel
 
         private void PartidaOnline_Shown(object sender, EventArgs e)
         {
-            //this.refrescoLista.Start();
             this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
-        }
-
-        private void bEnviar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                this.bEnviar.PerformClick();
         }
 
         private void bAbandonar_Click(object sender, EventArgs e)
@@ -140,6 +130,12 @@ namespace Juego_Hotel
         {
             this.frm_online.interfaz.online = true;
             this.frm_online.interfaz.Iniciar();
+        }
+
+        private void mensaje_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                this.bEnviar.PerformClick();
         }
     }
 }

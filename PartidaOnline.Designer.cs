@@ -28,13 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.listaJugadores = new System.Windows.Forms.ListBox();
             this.bEnviar = new System.Windows.Forms.Button();
             this.mensaje = new System.Windows.Forms.TextBox();
             this.mensajes = new System.Windows.Forms.TextBox();
             this.grupoChat = new System.Windows.Forms.GroupBox();
-            this.refrescoLista = new System.Windows.Forms.Timer(this.components);
             this.txtNombre = new System.Windows.Forms.Label();
             this.bAbandonar = new System.Windows.Forms.Button();
             this.bIniciar = new System.Windows.Forms.Button();
@@ -62,7 +60,6 @@
             this.bEnviar.Text = "Enviar";
             this.bEnviar.UseVisualStyleBackColor = true;
             this.bEnviar.Click += new System.EventHandler(this.bEnviar_Click);
-            this.bEnviar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.bEnviar_PreviewKeyDown);
             // 
             // mensaje
             // 
@@ -72,6 +69,7 @@
             this.mensaje.Name = "mensaje";
             this.mensaje.Size = new System.Drawing.Size(281, 20);
             this.mensaje.TabIndex = 5;
+            this.mensaje.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mensaje_PreviewKeyDown);
             // 
             // mensajes
             // 
@@ -100,11 +98,6 @@
             this.grupoChat.TabStop = false;
             this.grupoChat.Text = "Chat";
             // 
-            // refrescoLista
-            // 
-            this.refrescoLista.Interval = 2500;
-            this.refrescoLista.Tick += new System.EventHandler(this.refrescoLista_Tick_1);
-            // 
             // txtNombre
             // 
             this.txtNombre.AutoSize = true;
@@ -126,6 +119,7 @@
             // 
             // bIniciar
             // 
+            this.bIniciar.Enabled = false;
             this.bIniciar.Location = new System.Drawing.Point(18, 65);
             this.bIniciar.Name = "bIniciar";
             this.bIniciar.Size = new System.Drawing.Size(75, 23);
@@ -172,7 +166,6 @@
         private System.Windows.Forms.TextBox mensaje;
         private System.Windows.Forms.TextBox mensajes;
         private System.Windows.Forms.GroupBox grupoChat;
-        private System.Windows.Forms.Timer refrescoLista;
         private System.Windows.Forms.Label txtNombre;
         private System.Windows.Forms.Button bAbandonar;
         private System.Windows.Forms.Button bIniciar;
