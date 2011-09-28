@@ -21,7 +21,7 @@ namespace Juego_Hotel
         public LinkedList<PartidaOnline> lista_partidas;
         Thread thread_recepcion;
         Semaphore sem_en_comunicacion;
-        Boolean continuar_thread, conectado = false;
+        Boolean continuar_thread, conectado = false, cerrando = false;
 
         public Online(Principal interfaz)
         {
@@ -222,6 +222,8 @@ namespace Juego_Hotel
 
         private void Rellenar_lista_usuarios()
         {
+            if (this.cerrando)
+                return;
             try
             {
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
@@ -278,6 +280,8 @@ namespace Juego_Hotel
 
         private void Rellenar_lista_partidas()
         {
+            if (this.cerrando)
+                return;
             try
             {
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
@@ -300,8 +304,41 @@ namespace Juego_Hotel
             }
         }
 
+        delegate void Cerrar_Chat_Callback(Chat chat);
+
+        private void Cerrar_Chat(Chat chat)
+        {
+            if (chat.InvokeRequired)
+            {
+                Cerrar_Chat_Callback d = new Cerrar_Chat_Callback(Cerrar_Chat);
+                chat.Invoke(d, new object[] {chat});
+            }
+            else
+            {
+                chat.Close();
+            }
+        }
+
+        delegate void Cerrar_Partida_Callback(PartidaOnline partida);
+
+        private void Cerrar_Partida(PartidaOnline partida)
+        {
+            if (partida.InvokeRequired)
+            {
+                Cerrar_Partida_Callback d = new Cerrar_Partida_Callback(Cerrar_Partida);
+                partida.Invoke(d, new object[] { partida });
+            }
+            else
+            {
+                partida.cerrando_por_desconexion = true;
+                partida.Close();
+            }
+        }
+
         private void Online_FormClosing(object sender, FormClosingEventArgs e)
         {
+            int i;
+            this.cerrando = true;
             if (((this.frm_chat_global != null) ||
                 (this.chats_abiertos.Count > 0)) &&
                 (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
@@ -311,15 +348,19 @@ namespace Juego_Hotel
                     this.frm_chat_global.Close();
                     this.frm_chat_global = null;
                 }
-                foreach (Chat chat in this.chats_abiertos)
-                    chat.Close();
+                for (i = this.chats_abiertos.Count - 1 ; i >= 0 ; i--)
+                {
+                    this.Cerrar_Chat(this.chats_abiertos.ToArray()[i]);
+                }
                 this.chats_abiertos.Clear();
             }
             if ((this.lista_partidas.Count > 0) &&
                 (MessageBox.Show("¿Quieres que se cierre cualquier partida abierta?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
-                foreach (PartidaOnline partida in this.lista_partidas)
-                    partida.Cerrar();
+                for (i = this.lista_partidas.Count - 1; i >= 0; i--)
+                {
+                    this.Cerrar_Partida(this.lista_partidas.ToArray()[i]);
+                }
                 this.lista_partidas.Clear();
             }
             this.bDesconectar.PerformClick();
@@ -467,25 +508,24 @@ namespace Juego_Hotel
             this.frm_chat_global = null;
         }
 
-        delegate void Reactivar_crear_unirse_Callback();
+        delegate void Reactivar_crear_Callback();
 
-        private void Reactivar_crear_unirse()
+        private void Reactivar_crear()
         {
-            if (this.bUnirse.InvokeRequired || this.bCrearPartida.InvokeRequired)
+            if (this.bCrearPartida.InvokeRequired)
             {
-                Reactivar_crear_unirse_Callback d = new Reactivar_crear_unirse_Callback(Reactivar_crear_unirse);
+                Reactivar_crear_Callback d = new Reactivar_crear_Callback(Reactivar_crear);
                 this.Invoke(d);
             }
             else
             {
                 this.bCrearPartida.Enabled = true;
-                this.bUnirse.Enabled = true;
             }
         }
 
         public void salir_de_partida()
         {
-            this.Reactivar_crear_unirse();
+            this.Reactivar_crear();
         }
 
         private void Unirse_a_chat()

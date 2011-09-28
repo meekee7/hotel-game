@@ -16,6 +16,7 @@ namespace Juego_Hotel
         public int id;
         public String creador;
         public String nombre;
+        public Boolean cerrando_por_desconexion = false;
 
         public PartidaOnline(Online frm_online)
         {
@@ -80,23 +81,10 @@ namespace Juego_Hotel
 
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.bAbandonar.PerformClick();
-            //this.frm_online.salir_de_partida();
-        }
-
-        delegate void bAbandonar_Callback();
-
-        public void Cerrar()
-        {
-            if (this.bAbandonar.InvokeRequired)
-            {
-                bAbandonar_Callback d = new bAbandonar_Callback(Cerrar);
-                this.Invoke(d);
-            }
-            else
-            {
-                this.bAbandonar.PerformClick();
-            }
+            if (!this.cerrando_por_desconexion)
+                this.frm_online.salir_de_partida();
+            this.frm_online.enviar_comando("leave_game", this.id.ToString());
+            this.frm_online.lista_partidas.Remove(this);
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);
@@ -126,10 +114,11 @@ namespace Juego_Hotel
 
         private void bAbandonar_Click(object sender, EventArgs e)
         {
+            //this.bAbandonar.Enabled = false;
             //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
-            this.frm_online.enviar_comando("leave_game", this.id.ToString());
-            this.frm_online.lista_partidas.Remove(this);
-            this.bAbandonar.Enabled = false;
+            //this.frm_online.enviar_comando("leave_game", this.id.ToString());
+            //this.frm_online.lista_partidas.Remove(this);
+            //this.frm_online.salir_de_partida();
             this.Close();
         }            
 
@@ -141,6 +130,8 @@ namespace Juego_Hotel
         private void bIniciar_Click(object sender, EventArgs e)
         {
             this.frm_online.enviar_comando("start_game", this.id.ToString());
+            this.frm_online.lista_partidas.Remove(this);
+            this.frm_online.salir_de_partida();
         }
 
         public void Iniciar()

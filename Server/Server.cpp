@@ -126,12 +126,12 @@ bool delete_player_from_player_list(Player* p)
 	}
 	if (!found)
    {
-		cout << "Player not found in user list" << endl;
+		cout << "Player not found in player list" << endl;
       return false;
    }
 	else
 	{
-		cout << "Player deleted from user list" << endl;
+		cout << "Player deleted from player list" << endl;
 		plist.erase(i);
       return true;
 	}
@@ -242,7 +242,13 @@ void disconnect_client(Player* p)
    for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
    {
       (*i)->leave(p);
-      delete_chat_if_empty(get_chat_from_id((*i)->id));
+      if (delete_chat_if_empty(get_chat_from_id((*i)->id)))
+      {
+         if (chat_list.size() > 0)
+            i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
+         else
+            break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
+      }
    }
    global_chat_list.remove(p);
    // Leave games
@@ -389,7 +395,7 @@ void handle_command(string command, Player* p)
          return;
       }
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count);
-      cout << "New game! Name: " << name << "(ID " << new_game->id << ") | Number of players: " << n_players << endl;
+      cout << "New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
       send_command("joined_game", p);
       send_int(p, name.length());
