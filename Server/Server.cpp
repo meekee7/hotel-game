@@ -251,7 +251,12 @@ void disconnect_client(Player* p)
    {
       (*i2)->leave(p);
       if (delete_game_if_empty(*i2))
-         i2 = glist.begin(); // Al eliminar un juego, prefiero volver a comenzar la lista para evitar punterazos
+      {
+         if (glist.size() > 0)
+            i2 = glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
+         else
+            break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
+      }
    }
    delete_player_from_player_list(p);
    p->connected = false;
@@ -318,6 +323,15 @@ void handle_command(string command, Player* p)
          if (i != --plist.end())
             res += '~';
       }
+      // Get all games and join into a string with the separator ~
+		string res2 = "";
+		list<Game*>::iterator i2;
+		for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
+		{
+			res2 += (*i2)->name;
+			if (i2 != --glist.end())
+				res2 += '~';
+		}
       Player* dest;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
@@ -325,6 +339,10 @@ void handle_command(string command, Player* p)
          send_command("player_list", dest);
          send_int(dest, res.length());
          send_string(dest, res);
+         send_command("game_list", dest);
+		   send_int(dest, res.length());
+		   if (res.length() != 0)
+			   send_string(dest, res);
       }
 	}
    else if (command == "get_players")
@@ -468,6 +486,23 @@ void handle_command(string command, Player* p)
          send_string(dest, res);
       }
       delete_game_if_empty(game);
+      // Get all games and join into a string with the separator ~
+		res = "";
+		list<Game*>::iterator i2;
+		for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
+		{
+			res += (*i2)->name;
+			if (i2 != --glist.end())
+				res += '~';
+		}
+      for (i = plist.begin() ; i != plist.end() ; ++i)
+      {
+         dest = *i;
+         send_command("game_list", dest);
+		   send_int(dest, res.length());
+		   if (res.length() != 0)
+			   send_string(dest, res);
+      }
    }
    else if (command == "create_chat")
    {

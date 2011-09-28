@@ -80,10 +80,23 @@ namespace Juego_Hotel
 
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
-            this.frm_online.enviar_comando("leave_game", this.id.ToString());
-            this.frm_online.lista_partidas.Remove(this);
-            this.frm_online.salir_de_partida();
+            this.bAbandonar.PerformClick();
+            //this.frm_online.salir_de_partida();
+        }
+
+        delegate void bAbandonar_Callback();
+
+        public void Cerrar()
+        {
+            if (this.bAbandonar.InvokeRequired)
+            {
+                bAbandonar_Callback d = new bAbandonar_Callback(Cerrar);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.bAbandonar.PerformClick();
+            }
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);
@@ -113,8 +126,12 @@ namespace Juego_Hotel
 
         private void bAbandonar_Click(object sender, EventArgs e)
         {
+            //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
+            this.frm_online.enviar_comando("leave_game", this.id.ToString());
+            this.frm_online.lista_partidas.Remove(this);
+            this.bAbandonar.Enabled = false;
             this.Close();
-        }
+        }            
 
         private void bDado_Click(object sender, EventArgs e)
         {

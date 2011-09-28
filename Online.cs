@@ -302,7 +302,6 @@ namespace Juego_Hotel
 
         private void Online_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.bDesconectar.PerformClick();
             if (((this.frm_chat_global != null) ||
                 (this.chats_abiertos.Count > 0)) &&
                 (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
@@ -316,6 +315,14 @@ namespace Juego_Hotel
                     chat.Close();
                 this.chats_abiertos.Clear();
             }
+            if ((this.lista_partidas.Count > 0) &&
+                (MessageBox.Show("¿Quieres que se cierre cualquier partida abierta?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                foreach (PartidaOnline partida in this.lista_partidas)
+                    partida.Cerrar();
+                this.lista_partidas.Clear();
+            }
+            this.bDesconectar.PerformClick();
             this.interfaz.bOnline.Enabled = true;
         }
 
@@ -370,7 +377,10 @@ namespace Juego_Hotel
             {
                 string nombre = this.InputBox("Nombre de la partida:", "Crear partida", "");
                 if (nombre == "")
+                {
+                    MessageBox.Show("No se puede dejar el nombre en blanco", "Crear partida");
                     return;
+                }
                 else if (nombre.Contains('~'))
                 {
                     MessageBox.Show("El nombre de la partida no puede contener el carácter '~'");
@@ -378,7 +388,10 @@ namespace Juego_Hotel
                 }
                 string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
                 if (s_n_jugadores == "")
+                {
+                    MessageBox.Show("No se puede dejar el número de jugadores en blanco", "Crear partida");
                     return;
+                }
                 int n_jugadores;
                 try
                 {
