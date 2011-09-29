@@ -719,6 +719,7 @@ void handle_command(string command, Player* p)
          dest = *i;
          send_command("game_started", dest);
          send_int(dest, id);
+         send_int(dest, game->n_players);
       }
    }
 }

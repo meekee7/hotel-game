@@ -130,13 +130,12 @@ namespace Juego_Hotel
         private void bIniciar_Click(object sender, EventArgs e)
         {
             this.frm_online.enviar_comando("start_game", this.id.ToString());
-            this.frm_online.lista_partidas.Remove(this);
-            this.frm_online.salir_de_partida();
         }
 
-        public void Iniciar()
+        public void Iniciar(int num_jugadores)
         {
             this.frm_online.interfaz.online = true;
+            this.frm_online.interfaz.juego.n_jugadores = num_jugadores;
             this.frm_online.interfaz.Iniciar();
         }
 

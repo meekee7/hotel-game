@@ -834,7 +834,8 @@ namespace Juego_Hotel
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
-            this.Buscar_partida(id).Iniciar();
+            int num_jugadores = this.recibir_int(this.socket, ref bytes_recibidos);
+            this.Buscar_partida(id).Iniciar(num_jugadores);
         }
     }
 }
