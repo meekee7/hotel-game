@@ -24,6 +24,7 @@ list<Player*> global_chat_list; // Players in global chat
 list<Chat*> chat_list;
 dlib::mutex mutex_ids;
 int id_count = 0;
+string config_content;
 
 void unhook_signals()
 {
@@ -720,6 +721,9 @@ void handle_command(string command, Player* p)
          send_command("game_started", dest);
          send_int(dest, id);
          send_int(dest, game->n_players);
+         // Send configuracion
+         send_int(dest, config_content.size());
+         send_string(dest, config_content);
       }
    }
 }
@@ -815,6 +819,14 @@ void run_server()
    hook_signals();
    Player* p;
    srand(time(NULL));
+   // Read Config.xml
+   ifstream config_file ("Config.xml");
+   string line;
+   config_content = "";
+   while (getline(config_file, line))
+   {
+      config_content += line + '\n';
+   }
    while (closing == 0)
    {
       addrlen = sizeof(client_info);

@@ -253,7 +253,15 @@ namespace Juego_Hotel
             XmlDocument configuracion = new XmlDocument();
             try
             {
-                configuracion.Load("Config.xml");
+                if (this.online)
+                {
+                    int bytes_recibidos = 0;
+                    int long_config = this.frm_online.recibir_int(this.frm_online.socket, ref bytes_recibidos);
+                    String config = this.frm_online.recibir_string(this.frm_online.socket, long_config, ref bytes_recibidos);
+                    configuracion.LoadXml(config);
+                }
+                else
+                    configuracion.Load("Config.xml");
             }
             catch
             {

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="Config.xml" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server.cpp">
