@@ -13,7 +13,7 @@ Chat::Chat(Player* creator, bool normal_chat, dlib::mutex* mutex_ids, int* id_co
 bool Chat::join(Player* p)
 {
    this->players.push_back(p);
-   wcout << "Player "<< p->name <<" joined chat " << this->id << endl;
+   wcout << L"Player "<< p->name << L" joined chat " << this->id << endl;
 	return true;
 }
 
@@ -29,11 +29,11 @@ bool Chat::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		wcout << "Player " << p->name << " not found in chat " << this->id << endl;
+		wcout << L"Player " << p->name << L" not found in chat " << this->id << endl;
    else
    {
       this->players.erase(i);
-		wcout << "Player "<< p->name <<" left chat " << this->id << endl;
+		wcout << L"Player "<< p->name << L" left chat " << this->id << endl;
    }
    return found;
 }

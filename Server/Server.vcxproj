@@ -60,7 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)\Config.xml $(SolutionDir)\$(Projectname)\bin\$(Configuration)\</Command>
+      <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\$(Projectname)\bin\$(Configuration)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

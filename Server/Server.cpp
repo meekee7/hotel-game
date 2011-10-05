@@ -80,7 +80,7 @@ void empty_plist()
 void close_server (int signum)
 {
    closing = 1;
-   wcout << endl << "Closing server" << endl;
+   wcout << endl << L"Closing server" << endl;
    unhook_signals();
    delete socket_server;
 }
@@ -107,12 +107,12 @@ bool add_player_to_player_list (Player* p)
 	}
 	if (found)
 	{
-		wcout << "Player already connected" << endl;
+		wcout << L"Player already connected" << endl;
 		return false;
 	}
 	else
 	{
-		wcout << "Player accepted" << endl;
+		wcout << L"Player accepted" << endl;
 		plist.push_back(p);
 		return true;
 	}
@@ -131,12 +131,12 @@ bool delete_player_from_player_list(Player* p)
 	}
 	if (!found)
    {
-		wcout << "Player not found in player list" << endl;
+		wcout << L"Player not found in player list" << endl;
       return false;
    }
 	else
 	{
-		wcout << "Player deleted from player list" << endl;
+		wcout << L"Player deleted from player list" << endl;
 		plist.erase(i);
       return true;
 	}
@@ -164,7 +164,7 @@ bool delete_chat_if_empty(Chat* chat)
    if (chat->players.empty())
    {
       chat_list.remove(chat);
-      wcout << "Chat " << chat->id << " deleted because it's empty" << endl;
+      wcout << L"Chat " << chat->id << L" deleted because it's empty" << endl;
       delete chat;
       return true;
    }
@@ -176,7 +176,7 @@ bool delete_game_if_empty(Game* game)
    if (game->plist.empty())
    {
       glist.remove(game);
-      wcout << "Game " << game->name << " deleted because it's empty" << endl;
+      wcout << L"Game " << game->name << L" deleted because it's empty" << endl;
       delete game;
       return true;
    }
@@ -376,7 +376,7 @@ void send_command(string command, Player* p)
 {
    wstring w_command;
    w_command.assign(command.begin(), command.end());
-	wcout << "Sending command to player " << p->name << ": " << w_command << endl;
+	wcout << L"Sending command to player " << p->name << L": " << w_command << endl;
    send_int(p, command.length());
    send_string(p, command);
 }
@@ -459,11 +459,11 @@ void handle_command(string command, Player* p)
       int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
       if (name.find('~') != string::npos)
       {
-         wcout << "New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
+         wcout << L"New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
          return;
       }
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count);
-      wcout << "New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
+      wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
       send_command("joined_game", p);
       send_int(p, get_utf8_length(name));
@@ -586,7 +586,7 @@ void handle_command(string command, Player* p)
       vector<wstring> player_list = dlib::split(plist, L"~");
       Chat* new_chat = new Chat(p, true, &mutex_ids, &id_count);
       chat_list.push_back(new_chat);
-      wcout << "New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
+      wcout << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
       // Send commands to selected players to ask them to join the chat
       Player* dest;
       vector<wstring>::iterator i;
@@ -801,19 +801,19 @@ void handle_client(void* arg)
    int bytes_received;
    int long_name = receive_int(p, &bytes_received);
    p->name = receive_wstring(p, long_name, &bytes_received);
-   wcout << "Handling new player. Player name: " << p->name << endl;
+   wcout << L"Handling new player. Player name: " << p->name << endl;
    if (p->name.find('~') != string::npos)
    {
-      wcout << "Player " << p->name << " rejected because the name contains invalid character '~' (WARNING: possible hacked client)" << endl;
+      wcout << L"Player " << p->name << L" rejected because the name contains invalid character '~' (WARNING: possible hacked client)" << endl;
       p->socket->psend("login no", 8, 0);
 	   delete p;
-      wcout << "Disconnecting client" << endl;
+      wcout << L"Disconnecting client" << endl;
    }
    else if (add_player_to_player_list(p) == false)
    {
       p->socket->psend("login ko", 8, 0);
 	   delete p;
-      wcout << "Disconnecting client" << endl;
+      wcout << L"Disconnecting client" << endl;
    }
    else
    {
@@ -846,7 +846,7 @@ void handle_client(void* arg)
          {
             wstring w_command;
             w_command.assign(command.begin(), command.end());
-            wcout << "Received command from player " << p->name << ": " << w_command << endl;
+            wcout << L"Received command from player " << p->name << ": " << w_command << endl;
             handle_command(command, p);
          }
          else
@@ -854,7 +854,7 @@ void handle_client(void* arg)
             online = false;
             disconnect_client(p);
             delete p;
-            wcout << "Client disconnected" << endl;
+            wcout << L"Client disconnected" << endl;
          }
       }
    }
@@ -862,7 +862,7 @@ void handle_client(void* arg)
 
 void run_server()
 {
-   wcout << "Starting Hotel server..." << endl;
+   wcout << L"Starting Hotel server..." << endl;
    socket_server = new Portable_socket();
    sockaddr_in server_info;
    sockaddr_in client_info;
@@ -873,17 +873,17 @@ void run_server()
    server_info.sin_addr.s_addr=INADDR_ANY;
    if (socket_server->pbind((sockaddr*) &server_info,sizeof(server_info)) < 0)
    {
-	   wcout << "bind error: " << socket_server->get_last_error() << endl;
+	   wcout << L"bind error: " << socket_server->get_last_error() << endl;
 	   delete socket_server;
 	   return;
    }
    if (socket_server->plisten(MAXCONN) < 0)
    {
-	   wcout << "listen error: " << socket_server->get_last_error() << endl;
+	   wcout << L"listen error: " << socket_server->get_last_error() << endl;
 	   delete socket_server;
 	   return;
    }
-   wcout << "Listening for connections" << endl;
+   wcout << L"Listening for connections" << endl;
 
    hook_signals();
    Player* p;
@@ -901,22 +901,22 @@ void run_server()
       addrlen = sizeof(client_info);
       socket_client = socket_server->paccept((sockaddr*) &client_info, &addrlen);
       if (socket_client != NULL)
-         wcout << "Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
+         wcout << L"Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
       else
       {
          if (closing == 0)
-            wcout << "accept error: " << socket_server->get_last_error() << endl;
+            wcout << L"accept error: " << socket_server->get_last_error() << endl;
          else
          {
             // The server is closing
             empty_global_chat_list();
-            wcout << "Global Chat cleaned" << endl;
+            wcout << L"Global Chat cleaned" << endl;
             empty_chat_list();
-            wcout << "Chat list cleaned" << endl;
+            wcout << L"Chat list cleaned" << endl;
             empty_glist();
-            wcout << "Game list cleaned" << endl;
+            wcout << L"Game list cleaned" << endl;
             empty_plist();
-            wcout << "Player list cleaned" << endl;
+            wcout << L"Player list cleaned" << endl;
             return;
          }
       }

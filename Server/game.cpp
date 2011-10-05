@@ -19,12 +19,12 @@ bool Game::join(Player* p)
    {
       this->plist.push_back(p);
       this->chat->join(p);
-      wcout << "Player "<< p->name <<" joined game " << this->name << endl;
+      wcout << L"Player " << p->name << L" joined game " << this->name << endl;
       return true;
    }
    else
    {
-      wcout << "Player "<< p->name <<" cant join game " << this->name << " because it's full" << endl;
+      wcout << L"Player " << p->name << L" cant join game " << this->name << L" because it's full" << endl;
       return false;
    }
 }
@@ -41,12 +41,12 @@ bool Game::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		wcout << "Player " << p->name << " not found in game " << this->name << endl;
+		wcout << L"Player " << p->name << L" not found in game " << this->name << endl;
    else
    {
       this->chat->leave(p);
       this->plist.erase(i);
-		wcout << "Player "<< p->name <<" left game " << this->name << endl;
+		wcout << L"Player "<< p->name << L" left game " << this->name << endl;
    }
    return found;
 }
@@ -57,10 +57,6 @@ void Game::start()
 
 int Game::dice()
 {
-   for (int i = 0 ; i < 10 ; i++)
-   {
-      rand();
-   }
    return (rand() % 6) + 1;
    //return (this->random.get_random_32bit_number() % 6 + 1);
 }
