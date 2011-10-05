@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <ctime>
+#include <cstdlib>
 #include "portable_socket.h"
 #include "player.h"
 #include "game.h"
@@ -886,7 +887,7 @@ void run_server()
 
    hook_signals();
    Player* p;
-   //srand(time(0));
+   srand(time(0));
    // Read Config.xml
    ifstream config_file ("Config.xml");
    string line;

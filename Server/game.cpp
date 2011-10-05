@@ -57,12 +57,12 @@ void Game::start()
 
 int Game::dice()
 {
-   /*for (int i = 0 ; i < 10 ; i++)
+   for (int i = 0 ; i < 10 ; i++)
    {
       rand();
-   }*/
-   //return (rand() % 6) + 1;
-   return (this->random.get_random_32bit_number() % 6 + 1);
+   }
+   return (rand() % 6) + 1;
+   //return (this->random.get_random_32bit_number() % 6 + 1);
 }
 
 Game::~Game(void)
