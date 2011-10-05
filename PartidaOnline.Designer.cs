@@ -48,7 +48,7 @@
             this.listaJugadores.Location = new System.Drawing.Point(293, 19);
             this.listaJugadores.Name = "listaJugadores";
             this.listaJugadores.Size = new System.Drawing.Size(75, 264);
-            this.listaJugadores.TabIndex = 7;
+            this.listaJugadores.TabIndex = 4;
             // 
             // bEnviar
             // 
@@ -56,7 +56,7 @@
             this.bEnviar.Location = new System.Drawing.Point(293, 288);
             this.bEnviar.Name = "bEnviar";
             this.bEnviar.Size = new System.Drawing.Size(75, 23);
-            this.bEnviar.TabIndex = 6;
+            this.bEnviar.TabIndex = 2;
             this.bEnviar.Text = "Enviar";
             this.bEnviar.UseVisualStyleBackColor = true;
             this.bEnviar.Click += new System.EventHandler(this.bEnviar_Click);
@@ -68,7 +68,7 @@
             this.mensaje.Location = new System.Drawing.Point(6, 289);
             this.mensaje.Name = "mensaje";
             this.mensaje.Size = new System.Drawing.Size(281, 20);
-            this.mensaje.TabIndex = 5;
+            this.mensaje.TabIndex = 0;
             this.mensaje.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mensaje_PreviewKeyDown);
             // 
             // mensajes
@@ -82,7 +82,7 @@
             this.mensajes.ReadOnly = true;
             this.mensajes.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.mensajes.Size = new System.Drawing.Size(281, 264);
-            this.mensajes.TabIndex = 4;
+            this.mensajes.TabIndex = 3;
             this.mensajes.WordWrap = false;
             // 
             // grupoChat
@@ -104,7 +104,7 @@
             this.txtNombre.Location = new System.Drawing.Point(15, 21);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(47, 13);
-            this.txtNombre.TabIndex = 9;
+            this.txtNombre.TabIndex = 6;
             this.txtNombre.Text = "Nombre:";
             // 
             // bAbandonar
@@ -112,7 +112,7 @@
             this.bAbandonar.Location = new System.Drawing.Point(180, 65);
             this.bAbandonar.Name = "bAbandonar";
             this.bAbandonar.Size = new System.Drawing.Size(75, 23);
-            this.bAbandonar.TabIndex = 10;
+            this.bAbandonar.TabIndex = 5;
             this.bAbandonar.Text = "Abandonar";
             this.bAbandonar.UseVisualStyleBackColor = true;
             this.bAbandonar.Click += new System.EventHandler(this.bAbandonar_Click);
@@ -123,7 +123,7 @@
             this.bIniciar.Location = new System.Drawing.Point(18, 65);
             this.bIniciar.Name = "bIniciar";
             this.bIniciar.Size = new System.Drawing.Size(75, 23);
-            this.bIniciar.TabIndex = 11;
+            this.bIniciar.TabIndex = 1;
             this.bIniciar.Text = "Iniciar";
             this.bIniciar.UseVisualStyleBackColor = true;
             this.bIniciar.Click += new System.EventHandler(this.bIniciar_Click);
@@ -133,7 +133,7 @@
             this.bDado.Location = new System.Drawing.Point(99, 65);
             this.bDado.Name = "bDado";
             this.bDado.Size = new System.Drawing.Size(75, 23);
-            this.bDado.TabIndex = 12;
+            this.bDado.TabIndex = 7;
             this.bDado.Text = "Tirar dado";
             this.bDado.UseVisualStyleBackColor = true;
             this.bDado.Click += new System.EventHandler(this.bDado_Click);

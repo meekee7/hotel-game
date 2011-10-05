@@ -45,7 +45,7 @@
             this.mensajes.ReadOnly = true;
             this.mensajes.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.mensajes.Size = new System.Drawing.Size(242, 211);
-            this.mensajes.TabIndex = 0;
+            this.mensajes.TabIndex = 2;
             this.mensajes.WordWrap = false;
             // 
             // mensaje
@@ -55,7 +55,7 @@
             this.mensaje.Location = new System.Drawing.Point(12, 230);
             this.mensaje.Name = "mensaje";
             this.mensaje.Size = new System.Drawing.Size(242, 20);
-            this.mensaje.TabIndex = 1;
+            this.mensaje.TabIndex = 0;
             this.mensaje.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mensaje_PreviewKeyDown);
             // 
             // bEnviar
@@ -64,7 +64,7 @@
             this.bEnviar.Location = new System.Drawing.Point(265, 227);
             this.bEnviar.Name = "bEnviar";
             this.bEnviar.Size = new System.Drawing.Size(75, 23);
-            this.bEnviar.TabIndex = 2;
+            this.bEnviar.TabIndex = 1;
             this.bEnviar.Text = "Enviar";
             this.bEnviar.UseVisualStyleBackColor = true;
             this.bEnviar.Click += new System.EventHandler(this.bEnviar_Click);

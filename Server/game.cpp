@@ -1,8 +1,7 @@
 #include "game.h"
 #include <iostream>
 
-
-Game::Game(string name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count)
+Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count)
 {
    this->name = name;
    this->n_players = n_players;
@@ -20,12 +19,12 @@ bool Game::join(Player* p)
    {
       this->plist.push_back(p);
       this->chat->join(p);
-      cout << "Player "<< p->name <<" joined game " << this->name << endl;
+      wcout << "Player "<< p->name <<" joined game " << this->name << endl;
       return true;
    }
    else
    {
-      cout << "Player "<< p->name <<" cant join game " << this->name << " because it's full" << endl;
+      wcout << "Player "<< p->name <<" cant join game " << this->name << " because it's full" << endl;
       return false;
    }
 }
@@ -42,12 +41,12 @@ bool Game::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		cout << "Player " << p->name << " not found in game " << this->name << endl;
+		wcout << "Player " << p->name << " not found in game " << this->name << endl;
    else
    {
       this->chat->leave(p);
       this->plist.erase(i);
-		cout << "Player "<< p->name <<" left game " << this->name << endl;
+		wcout << "Player "<< p->name <<" left game " << this->name << endl;
    }
    return found;
 }
@@ -58,7 +57,12 @@ void Game::start()
 
 int Game::dice()
 {
-   return (rand() % 6) + 1;
+   /*for (int i = 0 ; i < 10 ; i++)
+   {
+      rand();
+   }*/
+   //return (rand() % 6) + 1;
+   return (this->random.get_random_32bit_number() % 6 + 1);
 }
 
 Game::~Game(void)

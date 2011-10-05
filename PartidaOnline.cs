@@ -109,6 +109,7 @@ namespace Juego_Hotel
 
         private void PartidaOnline_Shown(object sender, EventArgs e)
         {
+            this.mensaje.Focus();
             this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
 

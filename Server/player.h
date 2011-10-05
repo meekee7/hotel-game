@@ -7,7 +7,7 @@ class Player
 {
 
 public:
-   string name;
+   wstring name;
    string ip;
    Portable_socket* socket;
    bool connected;

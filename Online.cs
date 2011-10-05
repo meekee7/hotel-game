@@ -90,7 +90,8 @@ namespace Juego_Hotel
         {
             try
             {
-                return s.Send(Encoding.UTF8.GetBytes(texto));
+                byte[] texto_bytes = Encoding.UTF8.GetBytes(texto);
+                return s.Send(texto_bytes);
             }
             catch (Exception e)
             {
@@ -701,7 +702,7 @@ namespace Juego_Hotel
             lista.RemoveAt(0);
             foreach (String parametro in lista)
             {
-                this.enviar_int(this.socket, parametro.Length);
+                this.enviar_int(this.socket, Encoding.UTF8.GetByteCount(parametro));
                 this.enviar_string(this.socket, parametro);
             }
             this.sem_en_comunicacion.Release();
