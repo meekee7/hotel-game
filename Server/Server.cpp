@@ -274,19 +274,25 @@ void disconnect_client(Player* p)
 
 int get_utf8_length(wstring data)
 {
-   return WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
-}
-
-int get_utf16_length(string data)
-{
-   return MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0);
+   #ifdef _WIN32
+      return WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
+   #else
+      setlocale(LC_ALL, "es_ES.utf8");
+      return wcstombs(NULL, data.data(), 0);
+   #endif
 }
 
 wstring utf8_to_utf16 (string data)
 {
    wstring res;
-   res.resize(MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0));
-   MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), &res[0], res.length());
+   #ifdef _WIN32
+      res.resize(MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0));
+      MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), &res[0], res.length());
+   #else
+      setlocale(LC_ALL, "es_ES.utf8");
+      res.resize(mbstowcs(NULL, data.c_str(), 0)+1);
+      mbstowcs((wchar_t*)&res.data()[0], data.c_str(), res.size());
+   #endif
    return res;
 }
 
@@ -340,10 +346,20 @@ int send_string (Player* p, string data)
 
 int send_wstring (Player* p, wstring data)
 {
-   int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
+   #ifdef _WIN32
+      int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
+   #else
+      setlocale(LC_ALL, "es_ES.utf8");
+      int size_utf8 = wcstombs(NULL, data.data(), 0);
+   #endif
    string data_utf8;
    data_utf8.resize(size_utf8);
-   WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
+   #ifdef _WIN32
+      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
+   #else
+      setlocale(LC_ALL, "es_ES.utf8");
+      wcstombs(&data_utf8[0], data.data(), size_utf8);
+   #endif
    const char* c_data = data_utf8.c_str();
    int c_length = strlen(c_data);
    return p->socket->psend(c_data, c_length, 0);
