@@ -295,15 +295,21 @@ wstring utf8_to_utf16 (string data)
 
 string utf16_to_utf8 (wstring data)
 {
-   string res;
    #ifdef _WIN32
-      res.resize(WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL));
-      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &res[0], res.length(), NULL, NULL);
+      int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
    #else
-      res.resize(wcstombs(NULL, data.data(), 0));
-      wcstombs(&res[0], data.data(), res.length());
+      //setlocale(LC_ALL, "es_ES.utf8");
+      int size_utf8 = wcstombs(NULL, data.data(), 0);
    #endif
-   return res;
+   string data_utf8;
+   data_utf8.resize(size_utf8);
+   #ifdef _WIN32
+      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
+   #else
+      //setlocale(LC_ALL, "es_ES.utf8");
+      wcstombs(&data_utf8[0], data.data(), size_utf8);
+   #endif
+   return data_utf8;
 }
 
 string receive_string (Player* p, int length, int* bytes_received)
@@ -356,20 +362,7 @@ int send_string (Player* p, string data)
 
 int send_wstring (Player* p, wstring data)
 {
-   #ifdef _WIN32
-      int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
-   #else
-      //setlocale(LC_ALL, "es_ES.utf8");
-      int size_utf8 = wcstombs(NULL, data.data(), 0);
-   #endif
-   string data_utf8;
-   data_utf8.resize(size_utf8);
-   #ifdef _WIN32
-      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
-   #else
-      //setlocale(LC_ALL, "es_ES.utf8");
-      wcstombs(&data_utf8[0], data.data(), size_utf8);
-   #endif
+   string data_utf8 = utf16_to_utf8(data);
    const char* c_data = data_utf8.c_str();
    int c_length = strlen(c_data);
    return p->socket->psend(c_data, c_length, 0);
