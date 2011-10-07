@@ -125,7 +125,7 @@ namespace Juego_Hotel
 
         private void bDado_Click(object sender, EventArgs e)
         {
-            this.frm_online.enviar_comando("roll_dice", this.id.ToString());
+            this.frm_online.enviar_comando("roll_dice", this.id.ToString(), this.frm_online.txtLogin.Text);
         }
 
         private void bIniciar_Click(object sender, EventArgs e)
@@ -137,6 +137,7 @@ namespace Juego_Hotel
         {
             this.frm_online.interfaz.online = true;
             this.frm_online.interfaz.juego.n_jugadores = num_jugadores;
+            this.frm_online.interfaz.game_id = this.id;
             this.frm_online.interfaz.Iniciar();
         }
 

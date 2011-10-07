@@ -19,6 +19,7 @@ namespace Juego_Hotel
         Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
         public Boolean online;
         Online frm_online;
+        public int game_id;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal()
@@ -297,7 +298,7 @@ namespace Juego_Hotel
             }
         }
 
-        private void bDado_Click(object sender, EventArgs e)
+        private void Tirar_dado()
         {
             this.juego.ultimo_res_dado = this.juego.dado.tirar();
             this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
@@ -326,37 +327,37 @@ namespace Juego_Hotel
             switch (this.juego.jugador_actual.color)
             {
                 case Tipos.Tcolor.rojo: this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
-                                        this.posRojo.Location =
+                    this.posRojo.Location =
+                        new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
+                                  this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
+                    break;
+                case Tipos.Tcolor.azul: this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
+                    this.posAzul.Location =
                                             new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
                                                       this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                                        break;
-                case Tipos.Tcolor.azul: this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
-                                        this.posAzul.Location =
-                                                                new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                                                          this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                                        break;
+                    break;
                 case Tipos.Tcolor.verde: this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
-                                         this.posVerde.Location =
-                                                                new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                                                          this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                                        break;
+                    this.posVerde.Location =
+                                           new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
+                                                     this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
+                    break;
                 case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
-                                            this.posAmarillo.Location =
-                                                                new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                                                          this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                                        break;
+                    this.posAmarillo.Location =
+                                        new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
+                                                  this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
+                    break;
             }
             // Poner casilla actual a cada uno
             switch (this.juego.jug_actual)
             {
                 case 1: this.posJ1.Text = "Casilla: " + jugador.posicion.numero.ToString();
-                        break;
+                    break;
                 case 2: this.posJ2.Text = "Casilla: " + jugador.posicion.numero.ToString();
-                        break;
+                    break;
                 case 3: this.posJ3.Text = "Casilla: " + jugador.posicion.numero.ToString();
-                        break;
+                    break;
                 case 4: this.posJ4.Text = "Casilla: " + jugador.posicion.numero.ToString();
-                        break;
+                    break;
             }
             // Activar botones según el tipo de casilla
             this.bEntradasJ1.Enabled = false;
@@ -374,21 +375,21 @@ namespace Juego_Hotel
             switch (jugador.posicion.tipo)
             {
                 case Tipos.Tcasilla.comprar: this.bComprar.Enabled = true;
-                                             this.bConstruir.Enabled = false;
-                                             break;
+                    this.bConstruir.Enabled = false;
+                    break;
                 case Tipos.Tcasilla.construir: this.bConstruir.Enabled = true;
-                                               this.bComprar.Enabled = false;
-                                               break;
+                    this.bComprar.Enabled = false;
+                    break;
                 case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
-                                                 this.bComprar.Enabled = false;
-                                                 break;
+                    this.bComprar.Enabled = false;
+                    break;
                 case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
-                                                    this.bComprar.Enabled = false;
-                                                    this.Activar_Poner_Entradas(this.juego.jug_actual);
-                                                    break;
+                    this.bComprar.Enabled = false;
+                    this.Activar_Poner_Entradas(this.juego.jug_actual);
+                    break;
                 default: this.bConstruir.Enabled = false;
-                         this.bComprar.Enabled = false;
-                         break;
+                    this.bComprar.Enabled = false;
+                    break;
             }
             if (this.juego.ultimo_res_dado == 6)
             {
@@ -398,6 +399,16 @@ namespace Juego_Hotel
             else
                 this.bDado.Enabled = false;
             this.bTurno.Enabled = true;
+        }
+
+        private void bDado_Click(object sender, EventArgs e)
+        {
+            if (this.online)
+            {
+                this.frm_online.enviar_comando("roll_dice", this.game_id.ToString(), this.frm_online.txtLogin.Text);
+            }
+            else
+                this.Tirar_dado();
         }
 
         private void Activar_Poner_Entradas(int num_jugador)
