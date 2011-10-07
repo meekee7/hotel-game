@@ -9,6 +9,7 @@
 #include "player.h"
 #include "game.h"
 #include "chat.h"
+#include "xml.h"
 #include "dlib/threads.h"
 #include "dlib/string.h"
 
@@ -915,6 +916,16 @@ void run_server()
    {
       config_content += line + '\n';
    }
+   // Taken from dlib example:
+   // now make the xml parser and our document and error handlers
+   xml_parser::kernel_1a_c parser;
+    dh;
+   xml_error_handler eh;
+
+   // now associate the handlers with the parser and tell it to parse
+   parser.add_document_handler(dh);
+   parser.add_error_handler(eh);
+   parser.parse(fin);
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
