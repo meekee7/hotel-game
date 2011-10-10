@@ -29,6 +29,21 @@ dlib::mutex mutex_ids;
 int id_count = 0;
 string config_content;
 
+struct config_bills
+{
+   int n_5000;
+   int n_1000;
+   int n_500;
+   int n_100;
+   int n_50;
+};
+
+struct config
+{
+   struct config_bills two_players;
+   struct config_bills three_or_four_players;
+} configuration;
+
 void unhook_signals()
 {
    signal(SIGINT, 0);
@@ -922,7 +937,21 @@ void run_server()
       wcout << L"Error loading Config.xml" << endl;
       return;
    }
-   cout << config_xml.LastChild()->FirstChild()->FirstChild()->FirstChild()->FirstChild()->Value() << endl;
+   TiXmlNode* node = config_xml.LastChild()->FirstChild()->FirstChild()->FirstChild();
+   configuration.two_players.n_5000 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_1000 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_500 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_100 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_50 = atoi(node->FirstChild()->Value());
+   wcout << configuration.two_players.n_5000 << endl;
+   wcout << configuration.two_players.n_1000 << endl;
+   wcout << configuration.two_players.n_500 << endl;
+   wcout << configuration.two_players.n_100 << endl;
+   wcout << configuration.two_players.n_50 << endl;
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
