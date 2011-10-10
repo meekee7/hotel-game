@@ -20,8 +20,20 @@ game.o: game.cpp game.h
 portable_socket.o: portable_socket.cpp portable_socket.h
 	$(CC) -c $(FLAGS) -o portable_socket.o portable_socket.cpp
 
+tinyxml.o: tinyxml.cpp tinyxml.h
+	$(CC) -c $(FLAGS) -o tinyxml.o tinyxml.cpp
+
+tinystr.o: tinystr.cpp tinystr.h
+	$(CC) -c $(FLAGS) -o tinystr.o tinystr.cpp
+
+tinyxmlerror.o: tinyxmlerror.cpp
+	$(CC) -c $(FLAGS) -o tinyxmlerror.o tinyxmlerror.cpp
+
+tinyxmlparser.o: tinyxmlparser.cpp
+	$(CC) -c $(FLAGS) -o tinyxmlparser.o tinyxmlparser.cpp
+
 Server.o: Server.cpp
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 
-server: portable_socket.o chat.o game.o player.o Server.o
-	$(CC) -o server portable_socket.o chat.o game.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o player.o Server.o
+	$(CC) -o server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
