@@ -9,7 +9,7 @@
 #include "player.h"
 #include "game.h"
 #include "chat.h"
-#include "xml.h"
+#include "tinyxml.h"
 #include "dlib/threads.h"
 #include "dlib/string.h"
 
@@ -916,16 +916,13 @@ void run_server()
    {
       config_content += line + '\n';
    }
-   // Taken from dlib example:
-   // now make the xml parser and our document and error handlers
-   xml_parser::kernel_1a_c parser;
-    dh;
-   xml_error_handler eh;
-
-   // now associate the handlers with the parser and tell it to parse
-   parser.add_document_handler(dh);
-   parser.add_error_handler(eh);
-   parser.parse(fin);
+   TiXmlDocument config_xml("Config.xml");
+   if (!(config_xml.LoadFile()))
+   {
+      wcout << L"Error loading Config.xml" << endl;
+      return;
+   }
+   cout << config_xml.LastChild()->FirstChild()->FirstChild()->FirstChild()->FirstChild()->Value() << endl;
    while (closing == 0)
    {
       addrlen = sizeof(client_info);
