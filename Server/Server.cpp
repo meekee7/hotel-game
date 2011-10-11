@@ -10,6 +10,7 @@
 #include "game.h"
 #include "chat.h"
 #include "tinyxml.h"
+#include "hotel.h"
 #include "dlib/threads.h"
 #include "dlib/string.h"
 
@@ -889,6 +890,32 @@ void handle_client(void* arg)
    }
 }
 
+void read_config(TiXmlDocument* config_xml)
+{
+   // For two players
+   TiXmlNode* node = config_xml->LastChild()->FirstChild()->FirstChild()->FirstChild();
+   configuration.two_players.n_5000 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_1000 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_500 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_100 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.two_players.n_50 = atoi(node->FirstChild()->Value());
+   // Now for three or four players
+   node = node->Parent()->NextSibling()->FirstChild();
+   configuration.three_or_four_players.n_5000 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.three_or_four_players.n_1000 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.three_or_four_players.n_500 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.three_or_four_players.n_100 = atoi(node->FirstChild()->Value());
+   node = node->NextSiblingElement();
+   configuration.three_or_four_players.n_50 = atoi(node->FirstChild()->Value());
+}
+
 void run_server()
 {
    #ifdef _WIN32
@@ -923,7 +950,7 @@ void run_server()
    hook_signals();
    Player* p;
    srand(time(0));
-   // Read Config.xml
+   // Read Config.xml as string to send it to players
    ifstream config_file ("Config.xml");
    string line;
    config_content = "";
@@ -937,21 +964,9 @@ void run_server()
       wcout << L"Error loading Config.xml" << endl;
       return;
    }
-   TiXmlNode* node = config_xml.LastChild()->FirstChild()->FirstChild()->FirstChild();
-   configuration.two_players.n_5000 = atoi(node->FirstChild()->Value());
-   node = node->NextSiblingElement();
-   configuration.two_players.n_1000 = atoi(node->FirstChild()->Value());
-   node = node->NextSiblingElement();
-   configuration.two_players.n_500 = atoi(node->FirstChild()->Value());
-   node = node->NextSiblingElement();
-   configuration.two_players.n_100 = atoi(node->FirstChild()->Value());
-   node = node->NextSiblingElement();
-   configuration.two_players.n_50 = atoi(node->FirstChild()->Value());
-   wcout << configuration.two_players.n_5000 << endl;
-   wcout << configuration.two_players.n_1000 << endl;
-   wcout << configuration.two_players.n_500 << endl;
-   wcout << configuration.two_players.n_100 << endl;
-   wcout << configuration.two_players.n_50 << endl;
+   // Load Config.xml to have configuration loaded for future checks
+   read_config(&config_xml);
+   config_xml.~TiXmlDocument();
    while (closing == 0)
    {
       addrlen = sizeof(client_info);

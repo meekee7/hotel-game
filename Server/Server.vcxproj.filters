@@ -45,6 +45,9 @@
     <ClCompile Include="tinyxmlparser.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="hotel.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="portable_socket.h">
@@ -63,6 +66,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="tinyxml.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="hotel.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
