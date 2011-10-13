@@ -798,6 +798,7 @@ void handle_command(string command, Player* p)
       {
          dest = (*i);
          send_command("rolled_dice", dest);
+         send_int(dest, id);
          send_int(dest, game->roll_dice());
          send_int(dest, get_utf8_length(player_name));
          send_wstring(dest, player_name);

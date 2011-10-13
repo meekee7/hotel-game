@@ -827,11 +827,12 @@ namespace Juego_Hotel
         private void Dado_tirado()
         {
             int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int res = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-            //this.interfaz.juego.ultimo_res_dado = res;
-            //this.interfaz.Tirar_dado();
+            this.Buscar_partida(id).interfaz.juego.ultimo_res_dado = res;
+            this.Buscar_partida(id).interfaz.Tirar_dado();
         }
 
         private void Iniciar_partida()

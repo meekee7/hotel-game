@@ -13,7 +13,7 @@ namespace Juego_Hotel
     public partial class PartidaOnline : Form
     {
         Online frm_online;
-        Principal interfaz;
+        public Principal interfaz;
         public int id;
         public String creador;
         public String nombre;
@@ -37,7 +37,7 @@ namespace Juego_Hotel
             if (this.listaJugadores.InvokeRequired)
             {
                 Actualizar_lista_jugadores_Callback d = new Actualizar_lista_jugadores_Callback(Actualizar_lista_jugadores);
-                this.Invoke(d, new object[] { lista });
+                this.BeginInvoke(d, new object[] { lista });
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Juego_Hotel
             if (this.mensajes.InvokeRequired)
             {
                 Nuevo_mensaje_Callback d = new Nuevo_mensaje_Callback(Nuevo_mensaje);
-                this.Invoke(d, new object[] { msg });
+                this.BeginInvoke(d, new object[] { msg });
             }
             else
             {
@@ -116,11 +116,7 @@ namespace Juego_Hotel
 
         private void bAbandonar_Click(object sender, EventArgs e)
         {
-            //this.bAbandonar.Enabled = false;
             //TODO: Faltarían acciones para cuando dejas una partida, por ahora solo se envía el comando
-            //this.frm_online.enviar_comando("leave_game", this.id.ToString());
-            //this.frm_online.lista_partidas.Remove(this);
-            //this.frm_online.salir_de_partida();
             this.Close();
         }
 

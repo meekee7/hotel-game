@@ -729,6 +729,7 @@
             this.imgTablero.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgTablero.TabIndex = 1;
             this.imgTablero.TabStop = false;
+            this.imgTablero.Visible = false;
             // 
             // bOnline
             // 

@@ -394,9 +394,7 @@ namespace Juego_Hotel
         private void bDado_Click(object sender, EventArgs e)
         {
             if (this.online)
-            {
                 this.frm_online.enviar_comando("roll_dice", this.game_id.ToString(), this.frm_online.txtLogin.Text);
-            }
             else
                 this.Tirar_dado();
         }
@@ -1089,8 +1087,9 @@ namespace Juego_Hotel
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.frm_online != null)
-                this.frm_online.Close();
+            //TODO: Salir de la partida si estás en modo online
+            /*if (this.frm_online != null)
+                this.frm_online.Close();*/
         }
     }
 }
