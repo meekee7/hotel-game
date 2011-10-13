@@ -732,6 +732,7 @@
             // 
             // bOnline
             // 
+            this.bOnline.Enabled = false;
             this.bOnline.Location = new System.Drawing.Point(708, 28);
             this.bOnline.Name = "bOnline";
             this.bOnline.Size = new System.Drawing.Size(83, 23);

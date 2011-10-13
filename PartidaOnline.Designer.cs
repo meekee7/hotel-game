@@ -36,7 +36,6 @@
             this.txtNombre = new System.Windows.Forms.Label();
             this.bAbandonar = new System.Windows.Forms.Button();
             this.bIniciar = new System.Windows.Forms.Button();
-            this.bDado = new System.Windows.Forms.Button();
             this.grupoChat.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,7 +108,7 @@
             // 
             // bAbandonar
             // 
-            this.bAbandonar.Location = new System.Drawing.Point(180, 65);
+            this.bAbandonar.Location = new System.Drawing.Point(99, 65);
             this.bAbandonar.Name = "bAbandonar";
             this.bAbandonar.Size = new System.Drawing.Size(75, 23);
             this.bAbandonar.TabIndex = 5;
@@ -128,22 +127,11 @@
             this.bIniciar.UseVisualStyleBackColor = true;
             this.bIniciar.Click += new System.EventHandler(this.bIniciar_Click);
             // 
-            // bDado
-            // 
-            this.bDado.Location = new System.Drawing.Point(99, 65);
-            this.bDado.Name = "bDado";
-            this.bDado.Size = new System.Drawing.Size(75, 23);
-            this.bDado.TabIndex = 7;
-            this.bDado.Text = "Tirar dado";
-            this.bDado.UseVisualStyleBackColor = true;
-            this.bDado.Click += new System.EventHandler(this.bDado_Click);
-            // 
             // PartidaOnline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(398, 440);
-            this.Controls.Add(this.bDado);
             this.Controls.Add(this.bIniciar);
             this.Controls.Add(this.bAbandonar);
             this.Controls.Add(this.txtNombre);
@@ -169,6 +157,5 @@
         private System.Windows.Forms.Label txtNombre;
         private System.Windows.Forms.Button bAbandonar;
         private System.Windows.Forms.Button bIniciar;
-        private System.Windows.Forms.Button bDado;
     }
 }

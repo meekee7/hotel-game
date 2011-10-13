@@ -13,6 +13,7 @@ namespace Juego_Hotel
     public partial class PartidaOnline : Form
     {
         Online frm_online;
+        Principal interfaz;
         public int id;
         public String creador;
         public String nombre;
@@ -45,10 +46,10 @@ namespace Juego_Hotel
                 foreach (String nombre in lista)
                     this.listaJugadores.Items.Add(nombre);
                 this.listaJugadores.EndUpdate();
-                if ((this.listaJugadores.Items.Count >= 2) && (this.creador == this.frm_online.txtLogin.Text))
+                //if ((this.listaJugadores.Items.Count >= 2) && (this.creador == this.frm_online.txtLogin.Text))
                     this.bIniciar.Enabled = true;
-                else
-                    this.bIniciar.Enabled = false;
+                /*else
+                    this.bIniciar.Enabled = false;*/
             }
         }
 
@@ -121,11 +122,6 @@ namespace Juego_Hotel
             //this.frm_online.lista_partidas.Remove(this);
             //this.frm_online.salir_de_partida();
             this.Close();
-        }            
-
-        private void bDado_Click(object sender, EventArgs e)
-        {
-            this.frm_online.enviar_comando("roll_dice", this.id.ToString(), this.frm_online.txtLogin.Text);
         }
 
         private void bIniciar_Click(object sender, EventArgs e)
@@ -135,10 +131,16 @@ namespace Juego_Hotel
 
         public void Iniciar(int num_jugadores)
         {
-            this.frm_online.interfaz.online = true;
-            this.frm_online.interfaz.juego.n_jugadores = num_jugadores;
-            this.frm_online.interfaz.game_id = this.id;
-            this.frm_online.interfaz.Iniciar();
+            Thread thread_partida = new Thread(manejar_partida);
+            thread_partida.Start(num_jugadores);
+        }
+
+        void manejar_partida(object num_jugadores)
+        {
+            this.interfaz = new Principal(true, this.frm_online);
+            this.interfaz.juego.n_jugadores = (int) num_jugadores;
+            this.interfaz.game_id = this.id;
+            this.interfaz.ShowDialog();
         }
 
         private void mensaje_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

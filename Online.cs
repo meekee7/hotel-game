@@ -14,7 +14,7 @@ namespace Juego_Hotel
 {
     public partial class Online : Form
     {
-        public Principal interfaz;
+        //public Principal interfaz;
         public Socket socket;
         Chat frm_chat_global;
         public LinkedList<Chat> chats_abiertos;
@@ -23,10 +23,10 @@ namespace Juego_Hotel
         Semaphore sem_en_comunicacion;
         Boolean continuar_thread, conectado = false, cerrando = false;
 
-        public Online(Principal interfaz)
+        public Online()
         {
             InitializeComponent();
-            this.interfaz = interfaz;
+            //this.interfaz = interfaz;
             this.chats_abiertos = new LinkedList<Chat>();
             this.lista_partidas = new LinkedList<PartidaOnline>();
         }
@@ -365,7 +365,7 @@ namespace Juego_Hotel
                 this.lista_partidas.Clear();
             }
             this.bDesconectar.PerformClick();
-            this.interfaz.bOnline.Enabled = true;
+            //this.interfaz.bOnline.Enabled = true;
         }
 
         private void bDesconectar_Click(object sender, EventArgs e)
@@ -828,7 +828,10 @@ namespace Juego_Hotel
         {
             int bytes_recibidos = 0;
             int res = this.recibir_int(this.socket, ref bytes_recibidos);
-            MessageBox.Show(res.ToString());
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            //this.interfaz.juego.ultimo_res_dado = res;
+            //this.interfaz.Tirar_dado();
         }
 
         private void Iniciar_partida()

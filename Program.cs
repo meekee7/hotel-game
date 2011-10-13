@@ -16,7 +16,10 @@ namespace Juego_Hotel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Principal());
+            if (MessageBox.Show("¿Quieres jugar online?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.No)
+                Application.Run(new Principal(false, null));
+            else
+                Application.Run(new Online());
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Juego_Hotel
         public int game_id;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
-        public Principal()
+        public Principal(Boolean autostart, Online frm_online)
         {
             InitializeComponent();
             this.juego = new Juego();
@@ -31,21 +31,10 @@ namespace Juego_Hotel
             posVerde_orig = (Image) posVerde.Image.Clone();
             posAmarillo_orig = (Image) posAmarillo.Image.Clone();
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
-            this.online = false;
-        }
-
-        delegate void Iniciar_Callback();
-
-        public void Iniciar()
-        {
-            if (this.bIniciar.InvokeRequired)
+            if (frm_online != null)
             {
-                Iniciar_Callback d = new Iniciar_Callback(Iniciar);
-                this.Invoke(d);
-            }
-            else
-            {
-                this.bIniciar.PerformClick();
+                this.online = false;
+                this.frm_online = frm_online;
             }
         }
 
@@ -298,9 +287,10 @@ namespace Juego_Hotel
             }
         }
 
-        private void Tirar_dado()
+        public void Tirar_dado()
         {
-            this.juego.ultimo_res_dado = this.juego.dado.tirar();
+            if (!this.online)
+                this.juego.ultimo_res_dado = this.juego.dado.tirar();
             this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
             this.bComprarSuelo.Enabled = true;
             Jugador jugador = this.juego.jugador_actual;
@@ -1092,7 +1082,7 @@ namespace Juego_Hotel
 
         private void bOnline_Click(object sender, EventArgs e)
         {
-            this.frm_online = new Online(this);
+            this.frm_online = new Online();
             frm_online.Show();
             this.bOnline.Enabled = false;
         }

@@ -55,7 +55,7 @@ void Game::start()
 {
 }
 
-int Game::dice()
+int Game::roll_dice()
 {
    return (rand() % 6) + 1;
    //return (this->random.get_random_32bit_number() % 6 + 1);
