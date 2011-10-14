@@ -672,6 +672,8 @@ namespace Juego_Hotel
                     this.Dado_tirado();
                 else if (msg == "game_started")
                     this.Iniciar_partida();
+                else
+                    MessageBox.Show("Comando desconocido");
                 msg = null;
             }
             while (this.continuar_thread);
@@ -840,7 +842,9 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int num_jugadores = this.recibir_int(this.socket, ref bytes_recibidos);
-            this.Buscar_partida(id).Iniciar(num_jugadores);
+            int long_config = this.recibir_int(this.socket, ref bytes_recibidos);
+            String config = this.recibir_string(this.socket, long_config, ref bytes_recibidos);
+            this.Buscar_partida(id).Iniciar(num_jugadores, config);
         }
     }
 }

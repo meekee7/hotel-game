@@ -33,8 +33,13 @@ namespace Juego_Hotel
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
             if (frm_online != null)
             {
-                this.online = false;
+                this.online = true;
                 this.frm_online = frm_online;
+            }
+            else
+            {
+                this.online = false;
+                this.frm_online = null;
             }
         }
 
@@ -236,7 +241,7 @@ namespace Juego_Hotel
             }
         }
 
-        public void Crear_Jugadores()
+        public void Crear_Jugadores(String config)
         {
             this.juego.jugadores = new Jugador[this.juego.n_jugadores];
             this.juego.n_jugadores_activos = this.juego.n_jugadores;
@@ -245,9 +250,6 @@ namespace Juego_Hotel
             {
                 if (this.online)
                 {
-                    int bytes_recibidos = 0;
-                    int long_config = this.frm_online.recibir_int(this.frm_online.socket, ref bytes_recibidos);
-                    String config = this.frm_online.recibir_string(this.frm_online.socket, long_config, ref bytes_recibidos);
                     configuracion.LoadXml(config);
                 }
                 else

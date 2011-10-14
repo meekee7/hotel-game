@@ -12,7 +12,7 @@ namespace Juego_Hotel
 {
     public partial class PartidaOnline : Form
     {
-        Online frm_online;
+        public Online frm_online;
         public Principal interfaz;
         public int id;
         public String creador;
@@ -125,16 +125,20 @@ namespace Juego_Hotel
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 
-        public void Iniciar(int num_jugadores)
+        public void Iniciar(int num_jugadores, String config)
         {
             Thread thread_partida = new Thread(manejar_partida);
-            thread_partida.Start(num_jugadores);
+            String parametros = num_jugadores.ToString() + config;
+            thread_partida.Start(parametros);
         }
 
-        void manejar_partida(object num_jugadores)
+        void manejar_partida(object parametros)
         {
+            String s_parametros = (String) parametros;
             this.interfaz = new Principal(true, this.frm_online);
-            this.interfaz.juego.n_jugadores = (int) num_jugadores;
+            int num_jugadores = s_parametros[0];
+            s_parametros
+            this.interfaz.juego.n_jugadores = 2; // (int)num_jugadores;
             this.interfaz.game_id = this.id;
             this.interfaz.ShowDialog();
         }
