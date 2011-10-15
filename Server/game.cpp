@@ -57,7 +57,9 @@ void Game::start()
 
 int Game::roll_dice()
 {
-   return (rand() % 6) + 1;
+   int res = (rand() % 6) + 1;
+   cout << "Dice result: " << res << endl;
+   return res;
    //return (this->random.get_random_32bit_number() % 6 + 1);
 }
 

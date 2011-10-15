@@ -137,9 +137,9 @@ namespace Juego_Hotel
             String s_parametros = (String) parametros;
             this.interfaz = new Principal(true, this.frm_online);
             int num_jugadores = s_parametros[0];
-            s_parametros
             this.interfaz.juego.n_jugadores = 2; // (int)num_jugadores;
             this.interfaz.game_id = this.id;
+            this.interfaz.online_config = s_parametros.Remove(0, 1);
             this.interfaz.ShowDialog();
         }
 

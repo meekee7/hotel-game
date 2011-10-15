@@ -20,6 +20,7 @@ namespace Juego_Hotel
         public Boolean online;
         Online frm_online;
         public int game_id;
+        public String online_config;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
@@ -241,7 +242,7 @@ namespace Juego_Hotel
             }
         }
 
-        public void Crear_Jugadores(String config)
+        public void Crear_Jugadores()
         {
             this.juego.jugadores = new Jugador[this.juego.n_jugadores];
             this.juego.n_jugadores_activos = this.juego.n_jugadores;
@@ -249,9 +250,7 @@ namespace Juego_Hotel
             try
             {
                 if (this.online)
-                {
-                    configuracion.LoadXml(config);
-                }
+                    configuracion.LoadXml(this.online_config);
                 else
                     configuracion.Load("Config.xml");
             }
