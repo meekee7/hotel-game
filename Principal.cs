@@ -62,24 +62,28 @@ namespace Juego_Hotel
                 {
                     return; //Se trata en la función Crear_Jugadores
                 }
-                // Decidir quien empieza
-                this.tiradas_ini = new int[this.juego.n_jugadores];
-                int i;
-                for (i = 0; i < this.juego.n_jugadores; i++)
+                if (!this.online)
                 {
-                    this.tiradas_ini[i] = this.juego.dado.tirar();
-                }
-                // Encontrando el mayor
-                int max = 0;
-                for (i = 0; i < this.juego.n_jugadores; i++)
-                {
-                    if (this.tiradas_ini[i] > max)
+                    // Decidir quien empieza
+                    this.tiradas_ini = new int[this.juego.n_jugadores];
+                    int i;
+                    for (i = 0; i < this.juego.n_jugadores; i++)
                     {
-                        max = this.tiradas_ini[i];
-                        this.juego.jug_inicial = i;
+                        this.tiradas_ini[i] = this.juego.dado.tirar();
                     }
+                    // Encontrando el mayor
+                    int max = 0;
+                    for (i = 0; i < this.juego.n_jugadores; i++)
+                    {
+                        if (this.tiradas_ini[i] > max)
+                        {
+                            max = this.tiradas_ini[i];
+                            this.juego.jug_inicial = i;
+                        }
+                    }
+                    this.juego.jug_inicial++; // Para no comenzar en 0
                 }
-                this.juego.jug_inicial++; // Para no comenzar en 0
+                else
                 this.jug_ini.Text = "Jugador inicial: " + this.juego.jug_inicial.ToString();
                 this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
                 this.juego.jug_actual = this.juego.jug_inicial;

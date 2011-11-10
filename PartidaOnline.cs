@@ -125,10 +125,10 @@ namespace Juego_Hotel
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 
-        public void Iniciar(int num_jugadores, String config)
+        public void Iniciar(int num_jugadores, String config, int jug_inicial)
         {
             Thread thread_partida = new Thread(manejar_partida);
-            String parametros = num_jugadores.ToString() + config;
+            String parametros = num_jugadores.ToString() + jug_inicial.ToString() + config;
             thread_partida.Start(parametros);
         }
 
@@ -137,9 +137,11 @@ namespace Juego_Hotel
             String s_parametros = (String) parametros;
             this.interfaz = new Principal(true, this.frm_online);
             int num_jugadores = s_parametros[0];
+            int jug_inicial = s_parametros[1];
             this.interfaz.juego.n_jugadores = 2; // (int)num_jugadores;
             this.interfaz.game_id = this.id;
-            this.interfaz.online_config = s_parametros.Remove(0, 1);
+            this.interfaz.online_config = s_parametros.Remove(0, 2);
+            this.interfaz.juego.jug_inicial = jug_inicial + 1;
             this.interfaz.ShowDialog();
         }
 

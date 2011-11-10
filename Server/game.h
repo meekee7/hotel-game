@@ -17,6 +17,8 @@ public:
    Chat* chat;
    bool started;
    dlib::rand random;
+   Player* current_player;
+   int starting_player;
 
    bool join(Player* p);
    bool leave(Player* p);

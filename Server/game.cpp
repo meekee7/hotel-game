@@ -53,6 +53,13 @@ bool Game::leave(Player* p)
 
 void Game::start()
 {
+   // Roll dice to get first player
+   int res = rand() % this->n_players;
+   list<Player*>::iterator i = this->plist.begin();
+   advance(i, res);
+   this->current_player = (*i);
+   this->starting_player = res;
+   wcout << "Game " << this->name << " started. Player " << (*i)->name << " is the first" << endl;
 }
 
 int Game::roll_dice()

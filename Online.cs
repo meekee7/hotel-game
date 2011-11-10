@@ -847,7 +847,8 @@ namespace Juego_Hotel
             int num_jugadores = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_config = this.recibir_int(this.socket, ref bytes_recibidos);
             String config = this.recibir_string(this.socket, long_config, ref bytes_recibidos);
-            this.Buscar_partida(id).Iniciar(num_jugadores, config);
+            int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
+            this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial);
         }
     }
 }

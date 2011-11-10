@@ -822,6 +822,7 @@ void handle_command(string command, Player* p)
          // Send configuration
          send_int(dest, config_content.size());
          send_string(dest, config_content);
+         send_int(dest, game->starting_player);
       }
    }
 }
