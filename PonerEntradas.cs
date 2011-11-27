@@ -15,6 +15,7 @@ namespace Juego_Hotel
         Hotel hotel_seleccionado;
         Principal interfaz;
         Jugador jugador;
+        Boolean entrada_gratis;
 
         public PonerEntradas(ref Juego juego, int jugador, Principal interfaz)
         {
@@ -25,6 +26,10 @@ namespace Juego_Hotel
             this.juego.jugadores[jugador].hoteles.CopyTo(lista, 0);
             this.Rellenar_lista(ref lista);
             this.interfaz = interfaz;
+            if (this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.entrada_gratis)
+                this.entrada_gratis = true;
+            else
+                this.entrada_gratis = false;
         }
 
         void Rellenar_lista(ref Hotel[] lista)
@@ -104,23 +109,34 @@ namespace Juego_Hotel
 
         private void bComprar_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Si aceptas comprar la entrada, estás obligado a pagarla. ¿Deseas realizar la compra?", "Comprar entrada", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
-            this.bUnaMas.Enabled = true;
+            if (this.entrada_gratis == true)
+            {
+                MessageBox.Show("Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!");
+                this.entrada_gratis = false;
+                this.bUnaMas.Enabled = false; // Sólo se permite una por ser la casilla especial
+                this.hotel_seleccionado.entrada_comprada_ultimo_turno = false; // No cuenta para el turno
+            }
+            else
+            {
+                if (MessageBox.Show("Si aceptas comprar la entrada, estás obligado a pagarla. ¿Deseas realizar la compra?", "Comprar entrada", MessageBoxButtons.YesNo) == DialogResult.No)
+                    return;
+                int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
+                PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);
+                frm_pago.ShowDialog();
+                if (frm_pago.total_seleccionado > this.hotel_seleccionado.precio_entrada)
+                {
+                    Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.hotel_seleccionado.precio_entrada), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                }
+                this.jugador.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                this.jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                frm_pago.Close();
+                this.interfaz.Actualizar_Dinero_Jugadores();
+                this.bUnaMas.Enabled = true;
+                this.hotel_seleccionado.entrada_comprada_ultimo_turno = true;
+            }
             this.bComprar.Enabled = false;
             this.listaCasillas.Enabled = false;
             this.listaHoteles.Enabled = false;
-            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-            PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);
-            frm_pago.ShowDialog();
-            if (frm_pago.total_seleccionado > this.hotel_seleccionado.precio_entrada)
-            {
-                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.hotel_seleccionado.precio_entrada), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-            }
-            this.jugador.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-            this.jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-            frm_pago.Close();
-            this.interfaz.Actualizar_Dinero_Jugadores();
             // Hay que saber en que lado de la casilla se pone la entrada
             int n_casilla = Convert.ToInt16(this.listaCasillas.SelectedItem);
             if (this.juego.casillas[n_casilla].hotel_der == this.hotel_seleccionado.nombre)

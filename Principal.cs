@@ -377,10 +377,12 @@ namespace Juego_Hotel
                     break;
                 case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
                     this.bComprar.Enabled = false;
+                    MessageBox.Show("Has caído en una casilla de tipo Fase Gratis, ¡aprovecha!");
                     break;
                 case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
                     this.bComprar.Enabled = false;
                     this.Activar_Poner_Entradas(this.juego.jug_actual);
+                    MessageBox.Show("Has caído en una casilla de tipo Entrada Gratis, ¡aprovecha!");
                     break;
                 default: this.bConstruir.Enabled = false;
                     this.bComprar.Enabled = false;
