@@ -154,6 +154,10 @@ namespace Juego_Hotel
             this.listaHoteles.Items.Remove(this.listaHoteles.SelectedItem);
             this.listaHoteles.SelectedIndex = -1;
             this.listaHoteles.Refresh();
+            // Limpiar lista de casillas disponibles
+            this.listaCasillas.Items.Clear();
+            this.listaCasillas.SelectedIndex = -1;
+            this.listaCasillas.Refresh();
             this.hotel_seleccionado.entrada_comprada_ultimo_turno = true;
         }
     }

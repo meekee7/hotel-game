@@ -163,7 +163,7 @@ namespace Juego_Hotel
 
         public int Calcular_noches(int cuantas)
         {
-            return this.matriz_precios[this.n_ampliaciones_construidas, cuantas];
+            return this.matriz_precios[this.n_ampliaciones_construidas-1, cuantas-1]; // Restamos para acceder correctamente a la matriz de precios
         }
 
         public void Devolver_a_banca()
