@@ -17,21 +17,29 @@ namespace Juego_Hotel
         }
         public Boolean comprobar_actualizacion()
         {
-            System.Net.HttpWebRequest peticion = (HttpWebRequest)WebRequest.Create("http://betovserver.no-ip.org/version_hotel.txt");
+            System.Net.HttpWebRequest peticion = (HttpWebRequest)WebRequest.Create("http://betovvserver.no-ip.org/version_hotel.txt");
 
             String resultado;
 
-            using (HttpWebResponse respuesta = (HttpWebResponse)peticion.GetResponse())
+            try
             {
-                System.IO.StreamReader reader = new System.IO.StreamReader(respuesta.GetResponseStream());
+                using (HttpWebResponse respuesta = (HttpWebResponse)peticion.GetResponse())
+                {
+                    System.IO.StreamReader reader = new System.IO.StreamReader(respuesta.GetResponseStream());
 
-                resultado = reader.ReadToEnd();
+                    resultado = reader.ReadToEnd();
+                }
+                resultado = resultado.Replace("\n", "").Replace("\r", "");
+                if (resultado == this.version_actual)
+                    return false;
+                else
+                    return true;
             }
-            resultado = resultado.Replace("\n", "").Replace("\r", "");
-            if (resultado == this.version_actual)
+            catch (Exception)
+            {
+                MessageBox.Show("Se produjo un error comprobando la versión. Ve a https://sourceforge.net/projects/hotels-game/ para comprobar la versión manualmente");
                 return false;
-            else
-                return true;
+            }
         }
     }
 }
