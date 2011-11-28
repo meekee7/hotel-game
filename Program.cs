@@ -31,10 +31,10 @@ namespace Juego_Hotel
                 else
                     MessageBox.Show("No existe una versión más nueva :)");
             }
-            //if (MessageBox.Show("¿Quieres jugar online?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (MessageBox.Show("¿Quieres jugar online?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.No)
                 Application.Run(new Principal(false, null));
-            //else
-                //Application.Run(new Online());
+            else
+                Application.Run(new Online());
         }
     }
 }
