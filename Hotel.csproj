@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actualizador.cs" />
     <Compile Include="Casilla.cs" />
     <Compile Include="Chat.cs">
       <SubType>Form</SubType>
