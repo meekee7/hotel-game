@@ -116,6 +116,7 @@
     <Compile Include="PartidaOnline.Designer.cs">
       <DependentUpon>PartidaOnline.cs</DependentUpon>
     </Compile>
+    <Compile Include="Salvar_y_cargar.cs" />
     <Compile Include="Subastas.cs">
       <SubType>Form</SubType>
     </Compile>
