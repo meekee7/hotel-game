@@ -91,6 +91,8 @@
             this.posRojo = new System.Windows.Forms.PictureBox();
             this.imgTablero = new System.Windows.Forms.PictureBox();
             this.bOnline = new System.Windows.Forms.Button();
+            this.bSalvar = new System.Windows.Forms.Button();
+            this.bCargar = new System.Windows.Forms.Button();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -194,7 +196,7 @@
             // resDado
             // 
             this.resDado.AutoSize = true;
-            this.resDado.Location = new System.Drawing.Point(708, 329);
+            this.resDado.Location = new System.Drawing.Point(708, 305);
             this.resDado.Name = "resDado";
             this.resDado.Size = new System.Drawing.Size(39, 13);
             this.resDado.TabIndex = 10;
@@ -203,7 +205,7 @@
             // jug_ini
             // 
             this.jug_ini.AutoSize = true;
-            this.jug_ini.Location = new System.Drawing.Point(708, 357);
+            this.jug_ini.Location = new System.Drawing.Point(708, 333);
             this.jug_ini.Name = "jug_ini";
             this.jug_ini.Size = new System.Drawing.Size(80, 13);
             this.jug_ini.TabIndex = 11;
@@ -741,11 +743,33 @@
             this.bOnline.UseVisualStyleBackColor = true;
             this.bOnline.Click += new System.EventHandler(this.bOnline_Click);
             // 
+            // bSalvar
+            // 
+            this.bSalvar.Enabled = false;
+            this.bSalvar.Location = new System.Drawing.Point(708, 359);
+            this.bSalvar.Name = "bSalvar";
+            this.bSalvar.Size = new System.Drawing.Size(83, 23);
+            this.bSalvar.TabIndex = 35;
+            this.bSalvar.Text = "Salvar";
+            this.bSalvar.UseVisualStyleBackColor = true;
+            this.bSalvar.Click += new System.EventHandler(this.bSalvar_Click);
+            // 
+            // bCargar
+            // 
+            this.bCargar.Location = new System.Drawing.Point(708, 388);
+            this.bCargar.Name = "bCargar";
+            this.bCargar.Size = new System.Drawing.Size(83, 23);
+            this.bCargar.TabIndex = 36;
+            this.bCargar.Text = "Cargar";
+            this.bCargar.UseVisualStyleBackColor = true;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 665);
+            this.Controls.Add(this.bCargar);
+            this.Controls.Add(this.bSalvar);
             this.Controls.Add(this.bOnline);
             this.Controls.Add(this.bNormas);
             this.Controls.Add(this.bCobrarBanca);
@@ -866,5 +890,7 @@
         private System.Windows.Forms.Button bRetirarseJ4;
         public System.Windows.Forms.Button bOnline;
         public System.Windows.Forms.Button bIniciar;
+        private System.Windows.Forms.Button bSalvar;
+        private System.Windows.Forms.Button bCargar;
     }
 }

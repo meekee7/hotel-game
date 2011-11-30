@@ -121,6 +121,7 @@ namespace Juego_Hotel
                     this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
                 }
                 this.bDado.Enabled = true;
+                this.bSalvar.Enabled = true;
             }
         }
 
@@ -1097,6 +1098,12 @@ namespace Juego_Hotel
             //TODO: Salir de la partida si estás en modo online
             /*if (this.frm_online != null)
                 this.frm_online.Close();*/
+        }
+
+        private void bSalvar_Click(object sender, EventArgs e)
+        {
+            Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(this.juego);
+            mgr_salvar.Salvar_partida("D:\\partida.xml");
         }
     }
 }

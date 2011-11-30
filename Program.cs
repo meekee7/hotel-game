@@ -14,9 +14,6 @@ namespace Juego_Hotel
 
         static void Main ()
         {
-            Salvar_y_cargar mgr = new Salvar_y_cargar(null);
-            mgr.Salvar_partida("");
-            return;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (MessageBox.Show("¿Quieres comprobar si existe una versión del juego más actualizada?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.Yes)

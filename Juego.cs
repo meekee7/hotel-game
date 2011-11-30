@@ -81,6 +81,7 @@ namespace Juego_Hotel
             if (jugador_que_cobra != null) // Hay que darle todo el dinero del jugador al jugador que cobra
                 jugador.Pagar_Noches(ref jugador_que_cobra, jugador.n_billetes_5000, jugador.n_billetes_1000, jugador.n_billetes_500, jugador.n_billetes_100, jugador.n_billetes_50);
         }
+
         ~Juego()
         {
             this.hoteles = null;
