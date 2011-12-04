@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<partida>
+	<fecha>"29/11/2011"</fecha>
+	<online>no</online>
+	<num_jugadores>2</num_jugadores>
+	<estado_partida>
+		<num_jugadores_activos></num_jugadores_activos>
+		<jugador_inicial></jugador_inicial>
+		<jugador_actual></jugador_actual>
+		<ultimo_res_dado></ultimo_res_dado>
+		<ultimo_avance_auto></ultimo_avance_auto>
+	</estado_partida>
+	<estado_hoteles>
+		<estado_hotel>
+			<nombre></nombre>
+			<num_amplis_construidas></num_amplis_construidas>
+			<entrada_comprada_ultimo_turno>si</entrada_comprada_ultimo_turno>
+			<num_entradas></num_entradas>
+			<posiciones_de_entradas>1@2@3</posiciones_de_entradas>
+			<suelo_comprado>no</suelo_comprado>
+		</estado_hotel>
+	</estado_hoteles>
+	<estado_jugadores>
+		<estado_jugador>
+			<num_jugador></num_jugador>
+			<posicion></posicion>
+			<color>rojo</color>
+			<pago_ultimo_turno>si</pago_ultimo_turno>
+			<eliminado>no</eliminado>
+			<n_billetes_50></n_billetes_50>
+			<n_billetes_100></n_billetes_100>
+			<n_billetes_500></n_billetes_500>
+			<n_billetes_1000></n_billetes_1000>
+			<n_billetes_5000></n_billetes_5000>
+			<hoteles_poseidos>Nombre1@Nombre2@Nombre3</hoteles_poseidos>
+		</estado_jugador>
+	</estado_jugadores>
+</partida>

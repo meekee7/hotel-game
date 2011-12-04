@@ -37,7 +37,22 @@ namespace Juego_Hotel
             nodo = doc.CreateElement("num_jugadores_activos");
             nodo.AppendChild(doc.CreateTextNode(this.juego.n_jugadores_activos.ToString()));
             nodoEstadoPartida.AppendChild(nodo);
+            nodo = doc.CreateElement("jugador_inicial");
+            nodo.AppendChild(doc.CreateTextNode(this.juego.jug_inicial.ToString()));
+            nodoEstadoPartida.AppendChild(nodo);
+            nodo = doc.CreateElement("jugador_actual");
+            nodo.AppendChild(doc.CreateTextNode(this.juego.jug_actual.ToString()));
+            nodoEstadoPartida.AppendChild(nodo);
+            nodo = doc.CreateElement("ultimo_res_dado");
+            nodo.AppendChild(doc.CreateTextNode(this.juego.ultimo_res_dado.ToString()));
+            nodoEstadoPartida.AppendChild(nodo);
+            nodo = doc.CreateElement("ultimo_avance_auto");
+            nodo.AppendChild(doc.CreateTextNode(this.juego.ultimo_avance_auto.ToString()));
+            nodoEstadoPartida.AppendChild(nodo);
             raiz.AppendChild(nodoEstadoPartida);
+
+            // Estado de los hoteles
+            XmlNode nodoEstadoHoteles
             doc.Save(ruta);
             return true;
         }
