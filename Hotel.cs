@@ -19,6 +19,7 @@ namespace Juego_Hotel
         public Jugador dueño;
         int[,] matriz_precios;
         int[] precios_ampliaciones;
+        public LinkedList<Casilla> entradas;
         public System.Drawing.Bitmap img_tarjeta;
 
         public Hotel (Tipos.Tnombre_hotel nombre)
@@ -29,6 +30,7 @@ namespace Juego_Hotel
             this.n_ampliaciones_construidas = 0;
             this.n_entradas = 0;
             this.dueño = null;
+            this.entradas = new LinkedList<Casilla>();
             switch (this.nombre)
             {
                 case Tipos.Tnombre_hotel.Boomerang :

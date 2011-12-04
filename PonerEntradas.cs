@@ -150,6 +150,7 @@ namespace Juego_Hotel
                 this.interfaz.Dibujar_Entrada(ref this.juego.casillas[n_casilla], false);
             }
             this.hotel_seleccionado.n_entradas++;
+            this.hotel_seleccionado.entradas.AddLast(this.juego.casillas[n_casilla]);
             // Desactivar el hotel de la lista para no comprar más entradas en este turno
             this.listaHoteles.Items.Remove(this.listaHoteles.SelectedItem);
             this.listaHoteles.SelectedIndex = -1;
