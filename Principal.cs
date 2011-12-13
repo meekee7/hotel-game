@@ -62,7 +62,7 @@ namespace Juego_Hotel
                 {
                     return; //Se trata en la función Crear_Jugadores
                 }
-                if (!this.online)
+                if (!this.online) // Nos viene dado del servidor
                 {
                     // Decidir quien empieza
                     this.tiradas_ini = new int[this.juego.n_jugadores];
@@ -83,7 +83,6 @@ namespace Juego_Hotel
                     }
                     this.juego.jug_inicial++; // Para no comenzar en 0
                 }
-                else
                 this.jug_ini.Text = "Jugador inicial: " + this.juego.jug_inicial.ToString();
                 this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
                 this.juego.jug_actual = this.juego.jug_inicial;
@@ -1098,6 +1097,12 @@ namespace Juego_Hotel
             //TODO: Salir de la partida si estás en modo online
             /*if (this.frm_online != null)
                 this.frm_online.Close();*/
+        }
+
+        private void Principal_Shown(object sender, EventArgs e)
+        {
+            if (this.online)
+                this.bIniciar.PerformClick();
         }
 
         private void bSalvar_Click(object sender, EventArgs e)

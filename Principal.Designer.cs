@@ -741,6 +741,7 @@
             this.bOnline.TabIndex = 34;
             this.bOnline.Text = "Online";
             this.bOnline.UseVisualStyleBackColor = true;
+            this.bOnline.Visible = false;
             this.bOnline.Click += new System.EventHandler(this.bOnline_Click);
             // 
             // bSalvar
@@ -806,6 +807,7 @@
             this.Name = "Principal";
             this.Text = "Hotel - Construye tu propio imperio hotelero";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Principal_FormClosing);
+            this.Shown += new System.EventHandler(this.Principal_Shown);
             this.grupoNJugadores.ResumeLayout(false);
             this.grupoNJugadores.PerformLayout();
             this.controlJ1.ResumeLayout(false);

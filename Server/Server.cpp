@@ -178,8 +178,8 @@ bool delete_chat_if_empty(Chat* chat)
 {
    if (chat->players.empty())
    {
-      chat_list.remove(chat);
       wcout << L"Chat " << chat->id << L" deleted because it's empty" << endl;
+      chat_list.remove(chat);
       delete chat;
       return true;
    }
@@ -190,8 +190,8 @@ bool delete_game_if_empty(Game* game)
 {
    if (game->plist.empty())
    {
-      glist.remove(game);
       wcout << L"Game " << game->name << L" deleted because it's empty" << endl;
+      glist.remove(game);
       delete game;
       return true;
    }
@@ -968,7 +968,6 @@ void run_server()
    }
    // Load Config.xml to have configuration loaded for future checks
    read_config(&config_xml);
-   config_xml.~TiXmlDocument();
    while (closing == 0)
    {
       addrlen = sizeof(client_info);

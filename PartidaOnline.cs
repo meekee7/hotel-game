@@ -136,9 +136,9 @@ namespace Juego_Hotel
         {
             String s_parametros = (String) parametros;
             this.interfaz = new Principal(true, this.frm_online);
-            int num_jugadores = s_parametros[0];
-            int jug_inicial = s_parametros[1];
-            this.interfaz.juego.n_jugadores = 2; // (int)num_jugadores;
+            int num_jugadores = Convert.ToInt32((s_parametros[0].ToString()));
+            int jug_inicial = Convert.ToInt32((s_parametros[1].ToString()));
+            this.interfaz.juego.n_jugadores = (int)num_jugadores;
             this.interfaz.game_id = this.id;
             this.interfaz.online_config = s_parametros.Remove(0, 2);
             this.interfaz.juego.jug_inicial = jug_inicial + 1;
