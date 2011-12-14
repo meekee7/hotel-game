@@ -365,7 +365,6 @@ namespace Juego_Hotel
                 this.lista_partidas.Clear();
             }
             this.bDesconectar.PerformClick();
-            //this.interfaz.bOnline.Enabled = true;
         }
 
         private void bDesconectar_Click(object sender, EventArgs e)

@@ -1085,13 +1085,6 @@ namespace Juego_Hotel
             }
         }
 
-        private void bOnline_Click(object sender, EventArgs e)
-        {
-            this.frm_online = new Online();
-            frm_online.Show();
-            this.bOnline.Enabled = false;
-        }
-
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
             //TODO: Salir de la partida si estás en modo online
@@ -1107,8 +1100,44 @@ namespace Juego_Hotel
 
         private void bSalvar_Click(object sender, EventArgs e)
         {
-            Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(this.juego);
-            mgr_salvar.Salvar_partida("D:\\partida.xml");
+            SaveFileDialog dialogo = new SaveFileDialog();
+            dialogo.AddExtension = true;
+            dialogo.CheckPathExists = true;
+            dialogo.DefaultExt = "xml";
+            dialogo.SupportMultiDottedExtensions = true;
+            dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            dialogo.Filter = "Partida Hotel|*.xml";
+            dialogo.Title = "Salvar partida en curso";
+            dialogo.FileName = "Partida Hotel.xml";
+            dialogo.ShowDialog();
+            if (dialogo.FileName != "")
+            {
+                Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(this.juego);
+                if (mgr_salvar.Salvar_partida(dialogo.FileName) == false)
+                    MessageBox.Show("Error salvando la partida: " + mgr_salvar.error);
+            }
+            dialogo = null;
+        }
+
+        private void bCargar_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialogo = new OpenFileDialog();
+            dialogo.AddExtension = true;
+            dialogo.CheckPathExists = true;
+            dialogo.DefaultExt = "xml";
+            dialogo.SupportMultiDottedExtensions = true;
+            dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            dialogo.Filter = "Partida Hotel|*.xml";
+            dialogo.Title = "Cargar una partida";
+            dialogo.FileName = "Partida Hotel.xml";
+            dialogo.ShowDialog();
+            if (dialogo.FileName != "")
+            {
+                Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(this.juego);
+                if (mgr_cargar.Cargar_partida(dialogo.FileName) == false)
+                    MessageBox.Show("Error cargando la partida: " + mgr_cargar.error);
+            }
+            dialogo = null;
         }
     }
 }

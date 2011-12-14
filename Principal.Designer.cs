@@ -90,7 +90,6 @@
             this.posAzul = new System.Windows.Forms.PictureBox();
             this.posRojo = new System.Windows.Forms.PictureBox();
             this.imgTablero = new System.Windows.Forms.PictureBox();
-            this.bOnline = new System.Windows.Forms.Button();
             this.bSalvar = new System.Windows.Forms.Button();
             this.bCargar = new System.Windows.Forms.Button();
             this.grupoNJugadores.SuspendLayout();
@@ -116,7 +115,7 @@
             // 
             // bIniciar
             // 
-            this.bIniciar.Location = new System.Drawing.Point(708, 57);
+            this.bIniciar.Location = new System.Drawing.Point(708, 31);
             this.bIniciar.Name = "bIniciar";
             this.bIniciar.Size = new System.Drawing.Size(83, 23);
             this.bIniciar.TabIndex = 2;
@@ -165,7 +164,7 @@
             this.grupoNJugadores.Controls.Add(this.dos_jugadores);
             this.grupoNJugadores.Controls.Add(this.tres_jugadores);
             this.grupoNJugadores.Controls.Add(this.cuatro_jugadores);
-            this.grupoNJugadores.Location = new System.Drawing.Point(695, 88);
+            this.grupoNJugadores.Location = new System.Drawing.Point(695, 62);
             this.grupoNJugadores.Name = "grupoNJugadores";
             this.grupoNJugadores.Size = new System.Drawing.Size(107, 92);
             this.grupoNJugadores.TabIndex = 6;
@@ -174,7 +173,7 @@
             // 
             // bColores
             // 
-            this.bColores.Location = new System.Drawing.Point(708, 193);
+            this.bColores.Location = new System.Drawing.Point(708, 167);
             this.bColores.Name = "bColores";
             this.bColores.Size = new System.Drawing.Size(83, 23);
             this.bColores.TabIndex = 8;
@@ -185,7 +184,7 @@
             // bDado
             // 
             this.bDado.Enabled = false;
-            this.bDado.Location = new System.Drawing.Point(708, 238);
+            this.bDado.Location = new System.Drawing.Point(708, 212);
             this.bDado.Name = "bDado";
             this.bDado.Size = new System.Drawing.Size(85, 23);
             this.bDado.TabIndex = 9;
@@ -196,7 +195,7 @@
             // resDado
             // 
             this.resDado.AutoSize = true;
-            this.resDado.Location = new System.Drawing.Point(708, 305);
+            this.resDado.Location = new System.Drawing.Point(708, 270);
             this.resDado.Name = "resDado";
             this.resDado.Size = new System.Drawing.Size(39, 13);
             this.resDado.TabIndex = 10;
@@ -204,8 +203,9 @@
             // 
             // jug_ini
             // 
+            this.jug_ini.AutoEllipsis = true;
             this.jug_ini.AutoSize = true;
-            this.jug_ini.Location = new System.Drawing.Point(708, 333);
+            this.jug_ini.Location = new System.Drawing.Point(708, 290);
             this.jug_ini.Name = "jug_ini";
             this.jug_ini.Size = new System.Drawing.Size(80, 13);
             this.jug_ini.TabIndex = 11;
@@ -214,7 +214,7 @@
             // bTurno
             // 
             this.bTurno.Enabled = false;
-            this.bTurno.Location = new System.Drawing.Point(708, 267);
+            this.bTurno.Location = new System.Drawing.Point(708, 241);
             this.bTurno.Name = "bTurno";
             this.bTurno.Size = new System.Drawing.Size(83, 23);
             this.bTurno.TabIndex = 12;
@@ -732,18 +732,6 @@
             this.imgTablero.TabIndex = 1;
             this.imgTablero.TabStop = false;
             // 
-            // bOnline
-            // 
-            this.bOnline.Enabled = false;
-            this.bOnline.Location = new System.Drawing.Point(708, 28);
-            this.bOnline.Name = "bOnline";
-            this.bOnline.Size = new System.Drawing.Size(83, 23);
-            this.bOnline.TabIndex = 34;
-            this.bOnline.Text = "Online";
-            this.bOnline.UseVisualStyleBackColor = true;
-            this.bOnline.Visible = false;
-            this.bOnline.Click += new System.EventHandler(this.bOnline_Click);
-            // 
             // bSalvar
             // 
             this.bSalvar.Enabled = false;
@@ -763,6 +751,7 @@
             this.bCargar.TabIndex = 36;
             this.bCargar.Text = "Cargar";
             this.bCargar.UseVisualStyleBackColor = true;
+            this.bCargar.Click += new System.EventHandler(this.bCargar_Click);
             // 
             // Principal
             // 
@@ -771,7 +760,6 @@
             this.ClientSize = new System.Drawing.Size(849, 665);
             this.Controls.Add(this.bCargar);
             this.Controls.Add(this.bSalvar);
-            this.Controls.Add(this.bOnline);
             this.Controls.Add(this.bNormas);
             this.Controls.Add(this.bCobrarBanca);
             this.Controls.Add(this.bSalir);
@@ -890,7 +878,6 @@
         private System.Windows.Forms.Button bRetirarseJ2;
         private System.Windows.Forms.Button bRetirarseJ3;
         private System.Windows.Forms.Button bRetirarseJ4;
-        public System.Windows.Forms.Button bOnline;
         public System.Windows.Forms.Button bIniciar;
         private System.Windows.Forms.Button bSalvar;
         private System.Windows.Forms.Button bCargar;
