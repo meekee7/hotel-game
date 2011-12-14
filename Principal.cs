@@ -425,55 +425,58 @@ namespace Juego_Hotel
         {
             DialogResult dr = MessageBox.Show("¿Estás seguro de que quieres reiniciar la partida?", "Hotel", MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
+                Reiniciar_partida();
+        }
+
+        public void Reiniciar_partida()
+        {
+            this.bTurno.Enabled = false;
+            this.bDado.Enabled = false;
+            this.bIniciar.Enabled = true;
+            this.bColores.Enabled = true;
+            this.grupoNJugadores.Enabled = true;
+            this.turnoJ1.Text = "";
+            this.turnoJ2.Text = "";
+            this.turnoJ3.Text = "";
+            this.turnoJ4.Text = "";
+            this.bComprar.Enabled = false;
+            this.bConstruir.Enabled = false;
+            this.bComprarSuelo.Enabled = false;
+            this.controlJ1.Enabled = false;
+            this.controlJ2.Enabled = false;
+            this.controlJ3.Enabled = false;
+            this.controlJ4.Enabled = false;
+            this.bCobrarBanca.Enabled = false;
+            this.posJ1.Text = "Casilla:";
+            this.posJ2.Text = "Casilla:";
+            this.posJ3.Text = "Casilla:";
+            this.posJ4.Text = "Casilla:";
+            this.dineroJ1.Text = "Dinero:";
+            this.dineroJ2.Text = "Dinero:";
+            this.dineroJ3.Text = "Dinero:";
+            this.dineroJ4.Text = "Dinero:";
+            this.colorJ1.Text = "Color:";
+            this.colorJ2.Text = "Color:";
+            this.colorJ3.Text = "Color:";
+            this.colorJ4.Text = "Color:";
+            this.juego.jugadores = null;
+            this.posRojo.Image = posRojo_orig;
+            this.posAzul.Image = posAzul_orig;
+            this.posAmarillo.Image = posAmarillo_orig;
+            this.posVerde.Image = posVerde_orig;
+            this.posRojo.Location = new Point(40, 322);
+            this.posAzul.Location = new Point(60, 322);
+            this.posVerde.Location = new Point(80, 322);
+            this.posAmarillo.Location = new Point(100, 322);
+            Control[] lista_entradas = this.Controls.Find("entrada", true);
+            foreach (Control entrada in lista_entradas)
             {
-                this.bTurno.Enabled = false;
-                this.bDado.Enabled = false;
-                this.bIniciar.Enabled = true;
-                this.bColores.Enabled = true;
-                this.grupoNJugadores.Enabled = true;
-                this.turnoJ1.Text = "";
-                this.turnoJ2.Text = "";
-                this.turnoJ3.Text = "";
-                this.turnoJ4.Text = "";
-                this.bComprar.Enabled = false;
-                this.bConstruir.Enabled = false;
-                this.bComprarSuelo.Enabled = false;
-                this.controlJ1.Enabled = false;
-                this.controlJ2.Enabled = false;
-                this.controlJ3.Enabled = false;
-                this.controlJ4.Enabled = false;
-                this.bCobrarBanca.Enabled = false;
-                this.posJ1.Text = "Casilla:";
-                this.posJ2.Text = "Casilla:";
-                this.posJ3.Text = "Casilla:";
-                this.posJ4.Text = "Casilla:";
-                this.dineroJ1.Text = "Dinero:";
-                this.dineroJ2.Text = "Dinero:";
-                this.dineroJ3.Text = "Dinero:";
-                this.dineroJ4.Text = "Dinero:";
-                this.colorJ1.Text = "Color:";
-                this.colorJ2.Text = "Color:";
-                this.colorJ3.Text = "Color:";
-                this.colorJ4.Text = "Color:";
-                this.juego.jugadores = null;
-                this.posRojo.Image = posRojo_orig;
-                this.posAzul.Image = posAzul_orig;
-                this.posAmarillo.Image = posAmarillo_orig;
-                this.posVerde.Image = posVerde_orig;
-                this.posRojo.Location = new Point(40, 322);
-                this.posAzul.Location = new Point(60, 322);
-                this.posVerde.Location = new Point(80, 322);
-                this.posAmarillo.Location = new Point(100, 322);
-                Control[] lista_entradas = this.Controls.Find("entrada", true);
-                foreach (Control entrada in lista_entradas)
-                {
-                    this.Controls.Remove(entrada);
-                    entrada.Dispose();
-                }
-                int num_jugadores = this.juego.n_jugadores;
-                this.juego = new Juego();
-                this.juego.n_jugadores = num_jugadores;
+                this.Controls.Remove(entrada);
+                entrada.Dispose();
             }
+            int num_jugadores = this.juego.n_jugadores;
+            this.juego = new Juego();
+            this.juego.n_jugadores = num_jugadores;
         }
 
         private void bTurno_Click(object sender, EventArgs e)
@@ -1126,6 +1129,7 @@ namespace Juego_Hotel
             dialogo.CheckPathExists = true;
             dialogo.DefaultExt = "xml";
             dialogo.SupportMultiDottedExtensions = true;
+            String dir_trabajo = System.IO.Directory.GetCurrentDirectory(); // Después de cargar el fichero, el directorio actual se pierde
             dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
             dialogo.Filter = "Partida Hotel|*.xml";
             dialogo.Title = "Cargar una partida";
@@ -1134,10 +1138,14 @@ namespace Juego_Hotel
             if (dialogo.FileName != "")
             {
                 Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(this.juego);
-                if (mgr_cargar.Cargar_partida(dialogo.FileName) == false)
+                if (mgr_cargar.Cargar_partida(dialogo.FileName, this) == false)
+                {
                     MessageBox.Show("Error cargando la partida: " + mgr_cargar.error);
+                    this.Reiniciar_partida();
+                }
             }
             dialogo = null;
+            System.IO.Directory.SetCurrentDirectory(dir_trabajo); // Restaurar el directorio, para poder cargar el Config.xml
         }
     }
 }

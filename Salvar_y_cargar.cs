@@ -167,7 +167,7 @@ namespace Juego_Hotel
             }
         }
 
-        public Boolean Cargar_partida(String ruta)
+        public Boolean Cargar_partida(String ruta, Principal interfaz)
         {
             try
             {
@@ -176,11 +176,11 @@ namespace Juego_Hotel
 
                 // Estado de la partida
                 XmlElement nodoEstadoPartida = (XmlElement) doc.GetElementsByTagName("estado_partida")[0];
-                juego.n_jugadores_activos = Convert.ToInt32(nodoEstadoPartida.GetElementsByTagName("num_jugadores_activos")[0].FirstChild.Value);
-                juego.jug_inicial = Convert.ToInt32(nodoEstadoPartida.GetElementsByTagName("jugador_inicial")[0].FirstChild.Value);
-                juego.jug_actual = Convert.ToInt32(nodoEstadoPartida.GetElementsByTagName("jugador_actual")[0].FirstChild.Value);
-                juego.ultimo_res_dado = Convert.ToInt32(nodoEstadoPartida.GetElementsByTagName("ultimo_res_dado")[0].FirstChild.Value);
-                juego.ultimo_avance_auto = Convert.ToInt32(nodoEstadoPartida.GetElementsByTagName("ultimo_avance_auto")[0].FirstChild.Value);
+                juego.n_jugadores_activos = Convert.ToInt16(nodoEstadoPartida.GetElementsByTagName("num_jugadores_activos")[0].FirstChild.Value);
+                juego.jug_inicial = Convert.ToInt16(nodoEstadoPartida.GetElementsByTagName("jugador_inicial")[0].FirstChild.Value);
+                juego.jug_actual = Convert.ToInt16(nodoEstadoPartida.GetElementsByTagName("jugador_actual")[0].FirstChild.Value);
+                juego.ultimo_res_dado = Convert.ToInt16(nodoEstadoPartida.GetElementsByTagName("ultimo_res_dado")[0].FirstChild.Value);
+                juego.ultimo_avance_auto = Convert.ToInt16(nodoEstadoPartida.GetElementsByTagName("ultimo_avance_auto")[0].FirstChild.Value);
 
                 // Estado de los hoteles
                 XmlNodeList nodoEstadoHoteles = doc.GetElementsByTagName("estado_hotel");
@@ -191,17 +191,44 @@ namespace Juego_Hotel
                     String nombre_hotel = elemHotel.GetElementsByTagName("nombre")[0].FirstChild.Value;
                     Hotel hotel = this.juego.hoteles.First(delegate(Hotel h) { return h.nombre_txt == nombre_hotel; });
                     // Ya hemos emparejado el Hotel con su nombre
-                    hotel.n_ampliaciones_construidas = Convert.ToInt32(elemHotel.GetElementsByTagName("num_amplis_construidas")[0].FirstChild.Value);
+                    hotel.n_ampliaciones_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_amplis_construidas")[0].FirstChild.Value);
                     hotel.entrada_comprada_ultimo_turno = Convert.ToBoolean(elemHotel.GetElementsByTagName("entrada_comprada_ultimo_turno")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
-                    hotel.n_ampliaciones_construidas = Convert.ToInt32(elemHotel.GetElementsByTagName("num_entradas")[0].FirstChild.Value);
+                    hotel.n_ampliaciones_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_entradas")[0].FirstChild.Value);
                     hotel.suelo_comprado = Convert.ToBoolean(elemHotel.GetElementsByTagName("suelo_comprado")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
                     XmlNode nodoPosicionesEntradas = elemHotel.GetElementsByTagName("posiciones_de_entradas")[0];
                     if (nodoPosicionesEntradas.HasChildNodes)
                     {
                         lista_entradas = nodoPosicionesEntradas.FirstChild.Value.Split('@');
-                        hotel.entradas
+                        hotel.n_entradas = lista_entradas.Length;
+                        foreach (String s_num_casilla in lista_entradas)
+                        {
+                            int num_casilla = Convert.ToInt16(s_num_casilla);
+                            if (this.juego.casillas[num_casilla].hotel_der == hotel.nombre)
+                            {
+                                this.juego.casillas[num_casilla].entrada_en_der = true;
+                                interfaz.Dibujar_Entrada(ref this.juego.casillas[num_casilla], true);
+                            }
+                            else if (this.juego.casillas[num_casilla].hotel_izq == hotel.nombre)
+                            {
+                                this.juego.casillas[num_casilla].entrada_en_izq = true;
+                                interfaz.Dibujar_Entrada(ref this.juego.casillas[num_casilla], false);
+                            }
+                            else // Nº de casilla incorrecta, fichero modificado
+                            {
+                                this.error = "El fichero de la partida ha sido modificado incorrectamente: El hotel " +
+                                    hotel.nombre_txt + " tiene unas entradas asignadas que no pertenecen al hotel";
+                                return false;
+                            }
+                            hotel.entradas.AddLast(this.juego.casillas[num_casilla]);
+                        }
                     }
                 }
+
+                // Estado de los hoteles
+                XmlNodeList nodoEstadoJugadores = doc.GetElementsByTagName("estado_hotel");
+                String[] lista_entradas;
+                foreach (XmlNode nodoHotel in nodoEstadoHoteles)
+                {
                 return true;
             }
             catch (Exception e)
