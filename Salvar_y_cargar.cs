@@ -173,6 +173,7 @@ namespace Juego_Hotel
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(ruta);
+                this.juego.n_jugadores = Convert.ToInt16(doc.GetElementsByTagName("num_jugadores")[0].FirstChild.Value);
 
                 // Estado de la partida
                 XmlElement nodoEstadoPartida = (XmlElement) doc.GetElementsByTagName("estado_partida")[0];
@@ -183,9 +184,9 @@ namespace Juego_Hotel
                 juego.ultimo_avance_auto = Convert.ToInt16(nodoEstadoPartida.GetElementsByTagName("ultimo_avance_auto")[0].FirstChild.Value);
 
                 // Estado de los hoteles
-                XmlNodeList nodoEstadoHoteles = doc.GetElementsByTagName("estado_hotel");
+                XmlNodeList nodosEstadoHoteles = doc.GetElementsByTagName("estado_hotel");
                 String[] lista_entradas;
-                foreach (XmlNode nodoHotel in nodoEstadoHoteles)
+                foreach (XmlNode nodoHotel in nodosEstadoHoteles)
                 {
                     XmlElement elemHotel = (XmlElement)nodoHotel;
                     String nombre_hotel = elemHotel.GetElementsByTagName("nombre")[0].FirstChild.Value;
@@ -224,11 +225,44 @@ namespace Juego_Hotel
                     }
                 }
 
-                // Estado de los hoteles
-                XmlNodeList nodoEstadoJugadores = doc.GetElementsByTagName("estado_hotel");
-                String[] lista_entradas;
-                foreach (XmlNode nodoHotel in nodoEstadoHoteles)
+                // Estado de los jugadores
+                XmlNodeList nodosEstadoJugadores = doc.GetElementsByTagName("estado_jugador");
+                this.juego.jugadores = new Jugador[this.juego.n_jugadores];
+                String[] lista_hoteles;
+                foreach (XmlNode nodoJugador in nodosEstadoJugadores)
                 {
+                    XmlElement elemJugador = (XmlElement)nodoJugador;
+                    int n_jugador = Convert.ToInt16(elemJugador.GetElementsByTagName("num_jugador")[0].FirstChild.Value);
+                    int pos_jugador = Convert.ToInt16(elemJugador.GetElementsByTagName("posicion")[0].FirstChild.Value);
+                    Casilla posicion = this.juego.casillas.First(delegate(Casilla c) { return c.numero == pos_jugador; });
+                    Tipos.Tcolor color_jugador = (Tipos.Tcolor)Enum.Parse(typeof(Tipos.Tcolor), elemJugador.GetElementsByTagName("color")[0].FirstChild.Value);
+                    Boolean pago_ultimo_turno = Convert.ToBoolean(elemJugador.GetElementsByTagName("pago_ultimo_turno")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
+                    int eliminado = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_50")[0].FirstChild.Value);
+                    int n_billetes_50 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_50")[0].FirstChild.Value);
+                    int n_billetes_100 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_100")[0].FirstChild.Value);
+                    int n_billetes_500 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_500")[0].FirstChild.Value);
+                    int n_billetes_1000 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_1000")[0].FirstChild.Value);
+                    int n_billetes_5000 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_5000")[0].FirstChild.Value);
+                    this.juego.jugadores[n_jugador] = new Jugador(n_billetes_5000, n_billetes_1000, n_billetes_500, n_billetes_100, n_billetes_50, color_jugador, n_jugador);
+                    XmlNode nodoHotelesPoseidos = elemJugador.GetElementsByTagName("hoteles_poseidos")[0];
+                    if (nodoHotelesPoseidos.HasChildNodes)
+                    {
+                        lista_hoteles = nodoHotelesPoseidos.FirstChild.Value.Split('@');
+                        foreach (String nombre_hotel in lista_hoteles)
+                        {
+                            this.juego.hoteles.First(delegate(Hotel h) { return h.nombre_txt == nombre_hotel; }).dueño = this.juego.jugadores[n_jugador];
+                        }
+                    }
+                }
+                // Comprobación sobre números de jugador
+                foreach (Jugador jugador in this.juego.jugadores)
+                {
+                    if (jugador == null)
+                    {
+                        this.error = "La partida no contiene datos de todos los jugadores";
+                        return false;
+                    }
+                }
                 return true;
             }
             catch (Exception e)

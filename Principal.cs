@@ -21,16 +21,18 @@ namespace Juego_Hotel
         Online frm_online;
         public int game_id;
         public String online_config;
+        public Boolean partida_cargada;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
         {
             InitializeComponent();
             this.juego = new Juego();
-            posRojo_orig = (Image) posRojo.Image.Clone();
-            posAzul_orig = (Image) posAzul.Image.Clone();
-            posVerde_orig = (Image) posVerde.Image.Clone();
-            posAmarillo_orig = (Image) posAmarillo.Image.Clone();
+            this.partida_cargada = false;
+            this.posRojo_orig = (Image)posRojo.Image.Clone();
+            this.posAzul_orig = (Image)posAzul.Image.Clone();
+            this.posVerde_orig = (Image)posVerde.Image.Clone();
+            this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
             if (frm_online != null)
             {
@@ -62,7 +64,7 @@ namespace Juego_Hotel
                 {
                     return; //Se trata en la función Crear_Jugadores
                 }
-                if (!this.online) // Nos viene dado del servidor
+                if ((!this.online) || (!this.partida_cargada)) // Nos viene dado del servidor o por la partida cargada
                 {
                     // Decidir quien empieza
                     this.tiradas_ini = new int[this.juego.n_jugadores];
@@ -93,10 +95,10 @@ namespace Juego_Hotel
                 this.bComprarSuelo.Enabled = false;
                 this.grupoNJugadores.Enabled = false;
                 this.bCobrarBanca.Enabled = false;
-                this.posJ1.Text = "Casilla: 0";
-                this.posJ2.Text = "Casilla: 0";
-                this.posJ3.Text = "Casilla: 0";
-                this.posJ4.Text = "Casilla: 0";
+                this.posJ1.Text = "Casilla: " + this.juego.jugadores[0].posicion.numero;
+                this.posJ2.Text = "Casilla: " + this.juego.jugadores[1].posicion.numero;
+                this.posJ3.Text = "Casilla: " + this.juego.jugadores[2].posicion.numero;
+                this.posJ4.Text = "Casilla: " + this.juego.jugadores[3].posicion.numero;
                 this.bEntradasJ1.Enabled = false;
                 this.bEntradasJ2.Enabled = false;
                 this.bEntradasJ3.Enabled = false;
@@ -121,6 +123,7 @@ namespace Juego_Hotel
                 }
                 this.bDado.Enabled = true;
                 this.bSalvar.Enabled = true;
+                if (this.partida_cargada) // Recordatorio: Solo se puede salvar antes de tirar el dado, cambiar mecanismo
             }
         }
 
@@ -248,47 +251,63 @@ namespace Juego_Hotel
 
         public void Crear_Jugadores()
         {
-            this.juego.jugadores = new Jugador[this.juego.n_jugadores];
-            this.juego.n_jugadores_activos = this.juego.n_jugadores;
-            XmlDocument configuracion = new XmlDocument();
-            try
+            if (!this.partida_cargada)
             {
-                if (this.online)
-                    configuracion.LoadXml(this.online_config);
+                this.juego.jugadores = new Jugador[this.juego.n_jugadores];
+                this.juego.n_jugadores_activos = this.juego.n_jugadores;
+                XmlDocument configuracion = new XmlDocument();
+                try
+                {
+                    if (this.online)
+                        configuracion.LoadXml(this.online_config);
+                    else
+                        configuracion.Load("Config.xml");
+                }
+                catch
+                {
+                    MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
+                    this.juego.jugador_actual = null;
+                    throw;
+                }
+                XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
+                XmlNode nodo_cantidades;
+                if (this.juego.n_jugadores == 2)
+                    nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("two_players")[0];
                 else
-                    configuracion.Load("Config.xml");
+                    nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("three_or_four_players")[0];
+                int n_5000, n_1000, n_500, n_100, n_50;
+                n_5000 = Convert.ToInt16(nodo_cantidades.ChildNodes[0].FirstChild.Value);
+                n_1000 = Convert.ToInt16(nodo_cantidades.ChildNodes[1].FirstChild.Value);
+                n_500 = Convert.ToInt16(nodo_cantidades.ChildNodes[2].FirstChild.Value);
+                n_100 = Convert.ToInt16(nodo_cantidades.ChildNodes[3].FirstChild.Value);
+                n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[4].FirstChild.Value);
+                switch (this.juego.n_jugadores)
+                {
+                    case 4: this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
+                            this.controlJ4.Enabled = true;
+                            goto case 3;
+                    case 3: this.juego.jugadores[2] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j3, 2);
+                            this.controlJ3.Enabled = true;
+                            goto case 2;
+                    case 2: this.juego.jugadores[1] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j2, 1);
+                            this.juego.jugadores[0] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j1, 0);
+                            this.controlJ2.Enabled = true;
+                            this.controlJ1.Enabled = true;
+                            break;
+                }
             }
-            catch
-            {
-                MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
-                this.juego.jugador_actual = null;
-                throw;
-            }
-            XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
-            XmlNode nodo_cantidades;
-            if (this.juego.n_jugadores == 2)
-                nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("two_players")[0];
             else
-                nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("three_or_four_players")[0];
-            int n_5000, n_1000, n_500, n_100, n_50;
-            n_5000 = Convert.ToInt16(nodo_cantidades.ChildNodes[0].FirstChild.Value);
-            n_1000 = Convert.ToInt16(nodo_cantidades.ChildNodes[1].FirstChild.Value);
-            n_500 = Convert.ToInt16(nodo_cantidades.ChildNodes[2].FirstChild.Value);
-            n_100 = Convert.ToInt16(nodo_cantidades.ChildNodes[3].FirstChild.Value);
-            n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[4].FirstChild.Value);
-            switch (this.juego.n_jugadores)
             {
-                case 4: this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
-                        this.controlJ4.Enabled = true;
-                        goto case 3;
-                case 3: this.juego.jugadores[2] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j3, 2);
-                        this.controlJ3.Enabled = true;
-                        goto case 2;
-                case 2: this.juego.jugadores[1] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j2, 1);
-                        this.juego.jugadores[0] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j1, 0);
-                        this.controlJ2.Enabled = true;
-                        this.controlJ1.Enabled = true;
-                        break;
+                switch (this.juego.n_jugadores)
+                {
+                    case 4: this.controlJ4.Enabled = true;
+                            goto case 3;
+                    case 3: this.controlJ3.Enabled = true;
+                            goto case 2;
+                    case 2: this.controlJ2.Enabled = true;
+                            this.controlJ1.Enabled = true;
+                            break;
+                }
             }
         }
 
@@ -1140,8 +1159,12 @@ namespace Juego_Hotel
                 Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(this.juego);
                 if (mgr_cargar.Cargar_partida(dialogo.FileName, this) == false)
                 {
-                    MessageBox.Show("Error cargando la partida: " + mgr_cargar.error);
+                    MessageBox.Show("Error cargando la partida:" + Environment.NewLine + mgr_cargar.error);
                     this.Reiniciar_partida();
+                }
+                else
+                {
+                    this.partida_cargada = true;
                 }
             }
             dialogo = null;

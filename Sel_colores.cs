@@ -107,7 +107,17 @@ namespace Juego_Hotel
 
         private void j4Rojo_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (j4Rojo.Checked)
+            {
+                this.color_j4 = Tipos.Tcolor.rojo;
+                // Si ponemos J4 a rojo, no puede haber otro a rojo
+                if (j1Rojo.Checked)
+                    j1Rojo.Checked = false;
+                if (j2Rojo.Checked)
+                    j2Rojo.Checked = false;
+                if (j3Rojo.Checked)
+                    j3Rojo.Checked = false;
+            }
         }
 
         private void j1Azul_CheckedChanged(object sender, EventArgs e)
