@@ -21,7 +21,7 @@ namespace Juego_Hotel
         Online frm_online;
         public int game_id;
         public String online_config;
-        public Boolean partida_cargada;
+        public Boolean partida_cargada, dado_tirado;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
@@ -29,6 +29,7 @@ namespace Juego_Hotel
             InitializeComponent();
             this.juego = new Juego();
             this.partida_cargada = false;
+            this.dado_tirado = false;
             this.posRojo_orig = (Image)posRojo.Image.Clone();
             this.posAzul_orig = (Image)posAzul.Image.Clone();
             this.posVerde_orig = (Image)posVerde.Image.Clone();
@@ -95,10 +96,10 @@ namespace Juego_Hotel
                 this.bComprarSuelo.Enabled = false;
                 this.grupoNJugadores.Enabled = false;
                 this.bCobrarBanca.Enabled = false;
-                this.posJ1.Text = "Casilla: " + this.juego.jugadores[0].posicion.numero;
-                this.posJ2.Text = "Casilla: " + this.juego.jugadores[1].posicion.numero;
-                this.posJ3.Text = "Casilla: " + this.juego.jugadores[2].posicion.numero;
-                this.posJ4.Text = "Casilla: " + this.juego.jugadores[3].posicion.numero;
+                this.posJ1.Text = "Casilla: 0";
+                this.posJ2.Text = "Casilla: 0";
+                this.posJ3.Text = "Casilla: 0";
+                this.posJ4.Text = "Casilla: 0";
                 this.bEntradasJ1.Enabled = false;
                 this.bEntradasJ2.Enabled = false;
                 this.bEntradasJ3.Enabled = false;
@@ -123,7 +124,46 @@ namespace Juego_Hotel
                 }
                 this.bDado.Enabled = true;
                 this.bSalvar.Enabled = true;
-                if (this.partida_cargada) // Recordatorio: Solo se puede salvar antes de tirar el dado, cambiar mecanismo
+                if (this.partida_cargada) // Reajustar posiciones de los jugadores y rellenar datos
+                {
+                    foreach (Jugador jugador in this.juego.jugadores)
+                    {
+                        if (jugador.posicion.numero != 0)
+                        {
+                            switch (jugador.color)
+                            {
+                                case Tipos.Tcolor.rojo: this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
+                                    this.posRojo.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
+                                                                      this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
+                                    break;
+                                case Tipos.Tcolor.azul: this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
+                                    this.posAzul.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
+                                                                      this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
+                                    break;
+                                case Tipos.Tcolor.verde: this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
+                                    this.posVerde.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
+                                                                       this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
+                                    break;
+                                case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
+                                    this.posAmarillo.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
+                                                                          this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
+                                    break;
+                            }
+                        }
+                    }
+                    // Poner casilla actual a cada uno
+                    switch (this.juego.n_jugadores)
+                    {
+                        case 4: this.posJ4.Text = "Casilla: " + this.juego.jugadores[3].posicion.numero.ToString();
+                                goto case 3;
+                        case 3: this.posJ3.Text = "Casilla: " + this.juego.jugadores[2].posicion.numero.ToString();
+                                goto case 2;
+                        case 2: this.posJ2.Text = "Casilla: " + this.juego.jugadores[1].posicion.numero.ToString();
+                                this.posJ1.Text = "Casilla: " + this.juego.jugadores[0].posicion.numero.ToString();
+                                break;
+                    }
+                    this.Actualizar_Dinero_Jugadores();
+                }
             }
         }
 
@@ -244,6 +284,7 @@ namespace Juego_Hotel
                 this.bPedirNochesJ3.Enabled = false;
                 this.bPedirNochesJ4.Enabled = false;
                 this.juego.jugador_actual.pago_ultimo_turno = false;
+                this.dado_tirado = false;
                 foreach (Hotel hotel in this.juego.hoteles)
                     hotel.entrada_comprada_ultimo_turno = false;
             }
@@ -415,6 +456,7 @@ namespace Juego_Hotel
             else
                 this.bDado.Enabled = false;
             this.bTurno.Enabled = true;
+            this.dado_tirado = true;
         }
 
         private void bDado_Click(object sender, EventArgs e)
@@ -1122,6 +1164,11 @@ namespace Juego_Hotel
 
         private void bSalvar_Click(object sender, EventArgs e)
         {
+            if (this.dado_tirado)
+            {
+                MessageBox.Show("Sólo se puede salvar antes de tirar el dado");
+                return;
+            }
             SaveFileDialog dialogo = new SaveFileDialog();
             dialogo.AddExtension = true;
             dialogo.CheckPathExists = true;
@@ -1131,12 +1178,14 @@ namespace Juego_Hotel
             dialogo.Filter = "Partida Hotel|*.xml";
             dialogo.Title = "Salvar partida en curso";
             dialogo.FileName = "Partida Hotel.xml";
-            dialogo.ShowDialog();
-            if (dialogo.FileName != "")
+            if (dialogo.ShowDialog() != DialogResult.Cancel)
             {
-                Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(this.juego);
-                if (mgr_salvar.Salvar_partida(dialogo.FileName) == false)
-                    MessageBox.Show("Error salvando la partida: " + mgr_salvar.error);
+                if (dialogo.FileName != "")
+                {
+                    Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(ref this.juego);
+                    if (mgr_salvar.Salvar_partida(dialogo.FileName) == false)
+                        MessageBox.Show("Error salvando la partida: " + mgr_salvar.error);
+                }
             }
             dialogo = null;
         }
@@ -1153,18 +1202,21 @@ namespace Juego_Hotel
             dialogo.Filter = "Partida Hotel|*.xml";
             dialogo.Title = "Cargar una partida";
             dialogo.FileName = "Partida Hotel.xml";
-            dialogo.ShowDialog();
-            if (dialogo.FileName != "")
+            if (dialogo.ShowDialog() != DialogResult.Cancel)
             {
-                Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(this.juego);
-                if (mgr_cargar.Cargar_partida(dialogo.FileName, this) == false)
+                if (dialogo.FileName != "")
                 {
-                    MessageBox.Show("Error cargando la partida:" + Environment.NewLine + mgr_cargar.error);
-                    this.Reiniciar_partida();
-                }
-                else
-                {
-                    this.partida_cargada = true;
+                    Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(ref this.juego);
+                    if (mgr_cargar.Cargar_partida(dialogo.FileName, this) == false)
+                    {
+                        MessageBox.Show("Error cargando la partida:" + Environment.NewLine + mgr_cargar.error);
+                        this.Reiniciar_partida();
+                    }
+                    else
+                    {
+                        this.partida_cargada = true;
+                        this.bIniciar.PerformClick();
+                    }
                 }
             }
             dialogo = null;

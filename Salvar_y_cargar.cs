@@ -11,7 +11,7 @@ namespace Juego_Hotel
         public Juego juego;
         public String error;
 
-        public Salvar_y_cargar(Juego juego)
+        public Salvar_y_cargar(ref Juego juego)
         {
             this.juego = juego;
         }
@@ -194,7 +194,7 @@ namespace Juego_Hotel
                     // Ya hemos emparejado el Hotel con su nombre
                     hotel.n_ampliaciones_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_amplis_construidas")[0].FirstChild.Value);
                     hotel.entrada_comprada_ultimo_turno = Convert.ToBoolean(elemHotel.GetElementsByTagName("entrada_comprada_ultimo_turno")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
-                    hotel.n_ampliaciones_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_entradas")[0].FirstChild.Value);
+                    hotel.n_entradas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_entradas")[0].FirstChild.Value);
                     hotel.suelo_comprado = Convert.ToBoolean(elemHotel.GetElementsByTagName("suelo_comprado")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
                     XmlNode nodoPosicionesEntradas = elemHotel.GetElementsByTagName("posiciones_de_entradas")[0];
                     if (nodoPosicionesEntradas.HasChildNodes)
@@ -237,20 +237,25 @@ namespace Juego_Hotel
                     Casilla posicion = this.juego.casillas.First(delegate(Casilla c) { return c.numero == pos_jugador; });
                     Tipos.Tcolor color_jugador = (Tipos.Tcolor)Enum.Parse(typeof(Tipos.Tcolor), elemJugador.GetElementsByTagName("color")[0].FirstChild.Value);
                     Boolean pago_ultimo_turno = Convert.ToBoolean(elemJugador.GetElementsByTagName("pago_ultimo_turno")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
-                    int eliminado = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_50")[0].FirstChild.Value);
+                    Boolean eliminado = Convert.ToBoolean(elemJugador.GetElementsByTagName("eliminado")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
                     int n_billetes_50 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_50")[0].FirstChild.Value);
                     int n_billetes_100 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_100")[0].FirstChild.Value);
                     int n_billetes_500 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_500")[0].FirstChild.Value);
                     int n_billetes_1000 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_1000")[0].FirstChild.Value);
                     int n_billetes_5000 = Convert.ToInt16(elemJugador.GetElementsByTagName("n_billetes_5000")[0].FirstChild.Value);
                     this.juego.jugadores[n_jugador] = new Jugador(n_billetes_5000, n_billetes_1000, n_billetes_500, n_billetes_100, n_billetes_50, color_jugador, n_jugador);
+                    this.juego.jugadores[n_jugador].posicion = posicion;
+                    this.juego.jugadores[n_jugador].pago_ultimo_turno = pago_ultimo_turno;
+                    this.juego.jugadores[n_jugador].eliminado = eliminado;
                     XmlNode nodoHotelesPoseidos = elemJugador.GetElementsByTagName("hoteles_poseidos")[0];
                     if (nodoHotelesPoseidos.HasChildNodes)
                     {
                         lista_hoteles = nodoHotelesPoseidos.FirstChild.Value.Split('@');
                         foreach (String nombre_hotel in lista_hoteles)
                         {
-                            this.juego.hoteles.First(delegate(Hotel h) { return h.nombre_txt == nombre_hotel; }).dueño = this.juego.jugadores[n_jugador];
+                            Hotel hotel = this.juego.hoteles.First(delegate(Hotel h) { return h.nombre_txt == nombre_hotel; });
+                            hotel.dueño = this.juego.jugadores[n_jugador];
+                            this.juego.jugadores[n_jugador].hoteles.AddLast(hotel);
                         }
                     }
                 }
