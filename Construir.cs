@@ -142,6 +142,7 @@ namespace Juego_Hotel
                             if (frm_pago.cancelado)
                             {
                                 frm_pago.Close();
+                                this.cancelado = true;
                                 this.Close();
                                 return;
                             }
@@ -160,7 +161,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el suficiente dinero para comprar el edificio principal", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar el edificio principal", "No es posible construir");
             }
         }
 
@@ -199,6 +200,7 @@ namespace Juego_Hotel
                             if (frm_pago.cancelado)
                             {
                                 frm_pago.Close();
+                                this.cancelado = true;
                                 this.Close();
                                 return;
                             }
@@ -217,7 +219,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el suficiente dinero para comprar la primera ampliación", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar la primera ampliación", "No es posible construir");
             }
         }
 
@@ -256,6 +258,7 @@ namespace Juego_Hotel
                             if (frm_pago.cancelado)
                             {
                                 frm_pago.Close();
+                                this.cancelado = true;
                                 this.Close();
                                 return;
                             }
@@ -274,7 +277,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el suficiente dinero para comprar la segunda ampliación", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar la segunda ampliación", "No es posible construir");
             }
         }
 
@@ -313,6 +316,7 @@ namespace Juego_Hotel
                             if (frm_pago.cancelado)
                             {
                                 frm_pago.Close();
+                                this.cancelado = true;
                                 this.Close();
                                 return;
                             }
@@ -331,7 +335,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el suficiente dinero para comprar la tercera ampliación", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar la tercera ampliación", "No es posible construir");
             }
         }
 
@@ -370,6 +374,7 @@ namespace Juego_Hotel
                             if (frm_pago.cancelado)
                             {
                                 frm_pago.Close();
+                                this.cancelado = true;
                                 this.Close();
                                 return;
                             }
@@ -388,7 +393,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el suficiente dinero para comprar la cuarta ampliación", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar la cuarta ampliación", "No es posible construir");
             }
         }
 
@@ -427,6 +432,7 @@ namespace Juego_Hotel
                             if (frm_pago.cancelado)
                             {
                                 frm_pago.Close();
+                                this.cancelado = true;
                                 this.Close();
                                 return;
                             }
@@ -445,7 +451,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el suficiente dinero para comprar los complejos recreativos", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar los complejos recreativos", "No es posible construir");
             }
         }
 
@@ -453,6 +459,14 @@ namespace Juego_Hotel
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, this.juego.jug_actual - 1, false);
             frm_ver_hoteles.Show();
+        }
+
+        private void Construir_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!this.cancelado) // Pintar la fase en el tablero
+            {
+                this.interfaz.Dibujar_fase(ref this.hotel_seleccionado, this.hotel_seleccionado.n_ampliaciones_construidas - 1);
+            }
         }
     }
 }

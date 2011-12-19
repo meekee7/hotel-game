@@ -16,7 +16,7 @@ namespace Juego_Hotel
         public Juego juego;
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();
-        Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
+        Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada, img_tick;
         public Boolean online;
         Online frm_online;
         public int game_id;
@@ -35,6 +35,7 @@ namespace Juego_Hotel
             this.posVerde_orig = (Image)posVerde.Image.Clone();
             this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
+            this.img_tick = (Image)global::Juego_Hotel.Properties.Resources.green_tick.Clone();
             if (frm_online != null)
             {
                 this.online = true;
@@ -1233,6 +1234,23 @@ namespace Juego_Hotel
             }
             dialogo = null;
             System.IO.Directory.SetCurrentDirectory(dir_trabajo); // Restaurar el directorio, para poder cargar el Config.xml
+        }
+
+        public void Dibujar_fase(ref Hotel hotel, int num_fase)
+        {
+            // Creando nuevo PictureBox para meter la imagen de la entrada
+            PictureBox fase = new PictureBox();
+            ((ISupportInitialize)(fase)).BeginInit();
+            Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
+            fase.Image = RotarImagen(this.img_tick, pos.grados);
+            fase.Location = new Point(pos.X, pos.Y);
+            fase.Size = new Size(18, 18);
+            fase.SizeMode = PictureBoxSizeMode.StretchImage;
+            fase.TabStop = false;
+            fase.Name = "fase";
+            this.Controls.Add(fase);
+            ((ISupportInitialize)(fase)).EndInit();
+            fase.BringToFront();
         }
     }
 }

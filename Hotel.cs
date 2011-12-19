@@ -21,6 +21,8 @@ namespace Juego_Hotel
         int[] precios_ampliaciones;
         public LinkedList<Casilla> entradas;
         public System.Drawing.Bitmap img_tarjeta;
+        // Posiciones de las fases en el tablero
+        public LinkedList<Tipos.Posicion> posiciones_fases;
 
         public Hotel (Tipos.Tnombre_hotel nombre)
         {
@@ -31,6 +33,7 @@ namespace Juego_Hotel
             this.n_entradas = 0;
             this.dueño = null;
             this.entradas = new LinkedList<Casilla>();
+            this.posiciones_fases = new LinkedList<Tipos.Posicion>();
             switch (this.nombre)
             {
                 case Tipos.Tnombre_hotel.Boomerang :
@@ -43,6 +46,14 @@ namespace Juego_Hotel
                     this.precios_ampliaciones = new int[2] { 1800, 250 };
                     this.matriz_precios = new int[2,6] { { 400, 800, 1200, 1600, 2000, 2400 },
                                                            { 600, 1200, 1800, 2400, 3000, 3600 } };
+                    // Posiciones de las fases en el tablero (tantas como fases tenga)
+                    Tipos.Posicion pos;
+                    pos = new Tipos.Posicion();
+                    pos.Establecer(0, 75, 68); // Edif ppal
+                    this.posiciones_fases.AddLast(pos);
+                    pos = new Tipos.Posicion();
+                    pos.Establecer(0, 163, 71); // Suelo
+                    this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Fujiyama :
                     this.nombre_txt = "Fujiyama";

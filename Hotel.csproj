@@ -273,6 +273,7 @@
     </Content>
     <Content Include="Icono.ico" />
     <None Include="Images\Icono.ico" />
+    <None Include="Images\green-tick.jpg" />
     <Content Include="Images\Letoile_tarjeta.png" />
     <Content Include="Images\Royal_tarjeta.png" />
     <Content Include="Images\Safari_tarjeta.png" />

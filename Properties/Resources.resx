@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Tablero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Tablero.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Boomerang_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Boomerang_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Flecha_verde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Flecha_verde.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fujiyama_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Fujiyama_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -127,62 +133,59 @@
   <data name="President_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\President_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Safari_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Safari_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Flecha_azul" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Flecha_azul.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Waikiki_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Waikiki_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Flecha_amarilla" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Flecha_amarilla.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Royal_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Royal_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icono" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Icono.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Billete_5000" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_5000.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Taj_Mahal_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Taj_Mahal_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Entrada" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Entrada.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Billete_500" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Billete_500.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Billete_50" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Billete_50.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Billete_1000" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Billete_1000.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tablero" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Tablero.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Billete_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Billete_100.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Reglas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Reglas.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Flecha_amarilla" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_amarilla.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Flecha_azul" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_azul.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Flecha_roja" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Flecha_roja.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Flecha_verde" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_verde.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Letoile_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Letoile_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Royal_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Royal_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Billete_500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Billete_500.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Safari_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Safari_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Entrada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Entrada.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Waikiki_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Waikiki_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Billete_50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Billete_50.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Config" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Icono" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Icono.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Billete_1000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Billete_1000.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Reglas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Reglas.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Billete_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Billete_100.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="green-tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\green-tick.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

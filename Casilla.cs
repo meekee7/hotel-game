@@ -14,23 +14,9 @@ namespace Juego_Hotel
         public Tipos.Tnombre_hotel hotel_izq;
         public Boolean entrada_en_izq;
         public Boolean entrada_en_der;
-        // Para dibujar el coche y las entradas correctamente sobre el tablero en cada casilla
-        public struct Posicion
-        {
-            public float grados;
-            public int X;
-            public int Y;
-
-            public void Establecer (float grados, int X, int Y)
-            {
-                this.grados = grados;
-                this.X = X;
-                this.Y = Y;
-            }
-        }
-        public Posicion pos_coche;
-        public Posicion pos_entrada_der;
-        public Posicion pos_entrada_izq;
+        public Tipos.Posicion pos_coche;
+        public Tipos.Posicion pos_entrada_der;
+        public Tipos.Posicion pos_entrada_izq;
 
         public Casilla (int numero)
         {
@@ -38,9 +24,9 @@ namespace Juego_Hotel
             this.ocupada = false;
             this.entrada_en_izq = false;
             this.entrada_en_der = false;
-            this.pos_coche = new Posicion();
-            this.pos_entrada_der = new Posicion();
-            this.pos_entrada_izq = new Posicion();
+            this.pos_coche = new Tipos.Posicion();
+            this.pos_entrada_der = new Tipos.Posicion();
+            this.pos_entrada_izq = new Tipos.Posicion();
             this.pos_entrada_der.Establecer(0, 0, 0);
             this.pos_entrada_izq.Establecer(0, 0, 0);
 

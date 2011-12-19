@@ -92,6 +92,7 @@
             this.imgTablero = new System.Windows.Forms.PictureBox();
             this.bSalvar = new System.Windows.Forms.Button();
             this.bCargar = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -102,6 +103,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.posAzul)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posRojo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTablero)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTablero
@@ -753,11 +755,23 @@
             this.bCargar.UseVisualStyleBackColor = true;
             this.bCargar.Click += new System.EventHandler(this.bCargar_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pictureBox1.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.pictureBox1.Location = new System.Drawing.Point(163, 71);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(18, 18);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 37;
+            this.pictureBox1.TabStop = false;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(816, 665);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bCargar);
             this.Controls.Add(this.bSalvar);
             this.Controls.Add(this.bNormas);
@@ -811,6 +825,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.posAzul)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posRojo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTablero)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -881,5 +896,6 @@
         public System.Windows.Forms.Button bIniciar;
         private System.Windows.Forms.Button bSalvar;
         private System.Windows.Forms.Button bCargar;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
