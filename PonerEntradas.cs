@@ -55,6 +55,11 @@ namespace Juego_Hotel
         private void listaHoteles_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.hotel_seleccionado = this.juego.hoteles.First(Hotel => Hotel.nombre_txt == this.listaHoteles.SelectedItem.ToString());
+            if (this.hotel_seleccionado.n_ampliaciones_construidas == 0)
+            {
+                MessageBox.Show("El hotel " + this.hotel_seleccionado.nombre_txt + " no tiene fases construídas y por tanto no se le pueden añadir entradas aun");
+                return;
+            }
             if (this.hotel_seleccionado.precio_entrada > this.jugador.dinero_total)
             {
                 MessageBox.Show("No tienes dinero suficiente para pagar una entrada del hotel " + this.hotel_seleccionado.nombre_txt);

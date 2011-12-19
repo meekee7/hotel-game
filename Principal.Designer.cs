@@ -186,7 +186,7 @@
             this.bDado.Enabled = false;
             this.bDado.Location = new System.Drawing.Point(708, 212);
             this.bDado.Name = "bDado";
-            this.bDado.Size = new System.Drawing.Size(85, 23);
+            this.bDado.Size = new System.Drawing.Size(83, 23);
             this.bDado.TabIndex = 9;
             this.bDado.Text = "Tirar dado";
             this.bDado.UseVisualStyleBackColor = true;
@@ -195,7 +195,7 @@
             // resDado
             // 
             this.resDado.AutoSize = true;
-            this.resDado.Location = new System.Drawing.Point(708, 270);
+            this.resDado.Location = new System.Drawing.Point(708, 275);
             this.resDado.Name = "resDado";
             this.resDado.Size = new System.Drawing.Size(39, 13);
             this.resDado.TabIndex = 10;
@@ -205,7 +205,7 @@
             // 
             this.jug_ini.AutoEllipsis = true;
             this.jug_ini.AutoSize = true;
-            this.jug_ini.Location = new System.Drawing.Point(708, 290);
+            this.jug_ini.Location = new System.Drawing.Point(708, 295);
             this.jug_ini.Name = "jug_ini";
             this.jug_ini.Size = new System.Drawing.Size(80, 13);
             this.jug_ini.TabIndex = 11;
@@ -235,7 +235,7 @@
             // colorJugIni
             // 
             this.colorJugIni.AutoSize = true;
-            this.colorJugIni.Location = new System.Drawing.Point(796, 357);
+            this.colorJugIni.Location = new System.Drawing.Point(724, 321);
             this.colorJugIni.Name = "colorJugIni";
             this.colorJugIni.Size = new System.Drawing.Size(0, 13);
             this.colorJugIni.TabIndex = 15;
@@ -645,7 +645,7 @@
             this.bComprarSuelo.Enabled = false;
             this.bComprarSuelo.Location = new System.Drawing.Point(708, 603);
             this.bComprarSuelo.Name = "bComprarSuelo";
-            this.bComprarSuelo.Size = new System.Drawing.Size(85, 23);
+            this.bComprarSuelo.Size = new System.Drawing.Size(83, 23);
             this.bComprarSuelo.TabIndex = 30;
             this.bComprarSuelo.Text = "Comprar suelo";
             this.bComprarSuelo.UseVisualStyleBackColor = true;
@@ -757,7 +757,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 665);
+            this.ClientSize = new System.Drawing.Size(816, 665);
             this.Controls.Add(this.bCargar);
             this.Controls.Add(this.bSalvar);
             this.Controls.Add(this.bNormas);

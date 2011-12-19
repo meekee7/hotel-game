@@ -49,7 +49,7 @@ namespace Juego_Hotel
             this.eliminado = true;
             foreach (Hotel hotel in this.hoteles)
                 hotel.Devolver_a_banca();
-            this.hoteles = null;
+            this.hoteles.Clear();
             this.n_hoteles = 0;
         }
 

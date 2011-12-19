@@ -86,7 +86,7 @@ namespace Juego_Hotel
                     }
                     this.juego.jug_inicial++; // Para no comenzar en 0
                 }
-                this.jug_ini.Text = "Jugador inicial: " + this.juego.jug_inicial.ToString();
+                this.jug_ini.Text = "Jugador inicial:" + Environment.NewLine + Environment.NewLine + this.juego.jug_inicial.ToString();
                 this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
                 this.juego.jug_actual = this.juego.jug_inicial;
                 this.juego.Cambiar_jugador_actual();
@@ -126,6 +126,7 @@ namespace Juego_Hotel
                 this.bSalvar.Enabled = true;
                 if (this.partida_cargada) // Reajustar posiciones de los jugadores y rellenar datos
                 {
+                    this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado;
                     foreach (Jugador jugador in this.juego.jugadores)
                     {
                         if (jugador.posicion.numero != 0)
@@ -508,6 +509,8 @@ namespace Juego_Hotel
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
             this.bCobrarBanca.Enabled = false;
+            this.jug_ini.Text = "Jugador inicial:";
+            this.colorJugIni.Text = "";
             this.posJ1.Text = "Casilla:";
             this.posJ2.Text = "Casilla:";
             this.posJ3.Text = "Casilla:";
@@ -836,6 +839,11 @@ namespace Juego_Hotel
 
         private void bConstruir_Click(object sender, EventArgs e)
         {
+            if (this.juego.jugador_actual.hoteles.Count == 0)
+            {
+                MessageBox.Show("No posees ningún hotel");
+                return;
+            }
             Construir frm_construir = new Construir(ref this.juego, false, this);
             frm_construir.ShowDialog();
             this.Actualizar_Dinero_Jugadores();
@@ -1175,9 +1183,9 @@ namespace Juego_Hotel
             dialogo.DefaultExt = "xml";
             dialogo.SupportMultiDottedExtensions = true;
             dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            dialogo.Filter = "Partida Hotel|*.xml";
+            dialogo.Filter = "Partida de Hotel|*.xml";
             dialogo.Title = "Salvar partida en curso";
-            dialogo.FileName = "Partida Hotel.xml";
+            dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
             if (dialogo.ShowDialog() != DialogResult.Cancel)
             {
                 if (dialogo.FileName != "")
@@ -1192,6 +1200,9 @@ namespace Juego_Hotel
 
         private void bCargar_Click(object sender, EventArgs e)
         {
+            if (!this.bIniciar.Enabled)
+                if (MessageBox.Show("La partida actual se perderá si continúas, tanto si la carga es exitosa como no, ¿Quieres proceder?", "Cargar partida", MessageBoxButtons.YesNo) == DialogResult.No)
+                    return;
             OpenFileDialog dialogo = new OpenFileDialog();
             dialogo.AddExtension = true;
             dialogo.CheckPathExists = true;
@@ -1199,13 +1210,14 @@ namespace Juego_Hotel
             dialogo.SupportMultiDottedExtensions = true;
             String dir_trabajo = System.IO.Directory.GetCurrentDirectory(); // Después de cargar el fichero, el directorio actual se pierde
             dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            dialogo.Filter = "Partida Hotel|*.xml";
+            dialogo.Filter = "Partida de Hotel|*.xml";
             dialogo.Title = "Cargar una partida";
-            dialogo.FileName = "Partida Hotel.xml";
+            dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
             if (dialogo.ShowDialog() != DialogResult.Cancel)
             {
                 if (dialogo.FileName != "")
                 {
+                    this.Reiniciar_partida();
                     Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(ref this.juego);
                     if (mgr_cargar.Cargar_partida(dialogo.FileName, this) == false)
                     {
