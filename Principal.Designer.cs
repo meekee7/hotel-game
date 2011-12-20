@@ -92,7 +92,8 @@
             this.imgTablero = new System.Windows.Forms.PictureBox();
             this.bSalvar = new System.Windows.Forms.Button();
             this.bCargar = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.img_Banco = new System.Windows.Forms.PictureBox();
+            this.img_ayto = new System.Windows.Forms.PictureBox();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -103,7 +104,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.posAzul)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posRojo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTablero)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Banco)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_ayto)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTablero
@@ -755,23 +757,35 @@
             this.bCargar.UseVisualStyleBackColor = true;
             this.bCargar.Click += new System.EventHandler(this.bCargar_Click);
             // 
-            // pictureBox1
+            // img_Banco
             // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pictureBox1.Image = global::Juego_Hotel.Properties.Resources.green_tick;
-            this.pictureBox1.Location = new System.Drawing.Point(163, 71);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(18, 18);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 37;
-            this.pictureBox1.TabStop = false;
+            this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.img_Banco.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.img_Banco.Location = new System.Drawing.Point(271, 69);
+            this.img_Banco.Name = "img_Banco";
+            this.img_Banco.Size = new System.Drawing.Size(18, 18);
+            this.img_Banco.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.img_Banco.TabIndex = 37;
+            this.img_Banco.TabStop = false;
+            // 
+            // img_ayto
+            // 
+            this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.img_ayto.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.img_ayto.Location = new System.Drawing.Point(230, 389);
+            this.img_ayto.Name = "img_ayto";
+            this.img_ayto.Size = new System.Drawing.Size(18, 18);
+            this.img_ayto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.img_ayto.TabIndex = 38;
+            this.img_ayto.TabStop = false;
             // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(816, 665);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.img_ayto);
+            this.Controls.Add(this.img_Banco);
             this.Controls.Add(this.bCargar);
             this.Controls.Add(this.bSalvar);
             this.Controls.Add(this.bNormas);
@@ -804,6 +818,7 @@
             this.Controls.Add(this.bIniciar);
             this.Controls.Add(this.imgTablero);
             this.Controls.Add(this.labelTablero);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Principal";
@@ -825,7 +840,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.posAzul)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posRojo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgTablero)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Banco)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_ayto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -896,6 +912,7 @@
         public System.Windows.Forms.Button bIniciar;
         private System.Windows.Forms.Button bSalvar;
         private System.Windows.Forms.Button bCargar;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox img_Banco;
+        private System.Windows.Forms.PictureBox img_ayto;
     }
 }

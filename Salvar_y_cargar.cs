@@ -63,8 +63,8 @@ namespace Juego_Hotel
                     nodo = doc.CreateElement("nombre");
                     nodo.AppendChild(doc.CreateTextNode(hotel.nombre_txt));
                     nodoEstadoHotel.AppendChild(nodo);
-                    nodo = doc.CreateElement("num_amplis_construidas");
-                    nodo.AppendChild(doc.CreateTextNode(hotel.n_ampliaciones_construidas.ToString()));
+                    nodo = doc.CreateElement("num_fases_construidas");
+                    nodo.AppendChild(doc.CreateTextNode(hotel.n_fases_construidas.ToString()));
                     nodoEstadoHotel.AppendChild(nodo);
                     nodo = doc.CreateElement("entrada_comprada_ultimo_turno");
                     if (hotel.entrada_comprada_ultimo_turno)
@@ -192,7 +192,12 @@ namespace Juego_Hotel
                     String nombre_hotel = elemHotel.GetElementsByTagName("nombre")[0].FirstChild.Value;
                     Hotel hotel = this.juego.hoteles.First(delegate(Hotel h) { return h.nombre_txt == nombre_hotel; });
                     // Ya hemos emparejado el Hotel con su nombre
-                    hotel.n_ampliaciones_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_amplis_construidas")[0].FirstChild.Value);
+                    hotel.n_fases_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_fases_construidas")[0].FirstChild.Value);
+                    if (hotel.n_fases_construidas > hotel.n_fases_max)
+                    {
+                        this.error = "El hotel " + hotel.nombre_txt + " tiene más fases construidas que el número máximo de fases";
+                        return false;
+                    }   
                     hotel.entrada_comprada_ultimo_turno = Convert.ToBoolean(elemHotel.GetElementsByTagName("entrada_comprada_ultimo_turno")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
                     hotel.n_entradas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_entradas")[0].FirstChild.Value);
                     hotel.suelo_comprado = Convert.ToBoolean(elemHotel.GetElementsByTagName("suelo_comprado")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));

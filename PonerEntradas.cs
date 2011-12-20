@@ -55,7 +55,7 @@ namespace Juego_Hotel
         private void listaHoteles_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.hotel_seleccionado = this.juego.hoteles.First(Hotel => Hotel.nombre_txt == this.listaHoteles.SelectedItem.ToString());
-            if (this.hotel_seleccionado.n_ampliaciones_construidas == 0)
+            if (this.hotel_seleccionado.n_fases_construidas == 0)
             {
                 MessageBox.Show("El hotel " + this.hotel_seleccionado.nombre_txt + " no tiene fases construídas y por tanto no se le pueden añadir entradas aun");
                 return;

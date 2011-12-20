@@ -165,6 +165,15 @@ namespace Juego_Hotel
                                 break;
                     }
                     this.Actualizar_Dinero_Jugadores();
+                    // Dibujar todas las fases ya hechas
+                    int pos_fase_hotel;
+                    foreach (Hotel hotel in this.juego.hoteles)
+                    {
+                        for (pos_fase_hotel = 0; pos_fase_hotel < hotel.n_fases_construidas; pos_fase_hotel++)
+                        {
+                            this.Dibujar_Fase(hotel, pos_fase_hotel);
+                        }
+                    }
                 }
             }
         }
@@ -539,6 +548,12 @@ namespace Juego_Hotel
                 this.Controls.Remove(entrada);
                 entrada.Dispose();
             }
+            Control[] lista_fases = this.Controls.Find("fase", true);
+            foreach (Control fase in lista_fases)
+            {
+                this.Controls.Remove(fase);
+                fase.Dispose();
+            }
             int num_jugadores = this.juego.n_jugadores;
             this.juego = new Juego();
             this.juego.n_jugadores = num_jugadores;
@@ -598,7 +613,7 @@ namespace Juego_Hotel
                 {
                     if (hotel.dueño != jugador)
                     {
-                        if (hotel.n_ampliaciones_construidas == 0) // Se puede expropiar
+                        if (hotel.n_fases_construidas == 0) // Se puede expropiar
                         {
                             String texto = "¿Quieres expropiar el hotel " + hotel.nombre + " al jugador "
                                 + hotel.dueño.color.ToString() + "?";
@@ -631,7 +646,7 @@ namespace Juego_Hotel
                 }
             }
             frm_comprar_hotel.Close();
-            this.Actualizar_Dinero_Jugador_Actual();
+            //this.Actualizar_Dinero_Jugador_Actual();
         }
 
         void Comprar_hotel (ref Hotel hotel, ref Jugador jugador, Boolean expropiando)
@@ -670,6 +685,7 @@ namespace Juego_Hotel
             }
             frm_pago.Close();
             this.bComprar.Enabled = false;
+            this.bComprarSuelo.Enabled = false;
             this.Actualizar_Dinero_Jugadores();
         }
 
@@ -846,17 +862,28 @@ namespace Juego_Hotel
                 return;
             }
             Construir frm_construir = new Construir(ref this.juego, false, this);
-            frm_construir.ShowDialog();
-            this.Actualizar_Dinero_Jugadores();
-            this.bConstruir.Enabled = false;
+            if (frm_construir.ShowDialog() == DialogResult.OK)
+            {
+                this.Actualizar_Dinero_Jugadores();
+                this.bConstruir.Enabled = false;
+                this.bComprarSuelo.Enabled = false;
+            }
         }
 
         private void bComprarSuelo_Click(object sender, EventArgs e)
         {
+            if (this.juego.jugador_actual.hoteles.Count == 0)
+            {
+                MessageBox.Show("No posees ningún hotel");
+                return;
+            }
             Construir frm_construir = new Construir(ref this.juego, true, this);
-            frm_construir.ShowDialog();
-            this.Actualizar_Dinero_Jugadores();
-            this.bComprarSuelo.Enabled = false;
+            if (frm_construir.ShowDialog() == DialogResult.OK)
+            {
+                this.Actualizar_Dinero_Jugadores();
+                this.bConstruir.Enabled = false;
+                this.bComprarSuelo.Enabled = false;
+            }
         }
 
         private void bSalir_Click(object sender, EventArgs e)
@@ -1236,7 +1263,7 @@ namespace Juego_Hotel
             System.IO.Directory.SetCurrentDirectory(dir_trabajo); // Restaurar el directorio, para poder cargar el Config.xml
         }
 
-        public void Dibujar_fase(ref Hotel hotel, int num_fase)
+        public void Dibujar_Fase(Hotel hotel, int num_fase)
         {
             // Creando nuevo PictureBox para meter la imagen de la entrada
             PictureBox fase = new PictureBox();

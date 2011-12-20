@@ -35,6 +35,7 @@ namespace Juego_Hotel
         private void bCancelar_Click(object sender, EventArgs e)
         {
             this.cancelado = true;
+            this.DialogResult = DialogResult.Cancel;
             this.Hide();
         }
 
@@ -44,6 +45,8 @@ namespace Juego_Hotel
             if (lista.Count == 0)
             {
                 MessageBox.Show("No posees ningún hotel", "No es posible construir");
+                this.cancelado = true;
+                this.DialogResult = DialogResult.Cancel;
                 this.Hide();
             }
             else
@@ -72,34 +75,41 @@ namespace Juego_Hotel
             this.listaHoteles.BringToFront();
             if (!this.hotel_seleccionado.Ampliable())
                 MessageBox.Show ("El hotel " + this.hotel_seleccionado.nombre_txt + " está completamente construido", "No es posible construir");
+            else if (this.comprando_suelo)
+            {
+                if (this.hotel_seleccionado.n_fases_construidas == this.hotel_seleccionado.n_fases_max - 1)
+                    this.bSuelo.Enabled = true;
+                else
+                    MessageBox.Show("El hotel " + this.hotel_seleccionado.nombre_txt + " aun no tiene todas las fases hechas", "No se puede comprar el suelo");
+            }
             else
             {
-                switch (this.hotel_seleccionado.n_ampliaciones_construidas)
+                switch (this.hotel_seleccionado.n_fases_construidas)
                 {
                     case (0): this.bPrincipal.Enabled = true;
-                              break;
-                    case (1): if (this.hotel_seleccionado.n_ampliaciones_construidas < (this.hotel_seleccionado.n_ampliaciones_max - 1))
-                                  this.bAmpli1.Enabled = true;
-                              else
-                                  this.bSuelo.Enabled = true;
-                              break;
-                    case (2): if (this.hotel_seleccionado.n_ampliaciones_construidas < (this.hotel_seleccionado.n_ampliaciones_max - 1))
-                                  this.bAmpli2.Enabled = true;
-                              else
-                                  this.bSuelo.Enabled = true;
-                              break;
-                    case (3): if (this.hotel_seleccionado.n_ampliaciones_construidas < (this.hotel_seleccionado.n_ampliaciones_max - 1))
-                                  this.bAmpli3.Enabled = true;
-                              else
-                                  this.bSuelo.Enabled = true;
-                              break;
-                    case (4): if (this.hotel_seleccionado.n_ampliaciones_construidas < (this.hotel_seleccionado.n_ampliaciones_max - 1))
-                                  this.bAmpli4.Enabled = true;
-                              else
-                                  this.bSuelo.Enabled = true;
-                              break;
+                        break;
+                    case (1): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                            this.bAmpli1.Enabled = true;
+                        else
+                            this.bSuelo.Enabled = true;
+                        break;
+                    case (2): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                            this.bAmpli2.Enabled = true;
+                        else
+                            this.bSuelo.Enabled = true;
+                        break;
+                    case (3): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                            this.bAmpli3.Enabled = true;
+                        else
+                            this.bSuelo.Enabled = true;
+                        break;
+                    case (4): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                            this.bAmpli4.Enabled = true;
+                        else
+                            this.bSuelo.Enabled = true;
+                        break;
                     case (5): this.bSuelo.Enabled = true;
-                              break;
+                        break;
                 }
             }
             this.listaHoteles.Hide();
@@ -133,7 +143,11 @@ namespace Juego_Hotel
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
                             this.total_a_pagar = 0;
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        {
                             this.total_a_pagar = -1;
+                            this.cancelado = true;
+                            this.DialogResult = DialogResult.Cancel;
+                        }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
                         {
@@ -191,7 +205,11 @@ namespace Juego_Hotel
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
                             this.total_a_pagar = 0;
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        {
                             this.total_a_pagar = -1;
+                            this.cancelado = true;
+                            this.DialogResult = DialogResult.Cancel;
+                        }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
                         {
@@ -249,7 +267,11 @@ namespace Juego_Hotel
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
                             this.total_a_pagar = 0;
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        {
                             this.total_a_pagar = -1;
+                            this.cancelado = true;
+                            this.DialogResult = DialogResult.Cancel;
+                        }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
                         {
@@ -307,7 +329,11 @@ namespace Juego_Hotel
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
                             this.total_a_pagar = 0;
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        {
                             this.total_a_pagar = -1;
+                            this.cancelado = true;
+                            this.DialogResult = DialogResult.Cancel;
+                        }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
                         {
@@ -365,7 +391,11 @@ namespace Juego_Hotel
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
                             this.total_a_pagar = 0;
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        {
                             this.total_a_pagar = -1;
+                            this.cancelado = true;
+                            this.DialogResult = DialogResult.Cancel;
+                        }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
                         {
@@ -423,7 +453,11 @@ namespace Juego_Hotel
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
                             this.total_a_pagar = 0;
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        {
                             this.total_a_pagar = -1;
+                            this.cancelado = true;
+                            this.DialogResult = DialogResult.Cancel;
+                        }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
                         {
@@ -465,7 +499,8 @@ namespace Juego_Hotel
         {
             if (!this.cancelado) // Pintar la fase en el tablero
             {
-                this.interfaz.Dibujar_fase(ref this.hotel_seleccionado, this.hotel_seleccionado.n_ampliaciones_construidas - 1);
+                this.interfaz.Dibujar_Fase(this.hotel_seleccionado, this.hotel_seleccionado.n_fases_construidas - 1);
+                this.DialogResult = DialogResult.OK;
             }
         }
     }
