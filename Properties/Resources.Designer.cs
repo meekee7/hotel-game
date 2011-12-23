@@ -174,7 +174,7 @@ namespace Juego_Hotel.Properties {
         
         internal static System.Drawing.Bitmap green_tick {
             get {
-                object obj = ResourceManager.GetObject("green-tick", resourceCulture);
+                object obj = ResourceManager.GetObject("green_tick", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -217,6 +217,13 @@ namespace Juego_Hotel.Properties {
         internal static System.Drawing.Bitmap Safari_tarjeta {
             get {
                 object obj = ResourceManager.GetObject("Safari_tarjeta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_Royal {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_Royal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
