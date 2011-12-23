@@ -554,6 +554,8 @@ namespace Juego_Hotel
                 this.Controls.Remove(fase);
                 fase.Dispose();
             }
+            // Redibujar tablero para quitar los suelos
+            this.imgTablero.Image = global::Juego_Hotel.Properties.Resources.Tablero;
             int num_jugadores = this.juego.n_jugadores;
             this.juego = new Juego();
             this.juego.n_jugadores = num_jugadores;
@@ -1265,19 +1267,44 @@ namespace Juego_Hotel
 
         public void Dibujar_Fase(Hotel hotel, int num_fase)
         {
-            // Creando nuevo PictureBox para meter la imagen de la entrada
-            PictureBox fase = new PictureBox();
-            ((ISupportInitialize)(fase)).BeginInit();
-            Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
-            fase.Image = RotarImagen(this.img_tick, pos.grados);
-            fase.Location = new Point(pos.X, pos.Y);
-            fase.Size = new Size(18, 18);
-            fase.SizeMode = PictureBoxSizeMode.StretchImage;
-            fase.TabStop = false;
-            fase.Name = "fase";
-            this.Controls.Add(fase);
-            ((ISupportInitialize)(fase)).EndInit();
-            fase.BringToFront();
+            if (num_fase == hotel.n_fases_max - 1)
+                this.Dibujar_Suelo(hotel);
+            else
+            {
+                // Creando nuevo PictureBox para meter la imagen de la entrada
+                PictureBox fase = new PictureBox();
+                ((ISupportInitialize)(fase)).BeginInit();
+                Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
+                fase.Image = RotarImagen(this.img_tick, pos.grados);
+                fase.Location = new Point(pos.X, pos.Y);
+                fase.Size = new Size(18, 18);
+                fase.SizeMode = PictureBoxSizeMode.StretchImage;
+                fase.TabStop = false;
+                fase.Name = "fase";
+                this.Controls.Add(fase);
+                ((ISupportInitialize)(fase)).EndInit();
+                fase.BringToFront();
+            }
+        }
+
+        public void Dibujar_Suelo(Hotel hotel)
+        {
+            // Se repinta el tablero con la nueva imagen encima
+            Image tablero = this.imgTablero.Image;
+            Graphics g = Graphics.FromImage(tablero);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            Image suelo;
+            Tipos.Posicion pos;
+            switch (hotel.nombre)
+            {
+                case Tipos.Tnombre_hotel.Royal: suelo = global::Juego_Hotel.Properties.Resources.Suelo_Royal;
+                                                pos = hotel.posiciones_fases.ToList()[hotel.n_fases_max - 1];
+                                                g.DrawImage(suelo, pos.X, pos.Y);
+                                                break;
+            }                            
+
+            // Sustitur imagen actual
+            this.imgTablero.Image = tablero;
         }
     }
 }

@@ -198,7 +198,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 529, 299); // 3ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 553, 267); // Suelo
+                    pos.Establecer(0, 641, 323); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Safari:

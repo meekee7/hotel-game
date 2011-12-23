@@ -273,10 +273,11 @@
     </Content>
     <Content Include="Icono.ico" />
     <None Include="Images\Icono.ico" />
-    <None Include="Images\green-tick.jpg" />
+    <None Include="Images\green_tick.jpg" />
     <Content Include="Images\Letoile_tarjeta.png" />
     <Content Include="Images\Royal_tarjeta.png" />
     <Content Include="Images\Safari_tarjeta.png" />
+    <None Include="Images\Suelo_Royal.tif" />
     <Content Include="Images\Waikiki_tarjeta.png" />
   </ItemGroup>
   <ItemGroup>

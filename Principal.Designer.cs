@@ -760,7 +760,7 @@
             // img_Banco
             // 
             this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.img_Banco.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.img_Banco.Image = ((System.Drawing.Image)(resources.GetObject("img_Banco.Image")));
             this.img_Banco.Location = new System.Drawing.Point(271, 69);
             this.img_Banco.Name = "img_Banco";
             this.img_Banco.Size = new System.Drawing.Size(18, 18);
@@ -771,7 +771,7 @@
             // img_ayto
             // 
             this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.img_ayto.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.img_ayto.Image = ((System.Drawing.Image)(resources.GetObject("img_ayto.Image")));
             this.img_ayto.Location = new System.Drawing.Point(230, 389);
             this.img_ayto.Name = "img_ayto";
             this.img_ayto.Size = new System.Drawing.Size(18, 18);
