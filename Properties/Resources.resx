@@ -184,11 +184,32 @@
   <data name="Billete_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_100.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="green_tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\green_tick.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Suelo_Royal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Suelo_Royal.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Suelo_Boomerang" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_Boomerang.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Suelo_Fujiyama" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_Fujiyama.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Suelo_Letoile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_Letoile.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Suelo_President" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_President.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Suelo_Safari" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_Safari.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Suelo_TajMahal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_TajMahal.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Suelo_Waikiki" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Suelo_Waikiki.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

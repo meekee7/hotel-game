@@ -221,9 +221,58 @@ namespace Juego_Hotel.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Suelo_Boomerang {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_Boomerang", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_Fujiyama {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_Fujiyama", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_Letoile {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_Letoile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_President {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_President", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Suelo_Royal {
             get {
                 object obj = ResourceManager.GetObject("Suelo_Royal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_Safari {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_Safari", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_TajMahal {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_TajMahal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Suelo_Waikiki {
+            get {
+                object obj = ResourceManager.GetObject("Suelo_Waikiki", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

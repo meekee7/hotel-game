@@ -52,7 +52,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 75, 68); // Edif ppal
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 163, 71); // Suelo
+                    pos.Establecer(0, 44, 27); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Fujiyama :
@@ -78,7 +78,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 210, 215); // 2ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 131, 178); // Suelo
+                    pos.Establecer(0, 136, 213); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.President :
@@ -108,7 +108,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 523, 73); // 3ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 508, 126); // Suelo
+                    pos.Establecer(0, 600, 28); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Taj_Mahal :
@@ -134,7 +134,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 398, 442); // 2ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 364, 378); // Suelo
+                    pos.Establecer(0, 493, 565); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Waikiki :
@@ -168,7 +168,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 620, 399); // 4ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 534, 406); // Suelo
+                    pos.Establecer(0, 645, 603); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Royal:

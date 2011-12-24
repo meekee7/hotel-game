@@ -278,6 +278,13 @@
     <Content Include="Images\Royal_tarjeta.png" />
     <Content Include="Images\Safari_tarjeta.png" />
     <None Include="Images\Suelo_Royal.tif" />
+    <None Include="Images\Suelo_Boomerang.tif" />
+    <None Include="Images\Suelo_Fujiyama.tif" />
+    <None Include="Images\Suelo_Letoile.tif" />
+    <None Include="Images\Suelo_President.tif" />
+    <None Include="Images\Suelo_Safari.tif" />
+    <None Include="Images\Suelo_TajMahal.tif" />
+    <None Include="Images\Suelo_Waikiki.tif" />
     <Content Include="Images\Waikiki_tarjeta.png" />
   </ItemGroup>
   <ItemGroup>

@@ -907,6 +907,8 @@ namespace Juego_Hotel
                 this.bTurno.PerformClick();
             else if (keyData == Keys.E)
                 this.bDado.PerformClick();
+            else if (keyData == Keys.C)
+                this.bCargar.PerformClick();
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -1297,12 +1299,30 @@ namespace Juego_Hotel
             Tipos.Posicion pos;
             switch (hotel.nombre)
             {
-                case Tipos.Tnombre_hotel.Royal: suelo = global::Juego_Hotel.Properties.Resources.Suelo_Royal;
-                                                pos = hotel.posiciones_fases.ToList()[hotel.n_fases_max - 1];
-                                                g.DrawImage(suelo, pos.X, pos.Y);
-                                                break;
-            }                            
-
+                case Tipos.Tnombre_hotel.Boomerang: suelo = global::Juego_Hotel.Properties.Resources.Suelo_Boomerang;
+                                                    break;
+                case Tipos.Tnombre_hotel.Fujiyama:  suelo = global::Juego_Hotel.Properties.Resources.Suelo_Fujiyama;
+                                                    break;
+                case Tipos.Tnombre_hotel.Letoile:   suelo = global::Juego_Hotel.Properties.Resources.Suelo_Letoile;
+                                                    break;
+                case Tipos.Tnombre_hotel.President: suelo = global::Juego_Hotel.Properties.Resources.Suelo_President;
+                                                    break;
+                case Tipos.Tnombre_hotel.Royal:     suelo = global::Juego_Hotel.Properties.Resources.Suelo_Royal;
+                                                    break;
+                case Tipos.Tnombre_hotel.Safari:    suelo = global::Juego_Hotel.Properties.Resources.Suelo_Safari;
+                                                    break;
+                case Tipos.Tnombre_hotel.Taj_Mahal: suelo = global::Juego_Hotel.Properties.Resources.Suelo_TajMahal;
+                                                    break;
+                case Tipos.Tnombre_hotel.Waikiki:   suelo = global::Juego_Hotel.Properties.Resources.Suelo_Waikiki;
+                                                    break;
+                default:                            suelo = null;
+                                                    break;
+            }
+            pos = hotel.posiciones_fases.ToList()[hotel.n_fases_max - 1];
+            if (suelo != null) // Por si acaso alguna cosa rara
+                g.DrawImage(suelo, pos.X, pos.Y);
+            else
+                return;
             // Sustitur imagen actual
             this.imgTablero.Image = tablero;
         }
