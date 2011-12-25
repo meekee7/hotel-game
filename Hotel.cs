@@ -224,7 +224,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 43, 372); // 2ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 114, 374); // Suelo
+                    pos.Establecer(0, 90, 563); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 case Tipos.Tnombre_hotel.Letoile:
@@ -258,7 +258,7 @@ namespace Juego_Hotel
                     pos.Establecer(0, 288, 254); // 4ª ampliación
                     this.posiciones_fases.AddLast(pos);
                     pos = new Tipos.Posicion();
-                    pos.Establecer(0, 328, 270); // Suelo
+                    pos.Establecer(0, 300, 315); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
                 default: break;
