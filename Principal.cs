@@ -22,6 +22,10 @@ namespace Juego_Hotel
         public int game_id;
         public String online_config;
         public Boolean partida_cargada, dado_tirado;
+        int dif_tam_ancho = 0;
+        int dif_tam_alto = 0;
+        int ancho_ini;
+        int alto_ini;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
@@ -36,6 +40,8 @@ namespace Juego_Hotel
             this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
             this.img_tick = (Image)global::Juego_Hotel.Properties.Resources.green_tick.Clone();
+            this.alto_ini = this.Height;
+            this.ancho_ini = this.Width;
             if (frm_online != null)
             {
                 this.online = true;
@@ -1325,6 +1331,13 @@ namespace Juego_Hotel
                 return;
             // Sustitur imagen actual
             this.imgTablero.Image = tablero;
+        }
+
+        private void Principal_Resize(object sender, EventArgs e)
+        {
+            Control control = (Control)sender;
+            this.dif_tam_alto = control.Height - this.alto_ini;
+            this.dif_tam_ancho = control.Width - this.ancho_ini;
         }
     }
 }

@@ -119,6 +119,7 @@
             // 
             // bIniciar
             // 
+            this.bIniciar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bIniciar.Location = new System.Drawing.Point(708, 31);
             this.bIniciar.Name = "bIniciar";
             this.bIniciar.Size = new System.Drawing.Size(83, 23);
@@ -165,6 +166,7 @@
             // 
             // grupoNJugadores
             // 
+            this.grupoNJugadores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grupoNJugadores.Controls.Add(this.dos_jugadores);
             this.grupoNJugadores.Controls.Add(this.tres_jugadores);
             this.grupoNJugadores.Controls.Add(this.cuatro_jugadores);
@@ -177,6 +179,7 @@
             // 
             // bColores
             // 
+            this.bColores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bColores.Location = new System.Drawing.Point(708, 167);
             this.bColores.Name = "bColores";
             this.bColores.Size = new System.Drawing.Size(83, 23);
@@ -187,6 +190,7 @@
             // 
             // bDado
             // 
+            this.bDado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bDado.Enabled = false;
             this.bDado.Location = new System.Drawing.Point(708, 212);
             this.bDado.Name = "bDado";
@@ -198,6 +202,7 @@
             // 
             // resDado
             // 
+            this.resDado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.resDado.AutoSize = true;
             this.resDado.Location = new System.Drawing.Point(708, 275);
             this.resDado.Name = "resDado";
@@ -207,6 +212,7 @@
             // 
             // jug_ini
             // 
+            this.jug_ini.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.jug_ini.AutoEllipsis = true;
             this.jug_ini.AutoSize = true;
             this.jug_ini.Location = new System.Drawing.Point(708, 295);
@@ -217,6 +223,7 @@
             // 
             // bTurno
             // 
+            this.bTurno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bTurno.Enabled = false;
             this.bTurno.Location = new System.Drawing.Point(708, 241);
             this.bTurno.Name = "bTurno";
@@ -228,6 +235,7 @@
             // 
             // bReiniciar
             // 
+            this.bReiniciar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bReiniciar.Location = new System.Drawing.Point(708, 446);
             this.bReiniciar.Name = "bReiniciar";
             this.bReiniciar.Size = new System.Drawing.Size(83, 23);
@@ -238,6 +246,7 @@
             // 
             // colorJugIni
             // 
+            this.colorJugIni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.colorJugIni.AutoSize = true;
             this.colorJugIni.Location = new System.Drawing.Point(724, 321);
             this.colorJugIni.Name = "colorJugIni";
@@ -246,6 +255,7 @@
             // 
             // controlJ1
             // 
+            this.controlJ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.controlJ1.Controls.Add(this.bRetirarseJ1);
             this.controlJ1.Controls.Add(this.colorJ1);
             this.controlJ1.Controls.Add(this.bPedirNochesJ1);
@@ -330,6 +340,7 @@
             // 
             // turnoJ1
             // 
+            this.turnoJ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ1.AutoSize = true;
             this.turnoJ1.Location = new System.Drawing.Point(97, 515);
             this.turnoJ1.Name = "turnoJ1";
@@ -348,6 +359,7 @@
             // 
             // controlJ2
             // 
+            this.controlJ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.controlJ2.Controls.Add(this.bRetirarseJ2);
             this.controlJ2.Controls.Add(this.colorJ2);
             this.controlJ2.Controls.Add(this.bPedirNochesJ2);
@@ -422,6 +434,7 @@
             // 
             // turnoJ2
             // 
+            this.turnoJ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ2.AutoSize = true;
             this.turnoJ2.Location = new System.Drawing.Point(267, 515);
             this.turnoJ2.Name = "turnoJ2";
@@ -440,6 +453,7 @@
             // 
             // controlJ3
             // 
+            this.controlJ3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.controlJ3.Controls.Add(this.bRetirarseJ3);
             this.controlJ3.Controls.Add(this.colorJ3);
             this.controlJ3.Controls.Add(this.bPedirNochesJ3);
@@ -514,6 +528,7 @@
             // 
             // turnoJ3
             // 
+            this.turnoJ3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ3.AutoSize = true;
             this.turnoJ3.Location = new System.Drawing.Point(437, 515);
             this.turnoJ3.Name = "turnoJ3";
@@ -532,6 +547,7 @@
             // 
             // controlJ4
             // 
+            this.controlJ4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.controlJ4.Controls.Add(this.bRetirarseJ4);
             this.controlJ4.Controls.Add(this.colorJ4);
             this.controlJ4.Controls.Add(this.bPedirNochesJ4);
@@ -606,6 +622,7 @@
             // 
             // turnoJ4
             // 
+            this.turnoJ4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ4.AutoSize = true;
             this.turnoJ4.Location = new System.Drawing.Point(608, 515);
             this.turnoJ4.Name = "turnoJ4";
@@ -614,6 +631,7 @@
             // 
             // bComprar
             // 
+            this.bComprar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bComprar.Enabled = false;
             this.bComprar.Location = new System.Drawing.Point(708, 545);
             this.bComprar.Name = "bComprar";
@@ -625,6 +643,7 @@
             // 
             // bConstruir
             // 
+            this.bConstruir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bConstruir.Enabled = false;
             this.bConstruir.Location = new System.Drawing.Point(708, 574);
             this.bConstruir.Name = "bConstruir";
@@ -636,6 +655,7 @@
             // 
             // bVerHoteles
             // 
+            this.bVerHoteles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bVerHoteles.Location = new System.Drawing.Point(708, 516);
             this.bVerHoteles.Name = "bVerHoteles";
             this.bVerHoteles.Size = new System.Drawing.Size(83, 23);
@@ -646,6 +666,7 @@
             // 
             // bComprarSuelo
             // 
+            this.bComprarSuelo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bComprarSuelo.Enabled = false;
             this.bComprarSuelo.Location = new System.Drawing.Point(708, 603);
             this.bComprarSuelo.Name = "bComprarSuelo";
@@ -657,6 +678,7 @@
             // 
             // bSalir
             // 
+            this.bSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bSalir.Location = new System.Drawing.Point(708, 632);
             this.bSalir.Name = "bSalir";
             this.bSalir.Size = new System.Drawing.Size(83, 23);
@@ -667,6 +689,7 @@
             // 
             // bCobrarBanca
             // 
+            this.bCobrarBanca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bCobrarBanca.Enabled = false;
             this.bCobrarBanca.Location = new System.Drawing.Point(708, 487);
             this.bCobrarBanca.Name = "bCobrarBanca";
@@ -678,6 +701,7 @@
             // 
             // bNormas
             // 
+            this.bNormas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bNormas.Location = new System.Drawing.Point(708, 417);
             this.bNormas.Name = "bNormas";
             this.bNormas.Size = new System.Drawing.Size(83, 23);
@@ -728,6 +752,9 @@
             // 
             // imgTablero
             // 
+            this.imgTablero.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.imgTablero.Image = global::Juego_Hotel.Properties.Resources.Tablero;
             this.imgTablero.Location = new System.Drawing.Point(13, 30);
             this.imgTablero.Name = "imgTablero";
@@ -738,6 +765,7 @@
             // 
             // bSalvar
             // 
+            this.bSalvar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSalvar.Enabled = false;
             this.bSalvar.Location = new System.Drawing.Point(708, 359);
             this.bSalvar.Name = "bSalvar";
@@ -749,6 +777,7 @@
             // 
             // bCargar
             // 
+            this.bCargar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bCargar.Location = new System.Drawing.Point(708, 388);
             this.bCargar.Name = "bCargar";
             this.bCargar.Size = new System.Drawing.Size(83, 23);
@@ -783,7 +812,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 665);
+            this.ClientSize = new System.Drawing.Size(803, 665);
             this.Controls.Add(this.img_ayto);
             this.Controls.Add(this.img_Banco);
             this.Controls.Add(this.bCargar);
@@ -818,13 +847,13 @@
             this.Controls.Add(this.bIniciar);
             this.Controls.Add(this.imgTablero);
             this.Controls.Add(this.labelTablero);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "Principal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hotel - Construye tu propio imperio hotelero";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Principal_FormClosing);
             this.Shown += new System.EventHandler(this.Principal_Shown);
+            this.Resize += new System.EventHandler(this.Principal_Resize);
             this.grupoNJugadores.ResumeLayout(false);
             this.grupoNJugadores.PerformLayout();
             this.controlJ1.ResumeLayout(false);
