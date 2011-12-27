@@ -27,6 +27,7 @@ namespace Juego_Hotel
             this.pos_coche = new Tipos.Posicion();
             this.pos_entrada_der = new Tipos.Posicion();
             this.pos_entrada_izq = new Tipos.Posicion();
+            this.pos_coche.Establecer(0, 0, 0);
             this.pos_entrada_der.Establecer(0, 0, 0);
             this.pos_entrada_izq.Establecer(0, 0, 0);
 

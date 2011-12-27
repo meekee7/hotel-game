@@ -22,10 +22,9 @@ namespace Juego_Hotel
         public int game_id;
         public String online_config;
         public Boolean partida_cargada, dado_tirado;
-        int dif_tam_ancho = 0;
-        int dif_tam_alto = 0;
         int ancho_ini;
         int alto_ini;
+        Point pos_rojo_orig, pos_azul_orig, pos_verde_orig, pos_amarillo_orig, pos_banco_orig, pos_ayto_orig;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
@@ -35,13 +34,19 @@ namespace Juego_Hotel
             this.partida_cargada = false;
             this.dado_tirado = false;
             this.posRojo_orig = (Image)posRojo.Image.Clone();
+            this.pos_rojo_orig = this.posRojo.Location;
             this.posAzul_orig = (Image)posAzul.Image.Clone();
+            this.pos_azul_orig = this.posAzul.Location;
             this.posVerde_orig = (Image)posVerde.Image.Clone();
+            this.pos_verde_orig = this.posVerde.Location;
             this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
+            this.pos_amarillo_orig = this.posAmarillo.Location;
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
-            this.img_tick = (Image)global::Juego_Hotel.Properties.Resources.green_tick.Clone();
-            this.alto_ini = this.Height;
-            this.ancho_ini = this.Width;
+            this.img_tick = (Image) global::Juego_Hotel.Properties.Resources.green_tick.Clone();
+            this.alto_ini = this.imgTablero.Height;
+            this.ancho_ini = this.imgTablero.Width;
+            this.pos_banco_orig = this.img_Banco.Location;
+            this.pos_ayto_orig = this.img_ayto.Location;
             if (frm_online != null)
             {
                 this.online = true;
@@ -138,24 +143,21 @@ namespace Juego_Hotel
                     {
                         if (jugador.posicion.numero != 0)
                         {
+                            Point pos = Calcular_Posicion(this.juego.casillas[jugador.posicion.numero].pos_coche.X, this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
                             switch (jugador.color)
                             {
-                                case Tipos.Tcolor.rojo: this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
-                                    this.posRojo.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
-                                                                      this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
-                                    break;
-                                case Tipos.Tcolor.azul: this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
-                                    this.posAzul.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
-                                                                      this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
-                                    break;
-                                case Tipos.Tcolor.verde: this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
-                                    this.posVerde.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
-                                                                       this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
-                                    break;
+                                case Tipos.Tcolor.rojo:     this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
+                                                            this.posRojo.Location = pos;
+                                                            break;
+                                case Tipos.Tcolor.azul:     this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
+                                                            this.posAzul.Location = pos;
+                                                            break;
+                                case Tipos.Tcolor.verde:    this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
+                                                            this.posVerde.Location = pos;
+                                                            break;
                                 case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
-                                    this.posAmarillo.Location = new Point(this.juego.casillas[jugador.posicion.numero].pos_coche.X,
-                                                                          this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
-                                    break;
+                                                            this.posAmarillo.Location = pos;
+                                                            break;
                             }
                         }
                     }
@@ -396,28 +398,21 @@ namespace Juego_Hotel
             }
             jugador.posicion.ocupada = true; // Ocupamos la casilla
             // Pintamos el coche en su lugar
+            Point posicion = Calcular_Posicion(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X, this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
             switch (this.juego.jugador_actual.color)
             {
-                case Tipos.Tcolor.rojo: this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
-                    this.posRojo.Location =
-                        new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                  this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                    break;
-                case Tipos.Tcolor.azul: this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
-                    this.posAzul.Location =
-                                            new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                                      this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                    break;
-                case Tipos.Tcolor.verde: this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
-                    this.posVerde.Location =
-                                           new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                                     this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                    break;
+                case Tipos.Tcolor.rojo:     this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
+                                            this.posRojo.Location = posicion;
+                                            break;
+                case Tipos.Tcolor.azul:     this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
+                                            this.posAzul.Location = posicion;
+                                            break;
+                case Tipos.Tcolor.verde:    this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
+                                            this.posVerde.Location = posicion;
+                                            break;
                 case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
-                    this.posAmarillo.Location =
-                                        new Point(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X,
-                                                  this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-                    break;
+                                            this.posAmarillo.Location = posicion;
+                                            break;
             }
             // Poner casilla actual a cada uno
             switch (this.juego.jug_actual)
@@ -1062,6 +1057,8 @@ namespace Juego_Hotel
             entrada.SizeMode = PictureBoxSizeMode.StretchImage;
             entrada.TabStop = false;
             entrada.Name = "entrada";
+            entrada.Tag = entrada.Location.X.ToString() + "@" + entrada.Location.Y.ToString();
+            entrada.Location = Calcular_Posicion(entrada.Location.X, entrada.Location.Y);
             this.Controls.Add(entrada);
             ((ISupportInitialize)(entrada)).EndInit();
             entrada.BringToFront();
@@ -1289,6 +1286,8 @@ namespace Juego_Hotel
                 fase.SizeMode = PictureBoxSizeMode.StretchImage;
                 fase.TabStop = false;
                 fase.Name = "fase";
+                fase.Tag = fase.Location.X.ToString() + "@" + fase.Location.Y.ToString();
+                fase.Location = Calcular_Posicion(fase.Location.X, fase.Location.Y);
                 this.Controls.Add(fase);
                 ((ISupportInitialize)(fase)).EndInit();
                 fase.BringToFront();
@@ -1333,11 +1332,68 @@ namespace Juego_Hotel
             this.imgTablero.Image = tablero;
         }
 
+        Point Calcular_Posicion(int x, int y)
+        {
+            float desplazamiento_x = ((float)this.imgTablero.Width / (float)this.ancho_ini);
+            float desplazamiento_y = ((float)this.imgTablero.Height / (float)this.alto_ini);
+            return new Point(Convert.ToInt32((float)x * desplazamiento_x), Convert.ToInt32((float)y * desplazamiento_y));
+        }
+
         private void Principal_Resize(object sender, EventArgs e)
         {
-            Control control = (Control)sender;
-            this.dif_tam_alto = control.Height - this.alto_ini;
-            this.dif_tam_ancho = control.Width - this.ancho_ini;
+            // Obtener nuevo tamaño y recolocar todos los picturebox
+            if (this.juego.jugadores == null) // Partida no empezada
+            {
+                this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
+                this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
+                this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
+                this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
+            }
+            else
+            {
+                Jugador jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "rojo");
+                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                    this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
+                else
+                    this.posRojo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "azul");
+                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                    this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
+                else
+                    this.posAzul.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "verde");
+                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                    this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
+                else
+                    this.posVerde.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "amarillo");
+                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                    this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
+                else
+                    this.posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+            }
+            // Banco y Ayuntamiento
+            this.img_Banco.Location = Calcular_Posicion(this.pos_banco_orig.X, this.pos_banco_orig.Y);
+            this.img_ayto.Location = Calcular_Posicion(this.pos_ayto_orig.X, this.pos_ayto_orig.Y);
+            // Fases construidas
+            Control[] lista_fases = this.Controls.Find("fase", true);
+            String pos;
+            int x, y;
+            foreach (Control fase in lista_fases)
+            {
+                pos = fase.Tag.ToString(); // Uso la propiedad Tag para almacenar la posición original
+                x = Convert.ToInt32(pos.Split('@')[0]);
+                y = Convert.ToInt32(pos.Split('@')[1]);
+                fase.Location = Calcular_Posicion(x, y);
+            }
+            Control[] lista_entradas = this.Controls.Find("entrada", true);
+            foreach (Control entrada in lista_entradas)
+            {
+                pos = entrada.Tag.ToString(); // Uso la propiedad Tag para almacenar la posición original
+                x = Convert.ToInt32(pos.Split('@')[0]);
+                y = Convert.ToInt32(pos.Split('@')[1]);
+                entrada.Location = Calcular_Posicion(x, y);
+            }
         }
     }
 }
