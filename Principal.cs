@@ -25,28 +25,46 @@ namespace Juego_Hotel
         int ancho_ini;
         int alto_ini;
         Point pos_rojo_orig, pos_azul_orig, pos_verde_orig, pos_amarillo_orig, pos_banco_orig, pos_ayto_orig;
+        int ancho_coche = 20;
+        int alto_coche = 20;
+        int ancho_entrada = 15;
+        int alto_entrada = 15;
+        int ancho_fase = 18;
+        int alto_fase = 18;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
         {
             InitializeComponent();
             this.juego = new Juego();
-            this.partida_cargada = false;
-            this.dado_tirado = false;
-            this.posRojo_orig = (Image)posRojo.Image.Clone();
-            this.pos_rojo_orig = this.posRojo.Location;
-            this.posAzul_orig = (Image)posAzul.Image.Clone();
-            this.pos_azul_orig = this.posAzul.Location;
-            this.posVerde_orig = (Image)posVerde.Image.Clone();
-            this.pos_verde_orig = this.posVerde.Location;
-            this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
-            this.pos_amarillo_orig = this.posAmarillo.Location;
-            this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
-            this.img_tick = (Image) global::Juego_Hotel.Properties.Resources.green_tick.Clone();
             this.alto_ini = this.imgTablero.Height;
             this.ancho_ini = this.imgTablero.Width;
+            this.partida_cargada = false;
+            this.dado_tirado = false;
+            this.posRojo.Parent = this.imgTablero;
+            this.pos_rojo_orig = this.posRojo.Location;
+            this.posRojo.Location = Calcular_Posicion(this.posRojo.Location.X, this.posRojo.Location.Y);
+            this.posRojo_orig = (Image)posRojo.Image.Clone();
+            this.posAzul.Parent = this.imgTablero;
+            this.pos_azul_orig = this.posAzul.Location;
+            this.posAzul.Location = Calcular_Posicion(this.posAzul.Location.X, this.posAzul.Location.Y);
+            this.posAzul_orig = (Image)posAzul.Image.Clone();
+            this.posVerde.Parent = this.imgTablero;
+            this.pos_verde_orig = this.posVerde.Location;
+            this.posVerde.Location = Calcular_Posicion(this.posVerde.Location.X, this.posVerde.Location.Y);
+            this.posVerde_orig = (Image)posVerde.Image.Clone();
+            this.posAmarillo.Parent = this.imgTablero;
+            this.pos_amarillo_orig = this.posAmarillo.Location;
+            this.posAmarillo.Location = Calcular_Posicion(this.posAmarillo.Location.X, this.posAmarillo.Location.Y);
+            this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
+            this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
+            this.img_tick = (Image) global::Juego_Hotel.Properties.Resources.green_tick.Clone();
+            this.img_Banco.Parent = this.imgTablero;
             this.pos_banco_orig = this.img_Banco.Location;
+            this.img_Banco.Location = Calcular_Posicion(this.img_Banco.Location.X, this.img_Banco.Location.Y);
+            this.img_ayto.Parent = this.imgTablero;
             this.pos_ayto_orig = this.img_ayto.Location;
+            this.img_ayto.Location = Calcular_Posicion(this.img_ayto.Location.X, this.img_ayto.Location.Y);
             if (frm_online != null)
             {
                 this.online = true;
@@ -108,6 +126,12 @@ namespace Juego_Hotel
                 this.bComprarSuelo.Enabled = false;
                 this.grupoNJugadores.Enabled = false;
                 this.bCobrarBanca.Enabled = false;
+                this.posRojo.Visible = true;
+                this.posAzul.Visible = true;
+                this.posVerde.Visible = true;
+                this.posAmarillo.Visible = true;
+                this.img_Banco.Visible = true;
+                this.img_ayto.Visible = true;
                 this.posJ1.Text = "Casilla: 0";
                 this.posJ2.Text = "Casilla: 0";
                 this.posJ3.Text = "Casilla: 0";
@@ -148,15 +172,19 @@ namespace Juego_Hotel
                             {
                                 case Tipos.Tcolor.rojo:     this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
                                                             this.posRojo.Location = pos;
+                                                            this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
                                 case Tipos.Tcolor.azul:     this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
                                                             this.posAzul.Location = pos;
+                                                            this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
                                 case Tipos.Tcolor.verde:    this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
                                                             this.posVerde.Location = pos;
+                                                            this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
                                 case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
                                                             this.posAmarillo.Location = pos;
+                                                            this.posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
                             }
                         }
@@ -539,10 +567,10 @@ namespace Juego_Hotel
             this.posAzul.Image = posAzul_orig;
             this.posAmarillo.Image = posAmarillo_orig;
             this.posVerde.Image = posVerde_orig;
-            this.posRojo.Location = new Point(40, 322);
-            this.posAzul.Location = new Point(60, 322);
-            this.posVerde.Location = new Point(80, 322);
-            this.posAmarillo.Location = new Point(100, 322);
+            this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
+            this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
+            this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
+            this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
             Control[] lista_entradas = this.Controls.Find("entrada", true);
             foreach (Control entrada in lista_entradas)
             {
@@ -1053,13 +1081,14 @@ namespace Juego_Hotel
                 entrada.Image = RotarImagen(this.img_entrada, casilla.pos_entrada_izq.grados);
                 entrada.Location = new Point(casilla.pos_entrada_izq.X, casilla.pos_entrada_izq.Y);
             }
-            entrada.Size = new Size(15, 15);
+            entrada.Size = Calcular_Tamaño(ancho_entrada, alto_entrada);
             entrada.SizeMode = PictureBoxSizeMode.StretchImage;
             entrada.TabStop = false;
             entrada.Name = "entrada";
             entrada.Tag = entrada.Location.X.ToString() + "@" + entrada.Location.Y.ToString();
             entrada.Location = Calcular_Posicion(entrada.Location.X, entrada.Location.Y);
             this.Controls.Add(entrada);
+            entrada.Parent = this.imgTablero;
             ((ISupportInitialize)(entrada)).EndInit();
             entrada.BringToFront();
         }
@@ -1282,13 +1311,14 @@ namespace Juego_Hotel
                 Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
                 fase.Image = RotarImagen(this.img_tick, pos.grados);
                 fase.Location = new Point(pos.X, pos.Y);
-                fase.Size = new Size(18, 18);
+                fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
                 fase.SizeMode = PictureBoxSizeMode.StretchImage;
                 fase.TabStop = false;
                 fase.Name = "fase";
                 fase.Tag = fase.Location.X.ToString() + "@" + fase.Location.Y.ToString();
                 fase.Location = Calcular_Posicion(fase.Location.X, fase.Location.Y);
                 this.Controls.Add(fase);
+                fase.Parent = this.imgTablero;
                 ((ISupportInitialize)(fase)).EndInit();
                 fase.BringToFront();
             }
@@ -1334,9 +1364,22 @@ namespace Juego_Hotel
 
         Point Calcular_Posicion(int x, int y)
         {
+            x -= this.imgTablero.Left;
+            y -= this.imgTablero.Top;
             float desplazamiento_x = ((float)this.imgTablero.Width / (float)this.ancho_ini);
             float desplazamiento_y = ((float)this.imgTablero.Height / (float)this.alto_ini);
-            return new Point(Convert.ToInt32((float)x * desplazamiento_x), Convert.ToInt32((float)y * desplazamiento_y));
+            int x2 = Convert.ToInt32((float)x * desplazamiento_x);
+            int y2 = Convert.ToInt32((float)y * desplazamiento_y);
+            return new Point(x2, y2);
+        }
+
+        Size Calcular_Tamaño(int ancho, int alto)
+        {
+            float factor_x = ((float)this.imgTablero.Width / (float)this.ancho_ini);
+            float factor_y = ((float)this.imgTablero.Height / (float)this.alto_ini);
+            int ancho2 = Convert.ToInt32((float)ancho * factor_x);
+            int alto2 = Convert.ToInt32((float)alto * factor_y);
+            return new Size(ancho2, alto2);
         }
 
         private void Principal_Resize(object sender, EventArgs e)
@@ -1345,9 +1388,13 @@ namespace Juego_Hotel
             if (this.juego.jugadores == null) // Partida no empezada
             {
                 this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
+                this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
+                this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
+                this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
+                this.posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
             }
             else
             {
@@ -1356,25 +1403,31 @@ namespace Juego_Hotel
                     this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
                 else
                     this.posRojo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "azul");
                 if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
                     this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
                 else
                     this.posAzul.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "verde");
                 if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
                     this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
                 else
                     this.posVerde.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "amarillo");
                 if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
                     this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
                 else
                     this.posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
+                this.posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
             }
             // Banco y Ayuntamiento
             this.img_Banco.Location = Calcular_Posicion(this.pos_banco_orig.X, this.pos_banco_orig.Y);
+            this.img_Banco.Size = Calcular_Tamaño(ancho_fase, alto_fase);
             this.img_ayto.Location = Calcular_Posicion(this.pos_ayto_orig.X, this.pos_ayto_orig.Y);
+            this.img_ayto.Size = Calcular_Tamaño(ancho_fase, alto_fase);
             // Fases construidas
             Control[] lista_fases = this.Controls.Find("fase", true);
             String pos;
@@ -1385,6 +1438,7 @@ namespace Juego_Hotel
                 x = Convert.ToInt32(pos.Split('@')[0]);
                 y = Convert.ToInt32(pos.Split('@')[1]);
                 fase.Location = Calcular_Posicion(x, y);
+                fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
             }
             Control[] lista_entradas = this.Controls.Find("entrada", true);
             foreach (Control entrada in lista_entradas)
@@ -1393,6 +1447,7 @@ namespace Juego_Hotel
                 x = Convert.ToInt32(pos.Split('@')[0]);
                 y = Convert.ToInt32(pos.Split('@')[1]);
                 entrada.Location = Calcular_Posicion(x, y);
+                entrada.Size = Calcular_Tamaño(ancho_entrada, alto_entrada);
             }
         }
     }
