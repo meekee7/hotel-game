@@ -312,8 +312,6 @@ namespace Juego_Hotel
             {
                 //Calculates the projected coordinates of the 3D points in a cube face
                 PointF[] point2D = new PointF[4];
-                float zoom = (float)Screen.PrimaryScreen.Bounds.Width / 1.5f;
-                Point tmpOrigin = new Point(0, 0);
 
                 //Convert 3D Points to 2D
                 Math3D.Vector3D vec;

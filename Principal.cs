@@ -625,7 +625,7 @@ namespace Juego_Hotel
         {
             Tipos.Tnombre_hotel nombre_izq;
             Tipos.Tnombre_hotel nombre_der;
-            ComprarHotel frm_comprar_hotel = new ComprarHotel(ref juego);
+            ComprarHotel frm_comprar_hotel = new ComprarHotel();
             Jugador jugador = this.juego.jugadores[this.juego.jug_actual - 1];
             nombre_izq = this.juego.jugadores[this.juego.jug_actual - 1].posicion.hotel_izq;
             nombre_der = this.juego.jugadores[this.juego.jug_actual - 1].posicion.hotel_der;

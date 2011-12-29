@@ -14,12 +14,10 @@ namespace Juego_Hotel
         public Boolean cancelado = false;
         public Boolean comprado_izq = false;
         public Boolean comprado_der = false;
-        Juego juego;
 
-        public ComprarHotel(ref Juego juego)
+        public ComprarHotel()
         {
             InitializeComponent();
-            this.juego = juego;
         }
 
         public void HabilitarControles(Tipos.Tnombre_hotel nombre_izq, Tipos.Tnombre_hotel nombre_der)
