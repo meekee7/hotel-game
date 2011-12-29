@@ -19,6 +19,7 @@ namespace Juego_Hotel
         public Tipos.Tcolor color;
         public Boolean pago_ultimo_turno;
         public Boolean eliminado;
+        public String nombre_online;
 
         public Jugador (int n_5000, int n_1000, int n_500, int n_100, int n_50, Tipos.Tcolor color, int n_jugador)
         {

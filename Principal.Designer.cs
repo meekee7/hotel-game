@@ -94,6 +94,10 @@
             this.bCargar = new System.Windows.Forms.Button();
             this.img_Banco = new System.Windows.Forms.PictureBox();
             this.img_ayto = new System.Windows.Forms.PictureBox();
+            this.nombreJ1 = new System.Windows.Forms.Label();
+            this.nombreJ2 = new System.Windows.Forms.Label();
+            this.nombreJ3 = new System.Windows.Forms.Label();
+            this.nombreJ4 = new System.Windows.Forms.Label();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -256,6 +260,7 @@
             // controlJ1
             // 
             this.controlJ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.controlJ1.Controls.Add(this.nombreJ1);
             this.controlJ1.Controls.Add(this.bRetirarseJ1);
             this.controlJ1.Controls.Add(this.colorJ1);
             this.controlJ1.Controls.Add(this.bPedirNochesJ1);
@@ -264,16 +269,16 @@
             this.controlJ1.Controls.Add(this.bVerHotelesJ1);
             this.controlJ1.Controls.Add(this.posJ1);
             this.controlJ1.Enabled = false;
-            this.controlJ1.Location = new System.Drawing.Point(13, 531);
+            this.controlJ1.Location = new System.Drawing.Point(13, 516);
             this.controlJ1.Name = "controlJ1";
-            this.controlJ1.Size = new System.Drawing.Size(150, 128);
+            this.controlJ1.Size = new System.Drawing.Size(150, 179);
             this.controlJ1.TabIndex = 19;
             this.controlJ1.TabStop = false;
             this.controlJ1.Text = "Jugador 1";
             // 
             // bRetirarseJ1
             // 
-            this.bRetirarseJ1.Location = new System.Drawing.Point(9, 100);
+            this.bRetirarseJ1.Location = new System.Drawing.Point(10, 148);
             this.bRetirarseJ1.Name = "bRetirarseJ1";
             this.bRetirarseJ1.Size = new System.Drawing.Size(70, 23);
             this.bRetirarseJ1.TabIndex = 34;
@@ -292,7 +297,7 @@
             // 
             // bPedirNochesJ1
             // 
-            this.bPedirNochesJ1.Location = new System.Drawing.Point(85, 40);
+            this.bPedirNochesJ1.Location = new System.Drawing.Point(85, 89);
             this.bPedirNochesJ1.Name = "bPedirNochesJ1";
             this.bPedirNochesJ1.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ1.TabIndex = 27;
@@ -302,7 +307,7 @@
             // 
             // bEntradasJ1
             // 
-            this.bEntradasJ1.Location = new System.Drawing.Point(85, 89);
+            this.bEntradasJ1.Location = new System.Drawing.Point(85, 138);
             this.bEntradasJ1.Name = "bEntradasJ1";
             this.bEntradasJ1.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ1.TabIndex = 4;
@@ -321,7 +326,7 @@
             // 
             // bVerHotelesJ1
             // 
-            this.bVerHotelesJ1.Location = new System.Drawing.Point(10, 71);
+            this.bVerHotelesJ1.Location = new System.Drawing.Point(10, 120);
             this.bVerHotelesJ1.Name = "bVerHotelesJ1";
             this.bVerHotelesJ1.Size = new System.Drawing.Size(70, 23);
             this.bVerHotelesJ1.TabIndex = 1;
@@ -342,14 +347,14 @@
             // 
             this.turnoJ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ1.AutoSize = true;
-            this.turnoJ1.Location = new System.Drawing.Point(97, 515);
+            this.turnoJ1.Location = new System.Drawing.Point(103, 536);
             this.turnoJ1.Name = "turnoJ1";
             this.turnoJ1.Size = new System.Drawing.Size(0, 13);
             this.turnoJ1.TabIndex = 3;
             // 
             // bVerHotelesJ2
             // 
-            this.bVerHotelesJ2.Location = new System.Drawing.Point(10, 71);
+            this.bVerHotelesJ2.Location = new System.Drawing.Point(10, 120);
             this.bVerHotelesJ2.Name = "bVerHotelesJ2";
             this.bVerHotelesJ2.Size = new System.Drawing.Size(70, 23);
             this.bVerHotelesJ2.TabIndex = 1;
@@ -360,6 +365,7 @@
             // controlJ2
             // 
             this.controlJ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.controlJ2.Controls.Add(this.nombreJ2);
             this.controlJ2.Controls.Add(this.bRetirarseJ2);
             this.controlJ2.Controls.Add(this.colorJ2);
             this.controlJ2.Controls.Add(this.bPedirNochesJ2);
@@ -368,16 +374,16 @@
             this.controlJ2.Controls.Add(this.bVerHotelesJ2);
             this.controlJ2.Controls.Add(this.posJ2);
             this.controlJ2.Enabled = false;
-            this.controlJ2.Location = new System.Drawing.Point(183, 531);
+            this.controlJ2.Location = new System.Drawing.Point(183, 516);
             this.controlJ2.Name = "controlJ2";
-            this.controlJ2.Size = new System.Drawing.Size(150, 128);
+            this.controlJ2.Size = new System.Drawing.Size(150, 179);
             this.controlJ2.TabIndex = 20;
             this.controlJ2.TabStop = false;
             this.controlJ2.Text = "Jugador 2";
             // 
             // bRetirarseJ2
             // 
-            this.bRetirarseJ2.Location = new System.Drawing.Point(10, 99);
+            this.bRetirarseJ2.Location = new System.Drawing.Point(10, 148);
             this.bRetirarseJ2.Name = "bRetirarseJ2";
             this.bRetirarseJ2.Size = new System.Drawing.Size(70, 23);
             this.bRetirarseJ2.TabIndex = 35;
@@ -396,7 +402,7 @@
             // 
             // bPedirNochesJ2
             // 
-            this.bPedirNochesJ2.Location = new System.Drawing.Point(85, 40);
+            this.bPedirNochesJ2.Location = new System.Drawing.Point(85, 89);
             this.bPedirNochesJ2.Name = "bPedirNochesJ2";
             this.bPedirNochesJ2.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ2.TabIndex = 28;
@@ -406,7 +412,7 @@
             // 
             // bEntradasJ2
             // 
-            this.bEntradasJ2.Location = new System.Drawing.Point(85, 89);
+            this.bEntradasJ2.Location = new System.Drawing.Point(85, 138);
             this.bEntradasJ2.Name = "bEntradasJ2";
             this.bEntradasJ2.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ2.TabIndex = 5;
@@ -436,14 +442,14 @@
             // 
             this.turnoJ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ2.AutoSize = true;
-            this.turnoJ2.Location = new System.Drawing.Point(267, 515);
+            this.turnoJ2.Location = new System.Drawing.Point(273, 536);
             this.turnoJ2.Name = "turnoJ2";
             this.turnoJ2.Size = new System.Drawing.Size(0, 13);
             this.turnoJ2.TabIndex = 4;
             // 
             // bVerHotelesJ3
             // 
-            this.bVerHotelesJ3.Location = new System.Drawing.Point(10, 71);
+            this.bVerHotelesJ3.Location = new System.Drawing.Point(10, 120);
             this.bVerHotelesJ3.Name = "bVerHotelesJ3";
             this.bVerHotelesJ3.Size = new System.Drawing.Size(70, 23);
             this.bVerHotelesJ3.TabIndex = 1;
@@ -454,6 +460,7 @@
             // controlJ3
             // 
             this.controlJ3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.controlJ3.Controls.Add(this.nombreJ3);
             this.controlJ3.Controls.Add(this.bRetirarseJ3);
             this.controlJ3.Controls.Add(this.colorJ3);
             this.controlJ3.Controls.Add(this.bPedirNochesJ3);
@@ -462,16 +469,16 @@
             this.controlJ3.Controls.Add(this.bVerHotelesJ3);
             this.controlJ3.Controls.Add(this.posJ3);
             this.controlJ3.Enabled = false;
-            this.controlJ3.Location = new System.Drawing.Point(354, 531);
+            this.controlJ3.Location = new System.Drawing.Point(354, 516);
             this.controlJ3.Name = "controlJ3";
-            this.controlJ3.Size = new System.Drawing.Size(150, 128);
+            this.controlJ3.Size = new System.Drawing.Size(150, 179);
             this.controlJ3.TabIndex = 21;
             this.controlJ3.TabStop = false;
             this.controlJ3.Text = "Jugador 3";
             // 
             // bRetirarseJ3
             // 
-            this.bRetirarseJ3.Location = new System.Drawing.Point(10, 99);
+            this.bRetirarseJ3.Location = new System.Drawing.Point(10, 148);
             this.bRetirarseJ3.Name = "bRetirarseJ3";
             this.bRetirarseJ3.Size = new System.Drawing.Size(70, 23);
             this.bRetirarseJ3.TabIndex = 36;
@@ -490,7 +497,7 @@
             // 
             // bPedirNochesJ3
             // 
-            this.bPedirNochesJ3.Location = new System.Drawing.Point(85, 40);
+            this.bPedirNochesJ3.Location = new System.Drawing.Point(85, 89);
             this.bPedirNochesJ3.Name = "bPedirNochesJ3";
             this.bPedirNochesJ3.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ3.TabIndex = 32;
@@ -500,7 +507,7 @@
             // 
             // bEntradasJ3
             // 
-            this.bEntradasJ3.Location = new System.Drawing.Point(85, 89);
+            this.bEntradasJ3.Location = new System.Drawing.Point(85, 138);
             this.bEntradasJ3.Name = "bEntradasJ3";
             this.bEntradasJ3.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ3.TabIndex = 25;
@@ -530,14 +537,14 @@
             // 
             this.turnoJ3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ3.AutoSize = true;
-            this.turnoJ3.Location = new System.Drawing.Point(437, 515);
+            this.turnoJ3.Location = new System.Drawing.Point(443, 536);
             this.turnoJ3.Name = "turnoJ3";
             this.turnoJ3.Size = new System.Drawing.Size(0, 13);
             this.turnoJ3.TabIndex = 5;
             // 
             // bVerHotelesJ4
             // 
-            this.bVerHotelesJ4.Location = new System.Drawing.Point(10, 71);
+            this.bVerHotelesJ4.Location = new System.Drawing.Point(10, 120);
             this.bVerHotelesJ4.Name = "bVerHotelesJ4";
             this.bVerHotelesJ4.Size = new System.Drawing.Size(70, 23);
             this.bVerHotelesJ4.TabIndex = 1;
@@ -548,6 +555,7 @@
             // controlJ4
             // 
             this.controlJ4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.controlJ4.Controls.Add(this.nombreJ4);
             this.controlJ4.Controls.Add(this.bRetirarseJ4);
             this.controlJ4.Controls.Add(this.colorJ4);
             this.controlJ4.Controls.Add(this.bPedirNochesJ4);
@@ -556,16 +564,16 @@
             this.controlJ4.Controls.Add(this.bVerHotelesJ4);
             this.controlJ4.Controls.Add(this.posJ4);
             this.controlJ4.Enabled = false;
-            this.controlJ4.Location = new System.Drawing.Point(524, 531);
+            this.controlJ4.Location = new System.Drawing.Point(524, 516);
             this.controlJ4.Name = "controlJ4";
-            this.controlJ4.Size = new System.Drawing.Size(150, 128);
+            this.controlJ4.Size = new System.Drawing.Size(150, 179);
             this.controlJ4.TabIndex = 22;
             this.controlJ4.TabStop = false;
             this.controlJ4.Text = "Jugador 4";
             // 
             // bRetirarseJ4
             // 
-            this.bRetirarseJ4.Location = new System.Drawing.Point(10, 99);
+            this.bRetirarseJ4.Location = new System.Drawing.Point(10, 148);
             this.bRetirarseJ4.Name = "bRetirarseJ4";
             this.bRetirarseJ4.Size = new System.Drawing.Size(70, 23);
             this.bRetirarseJ4.TabIndex = 37;
@@ -584,7 +592,7 @@
             // 
             // bPedirNochesJ4
             // 
-            this.bPedirNochesJ4.Location = new System.Drawing.Point(85, 40);
+            this.bPedirNochesJ4.Location = new System.Drawing.Point(85, 89);
             this.bPedirNochesJ4.Name = "bPedirNochesJ4";
             this.bPedirNochesJ4.Size = new System.Drawing.Size(57, 47);
             this.bPedirNochesJ4.TabIndex = 32;
@@ -594,7 +602,7 @@
             // 
             // bEntradasJ4
             // 
-            this.bEntradasJ4.Location = new System.Drawing.Point(85, 89);
+            this.bEntradasJ4.Location = new System.Drawing.Point(85, 138);
             this.bEntradasJ4.Name = "bEntradasJ4";
             this.bEntradasJ4.Size = new System.Drawing.Size(57, 34);
             this.bEntradasJ4.TabIndex = 25;
@@ -624,7 +632,7 @@
             // 
             this.turnoJ4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.turnoJ4.AutoSize = true;
-            this.turnoJ4.Location = new System.Drawing.Point(608, 515);
+            this.turnoJ4.Location = new System.Drawing.Point(614, 536);
             this.turnoJ4.Name = "turnoJ4";
             this.turnoJ4.Size = new System.Drawing.Size(0, 13);
             this.turnoJ4.TabIndex = 6;
@@ -679,7 +687,7 @@
             // bSalir
             // 
             this.bSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSalir.Location = new System.Drawing.Point(708, 632);
+            this.bSalir.Location = new System.Drawing.Point(708, 668);
             this.bSalir.Name = "bSalir";
             this.bSalir.Size = new System.Drawing.Size(83, 23);
             this.bSalir.TabIndex = 31;
@@ -808,11 +816,47 @@
             this.img_ayto.TabIndex = 38;
             this.img_ayto.TabStop = false;
             // 
+            // nombreJ1
+            // 
+            this.nombreJ1.AutoSize = true;
+            this.nombreJ1.Location = new System.Drawing.Point(6, 69);
+            this.nombreJ1.Name = "nombreJ1";
+            this.nombreJ1.Size = new System.Drawing.Size(47, 13);
+            this.nombreJ1.TabIndex = 35;
+            this.nombreJ1.Text = "Nombre:";
+            // 
+            // nombreJ2
+            // 
+            this.nombreJ2.AutoSize = true;
+            this.nombreJ2.Location = new System.Drawing.Point(6, 70);
+            this.nombreJ2.Name = "nombreJ2";
+            this.nombreJ2.Size = new System.Drawing.Size(47, 13);
+            this.nombreJ2.TabIndex = 36;
+            this.nombreJ2.Text = "Nombre:";
+            // 
+            // nombreJ3
+            // 
+            this.nombreJ3.AutoSize = true;
+            this.nombreJ3.Location = new System.Drawing.Point(6, 70);
+            this.nombreJ3.Name = "nombreJ3";
+            this.nombreJ3.Size = new System.Drawing.Size(47, 13);
+            this.nombreJ3.TabIndex = 37;
+            this.nombreJ3.Text = "Nombre:";
+            // 
+            // nombreJ4
+            // 
+            this.nombreJ4.AutoSize = true;
+            this.nombreJ4.Location = new System.Drawing.Point(6, 70);
+            this.nombreJ4.Name = "nombreJ4";
+            this.nombreJ4.Size = new System.Drawing.Size(47, 13);
+            this.nombreJ4.TabIndex = 38;
+            this.nombreJ4.Text = "Nombre:";
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 665);
+            this.ClientSize = new System.Drawing.Size(803, 701);
             this.Controls.Add(this.img_ayto);
             this.Controls.Add(this.img_Banco);
             this.Controls.Add(this.bCargar);
@@ -943,5 +987,9 @@
         private System.Windows.Forms.Button bCargar;
         private System.Windows.Forms.PictureBox img_Banco;
         private System.Windows.Forms.PictureBox img_ayto;
+        public System.Windows.Forms.Label nombreJ1;
+        public System.Windows.Forms.Label nombreJ2;
+        public System.Windows.Forms.Label nombreJ3;
+        public System.Windows.Forms.Label nombreJ4;
     }
 }

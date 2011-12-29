@@ -825,7 +825,7 @@ namespace Juego_Hotel
                 this.bUnirse.Enabled = true;
         }
 
-        delegate void Tirar_Dado_Callback();
+        delegate void Tirar_Dado_Callback(String jugador);
 
         private void Dado_tirado()
         {
@@ -836,7 +836,7 @@ namespace Juego_Hotel
             String jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             partida.interfaz.juego.ultimo_res_dado = res;
-            partida.interfaz.BeginInvoke(new Tirar_Dado_Callback(partida.interfaz.Tirar_dado));
+            partida.interfaz.BeginInvoke(new Tirar_Dado_Callback(partida.interfaz.Tirar_dado), new object[] { jugador });
         }
 
         private void Iniciar_partida()
@@ -847,7 +847,9 @@ namespace Juego_Hotel
             int long_config = this.recibir_int(this.socket, ref bytes_recibidos);
             String config = this.recibir_string(this.socket, long_config, ref bytes_recibidos);
             int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
-            this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial);
+            int long_lista_nombres = this.recibir_int(this.socket, ref bytes_recibidos);
+            String lista_nombres = this.recibir_string(this.socket, long_lista_nombres, ref bytes_recibidos);
+            this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_nombres);
         }
     }
 }

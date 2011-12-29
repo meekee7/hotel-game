@@ -46,10 +46,10 @@ namespace Juego_Hotel
                 foreach (String nombre in lista)
                     this.listaJugadores.Items.Add(nombre);
                 this.listaJugadores.EndUpdate();
-                //if ((this.listaJugadores.Items.Count >= 2) && (this.creador == this.frm_online.txtLogin.Text))
+                if ((this.listaJugadores.Items.Count >= 2) && (this.creador == this.frm_online.txtLogin.Text))
                     this.bIniciar.Enabled = true;
-                /*else
-                    this.bIniciar.Enabled = false;*/
+                else
+                    this.bIniciar.Enabled = false;
             }
         }
 
@@ -125,22 +125,42 @@ namespace Juego_Hotel
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 
-        public void Iniciar(int num_jugadores, String config, int jug_inicial)
+        public void Iniciar(int num_jugadores, String config, int jug_inicial, String lista_nombres)
         {
             Thread thread_partida = new Thread(manejar_partida);
-            String parametros = num_jugadores.ToString() + jug_inicial.ToString() + config;
+            LinkedList<String> parametros = new LinkedList<String>();
+            parametros.AddLast(num_jugadores.ToString());
+            parametros.AddLast(jug_inicial.ToString());
+            parametros.AddLast(config);
+            parametros.AddLast(lista_nombres);
+
             thread_partida.Start(parametros);
         }
 
         void manejar_partida(object parametros)
         {
-            String s_parametros = (String) parametros;
+            LinkedList<String> l_parametros = (LinkedList<String>)parametros;
             this.interfaz = new Principal(true, this.frm_online);
-            int num_jugadores = Convert.ToInt32((s_parametros[0].ToString()));
-            int jug_inicial = Convert.ToInt32((s_parametros[1].ToString()));
-            this.interfaz.juego.n_jugadores = (int)num_jugadores;
+            int num_jugadores = Convert.ToInt32((l_parametros.First.Value));
+            l_parametros.RemoveFirst();
+            int jug_inicial = Convert.ToInt32((l_parametros.First.Value));
+            l_parametros.RemoveFirst();
+            this.interfaz.juego.n_jugadores = num_jugadores;
             this.interfaz.game_id = this.id;
-            this.interfaz.online_config = s_parametros.Remove(0, 2);
+            this.interfaz.online_config = l_parametros.First.Value;
+            l_parametros.RemoveFirst();
+            String[] lista_nombres = l_parametros.First.Value.Split('~');
+            this.interfaz.juego.lista_jugadores_online = lista_nombres;
+            switch (num_jugadores)
+            {
+                case 4: this.interfaz.nombreJ4.Text = "Nombre: " + lista_nombres[3];
+                        goto case 3;
+                case 3: this.interfaz.nombreJ3.Text = "Nombre: " + lista_nombres[2];
+                        goto case 2;
+                case 2: this.interfaz.nombreJ2.Text = "Nombre: " + lista_nombres[1];
+                        this.interfaz.nombreJ1.Text = "Nombre: " + lista_nombres[0];
+                        break;
+            }
             this.interfaz.juego.jug_inicial = jug_inicial + 1;
             this.interfaz.ShowDialog();
         }

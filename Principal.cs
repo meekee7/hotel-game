@@ -353,9 +353,18 @@ namespace Juego_Hotel
                 }
                 catch
                 {
-                    MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
-                    this.juego.jugador_actual = null;
-                    throw;
+                    if (!this.online)
+                    {
+                        MessageBox.Show("No se puede cargar el fichero de configuración Config.xml", "Error");
+                        this.juego.jugadores = null;
+                        throw;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se puede cargar la configuración desde el servidor", "Error");
+                        this.juego.jugadores = null;
+                        throw;
+                    }
                 }
                 XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
                 XmlNode nodo_cantidades;
@@ -372,13 +381,22 @@ namespace Juego_Hotel
                 switch (this.juego.n_jugadores)
                 {
                     case 4: this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
+                            if (this.online)
+                                this.juego.jugadores[3].nombre_online = this.juego.lista_jugadores_online[3];
                             this.controlJ4.Enabled = true;
                             goto case 3;
                     case 3: this.juego.jugadores[2] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j3, 2);
+                            if (this.online)
+                                this.juego.jugadores[2].nombre_online = this.juego.lista_jugadores_online[2];
                             this.controlJ3.Enabled = true;
                             goto case 2;
                     case 2: this.juego.jugadores[1] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j2, 1);
                             this.juego.jugadores[0] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j1, 0);
+                            if (this.online)
+                            {
+                                this.juego.jugadores[1].nombre_online = this.juego.lista_jugadores_online[1];
+                                this.juego.jugadores[0].nombre_online = this.juego.lista_jugadores_online[0];
+                            }
                             this.controlJ2.Enabled = true;
                             this.controlJ1.Enabled = true;
                             break;
@@ -399,7 +417,7 @@ namespace Juego_Hotel
             }
         }
 
-        public void Tirar_dado()
+        public void Tirar_dado(String nombre)
         {
             if (!this.online)
                 this.juego.ultimo_res_dado = this.juego.dado.tirar();
@@ -502,9 +520,9 @@ namespace Juego_Hotel
         private void bDado_Click(object sender, EventArgs e)
         {
             if (this.online)
-                this.frm_online.enviar_comando("roll_dice", this.game_id.ToString(), this.frm_online.txtLogin.Text);
+                this.frm_online.enviar_comando("roll_dice", this.game_id.ToString(), this.juego.jugador_actual.nombre_online);
             else
-                this.Tirar_dado();
+                this.Tirar_dado(null);
         }
 
         private void Activar_Poner_Entradas(int num_jugador)
@@ -588,6 +606,7 @@ namespace Juego_Hotel
             int num_jugadores = this.juego.n_jugadores;
             this.juego = new Juego();
             this.juego.n_jugadores = num_jugadores;
+            this.partida_cargada = false;
         }
 
         private void bTurno_Click(object sender, EventArgs e)
@@ -1398,26 +1417,26 @@ namespace Juego_Hotel
             }
             else
             {
-                Jugador jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "rojo");
-                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                Jugador jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "rojo");
+                if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
                 else
                     this.posRojo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-                jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "azul");
-                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "azul");
+                if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
                 else
                     this.posAzul.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-                jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "verde");
-                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "verde");
+                if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
                 else
                     this.posVerde.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-                jugador = this.juego.jugadores.First(Jugador => Jugador.color.ToString() == "amarillo");
-                if (jugador.posicion.tipo == Tipos.Tcasilla.salida)
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "amarillo");
+                if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
                 else
                     this.posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);

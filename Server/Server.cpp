@@ -813,6 +813,14 @@ void handle_command(string command, Player* p)
       game->start();
       list<Player*>::iterator i;
       Player* dest;
+      // Create player list
+      wstring name_list = L""; 
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         name_list += (*i)->name;
+         if (i != --game->plist.end())
+            name_list += '~';
+      }
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = *i;
@@ -823,6 +831,9 @@ void handle_command(string command, Player* p)
          send_int(dest, config_content.size());
          send_string(dest, config_content);
          send_int(dest, game->starting_player);
+         // Send player list
+         send_int(dest, get_utf8_length(name_list));
+         send_wstring(dest, name_list);
       }
    }
 }

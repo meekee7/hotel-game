@@ -10,18 +10,17 @@ namespace Juego_Hotel
     class Actualizador
     {
         public String version_actual;
+        public String ultima_version;
         public Boolean error;
         
         public Actualizador()
         {
-            this.version_actual = "1.3";
+            this.version_actual = "1.3.1";
             this.error = false;
         }
         public Boolean comprobar_actualizacion()
         {
             System.Net.HttpWebRequest peticion = (HttpWebRequest)WebRequest.Create("http://betovserver.no-ip.org/version_hotel.txt");
-
-            String resultado;
 
             try
             {
@@ -29,10 +28,10 @@ namespace Juego_Hotel
                 {
                     System.IO.StreamReader reader = new System.IO.StreamReader(respuesta.GetResponseStream());
 
-                    resultado = reader.ReadToEnd();
+                    ultima_version = reader.ReadToEnd();
                 }
-                resultado = resultado.Replace("\n", "").Replace("\r", "");
-                if (resultado == this.version_actual)
+                ultima_version = ultima_version.Replace("\n", "").Replace("\r", "");
+                if (ultima_version == this.version_actual)
                     return false;
                 else
                     return true;

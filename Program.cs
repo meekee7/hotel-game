@@ -21,7 +21,7 @@ namespace Juego_Hotel
                 Actualizador actualizador = new Actualizador();
                 if (actualizador.comprobar_actualizacion())
                 {
-                    if (MessageBox.Show("Existe una versión más nueva que la que estás usando (" + actualizador.version_actual + "). ¿Quieres acceder a la página del proyecto en SourceForge?\nEl juego se cerrará.",
+                    if (MessageBox.Show("Existe una versión diferente (" + actualizador.ultima_version + ") que la que estás usando (" + actualizador.version_actual + "). ¿Quieres acceder a la página del proyecto en SourceForge?\nEl juego se cerrará.",
                         "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         System.Diagnostics.Process.Start("https://sourceforge.net/projects/hotels-game/files");
