@@ -45,6 +45,7 @@
             // bCancelar
             // 
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancelar.Enabled = false;
             this.bCancelar.Location = new System.Drawing.Point(60, 171);
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.Size = new System.Drawing.Size(75, 23);

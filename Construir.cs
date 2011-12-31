@@ -26,6 +26,7 @@ namespace Juego_Hotel
             this.juego = juego;
             this.cancelado = false;
             this.interfaz = interfaz;
+            this.total_a_pagar = 0;
             if (this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.fase_gratis)
                 this.fase_gratis = true;
             else
@@ -36,6 +37,7 @@ namespace Juego_Hotel
         {
             this.cancelado = true;
             this.DialogResult = DialogResult.Cancel;
+            this.total_a_pagar = 0;
             this.Hide();
         }
 
@@ -146,7 +148,7 @@ namespace Juego_Hotel
                         {
                             this.total_a_pagar = -1;
                             this.cancelado = true;
-                            this.DialogResult = DialogResult.Cancel;
+                            this.DialogResult = DialogResult.Abort;
                         }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
@@ -157,6 +159,7 @@ namespace Juego_Hotel
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
+                                this.DialogResult = DialogResult.Cancel;
                                 this.Close();
                                 return;
                             }
@@ -208,7 +211,7 @@ namespace Juego_Hotel
                         {
                             this.total_a_pagar = -1;
                             this.cancelado = true;
-                            this.DialogResult = DialogResult.Cancel;
+                            this.DialogResult = DialogResult.Abort;
                         }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
@@ -219,6 +222,7 @@ namespace Juego_Hotel
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
+                                this.DialogResult = DialogResult.Cancel;
                                 this.Close();
                                 return;
                             }
@@ -270,7 +274,7 @@ namespace Juego_Hotel
                         {
                             this.total_a_pagar = -1;
                             this.cancelado = true;
-                            this.DialogResult = DialogResult.Cancel;
+                            this.DialogResult = DialogResult.Abort;
                         }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
@@ -281,6 +285,7 @@ namespace Juego_Hotel
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
+                                this.DialogResult = DialogResult.Cancel;
                                 this.Close();
                                 return;
                             }
@@ -332,7 +337,7 @@ namespace Juego_Hotel
                         {
                             this.total_a_pagar = -1;
                             this.cancelado = true;
-                            this.DialogResult = DialogResult.Cancel;
+                            this.DialogResult = DialogResult.Abort;
                         }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
@@ -343,6 +348,7 @@ namespace Juego_Hotel
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
+                                this.DialogResult = DialogResult.Cancel;
                                 this.Close();
                                 return;
                             }
@@ -394,7 +400,7 @@ namespace Juego_Hotel
                         {
                             this.total_a_pagar = -1;
                             this.cancelado = true;
-                            this.DialogResult = DialogResult.Cancel;
+                            this.DialogResult = DialogResult.Abort;
                         }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
@@ -405,6 +411,7 @@ namespace Juego_Hotel
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
+                                this.DialogResult = DialogResult.Cancel;
                                 this.Close();
                                 return;
                             }
@@ -456,7 +463,7 @@ namespace Juego_Hotel
                         {
                             this.total_a_pagar = -1;
                             this.cancelado = true;
-                            this.DialogResult = DialogResult.Cancel;
+                            this.DialogResult = DialogResult.Abort;
                         }
                         dado_cons.Close();
                         if (this.total_a_pagar > 0)
@@ -467,6 +474,7 @@ namespace Juego_Hotel
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
+                                this.DialogResult = DialogResult.Cancel;
                                 this.Close();
                                 return;
                             }

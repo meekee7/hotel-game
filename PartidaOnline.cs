@@ -151,6 +151,7 @@ namespace Juego_Hotel
             l_parametros.RemoveFirst();
             String[] lista_nombres = l_parametros.First.Value.Split('~');
             this.interfaz.juego.lista_jugadores_online = lista_nombres;
+            this.interfaz.nombre_online = this.frm_online.txtLogin.Text;
             switch (num_jugadores)
             {
                 case 4: this.interfaz.nombreJ4.Text = "Nombre: " + lista_nombres[3];

@@ -20,6 +20,7 @@ namespace Juego_Hotel
         public Boolean online;
         Online frm_online;
         public int game_id;
+        public String nombre_online;
         public String online_config;
         public Boolean partida_cargada, dado_tirado;
         int ancho_ini;
@@ -158,8 +159,10 @@ namespace Juego_Hotel
                     this.dineroJ4.Text = "Dinero: " + this.juego.jugadores[3].dinero_total;
                     this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
                 }
-                this.bDado.Enabled = true;
-                this.bSalvar.Enabled = true;
+                if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial-1].nombre_online)))
+                    this.bDado.Enabled = true;
+                if (!this.online)
+                    this.bSalvar.Enabled = true;
                 if (this.partida_cargada) // Reajustar posiciones de los jugadores y rellenar datos
                 {
                     this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado;
@@ -419,11 +422,17 @@ namespace Juego_Hotel
 
         public void Tirar_dado(String nombre)
         {
+            Jugador jugador;
             if (!this.online)
+            {
                 this.juego.ultimo_res_dado = this.juego.dado.tirar();
+                jugador = this.juego.jugador_actual;
+            }
+            else
+            {
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre);
+            }
             this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
-            this.bComprarSuelo.Enabled = true;
-            Jugador jugador = this.juego.jugador_actual;
             jugador.posicion.ocupada = false; // Desocupamos la casilla
             if ((jugador.posicion.numero + this.juego.ultimo_res_dado) <= 31) // Damos la vuelta al tablero
             {
@@ -445,7 +454,7 @@ namespace Juego_Hotel
             jugador.posicion.ocupada = true; // Ocupamos la casilla
             // Pintamos el coche en su lugar
             Point posicion = Calcular_Posicion(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X, this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
-            switch (this.juego.jugador_actual.color)
+            switch (jugador.color)
             {
                 case Tipos.Tcolor.rojo:     this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
                                             this.posRojo.Location = posicion;
@@ -473,48 +482,52 @@ namespace Juego_Hotel
                     break;
             }
             // Activar botones según el tipo de casilla
-            this.bEntradasJ1.Enabled = false;
-            this.bEntradasJ2.Enabled = false;
-            this.bEntradasJ3.Enabled = false;
-            this.bEntradasJ4.Enabled = false;
-            if (this.Puede_poner_entradas(this.juego.jugador_actual))
-                this.Activar_Poner_Entradas(this.juego.jug_actual);
-            this.bPedirNochesJ1.Enabled = true;
-            this.bPedirNochesJ2.Enabled = true;
-            this.bPedirNochesJ3.Enabled = true;
-            this.bPedirNochesJ4.Enabled = true;
-            if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
-                this.bCobrarBanca.Enabled = true;
-            switch (jugador.posicion.tipo)
+            if ((!this.online) || (this.online && (this.nombre_online == jugador.nombre_online)))
             {
-                case Tipos.Tcasilla.comprar: this.bComprar.Enabled = true;
-                    this.bConstruir.Enabled = false;
-                    break;
-                case Tipos.Tcasilla.construir: this.bConstruir.Enabled = true;
-                    this.bComprar.Enabled = false;
-                    break;
-                case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
-                    this.bComprar.Enabled = false;
-                    MessageBox.Show("Has caído en una casilla de tipo Fase Gratis, ¡aprovecha!");
-                    break;
-                case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
-                    this.bComprar.Enabled = false;
+                this.bComprarSuelo.Enabled = true;
+                this.bEntradasJ1.Enabled = false;
+                this.bEntradasJ2.Enabled = false;
+                this.bEntradasJ3.Enabled = false;
+                this.bEntradasJ4.Enabled = false;
+                if (this.Puede_poner_entradas(this.juego.jugador_actual))
                     this.Activar_Poner_Entradas(this.juego.jug_actual);
-                    MessageBox.Show("Has caído en una casilla de tipo Entrada Gratis, ¡aprovecha!");
-                    break;
-                default: this.bConstruir.Enabled = false;
-                    this.bComprar.Enabled = false;
-                    break;
+                this.bPedirNochesJ1.Enabled = true;
+                this.bPedirNochesJ2.Enabled = true;
+                this.bPedirNochesJ3.Enabled = true;
+                this.bPedirNochesJ4.Enabled = true;
+                if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
+                    this.bCobrarBanca.Enabled = true;
+                switch (jugador.posicion.tipo)
+                {
+                    case Tipos.Tcasilla.comprar: this.bComprar.Enabled = true;
+                        this.bConstruir.Enabled = false;
+                        break;
+                    case Tipos.Tcasilla.construir: this.bConstruir.Enabled = true;
+                        this.bComprar.Enabled = false;
+                        break;
+                    case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
+                        this.bComprar.Enabled = false;
+                        MessageBox.Show("Has caído en una casilla de tipo Fase Gratis, ¡aprovecha!");
+                        break;
+                    case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
+                        this.bComprar.Enabled = false;
+                        this.Activar_Poner_Entradas(this.juego.jug_actual);
+                        MessageBox.Show("Has caído en una casilla de tipo Entrada Gratis, ¡aprovecha!");
+                        break;
+                    default: this.bConstruir.Enabled = false;
+                        this.bComprar.Enabled = false;
+                        break;
+                }
+                if (this.juego.ultimo_res_dado == 6)
+                {
+                    MessageBox.Show("Has sacado un 6. Puedes volver a tirar");
+                    this.bDado.Enabled = true;
+                }
+                else
+                    this.bDado.Enabled = false;
+                this.bTurno.Enabled = true;
+                this.dado_tirado = true;
             }
-            if (this.juego.ultimo_res_dado == 6)
-            {
-                MessageBox.Show("Has sacado un 6. Puedes volver a tirar");
-                this.bDado.Enabled = true;
-            }
-            else
-                this.bDado.Enabled = false;
-            this.bTurno.Enabled = true;
-            this.dado_tirado = true;
         }
 
         private void bDado_Click(object sender, EventArgs e)
@@ -912,7 +925,8 @@ namespace Juego_Hotel
                 return;
             }
             Construir frm_construir = new Construir(ref this.juego, false, this);
-            if (frm_construir.ShowDialog() == DialogResult.OK)
+            DialogResult dr = frm_construir.ShowDialog();
+            if ((dr == DialogResult.OK) || (dr == DialogResult.Abort))
             {
                 this.Actualizar_Dinero_Jugadores();
                 this.bConstruir.Enabled = false;
