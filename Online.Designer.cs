@@ -132,6 +132,7 @@
             this.listaPartidas.Size = new System.Drawing.Size(181, 134);
             this.listaPartidas.TabIndex = 6;
             this.listaPartidas.SelectedIndexChanged += new System.EventHandler(this.listaPartidas_SelectedIndexChanged);
+            this.listaPartidas.DoubleClick += new System.EventHandler(this.listaPartidas_DoubleClick);
             // 
             // LUsuarios
             // 

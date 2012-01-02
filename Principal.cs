@@ -159,10 +159,33 @@ namespace Juego_Hotel
                     this.dineroJ4.Text = "Dinero: " + this.juego.jugadores[3].dinero_total;
                     this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
                 }
-                if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial-1].nombre_online)))
-                    this.bDado.Enabled = true;
                 if (!this.online)
+                {
                     this.bSalvar.Enabled = true;
+                    this.bDado.Enabled = true;
+                }
+                else
+                {
+                    this.bDado.Enabled = false;
+                    this.controlJ1.Enabled = false;
+                    this.controlJ2.Enabled = false;
+                    this.controlJ3.Enabled = false;
+                    this.controlJ4.Enabled = false;
+                    Jugador yo = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == this.nombre_online);
+                    switch (yo.n_jugador)
+                    {
+                        case 0: this.controlJ1.Enabled = true;
+                            break;
+                        case 1: this.controlJ2.Enabled = true;
+                            break;
+                        case 2: this.controlJ3.Enabled = true;
+                            break;
+                        case 3: this.controlJ4.Enabled = true;
+                            break;
+                    }
+                }
+                if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial - 1].nombre_online)))
+                    this.bDado.Enabled = true;
                 if (this.partida_cargada) // Reajustar posiciones de los jugadores y rellenar datos
                 {
                     this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado;
@@ -312,7 +335,7 @@ namespace Juego_Hotel
             return sig_jugador;
         }
 
-        public void Pasar_turno()
+        public void Pasar_turno(String sig_jugador)
         {
             if (Todos_Eliminados())
                 Finalizar_Partida(this.juego.jugadores[Sig_jugador_Activo()-1]);
@@ -320,10 +343,18 @@ namespace Juego_Hotel
                 Finalizar_Partida(null);
             else
             {
-                this.juego.jug_actual = Sig_jugador_Activo();
+                if (!this.online)
+                    this.juego.jug_actual = Sig_jugador_Activo();
+                else
+                {
+                    this.juego.jug_actual = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == sig_jugador).n_jugador + 1;
+                }
                 this.Establecer_Turno();
                 this.juego.Cambiar_jugador_actual();
-                this.bDado.Enabled = true;
+                if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugador_actual.nombre_online)))
+                    this.bDado.Enabled = true;
+                else
+                    this.bDado.Enabled = false;
                 this.bTurno.Enabled = false;
                 this.bComprar.Enabled = false;
                 this.bConstruir.Enabled = false;
@@ -624,7 +655,10 @@ namespace Juego_Hotel
 
         private void bTurno_Click(object sender, EventArgs e)
         {
-            this.Pasar_turno();
+            if (this.online)
+                this.frm_online.enviar_comando("turn_pass", this.game_id.ToString());
+            else
+                this.Pasar_turno(null);
         }
 
         private void bColores_Click(object sender, EventArgs e)

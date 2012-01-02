@@ -24,6 +24,7 @@ public:
    bool leave(Player* p);
    void start();
    int roll_dice();
+   Player* turn_pass();
 
    Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count);
    ~Game(void);

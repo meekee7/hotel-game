@@ -671,6 +671,8 @@ namespace Juego_Hotel
                     this.Dado_tirado();
                 else if (msg == "game_started")
                     this.Iniciar_partida();
+                else if (msg == "turn_passed")
+                    this.Pasar_Turno();
                 else
                     MessageBox.Show("Comando desconocido");
                 msg = null;
@@ -825,6 +827,11 @@ namespace Juego_Hotel
                 this.bUnirse.Enabled = true;
         }
 
+        private void listaPartidas_DoubleClick(object sender, EventArgs e)
+        {
+            this.bUnirse.PerformClick();
+        }
+
         delegate void Tirar_Dado_Callback(String jugador);
 
         private void Dado_tirado()
@@ -850,6 +857,18 @@ namespace Juego_Hotel
             int long_lista_nombres = this.recibir_int(this.socket, ref bytes_recibidos);
             String lista_nombres = this.recibir_string(this.socket, long_lista_nombres, ref bytes_recibidos);
             this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_nombres);
+        }
+
+        delegate void Pasar_Turno_Callback(String jugador);
+
+        private void Pasar_Turno()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String sig_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.BeginInvoke(new Pasar_Turno_Callback(partida.interfaz.Pasar_turno), new object[] { sig_jugador });
         }
     }
 }

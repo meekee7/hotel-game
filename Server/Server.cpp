@@ -794,12 +794,13 @@ void handle_command(string command, Player* p)
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
+      int dice_res = game->roll_dice();
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
          send_command("rolled_dice", dest);
          send_int(dest, id);
-         send_int(dest, game->roll_dice());
+         send_int(dest, dice_res);
          send_int(dest, get_utf8_length(player_name));
          send_wstring(dest, player_name);
       }
@@ -834,6 +835,24 @@ void handle_command(string command, Player* p)
          // Send player list
          send_int(dest, get_utf8_length(name_list));
          send_wstring(dest, name_list);
+      }
+   }
+   else if (command == "turn_pass")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      list<Player*>::iterator i;
+      Player* dest;
+      Game* game = get_game_from_id(id);
+      Player* next_player = game->turn_pass();
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("turn_passed", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(next_player->name));
+         send_wstring(dest, next_player->name);
       }
    }
 }

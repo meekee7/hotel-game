@@ -70,6 +70,27 @@ int Game::roll_dice()
    //return (this->random.get_random_32bit_number() % 6 + 1);
 }
 
+Player* Game::turn_pass()
+{
+   list<Player*>::iterator i;
+   i = find(this->plist.begin(), this->plist.end(), this->current_player);
+   bool valid = false;
+   while (!valid)
+   {
+      if (i == --this->plist.end())
+         this->current_player = *(this->plist.begin());
+      else
+      {
+         advance(i, 1);
+         this->current_player = *i;
+      }
+      if (this->current_player->active)
+         valid = true;
+   }
+   wcout << L"Turn passed, next player: " << this->current_player->name << endl;
+   return this->current_player;
+}
+
 Game::~Game(void)
 {
    this->creator = NULL;
