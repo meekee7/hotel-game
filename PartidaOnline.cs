@@ -17,6 +17,7 @@ namespace Juego_Hotel
         public int id;
         public String creador;
         public String nombre;
+        public int num_jugadores;
         public Boolean cerrando_por_desconexion = false;
 
         public PartidaOnline(Online frm_online)
@@ -110,6 +111,9 @@ namespace Juego_Hotel
 
         private void PartidaOnline_Shown(object sender, EventArgs e)
         {
+            this.txtNombre.Text = "Nombre: " + this.nombre;
+            this.txtCreador.Text = "Creador: " + this.creador;
+            this.txtNJugadores.Text = "Número de jugadores: " + this.num_jugadores.ToString();
             this.mensaje.Focus();
             this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
@@ -143,7 +147,7 @@ namespace Juego_Hotel
             this.interfaz = new Principal(true, this.frm_online);
             int num_jugadores = Convert.ToInt32((l_parametros.First.Value));
             l_parametros.RemoveFirst();
-            int jug_inicial = Convert.ToInt32((l_parametros.First.Value));
+            this.interfaz.juego.jug_inicial = Convert.ToInt32((l_parametros.First.Value)) + 1;
             l_parametros.RemoveFirst();
             this.interfaz.juego.n_jugadores = num_jugadores;
             this.interfaz.game_id = this.id;
@@ -162,7 +166,6 @@ namespace Juego_Hotel
                         this.interfaz.nombreJ1.Text = "Nombre: " + lista_nombres[0];
                         break;
             }
-            this.interfaz.juego.jug_inicial = jug_inicial + 1;
             this.interfaz.ShowDialog();
         }
 

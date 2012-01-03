@@ -13,6 +13,33 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->started = false;
 }
 
+void Game::set_player_money(config configuration)
+{
+   list<Player*>::iterator i;
+   if (this->n_players > 2)
+   {
+      for (i = this->plist.begin(); i != this->plist.end() ; ++i)
+      {
+         (*i)->n_50 = configuration.three_or_four_players.n_50;
+         (*i)->n_100 = configuration.three_or_four_players.n_100;
+         (*i)->n_500 = configuration.three_or_four_players.n_500;
+         (*i)->n_1000 = configuration.three_or_four_players.n_1000;
+         (*i)->n_5000 = configuration.three_or_four_players.n_5000;
+      }
+   }
+   else
+   {
+      for (i = this->plist.begin(); i != this->plist.end() ; ++i)
+      {
+         (*i)->n_50 = configuration.two_players.n_50;
+         (*i)->n_100 = configuration.two_players.n_100;
+         (*i)->n_500 = configuration.two_players.n_500;
+         (*i)->n_1000 = configuration.two_players.n_1000;
+         (*i)->n_5000 = configuration.two_players.n_5000;
+      }
+   }
+}
+
 bool Game::join(Player* p)
 {
    if ((int) this->plist.size() < this->n_players)
@@ -59,7 +86,7 @@ void Game::start()
    advance(i, res);
    this->current_player = (*i);
    this->starting_player = res;
-   wcout << "Game " << this->name << " started. Player " << (*i)->name << " is the first" << endl;
+   wcout << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")" << endl;
 }
 
 int Game::roll_dice()

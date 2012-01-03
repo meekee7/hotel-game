@@ -9,7 +9,7 @@ Player::Player(string ip, Portable_socket* socket_client)
    this->active = true;
 }
 
-void Player::calculate_total_money()
+void Player::Calculate_total_money()
 {
    this->total_money = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
 }
@@ -17,6 +17,12 @@ void Player::calculate_total_money()
 void Player::Eliminate()
 {
    this->active = false;
+}
+
+void Player::Charge_bank()
+{
+   this->n_1000 += 2;
+   this->Calculate_total_money();
 }
 
 Player::~Player(void)

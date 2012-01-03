@@ -17,8 +17,9 @@ public:
    int position;
 
    Player(string ip, Portable_socket* socket_client);
-   void calculate_total_money();
+   void Calculate_total_money();
    void Eliminate();
+   void Charge_bank();
    ~Player(void);
 };
 

@@ -96,7 +96,7 @@ namespace Juego_Hotel
                 {
                     return; //Se trata en la función Crear_Jugadores
                 }
-                if ((!this.online) || (!this.partida_cargada)) // Nos viene dado del servidor o por la partida cargada
+                if ((!this.online) && (!this.partida_cargada)) // Nos viene dado del servidor o por la partida cargada
                 {
                     // Decidir quien empieza
                     this.tiradas_ini = new int[this.juego.n_jugadores];
@@ -922,6 +922,29 @@ namespace Juego_Hotel
             jugador.calcular_dinero_total();
         }
 
+        public void Actualizar_Dinero_Jugador(String nombre_jugador, int n_50, int n_100, int n_500, int n_1000, int n_5000)
+        {
+            // Solo es llamada en modo online
+            Jugador jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            jugador.n_billetes_50 = n_50;
+            jugador.n_billetes_100 = n_100;
+            jugador.n_billetes_500 = n_500;
+            jugador.n_billetes_1000 = n_1000;
+            jugador.n_billetes_5000 = n_5000;
+            jugador.calcular_dinero_total();
+            switch (jugador.n_jugador)
+            {
+                case 0: this.dineroJ1.Text = "Dinero: " + jugador.dinero_total;
+                    break;
+                case 1: this.dineroJ2.Text = "Dinero: " + jugador.dinero_total;
+                    break;
+                case 2: this.dineroJ3.Text = "Dinero: " + jugador.dinero_total;
+                    break;
+                case 3: this.dineroJ4.Text = "Dinero: " + jugador.dinero_total;
+                    break;
+            }
+        }
+
         public void Actualizar_Dinero_Jugador_Actual()
         {
             switch (this.juego.jug_actual)
@@ -1025,9 +1048,14 @@ namespace Juego_Hotel
 
         private void bCobrarBanca_Click(object sender, EventArgs e)
         {
-            this.juego.jugador_actual.Cobrar_Banco();
-            this.Actualizar_Dinero_Jugador_Actual();
             this.bCobrarBanca.Enabled = false;
+            if (this.online)
+                this.frm_online.enviar_comando("charge_bank", this.game_id.ToString(), this.nombre_online);
+            else
+            {
+                this.juego.jugador_actual.Cobrar_Banco();
+                this.Actualizar_Dinero_Jugador_Actual();
+            }
         }
 
         private void bVerHotelesJ1_Click(object sender, EventArgs e)

@@ -3,6 +3,7 @@
 #include <string>
 #include "player.h"
 #include "chat.h"
+#include "types.h"
 #include "dlib/threads.h"
 #include "dlib/rand.h"
 
@@ -20,6 +21,7 @@ public:
    Player* current_player;
    int starting_player;
 
+   void set_player_money(config configuration);
    bool join(Player* p);
    bool leave(Player* p);
    void start();

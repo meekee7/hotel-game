@@ -567,10 +567,12 @@ namespace Juego_Hotel
                 int id_chat = recibir_int(this.socket, ref bytes_recibidos);
                 int long_creador = recibir_int(this.socket, ref bytes_recibidos);
                 String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
+                int num_jugadores = recibir_int(this.socket, ref bytes_recibidos);
                 List<String> lista_params = new List<String>(3);
                 lista_params.Add(id_chat.ToString());
                 lista_params.Add(creador);
                 lista_params.Add(nombre);
+                lista_params.Add(num_jugadores.ToString());
                 Thread thread_partida = new Thread(Manejar_nueva_partida);
                 thread_partida.Start(lista_params);
             }
@@ -599,6 +601,7 @@ namespace Juego_Hotel
             partida.id = Convert.ToInt32(lista_params[0]);
             partida.creador = lista_params[1];
             partida.nombre = lista_params[2];
+            partida.num_jugadores = Convert.ToInt32(lista_params[3]);
             this.lista_partidas.AddFirst(partida);
             partida.ShowDialog();
         }
@@ -673,6 +676,8 @@ namespace Juego_Hotel
                     this.Iniciar_partida();
                 else if (msg == "turn_passed")
                     this.Pasar_Turno();
+                else if (msg == "update_player_money")
+                    this.Actualizar_dinero_jugador();
                 else
                     MessageBox.Show("Comando desconocido");
                 msg = null;
@@ -869,6 +874,23 @@ namespace Juego_Hotel
             String sig_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             partida.interfaz.BeginInvoke(new Pasar_Turno_Callback(partida.interfaz.Pasar_turno), new object[] { sig_jugador });
+        }
+
+        delegate void Actualizar_Dinero_Jugador_Callback(String jugador, int n_50, int n_100, int n_500, int n_1000, int n_5000);
+
+        private void Actualizar_dinero_jugador()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int n_50 = this.recibir_int(this.socket, ref bytes_recibidos);
+            int n_100 = this.recibir_int(this.socket, ref bytes_recibidos);
+            int n_500 = this.recibir_int(this.socket, ref bytes_recibidos);
+            int n_1000 = this.recibir_int(this.socket, ref bytes_recibidos);
+            int n_5000 = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.BeginInvoke(new Actualizar_Dinero_Jugador_Callback(partida.interfaz.Actualizar_Dinero_Jugador), jugador, n_50, n_100, n_500, n_1000, n_5000);
         }
     }
 }

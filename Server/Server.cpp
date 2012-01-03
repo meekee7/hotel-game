@@ -11,6 +11,7 @@
 #include "chat.h"
 #include "tinyxml.h"
 #include "hotel.h"
+#include "types.h"
 #include "dlib/threads.h"
 #include "dlib/string.h"
 
@@ -29,21 +30,7 @@ list<Chat*> chat_list;
 dlib::mutex mutex_ids;
 int id_count = 0;
 string config_content;
-
-struct config_bills
-{
-   int n_5000;
-   int n_1000;
-   int n_500;
-   int n_100;
-   int n_50;
-};
-
-struct config
-{
-   struct config_bills two_players;
-   struct config_bills three_or_four_players;
-} configuration;
+struct config configuration;
 
 void unhook_signals()
 {
@@ -162,6 +149,23 @@ Player* get_player_from_name(wstring name)
    bool found = false;
 	list<Player*>::iterator i = plist.begin();
 	while (!found && i != plist.end())
+	{
+		if ((*i)->name == name)
+			found = true;
+      else
+         ++i;
+	}
+	if (!found)
+		return NULL;
+	else
+		return (*i);
+}
+
+Player* get_player_from_game(wstring name, Game* game)
+{
+   bool found = false;
+	list<Player*>::iterator i = game->plist.begin();
+	while (!found && i != game->plist.end())
 	{
 		if ((*i)->name == name)
 			found = true;
@@ -490,6 +494,7 @@ void handle_command(string command, Player* p)
       send_int(p, new_game->chat->id);
       send_int(p, get_utf8_length(new_game->creator->name));
       send_wstring(p, new_game->creator->name);
+      send_int(p, new_game->n_players);
       // Get all games and join into a string with the separator ~
 		wstring res = L"";
 		list<Game*>::iterator i;
@@ -524,6 +529,7 @@ void handle_command(string command, Player* p)
          send_int(p, game->chat->id);
          send_int(p, get_utf8_length(game->creator->name));
          send_wstring(p, game->creator->name);
+         send_int(p, game->n_players);
          wstring res = L"";
          list<Player*>::iterator i;
          for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -811,6 +817,7 @@ void handle_command(string command, Player* p)
       int long_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
       Game* game = get_game_from_id(id);
+      game->set_player_money(configuration);
       game->start();
       list<Player*>::iterator i;
       Player* dest;
@@ -853,6 +860,32 @@ void handle_command(string command, Player* p)
          send_int(dest, id);
          send_int(dest, get_utf8_length(next_player->name));
          send_wstring(dest, next_player->name);
+      }
+   }
+   else if (command == "charge_bank")
+   {
+      int bytes_received;
+      int long_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      int long_name = receive_int(p, &bytes_received);
+      wstring player_name = receive_wstring(p, long_name, &bytes_received);
+      list<Player*>::iterator i;
+      Player* dest;
+      Game* game = get_game_from_id(id);
+      Player* player = get_player_from_game(player_name, game);
+      player->Charge_bank();
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, player->n_50);
+         send_int(dest, player->n_100);
+         send_int(dest, player->n_500);
+         send_int(dest, player->n_1000);
+         send_int(dest, player->n_5000);
       }
    }
 }

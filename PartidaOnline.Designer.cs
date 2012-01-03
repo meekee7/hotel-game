@@ -36,6 +36,8 @@
             this.txtNombre = new System.Windows.Forms.Label();
             this.bAbandonar = new System.Windows.Forms.Button();
             this.bIniciar = new System.Windows.Forms.Button();
+            this.txtCreador = new System.Windows.Forms.Label();
+            this.txtNJugadores = new System.Windows.Forms.Label();
             this.grupoChat.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,7 +102,7 @@
             // txtNombre
             // 
             this.txtNombre.AutoSize = true;
-            this.txtNombre.Location = new System.Drawing.Point(15, 21);
+            this.txtNombre.Location = new System.Drawing.Point(15, 12);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(47, 13);
             this.txtNombre.TabIndex = 6;
@@ -108,7 +110,7 @@
             // 
             // bAbandonar
             // 
-            this.bAbandonar.Location = new System.Drawing.Point(99, 65);
+            this.bAbandonar.Location = new System.Drawing.Point(99, 80);
             this.bAbandonar.Name = "bAbandonar";
             this.bAbandonar.Size = new System.Drawing.Size(75, 23);
             this.bAbandonar.TabIndex = 5;
@@ -119,7 +121,7 @@
             // bIniciar
             // 
             this.bIniciar.Enabled = false;
-            this.bIniciar.Location = new System.Drawing.Point(18, 65);
+            this.bIniciar.Location = new System.Drawing.Point(18, 80);
             this.bIniciar.Name = "bIniciar";
             this.bIniciar.Size = new System.Drawing.Size(75, 23);
             this.bIniciar.TabIndex = 1;
@@ -127,11 +129,31 @@
             this.bIniciar.UseVisualStyleBackColor = true;
             this.bIniciar.Click += new System.EventHandler(this.bIniciar_Click);
             // 
+            // txtCreador
+            // 
+            this.txtCreador.AutoSize = true;
+            this.txtCreador.Location = new System.Drawing.Point(15, 34);
+            this.txtCreador.Name = "txtCreador";
+            this.txtCreador.Size = new System.Drawing.Size(47, 13);
+            this.txtCreador.TabIndex = 9;
+            this.txtCreador.Text = "Creador:";
+            // 
+            // txtNJugadores
+            // 
+            this.txtNJugadores.AutoSize = true;
+            this.txtNJugadores.Location = new System.Drawing.Point(15, 57);
+            this.txtNJugadores.Name = "txtNJugadores";
+            this.txtNJugadores.Size = new System.Drawing.Size(111, 13);
+            this.txtNJugadores.TabIndex = 10;
+            this.txtNJugadores.Text = "Número de jugadores:";
+            // 
             // PartidaOnline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(398, 440);
+            this.Controls.Add(this.txtNJugadores);
+            this.Controls.Add(this.txtCreador);
             this.Controls.Add(this.bIniciar);
             this.Controls.Add(this.bAbandonar);
             this.Controls.Add(this.txtNombre);
@@ -157,5 +179,7 @@
         private System.Windows.Forms.Label txtNombre;
         private System.Windows.Forms.Button bAbandonar;
         private System.Windows.Forms.Button bIniciar;
+        private System.Windows.Forms.Label txtCreador;
+        private System.Windows.Forms.Label txtNJugadores;
     }
 }
