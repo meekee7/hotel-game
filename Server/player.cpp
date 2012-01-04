@@ -25,6 +25,17 @@ void Player::Charge_bank()
    this->Calculate_total_money();
 }
 
+void Player::Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+   // Money its already calculated, client does the math
+   this->hotels.push_back(hotel);
+   this->n_5000 = n_5000;
+   this->n_1000 = n_1000;
+   this->n_500 = n_500;
+   this->n_100 = n_100;
+   this->n_50 = n_50;
+}
+
 Player::~Player(void)
 {
    if (this->socket != NULL)

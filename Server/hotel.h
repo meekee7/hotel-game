@@ -5,7 +5,7 @@
 class Hotel
 {
 public:
-   string name_txt;
+   wstring name;
    int price, expropriation_price;
    bool ground_bought;
    bool entrance_bought_last_turn;
@@ -14,10 +14,10 @@ public:
    int entrance_price;
    int n_entrances;
    Player* owner;
-   vector<vector<int> > prices_matrix;
+   vector<vector<int>> prices_matrix;
    vector<int> expansions_prices;
 
-   Hotel(void);
+   Hotel(wstring name);
    ~Hotel(void);
 };
 

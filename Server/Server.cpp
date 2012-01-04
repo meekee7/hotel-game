@@ -27,6 +27,7 @@ list<Player*> plist; // Player list
 list<Game*> glist; // Game list
 list<Player*> global_chat_list; // Players in global chat
 list<Chat*> chat_list;
+list<Hotel*> hotel_list;
 dlib::mutex mutex_ids;
 int id_count = 0;
 string config_content;
@@ -178,8 +179,27 @@ Player* get_player_from_game(wstring name, Game* game)
 		return (*i);
 }
 
+Hotel* get_hotel_from_name(wstring name)
+{
+   bool found = false;
+	list<Hotel*>::iterator i = hotel_list.begin();
+	while (!found && i != hotel_list.end())
+	{
+		if ((*i)->name == name)
+			found = true;
+      else
+         ++i;
+	}
+	if (!found)
+		return NULL;
+	else
+		return (*i);
+}
+
 bool delete_chat_if_empty(Chat* chat)
 {
+   if (chat == NULL) // Ya ha sido borrado en otro thread, cambiar a mutex o semáforo
+      return true;
    if (chat->players.empty())
    {
       wcout << L"Chat " << chat->id << L" deleted because it's empty" << endl;
@@ -192,6 +212,8 @@ bool delete_chat_if_empty(Chat* chat)
 
 bool delete_game_if_empty(Game* game)
 {
+   if (game == NULL) // Ya ha sido borrado en otro thread, cambiar a mutex o semáforo
+      return true;
    if (game->plist.empty())
    {
       wcout << L"Game " << game->name << L" deleted because it's empty" << endl;
@@ -476,8 +498,8 @@ void handle_command(string command, Player* p)
 	else if (command == "create_game")
 	{
       int bytes_received;
-      int long_name = receive_int(p, &bytes_received);
-      wstring name = receive_wstring(p, long_name, &bytes_received);
+      int len_name = receive_int(p, &bytes_received);
+      wstring name = receive_wstring(p, len_name, &bytes_received);
       int long_n_players = receive_int(p, &bytes_received);
       int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
       if (name.find('~') != string::npos)
@@ -518,8 +540,8 @@ void handle_command(string command, Player* p)
    else if (command == "join_game")
    {
       int bytes_received;
-      int long_name = receive_int(p, &bytes_received);
-      wstring name = receive_wstring(p, long_name, &bytes_received);
+      int len_name = receive_int(p, &bytes_received);
+      wstring name = receive_wstring(p, len_name, &bytes_received);
       Game* game = get_game_from_name(name);
       if (game->join(p))
       {
@@ -563,8 +585,8 @@ void handle_command(string command, Player* p)
    else if (command == "leave_game")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      string id = receive_string(p, long_id, &bytes_received);
+      int len_id = receive_int(p, &bytes_received);
+      string id = receive_string(p, len_id, &bytes_received);
       Game* game = get_game_from_id(atoi(id.c_str()));
       game->leave(p);
       wstring res = L"";
@@ -648,8 +670,8 @@ void handle_command(string command, Player* p)
    else if (command == "join_chat")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      string id = receive_string(p, long_id, &bytes_received);
+      int len_id = receive_int(p, &bytes_received);
+      string id = receive_string(p, len_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->join(p);
       wstring res = L"";
@@ -694,8 +716,8 @@ void handle_command(string command, Player* p)
    else if (command == "leave_chat")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      string id = receive_string(p, long_id, &bytes_received);
+      int len_id = receive_int(p, &bytes_received);
+      string id = receive_string(p, len_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->leave(p);
       wstring res = L"";
@@ -735,8 +757,8 @@ void handle_command(string command, Player* p)
    else if (command == "get_chat_users")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       // Get all users and join into a string with the separator ~
       Chat* chat = get_chat_from_id(id);
       wstring res = L"";
@@ -772,8 +794,8 @@ void handle_command(string command, Player* p)
    else if (command == "send_chat_msg")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       int long_msg = receive_int(p, &bytes_received);
       wstring msg = receive_wstring(p, long_msg, &bytes_received);
       Chat* chat = get_chat_from_id(id);
@@ -793,10 +815,10 @@ void handle_command(string command, Player* p)
    else if (command == "roll_dice")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
-      int long_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, long_name, &bytes_received);
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+      int len_name = receive_int(p, &bytes_received);
+      wstring player_name = receive_wstring(p, len_name, &bytes_received);
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
@@ -814,8 +836,8 @@ void handle_command(string command, Player* p)
    else if (command == "start_game")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       Game* game = get_game_from_id(id);
       game->set_player_money(configuration);
       game->start();
@@ -847,8 +869,8 @@ void handle_command(string command, Player* p)
    else if (command == "turn_pass")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
@@ -865,10 +887,10 @@ void handle_command(string command, Player* p)
    else if (command == "charge_bank")
    {
       int bytes_received;
-      int long_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, long_id, &bytes_received).c_str());
-      int long_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, long_name, &bytes_received);
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+      int len_name = receive_int(p, &bytes_received);
+      wstring player_name = receive_wstring(p, len_name, &bytes_received);
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
@@ -888,14 +910,60 @@ void handle_command(string command, Player* p)
          send_int(dest, player->n_5000);
       }
    }
+   else if (command == "buy_hotel")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int len_name = receive_int(p, &bytes_received);
+      wstring player_name = receive_wstring(p, len_name, &bytes_received);
+      len_name = receive_int(p, &bytes_received);
+      wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+      len_int = receive_int(p, &bytes_received);
+      int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      // We have player total money
+      Game* game = get_game_from_id(id);
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Player* player = get_player_from_name(player_name);
+      player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("hotel_purchased", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(hotel_name));
+         send_wstring(dest, hotel_name);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, player->n_50);
+         send_int(dest, player->n_100);
+         send_int(dest, player->n_500);
+         send_int(dest, player->n_1000);
+         send_int(dest, player->n_5000);
+      }
+   }
 }
 
 void handle_client(void* arg)
 {
    Player* p = (Player*) arg;
    int bytes_received;
-   int long_name = receive_int(p, &bytes_received);
-   p->name = receive_wstring(p, long_name, &bytes_received);
+   int len_name = receive_int(p, &bytes_received);
+   p->name = receive_wstring(p, len_name, &bytes_received);
    wcout << L"Handling new player. Player name: " << p->name << endl;
    if (p->name.find('~') != string::npos)
    {
@@ -981,6 +1049,18 @@ void read_config(TiXmlDocument* config_xml)
    configuration.three_or_four_players.n_50 = atoi(node->FirstChild()->Value());
 }
 
+void create_hotel_list()
+{
+   hotel_list.push_back(new Hotel(L"Fujiyama"));
+   hotel_list.push_back(new Hotel(L"Boomerang"));
+   hotel_list.push_back(new Hotel(L"L'etoile"));
+   hotel_list.push_back(new Hotel(L"President"));
+   hotel_list.push_back(new Hotel(L"Royal"));
+   hotel_list.push_back(new Hotel(L"Waikiki"));
+   hotel_list.push_back(new Hotel(L"Taj Mahal"));
+   hotel_list.push_back(new Hotel(L"Safari"));
+}
+
 void run_server()
 {
    #ifdef _WIN32
@@ -1031,6 +1111,7 @@ void run_server()
    }
    // Load Config.xml to have configuration loaded for future checks
    read_config(&config_xml);
+   create_hotel_list();
    while (closing == 0)
    {
       addrlen = sizeof(client_info);

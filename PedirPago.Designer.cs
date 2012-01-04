@@ -61,9 +61,9 @@
             this.img100.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img100.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img100.Image = global::Juego_Hotel.Properties.Resources.Billete_100;
-            this.img100.Location = new System.Drawing.Point(136, 12);
+            this.img100.Location = new System.Drawing.Point(318, 12);
             this.img100.Name = "img100";
-            this.img100.Size = new System.Drawing.Size(100, 50);
+            this.img100.Size = new System.Drawing.Size(300, 125);
             this.img100.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.img100.TabIndex = 1;
             this.img100.TabStop = false;
@@ -76,7 +76,7 @@
             this.img50.Image = global::Juego_Hotel.Properties.Resources.Billete_50;
             this.img50.Location = new System.Drawing.Point(12, 12);
             this.img50.Name = "img50";
-            this.img50.Size = new System.Drawing.Size(100, 50);
+            this.img50.Size = new System.Drawing.Size(300, 125);
             this.img50.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.img50.TabIndex = 0;
             this.img50.TabStop = false;
@@ -87,9 +87,9 @@
             this.img500.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img500.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img500.Image = global::Juego_Hotel.Properties.Resources.Billete_500;
-            this.img500.Location = new System.Drawing.Point(260, 12);
+            this.img500.Location = new System.Drawing.Point(624, 12);
             this.img500.Name = "img500";
-            this.img500.Size = new System.Drawing.Size(100, 50);
+            this.img500.Size = new System.Drawing.Size(300, 125);
             this.img500.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.img500.TabIndex = 2;
             this.img500.TabStop = false;
@@ -100,9 +100,9 @@
             this.img1000.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img1000.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img1000.Image = global::Juego_Hotel.Properties.Resources.Billete_1000;
-            this.img1000.Location = new System.Drawing.Point(72, 84);
+            this.img1000.Location = new System.Drawing.Point(164, 188);
             this.img1000.Name = "img1000";
-            this.img1000.Size = new System.Drawing.Size(100, 50);
+            this.img1000.Size = new System.Drawing.Size(300, 125);
             this.img1000.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.img1000.TabIndex = 3;
             this.img1000.TabStop = false;
@@ -113,9 +113,9 @@
             this.img5000.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img5000.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img5000.Image = global::Juego_Hotel.Properties.Resources.Billete_5000;
-            this.img5000.Location = new System.Drawing.Point(197, 84);
+            this.img5000.Location = new System.Drawing.Point(470, 188);
             this.img5000.Name = "img5000";
-            this.img5000.Size = new System.Drawing.Size(100, 50);
+            this.img5000.Size = new System.Drawing.Size(300, 125);
             this.img5000.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.img5000.TabIndex = 4;
             this.img5000.TabStop = false;
@@ -123,7 +123,7 @@
             // 
             // bOk
             // 
-            this.bOk.Location = new System.Drawing.Point(10, 176);
+            this.bOk.Location = new System.Drawing.Point(12, 385);
             this.bOk.Name = "bOk";
             this.bOk.Size = new System.Drawing.Size(75, 23);
             this.bOk.TabIndex = 5;
@@ -135,7 +135,7 @@
             // 
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancelar.Enabled = false;
-            this.bCancelar.Location = new System.Drawing.Point(101, 176);
+            this.bCancelar.Location = new System.Drawing.Point(261, 385);
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.Size = new System.Drawing.Size(75, 23);
             this.bCancelar.TabIndex = 6;
@@ -146,7 +146,7 @@
             // n50
             // 
             this.n50.AutoSize = true;
-            this.n50.Location = new System.Drawing.Point(69, 65);
+            this.n50.Location = new System.Drawing.Point(163, 141);
             this.n50.Name = "n50";
             this.n50.Size = new System.Drawing.Size(43, 13);
             this.n50.TabIndex = 7;
@@ -155,7 +155,7 @@
             // n100
             // 
             this.n100.AutoSize = true;
-            this.n100.Location = new System.Drawing.Point(193, 65);
+            this.n100.Location = new System.Drawing.Point(472, 141);
             this.n100.Name = "n100";
             this.n100.Size = new System.Drawing.Size(43, 13);
             this.n100.TabIndex = 8;
@@ -164,7 +164,7 @@
             // n500
             // 
             this.n500.AutoSize = true;
-            this.n500.Location = new System.Drawing.Point(317, 65);
+            this.n500.Location = new System.Drawing.Point(778, 141);
             this.n500.Name = "n500";
             this.n500.Size = new System.Drawing.Size(43, 13);
             this.n500.TabIndex = 9;
@@ -173,7 +173,7 @@
             // n1000
             // 
             this.n1000.AutoSize = true;
-            this.n1000.Location = new System.Drawing.Point(129, 137);
+            this.n1000.Location = new System.Drawing.Point(318, 316);
             this.n1000.Name = "n1000";
             this.n1000.Size = new System.Drawing.Size(43, 13);
             this.n1000.TabIndex = 10;
@@ -182,7 +182,7 @@
             // n5000
             // 
             this.n5000.AutoSize = true;
-            this.n5000.Location = new System.Drawing.Point(254, 137);
+            this.n5000.Location = new System.Drawing.Point(624, 316);
             this.n5000.Name = "n5000";
             this.n5000.Size = new System.Drawing.Size(43, 13);
             this.n5000.TabIndex = 11;
@@ -191,7 +191,7 @@
             // total
             // 
             this.total.AutoSize = true;
-            this.total.Location = new System.Drawing.Point(194, 157);
+            this.total.Location = new System.Drawing.Point(564, 354);
             this.total.Name = "total";
             this.total.Size = new System.Drawing.Size(43, 13);
             this.total.TabIndex = 12;
@@ -200,7 +200,7 @@
             // n50j
             // 
             this.n50j.AutoSize = true;
-            this.n50j.Location = new System.Drawing.Point(9, 65);
+            this.n50j.Location = new System.Drawing.Point(106, 141);
             this.n50j.Name = "n50j";
             this.n50j.Size = new System.Drawing.Size(51, 13);
             this.n50j.TabIndex = 13;
@@ -209,7 +209,7 @@
             // n100j
             // 
             this.n100j.AutoSize = true;
-            this.n100j.Location = new System.Drawing.Point(133, 65);
+            this.n100j.Location = new System.Drawing.Point(412, 141);
             this.n100j.Name = "n100j";
             this.n100j.Size = new System.Drawing.Size(51, 13);
             this.n100j.TabIndex = 14;
@@ -218,7 +218,7 @@
             // n500j
             // 
             this.n500j.AutoSize = true;
-            this.n500j.Location = new System.Drawing.Point(257, 65);
+            this.n500j.Location = new System.Drawing.Point(721, 141);
             this.n500j.Name = "n500j";
             this.n500j.Size = new System.Drawing.Size(51, 13);
             this.n500j.TabIndex = 15;
@@ -227,7 +227,7 @@
             // n5000j
             // 
             this.n5000j.AutoSize = true;
-            this.n5000j.Location = new System.Drawing.Point(194, 137);
+            this.n5000j.Location = new System.Drawing.Point(564, 316);
             this.n5000j.Name = "n5000j";
             this.n5000j.Size = new System.Drawing.Size(51, 13);
             this.n5000j.TabIndex = 16;
@@ -236,7 +236,7 @@
             // n1000j
             // 
             this.n1000j.AutoSize = true;
-            this.n1000j.Location = new System.Drawing.Point(69, 137);
+            this.n1000j.Location = new System.Drawing.Point(258, 316);
             this.n1000j.Name = "n1000j";
             this.n1000j.Size = new System.Drawing.Size(51, 13);
             this.n1000j.TabIndex = 17;
@@ -244,7 +244,7 @@
             // 
             // bReset
             // 
-            this.bReset.Location = new System.Drawing.Point(191, 176);
+            this.bReset.Location = new System.Drawing.Point(567, 385);
             this.bReset.Name = "bReset";
             this.bReset.Size = new System.Drawing.Size(80, 23);
             this.bReset.TabIndex = 18;
@@ -255,7 +255,7 @@
             // necesario
             // 
             this.necesario.AutoSize = true;
-            this.necesario.Location = new System.Drawing.Point(69, 157);
+            this.necesario.Location = new System.Drawing.Point(258, 354);
             this.necesario.Name = "necesario";
             this.necesario.Size = new System.Drawing.Size(58, 13);
             this.necesario.TabIndex = 19;
@@ -263,7 +263,7 @@
             // 
             // bSubastar
             // 
-            this.bSubastar.Location = new System.Drawing.Point(283, 176);
+            this.bSubastar.Location = new System.Drawing.Point(849, 385);
             this.bSubastar.Name = "bSubastar";
             this.bSubastar.Size = new System.Drawing.Size(75, 23);
             this.bSubastar.TabIndex = 20;
@@ -277,7 +277,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancelar;
-            this.ClientSize = new System.Drawing.Size(372, 208);
+            this.ClientSize = new System.Drawing.Size(936, 420);
             this.ControlBox = false;
             this.Controls.Add(this.bSubastar);
             this.Controls.Add(this.necesario);

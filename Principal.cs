@@ -695,7 +695,7 @@ namespace Juego_Hotel
             Jugador jugador = this.juego.jugadores[this.juego.jug_actual - 1];
             nombre_izq = this.juego.jugadores[this.juego.jug_actual - 1].posicion.hotel_izq;
             nombre_der = this.juego.jugadores[this.juego.jug_actual - 1].posicion.hotel_der;
-            frm_comprar_hotel.HabilitarControles (nombre_izq, nombre_der);
+            frm_comprar_hotel.HabilitarControles(this.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre == nombre_izq), this.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre == nombre_der));
             frm_comprar_hotel.ShowDialog();
             // Ya ha sido seleccionado cual comprar. Haciendo efectiva la compra
             if (!frm_comprar_hotel.cancelado)
@@ -778,6 +778,11 @@ namespace Juego_Hotel
                 {
                     Principal.Calcular_Devolucion((frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
                     jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                }
+                if (this.online)
+                {
+                    this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), this.juego.jugador_actual.nombre_online, hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
+                         jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString());
                 }
             }
             frm_pago.Close();

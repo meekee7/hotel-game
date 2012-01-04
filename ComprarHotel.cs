@@ -20,11 +20,11 @@ namespace Juego_Hotel
             InitializeComponent();
         }
 
-        public void HabilitarControles(Tipos.Tnombre_hotel nombre_izq, Tipos.Tnombre_hotel nombre_der)
+        public void HabilitarControles(Hotel hotel_izq, Hotel hotel_der)
         {
-            if (nombre_izq != Tipos.Tnombre_hotel.Ninguno)
+            if (hotel_izq != null)
             {
-                this.nombreIzq.Text = nombre_izq.ToString();
+                this.nombreIzq.Text = hotel_izq.nombre_txt;
                 this.bIzq.Enabled = true;
             }
             else
@@ -32,9 +32,9 @@ namespace Juego_Hotel
                 this.nombreIzq.Text = "";
                 this.bIzq.Enabled = false;
             }
-            if (nombre_der != Tipos.Tnombre_hotel.Ninguno)
+            if (hotel_der != null)
             {
-                this.nombreDer.Text = nombre_der.ToString();
+                this.nombreDer.Text = hotel_der.nombre_txt;
                 this.bDer.Enabled = true;
             }
             else

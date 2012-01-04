@@ -678,8 +678,13 @@ namespace Juego_Hotel
                     this.Pasar_Turno();
                 else if (msg == "update_player_money")
                     this.Actualizar_dinero_jugador();
+                else if (msg == "hotel_purchased")
+                    this.Hotel_comprado();
                 else
+                {
                     MessageBox.Show("Comando desconocido");
+                    this.bDesconectar.PerformClick();
+                }
                 msg = null;
             }
             while (this.continuar_thread);
@@ -891,6 +896,25 @@ namespace Juego_Hotel
             int n_5000 = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             partida.interfaz.BeginInvoke(new Actualizar_Dinero_Jugador_Callback(partida.interfaz.Actualizar_Dinero_Jugador), jugador, n_50, n_100, n_500, n_1000, n_5000);
+        }
+
+        private void Hotel_comprado()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            hotel.dueño = jugador;
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
+            {
+                jugador.hoteles.AddLast(hotel);
+                jugador.n_hoteles++;
+            }
         }
     }
 }
