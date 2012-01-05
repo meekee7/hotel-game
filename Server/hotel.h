@@ -18,6 +18,7 @@ public:
    vector<int> expansions_prices;
 
    Hotel(wstring name);
+   void Extend();
    ~Hotel(void);
 };
 

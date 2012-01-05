@@ -29,6 +29,11 @@ void Player::Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_10
 {
    // Money its already calculated, client does the math
    this->hotels.push_back(hotel);
+   this->Set_money(n_5000, n_1000, n_500, n_100, n_50);
+}
+
+void Player::Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
    this->n_5000 = n_5000;
    this->n_1000 = n_1000;
    this->n_500 = n_500;

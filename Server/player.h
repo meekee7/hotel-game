@@ -24,6 +24,7 @@ public:
    void Eliminate();
    void Charge_bank();
    void Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50);
+   void Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50);
    ~Player(void);
 };
 

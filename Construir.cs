@@ -116,263 +116,57 @@ namespace Juego_Hotel
             }
             this.listaHoteles.Hide();
             this.bSelHotel.Enabled = true;
-            this.HotelSeleccionado.Text = this.hotel_seleccionado.nombre.ToString();
+            this.HotelSeleccionado.Text = this.hotel_seleccionado.nombre_txt;
         }
 
         private void bPrincipal_Click(object sender, EventArgs e)
         {
-            if (this.fase_gratis)
-            {
-                MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
-                this.hotel_seleccionado.Ampliar();
-                this.Close();
-            }
-            else
-            {
-                if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
-                {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar el edificio principal\n" +
-                                                        "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                                        "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        Dado_construccion dado_cons = new Dado_construccion();
-                        dado_cons.ShowDialog();
-                        if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
-                            this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
-                            this.total_a_pagar = 0;
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
-                        {
-                            this.total_a_pagar = -1;
-                            this.cancelado = true;
-                            this.DialogResult = DialogResult.Abort;
-                        }
-                        dado_cons.Close();
-                        if (this.total_a_pagar > 0)
-                        {
-                            PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
-                            frm_pago.ShowDialog();
-                            if (frm_pago.cancelado)
-                            {
-                                frm_pago.Close();
-                                this.cancelado = true;
-                                this.DialogResult = DialogResult.Cancel;
-                                this.Close();
-                                return;
-                            }
-                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                            this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                            if (frm_pago.total_seleccionado > this.total_a_pagar)
-                            {
-                                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                            }
-                            frm_pago.Close();
-                        }
-                        if (this.total_a_pagar != -1)
-                            this.hotel_seleccionado.Ampliar();
-                        this.Close();
-                    }
-                }
-                else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar el edificio principal", "No es posible construir");
-            }
+            this.construir(1);
         }
 
         private void bAmpli1_Click(object sender, EventArgs e)
         {
-            if (this.fase_gratis)
-            {
-                MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
-                this.hotel_seleccionado.Ampliar();
-                this.Close();
-            }
-            else
-            {
-                if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
-                {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar la primera ampliación\n" +
-                                                        "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                                        "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        Dado_construccion dado_cons = new Dado_construccion();
-                        dado_cons.ShowDialog();
-                        if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
-                            this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
-                            this.total_a_pagar = 0;
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
-                        {
-                            this.total_a_pagar = -1;
-                            this.cancelado = true;
-                            this.DialogResult = DialogResult.Abort;
-                        }
-                        dado_cons.Close();
-                        if (this.total_a_pagar > 0)
-                        {
-                            PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
-                            frm_pago.ShowDialog();
-                            if (frm_pago.cancelado)
-                            {
-                                frm_pago.Close();
-                                this.cancelado = true;
-                                this.DialogResult = DialogResult.Cancel;
-                                this.Close();
-                                return;
-                            }
-                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                            this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                            if (frm_pago.total_seleccionado > this.total_a_pagar)
-                            {
-                                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                            }
-                            frm_pago.Close();
-                        }
-                        if (this.total_a_pagar != -1)
-                            this.hotel_seleccionado.Ampliar();
-                        this.Close();
-                    }
-                }
-                else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar la primera ampliación", "No es posible construir");
-            }
+            this.construir(2);
         }
 
         private void bAmpli2_Click(object sender, EventArgs e)
         {
-            if (this.fase_gratis)
-            {
-                MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
-                this.hotel_seleccionado.Ampliar();
-                this.Close();
-            }
-            else
-            {
-                if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
-                {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar la segunda ampliación\n" +
-                                                        "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                                        "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        Dado_construccion dado_cons = new Dado_construccion();
-                        dado_cons.ShowDialog();
-                        if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
-                            this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
-                            this.total_a_pagar = 0;
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
-                        {
-                            this.total_a_pagar = -1;
-                            this.cancelado = true;
-                            this.DialogResult = DialogResult.Abort;
-                        }
-                        dado_cons.Close();
-                        if (this.total_a_pagar > 0)
-                        {
-                            PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
-                            frm_pago.ShowDialog();
-                            if (frm_pago.cancelado)
-                            {
-                                frm_pago.Close();
-                                this.cancelado = true;
-                                this.DialogResult = DialogResult.Cancel;
-                                this.Close();
-                                return;
-                            }
-                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                            this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                            if (frm_pago.total_seleccionado > this.total_a_pagar)
-                            {
-                                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                            }
-                            frm_pago.Close();
-                        }
-                        if (this.total_a_pagar != -1)
-                            this.hotel_seleccionado.Ampliar();
-                        this.Close();
-                    }
-                }
-                else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar la segunda ampliación", "No es posible construir");
-            }
+            this.construir(3);
         }
 
         private void bAmpli3_Click(object sender, EventArgs e)
         {
-            if (this.fase_gratis)
-            {
-                MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
-                this.hotel_seleccionado.Ampliar();
-                this.Close();
-            }
-            else
-            {
-                if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
-                {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar la tercera ampliación\n" +
-                                                        "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                                        "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        Dado_construccion dado_cons = new Dado_construccion();
-                        dado_cons.ShowDialog();
-                        if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
-                            this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
-                            this.total_a_pagar = 0;
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
-                        {
-                            this.total_a_pagar = -1;
-                            this.cancelado = true;
-                            this.DialogResult = DialogResult.Abort;
-                        }
-                        dado_cons.Close();
-                        if (this.total_a_pagar > 0)
-                        {
-                            PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
-                            frm_pago.ShowDialog();
-                            if (frm_pago.cancelado)
-                            {
-                                frm_pago.Close();
-                                this.cancelado = true;
-                                this.DialogResult = DialogResult.Cancel;
-                                this.Close();
-                                return;
-                            }
-                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                            this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                            if (frm_pago.total_seleccionado > this.total_a_pagar)
-                            {
-                                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                            }
-                            frm_pago.Close();
-                        }
-                        if (this.total_a_pagar != -1)
-                            this.hotel_seleccionado.Ampliar();
-                        this.Close();
-                    }
-                }
-                else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar la tercera ampliación", "No es posible construir");
-            }
+            this.construir(4);
         }
 
         private void bAmpli4_Click(object sender, EventArgs e)
         {
+            this.construir(5);
+        }
+
+        private void bSuelo_Click(object sender, EventArgs e)
+        {
+            this.construir(6);
+        }
+
+        private void construir(int num_fase)
+        {
+            String fase = "";
+            switch (num_fase)
+            {
+                case 1: fase = "el edificio principal";
+                    break;
+                case 2: fase = "la primera ampliación";
+                    break;
+                case 3: fase = "la segunda ampliación";
+                    break;
+                case 4: fase = "la tercera ampliación";
+                    break;
+                case 5: fase = "la cuarta ampliación";
+                    break;
+                case 6: fase = "los complejos recreativos";
+                    break;
+            }
             if (this.fase_gratis)
             {
                 MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
@@ -383,7 +177,7 @@ namespace Juego_Hotel
             {
                 if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
                 {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar la cuarta ampliación\n" +
+                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar " + fase + "\n" +
                                                         "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
                                                         "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
@@ -430,70 +224,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar la cuarta ampliación", "No es posible construir");
-            }
-        }
-
-        private void bSuelo_Click(object sender, EventArgs e)
-        {
-            if (this.fase_gratis)
-            {
-                MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
-                this.hotel_seleccionado.Ampliar();
-                this.Close();
-            }
-            else
-            {
-                if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
-                {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar los complejos recreativos\n" +
-                                                        "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                                        "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        Dado_construccion dado_cons = new Dado_construccion(); // TODO: quitar esto porque no necesita permiso de construcción
-                        dado_cons.ShowDialog();
-                        if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
-                            this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
-                            this.total_a_pagar = 0;
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
-                        {
-                            this.total_a_pagar = -1;
-                            this.cancelado = true;
-                            this.DialogResult = DialogResult.Abort;
-                        }
-                        dado_cons.Close();
-                        if (this.total_a_pagar > 0)
-                        {
-                            PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
-                            frm_pago.ShowDialog();
-                            if (frm_pago.cancelado)
-                            {
-                                frm_pago.Close();
-                                this.cancelado = true;
-                                this.DialogResult = DialogResult.Cancel;
-                                this.Close();
-                                return;
-                            }
-                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                            this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                            if (frm_pago.total_seleccionado > this.total_a_pagar)
-                            {
-                                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                            }
-                            frm_pago.Close();
-                        }
-                        if (this.total_a_pagar != -1)
-                            this.hotel_seleccionado.Ampliar();
-                        this.Close();
-                    }
-                }
-                else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar los complejos recreativos", "No es posible construir");
+                    MessageBox.Show("No tienes el dinero suficiente para comprar " + fase, "No es posible construir");
             }
         }
 
@@ -509,6 +240,13 @@ namespace Juego_Hotel
             {
                 this.interfaz.Dibujar_Fase(this.hotel_seleccionado, this.hotel_seleccionado.n_fases_construidas - 1);
                 this.DialogResult = DialogResult.OK;
+                if (this.interfaz.online)
+                {
+                    Jugador jugador = this.juego.jugador_actual;
+                    int game_id = this.interfaz.game_id;
+                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), jugador.nombre_online, this.hotel_seleccionado.nombre_txt, jugador.n_billetes_5000.ToString(),
+                        jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString());
+                }
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Juego_Hotel
         Sel_colores frm_colores = new Sel_colores();
         Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada, img_tick;
         public Boolean online;
-        Online frm_online;
+        public Online frm_online;
         public int game_id;
         public String nombre_online;
         public String online_config;

@@ -10,6 +10,11 @@ Hotel::Hotel(wstring name)
    this->owner = NULL;
 }
 
+void Hotel::Extend()
+{
+   this->n_built_expansions++;
+}
+
 Hotel::~Hotel(void)
 {
 }

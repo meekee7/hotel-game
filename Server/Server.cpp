@@ -325,6 +325,8 @@ int get_utf8_length(wstring data)
 
 wstring utf8_to_utf16 (string data)
 {
+   if (data.empty())
+      return L"";
    wstring res;
    #ifdef _WIN32
       res.resize(MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0));
@@ -338,6 +340,8 @@ wstring utf8_to_utf16 (string data)
 
 string utf16_to_utf8 (wstring data)
 {
+   if (data.empty())
+      return "";
    #ifdef _WIN32
       int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
    #else
@@ -940,6 +944,53 @@ void handle_command(string command, Player* p)
       {
          dest = (*i);
          send_command("hotel_purchased", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(hotel_name));
+         send_wstring(dest, hotel_name);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, player->n_50);
+         send_int(dest, player->n_100);
+         send_int(dest, player->n_500);
+         send_int(dest, player->n_1000);
+         send_int(dest, player->n_5000);
+      }
+   }
+   else if (command == "build_phase")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int len_name = receive_int(p, &bytes_received);
+      wstring player_name = receive_wstring(p, len_name, &bytes_received);
+      len_name = receive_int(p, &bytes_received);
+      wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+      len_int = receive_int(p, &bytes_received);
+      int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      // We have player total money
+      Game* game = get_game_from_id(id);
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Player* player = get_player_from_name(player_name);
+      player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
+      hotel->Extend();
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("phase_built", dest);
          send_int(dest, id);
          send_int(dest, get_utf8_length(player_name));
          send_wstring(dest, player_name);
