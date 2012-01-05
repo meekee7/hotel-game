@@ -24,6 +24,7 @@ public:
    void Eliminate();
    void Charge_bank();
    void Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50);
+   void Expropriate_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, int po_n_5000, int po_n_1000, int po_n_500, int po_n_100, int po_n_50);
    void Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50);
    ~Player(void);
 };

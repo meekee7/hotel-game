@@ -769,6 +769,13 @@ namespace Juego_Hotel
                     Principal.Calcular_Devolucion(ref dueño_ant, (frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
                     jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
                 }
+                if (this.online)
+                {
+                    this.frm_online.enviar_comando("expropriate_hotel", this.game_id.ToString(), this.juego.jugador_actual.nombre_online, hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
+                         jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString(),
+                         dueño_ant.n_billetes_5000.ToString(), dueño_ant.n_billetes_1000.ToString(), dueño_ant.n_billetes_500.ToString(), dueño_ant.n_billetes_100.ToString(),
+                         dueño_ant.n_billetes_50.ToString());
+                }
             }
             else
             {

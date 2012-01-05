@@ -937,6 +937,7 @@ void handle_command(string command, Player* p)
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_name(player_name);
+      hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
       list<Player*>::iterator i;
       Player* dest;
@@ -958,6 +959,73 @@ void handle_command(string command, Player* p)
          send_int(dest, player->n_500);
          send_int(dest, player->n_1000);
          send_int(dest, player->n_5000);
+      }
+   }
+   else if (command == "expropriate_hotel")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int len_name = receive_int(p, &bytes_received);
+      wstring player_name = receive_wstring(p, len_name, &bytes_received);
+      len_name = receive_int(p, &bytes_received);
+      wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+      len_int = receive_int(p, &bytes_received);
+      int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int po_n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int po_n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int po_n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int po_n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int po_n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      // We have player total money
+      Game* game = get_game_from_id(id);
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Player* player = get_player_from_name(player_name);
+      Player* previous_owner = hotel->owner;
+      hotel->owner = player;
+      player->Expropriate_hotel(hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50, po_n_5000, po_n_1000, po_n_500, po_n_100, po_n_50);
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("hotel_expropriated", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(hotel_name));
+         send_wstring(dest, hotel_name);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player_name));
+         send_wstring(dest, player_name);
+         send_int(dest, player->n_50);
+         send_int(dest, player->n_100);
+         send_int(dest, player->n_500);
+         send_int(dest, player->n_1000);
+         send_int(dest, player->n_5000);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(previous_owner->name));
+         send_wstring(dest, previous_owner->name);
+         send_int(dest, previous_owner->n_50);
+         send_int(dest, previous_owner->n_100);
+         send_int(dest, previous_owner->n_500);
+         send_int(dest, previous_owner->n_1000);
+         send_int(dest, previous_owner->n_5000);
       }
    }
    else if (command == "build_phase")
