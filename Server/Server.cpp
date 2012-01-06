@@ -1101,6 +1101,7 @@ void handle_command(string command, Player* p)
       Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_name(player_name);
       hotel->Add_entrance(position);
+      player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
