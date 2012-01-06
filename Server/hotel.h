@@ -14,7 +14,7 @@ public:
    int entrance_price;
    int n_entrances;
    Player* owner;
-   vector<vector<int>> prices_matrix;
+   vector<vector<int> > prices_matrix;
    vector<int> expansions_prices;
 
    Hotel(wstring name);

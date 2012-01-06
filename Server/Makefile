@@ -17,6 +17,9 @@ player.o: player.cpp player.h
 game.o: game.cpp game.h
 	$(CC) -c $(FLAGS) -o game.o game.cpp
 
+hotel.o: hotel.cpp hotel.h
+	$(CC) -c $(FLAGS) -o hotel.o hotel.cpp
+
 portable_socket.o: portable_socket.cpp portable_socket.h
 	$(CC) -c $(FLAGS) -o portable_socket.o portable_socket.cpp
 
@@ -35,5 +38,5 @@ tinyxmlparser.o: tinyxmlparser.cpp
 Server.o: Server.cpp
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 
-server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o player.o Server.o
-	$(CC) -o server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o Server.o
+	$(CC) -o server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
