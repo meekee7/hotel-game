@@ -212,12 +212,12 @@ namespace Juego_Hotel
                             if (this.juego.casillas[num_casilla].hotel_der == hotel.nombre)
                             {
                                 this.juego.casillas[num_casilla].entrada_en_der = true;
-                                interfaz.Dibujar_Entrada(ref this.juego.casillas[num_casilla], true);
+                                interfaz.Dibujar_Entrada(this.juego.casillas[num_casilla], true);
                             }
                             else if (this.juego.casillas[num_casilla].hotel_izq == hotel.nombre)
                             {
                                 this.juego.casillas[num_casilla].entrada_en_izq = true;
-                                interfaz.Dibujar_Entrada(ref this.juego.casillas[num_casilla], false);
+                                interfaz.Dibujar_Entrada(this.juego.casillas[num_casilla], false);
                             }
                             else // Nº de casilla incorrecta, fichero modificado
                             {

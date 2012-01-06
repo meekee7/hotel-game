@@ -13,12 +13,14 @@ public:
    int n_built_expansions;
    int entrance_price;
    int n_entrances;
+   list<int> entrances;
    Player* owner;
    vector<vector<int> > prices_matrix;
    vector<int> expansions_prices;
 
    Hotel(wstring name);
    void Extend();
+   void Add_entrance(int position);
    ~Hotel(void);
 };
 

@@ -684,6 +684,8 @@ namespace Juego_Hotel
                     this.Hotel_expropiado();
                 else if (msg == "phase_built")
                     this.Fase_construida();
+                else if (msg == "entrance_added")
+                    this.Entrada_añadida();
                 else
                 {
                     MessageBox.Show("Comando desconocido");
@@ -953,11 +955,40 @@ namespace Juego_Hotel
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
-            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             if (partida.interfaz.nombre_online != nombre_jugador) // Ya se amplía desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
             {
                 hotel.Ampliar();
                 partida.interfaz.BeginInvoke(new Dibujar_Fase_Callback(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
+            }
+        }
+
+        delegate void Dibujar_Entrada_Callback(Casilla casilla, Boolean en_la_derecha);
+
+        private void Entrada_añadida()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int casilla = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
+            {
+                if (partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
+                {
+                    partida.interfaz.juego.casillas[casilla].entrada_en_der = true;
+                    partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
+                }
+                else
+                {
+                    partida.interfaz.juego.casillas[casilla].entrada_en_izq = true;
+                    partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
+                }
+                hotel.n_entradas++;
+                hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
             }
         }
     }

@@ -1173,7 +1173,7 @@ namespace Juego_Hotel
                 MessageBox.Show("No posees ningún hotel", "No es posible poner entradas");
         }
 
-        public void Dibujar_Entrada(ref Casilla casilla, Boolean en_la_derecha)
+        public void Dibujar_Entrada(Casilla casilla, Boolean en_la_derecha)
         {
             // Creando nuevo PictureBox para meter la imagen de la entrada
             PictureBox entrada = new PictureBox();

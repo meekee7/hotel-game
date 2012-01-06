@@ -147,12 +147,12 @@ namespace Juego_Hotel
             if (this.juego.casillas[n_casilla].hotel_der == this.hotel_seleccionado.nombre)
             {
                 this.juego.casillas[n_casilla].entrada_en_der = true;
-                this.interfaz.Dibujar_Entrada(ref this.juego.casillas[n_casilla], true);
+                this.interfaz.Dibujar_Entrada(this.juego.casillas[n_casilla], true);
             }
             else
             {
                 this.juego.casillas[n_casilla].entrada_en_izq = true;
-                this.interfaz.Dibujar_Entrada(ref this.juego.casillas[n_casilla], false);
+                this.interfaz.Dibujar_Entrada(this.juego.casillas[n_casilla], false);
             }
             this.hotel_seleccionado.n_entradas++;
             this.hotel_seleccionado.entradas.AddLast(this.juego.casillas[n_casilla]);
@@ -164,7 +164,13 @@ namespace Juego_Hotel
             this.listaCasillas.Items.Clear();
             this.listaCasillas.SelectedIndex = -1;
             this.listaCasillas.Refresh();
-            this.hotel_seleccionado.entrada_comprada_ultimo_turno = true;
+            if (this.interfaz.online)
+            {
+                int game_id = this.interfaz.game_id;
+                this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.interfaz.nombre_online, this.hotel_seleccionado.nombre_txt, n_casilla.ToString(),
+                    this.jugador.n_billetes_5000.ToString(), this.jugador.n_billetes_1000.ToString(), this.jugador.n_billetes_500.ToString(), this.jugador.n_billetes_100.ToString(),
+                    this.jugador.n_billetes_50.ToString());
+            }
         }
     }
 }
