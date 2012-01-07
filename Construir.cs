@@ -244,7 +244,7 @@ namespace Juego_Hotel
                 {
                     Jugador jugador = this.juego.jugador_actual;
                     int game_id = this.interfaz.game_id;
-                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), jugador.nombre_online, this.hotel_seleccionado.nombre_txt, jugador.n_billetes_5000.ToString(),
+                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, jugador.n_billetes_5000.ToString(),
                         jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString());
                 }
             }

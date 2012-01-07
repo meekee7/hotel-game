@@ -564,7 +564,7 @@ namespace Juego_Hotel
         private void bDado_Click(object sender, EventArgs e)
         {
             if (this.online)
-                this.frm_online.enviar_comando("roll_dice", this.game_id.ToString(), this.juego.jugador_actual.nombre_online);
+                this.frm_online.enviar_comando("roll_dice", this.game_id.ToString());
             else
                 this.Tirar_dado(null);
         }
@@ -771,7 +771,7 @@ namespace Juego_Hotel
                 }
                 if (this.online)
                 {
-                    this.frm_online.enviar_comando("expropriate_hotel", this.game_id.ToString(), this.juego.jugador_actual.nombre_online, hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
+                    this.frm_online.enviar_comando("expropriate_hotel", this.game_id.ToString(), hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
                          jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString(),
                          dueño_ant.n_billetes_5000.ToString(), dueño_ant.n_billetes_1000.ToString(), dueño_ant.n_billetes_500.ToString(), dueño_ant.n_billetes_100.ToString(),
                          dueño_ant.n_billetes_50.ToString());
@@ -788,7 +788,7 @@ namespace Juego_Hotel
                 }
                 if (this.online)
                 {
-                    this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), this.juego.jugador_actual.nombre_online, hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
+                    this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
                          jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString());
                 }
             }
@@ -1062,7 +1062,7 @@ namespace Juego_Hotel
         {
             this.bCobrarBanca.Enabled = false;
             if (this.online)
-                this.frm_online.enviar_comando("charge_bank", this.game_id.ToString(), this.nombre_online);
+                this.frm_online.enviar_comando("charge_bank", this.game_id.ToString());
             else
             {
                 this.juego.jugador_actual.Cobrar_Banco();
@@ -1129,48 +1129,35 @@ namespace Juego_Hotel
                 return false;
         }
 
-        private void bEntradasJ1_Click(object sender, EventArgs e)
+        private void Poner_entradas(int num_jugador)
         {
-            if (this.juego.jugadores[0].hoteles.Count != 0)
+            if (this.juego.jugadores[num_jugador].hoteles.Count != 0)
             {
-                PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, 0, this);
+                PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, num_jugador, this);
                 frm_poner_entradas.ShowDialog();
             }
             else
                 MessageBox.Show("No posees ningún hotel", "No es posible poner entradas");
+        }
+
+        private void bEntradasJ1_Click(object sender, EventArgs e)
+        {
+            this.Poner_entradas(0);
         }
 
         private void bEntradasJ2_Click(object sender, EventArgs e)
         {
-            if (this.juego.jugadores[1].hoteles.Count != 0)
-            {
-                PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, 1, this);
-                frm_poner_entradas.ShowDialog();
-            }
-            else
-                MessageBox.Show("No posees ningún hotel", "No es posible poner entradas");
+            this.Poner_entradas(1);
         }
 
         private void bEntradasJ3_Click(object sender, EventArgs e)
         {
-            if (this.juego.jugadores[2].hoteles.Count != 0)
-            {
-                PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, 2, this);
-                frm_poner_entradas.ShowDialog();
-            }
-            else
-                MessageBox.Show("No posees ningún hotel", "No es posible poner entradas");
+            this.Poner_entradas(2);
         }
 
         private void bEntradasJ4_Click(object sender, EventArgs e)
         {
-            if (this.juego.jugadores[3].hoteles.Count != 0)
-            {
-                PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, 3, this);
-                frm_poner_entradas.ShowDialog();
-            }
-            else
-                MessageBox.Show("No posees ningún hotel", "No es posible poner entradas");
+            this.Poner_entradas(3);
         }
 
         public void Dibujar_Entrada(Casilla casilla, Boolean en_la_derecha)
@@ -1284,6 +1271,8 @@ namespace Juego_Hotel
                 case 3: this.controlJ4.Enabled = false;
                     break;
             }
+            if (this.online)
+                return; // Se hace en el comando enviado por el server
             if (n_jugador + 1 == this.juego.jug_actual)
             {
                 this.bTurno.Enabled = true;
@@ -1292,40 +1281,35 @@ namespace Juego_Hotel
             }
         }
 
-        private void bRetirarseJ1_Click(object sender, EventArgs e)
+        private void Retirarse(int num_jugador)
         {
             if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[0], null);
-                this.Marcar_Jugador_Eliminado(0);
+                this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
+                this.Marcar_Jugador_Eliminado(num_jugador);
+                if (this.online)
+                    this.frm_online.enviar_comando("retire", this.game_id.ToString());
             }
+        }
+
+        private void bRetirarseJ1_Click(object sender, EventArgs e)
+        {
+            this.Retirarse(0);
         }
 
         private void bRetirarseJ2_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[1], null);
-                this.Marcar_Jugador_Eliminado(1);
-            }
+            this.Retirarse(1);
         }
 
         private void bRetirarseJ3_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[2], null);
-                this.Marcar_Jugador_Eliminado(2);
-            }
+            this.Retirarse(2);
         }
 
         private void bRetirarseJ4_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[3], null);
-                this.Marcar_Jugador_Eliminado(3);
-            }
+            this.Retirarse(3);
         }
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)

@@ -584,6 +584,16 @@ namespace Juego_Hotel
             }
         }
 
+        private void No_unirse_a_partida()
+        {
+            int bytes_recibidos = 0;
+            int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
+            String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            MessageBox.Show("Ya estás dentro de la partida " + nombre);
+            this.Activar_bUnirse();
+            this.Activar_bCrearPartida();
+        }
+
         private void Manejar_nuevo_chat(object parametros)
         {
             List<String> lista_params = (List<String>) parametros;
@@ -646,9 +656,10 @@ namespace Juego_Hotel
         {
             String msg = null;
             int bytes_recibidos = 0;
+            int long_msg;
             do
             {
-                int long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
+                long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
                 msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
                 if (msg == "#disconnect#")
                     this.continuar_thread = false;
@@ -670,6 +681,8 @@ namespace Juego_Hotel
                     this.Unirse_a_partida(true);
                 else if (msg == "cant_join_game_full")
                     this.Unirse_a_partida(false);
+                else if (msg == "cant_join_already_joined")
+                    this.No_unirse_a_partida();
                 else if (msg == "rolled_dice")
                     this.Dado_tirado();
                 else if (msg == "game_started")
@@ -686,10 +699,13 @@ namespace Juego_Hotel
                     this.Fase_construida();
                 else if (msg == "entrance_added")
                     this.Entrada_añadida();
+                else if (msg == "player_retired")
+                    this.Jugador_retirado();
                 else
                 {
                     MessageBox.Show("Comando desconocido");
-                    this.bDesconectar.PerformClick();
+                    this.continuar_thread = false;
+                    this.Pulsar_Desconectar();
                 }
                 msg = null;
             }
@@ -989,6 +1005,21 @@ namespace Juego_Hotel
                 }
                 hotel.n_entradas++;
                 hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
+            }
+        }
+
+        private void Jugador_retirado()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se hace desde la interfaz cuando se retira, por seguridad debería cambiarse para que lo haga todo el servidor
+            {
+                partida.interfaz.juego.Eliminar_Jugador(jugador, null);
+                partida.interfaz.Marcar_Jugador_Eliminado(jugador.n_jugador);
             }
         }
     }

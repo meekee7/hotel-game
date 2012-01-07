@@ -23,6 +23,7 @@ public:
 
    void set_player_money(config configuration);
    bool join(Player* p);
+   bool check_already_joined(Player* p);
    bool leave(Player* p);
    void start();
    int roll_dice();

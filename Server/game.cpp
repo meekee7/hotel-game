@@ -56,6 +56,15 @@ bool Game::join(Player* p)
    }
 }
 
+bool Game::check_already_joined(Player* p)
+{
+   list<Player*>::iterator i = find(this->plist.begin(), this->plist.end(), p);
+   if (i == plist.end())
+      return false;
+   else
+      return true;
+}
+
 bool Game::leave(Player* p)
 {
    bool found = false;
@@ -105,7 +114,10 @@ Player* Game::turn_pass()
    while (!valid)
    {
       if (i == --this->plist.end())
+      {
          this->current_player = *(this->plist.begin());
+         i = plist.begin();
+      }
       else
       {
          advance(i, 1);

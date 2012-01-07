@@ -176,7 +176,12 @@ Player* get_player_from_game(wstring name, Game* game)
 	if (!found)
 		return NULL;
 	else
-		return (*i);
+   {
+      if ((*i)->active) // To avoid hack: sending commands when retired
+		   return (*i);
+      else
+         return NULL;
+   }
 }
 
 Hotel* get_hotel_from_name(wstring name)
@@ -547,7 +552,13 @@ void handle_command(string command, Player* p)
       int len_name = receive_int(p, &bytes_received);
       wstring name = receive_wstring(p, len_name, &bytes_received);
       Game* game = get_game_from_name(name);
-      if (game->join(p))
+      if (game->check_already_joined(p))
+      {
+         send_command("cant_join_already_joined", p);
+         send_int(p, get_utf8_length(name));
+         send_wstring(p, name);
+      }
+      else if (game->join(p))
       {
          send_command("joined_game", p);
          send_int(p, get_utf8_length(name));
@@ -816,27 +827,6 @@ void handle_command(string command, Player* p)
          send_wstring(dest, msg);
       }
    }
-   else if (command == "roll_dice")
-   {
-      int bytes_received;
-      int len_id = receive_int(p, &bytes_received);
-      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      int len_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, len_name, &bytes_received);
-      list<Player*>::iterator i;
-      Player* dest;
-      Game* game = get_game_from_id(id);
-      int dice_res = game->roll_dice();
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
-      {
-         dest = (*i);
-         send_command("rolled_dice", dest);
-         send_int(dest, id);
-         send_int(dest, dice_res);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
-      }
-   }
    else if (command == "start_game")
    {
       int bytes_received;
@@ -870,6 +860,27 @@ void handle_command(string command, Player* p)
          send_wstring(dest, name_list);
       }
    }
+   else if (command == "roll_dice")
+   {
+      int bytes_received;
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+      //int len_name = receive_int(p, &bytes_received);
+      //wstring player_name = receive_wstring(p, len_name, &bytes_received);
+      list<Player*>::iterator i;
+      Player* dest;
+      Game* game = get_game_from_id(id);
+      int dice_res = game->roll_dice();
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("rolled_dice", dest);
+         send_int(dest, id);
+         send_int(dest, dice_res);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
+      }
+   }
    else if (command == "turn_pass")
    {
       int bytes_received;
@@ -893,20 +904,20 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      int len_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, len_name, &bytes_received);
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
-      Player* player = get_player_from_game(player_name, game);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
       player->Charge_bank();
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
          send_command("update_player_money", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, player->n_50);
          send_int(dest, player->n_100);
          send_int(dest, player->n_500);
@@ -920,8 +931,6 @@ void handle_command(string command, Player* p)
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, len_name, &bytes_received);
-      len_name = receive_int(p, &bytes_received);
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
       len_int = receive_int(p, &bytes_received);
       int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
@@ -936,7 +945,9 @@ void handle_command(string command, Player* p)
       // We have player total money
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
-      Player* player = get_player_from_name(player_name);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
       hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
       list<Player*>::iterator i;
@@ -946,14 +957,14 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("hotel_purchased", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, get_utf8_length(hotel_name));
          send_wstring(dest, hotel_name);
          send_command("update_player_money", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, player->n_50);
          send_int(dest, player->n_100);
          send_int(dest, player->n_500);
@@ -967,8 +978,6 @@ void handle_command(string command, Player* p)
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, len_name, &bytes_received);
-      len_name = receive_int(p, &bytes_received);
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
       len_int = receive_int(p, &bytes_received);
       int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
@@ -993,7 +1002,9 @@ void handle_command(string command, Player* p)
       // We have player total money
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
-      Player* player = get_player_from_name(player_name);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
       Player* previous_owner = hotel->owner;
       hotel->owner = player;
       player->Expropriate_hotel(hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50, po_n_5000, po_n_1000, po_n_500, po_n_100, po_n_50);
@@ -1004,14 +1015,14 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("hotel_expropriated", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, get_utf8_length(hotel_name));
          send_wstring(dest, hotel_name);
          send_command("update_player_money", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, player->n_50);
          send_int(dest, player->n_100);
          send_int(dest, player->n_500);
@@ -1034,8 +1045,6 @@ void handle_command(string command, Player* p)
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, len_name, &bytes_received);
-      len_name = receive_int(p, &bytes_received);
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
       len_int = receive_int(p, &bytes_received);
       int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
@@ -1050,7 +1059,9 @@ void handle_command(string command, Player* p)
       // We have player total money
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
-      Player* player = get_player_from_name(player_name);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
       player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
       hotel->Extend();
       list<Player*>::iterator i;
@@ -1060,14 +1071,14 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("phase_built", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, get_utf8_length(hotel_name));
          send_wstring(dest, hotel_name);
          send_command("update_player_money", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, player->n_50);
          send_int(dest, player->n_100);
          send_int(dest, player->n_500);
@@ -1081,8 +1092,6 @@ void handle_command(string command, Player* p)
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_name = receive_int(p, &bytes_received);
-      wstring player_name = receive_wstring(p, len_name, &bytes_received);
-      len_name = receive_int(p, &bytes_received);
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
       len_int = receive_int(p, &bytes_received);
       int position = atoi(receive_string(p, len_int, &bytes_received).c_str());
@@ -1099,7 +1108,9 @@ void handle_command(string command, Player* p)
       // We have player total money
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
-      Player* player = get_player_from_name(player_name);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
       hotel->Add_entrance(position);
       player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
       list<Player*>::iterator i;
@@ -1109,20 +1120,47 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("entrance_added", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, get_utf8_length(hotel_name));
          send_wstring(dest, hotel_name);
          send_int(dest, position);
          send_command("update_player_money", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(player_name));
-         send_wstring(dest, player_name);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
          send_int(dest, player->n_50);
          send_int(dest, player->n_100);
          send_int(dest, player->n_500);
          send_int(dest, player->n_1000);
          send_int(dest, player->n_5000);
+      }
+   }
+   else if (command == "retire")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      Game* game = get_game_from_id(id);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
+      player->Eliminate();
+      // Return all hotels to bank
+      list<Hotel*>::iterator j;
+      for (j = player->hotels.begin() ; j != player->hotels.end() ; ++j)
+      {
+         (*j)->owner = NULL;
+      }
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("player_retired", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
       }
    }
 }

@@ -167,7 +167,7 @@ namespace Juego_Hotel
             if (this.interfaz.online)
             {
                 int game_id = this.interfaz.game_id;
-                this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.interfaz.nombre_online, this.hotel_seleccionado.nombre_txt, n_casilla.ToString(),
+                this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.hotel_seleccionado.nombre_txt, n_casilla.ToString(),
                     this.jugador.n_billetes_5000.ToString(), this.jugador.n_billetes_1000.ToString(), this.jugador.n_billetes_500.ToString(), this.jugador.n_billetes_100.ToString(),
                     this.jugador.n_billetes_50.ToString());
             }
