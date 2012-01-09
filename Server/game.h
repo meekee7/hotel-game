@@ -21,13 +21,15 @@ public:
    Player* current_player;
    int starting_player;
 
-   void set_player_money(config configuration);
+   void set_players_money(config configuration);
    bool join(Player* p);
    bool check_already_joined(Player* p);
    bool leave(Player* p);
    void start();
    int roll_dice();
    Player* turn_pass();
+   int get_active_players_count();
+   Player* get_winner(); // Only called when active players count is 1, so it gets first active player in list
 
    Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count);
    ~Game(void);

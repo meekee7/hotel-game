@@ -13,7 +13,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->started = false;
 }
 
-void Game::set_player_money(config configuration)
+void Game::set_players_money(config configuration)
 {
    list<Player*>::iterator i;
    if (this->n_players > 2)
@@ -128,6 +128,32 @@ Player* Game::turn_pass()
    }
    wcout << L"Turn passed, next player: " << this->current_player->name << endl;
    return this->current_player;
+}
+
+int Game::get_active_players_count()
+{
+   int num = 0;
+   list<Player*>::iterator i;
+   for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
+   {
+      if ((*i)->active)
+         num++;
+   }
+   return num;
+}
+
+Player* Game::get_winner() // Only called when active players count is 1, so it gets first active player in list
+{
+   list<Player*>::iterator i = this->plist.begin();
+   bool found = false;
+   while (!found && (i != this->plist.end())) // Just in case of strange case
+   {
+      if ((*i)->active)
+         found = true;
+      else
+         ++i;
+   }
+   return (*i);
 }
 
 Game::~Game(void)

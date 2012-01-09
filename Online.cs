@@ -701,6 +701,8 @@ namespace Juego_Hotel
                     this.Entrada_añadida();
                 else if (msg == "player_retired")
                     this.Jugador_retirado();
+                else if (msg == "game_ended")
+                    this.Juego_terminado();
                 else
                 {
                     MessageBox.Show("Comando desconocido");
@@ -1021,6 +1023,19 @@ namespace Juego_Hotel
                 partida.interfaz.juego.Eliminar_Jugador(jugador, null);
                 partida.interfaz.Marcar_Jugador_Eliminado(jugador.n_jugador);
             }
+        }
+
+        delegate void Finalizar_Partida_Callback(Jugador jugador);
+
+        private void Juego_terminado()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            partida.interfaz.BeginInvoke(new Finalizar_Partida_Callback(partida.interfaz.Finalizar_Partida), jugador);
         }
     }
 }

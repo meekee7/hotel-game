@@ -29,6 +29,8 @@ list<Player*> global_chat_list; // Players in global chat
 list<Chat*> chat_list;
 list<Hotel*> hotel_list;
 dlib::mutex mutex_ids;
+dlib::mutex mutex_lists;
+dlib::mutex mutex_disconnects;
 int id_count = 0;
 string config_content;
 struct config configuration;
@@ -80,6 +82,7 @@ void empty_plist()
       delete p;
 	}
 }
+
 void close_server (int signum)
 {
    closing = 1;
@@ -99,6 +102,7 @@ void hook_signals()
 
 bool add_player_to_player_list (Player* p)
 {
+   mutex_lists.lock();
 	bool found = false;
 	list<Player*>::iterator i = plist.begin();
 	while (!found && i != plist.end())
@@ -111,18 +115,21 @@ bool add_player_to_player_list (Player* p)
 	if (found)
 	{
 		wcout << L"Player already connected" << endl;
+      mutex_lists.unlock();
 		return false;
 	}
 	else
 	{
 		wcout << L"Player accepted" << endl;
 		plist.push_back(p);
+      mutex_lists.unlock();
 		return true;
 	}
 }
 
 bool delete_player_from_player_list(Player* p)
 {
+   mutex_lists.lock();
    bool found = false;
 	list<Player*>::iterator i = plist.begin();
 	while (!found && i != plist.end())
@@ -135,12 +142,14 @@ bool delete_player_from_player_list(Player* p)
 	if (!found)
    {
 		wcout << L"Player not found in player list" << endl;
+      mutex_lists.unlock();
       return false;
    }
 	else
 	{
 		wcout << L"Player deleted from player list" << endl;
 		plist.erase(i);
+      mutex_lists.unlock();
       return true;
 	}
 }
@@ -205,13 +214,16 @@ bool delete_chat_if_empty(Chat* chat)
 {
    if (chat == NULL) // Ya ha sido borrado en otro thread, cambiar a mutex o semáforo
       return true;
+   mutex_lists.lock();
    if (chat->players.empty())
    {
       wcout << L"Chat " << chat->id << L" deleted because it's empty" << endl;
       chat_list.remove(chat);
       delete chat;
+      mutex_lists.unlock();
       return true;
    }
+   mutex_lists.unlock();
    return false;
 }
 
@@ -219,15 +231,20 @@ bool delete_game_if_empty(Game* game)
 {
    if (game == NULL) // Ya ha sido borrado en otro thread, cambiar a mutex o semáforo
       return true;
+   mutex_lists.lock();
    if (game->plist.empty())
    {
       wcout << L"Game " << game->name << L" deleted because it's empty" << endl;
       glist.remove(game);
       delete game;
+      mutex_lists.unlock();
       return true;
    }
    else
+   {
+      mutex_lists.unlock();
       return false;
+   }
 }
 
 Game* get_game_from_name(wstring name)
@@ -288,6 +305,7 @@ void disconnect_client(Player* p)
 {
    if (!p->connected)
       return;
+   mutex_disconnects.lock();
    // Leave all normal chats and global chat
    list<Chat*>::iterator i;
    for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
@@ -317,6 +335,7 @@ void disconnect_client(Player* p)
    }
    delete_player_from_player_list(p);
    p->connected = false;
+   mutex_disconnects.unlock();
 }
 
 int get_utf8_length(wstring data)
@@ -833,7 +852,7 @@ void handle_command(string command, Player* p)
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       Game* game = get_game_from_id(id);
-      game->set_player_money(configuration);
+      game->set_players_money(configuration);
       game->start();
       list<Player*>::iterator i;
       Player* dest;
@@ -1153,7 +1172,7 @@ void handle_command(string command, Player* p)
          (*j)->owner = NULL;
       }
       list<Player*>::iterator i;
-      Player* dest;
+      Player* dest, * winner;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
@@ -1161,6 +1180,14 @@ void handle_command(string command, Player* p)
          send_int(dest, id);
          send_int(dest, get_utf8_length(p->name));
          send_wstring(dest, p->name);
+         if (game->get_active_players_count() == 1)
+         {
+            send_command("game_ended", dest);
+            send_int(dest, id);
+            winner = game->get_winner();
+            send_int(dest, get_utf8_length(winner->name));
+            send_wstring(dest, winner->name);
+         }
       }
    }
 }

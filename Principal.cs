@@ -145,6 +145,21 @@ namespace Juego_Hotel
                 this.bPedirNochesJ2.Enabled = false;
                 this.bPedirNochesJ3.Enabled = false;
                 this.bPedirNochesJ4.Enabled = false;
+                this.bRetirarseJ1.Enabled = false;
+                this.bRetirarseJ2.Enabled = false;
+                this.bRetirarseJ3.Enabled = false;
+                this.bRetirarseJ4.Enabled = false;
+                switch (this.juego.jugador_actual.n_jugador)
+                {
+                    case 0: this.bRetirarseJ1.Enabled = true;
+                        break;
+                    case 1: this.bRetirarseJ2.Enabled = true;
+                        break;
+                    case 2: this.bRetirarseJ3.Enabled = true;
+                        break;
+                    case 3: this.bRetirarseJ4.Enabled = true;
+                        break;
+                }
                 this.colorJ1.Text = "Color: " + this.juego.jugadores[0].color.ToString();
                 this.colorJ2.Text = "Color: " + this.juego.jugadores[1].color.ToString();
                 this.dineroJ1.Text = "Dinero: " + this.juego.jugadores[0].dinero_total;
@@ -346,9 +361,7 @@ namespace Juego_Hotel
                 if (!this.online)
                     this.juego.jug_actual = Sig_jugador_Activo();
                 else
-                {
                     this.juego.jug_actual = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == sig_jugador).n_jugador + 1;
-                }
                 this.Establecer_Turno();
                 this.juego.Cambiar_jugador_actual();
                 if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugador_actual.nombre_online)))
@@ -364,6 +377,21 @@ namespace Juego_Hotel
                 this.bPedirNochesJ2.Enabled = false;
                 this.bPedirNochesJ3.Enabled = false;
                 this.bPedirNochesJ4.Enabled = false;
+                this.bRetirarseJ1.Enabled = false;
+                this.bRetirarseJ2.Enabled = false;
+                this.bRetirarseJ3.Enabled = false;
+                this.bRetirarseJ4.Enabled = false;
+                switch (this.juego.jugador_actual.n_jugador)
+                {
+                    case 0: this.bRetirarseJ1.Enabled = true;
+                        break;
+                    case 1: this.bRetirarseJ2.Enabled = true;
+                        break;
+                    case 2: this.bRetirarseJ3.Enabled = true;
+                        break;
+                    case 3: this.bRetirarseJ4.Enabled = true;
+                        break;
+                }
                 this.juego.jugador_actual.pago_ultimo_turno = false;
                 this.dado_tirado = false;
                 foreach (Hotel hotel in this.juego.hoteles)
@@ -522,10 +550,17 @@ namespace Juego_Hotel
                 this.bEntradasJ4.Enabled = false;
                 if (this.Puede_poner_entradas(this.juego.jugador_actual))
                     this.Activar_Poner_Entradas(this.juego.jug_actual);
-                this.bPedirNochesJ1.Enabled = true;
-                this.bPedirNochesJ2.Enabled = true;
-                this.bPedirNochesJ3.Enabled = true;
-                this.bPedirNochesJ4.Enabled = true;
+                switch (jugador.n_jugador)
+                {
+                    case 0: this.bPedirNochesJ1.Enabled = true;
+                        break;
+                    case 1: this.bPedirNochesJ2.Enabled = true;
+                        break;
+                    case 2: this.bPedirNochesJ3.Enabled = true;
+                        break;
+                    case 3: this.bPedirNochesJ4.Enabled = true;
+                        break;
+                }
                 if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
                     this.bCobrarBanca.Enabled = true;
                 switch (jugador.posicion.tipo)

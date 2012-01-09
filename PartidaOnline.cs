@@ -47,7 +47,7 @@ namespace Juego_Hotel
                 foreach (String nombre in lista)
                     this.listaJugadores.Items.Add(nombre);
                 this.listaJugadores.EndUpdate();
-                if ((this.listaJugadores.Items.Count >= 2) && (this.creador == this.frm_online.txtLogin.Text))
+                if ((this.listaJugadores.Items.Count == this.num_jugadores) && (this.creador == this.frm_online.txtLogin.Text))
                     this.bIniciar.Enabled = true;
                 else
                     this.bIniciar.Enabled = false;
