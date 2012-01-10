@@ -193,13 +193,13 @@ Player* get_player_from_game(wstring name, Game* game)
    }
 }
 
-Hotel* get_hotel_from_name(wstring name)
+Hotel* get_hotel_from_name(wstring name_txt)
 {
    bool found = false;
 	list<Hotel*>::iterator i = hotel_list.begin();
 	while (!found && i != hotel_list.end())
 	{
-		if ((*i)->name == name)
+		if ((*i)->name_txt == name_txt)
 			found = true;
       else
          ++i;
@@ -1285,14 +1285,14 @@ void read_config(TiXmlDocument* config_xml)
 
 void create_hotel_list()
 {
-   hotel_list.push_back(new Hotel(L"Fujiyama"));
-   hotel_list.push_back(new Hotel(L"Boomerang"));
-   hotel_list.push_back(new Hotel(L"L'etoile"));
-   hotel_list.push_back(new Hotel(L"President"));
-   hotel_list.push_back(new Hotel(L"Royal"));
-   hotel_list.push_back(new Hotel(L"Waikiki"));
-   hotel_list.push_back(new Hotel(L"Taj Mahal"));
-   hotel_list.push_back(new Hotel(L"Safari"));
+   hotel_list.push_back(new Hotel(Fujiyama));
+   hotel_list.push_back(new Hotel(Boomerang));
+   hotel_list.push_back(new Hotel(Letoile));
+   hotel_list.push_back(new Hotel(President));
+   hotel_list.push_back(new Hotel(Royal));
+   hotel_list.push_back(new Hotel(Waikiki));
+   hotel_list.push_back(new Hotel(Taj_Mahal));
+   hotel_list.push_back(new Hotel(Safari));
 }
 
 void run_server()

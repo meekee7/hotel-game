@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
 #include "player.h"
+#include "types.h"
 
 class Hotel
 {
 public:
-   wstring name;
+   THotel_name name;
+   wstring name_txt;
    int price, expropriation_price;
    bool ground_bought;
    bool entrance_bought_last_turn;
@@ -18,7 +20,7 @@ public:
    vector<vector<int> > prices_matrix;
    vector<int> expansions_prices;
 
-   Hotel(wstring name);
+   Hotel(THotel_name real_name);
    void Extend();
    void Add_entrance(int position);
    ~Hotel(void);
