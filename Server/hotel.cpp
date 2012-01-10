@@ -2,10 +2,6 @@
 
 Hotel::Hotel(THotel_name name)
 {
-   this->prices_matrix = vector<vector<int> > (2, vector<int>(3));
-   this->prices_matrix[0][0] = 1;
-   this->prices_matrix[0][1] = 2;
-   this->prices_matrix[1][2] = 3;
    this->name = name;
    this->owner = NULL;
    this->entrances = list<int>();
@@ -82,13 +78,42 @@ Hotel::Hotel(THotel_name name)
             this->entrance_price = 250;
             this->n_max_expansions = 5;
             this->expansions_prices = vector<int>(this->n_max_expansions);
+            this->expansions_prices[0] = 5000;
+            this->expansions_prices[1] = 3000;
+            this->expansions_prices[2] = 2250;
+            this->expansions_prices[3] = 1750;
+            this->expansions_prices[4] = 5000;
             this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
-            this->expansions_prices = new int[5] { 5000, 3000, 2250, 1750, 5000 };
-            this->prices_matrix = new int[5, 6] { { 200, 400, 600, 800, 1000, 1200 },
-                                                   { 400, 800, 1200, 1600, 2000, 2400 },
-                                                   { 600, 1200, 1800, 2400, 3000, 3600 },
-                                                   { 800, 1600, 2400, 3200, 4000, 4800 },
-                                                   { 1100, 2200, 3300, 4400, 5500, 6600 } };
+            this->prices_matrix[0][0] = 200;
+            this->prices_matrix[0][1] = 400;
+            this->prices_matrix[0][2] = 600;
+            this->prices_matrix[0][3] = 800;
+            this->prices_matrix[0][4] = 1000;
+            this->prices_matrix[0][5] = 1200;
+            this->prices_matrix[1][0] = 400;
+            this->prices_matrix[1][1] = 800;
+            this->prices_matrix[1][2] = 1200;
+            this->prices_matrix[1][3] = 1600;
+            this->prices_matrix[1][4] = 2000;
+            this->prices_matrix[1][5] = 2400;
+            this->prices_matrix[2][0] = 600;
+            this->prices_matrix[2][1] = 1200;
+            this->prices_matrix[2][2] = 1800;
+            this->prices_matrix[2][3] = 2400;
+            this->prices_matrix[2][4] = 3000;
+            this->prices_matrix[2][5] = 3600;
+            this->prices_matrix[3][0] = 800;
+            this->prices_matrix[3][1] = 1600;
+            this->prices_matrix[3][2] = 2400;
+            this->prices_matrix[3][3] = 3200;
+            this->prices_matrix[3][4] = 4000;
+            this->prices_matrix[3][5] = 4800;
+            this->prices_matrix[4][0] = 1100;
+            this->prices_matrix[4][1] = 2200;
+            this->prices_matrix[4][2] = 3300;
+            this->prices_matrix[4][3] = 4400;
+            this->prices_matrix[4][4] = 5500;
+            this->prices_matrix[4][5] = 6600;
             break;
          case Taj_Mahal :
             this->name_txt = L"Taj Mahal";
@@ -97,12 +122,35 @@ Hotel::Hotel(THotel_name name)
             this->entrance_price = 100;
             this->n_max_expansions = 4;
             this->expansions_prices = vector<int>(this->n_max_expansions);
+            this->expansions_prices[0] = 2400;
+            this->expansions_prices[1] = 1000;
+            this->expansions_prices[2] = 500;
+            this->expansions_prices[3] = 1000;
             this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
-            this->expansions_prices = new int[4] { 2400, 1000, 500, 1000 };
-            this->prices_matrix = new int[4, 6] { { 100, 200, 300, 400, 500, 600 },
-                                                   { 100, 200, 300, 400, 500, 600 },
-                                                   { 200, 400, 600, 800, 1000, 1200 },
-                                                   { 300, 600, 900, 1200, 1500, 1800 } };
+            this->prices_matrix[0][0] = 100;
+            this->prices_matrix[0][1] = 200;
+            this->prices_matrix[0][2] = 300;
+            this->prices_matrix[0][3] = 400;
+            this->prices_matrix[0][4] = 500;
+            this->prices_matrix[0][5] = 600;
+            this->prices_matrix[1][0] = 100;
+            this->prices_matrix[1][1] = 200;
+            this->prices_matrix[1][2] = 300;
+            this->prices_matrix[1][3] = 400;
+            this->prices_matrix[1][4] = 500;
+            this->prices_matrix[1][5] = 600;
+            this->prices_matrix[2][0] = 200;
+            this->prices_matrix[2][1] = 400;
+            this->prices_matrix[2][2] = 600;
+            this->prices_matrix[2][3] = 800;
+            this->prices_matrix[2][4] = 1000;
+            this->prices_matrix[2][5] = 1200;
+            this->prices_matrix[3][0] = 300;
+            this->prices_matrix[3][1] = 600;
+            this->prices_matrix[3][2] = 900;
+            this->prices_matrix[3][3] = 1200;
+            this->prices_matrix[3][4] = 1500;
+            this->prices_matrix[3][5] = 1800;
             break;
          case Waikiki :
             this->name_txt = L"Waikiki";
@@ -111,14 +159,49 @@ Hotel::Hotel(THotel_name name)
             this->entrance_price = 200;
             this->n_max_expansions = 6;
             this->expansions_prices = vector<int>(this->n_max_expansions);
+            this->expansions_prices[0] = 3500;
+            this->expansions_prices[1] = 2500;
+            this->expansions_prices[2] = 2500;
+            this->expansions_prices[3] = 1750;
+            this->expansions_prices[4] = 1750;
+            this->expansions_prices[5] = 2500;
             this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
-            this->expansions_prices = new int[6] { 3500, 2500, 2500, 1750, 1750, 2500 };
-            this->prices_matrix = new int[6, 6] { { 200, 400, 600, 800, 1000, 1200 },
-                                                   { 350, 700, 1050, 1400, 1750, 2100 },
-                                                   { 500, 1000, 1500, 2000, 2500, 3000 },
-                                                   { 500, 1000, 1500, 2000, 2500, 3000 },
-                                                   { 650, 1300, 1950, 2600, 3250, 3900 },
-                                                   { 1000, 2000, 3000, 4000, 5000, 6000 } };
+            this->prices_matrix[0][0] = 200;
+            this->prices_matrix[0][1] = 400;
+            this->prices_matrix[0][2] = 600;
+            this->prices_matrix[0][3] = 800;
+            this->prices_matrix[0][4] = 1000;
+            this->prices_matrix[0][5] = 1200;
+            this->prices_matrix[1][0] = 350;
+            this->prices_matrix[1][1] = 700;
+            this->prices_matrix[1][2] = 1050;
+            this->prices_matrix[1][3] = 1400;
+            this->prices_matrix[1][4] = 1750;
+            this->prices_matrix[1][5] = 2100;
+            this->prices_matrix[2][0] = 500;
+            this->prices_matrix[2][1] = 1000;
+            this->prices_matrix[2][2] = 1500;
+            this->prices_matrix[2][3] = 2000;
+            this->prices_matrix[2][4] = 2500;
+            this->prices_matrix[2][5] = 3000;
+            this->prices_matrix[3][0] = 500;
+            this->prices_matrix[3][1] = 1000;
+            this->prices_matrix[3][2] = 1500;
+            this->prices_matrix[3][3] = 2000;
+            this->prices_matrix[3][4] = 2500;
+            this->prices_matrix[3][5] = 3000;
+            this->prices_matrix[4][0] = 650;
+            this->prices_matrix[4][1] = 1300;
+            this->prices_matrix[4][2] = 1950;
+            this->prices_matrix[4][3] = 2600;
+            this->prices_matrix[4][4] = 3250;
+            this->prices_matrix[4][5] = 3900;
+            this->prices_matrix[5][0] = 1000;
+            this->prices_matrix[5][1] = 2000;
+            this->prices_matrix[5][2] = 3000;
+            this->prices_matrix[5][3] = 4000;
+            this->prices_matrix[5][4] = 5000;
+            this->prices_matrix[5][5] = 6000;
             break;
          case Royal:
             this->name_txt = L"Royal";
@@ -127,13 +210,42 @@ Hotel::Hotel(THotel_name name)
             this->entrance_price = 200;
             this->n_max_expansions = 5;
             this->expansions_prices = vector<int>(this->n_max_expansions);
+            this->expansions_prices[0] = 3600;
+            this->expansions_prices[1] = 2600;
+            this->expansions_prices[2] = 1800;
+            this->expansions_prices[3] = 1800;
+            this->expansions_prices[4] = 3000;
             this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
-            this->expansions_prices = new int[5] { 3600, 2600, 1800, 1800, 3000 };
-            this->prices_matrix = new int[5, 6] { { 150, 300, 450, 600, 750, 900 },
-                                                   { 300, 600, 900, 1200, 1500, 1800 },
-                                                   { 300, 600, 900, 1200, 1500, 1800 },
-                                                   { 450, 900, 1350, 1800, 2250, 2700 },
-                                                   { 600, 1200, 1800, 2400, 3000, 3600 } };
+            this->prices_matrix[0][0] = 150;
+            this->prices_matrix[0][1] = 300;
+            this->prices_matrix[0][2] = 450;
+            this->prices_matrix[0][3] = 600;
+            this->prices_matrix[0][4] = 750;
+            this->prices_matrix[0][5] = 900;
+            this->prices_matrix[1][0] = 300;
+            this->prices_matrix[1][1] = 600;
+            this->prices_matrix[1][2] = 900;
+            this->prices_matrix[1][3] = 1200;
+            this->prices_matrix[1][4] = 1500;
+            this->prices_matrix[1][5] = 1800;
+            this->prices_matrix[2][0] = 300;
+            this->prices_matrix[2][1] = 600;
+            this->prices_matrix[2][2] = 900;
+            this->prices_matrix[2][3] = 1200;
+            this->prices_matrix[2][4] = 1500;
+            this->prices_matrix[2][5] = 1800;
+            this->prices_matrix[3][0] = 450;
+            this->prices_matrix[3][1] = 900;
+            this->prices_matrix[3][2] = 1350;
+            this->prices_matrix[3][3] = 1800;
+            this->prices_matrix[3][4] = 2250;
+            this->prices_matrix[3][5] = 2700;
+            this->prices_matrix[4][0] = 600;
+            this->prices_matrix[4][1] = 1200;
+            this->prices_matrix[4][2] = 1800;
+            this->prices_matrix[4][3] = 2400;
+            this->prices_matrix[4][4] = 3000;
+            this->prices_matrix[4][5] = 3600;
             break;
          case Safari:
             this->name_txt = L"Safari";
@@ -142,12 +254,35 @@ Hotel::Hotel(THotel_name name)
             this->entrance_price = 150;
             this->n_max_expansions = 4;
             this->expansions_prices = vector<int>(this->n_max_expansions);
+            this->expansions_prices[0] = 2600;
+            this->expansions_prices[1] = 1200;
+            this->expansions_prices[2] = 1200;
+            this->expansions_prices[3] = 2000;
             this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
-            this->expansions_prices = new int[4] { 2600, 1200, 1200, 2000 };
-            this->prices_matrix = new int[4, 6] { { 100, 200, 300, 400, 500, 600 },
-                                                   { 100, 200, 300, 400, 500, 600 },
-                                                   { 250, 500, 750, 1000, 1250, 1500 },
-                                                   { 500, 1000, 1500, 2000, 2500, 3000 } };
+            this->prices_matrix[0][0] = 100;
+            this->prices_matrix[0][1] = 200;
+            this->prices_matrix[0][2] = 300;
+            this->prices_matrix[0][3] = 400;
+            this->prices_matrix[0][4] = 500;
+            this->prices_matrix[0][5] = 600;
+            this->prices_matrix[1][0] = 100;
+            this->prices_matrix[1][1] = 200;
+            this->prices_matrix[1][2] = 300;
+            this->prices_matrix[1][3] = 400;
+            this->prices_matrix[1][4] = 500;
+            this->prices_matrix[1][5] = 600;
+            this->prices_matrix[2][0] = 250;
+            this->prices_matrix[2][1] = 500;
+            this->prices_matrix[2][2] = 750;
+            this->prices_matrix[2][3] = 1000;
+            this->prices_matrix[2][4] = 1250;
+            this->prices_matrix[2][5] = 1500;
+            this->prices_matrix[3][0] = 500;
+            this->prices_matrix[3][1] = 1000;
+            this->prices_matrix[3][2] = 1500;
+            this->prices_matrix[3][3] = 2000;
+            this->prices_matrix[3][4] = 2500;
+            this->prices_matrix[3][5] = 3000;
             break;
          case Letoile:
             this->name_txt = L"L'etoile";
@@ -156,14 +291,49 @@ Hotel::Hotel(THotel_name name)
             this->entrance_price = 250;
             this->n_max_expansions = 6;
             this->expansions_prices = vector<int>(this->n_max_expansions);
+            this->expansions_prices[0] = 3300;
+            this->expansions_prices[1] = 2200;
+            this->expansions_prices[2] = 1800;
+            this->expansions_prices[3] = 1800;
+            this->expansions_prices[4] = 1800;
+            this->expansions_prices[5] = 4000;
             this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
-            this->expansions_prices = new int[6] { 3300, 2200, 1800, 1800, 1800, 4000 };
-            this->prices_matrix = new int[6, 6] { { 150, 300, 450, 600, 750, 900 },
-                                                   { 300, 600, 900, 1200, 1500, 1800 },
-                                                   { 300, 600, 900, 1200, 1500, 1800 },
-                                                   { 300, 600, 900, 1200, 1500, 1800 },
-                                                   { 450, 900, 1350, 1800, 2250, 2700 },
-                                                   { 750, 1500, 2250, 3000, 3750, 4500 } };
+            this->prices_matrix[0][0] = 150;
+            this->prices_matrix[0][1] = 300;
+            this->prices_matrix[0][2] = 450;
+            this->prices_matrix[0][3] = 600;
+            this->prices_matrix[0][4] = 750;
+            this->prices_matrix[0][5] = 900;
+            this->prices_matrix[1][0] = 300;
+            this->prices_matrix[1][1] = 600;
+            this->prices_matrix[1][2] = 900;
+            this->prices_matrix[1][3] = 1200;
+            this->prices_matrix[1][4] = 1500;
+            this->prices_matrix[1][5] = 1800;
+            this->prices_matrix[2][0] = 300;
+            this->prices_matrix[2][1] = 600;
+            this->prices_matrix[2][2] = 900;
+            this->prices_matrix[2][3] = 1200;
+            this->prices_matrix[2][4] = 1500;
+            this->prices_matrix[2][5] = 1800;
+            this->prices_matrix[3][0] = 300;
+            this->prices_matrix[3][1] = 600;
+            this->prices_matrix[3][2] = 900;
+            this->prices_matrix[3][3] = 1200;
+            this->prices_matrix[3][4] = 1500;
+            this->prices_matrix[3][5] = 1800;
+            this->prices_matrix[4][0] = 450;
+            this->prices_matrix[4][1] = 900;
+            this->prices_matrix[4][2] = 1350;
+            this->prices_matrix[4][3] = 1800;
+            this->prices_matrix[4][4] = 2250;
+            this->prices_matrix[4][5] = 2700;
+            this->prices_matrix[5][0] = 750;
+            this->prices_matrix[5][1] = 1500;
+            this->prices_matrix[5][2] = 2250;
+            this->prices_matrix[5][3] = 3000;
+            this->prices_matrix[5][4] = 3750;
+            this->prices_matrix[5][5] = 4500;
             break;
    }
 }
