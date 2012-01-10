@@ -335,6 +335,8 @@ Hotel::Hotel(THotel_name name)
             this->prices_matrix[5][4] = 3750;
             this->prices_matrix[5][5] = 4500;
             break;
+         case None:
+            break;
    }
 }
 
