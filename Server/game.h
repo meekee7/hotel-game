@@ -4,6 +4,7 @@
 #include "player.h"
 #include "chat.h"
 #include "types.h"
+#include "hotel.h"
 #include "dlib/threads.h"
 #include "dlib/rand.h"
 
@@ -20,6 +21,8 @@ public:
    dlib::rand random;
    Player* current_player;
    int starting_player;
+   int last_dice_res;
+   int last_auto_advance;
 
    void set_players_money(config configuration);
    bool join(Player* p);
@@ -29,7 +32,9 @@ public:
    int roll_dice();
    Player* turn_pass();
    int get_active_players_count();
-   Player* get_winner(); // Only called when active players count is 1, so it gets first active player in list
+   Player* get_winner();
+   void eliminate_player(Player* player);
+   int get_money_for_nights(Player* owner, Player* player);
 
    Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count);
    ~Game(void);

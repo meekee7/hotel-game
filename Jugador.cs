@@ -186,6 +186,7 @@ namespace Juego_Hotel
                     this.n_billetes_50--;
                 }
             }
+            this.calcular_dinero_total();
         }
 
         public void Quitar_1000_sin_tener_b1000(out int n_1000, out int n_500, out int n_100, out int n_50)
@@ -232,6 +233,7 @@ namespace Juego_Hotel
                     }
                 }
             }
+            this.calcular_dinero_total();
         }
 
         public void Quitar_500_sin_tener_b500(out int n_500, out int n_100, out int n_50)
@@ -276,6 +278,7 @@ namespace Juego_Hotel
                     }
                 }
             }
+            this.calcular_dinero_total();
         }
 
         public void Quitar_100_sin_tener_b100(out int n_100, out int n_50)
@@ -318,6 +321,7 @@ namespace Juego_Hotel
                     }
                 }
             }
+            this.calcular_dinero_total();
         }
 
         public void Quitar_50_sin_tener_b50(out int n_50)
@@ -358,6 +362,7 @@ namespace Juego_Hotel
                     }
                 }
             }
+            this.calcular_dinero_total();
         }
 
         ~Jugador()

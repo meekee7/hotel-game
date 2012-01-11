@@ -703,6 +703,8 @@ namespace Juego_Hotel
                     this.Jugador_retirado();
                 else if (msg == "game_ended")
                     this.Juego_terminado();
+                else if (msg == "pay_nights")
+                    this.Pagar_noches();
                 else
                 {
                     MessageBox.Show("Comando desconocido");
@@ -1036,6 +1038,17 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             partida.interfaz.BeginInvoke(new Finalizar_Partida_Callback(partida.interfaz.Finalizar_Partida), jugador);
+        }
+
+        private void Pagar_noches()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
         }
     }
 }

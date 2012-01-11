@@ -1,4 +1,5 @@
 #include "game.h"
+#include "position.h"
 #include <iostream>
 
 Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count)
@@ -25,6 +26,7 @@ void Game::set_players_money(config configuration)
          (*i)->n_500 = configuration.three_or_four_players.n_500;
          (*i)->n_1000 = configuration.three_or_four_players.n_1000;
          (*i)->n_5000 = configuration.three_or_four_players.n_5000;
+         (*i)->Calculate_total_money();
       }
    }
    else
@@ -36,6 +38,7 @@ void Game::set_players_money(config configuration)
          (*i)->n_500 = configuration.two_players.n_500;
          (*i)->n_1000 = configuration.two_players.n_1000;
          (*i)->n_5000 = configuration.two_players.n_5000;
+         (*i)->Calculate_total_money();
       }
    }
 }
@@ -100,9 +103,9 @@ void Game::start()
 
 int Game::roll_dice()
 {
-   int res = (rand() % 6) + 1;
-   cout << "Dice result: " << res << endl;
-   return res;
+   this->last_dice_res = (rand() % 6) + 1;
+   cout << "Dice result: " << this->last_dice_res << endl;
+   return this->last_dice_res;
    //return (this->random.get_random_32bit_number() % 6 + 1);
 }
 
@@ -146,7 +149,7 @@ Player* Game::get_winner() // Only called when active players count is 1, so it 
 {
    list<Player*>::iterator i = this->plist.begin();
    bool found = false;
-   while (!found && (i != this->plist.end())) // Just in case of strange case
+   while (!found && (i != this->plist.end())) // Second part shouldn't happen
    {
       if ((*i)->active)
          found = true;
@@ -154,6 +157,36 @@ Player* Game::get_winner() // Only called when active players count is 1, so it 
          ++i;
    }
    return (*i);
+}
+
+void Game::eliminate_player(Player* player)
+{
+   player->Eliminate();
+   // Return all hotels to bank
+   list<Hotel*>::iterator i;
+   for (i = player->hotels.begin() ; i != player->hotels.end() ; ++i)
+   {
+      (*i)->Return_to_bank();
+   }
+   player->hotels.clear();
+}
+
+int Game::get_money_for_nights(Player* owner, Player* player) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance)
+{
+   list<Hotel*>::iterator i;
+   int amount = 0, dice_res = 0;
+   list<int>::iterator pos;
+   for (i = owner->hotels.begin() ; i != owner->hotels.end() ; ++i)
+   {
+      pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player->position->number);
+      if (pos != (*i)->entrances.end()) // Player is in a entrance of this hotel, and it cant be in any other entrance
+      {
+         dice_res = (rand() % 6); // From 0 to 5, perfect for prices matrix, no need to substract
+         wcout << L"Player: " << player->name << " must pay " << dice_res + 1 << " nights to player " << owner->name << endl;
+         amount = (*i)->prices_matrix[(*i)->n_built_expansions-1][dice_res];
+      }
+   }
+   return amount;
 }
 
 Game::~Game(void)

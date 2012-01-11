@@ -1275,22 +1275,34 @@ namespace Juego_Hotel
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)
         {
-            this.Pedir_Noches(0);
+            if (this.online)
+                this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            else
+                this.Pedir_Noches(0);
         }
 
         private void bPedirNochesJ2_Click(object sender, EventArgs e)
         {
-            this.Pedir_Noches(1);
+            if (this.online)
+                this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            else
+                this.Pedir_Noches(1);
         }
 
         private void bPedirNochesJ3_Click(object sender, EventArgs e)
         {
-            this.Pedir_Noches(2);
+            if (this.online)
+                this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            else
+                this.Pedir_Noches(2);
         }
 
         private void bPedirNochesJ4_Click(object sender, EventArgs e)
         {
-            this.Pedir_Noches(3);
+            if (this.online)
+                this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            else
+                this.Pedir_Noches(3);
         }
 
         public void Marcar_Jugador_Eliminado(int n_jugador)

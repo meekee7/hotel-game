@@ -1164,13 +1164,7 @@ void handle_command(string command, Player* p)
       Player* player = get_player_from_game(p->name, game);
       if (player == NULL) // Hack, retire player
          return;
-      player->Eliminate();
-      // Return all hotels to bank
-      list<Hotel*>::iterator j;
-      for (j = player->hotels.begin() ; j != player->hotels.end() ; ++j)
-      {
-         (*j)->owner = NULL;
-      }
+      game->eliminate_player(player);
       list<Player*>::iterator i;
       Player* dest, * winner;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -1187,6 +1181,32 @@ void handle_command(string command, Player* p)
             winner = game->get_winner();
             send_int(dest, get_utf8_length(winner->name));
             send_wstring(dest, winner->name);
+         }
+      }
+   }
+   else if (command == "ask_nights")
+   {
+      int bytes_received;
+      int len_id = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+      list<Player*>::iterator i;
+      Player* dest;
+      Game* game = get_game_from_id(id);
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
+      int amount = 0;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
+      {
+         dest = (*i);
+         amount = game->get_money_for_nights(player, dest);
+         if (amount > 0) // The player is in a entrance
+         {
+            send_command("pay_nights", dest); // Will force the player to pay nights
+            send_int(dest, id);
+            send_int(dest, get_utf8_length(p->name));
+            send_wstring(dest, p->name);
+            send_int(dest, amount);
          }
       }
    }

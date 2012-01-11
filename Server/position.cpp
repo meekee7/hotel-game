@@ -1,7 +1,7 @@
 #include "position.h"
 
 
-position::position(void)
+Position::Position(int number)
 {
    this->number = number;
    this->occupied = false;
@@ -130,6 +130,6 @@ position::position(void)
 }
 
 
-position::~position(void)
+Position::~Position(void)
 {
 }

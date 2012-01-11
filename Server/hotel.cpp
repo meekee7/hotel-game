@@ -343,12 +343,35 @@ Hotel::Hotel(THotel_name name)
 void Hotel::Extend()
 {
    this->n_built_expansions++;
+   if (this->n_built_expansions == this->n_max_expansions)
+      this->ground_bought = true;
 }
 
 void Hotel::Add_entrance(int position)
 {
    this->entrances.push_back(position);
    this->n_entrances++;
+}
+
+int Hotel::Price_next_expansion()
+{
+   return this->expansions_prices[this->n_built_expansions];
+}
+
+bool Hotel::Can_extend()
+{
+   return !this->ground_bought;
+}
+
+int Hotel::Calculate_nights(int number)
+{
+   return this->prices_matrix[this->n_built_expansions-1][number-1]; // Substract to access correctly to prices matrix
+}
+
+void Hotel::Return_to_bank()
+{
+   // The hotel remains with everything
+   this->owner = NULL;
 }
 
 Hotel::~Hotel(void)

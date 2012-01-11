@@ -23,6 +23,10 @@ public:
    Hotel(THotel_name real_name);
    void Extend();
    void Add_entrance(int position);
+   int Price_next_expansion();
+   bool Can_extend();
+   int Calculate_nights(int number);
+   void Return_to_bank();
    ~Hotel(void);
 };
 

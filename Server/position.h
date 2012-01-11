@@ -1,7 +1,7 @@
 #pragma once
 #include "types.h"
 
-class position
+class Position
 {
 public:
    int number;
@@ -12,6 +12,6 @@ public:
    bool entrance_left;
    bool entrance_right;
 
-   position(void);
-   ~position(void);
+   Position(int number);
+   ~Position(void);
 };
