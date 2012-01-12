@@ -348,7 +348,6 @@ int get_utf8_length(wstring data)
    #else
       res = wcstombs(NULL, data.c_str(), 0);
    #endif
-   wcout << L"long utf8: " << res << L" data.c_str: " << data.c_str() << endl;
    return res;
 }
 
@@ -1242,23 +1241,19 @@ void handle_client(void* arg)
       p->socket->psend("login ok", 8, 0);
       bool online = true;
       // Send player list to all players, so they are notified about the new user
-      // Get all users and join into a string with the separator ~
-      wstring s_plist(L"");
-      list<Player*>::iterator i;
-      for (i = plist.begin() ; i != plist.end() ; ++i)
-      {
-         s_plist += (*i)->name;
-         if (i != --plist.end())
-            s_plist += L'~';
-      }
+      // Send as much strings as connected players, with a count first
+      list<Player*>::iterator i, j;
       Player* dest;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
          dest = *i;
          send_command("player_list", dest);
-         wcout << "res length: " << get_utf8_length(s_plist) << " res.c_str: " << s_plist.c_str() << " res: " << s_plist << endl;
-         send_int(dest, get_utf8_length(s_plist));
-         send_wstring(dest, s_plist);
+         send_int(dest, plist.size()); // Number of players
+         for (j = plist.begin() ; j != plist.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
       int long_command;
       while (online)
