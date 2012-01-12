@@ -97,6 +97,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="portable_socket.cpp" />
     <ClCompile Include="position.cpp" />
+    <ClCompile Include="random.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="portable_socket.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="random.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="types.h" />

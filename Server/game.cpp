@@ -2,8 +2,9 @@
 #include "position.h"
 #include <iostream>
 
-Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count)
+Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random)
 {
+   this->random = random;
    this->name = name;
    this->n_players = n_players;
    this->creator = creator;
@@ -93,7 +94,7 @@ bool Game::leave(Player* p)
 void Game::start()
 {
    // Roll dice to get first player
-   int res = rand() % this->n_players;
+   int res = (this->random->RollDice(6, 1) - 1) % this->n_players;
    list<Player*>::iterator i = this->plist.begin();
    advance(i, res);
    this->current_player = (*i);
@@ -103,7 +104,7 @@ void Game::start()
 
 int Game::roll_dice()
 {
-   this->last_dice_res = (rand() % 6) + 1;
+   this->last_dice_res = this->random->RollDice(6, 1);
    cout << "Dice result: " << this->last_dice_res << endl;
    return this->last_dice_res;
    //return (this->random.get_random_32bit_number() % 6 + 1);
@@ -181,9 +182,9 @@ int Game::get_money_for_nights(Player* owner, Player* player) // Checks player p
       pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player->position->number);
       if (pos != (*i)->entrances.end()) // Player is in a entrance of this hotel, and it cant be in any other entrance
       {
-         dice_res = (rand() % 6); // From 0 to 5, perfect for prices matrix, no need to substract
-         wcout << L"Player: " << player->name << " must pay " << dice_res + 1 << " nights to player " << owner->name << endl;
-         amount = (*i)->prices_matrix[(*i)->n_built_expansions-1][dice_res];
+         dice_res = this->random->RollDice(6, 1);
+         wcout << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;
+         amount = (*i)->prices_matrix[(*i)->n_built_expansions-1][dice_res-1];
       }
    }
    return amount;

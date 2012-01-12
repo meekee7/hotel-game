@@ -5,8 +5,9 @@
 #include "chat.h"
 #include "types.h"
 #include "hotel.h"
+#include "random.h"
 #include "dlib/threads.h"
-#include "dlib/rand.h"
+//#include "dlib/rand.h"
 
 class Game
 {
@@ -18,11 +19,12 @@ public:
    list<Player*> plist;
    Chat* chat;
    bool started;
-   dlib::rand random;
+   //dlib::rand random;
    Player* current_player;
    int starting_player;
    int last_dice_res;
    int last_auto_advance;
+   CRandomMT* random;
 
    void set_players_money(config configuration);
    bool join(Player* p);
@@ -36,6 +38,6 @@ public:
    void eliminate_player(Player* player);
    int get_money_for_nights(Player* owner, Player* player);
 
-   Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count);
+   Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random);
    ~Game(void);
 };

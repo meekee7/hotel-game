@@ -12,6 +12,7 @@
 #include "tinyxml.h"
 #include "hotel.h"
 #include "types.h"
+#include "random.h"
 #include "dlib/threads.h"
 #include "dlib/string.h"
 
@@ -34,6 +35,7 @@ dlib::mutex mutex_disconnects;
 int id_count = 0;
 string config_content;
 struct config configuration;
+CRandomMT* random;
 
 void unhook_signals()
 {
@@ -535,7 +537,7 @@ void handle_command(string command, Player* p)
          wcout << L"New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
          return;
       }
-      Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count);
+      Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random);
       wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
       send_command("joined_game", p);
@@ -1348,7 +1350,8 @@ void run_server()
 
    hook_signals();
    Player* p;
-   srand(time(0));
+   random = new CRandomMT();
+   //srand(time(0));
    // Read Config.xml as string to send it to players
    ifstream config_file ("Config.xml");
    string line;
