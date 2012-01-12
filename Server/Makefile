@@ -8,6 +8,9 @@ clean:
 	rm -rf *.o
 	rm -rf server
 
+random.o: random.cpp random.h
+	$(CC) -c $(FLAGS) -o random.o random.cpp
+
 chat.o: chat.cpp chat.h
 	$(CC) -c $(FLAGS) -o chat.o chat.cpp
 
@@ -41,5 +44,5 @@ tinyxmlparser.o: tinyxmlparser.cpp
 Server.o: Server.cpp
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 
-server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o Server.o
-	$(CC) -o server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o Server.o random.o
+	$(CC) -o server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT

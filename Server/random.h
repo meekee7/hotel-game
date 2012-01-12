@@ -7,10 +7,12 @@
 
 #ifdef _WIN32
    #include <windows.h>
+   #include <math.h>
 #else
-   #include <sys/types.h>
+   #define ULONG unsigned long
+   #define UINT unsigned int
+   #include "stdlib.h"
 #endif
-#include <math.h>
 
 const   int	N = 624;		// Replaced the #defines for these with const values - DHL
 const   int M = 397;
@@ -37,7 +39,7 @@ public:
 	void		SeedMT(ULONG seed);
 
 
-inline ULONG CRandomMT::RandomMT(void)
+inline ULONG RandomMT(void)
 {
     ULONG y;
 
@@ -52,7 +54,7 @@ inline ULONG CRandomMT::RandomMT(void)
 }
 
 
-inline int	RandomMax(int max)
+inline int RandomMax(int max)
 {
 	return(((int)RandomMT()%max));
 }
@@ -74,7 +76,7 @@ inline int RollDice(int faces, int number_of_dice)
 	return roll;
 }
 
-inline int CRandomMT::HeadsOrTails()
+inline int HeadsOrTails()
 {
 	return((RandomMT()) % 2);
 }

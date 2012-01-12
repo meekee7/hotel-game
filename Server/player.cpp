@@ -149,25 +149,25 @@ void Player::Take_1000_without_having_b1000(int* n_1000, int* n_500, int* n_100,
       if (this->n_1000 > 0)
       {
          acumulado += 1000;
-         *(n_1000)++;
+         (*n_1000)++;
          this->n_1000--;
       }
       else if (this->n_500 > 0)
       {
          acumulado += 500;
-         *(n_500)++;
+         (*n_500)++;
          this->n_500--;
       }
       else if (this->n_100 > 0)
       {
          acumulado += 100;
-         *(n_100)++;
+         (*n_100)++;
          this->n_100--;
       }
       else if (this->n_50 > 0)
       {
          acumulado += 50;
-         *(n_50)++;
+         (*n_50)++;
          this->n_50--;
       }
       else // When there are not available bills, change them with the bank

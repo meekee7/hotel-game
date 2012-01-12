@@ -35,7 +35,7 @@ dlib::mutex mutex_disconnects;
 int id_count = 0;
 string config_content;
 struct config configuration;
-CRandomMT* random;
+CRandomMT* random_gen;
 
 void unhook_signals()
 {
@@ -342,11 +342,14 @@ void disconnect_client(Player* p)
 
 int get_utf8_length(wstring data)
 {
+   int res;
    #ifdef _WIN32
-      return WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
+      res = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
    #else
-      return wcstombs(NULL, data.data(), 0);
+      res = wcstombs(NULL, data.c_str(), 0);
    #endif
+   wcout << L"long utf8: " << res << L" data.c_str: " << data.c_str() << endl;
+   return res;
 }
 
 wstring utf8_to_utf16 (string data)
@@ -537,7 +540,7 @@ void handle_command(string command, Player* p)
          wcout << L"New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
          return;
       }
-      Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random);
+      Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
       wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
       send_command("joined_game", p);
@@ -1240,22 +1243,24 @@ void handle_client(void* arg)
       bool online = true;
       // Send player list to all players, so they are notified about the new user
       // Get all users and join into a string with the separator ~
-      wstring res = L"";
+      wstring* res = new wstring(L"");
       list<Player*>::iterator i;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
-         res += (*i)->name;
+         (*res) += (*i)->name;
          if (i != --plist.end())
-            res += '~';
+            (*res) += L'~';
       }
       Player* dest;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
          dest = *i;
          send_command("player_list", dest);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         wcout << "res length: " << get_utf8_length(*res) << " res.c_str: " << (*res).c_str() << " res: " << *res << endl;
+         send_int(dest, get_utf8_length(*res));
+         send_wstring(dest, *res);
       }
+      delete res;
       int long_command;
       while (online)
       {
@@ -1350,7 +1355,7 @@ void run_server()
 
    hook_signals();
    Player* p;
-   random = new CRandomMT();
+   random_gen = new CRandomMT();
    //srand(time(0));
    // Read Config.xml as string to send it to players
    ifstream config_file ("Config.xml");
