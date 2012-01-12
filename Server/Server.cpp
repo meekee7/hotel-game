@@ -1243,24 +1243,23 @@ void handle_client(void* arg)
       bool online = true;
       // Send player list to all players, so they are notified about the new user
       // Get all users and join into a string with the separator ~
-      wstring* res = new wstring(L"");
+      wstring s_plist(L"");
       list<Player*>::iterator i;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
-         (*res) += (*i)->name;
+         s_plist += (*i)->name;
          if (i != --plist.end())
-            (*res) += L'~';
+            s_plist += L'~';
       }
       Player* dest;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
          dest = *i;
          send_command("player_list", dest);
-         wcout << "res length: " << get_utf8_length(*res) << " res.c_str: " << (*res).c_str() << " res: " << *res << endl;
-         send_int(dest, get_utf8_length(*res));
-         send_wstring(dest, *res);
+         wcout << "res length: " << get_utf8_length(s_plist) << " res.c_str: " << s_plist.c_str() << " res: " << s_plist << endl;
+         send_int(dest, get_utf8_length(s_plist));
+         send_wstring(dest, s_plist);
       }
-      delete res;
       int long_command;
       while (online)
       {
