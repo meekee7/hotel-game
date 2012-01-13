@@ -497,7 +497,6 @@ namespace Juego_Hotel
             }
             // Este mecanismo funciona así:
             // Se envía la longitud de la lista de usuarios y luego la lista para así enviarles la petición
-            String lista = this.txtLogin.Text.ToString();
             String[] parametros = new String[this.listaUsuarios.SelectedItems.Count + 1];
             int i = 1;
             parametros[0] = this.listaUsuarios.SelectedItems.Count.ToString();
