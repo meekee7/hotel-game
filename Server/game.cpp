@@ -105,7 +105,7 @@ void Game::start()
 int Game::roll_dice()
 {
    this->last_dice_res = this->random->RollDice(6, 1);
-   cout << "Dice result: " << this->last_dice_res << endl;
+   wcout << "Dice result: " << this->last_dice_res << endl;
    return this->last_dice_res;
    //return (this->random.get_random_32bit_number() % 6 + 1);
 }
