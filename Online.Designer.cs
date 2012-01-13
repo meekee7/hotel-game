@@ -45,6 +45,8 @@
             // 
             // txtLogin
             // 
+            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLogin.Location = new System.Drawing.Point(93, 44);
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(100, 20);
@@ -74,6 +76,8 @@
             // 
             // txtServidor
             // 
+            this.txtServidor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtServidor.Location = new System.Drawing.Point(93, 15);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(100, 20);
@@ -82,6 +86,9 @@
             // 
             // listaUsuarios
             // 
+            this.listaUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listaUsuarios.FormattingEnabled = true;
             this.listaUsuarios.HorizontalScrollbar = true;
             this.listaUsuarios.Location = new System.Drawing.Point(12, 88);
@@ -92,6 +99,7 @@
             // 
             // bDesconectar
             // 
+            this.bDesconectar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bDesconectar.Enabled = false;
             this.bDesconectar.Location = new System.Drawing.Point(210, 353);
             this.bDesconectar.Name = "bDesconectar";
@@ -103,6 +111,7 @@
             // 
             // bCrearPartida
             // 
+            this.bCrearPartida.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bCrearPartida.Enabled = false;
             this.bCrearPartida.Location = new System.Drawing.Point(210, 242);
             this.bCrearPartida.Name = "bCrearPartida";
@@ -114,6 +123,7 @@
             // 
             // bCrearConv
             // 
+            this.bCrearConv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bCrearConv.Enabled = false;
             this.bCrearConv.Location = new System.Drawing.Point(210, 88);
             this.bCrearConv.Name = "bCrearConv";
@@ -125,6 +135,8 @@
             // 
             // listaPartidas
             // 
+            this.listaPartidas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listaPartidas.FormattingEnabled = true;
             this.listaPartidas.HorizontalScrollbar = true;
             this.listaPartidas.Location = new System.Drawing.Point(12, 242);
@@ -145,6 +157,7 @@
             // 
             // LPartidas
             // 
+            this.LPartidas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LPartidas.AutoSize = true;
             this.LPartidas.Location = new System.Drawing.Point(12, 226);
             this.LPartidas.Name = "LPartidas";
@@ -154,6 +167,7 @@
             // 
             // bChatGlobal
             // 
+            this.bChatGlobal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bChatGlobal.Location = new System.Drawing.Point(210, 129);
             this.bChatGlobal.Name = "bChatGlobal";
             this.bChatGlobal.Size = new System.Drawing.Size(80, 23);
@@ -164,6 +178,7 @@
             // 
             // bUnirse
             // 
+            this.bUnirse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bUnirse.Enabled = false;
             this.bUnirse.Location = new System.Drawing.Point(210, 272);
             this.bUnirse.Name = "bUnirse";

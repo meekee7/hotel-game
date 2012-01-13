@@ -59,9 +59,18 @@ namespace Juego_Hotel
             try
             {
                 int bytes_recibidos = 0;
-                int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
-                String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
-                String[] lista_jugadores = lista.Split('~');
+                //int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                //String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
+                //String[] lista_jugadores = lista.Split('~');
+                int cuantos = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                int i;
+                int long_nombre;
+                String[] lista_jugadores = new String[cuantos];
+                for (i = 0; i < cuantos; i++)
+                {
+                    long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                    lista_jugadores[i] = frm_online.recibir_string(frm_online.socket, long_nombre, ref bytes_recibidos);
+                }
                 this.Actualizar_lista_jugadores(lista_jugadores);
             }
             catch (Exception ex)
@@ -129,14 +138,16 @@ namespace Juego_Hotel
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 
-        public void Iniciar(int num_jugadores, String config, int jug_inicial, String lista_nombres)
+        public void Iniciar(int num_jugadores, String config, int jug_inicial, String[] lista_nombres)
         {
             Thread thread_partida = new Thread(manejar_partida);
             LinkedList<String> parametros = new LinkedList<String>();
             parametros.AddLast(num_jugadores.ToString());
             parametros.AddLast(jug_inicial.ToString());
             parametros.AddLast(config);
-            parametros.AddLast(lista_nombres);
+            parametros.AddLast(lista_nombres.Length.ToString());
+            foreach (String nombre in lista_nombres)
+                parametros.AddLast(nombre);
 
             thread_partida.Start(parametros);
         }
@@ -153,17 +164,26 @@ namespace Juego_Hotel
             this.interfaz.game_id = this.id;
             this.interfaz.online_config = l_parametros.First.Value;
             l_parametros.RemoveFirst();
-            String[] lista_nombres = l_parametros.First.Value.Split('~');
-            this.interfaz.juego.lista_jugadores_online = lista_nombres;
+            int cuantos = Convert.ToInt32(l_parametros.First.Value);
+            l_parametros.RemoveFirst();
+            //String[] lista_nombres = l_parametros.First.Value.Split('~');
+            String[] lista_jugadores = new String[cuantos];
+            int i;
+            for (i = 0; i < cuantos; i++)
+            {
+                lista_jugadores[i] = l_parametros.First.Value;
+                l_parametros.RemoveFirst();
+            }
+            this.interfaz.juego.lista_jugadores_online = lista_jugadores;
             this.interfaz.nombre_online = this.frm_online.txtLogin.Text;
             switch (num_jugadores)
             {
-                case 4: this.interfaz.nombreJ4.Text = "Nombre: " + lista_nombres[3];
+                case 4: this.interfaz.nombreJ4.Text = "Nombre: " + lista_jugadores[3];
                         goto case 3;
-                case 3: this.interfaz.nombreJ3.Text = "Nombre: " + lista_nombres[2];
+                case 3: this.interfaz.nombreJ3.Text = "Nombre: " + lista_jugadores[2];
                         goto case 2;
-                case 2: this.interfaz.nombreJ2.Text = "Nombre: " + lista_nombres[1];
-                        this.interfaz.nombreJ1.Text = "Nombre: " + lista_nombres[0];
+                case 2: this.interfaz.nombreJ2.Text = "Nombre: " + lista_jugadores[1];
+                        this.interfaz.nombreJ1.Text = "Nombre: " + lista_jugadores[0];
                         break;
             }
             this.interfaz.ShowDialog();

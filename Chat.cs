@@ -53,9 +53,18 @@ namespace Juego_Hotel
             try
             {
                 int bytes_recibidos = 0;
-                int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
-                String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
-                String[] lista_jugadores = lista.Split('~');
+                //int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                //String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
+                //String[] lista_jugadores = lista.Split('~');
+                int cuantos = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                int i;
+                int long_nombre;
+                String[] lista_jugadores = new String[cuantos];
+                for (i = 0; i < cuantos; i++)
+                {
+                    long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                    lista_jugadores[i] = frm_online.recibir_string(frm_online.socket, long_nombre, ref bytes_recibidos);
+                }
                 this.Actualizar_lista_jugadores(lista_jugadores);
             }
             catch (Exception ex)
@@ -123,7 +132,7 @@ namespace Juego_Hotel
             if (this.global)
                 this.Text += " global";
             else
-                this.Text += ' ' + this.id;
+                this.Text += " " + this.id.ToString();
             this.Text += ": " + frm_online.txtLogin.Text;
         }
     }

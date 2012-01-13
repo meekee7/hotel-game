@@ -132,8 +132,6 @@ namespace Juego_Hotel
                     MessageBox.Show("El apodo no puede estar vacío");
                 else if (this.txtLogin.Text.Length > 20)
                     MessageBox.Show("El apodo no puede superar 20 caracteres");
-                else if (this.txtLogin.Text.Contains('~'))
-                    MessageBox.Show("El apodo no puede contener el carácter '~'");
                 else
                 {
                     try
@@ -150,7 +148,7 @@ namespace Juego_Hotel
                         }
                         else if (res_login == "login no")
                         {
-                            MessageBox.Show("El apodo contiene el carácter '~' y no es válido");
+                            MessageBox.Show("El apodo excede el tamaño máximo");
                             this.bDesconectar.PerformClick();
                             this.txtLogin.Enabled = true;
                         }
@@ -227,13 +225,18 @@ namespace Juego_Hotel
                 return;
             try
             {
-                // Primero se recibe la longitud de la cadena de usuarios aplanada
+                // Primero se recibe la cantidad de usuarios online
                 int bytes_recibidos = 0;
-                int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
-                String s_lista_jugadores = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
-                String[] lista_jugadores = s_lista_jugadores.Split('~');
+                int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
+                int i;
+                int long_nombre;
+                String[] lista_jugadores = new String[cuantos];
+                for (i = 0; i < cuantos; i++)
+                {
+                    long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+                    lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                }
                 this.Actualizar_lista_usuarios(lista_jugadores);
-                s_lista_jugadores = null;
                 lista_jugadores = null;
             }
             catch (Exception ex)
@@ -287,16 +290,24 @@ namespace Juego_Hotel
             {
                 // Primero se recibe la longitud de la cadena de usuarios aplanada
                 int bytes_recibidos = 0;
-                int long_cadena = this.recibir_int(this.socket, ref bytes_recibidos);
-                if (long_cadena == 0)
+                int cuantas = this.recibir_int(this.socket, ref bytes_recibidos);
+                if (cuantas == 0)
                 {
                     this.Borrar_lista_partidas();
                     return;
                 }
-                String s_lista_partidas = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
-                String[] lista_partidas = s_lista_partidas.Split('~');
+                int i;
+                int long_nombre;
+                String[] lista_partidas = new String[cuantas];
+                for (i = 0; i < cuantas; i++)
+                {
+                    long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+                    lista_partidas[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                }
+                //String s_lista_partidas = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
+                //String[] lista_partidas = s_lista_partidas.Split('~');
                 this.Actualizar_lista_partidas(lista_partidas);
-                s_lista_partidas = null;
+                //s_lista_partidas = null;
             }
             catch (Exception ex)
             {
@@ -485,13 +496,17 @@ namespace Juego_Hotel
                 return;
             }
             // Este mecanismo funciona así:
-            // Se crea una cadena con todos los usuarios seleccionados separados con un '~' para así enviarles la petición
+            // Se envía la longitud de la lista de usuarios y luego la lista para así enviarles la petición
             String lista = this.txtLogin.Text.ToString();
+            String[] parametros = new String[this.listaUsuarios.SelectedItems.Count + 1];
+            int i = 1;
+            parametros[0] = this.listaUsuarios.SelectedItems.Count.ToString();
             foreach (Object nombre in this.listaUsuarios.SelectedItems)
             {
-                lista += '~' + nombre.ToString();
+                parametros[i] = nombre.ToString();
+                i++;
             }
-            this.enviar_comando("create_chat", lista);
+            this.enviar_comando("create_chat", parametros);
         }
 
         private void bChatGlobal_Click(object sender, EventArgs e)
@@ -890,9 +905,17 @@ namespace Juego_Hotel
             int long_config = this.recibir_int(this.socket, ref bytes_recibidos);
             String config = this.recibir_string(this.socket, long_config, ref bytes_recibidos);
             int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
-            int long_lista_nombres = this.recibir_int(this.socket, ref bytes_recibidos);
-            String lista_nombres = this.recibir_string(this.socket, long_lista_nombres, ref bytes_recibidos);
-            this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_nombres);
+            int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
+            int i;
+            int long_nombre;
+            String[] lista_jugadores = new String[cuantos];
+            for (i = 0; i < cuantos; i++)
+            {
+                long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+                lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            }
+            //String lista_nombres = this.recibir_string(this.socket, long_lista_nombres, ref bytes_recibidos);
+            this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_jugadores);
         }
 
         delegate void Pasar_Turno_Callback(String jugador);

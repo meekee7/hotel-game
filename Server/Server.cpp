@@ -465,67 +465,56 @@ void handle_command(string command, Player* p)
       disconnect_client(p);
       send_command("#disconnect#", p);
       // Send player list to all players, so they are notified about the diconnected user
-      // Get all users and join into a string with the separator ~
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = plist.begin() ; i != plist.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --plist.end())
-            res += '~';
-      }
-      // Get all games and join into a string with the separator ~
-		wstring res2 = L"";
+      // Send as much strings as connected players, with a count first
+      list<Player*>::iterator i, j;
 		list<Game*>::iterator i2;
-		for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
-		{
-			res2 += (*i2)->name;
-			if (i2 != --glist.end())
-				res2 += '~';
-		}
       Player* dest;
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
          dest = *i;
          send_command("player_list", dest);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         send_int(dest, plist.size()); // Number of players
+         for (j = plist.begin() ; j != plist.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
          send_command("game_list", dest);
-		   send_int(dest, get_utf8_length(res2));
-		   if (res2.length() != 0)
-			   send_wstring(dest, res2);
+         send_int(dest, glist.size());
+         if (glist.size() != 0)
+         {
+            for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
+            {
+               send_int(dest, get_utf8_length((*i2)->name));
+               send_wstring(dest, (*i2)->name);
+            }
+         }			   
       }
 	}
    else if (command == "get_players")
    {
-      // Get all users and join into a string with the separator ~
-      wstring res = L"";
       list<Player*>::iterator i;
+      send_command("player_list", p);
+      send_int(p, plist.size()); // Number of players
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
-         res += (*i)->name;
-         if (i != --plist.end())
-            res += '~';
+         send_int(p, get_utf8_length((*i)->name));
+         send_wstring(p, (*i)->name);
       }
-      send_command("player_list", p);
-      send_int(p, get_utf8_length(res));
-      send_wstring(p, res);
 	}
 	else if (command == "get_games")
 	{
-		// Get all games and join into a string with the separator ~
-		wstring res = L"";
 		list<Game*>::iterator i;
-		for (i = glist.begin() ; i != glist.end() ; ++i)
-		{
-			res += (*i)->name;
-			if (i != --glist.end())
-				res += '~';
-		}
       send_command("game_list", p);
-		send_int(p, get_utf8_length(res));
-		if (res.length() != 0)
-			send_wstring(p, res);
+      send_int(p, glist.size());
+      if (glist.size() != 0)
+      {
+         for (i = glist.begin() ; i != glist.end() ; ++i)
+         {
+            send_int(p, get_utf8_length((*i)->name));
+            send_wstring(p, (*i)->name);
+         }
+      }
 	}
 	else if (command == "create_game")
 	{
@@ -534,11 +523,6 @@ void handle_command(string command, Player* p)
       wstring name = receive_wstring(p, len_name, &bytes_received);
       int long_n_players = receive_int(p, &bytes_received);
       int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
-      if (name.find('~') != string::npos)
-      {
-         wcout << L"New game rejected because the name contained invalid character ~ (WARNING: possible hacked client)" << endl;
-         return;
-      }
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
       wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
@@ -549,24 +533,22 @@ void handle_command(string command, Player* p)
       send_int(p, get_utf8_length(new_game->creator->name));
       send_wstring(p, new_game->creator->name);
       send_int(p, new_game->n_players);
-      // Get all games and join into a string with the separator ~
-		wstring res = L"";
 		list<Game*>::iterator i;
-		for (i = glist.begin() ; i != glist.end() ; ++i)
-		{
-			res += (*i)->name;
-			if (i != --glist.end())
-				res += '~';
-		}
       list<Player*>::iterator i2;
       Player* dest;
       for (i2 = plist.begin() ; i2 != plist.end() ; ++i2)
       {
          dest = *i2;
          send_command("game_list", dest);
-		   send_int(dest, get_utf8_length(res));
-		   if (res.length() != 0)
-			   send_wstring(dest, res);
+		   send_int(dest, glist.size());
+         if (glist.size() != 0)
+         {
+            for (i = glist.begin() ; i != glist.end() ; ++i)
+            {
+               send_int(dest, get_utf8_length((*i)->name));
+               send_wstring(dest, (*i)->name);
+            }
+         }	
       }
    }
    else if (command == "join_game")
@@ -590,26 +572,23 @@ void handle_command(string command, Player* p)
          send_int(p, get_utf8_length(game->creator->name));
          send_wstring(p, game->creator->name);
          send_int(p, game->n_players);
-         wstring res = L"";
-         list<Player*>::iterator i;
-         for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
-         {
-            res += (*i)->name;
-            if (i != --game->plist.end())
-               res += '~';
-         }
+         list<Player*>::iterator i, j;
          Player* dest;
          for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
          {
-            // We exclude recently joined player because the command is sent too quickly.
+            // We exclude joined player because the command is sent too quickly.
             // He will ask for player list just after joining
             dest = *i;
             if (dest != p)
             {
                send_command("chat_userlist", dest);
                send_int(dest, game->id);
-               send_int(dest, get_utf8_length(res));
-               send_wstring(dest, res);
+               send_int(dest, game->plist.size()); // Number of players
+               for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+               {
+                  send_int(dest, get_utf8_length((*j)->name));
+                  send_wstring(dest, (*j)->name);
+               }
             }
          }
       }
@@ -627,54 +606,61 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, len_id, &bytes_received);
       Game* game = get_game_from_id(atoi(id.c_str()));
       game->leave(p);
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --game->plist.end())
-            res += '~';
-      }
+      list<Player*>::iterator i, j;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = *i;
          send_command("chat_userlist", dest);
          send_int(dest, game->id);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         send_int(dest, game->plist.size()); // Number of players
+         for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
-      delete_game_if_empty(game);
-      // Get all games and join into a string with the separator ~
-		res = L"";
-		list<Game*>::iterator i2;
-		for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
-		{
-			res += (*i2)->name;
-			if (i2 != --glist.end())
-				res += '~';
-		}
-      for (i = plist.begin() ; i != plist.end() ; ++i)
+      if (delete_game_if_empty(game))
       {
-         dest = *i;
-         send_command("game_list", dest);
-		   send_int(dest, get_utf8_length(res));
-		   if (res.length() != 0)
-			   send_wstring(dest, res);
+		   list<Game*>::iterator i2;
+         for (i = plist.begin() ; i != plist.end() ; ++i)
+         {
+            dest = *i;
+            send_command("game_list", dest);
+		      send_int(dest, glist.size());
+            if (glist.size() != 0)
+            {
+               for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
+               {
+                  send_int(dest, get_utf8_length((*i2)->name));
+                  send_wstring(dest, (*i2)->name);
+               }
+            }
+         }
       }
    }
    else if (command == "create_chat")
    {
       int bytes_received;
-      int long_list = receive_int(p, &bytes_received);
-      wstring plist = receive_wstring(p, long_list, &bytes_received);
-      vector<wstring> player_list = dlib::split(plist, L"~");
+      int len_quantity = receive_int(p, &bytes_received);
+      int quantity = atoi(receive_string(p, len_quantity, &bytes_received).c_str());
+      //wstring plist = receive_wstring(p, long_list, &bytes_received);
+      //vector<wstring> player_list = dlib::split(plist, L"~");
+      vector<wstring> player_list = vector<wstring>(quantity+1);
+      vector<wstring>::iterator i;
+      // Receive every player and add the player who sends the command
+      int len_name;
+      for (i = player_list.begin() ; i != --player_list.end() ; ++i)
+      {
+         len_name = receive_int(p, &bytes_received);
+         (*i) = receive_wstring(p, len_name, &bytes_received);
+      }
+      (*i) = p->name;
       Chat* new_chat = new Chat(p, true, &mutex_ids, &id_count);
       chat_list.push_back(new_chat);
       wcout << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
       // Send commands to selected players to ask them to join the chat
       Player* dest;
-      vector<wstring>::iterator i;
       for (i = player_list.begin() ; i != player_list.end() ; ++i)
       {
          dest = get_player_from_name(*i);
@@ -687,22 +673,18 @@ void handle_command(string command, Player* p)
    else if (command == "join_global_chat")
    {
       global_chat_list.push_back(p);
-      // Get all global chat users and join into a string with the separator ~
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --global_chat_list.end())
-            res += '~';
-      }
+      list<Player*>::iterator i, j;
       Player* dest;
       for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
       {
          dest = *i;
          send_command("global_chat_userlist", dest);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         send_int(dest, global_chat_list.size()); // Number of players
+         for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
    }
    else if (command == "join_chat")
@@ -712,43 +694,36 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, len_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->join(p);
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --chat->players.end())
-            res += '~';
-      }
+      list<Player*>::iterator i, j;
       Player* dest;
       for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
       {
          dest = *i;
          send_command("chat_userlist", dest);
          send_int(dest, chat->id);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         send_int(dest, chat->players.size()); // Number of players
+         for (j = chat->players.begin() ; j != chat->players.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
    }
    else if (command == "leave_global_chat")
    {
       global_chat_list.remove(p);
-      // Get all global chat users and join into a string with the separator ~
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --global_chat_list.end())
-            res += '~';
-      }
+      list<Player*>::iterator i, j;
       Player* dest;
       for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
       {
          dest = *i;
          send_command("global_chat_userlist", dest);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         send_int(dest, global_chat_list.size()); // Number of players
+         for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
    }
    else if (command == "leave_chat")
@@ -758,59 +733,48 @@ void handle_command(string command, Player* p)
       string id = receive_string(p, len_id, &bytes_received);
       Chat* chat = get_chat_from_id(atoi(id.c_str()));
       chat->leave(p);
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --chat->players.end())
-            res += '~';
-      }
+      list<Player*>::iterator i, j;
       Player* dest;
       for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
       {
          dest = *i;
          send_command("chat_userlist", dest);
          send_int(dest, chat->id);
-         send_int(dest, get_utf8_length(res));
-         send_wstring(dest, res);
+         send_int(dest, chat->players.size()); // Number of players
+         for (j = chat->players.begin() ; j != chat->players.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
       delete_chat_if_empty(chat);
    }
    else if (command == "get_global_chat_users")
    {
-      // Get all global chat users and join into a string with the separator ~
-      wstring res = L"";
-      list<Player*>::iterator i;
-      for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --global_chat_list.end())
-            res += '~';
-      }
+      list<Player*>::iterator i, j;
       send_command("global_chat_userlist", p);
-      send_int(p, get_utf8_length(res));
-      send_wstring(p, res);
+      send_int(p, global_chat_list.size()); // Number of players
+      for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
+      {
+         send_int(p, get_utf8_length((*j)->name));
+         send_wstring(p, (*j)->name);
+      }
    }
    else if (command == "get_chat_users")
    {
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      // Get all users and join into a string with the separator ~
       Chat* chat = get_chat_from_id(id);
-      wstring res = L"";
       list<Player*>::iterator i; 
-      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
-      {
-         res += (*i)->name;
-         if (i != --chat->players.end())
-            res += '~';
-      }
       send_command("chat_userlist", p);
       send_int(p, id);
-      send_int(p, get_utf8_length(res));
-      send_wstring(p, res);
+      send_int(p, chat->players.size()); // Number of players
+      for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+      {
+         send_int(p, get_utf8_length((*i)->name));
+         send_wstring(p, (*i)->name);
+      }
    }
    else if (command == "send_global_chat_msg")
    {
@@ -858,16 +822,8 @@ void handle_command(string command, Player* p)
       Game* game = get_game_from_id(id);
       game->set_players_money(configuration);
       game->start();
-      list<Player*>::iterator i;
+      list<Player*>::iterator i, j;
       Player* dest;
-      // Create player list
-      wstring name_list = L""; 
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
-      {
-         name_list += (*i)->name;
-         if (i != --game->plist.end())
-            name_list += '~';
-      }
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = *i;
@@ -879,8 +835,12 @@ void handle_command(string command, Player* p)
          send_string(dest, config_content);
          send_int(dest, game->starting_player);
          // Send player list
-         send_int(dest, get_utf8_length(name_list));
-         send_wstring(dest, name_list);
+         send_int(dest, game->plist.size());
+         for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+         {
+            send_int(dest, get_utf8_length((*j)->name));
+            send_wstring(dest, (*j)->name);
+         }
       }
    }
    else if (command == "roll_dice")
@@ -1223,9 +1183,9 @@ void handle_client(void* arg)
    int len_name = receive_int(p, &bytes_received);
    p->name = receive_wstring(p, len_name, &bytes_received);
    wcout << L"Handling new player. Player name: " << p->name << endl;
-   if (p->name.find('~') != string::npos)
+   if (p->name.length() > 20)
    {
-      wcout << L"Player " << p->name << L" rejected because the name contains invalid character '~' (WARNING: possible hacked client)" << endl;
+      wcout << L"Player " << p->name << L" rejected because the name is too long (WARNING: possible hacked client)" << endl;
       p->socket->psend("login no", 8, 0);
 	   delete p;
       wcout << L"Disconnecting client" << endl;
