@@ -13,6 +13,12 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->chat->join(this->creator);
    this->id = this->chat->id;
    this->started = false;
+   // Create all positions
+   this->positions = vector<Position*>(32);
+   for (int i = 0 ; i < 32 ; i++)
+   {
+      this->positions[i] = new Position(i);
+   }
 }
 
 void Game::set_players_money(config configuration)
@@ -107,7 +113,28 @@ int Game::roll_dice()
    this->last_dice_res = this->random->RollDice(6, 1);
    wcout << "Dice result: " << this->last_dice_res << endl;
    return this->last_dice_res;
-   //return (this->random.get_random_32bit_number() % 6 + 1);
+}
+
+void Game::move_player(Player* p)
+{
+   // Uses last dice result
+   p->position->occupied = false; // Free the position
+   if ((p->position->number + this->last_dice_res) <= 31) // One lap
+      p->position = this->positions[p->position->number + this->last_dice_res];
+   else
+   {
+         p->position = this->positions[p->position->number + this->last_dice_res - 31];
+   }
+   this->last_auto_advance = 0;
+   while (p->position->occupied) // We need to advance because it's occupied
+   {
+      if (p->position->number < 31) // Proteger la vuelta al tablero
+         p->position = this->positions[p->position->number + 1];
+      else
+         p->position = this->positions[1];
+      this->last_auto_advance++;
+   }
+   p->position->occupied = true; // Ocupamos la casilla
 }
 
 Player* Game::turn_pass()

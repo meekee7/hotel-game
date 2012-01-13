@@ -7,7 +7,6 @@
 #include "hotel.h"
 #include "random.h"
 #include "dlib/threads.h"
-//#include "dlib/rand.h"
 
 class Game
 {
@@ -24,6 +23,7 @@ public:
    int starting_player;
    int last_dice_res;
    int last_auto_advance;
+   vector<Position*> positions;
    CRandomMT* random;
 
    void set_players_money(config configuration);
@@ -32,6 +32,7 @@ public:
    bool leave(Player* p);
    void start();
    int roll_dice();
+   void move_player(Player* p);
    Player* turn_pass();
    int get_active_players_count();
    Player* get_winner();

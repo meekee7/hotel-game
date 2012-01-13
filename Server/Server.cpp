@@ -17,7 +17,6 @@
 #include "dlib/string.h"
 
 #define MAXCONN 100
-//#define MAXDATALEN 100
 
 using namespace std;
 
@@ -214,8 +213,6 @@ Hotel* get_hotel_from_name(wstring name_txt)
 
 bool delete_chat_if_empty(Chat* chat)
 {
-   if (chat == NULL) // Ya ha sido borrado en otro thread, cambiar a mutex o semáforo
-      return true;
    mutex_lists.lock();
    if (chat->players.empty())
    {
@@ -231,8 +228,6 @@ bool delete_chat_if_empty(Chat* chat)
 
 bool delete_game_if_empty(Game* game)
 {
-   if (game == NULL) // Ya ha sido borrado en otro thread, cambiar a mutex o semáforo
-      return true;
    mutex_lists.lock();
    if (game->plist.empty())
    {
@@ -644,8 +639,6 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_quantity = receive_int(p, &bytes_received);
       int quantity = atoi(receive_string(p, len_quantity, &bytes_received).c_str());
-      //wstring plist = receive_wstring(p, long_list, &bytes_received);
-      //vector<wstring> player_list = dlib::split(plist, L"~");
       vector<wstring> player_list = vector<wstring>(quantity+1);
       vector<wstring>::iterator i;
       // Receive every player and add the player who sends the command
@@ -848,8 +841,6 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      //int len_name = receive_int(p, &bytes_received);
-      //wstring player_name = receive_wstring(p, len_name, &bytes_received);
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
@@ -859,7 +850,7 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("rolled_dice", dest);
          send_int(dest, id);
-         send_int(dest, dice_res);
+         send_int(dest, p->position->number);
          send_int(dest, get_utf8_length(p->name));
          send_wstring(dest, p->name);
       }
@@ -1310,7 +1301,6 @@ void run_server()
    hook_signals();
    Player* p;
    random_gen = new CRandomMT();
-   //srand(time(0));
    // Read Config.xml as string to send it to players
    ifstream config_file ("Config.xml");
    string line;

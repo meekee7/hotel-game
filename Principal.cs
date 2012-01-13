@@ -488,19 +488,13 @@ namespace Juego_Hotel
                 jugador = this.juego.jugador_actual;
             }
             else
-            {
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre);
-            }
             this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
             jugador.posicion.ocupada = false; // Desocupamos la casilla
             if ((jugador.posicion.numero + this.juego.ultimo_res_dado) <= 31) // Damos la vuelta al tablero
-            {
                 jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado];
-            }
             else
-            {
                 jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado - 31];
-            }
             this.juego.ultimo_avance_auto = 0;
             while (jugador.posicion.ocupada) // Hay que avanzar una porque está ocupada
             {
