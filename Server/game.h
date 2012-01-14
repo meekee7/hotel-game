@@ -38,6 +38,7 @@ public:
    Player* get_winner();
    void eliminate_player(Player* player);
    int get_money_for_nights(Player* owner, Player* player);
+   bool can_charge_bank(Player* p);
 
    Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random);
    ~Game(void);

@@ -479,32 +479,29 @@ namespace Juego_Hotel
             }
         }
 
-        public void Tirar_dado(String nombre)
+        public void Tirar_dado(Jugador jugador)
         {
-            Jugador jugador;
+            if (!this.online)
+                this.juego.ultimo_res_dado = this.juego.dado.tirar();
+            this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
             if (!this.online)
             {
-                this.juego.ultimo_res_dado = this.juego.dado.tirar();
-                jugador = this.juego.jugador_actual;
-            }
-            else
-                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre);
-            this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
-            jugador.posicion.ocupada = false; // Desocupamos la casilla
-            if ((jugador.posicion.numero + this.juego.ultimo_res_dado) <= 31) // Damos la vuelta al tablero
-                jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado];
-            else
-                jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado - 31];
-            this.juego.ultimo_avance_auto = 0;
-            while (jugador.posicion.ocupada) // Hay que avanzar una porque está ocupada
-            {
-                if (jugador.posicion.numero < 31) // Proteger la vuelta al tablero
-                    jugador.posicion = this.juego.casillas[jugador.posicion.numero + 1];
+                jugador.posicion.ocupada = false; // Desocupamos la casilla
+                if ((jugador.posicion.numero + this.juego.ultimo_res_dado) <= 31) // Damos la vuelta al tablero
+                    jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado];
                 else
-                    jugador.posicion = this.juego.casillas[1];
-                this.juego.ultimo_avance_auto++;
+                    jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado - 31];
+                this.juego.ultimo_avance_auto = 0;
+                while (jugador.posicion.ocupada) // Hay que avanzar una porque está ocupada
+                {
+                    if (jugador.posicion.numero < 31) // Proteger la vuelta al tablero
+                        jugador.posicion = this.juego.casillas[jugador.posicion.numero + 1];
+                    else
+                        jugador.posicion = this.juego.casillas[1];
+                    this.juego.ultimo_avance_auto++;
+                }
+                jugador.posicion.ocupada = true; // Ocupamos la casilla
             }
-            jugador.posicion.ocupada = true; // Ocupamos la casilla
             // Pintamos el coche en su lugar
             Point posicion = Calcular_Posicion(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X, this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
             switch (jugador.color)
@@ -595,7 +592,7 @@ namespace Juego_Hotel
             if (this.online)
                 this.frm_online.enviar_comando("roll_dice", this.game_id.ToString());
             else
-                this.Tirar_dado(null);
+                this.Tirar_dado(this.juego.jugador_actual);
         }
 
         private void Activar_Poner_Entradas(int num_jugador)

@@ -217,6 +217,19 @@ int Game::get_money_for_nights(Player* owner, Player* player) // Checks player p
    return amount;
 }
 
+bool Game::can_charge_bank(Player* p)
+{
+   if ((this->n_players == 2) || ((this->get_active_players_count() > 2) && (this->n_players > 2)))
+   {
+      if ((p->position->number >= 8) && ((p->position->number - this->last_dice_res - this->last_auto_advance) < 8))
+         return true;
+      else
+         return false;
+   }
+   else
+      return false;
+}
+
 Game::~Game(void)
 {
    this->creator = NULL;

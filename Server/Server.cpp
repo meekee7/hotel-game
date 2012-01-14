@@ -844,12 +844,17 @@ void handle_command(string command, Player* p)
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
+      if (game->current_player != p) // Hack, retire player
+         return;
       int dice_res = game->roll_dice();
+      game->move_player(p);
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
          send_command("rolled_dice", dest);
          send_int(dest, id);
+         send_int(dest, game->last_dice_res);
+         send_int(dest, game->last_auto_advance);
          send_int(dest, p->position->number);
          send_int(dest, get_utf8_length(p->name));
          send_wstring(dest, p->name);
@@ -863,6 +868,8 @@ void handle_command(string command, Player* p)
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
+      if (game->current_player != p) // Hack, retire player
+         return;
       Player* next_player = game->turn_pass();
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
@@ -881,10 +888,12 @@ void handle_command(string command, Player* p)
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
-      Player* player = get_player_from_game(p->name, game);
-      if (player == NULL) // Hack, retire player
+      if (game->current_player != p) // Hack, retire player
          return;
-      player->Charge_bank();
+      if (game->can_charge_bank(p))
+         p->Charge_bank();
+      else
+         return; // Hack, retire player
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
@@ -892,11 +901,11 @@ void handle_command(string command, Player* p)
          send_int(dest, id);
          send_int(dest, get_utf8_length(p->name));
          send_wstring(dest, p->name);
-         send_int(dest, player->n_50);
-         send_int(dest, player->n_100);
-         send_int(dest, player->n_500);
-         send_int(dest, player->n_1000);
-         send_int(dest, player->n_5000);
+         send_int(dest, p->n_50);
+         send_int(dest, p->n_100);
+         send_int(dest, p->n_500);
+         send_int(dest, p->n_1000);
+         send_int(dest, p->n_5000);
       }
    }
    else if (command == "buy_hotel")
