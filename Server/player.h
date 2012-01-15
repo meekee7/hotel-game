@@ -17,7 +17,7 @@ public:
    Portable_socket* socket;
    bool connected;
    bool active;
-   bool paid_last_turn;
+   bool paid_last_turn, rolled_last_turn, bought_last_turn, built_last_turn, charged_bank_last_turn, put_entrance_last_turn;
    int n_5000, n_1000, n_500, n_100, n_50;
    int total_money;
    Position* position;

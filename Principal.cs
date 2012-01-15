@@ -769,7 +769,6 @@ namespace Juego_Hotel
                 }
             }
             frm_comprar_hotel.Close();
-            //this.Actualizar_Dinero_Jugador_Actual();
         }
 
         void Comprar_hotel (ref Hotel hotel, ref Jugador jugador, Boolean expropiando)

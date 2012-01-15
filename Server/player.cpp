@@ -7,6 +7,11 @@ Player::Player(string ip, Portable_socket* socket_client)
    this->connected = true;
    this->active = true;
    this->paid_last_turn = false;
+   this->rolled_last_turn = false;
+   this->charged_bank_last_turn = false;
+   this->bought_last_turn = false;
+   this->built_last_turn = false;
+   this->put_entrance_last_turn = false;
    this->position = new Position(0);
 }
 
@@ -24,6 +29,7 @@ void Player::Charge_bank()
 {
    this->n_1000 += 2;
    this->Calculate_total_money();
+   this->charged_bank_last_turn = true;
 }
 
 void Player::Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50)

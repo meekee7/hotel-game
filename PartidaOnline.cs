@@ -59,9 +59,6 @@ namespace Juego_Hotel
             try
             {
                 int bytes_recibidos = 0;
-                //int long_lista = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
-                //String lista = frm_online.recibir_string(frm_online.socket, long_lista, ref bytes_recibidos);
-                //String[] lista_jugadores = lista.Split('~');
                 int cuantos = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                 int i;
                 int long_nombre;
@@ -166,7 +163,6 @@ namespace Juego_Hotel
             l_parametros.RemoveFirst();
             int cuantos = Convert.ToInt32(l_parametros.First.Value);
             l_parametros.RemoveFirst();
-            //String[] lista_nombres = l_parametros.First.Value.Split('~');
             String[] lista_jugadores = new String[cuantos];
             int i;
             for (i = 0; i < cuantos; i++)

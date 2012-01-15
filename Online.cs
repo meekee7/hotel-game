@@ -14,7 +14,6 @@ namespace Juego_Hotel
 {
     public partial class Online : Form
     {
-        //public Principal interfaz;
         public Socket socket;
         Chat frm_chat_global;
         public LinkedList<Chat> chats_abiertos;
@@ -26,7 +25,6 @@ namespace Juego_Hotel
         public Online()
         {
             InitializeComponent();
-            //this.interfaz = interfaz;
             this.chats_abiertos = new LinkedList<Chat>();
             this.lista_partidas = new LinkedList<PartidaOnline>();
         }
@@ -304,10 +302,7 @@ namespace Juego_Hotel
                     long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
                     lista_partidas[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
                 }
-                //String s_lista_partidas = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
-                //String[] lista_partidas = s_lista_partidas.Split('~');
                 this.Actualizar_lista_partidas(lista_partidas);
-                //s_lista_partidas = null;
             }
             catch (Exception ex)
             {
@@ -920,7 +915,6 @@ namespace Juego_Hotel
                 long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
                 lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             }
-            //String lista_nombres = this.recibir_string(this.socket, long_lista_nombres, ref bytes_recibidos);
             this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_jugadores);
         }
 

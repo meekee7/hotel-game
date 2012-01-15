@@ -122,19 +122,17 @@ void Game::move_player(Player* p)
    if ((p->position->number + this->last_dice_res) <= 31) // One lap
       p->position = this->positions[p->position->number + this->last_dice_res];
    else
-   {
-         p->position = this->positions[p->position->number + this->last_dice_res - 31];
-   }
+      p->position = this->positions[p->position->number + this->last_dice_res - 31];
    this->last_auto_advance = 0;
    while (p->position->occupied) // We need to advance because it's occupied
    {
-      if (p->position->number < 31) // Proteger la vuelta al tablero
+      if (p->position->number < 31) // Protect the lap
          p->position = this->positions[p->position->number + 1];
       else
          p->position = this->positions[1];
       this->last_auto_advance++;
    }
-   p->position->occupied = true; // Ocupamos la casilla
+   p->position->occupied = true; // Occupy the position
 }
 
 Player* Game::turn_pass()
@@ -142,6 +140,12 @@ Player* Game::turn_pass()
    list<Player*>::iterator i;
    i = find(this->plist.begin(), this->plist.end(), this->current_player);
    bool valid = false;
+   this->current_player->rolled_last_turn = false;
+   this->current_player->paid_last_turn = false;
+   this->current_player->bought_last_turn = false;
+   this->current_player->built_last_turn = false;
+   this->current_player->charged_bank_last_turn = false;
+   this->current_player->put_entrance_last_turn = false;
    while (!valid)
    {
       if (i == --this->plist.end())

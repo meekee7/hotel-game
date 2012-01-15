@@ -518,6 +518,8 @@ void handle_command(string command, Player* p)
       wstring name = receive_wstring(p, len_name, &bytes_received);
       int long_n_players = receive_int(p, &bytes_received);
       int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
+      if (name.empty()) // Hack, kick player
+         return;
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
       wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
@@ -846,8 +848,12 @@ void handle_command(string command, Player* p)
       Game* game = get_game_from_id(id);
       if (game->current_player != p) // Hack, retire player
          return;
+      else if (p->rolled_last_turn) // Hack, retire player
+         return;
       int dice_res = game->roll_dice();
       game->move_player(p);
+      if (game->last_dice_res < 6)
+         p->rolled_last_turn = true;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
@@ -888,12 +894,10 @@ void handle_command(string command, Player* p)
       list<Player*>::iterator i;
       Player* dest;
       Game* game = get_game_from_id(id);
-      if (game->current_player != p) // Hack, retire player
+      if ((game->current_player != p) || (game->can_charge_bank(p) == false) || (p->charged_bank_last_turn)) // Hack, retire player
          return;
-      if (game->can_charge_bank(p))
-         p->Charge_bank();
       else
-         return; // Hack, retire player
+         p->Charge_bank();
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
