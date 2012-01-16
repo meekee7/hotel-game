@@ -931,9 +931,15 @@ void handle_command(string command, Player* p)
       int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       // We have player total money
       Game* game = get_game_from_id(id);
-      Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_game(p->name, game);
-      if (player == NULL) // Hack, retire player
+      if (game->current_player != player) // Hack, retire player
+         return;
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      if (hotel->owner != NULL) // Hack, retire player
+         return;
+      if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
+         return;
+      if ((n_5000*5000 + n_1000*1000, n_500*500 + n_100*100 + n_50*50) != (player->total_money - hotel->price)) // Hack, retire player
          return;
       hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
@@ -987,10 +993,12 @@ void handle_command(string command, Player* p)
       len_int = receive_int(p, &bytes_received);
       int po_n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       // We have player total money
+      // Needs checking: hotel has owner and is different than player, hotel can be expropriated (player position is next to the hotel, no phases built),
+      // player total money is previous total - hotel expropriation price, previous owner total money is previous total + hotel_expropriation price
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_game(p->name, game);
-      if (player == NULL) // Hack, retire player
+      if (game->current_player != player) // Hack, retire player
          return;
       Player* previous_owner = hotel->owner;
       hotel->owner = player;
@@ -1044,10 +1052,11 @@ void handle_command(string command, Player* p)
       len_int = receive_int(p, &bytes_received);
       int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       // We have player total money
+      // Needs checking: hotel is owned by player, roll construction dice in server, hotel can be extended, position type (free phase), player total money is previous total money - (phase price*extra_cost)
       Game* game = get_game_from_id(id);
       Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_game(p->name, game);
-      if (player == NULL) // Hack, retire player
+      if (game->current_player != player) // Hack, retire player
          return;
       player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
       hotel->Extend();

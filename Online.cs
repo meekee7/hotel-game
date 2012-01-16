@@ -959,7 +959,7 @@ namespace Juego_Hotel
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             hotel.dueño = jugador;
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra
             {
                 jugador.hoteles.AddLast(hotel);
                 jugador.n_hoteles++;
@@ -977,7 +977,7 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra
             {
                 hotel.dueño.Hotel_Expropiado(ref hotel);
                 hotel.dueño = jugador;
@@ -998,7 +998,7 @@ namespace Juego_Hotel
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se amplía desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se amplía desde la interfaz cuando se compra
             {
                 hotel.Ampliar();
                 partida.interfaz.BeginInvoke(new Dibujar_Fase_Callback(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
@@ -1018,7 +1018,7 @@ namespace Juego_Hotel
             int casilla = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra, por seguridad debería cambiarse para que lo haga todo el servidor
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra
             {
                 if (partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
                 {
@@ -1043,7 +1043,7 @@ namespace Juego_Hotel
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se hace desde la interfaz cuando se retira, por seguridad debería cambiarse para que lo haga todo el servidor
+            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se hace desde la interfaz cuando se retira
             {
                 partida.interfaz.juego.Eliminar_Jugador(jugador, null);
                 partida.interfaz.Marcar_Jugador_Eliminado(jugador.n_jugador);

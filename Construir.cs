@@ -201,7 +201,7 @@ namespace Juego_Hotel
                         {
                             PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                             frm_pago.ShowDialog();
-                            if (frm_pago.cancelado)
+                            if (frm_pago.cancelado) // TODO: Quitar, no se puede cancelar esta operación
                             {
                                 frm_pago.Close();
                                 this.cancelado = true;
