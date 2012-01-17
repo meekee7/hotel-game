@@ -804,17 +804,25 @@ namespace Juego_Hotel
             }
             else
             {
-                jugador.Comprar_Hotel(ref hotel, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                // Hay que calcular el dinero a devolver y restarlo de la llamada a Comprar_Hotel
-                if (frm_pago.total_seleccionado > dinero_necesario)
+                if (!this.online)
                 {
-                    Principal.Calcular_Devolucion((frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                    jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                    jugador.Comprar_Hotel(ref hotel, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                    // Hay que calcular el dinero a devolver y restarlo de la llamada a Comprar_Hotel
+                    if (frm_pago.total_seleccionado > dinero_necesario)
+                    {
+                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                        jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                    }
                 }
-                if (this.online) // El dinero total enviado es comprobado en el servidor para evitar hacks
+                else // Todo se hace en el lado del servidor, devolución incluída
                 {
-                    this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), hotel.nombre_txt, jugador.n_billetes_5000.ToString(),
-                         jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString());
+                    n_5000 = frm_pago.n_5000;
+                    n_1000 = frm_pago.n_1000;
+                    n_500 = frm_pago.n_500;
+                    n_100 = frm_pago.n_100;
+                    n_50 = frm_pago.n_50;
+                    this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), hotel.nombre_txt, n_5000.ToString(),
+                         n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
                 }
             }
             frm_pago.Close();

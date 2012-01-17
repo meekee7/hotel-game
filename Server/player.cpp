@@ -34,9 +34,14 @@ void Player::Charge_bank()
 
 void Player::Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50)
 {
-   // Money its already calculated, client does the math
+   // Owner is set by caller thread because incomplete class Hotel
    this->hotels.push_back(hotel);
-   this->Set_money(n_5000, n_1000, n_500, n_100, n_50);
+   this->n_5000 -= n_5000;
+   this->n_1000 -= n_1000;
+   this->n_500 -= n_500;
+   this->n_100 -= n_100;
+   this->n_50 -= n_50;
+   this->Calculate_total_money();
 }
 
 void Player::Expropriate_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, int po_n_5000, int po_n_1000, int po_n_500, int po_n_100, int po_n_50)
@@ -97,43 +102,43 @@ void Player::Pay_phase_or_entrance(int n5000, int n1000, int n500, int n100, int
 
 void Player::Take_5000_without_having_b5000(int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
 {
-   *n_5000 = 0;
-   *n_1000 = 0;
-   *n_500 = 0;
-   *n_100 = 0;
-   *n_50 = 0;
+   (*n_5000) = 0;
+   (*n_1000) = 0;
+   (*n_500) = 0;
+   (*n_100) = 0;
+   (*n_50) = 0;
 
-   int acumulado = 0;
+   int accumulated = 0;
 
-   while (acumulado < 5000)
+   while (accumulated < 5000)
    {
       if (this->n_5000 > 0)
       {
-         acumulado += 5000;
+         accumulated += 5000;
          (*n_5000)++;
          this->n_5000--;
       }
       else if (this->n_1000 > 0)
       {
-         acumulado += 1000;
+         accumulated += 1000;
          (*n_1000)++;
          this->n_1000--;
       }
       else if (this->n_500 > 0)
       {
-         acumulado += 500;
+         accumulated += 500;
          (*n_500)++;
          this->n_500--;
       }
       else if (this->n_100 > 0)
       {
-         acumulado += 100;
+         accumulated += 100;
          (*n_100)++;
          this->n_100--;
       }
       else if (this->n_50 > 0)
       {
-         acumulado += 50;
+         accumulated += 50;
          (*n_50)++;
          this->n_50--;
       }
@@ -143,36 +148,36 @@ void Player::Take_5000_without_having_b5000(int* n_5000, int* n_1000, int* n_500
 
 void Player::Take_1000_without_having_b1000(int* n_1000, int* n_500, int* n_100, int* n_50)
 {
-   *n_1000 = 0;
-   *n_500 = 0;
-   *n_100 = 0;
-   *n_50 = 0;
+   (*n_1000) = 0;
+   (*n_500) = 0;
+   (*n_100) = 0;
+   (*n_50) = 0;
 
-   int acumulado = 0;
+   int accumulated = 0;
 
-   while (acumulado < 1000)
+   while (accumulated < 1000)
    {
       if (this->n_1000 > 0)
       {
-         acumulado += 1000;
+         accumulated += 1000;
          (*n_1000)++;
          this->n_1000--;
       }
       else if (this->n_500 > 0)
       {
-         acumulado += 500;
+         accumulated += 500;
          (*n_500)++;
          this->n_500--;
       }
       else if (this->n_100 > 0)
       {
-         acumulado += 100;
+         accumulated += 100;
          (*n_100)++;
          this->n_100--;
       }
       else if (this->n_50 > 0)
       {
-         acumulado += 50;
+         accumulated += 50;
          (*n_50)++;
          this->n_50--;
       }
@@ -190,29 +195,29 @@ void Player::Take_1000_without_having_b1000(int* n_1000, int* n_500, int* n_100,
 
 void Player::Take_500_without_having_b500(int* n_500, int* n_100, int* n_50)
 {
-   *n_500 = 0;
-   *n_100 = 0;
-   *n_50 = 0;
+   (*n_500) = 0;
+   (*n_100) = 0;
+   (*n_50) = 0;
 
-   int acumulado = 0;
+   int accumulated = 0;
 
-   while (acumulado < 500)
+   while (accumulated < 500)
    {
       if (this->n_500 > 0)
       {
-         acumulado += 500;
+         accumulated += 500;
          (*n_500)++;
          this->n_500--;
       }
       else if (this->n_100 > 0)
       {
-         acumulado += 100;
+         accumulated += 100;
          (*n_100)++;
          this->n_100--;
       }
       else if (this->n_50 > 0)
       {
-         acumulado += 50;
+         accumulated += 50;
          (*n_50)++;
          this->n_50--;
       }
@@ -235,22 +240,22 @@ void Player::Take_500_without_having_b500(int* n_500, int* n_100, int* n_50)
 
 void Player::Take_100_without_having_b100(int* n_100, int* n_50)
 {
-   *n_100 = 0;
-   *n_50 = 0;
+   (*n_100) = 0;
+   (*n_50) = 0;
 
-   int acumulado = 0;
+   int accumulated = 0;
 
-   while (acumulado < 100)
+   while (accumulated < 100)
    {
       if (this->n_100 > 0)
       {
-         acumulado += 100;
+         accumulated += 100;
          (*n_100)++;
          this->n_100--;
       }
       else if (this->n_50 > 0)
       {
-         acumulado += 50;
+         accumulated += 50;
          (*n_50)++;
          this->n_50--;
       }
@@ -278,15 +283,15 @@ void Player::Take_100_without_having_b100(int* n_100, int* n_50)
 
 void Player::Take_50_without_having_b50(int* n_50)
 {
-   *n_50 = 0;
+   (*n_50) = 0;
 
-   int acumulado = 0;
+   int accumulated = 0;
 
-   while (acumulado < 50)
+   while (accumulated < 50)
    {
       if (this->n_50 > 0)
       {
-         acumulado += 50;
+         accumulated += 50;
          (*n_50)++;
          this->n_50--;
       }

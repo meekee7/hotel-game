@@ -31,7 +31,7 @@ public:
    void Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50);
    void Expropriate_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, int po_n_5000, int po_n_1000, int po_n_500, int po_n_100, int po_n_50);
    void Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50);
-   void Pay_nights (Player* to_player, int n5000, int n1000, int n500, int n100, int n50);
+   void Pay_nights(Player* to_player, int n5000, int n1000, int n500, int n100, int n50);
    void Return_change(int n_5000, int n_1000, int n_500, int n_100, int n_50);
    void Pay_phase_or_entrance(int n5000, int n1000, int n500, int n100, int n50);
    void Take_5000_without_having_b5000(int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50);

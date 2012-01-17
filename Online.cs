@@ -959,11 +959,8 @@ namespace Juego_Hotel
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             hotel.dueño = jugador;
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra
-            {
-                jugador.hoteles.AddLast(hotel);
-                jugador.n_hoteles++;
-            }
+            jugador.hoteles.AddLast(hotel);
+            jugador.n_hoteles++;
         }
 
         private void Hotel_expropiado()

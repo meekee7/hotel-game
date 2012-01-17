@@ -234,6 +234,142 @@ bool Game::can_charge_bank(Player* p)
       return false;
 }
 
+void Game::calculate_return (int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
+{
+   (*n_5000) = 0;
+   (*n_1000) = 0;
+   (*n_500) = 0;
+   (*n_100) = 0;
+   (*n_50) = 0;
+
+   while (quantity > 0)
+   {
+         if (quantity >= 5000)
+         {
+            quantity -= 5000;
+            (*n_5000)++;
+         }
+         else if (quantity >= 1000)
+         {
+            quantity -= 1000;
+            (*n_1000)++;
+         }
+         else if (quantity >= 500)
+         {
+            quantity -= 500;
+            (*n_500)++;
+         }
+         else if (quantity >= 100)
+         {
+            quantity -= 100;
+            (*n_100)++;
+         }
+         else if (quantity >= 50)
+         {
+            quantity -= 50;
+            (*n_50)++;
+         }
+   }
+}
+
+void Game::calculate_return(Player* player, int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
+{
+   // Al restar la devolución a un jugador, hay que haber ingresado los fondos previamente por si acaso el jugador
+   // no tiene fondos suficientes para devolver antes de haber recibido el cobro
+   // En el caso de que no tenga cambio justo, el sistema automáticamente obtendrá los billetes necesarios para que así sea, cambiando billetes con la banca
+   (*n_5000) = 0;
+   (*n_1000) = 0;
+   (*n_500) = 0;
+   (*n_100) = 0;
+   (*n_50) = 0;
+   int n_5000_, n_1000_, n_500_, n_100_, n_50_;
+
+   while (quantity > 0)
+   {
+         if (quantity >= 5000)
+         {
+            if (player->n_5000 > 0)
+            {
+               player->n_5000--;
+               (*n_5000)++;
+            }
+            else
+            {
+               player->Take_5000_without_having_b5000(&n_5000_, &n_1000_, &n_500_, &n_100_, &n_50_);
+               (*n_5000) += n_5000_;
+               (*n_1000) += n_1000_;
+               (*n_500) += n_500_;
+               (*n_100) += n_100_;
+               (*n_50) += n_50_;
+            }
+            quantity -= 5000;
+         }
+         else if (quantity >= 1000)
+         {
+            if (player->n_1000 > 0)
+            {
+               player->n_1000--;
+               (*n_1000)++;
+            }
+            else
+            {
+               player->Take_1000_without_having_b1000(&n_1000_, &n_500_, &n_100_, &n_50_);
+               (*n_1000) += n_1000_;
+               (*n_500) += n_500_;
+               (*n_100) += n_100_;
+               (*n_50) += n_50_;
+            }
+            quantity -= 1000;
+         }
+         else if (quantity >= 500)
+         {
+            if (player->n_500 > 0)
+            {
+               player->n_500--;
+               (*n_500)++;
+            }
+            else
+            {
+               player->Take_500_without_having_b500(&n_500_, &n_100_, &n_50_);
+               (*n_500) += n_500_;
+               (*n_100) += n_100_;
+               (*n_50) += n_50_;
+            }
+            quantity -= 500;
+         }
+         else if (quantity >= 100)
+         {
+            if (player->n_100 > 0)
+            {
+               player->n_100--;
+               (*n_100)++;
+            }
+            else
+            {
+               player->Take_100_without_having_b100(&n_100_, &n_50_);
+               (*n_100) += n_100_;
+               (*n_50) += n_50_;
+            }
+            quantity -= 100;
+         }
+         else if (quantity >= 50)
+         {
+            if (player->n_50 > 0)
+            {
+               player->n_50--;
+               (*n_50)++;
+            }
+            else
+            {
+               player->Take_50_without_having_b50(&n_50_);
+               (*n_50) += n_50_;
+            }
+            quantity -= 50;
+         }
+   }
+   player->Calculate_total_money();
+}
+
 Game::~Game(void)
 {
    this->creator = NULL;

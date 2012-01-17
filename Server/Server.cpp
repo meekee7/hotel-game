@@ -929,7 +929,7 @@ void handle_command(string command, Player* p)
       int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       len_int = receive_int(p, &bytes_received);
       int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      // We have player total money
+      // We have selected money by player, change needs to be calculated
       Game* game = get_game_from_id(id);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
@@ -939,10 +939,17 @@ void handle_command(string command, Player* p)
          return;
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
          return;
-      if ((n_5000*5000 + n_1000*1000, n_500*500 + n_100*100 + n_50*50) != (player->total_money - hotel->price)) // Hack, retire player
+      int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
+      if (total_selected < hotel->price) // Hack, retire player
          return;
       hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
+      // Calculate change
+      if (total_selected > hotel->price)
+      {
+         game->calculate_return(total_selected - hotel->price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+         player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+      }
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
