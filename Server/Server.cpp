@@ -1174,21 +1174,37 @@ void handle_command(string command, Player* p)
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
       len_int = receive_int(p, &bytes_received);
       int position = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int n_5000, n_1000, n_500, n_100, n_50;
       len_int = receive_int(p, &bytes_received);
-      int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      // We have player total money
+      int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      if (type == 2)
+      {
+         len_int = receive_int(p, &bytes_received);
+         n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      }
+      // We have selected money by player, change needs to be calculated
       Game* game = get_game_from_id(id);
-      Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_game(p->name, game);
-      if (player == NULL) // Hack, retire player
+      if (game->current_player != player) // Hack, retire player
+         return;
+      if ((player->position->type != build) && (player->position->type != free_phase)) // Hack, retire player
+         return;
+      if (player->built_last_turn) // Hack, retire player
+         return;
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      if (hotel->owner != player) // Hack, retire player
+         return;
+      if ((type == 0) && (player->position->type != free_phase)) // Hack, retire player
+         return;
+      if ((type == 1) && (game->last_construction_dice_res != Free)) // Hack, retire player
          return;
       hotel->Add_entrance(position);
       player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
