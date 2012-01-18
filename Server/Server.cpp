@@ -866,6 +866,23 @@ void handle_command(string command, Player* p)
          send_wstring(dest, p->name);
       }
    }
+   else if (command == "roll_construction_dice")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      Game* game = get_game_from_id(id);
+      if (game->current_player != p) // Hack, retire player
+         return;
+      if (p->position->type != build) // Hack, retire player
+         return;
+      TBuild_dice_res construction_dice_res = game->roll_construction_dice();
+      send_command("rolled_construction_dice", p);
+      send_int(p, id);
+      send_int(p, (int)construction_dice_res);
+      if (construction_dice_res == Deny)
+         p->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
+   }
    else if (command == "turn_pass")
    {
       int bytes_received;
@@ -875,6 +892,8 @@ void handle_command(string command, Player* p)
       Player* dest;
       Game* game = get_game_from_id(id);
       if (game->current_player != p) // Hack, retire player
+         return;
+      if (!p->rolled_last_turn) // Hack, retire player
          return;
       Player* next_player = game->turn_pass();
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -934,6 +953,10 @@ void handle_command(string command, Player* p)
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return;
+      if (player->position->type != buy)  // Hack, retire player
+         return;
+      if (player->bought_last_turn) // Hack, retire player
+         return;
       Hotel* hotel = get_hotel_from_name(hotel_name);
       if (hotel->owner != NULL) // Hack, retire player
          return;
@@ -950,6 +973,7 @@ void handle_command(string command, Player* p)
          game->calculate_return(total_selected - hotel->price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
          player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
       }
+      player->bought_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -989,27 +1013,36 @@ void handle_command(string command, Player* p)
       int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       len_int = receive_int(p, &bytes_received);
       int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int po_n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int po_n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int po_n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int po_n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int po_n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      // We have player total money
+      // We have selected money by player, change needs to be calculated
       // Needs checking: hotel has owner and is different than player, hotel can be expropriated (player position is next to the hotel, no phases built),
       // player total money is previous total - hotel expropriation price, previous owner total money is previous total + hotel_expropriation price
       Game* game = get_game_from_id(id);
-      Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return;
+      if (player->position->type != buy)  // Hack, retire player
+         return;
+      if (player->bought_last_turn) // Hack, retire player
+         return;
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      if ((hotel->owner == NULL) || (hotel->owner == player) || (hotel->n_built_phases > 0)) // Hack, retire player
+         return;
+      if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
+         return;
+      int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
+      if (total_selected < hotel->expropriation_price) // Hack, retire player
+         return;
       Player* previous_owner = hotel->owner;
       hotel->owner = player;
-      player->Expropriate_hotel(hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50, po_n_5000, po_n_1000, po_n_500, po_n_100, po_n_50);
+      previous_owner->Expropriate_hotel(hotel);
+      player->Buy_hotel(hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
+      // Calculate change
+      if (total_selected > hotel->expropriation_price)
+      {
+         game->calculate_return(previous_owner, total_selected - hotel->expropriation_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+         player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+      }
+      player->bought_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -1048,25 +1081,68 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_name = receive_int(p, &bytes_received);
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+      int n_5000, n_1000, n_500, n_100, n_50;
       len_int = receive_int(p, &bytes_received);
-      int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
-      int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      // We have player total money
-      // Needs checking: hotel is owned by player, roll construction dice in server, hotel can be extended, position type (free phase), player total money is previous total money - (phase price*extra_cost)
+      int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      if (type == 2)
+      {
+         len_int = receive_int(p, &bytes_received);
+         n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+         len_int = receive_int(p, &bytes_received);
+         n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      }
+      // We have selected money by player, change needs to be calculated
       Game* game = get_game_from_id(id);
-      Hotel* hotel = get_hotel_from_name(hotel_name);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return;
-      player->Set_money(n_5000, n_1000, n_500, n_100, n_50);
+      if ((player->position->type != build) && (player->position->type != free_phase)) // Hack, retire player
+         return;
+      if (player->built_last_turn) // Hack, retire player
+         return;
+      Hotel* hotel = get_hotel_from_name(hotel_name);
+      if (hotel->owner != player) // Hack, retire player
+         return;
+      if ((type == 0) && (player->position->type != free_phase)) // Hack, retire player
+         return;
+      if ((type == 1) && (game->last_construction_dice_res != Free)) // Hack, retire player
+         return;
+      int total_selected = 0;
+      if (!hotel->Can_extend()) // Hack, retire player
+         return;
+      int total_price;
+      switch (type)
+      {
+         case 0:
+         case 1:  total_price = 0;
+                  break;
+         case 2:  total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
+                  total_price = hotel->Price_next_expansion();
+                  if (game->last_construction_dice_res == Double)
+                     total_price = hotel->Price_next_expansion() * 2;
+                  if (total_selected < hotel->Price_next_expansion()) // Hack, retire player
+                     return;
+                  break;
+         default: return; // Hack, retire player
+      }
       hotel->Extend();
+      if (type == 2)
+      {
+         player->Pay_phase_or_entrance(n_5000, n_1000, n_500, n_100, n_50);
+         // Calculate change
+         if (total_selected > total_price)
+         {
+            game->calculate_return(total_selected - total_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+            player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+         }
+      }
+      player->built_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)

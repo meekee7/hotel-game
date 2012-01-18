@@ -59,5 +59,11 @@ namespace Juego_Hotel
         {
             this.Close();
         }
+
+        private void VerHoteles_Shown(object sender, EventArgs e)
+        {
+            if (this.listaHoteles.Items.Count > 0)
+                this.listaHoteles.SelectedIndex = 0;
+        }
     }
 }

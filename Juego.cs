@@ -14,7 +14,6 @@ namespace Juego_Hotel
         public Jugador[] jugadores;
         public Jugador banca;
         public Dado dado = new Dado(6);
-        public Dado_construccion dado_cons = new Dado_construccion();
         public int jug_inicial;
         public int jug_actual;
         public Jugador jugador_actual;
@@ -22,6 +21,7 @@ namespace Juego_Hotel
         public int ultimo_avance_auto;
         public Casilla[] casillas;
         public String[] lista_jugadores_online;
+        public System.Threading.Semaphore sem_dado_cons;
 
         public Juego()
         {
@@ -31,6 +31,7 @@ namespace Juego_Hotel
             this.hoteles = new Hotel[this.n_hoteles];
             Crear_Hoteles(ref this.hoteles);
             this.banca = new Jugador(5, 5, 5, 5, 5, Tipos.Tcolor.banca, -1);
+            this.sem_dado_cons = new System.Threading.Semaphore(0, 1);
             // Creando casillas
             this.casillas = new Casilla[32];
             for (int i = 0 ; i < 32 ; i++)

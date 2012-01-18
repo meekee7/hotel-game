@@ -17,6 +17,7 @@ namespace Juego_Hotel
         public Boolean cancelado;
         public Boolean fase_gratis;
         public int total_a_pagar;
+        int num_5000, num_1000, num_500, num_100, num_50;
         Principal interfaz;
 
         public Construir(ref Juego juego, Boolean comprando_suelo, Principal interfaz)
@@ -170,7 +171,8 @@ namespace Juego_Hotel
             if (this.fase_gratis)
             {
                 MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
-                this.hotel_seleccionado.Ampliar();
+                if (!this.interfaz.online)
+                    this.hotel_seleccionado.Ampliar();
                 this.Close();
             }
             else
@@ -182,8 +184,8 @@ namespace Juego_Hotel
                                                         "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
                     {
-                        Dado_construccion dado_cons = new Dado_construccion();
-                        dado_cons.ShowDialog();
+                        Dado_construccion dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id);
+                        dado_cons.ShowDialog(); // El resultado será comprobado por el servidor
                         if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
                             this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
                         else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
@@ -201,25 +203,25 @@ namespace Juego_Hotel
                         {
                             PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                             frm_pago.ShowDialog();
-                            if (frm_pago.cancelado) // TODO: Quitar, no se puede cancelar esta operación
+                            this.num_5000 = frm_pago.n_5000;
+                            this.num_1000 = frm_pago.n_1000;
+                            this.num_500 = frm_pago.n_500;
+                            this.num_100 = frm_pago.n_100;
+                            this.num_50 = frm_pago.n_50;
+                            if (!this.interfaz.online)
                             {
-                                frm_pago.Close();
-                                this.cancelado = true;
-                                this.DialogResult = DialogResult.Cancel;
-                                this.Close();
-                                return;
-                            }
-                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                            this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                            if (frm_pago.total_seleccionado > this.total_a_pagar)
-                            {
-                                Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                                int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
+                                this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(this.num_5000, this.num_1000, this.num_500, this.num_100, this.num_50);
+                                if (frm_pago.total_seleccionado > this.total_a_pagar)
+                                {
+                                    Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                                    this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                                }
                             }
                             frm_pago.Close();
                         }
-                        if (this.total_a_pagar != -1)
-                            this.hotel_seleccionado.Ampliar();
+                        if ((this.total_a_pagar != -1) && (!this.interfaz.online))
+                                this.hotel_seleccionado.Ampliar();
                         this.Close();
                     }
                 }
@@ -236,17 +238,22 @@ namespace Juego_Hotel
 
         private void Construir_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!this.cancelado) // Pintar la fase en el tablero
+            if (!this.cancelado) // Pintar la fase en el tablero y enviar el comando
             {
-                this.interfaz.Dibujar_Fase(this.hotel_seleccionado, this.hotel_seleccionado.n_fases_construidas - 1);
-                this.DialogResult = DialogResult.OK;
                 if (this.interfaz.online)
                 {
-                    Jugador jugador = this.juego.jugador_actual;
                     int game_id = this.interfaz.game_id;
-                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, jugador.n_billetes_5000.ToString(),
-                        jugador.n_billetes_1000.ToString(), jugador.n_billetes_500.ToString(), jugador.n_billetes_100.ToString(), jugador.n_billetes_50.ToString());
+                    if (this.fase_gratis) // Se diferencian 3 tipos para detectar hacks
+                        this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "0");
+                    else if (this.total_a_pagar == 0)
+                        this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "1");
+                    else
+                        this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "2", this.num_5000.ToString(),
+                        this.num_1000.ToString(), this.num_500.ToString(), this.num_100.ToString(), this.num_50.ToString());
                 }
+                else
+                    this.interfaz.Dibujar_Fase(this.hotel_seleccionado, this.hotel_seleccionado.n_fases_construidas - 1);
+                this.DialogResult = DialogResult.OK;
             }
         }
     }

@@ -25,11 +25,15 @@ namespace Juego_Hotel
         Math3D.Cube dado;
         Point origen;
         public Tipos.Resultado_dado_cons resultado;
+        Online frm_online;
+        int game_id;
 
-        public Dado_construccion()
+        public Dado_construccion(Online frm_online, int game_id)
         {
             InitializeComponent();
             this.rand = new Random();
+            this.frm_online = frm_online;
+            this.game_id = game_id;
         }
 
         private void Dado_construccion_Load(object sender, EventArgs e)
@@ -59,41 +63,88 @@ namespace Juego_Hotel
 
         private void cuadro_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 30; i++)
+            // Enviar comando al server si estamos en modo online
+            Tipos.Resultado_dado_cons res_online;
+            if (this.frm_online != null)
             {
-                dado.RotateX += this.rand.Next(50);
-                dado.RotateY += this.rand.Next(50);
-                dado.RotateZ += this.rand.Next(50);
-                this.Refresh();
-                Thread.Sleep(50);
-            }
-            // Detectar qué cara está más cerca de la pantalla
-            Math3D.Cube.Face cara_mas_cercana = dado.faces[0];
-            for (int i = 1 ; i < dado.faces.Length ; i++)
-            {
-                if (cara_mas_cercana.CompareTo(dado.faces[i]) > 0)
-                    cara_mas_cercana = dado.faces[i];
-            }
+                this.frm_online.enviar_comando("roll_construction_dice", this.game_id.ToString());
+                this.frm_online.Buscar_partida(game_id).interfaz.juego.sem_dado_cons.WaitOne(10000); // Esperamos a que llegue el comando con el resultado del dado
+                res_online = this.frm_online.ultimo_res_dado_cons;
 
-            if (cara_mas_cercana.color == Brushes.Green)
-            {
-                MessageBox.Show("Construcción permitida");
-                this.resultado = Tipos.Resultado_dado_cons.Permitido;
+                do
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dado.RotateX += this.rand.Next(50);
+                        dado.RotateY += this.rand.Next(50);
+                        dado.RotateZ += this.rand.Next(50);
+                        this.Refresh();
+                        Thread.Sleep(50);
+                    }
+                    // Detectar qué cara está más cerca de la pantalla
+                    Math3D.Cube.Face cara_mas_cercana = dado.faces[0];
+                    for (int i = 1; i < dado.faces.Length; i++)
+                    {
+                        if (cara_mas_cercana.CompareTo(dado.faces[i]) > 0)
+                            cara_mas_cercana = dado.faces[i];
+                    }
+
+                    if (cara_mas_cercana.color == Brushes.Green)
+                        this.resultado = Tipos.Resultado_dado_cons.Permitido;
+                    else if (cara_mas_cercana.color == Brushes.Red)
+                        this.resultado = Tipos.Resultado_dado_cons.Denegado;
+                    else if (cara_mas_cercana.color == Brushes.Yellow)
+                        this.resultado = Tipos.Resultado_dado_cons.Gratis;
+                    else if (cara_mas_cercana.color == Brushes.Orange)
+                        this.resultado = Tipos.Resultado_dado_cons.Doble;
+                } while (resultado != res_online);
+                if (resultado == Tipos.Resultado_dado_cons.Permitido)
+                    MessageBox.Show("Construcción permitida");
+                else if (resultado == Tipos.Resultado_dado_cons.Gratis)
+                    MessageBox.Show("Construcción gratuita");
+                else if (resultado == Tipos.Resultado_dado_cons.Doble)
+                    MessageBox.Show("Construcción de coste doble");
+                else if (resultado == Tipos.Resultado_dado_cons.Denegado)
+                    MessageBox.Show("Construcción denegada");
             }
-            else if (cara_mas_cercana.color == Brushes.Red)
+            else
             {
-                MessageBox.Show("Construcción denegada");
-                this.resultado = Tipos.Resultado_dado_cons.Denegado;
-            }
-            else if (cara_mas_cercana.color == Brushes.Yellow)
-            {
-                MessageBox.Show("Construcción gratuita");
-                this.resultado = Tipos.Resultado_dado_cons.Gratis;
-            }
-            else if (cara_mas_cercana.color == Brushes.Orange)
-            {
-                MessageBox.Show("Construcción de coste doble");
-                this.resultado = Tipos.Resultado_dado_cons.Doble;
+                for (int i = 0; i < 30; i++)
+                {
+                    dado.RotateX += this.rand.Next(50);
+                    dado.RotateY += this.rand.Next(50);
+                    dado.RotateZ += this.rand.Next(50);
+                    this.Refresh();
+                    Thread.Sleep(50);
+                }
+                // Detectar qué cara está más cerca de la pantalla
+                Math3D.Cube.Face cara_mas_cercana = dado.faces[0];
+                for (int i = 1; i < dado.faces.Length; i++)
+                {
+                    if (cara_mas_cercana.CompareTo(dado.faces[i]) > 0)
+                        cara_mas_cercana = dado.faces[i];
+                }
+
+                if (cara_mas_cercana.color == Brushes.Green)
+                {
+                    MessageBox.Show("Construcción permitida");
+                    this.resultado = Tipos.Resultado_dado_cons.Permitido;
+                }
+                else if (cara_mas_cercana.color == Brushes.Red)
+                {
+                    MessageBox.Show("Construcción denegada");
+                    this.resultado = Tipos.Resultado_dado_cons.Denegado;
+                }
+                else if (cara_mas_cercana.color == Brushes.Yellow)
+                {
+                    MessageBox.Show("Construcción gratuita");
+                    this.resultado = Tipos.Resultado_dado_cons.Gratis;
+                }
+                else if (cara_mas_cercana.color == Brushes.Orange)
+                {
+                    MessageBox.Show("Construcción de coste doble");
+                    this.resultado = Tipos.Resultado_dado_cons.Doble;
+                }
             }
             this.Hide();
         }

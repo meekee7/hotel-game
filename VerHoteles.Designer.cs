@@ -129,6 +129,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "VerHoteles";
             this.Text = "Tus hoteles";
+            this.Shown += new System.EventHandler(this.VerHoteles_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.imgTarjeta)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -17,4 +17,4 @@ struct config
 enum TColor { red, blue, yellow, green, bank };
 enum TPosition { start, buy, build, free_entrance, free_phase };
 enum THotel_name { Fujiyama, Boomerang, Letoile, President, Royal, Waikiki, Taj_Mahal, Safari, None };
-enum TBuild_dice_res { Allowd, Free, Double, Denied };
+enum TBuild_dice_res { Allow, Free, Double, Deny };

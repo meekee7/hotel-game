@@ -115,24 +115,61 @@ int Game::roll_dice()
    return this->last_dice_res;
 }
 
+TBuild_dice_res Game::roll_construction_dice()
+{
+   int res = this->random->RollDice(6, 1);
+   switch (res)
+   {
+      case 1:
+      case 2:
+      case 3: this->last_construction_dice_res = Allow;
+              break;
+      case 4: this->last_construction_dice_res = Free;
+              break;
+      case 5: this->last_construction_dice_res = Double;
+              break;
+      case 6: this->last_construction_dice_res = Deny;
+              break;
+   }
+   wcout << L"Construction dice result: ";
+   switch (this->last_construction_dice_res)
+   {
+      case 0: wcout << L"Allow" << endl;
+              break;
+      case 1: wcout << L"Free" << endl;
+              break;
+      case 2: wcout << L"Double" << endl;
+              break;
+      case 3: wcout << L"Deny" << endl;
+              break;
+   }
+   return this->last_construction_dice_res;
+}
+
 void Game::move_player(Player* p)
 {
    // Uses last dice result
    p->position->occupied = false; // Free the position
-   if ((p->position->number + this->last_dice_res) <= 31) // One lap
+   if ((p->position->number + this->last_dice_res) <= 31) // No new lap yet
       p->position = this->positions[p->position->number + this->last_dice_res];
    else
       p->position = this->positions[p->position->number + this->last_dice_res - 31];
    this->last_auto_advance = 0;
    while (p->position->occupied) // We need to advance because it's occupied
    {
-      if (p->position->number < 31) // Protect the lap
+      if (p->position->number < 31) // No new lap yet
          p->position = this->positions[p->position->number + 1];
       else
          p->position = this->positions[1];
       this->last_auto_advance++;
    }
    p->position->occupied = true; // Occupy the position
+   this->current_player->rolled_last_turn = false;
+   this->current_player->paid_last_turn = false;
+   this->current_player->bought_last_turn = false;
+   this->current_player->built_last_turn = false;
+   this->current_player->charged_bank_last_turn = false;
+   this->current_player->put_entrance_last_turn = false;
 }
 
 Player* Game::turn_pass()
@@ -141,11 +178,7 @@ Player* Game::turn_pass()
    i = find(this->plist.begin(), this->plist.end(), this->current_player);
    bool valid = false;
    this->current_player->rolled_last_turn = false;
-   this->current_player->paid_last_turn = false;
-   this->current_player->bought_last_turn = false;
-   this->current_player->built_last_turn = false;
-   this->current_player->charged_bank_last_turn = false;
-   this->current_player->put_entrance_last_turn = false;
+
    while (!valid)
    {
       if (i == --this->plist.end())
@@ -215,7 +248,7 @@ int Game::get_money_for_nights(Player* owner, Player* player) // Checks player p
       {
          dice_res = this->random->RollDice(6, 1);
          wcout << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;
-         amount = (*i)->prices_matrix[(*i)->n_built_expansions-1][dice_res-1];
+         amount = (*i)->prices_matrix[(*i)->n_built_phases-1][dice_res-1];
       }
    }
    return amount;

@@ -8,7 +8,7 @@ Hotel::Hotel(THotel_name name)
    this->n_entrances = 0;
    this->entrance_bought_last_turn = false;
    this->ground_bought = false;
-   this->n_built_expansions = 0;
+   this->n_built_phases = 0;
    switch (this->name)
    {
          case Boomerang :
@@ -16,11 +16,11 @@ Hotel::Hotel(THotel_name name)
             this->price = 500;
             this->expropriation_price = 250;
             this->entrance_price = 100;
-            this->n_max_expansions = 2;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 1800;
-            this->expansions_prices[1] = 250;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 2;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 1800;
+            this->phases_prices[1] = 250;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 400;
             this->prices_matrix[0][1] = 800;
             this->prices_matrix[0][2] = 1200;
@@ -39,13 +39,13 @@ Hotel::Hotel(THotel_name name)
             this->price = 1000;
             this->expropriation_price = 500;
             this->entrance_price = 100;
-            this->n_max_expansions = 4;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 2200;
-            this->expansions_prices[1] = 1400;
-            this->expansions_prices[2] = 1400;
-            this->expansions_prices[3] = 500;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 4;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 2200;
+            this->phases_prices[1] = 1400;
+            this->phases_prices[2] = 1400;
+            this->phases_prices[3] = 500;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 100;
             this->prices_matrix[0][1] = 200;
             this->prices_matrix[0][2] = 300;
@@ -76,14 +76,14 @@ Hotel::Hotel(THotel_name name)
             this->price = 3500;
             this->expropriation_price = 1750;
             this->entrance_price = 250;
-            this->n_max_expansions = 5;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 5000;
-            this->expansions_prices[1] = 3000;
-            this->expansions_prices[2] = 2250;
-            this->expansions_prices[3] = 1750;
-            this->expansions_prices[4] = 5000;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 5;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 5000;
+            this->phases_prices[1] = 3000;
+            this->phases_prices[2] = 2250;
+            this->phases_prices[3] = 1750;
+            this->phases_prices[4] = 5000;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 200;
             this->prices_matrix[0][1] = 400;
             this->prices_matrix[0][2] = 600;
@@ -120,13 +120,13 @@ Hotel::Hotel(THotel_name name)
             this->price = 1500;
             this->expropriation_price = 750;
             this->entrance_price = 100;
-            this->n_max_expansions = 4;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 2400;
-            this->expansions_prices[1] = 1000;
-            this->expansions_prices[2] = 500;
-            this->expansions_prices[3] = 1000;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 4;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 2400;
+            this->phases_prices[1] = 1000;
+            this->phases_prices[2] = 500;
+            this->phases_prices[3] = 1000;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 100;
             this->prices_matrix[0][1] = 200;
             this->prices_matrix[0][2] = 300;
@@ -157,15 +157,15 @@ Hotel::Hotel(THotel_name name)
             this->price = 2500;
             this->expropriation_price = 1250;
             this->entrance_price = 200;
-            this->n_max_expansions = 6;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 3500;
-            this->expansions_prices[1] = 2500;
-            this->expansions_prices[2] = 2500;
-            this->expansions_prices[3] = 1750;
-            this->expansions_prices[4] = 1750;
-            this->expansions_prices[5] = 2500;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 6;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 3500;
+            this->phases_prices[1] = 2500;
+            this->phases_prices[2] = 2500;
+            this->phases_prices[3] = 1750;
+            this->phases_prices[4] = 1750;
+            this->phases_prices[5] = 2500;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 200;
             this->prices_matrix[0][1] = 400;
             this->prices_matrix[0][2] = 600;
@@ -208,14 +208,14 @@ Hotel::Hotel(THotel_name name)
             this->price = 2500;
             this->expropriation_price = 1250;
             this->entrance_price = 200;
-            this->n_max_expansions = 5;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 3600;
-            this->expansions_prices[1] = 2600;
-            this->expansions_prices[2] = 1800;
-            this->expansions_prices[3] = 1800;
-            this->expansions_prices[4] = 3000;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 5;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 3600;
+            this->phases_prices[1] = 2600;
+            this->phases_prices[2] = 1800;
+            this->phases_prices[3] = 1800;
+            this->phases_prices[4] = 3000;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 150;
             this->prices_matrix[0][1] = 300;
             this->prices_matrix[0][2] = 450;
@@ -252,13 +252,13 @@ Hotel::Hotel(THotel_name name)
             this->price = 2000;
             this->expropriation_price = 1000;
             this->entrance_price = 150;
-            this->n_max_expansions = 4;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 2600;
-            this->expansions_prices[1] = 1200;
-            this->expansions_prices[2] = 1200;
-            this->expansions_prices[3] = 2000;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 4;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 2600;
+            this->phases_prices[1] = 1200;
+            this->phases_prices[2] = 1200;
+            this->phases_prices[3] = 2000;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 100;
             this->prices_matrix[0][1] = 200;
             this->prices_matrix[0][2] = 300;
@@ -289,15 +289,15 @@ Hotel::Hotel(THotel_name name)
             this->price = 3000;
             this->expropriation_price = 1500;
             this->entrance_price = 250;
-            this->n_max_expansions = 6;
-            this->expansions_prices = vector<int>(this->n_max_expansions);
-            this->expansions_prices[0] = 3300;
-            this->expansions_prices[1] = 2200;
-            this->expansions_prices[2] = 1800;
-            this->expansions_prices[3] = 1800;
-            this->expansions_prices[4] = 1800;
-            this->expansions_prices[5] = 4000;
-            this->prices_matrix = vector<vector<int> > (this->n_max_expansions, vector<int>(6));
+            this->n_max_phases = 6;
+            this->phases_prices = vector<int>(this->n_max_phases);
+            this->phases_prices[0] = 3300;
+            this->phases_prices[1] = 2200;
+            this->phases_prices[2] = 1800;
+            this->phases_prices[3] = 1800;
+            this->phases_prices[4] = 1800;
+            this->phases_prices[5] = 4000;
+            this->prices_matrix = vector<vector<int> > (this->n_max_phases, vector<int>(6));
             this->prices_matrix[0][0] = 150;
             this->prices_matrix[0][1] = 300;
             this->prices_matrix[0][2] = 450;
@@ -342,8 +342,8 @@ Hotel::Hotel(THotel_name name)
 
 void Hotel::Extend()
 {
-   this->n_built_expansions++;
-   if (this->n_built_expansions == this->n_max_expansions)
+   this->n_built_phases++;
+   if (this->n_built_phases == this->n_max_phases)
       this->ground_bought = true;
 }
 
@@ -355,7 +355,7 @@ void Hotel::Add_entrance(int position)
 
 int Hotel::Price_next_expansion()
 {
-   return this->expansions_prices[this->n_built_expansions];
+   return this->phases_prices[this->n_built_phases];
 }
 
 bool Hotel::Can_extend()
@@ -365,7 +365,7 @@ bool Hotel::Can_extend()
 
 int Hotel::Calculate_nights(int number)
 {
-   return this->prices_matrix[this->n_built_expansions-1][number-1]; // Substract to access correctly to prices matrix
+   return this->prices_matrix[this->n_built_phases-1][number-1]; // Substract to access correctly to prices matrix
 }
 
 void Hotel::Return_to_bank()

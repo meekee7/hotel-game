@@ -21,6 +21,7 @@ namespace Juego_Hotel
         Thread thread_recepcion;
         Semaphore sem_en_comunicacion;
         Boolean continuar_thread, conectado = false, cerrando = false;
+        public Tipos.Resultado_dado_cons ultimo_res_dado_cons;
 
         public Online()
         {
@@ -635,7 +636,7 @@ namespace Juego_Hotel
             return null;
         }
 
-        private PartidaOnline Buscar_partida(int id)
+        public PartidaOnline Buscar_partida(int id)
         {
             foreach (PartidaOnline partida in lista_partidas)
             {
@@ -694,6 +695,8 @@ namespace Juego_Hotel
                     this.No_unirse_a_partida();
                 else if (msg == "rolled_dice")
                     this.Dado_tirado();
+                else if (msg == "rolled_construction_dice")
+                    this.Dado_construccion_tirado();
                 else if (msg == "game_started")
                     this.Iniciar_partida();
                 else if (msg == "turn_passed")
@@ -898,6 +901,18 @@ namespace Juego_Hotel
             partida.interfaz.BeginInvoke(new Tirar_Dado_Callback(partida.interfaz.Tirar_dado), new object[] { jugador });
         }
 
+        private void Dado_construccion_tirado()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            this.ultimo_res_dado_cons = (Tipos.Resultado_dado_cons) this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.juego.sem_dado_cons.Release();
+            Thread.Sleep(200);
+            partida.interfaz.juego.sem_dado_cons.Close();
+            partida.interfaz.juego.sem_dado_cons = new Semaphore(0, 1);
+        }
+
         private void Iniciar_partida()
         {
             int bytes_recibidos = 0;
@@ -974,13 +989,10 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra
-            {
-                hotel.dueño.Hotel_Expropiado(ref hotel);
-                hotel.dueño = jugador;
-                jugador.hoteles.AddLast(hotel);
-                jugador.n_hoteles++;
-            }
+            hotel.dueño.Hotel_Expropiado(ref hotel);
+            hotel.dueño = jugador;
+            jugador.hoteles.AddLast(hotel);
+            jugador.n_hoteles++;
         }
 
         delegate void Dibujar_Fase_Callback(Hotel hotel, int n_50);
@@ -995,11 +1007,8 @@ namespace Juego_Hotel
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se amplía desde la interfaz cuando se compra
-            {
-                hotel.Ampliar();
-                partida.interfaz.BeginInvoke(new Dibujar_Fase_Callback(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
-            }
+            hotel.Ampliar();
+            partida.interfaz.BeginInvoke(new Dibujar_Fase_Callback(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
         }
 
         delegate void Dibujar_Entrada_Callback(Casilla casilla, Boolean en_la_derecha);

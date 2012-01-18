@@ -44,13 +44,28 @@ void Player::Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_10
    this->Calculate_total_money();
 }
 
-void Player::Expropriate_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, int po_n_5000, int po_n_1000, int po_n_500, int po_n_100, int po_n_50)
+void Player::Buy_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+   // Owner is set by caller thread because incomplete class Hotel
+   this->hotels.push_back(hotel);
+   this->n_5000 -= n_5000;
+   this->n_1000 -= n_1000;
+   this->n_500 -= n_500;
+   this->n_100 -= n_100;
+   this->n_50 -= n_50;
+   this->Calculate_total_money();
+   previous_owner->n_5000 += n_5000;
+   previous_owner->n_1000 += n_1000;
+   previous_owner->n_500 += n_500;
+   previous_owner->n_100 += n_100;
+   previous_owner->n_50 += n_50;
+   previous_owner->Calculate_total_money();
+}
+
+void Player::Expropriate_hotel(Hotel* hotel)
 {
    // Money its already calculated, client does the math
    this->hotels.push_back(hotel);
-   this->Set_money(n_5000, n_1000, n_500, n_100, n_50);
-   previous_owner->Set_money(po_n_5000, po_n_1000, po_n_500, po_n_100, po_n_50);
-   previous_owner->hotels.remove(hotel);
 }
 
 void Player::Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50)
