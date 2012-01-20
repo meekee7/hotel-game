@@ -715,7 +715,7 @@ namespace Juego_Hotel
                     this.Jugador_retirado();
                 else if (msg == "game_ended")
                     this.Juego_terminado();
-                else if (msg == "pay_nights")
+                else if (msg == "ask_pay_nights")
                     this.Pagar_noches();
                 else
                 {
@@ -1080,6 +1080,7 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             MessageBox.Show("Debes pagar " + noches + " noches (" + cantidad + ") al jugador " + jugador.color + " (" + jugador.nombre_online + ")");
+
         }
     }
 }

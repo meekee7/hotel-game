@@ -1370,7 +1370,8 @@ void handle_command(string command, Player* p)
             amount = game->get_money_for_nights(p, dest, &nights);
             if (amount > 0) // The player is in a entrance
             {
-               send_command("pay_nights", dest); // Will force the player to pay nights, if he hacks the game, in next turn pass he will be retired
+               dest->asked_nights_last_turn = true;
+               send_command("ask_pay_nights", dest); // Will force the player to pay nights, if he hacks the game, in next turn pass he will be retired
                send_int(dest, id);
                send_int(dest, get_utf8_length(p->name));
                send_wstring(dest, p->name);
