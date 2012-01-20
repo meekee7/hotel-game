@@ -1277,6 +1277,14 @@ namespace Juego_Hotel
             this.Actualizar_Dinero_Jugadores();
         }
 
+        private void Pedir_Noches_Online(int n_jugador)
+        {
+            Jugador jugador = this.juego.jugadores[n_jugador];
+            PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this, hotel.dueño);
+            frm_pago.ShowDialog();
+            jugador.pago_ultimo_turno = true;
+        }
+
         private void bPedirNochesJ1_Click(object sender, EventArgs e)
         {
             if (this.online)
