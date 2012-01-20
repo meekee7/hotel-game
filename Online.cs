@@ -719,7 +719,10 @@ namespace Juego_Hotel
                     this.Pagar_noches();
                 else
                 {
-                    MessageBox.Show("Comando desconocido");
+                    if (msg == "")
+                        MessageBox.Show("Ha habido un problema de conexión con el servidor");
+                    else
+                        MessageBox.Show("Comando " + msg + " desconocido");
                     this.continuar_thread = false;
                     this.Pulsar_Desconectar();
                 }
@@ -1002,7 +1005,6 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
-            long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
@@ -1023,22 +1025,21 @@ namespace Juego_Hotel
             int casilla = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se añade desde la interfaz cuando se compra
+            if (partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
             {
-                if (partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
-                {
-                    partida.interfaz.juego.casillas[casilla].entrada_en_der = true;
-                    partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
-                }
-                else
-                {
-                    partida.interfaz.juego.casillas[casilla].entrada_en_izq = true;
-                    partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
-                }
-                hotel.n_entradas++;
-                hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
+                partida.interfaz.juego.casillas[casilla].entrada_en_der = true;
+                partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
             }
+            else
+            {
+                partida.interfaz.juego.casillas[casilla].entrada_en_izq = true;
+                partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
+            }
+            hotel.n_entradas++;
+            hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
         }
+
+        delegate void Marcar_Jugador_Eliminado_Callback(int jugador);
 
         private void Jugador_retirado()
         {
@@ -1048,11 +1049,10 @@ namespace Juego_Hotel
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            if (partida.interfaz.nombre_online != nombre_jugador) // Ya se hace desde la interfaz cuando se retira
-            {
-                partida.interfaz.juego.Eliminar_Jugador(jugador, null);
-                partida.interfaz.Marcar_Jugador_Eliminado(jugador.n_jugador);
-            }
+            if (jugador.Eliminado())
+                return;
+            partida.interfaz.juego.Eliminar_Jugador(jugador, null);
+            partida.interfaz.BeginInvoke(new Marcar_Jugador_Eliminado_Callback(partida.interfaz.Marcar_Jugador_Eliminado), jugador.n_jugador);
         }
 
         delegate void Finalizar_Partida_Callback(Jugador jugador);
@@ -1065,7 +1065,8 @@ namespace Juego_Hotel
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            partida.interfaz.BeginInvoke(new Finalizar_Partida_Callback(partida.interfaz.Finalizar_Partida), jugador);
+            if (!jugador.Eliminado())
+                partida.interfaz.BeginInvoke(new Finalizar_Partida_Callback(partida.interfaz.Finalizar_Partida), jugador);
         }
 
         private void Pagar_noches()
@@ -1075,8 +1076,10 @@ namespace Juego_Hotel
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
+            int noches = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            MessageBox.Show("Debes pagar " + noches + " noches (" + cantidad + ") al jugador " + jugador.color + " (" + jugador.nombre_online + ")");
         }
     }
 }

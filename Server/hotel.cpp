@@ -353,6 +353,23 @@ void Hotel::Add_entrance(int position)
    this->n_entrances++;
 }
 
+bool Hotel::Has_entrance_in_position(int position)
+{
+   list<int>::iterator i = find(this->entrances.begin(), this->entrances.end(), position);
+   if (i != this->entrances.end()) // Hotel has an entrance in this position
+      return true;
+   else
+      return false;
+}
+
+bool Hotel::Is_a_valid_entrance_position(Position* position)
+{
+   if ((position->hotel_left == this->name) || (position->hotel_right == this->name))
+      return true;
+   else
+      return false;
+}
+
 int Hotel::Price_next_expansion()
 {
    return this->phases_prices[this->n_built_phases];

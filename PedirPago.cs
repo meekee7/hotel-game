@@ -95,7 +95,36 @@ namespace Juego_Hotel
             }
         }
 
+
+        private void img50_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.n_50 < this.pagador.n_billetes_50)
+            {
+                this.n_50++;
+                this.n50.Text = "Usas: " + this.n_50.ToString();
+                this.Calcular_total();
+            }
+            else
+            {
+                MessageBox.Show("No tienes tantos billetes de 50", "Imposible incrementar");
+            }
+        }
+
         private void img100_Click(object sender, EventArgs e)
+        {
+            if (this.n_100 < this.pagador.n_billetes_100)
+            {
+                this.n_100++;
+                this.n100.Text = "Usas: " + this.n_100.ToString();
+                this.Calcular_total();
+            }
+            else
+            {
+                MessageBox.Show("No tienes tantos billetes de 100", "Imposible incrementar");
+            }
+        }
+
+        private void img100_DoubleClick(object sender, EventArgs e)
         {
             if (this.n_100 < this.pagador.n_billetes_100)
             {
@@ -123,6 +152,20 @@ namespace Juego_Hotel
             }
         }
 
+        private void img500_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.n_500 < this.pagador.n_billetes_500)
+            {
+                this.n_500++;
+                this.n500.Text = "Usas: " + this.n_500.ToString();
+                this.Calcular_total();
+            }
+            else
+            {
+                MessageBox.Show("No tienes tantos billetes de 500", "Imposible incrementar");
+            }
+        }
+
         private void img1000_Click(object sender, EventArgs e)
         {
             if (this.n_1000 < this.pagador.n_billetes_1000)
@@ -137,7 +180,35 @@ namespace Juego_Hotel
             }
         }
 
+        private void img1000_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.n_1000 < this.pagador.n_billetes_1000)
+            {
+                this.n_1000++;
+                this.n1000.Text = "Usas: " + this.n_1000.ToString();
+                this.Calcular_total();
+            }
+            else
+            {
+                MessageBox.Show("No tienes tantos billetes de 1000", "Imposible incrementar");
+            }
+        }
+
         private void img5000_Click(object sender, EventArgs e)
+        {
+            if (this.n_5000 < this.pagador.n_billetes_5000)
+            {
+                this.n_5000++;
+                this.n5000.Text = "Usas: " + this.n_5000.ToString();
+                this.Calcular_total();
+            }
+            else
+            {
+                MessageBox.Show("No tienes tantos billetes de 5000", "Imposible incrementar");
+            }
+        }
+
+        private void img5000_DoubleClick(object sender, EventArgs e)
         {
             if (this.n_5000 < this.pagador.n_billetes_5000)
             {

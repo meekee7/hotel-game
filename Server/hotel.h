@@ -1,7 +1,9 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include "player.h"
 #include "types.h"
+#include "position.h"
 
 class Hotel
 {
@@ -23,6 +25,8 @@ public:
    Hotel(THotel_name real_name);
    void Extend();
    void Add_entrance(int position);
+   bool Has_entrance_in_position(int position);
+   bool Is_a_valid_entrance_position(Position* position);
    int Price_next_expansion();
    bool Can_extend();
    int Calculate_nights(int number);

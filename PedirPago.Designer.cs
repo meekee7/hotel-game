@@ -68,6 +68,7 @@
             this.img100.TabIndex = 1;
             this.img100.TabStop = false;
             this.img100.Click += new System.EventHandler(this.img100_Click);
+            this.img100.DoubleClick += new System.EventHandler(this.img100_DoubleClick);
             // 
             // img50
             // 
@@ -81,6 +82,7 @@
             this.img50.TabIndex = 0;
             this.img50.TabStop = false;
             this.img50.Click += new System.EventHandler(this.img50_Click);
+            this.img50.DoubleClick += new System.EventHandler(this.img50_DoubleClick);
             // 
             // img500
             // 
@@ -94,6 +96,7 @@
             this.img500.TabIndex = 2;
             this.img500.TabStop = false;
             this.img500.Click += new System.EventHandler(this.img500_Click);
+            this.img500.DoubleClick += new System.EventHandler(this.img500_DoubleClick);
             // 
             // img1000
             // 
@@ -107,6 +110,7 @@
             this.img1000.TabIndex = 3;
             this.img1000.TabStop = false;
             this.img1000.Click += new System.EventHandler(this.img1000_Click);
+            this.img1000.DoubleClick += new System.EventHandler(this.img1000_DoubleClick);
             // 
             // img5000
             // 
@@ -120,6 +124,7 @@
             this.img5000.TabIndex = 4;
             this.img5000.TabStop = false;
             this.img5000.Click += new System.EventHandler(this.img5000_Click);
+            this.img5000.DoubleClick += new System.EventHandler(this.img5000_DoubleClick);
             // 
             // bOk
             // 

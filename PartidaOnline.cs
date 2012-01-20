@@ -83,6 +83,11 @@ namespace Juego_Hotel
                 MessageBox.Show("No puedes enviar un mensaje vacío");
                 return;
             }
+            if (this.mensaje.Text.Length > 1024)
+            {
+                MessageBox.Show("No puedes enviar un mensaje de más de 1024 caracteres");
+                return;
+            }
             this.frm_online.enviar_comando("send_chat_msg", this.id.ToString(), this.mensaje.Text);
             this.mensaje.Text = "";
         }
@@ -132,6 +137,7 @@ namespace Juego_Hotel
 
         private void bIniciar_Click(object sender, EventArgs e)
         {
+            this.bIniciar.Enabled = false;
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 

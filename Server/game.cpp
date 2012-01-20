@@ -13,6 +13,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->chat->join(this->creator);
    this->id = this->chat->id;
    this->started = false;
+   this->ended = false;
    // Create all positions
    this->positions = vector<Position*>(32);
    for (int i = 0 ; i < 32 ; i++)
@@ -69,7 +70,7 @@ bool Game::join(Player* p)
 bool Game::check_already_joined(Player* p)
 {
    list<Player*>::iterator i = find(this->plist.begin(), this->plist.end(), p);
-   if (i == plist.end())
+   if (i == this->plist.end())
       return false;
    else
       return true;
@@ -87,7 +88,7 @@ bool Game::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		wcout << L"Player " << p->name << L" not found in game " << this->name << endl;
+		wcout << L"Player " << p->name << L" not found in game " << this->name << " (WARNING: Possible hack)" << endl;
    else
    {
       this->chat->leave(p);
@@ -105,6 +106,7 @@ void Game::start()
    advance(i, res);
    this->current_player = (*i);
    this->starting_player = res;
+   this->started = true;
    wcout << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")" << endl;
 }
 
@@ -169,7 +171,6 @@ void Game::move_player(Player* p)
    this->current_player->bought_last_turn = false;
    this->current_player->built_last_turn = false;
    this->current_player->charged_bank_last_turn = false;
-   this->current_player->put_entrance_last_turn = false;
 }
 
 Player* Game::turn_pass()
@@ -178,6 +179,7 @@ Player* Game::turn_pass()
    i = find(this->plist.begin(), this->plist.end(), this->current_player);
    bool valid = false;
    this->current_player->rolled_last_turn = false;
+   this->current_player->asked_nights_last_turn = false;
 
    while (!valid)
    {
@@ -194,6 +196,9 @@ Player* Game::turn_pass()
       if (this->current_player->active)
          valid = true;
    }
+   list<Hotel*>::iterator i2;
+   for (i2 = this->current_player->hotels.begin() ; i2 != this->current_player->hotels.end() ; ++i2)
+      (*i2)->entrance_bought_last_turn = false;
    wcout << L"Turn passed, next player: " << this->current_player->name << endl;
    return this->current_player;
 }
@@ -236,7 +241,7 @@ void Game::eliminate_player(Player* player)
    player->hotels.clear();
 }
 
-int Game::get_money_for_nights(Player* owner, Player* player) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance)
+int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance)
 {
    list<Hotel*>::iterator i;
    int amount = 0, dice_res = 0;
@@ -244,13 +249,14 @@ int Game::get_money_for_nights(Player* owner, Player* player) // Checks player p
    for (i = owner->hotels.begin() ; i != owner->hotels.end() ; ++i)
    {
       pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player->position->number);
-      if (pos != (*i)->entrances.end()) // Player is in a entrance of this hotel, and it cant be in any other entrance
+      if (pos != (*i)->entrances.end()) // Player is in an entrance of this hotel, and it cant be in any other entrance
       {
          dice_res = this->random->RollDice(6, 1);
          wcout << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;
          amount = (*i)->prices_matrix[(*i)->n_built_phases-1][dice_res-1];
       }
    }
+   (*nights) = dice_res;
    return amount;
 }
 
@@ -263,6 +269,15 @@ bool Game::can_charge_bank(Player* p)
       else
          return false;
    }
+   else
+      return false;
+}
+
+bool Game::can_buy_entrance(Player* p)
+{
+   int pos = p->position->number;
+   if ((pos >= 27) && ((pos - this->last_dice_res - this->last_auto_advance) < 27))
+      return true;
    else
       return false;
 }

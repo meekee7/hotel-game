@@ -17,6 +17,15 @@ bool Chat::join(Player* p)
 	return true;
 }
 
+bool Chat::check_already_joined(Player* p)
+{
+   list<Player*>::iterator i = find(this->players.begin(), this->players.end(), p);
+   if (i == this->players.end())
+      return false;
+   else
+      return true;
+}
+
 bool Chat::leave(Player* p)
 {
    bool found = false;
@@ -29,7 +38,7 @@ bool Chat::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		wcout << L"Player " << p->name << L" not found in chat " << this->id << endl;
+		wcout << L"Player " << p->name << L" not found in chat " << this->id << " (WARNING: Possible hack)" << endl;
    else
    {
       this->players.erase(i);

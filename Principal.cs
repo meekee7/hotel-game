@@ -1170,7 +1170,7 @@ namespace Juego_Hotel
 
         private void Poner_entradas(int num_jugador)
         {
-            if (this.juego.jugadores[num_jugador].hoteles.Count != 0)
+            if (this.juego.jugadores[num_jugador].hoteles.Count != 0) // TODO revisar el caso de la casilla de entrada gratis después del Ayto. Solo permitir una entrada por casilla gratis
             {
                 PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, num_jugador, this);
                 frm_poner_entradas.ShowDialog();
@@ -1283,6 +1283,7 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(0);
+            this.bPedirNochesJ1.Enabled = false;
         }
 
         private void bPedirNochesJ2_Click(object sender, EventArgs e)
@@ -1291,6 +1292,7 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(1);
+            this.bPedirNochesJ2.Enabled = false;
         }
 
         private void bPedirNochesJ3_Click(object sender, EventArgs e)
@@ -1299,6 +1301,7 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(2);
+            this.bPedirNochesJ3.Enabled = false;
         }
 
         private void bPedirNochesJ4_Click(object sender, EventArgs e)
@@ -1307,6 +1310,7 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(3);
+            this.bPedirNochesJ4.Enabled = false;
         }
 
         public void Marcar_Jugador_Eliminado(int n_jugador)
@@ -1334,11 +1338,16 @@ namespace Juego_Hotel
 
         private void Retirarse(int num_jugador)
         {
+            if (this.juego.jugadores[num_jugador].Eliminado()) // Ya está eliminado
+                return;
             if (MessageBox.Show("¿Estás seguro de que quieres retirarte?", "Hotel", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
-                this.Marcar_Jugador_Eliminado(num_jugador);
-                if (this.online)
+                if (!this.online)
+                {
+                    this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
+                    this.Marcar_Jugador_Eliminado(num_jugador);
+                }
+                else
                     this.frm_online.enviar_comando("retire", this.game_id.ToString());
             }
         }
@@ -1365,9 +1374,8 @@ namespace Juego_Hotel
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //TODO: Salir de la partida si estás en modo online
-            /*if (this.frm_online != null)
-                this.frm_online.Close();*/
+            if (this.online)
+                this.Retirarse(this.juego.jugador_actual.n_jugador);
         }
 
         private void Principal_Shown(object sender, EventArgs e)

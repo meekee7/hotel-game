@@ -114,6 +114,11 @@ namespace Juego_Hotel
                 MessageBox.Show("No puedes enviar un mensaje vacío");
                 return;
             }
+            if (this.mensaje.Text.Length > 1024)
+            {
+                MessageBox.Show("No puedes enviar un mensaje de más de 1024 caracteres");
+                return;
+            }
             if (this.global)
                 this.frm_online.enviar_comando("send_global_chat_msg", this.mensaje.Text);
             else

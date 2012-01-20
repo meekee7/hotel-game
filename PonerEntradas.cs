@@ -114,6 +114,7 @@ namespace Juego_Hotel
 
         private void bComprar_Click(object sender, EventArgs e)
         {
+            int sel_n_5000 = 0, sel_n_1000 = 0, sel_n_500 = 0, sel_n_100 = 0, sel_n_50 = 0;
             if (this.entrada_gratis == true)
             {
                 MessageBox.Show("Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!");
@@ -128,14 +129,22 @@ namespace Juego_Hotel
                 int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
                 PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);
                 frm_pago.ShowDialog();
-                if (frm_pago.total_seleccionado > this.hotel_seleccionado.precio_entrada)
-                {
-                    Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.hotel_seleccionado.precio_entrada), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                }
-                this.jugador.Pagar_Ampliacion_o_Entrada(frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                this.jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                sel_n_5000 = frm_pago.n_5000;
+                sel_n_1000 = frm_pago.n_1000;
+                sel_n_500 = frm_pago.n_500;
+                sel_n_100 = frm_pago.n_100;
+                sel_n_50 = frm_pago.n_50;
                 frm_pago.Close();
-                this.interfaz.Actualizar_Dinero_Jugadores();
+                if (!this.interfaz.online)
+                {
+                    if (frm_pago.total_seleccionado > this.hotel_seleccionado.precio_entrada)
+                    {
+                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.hotel_seleccionado.precio_entrada), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                    }
+                    this.jugador.Pagar_Ampliacion_o_Entrada(sel_n_5000, sel_n_1000, sel_n_500, sel_n_100, sel_n_50);
+                    this.jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                    this.interfaz.Actualizar_Dinero_Jugadores();
+                }
                 this.bUnaMas.Enabled = true;
                 this.hotel_seleccionado.entrada_comprada_ultimo_turno = true;
             }
@@ -144,18 +153,21 @@ namespace Juego_Hotel
             this.listaHoteles.Enabled = false;
             // Hay que saber en que lado de la casilla se pone la entrada
             int n_casilla = Convert.ToInt16(this.listaCasillas.SelectedItem);
-            if (this.juego.casillas[n_casilla].hotel_der == this.hotel_seleccionado.nombre)
+            if (!this.interfaz.online)
             {
-                this.juego.casillas[n_casilla].entrada_en_der = true;
-                this.interfaz.Dibujar_Entrada(this.juego.casillas[n_casilla], true);
+                if (this.juego.casillas[n_casilla].hotel_der == this.hotel_seleccionado.nombre)
+                {
+                    this.juego.casillas[n_casilla].entrada_en_der = true;
+                    this.interfaz.Dibujar_Entrada(this.juego.casillas[n_casilla], true);
+                }
+                else
+                {
+                    this.juego.casillas[n_casilla].entrada_en_izq = true;
+                    this.interfaz.Dibujar_Entrada(this.juego.casillas[n_casilla], false);
+                }
+                this.hotel_seleccionado.n_entradas++;
+                this.hotel_seleccionado.entradas.AddLast(this.juego.casillas[n_casilla]);
             }
-            else
-            {
-                this.juego.casillas[n_casilla].entrada_en_izq = true;
-                this.interfaz.Dibujar_Entrada(this.juego.casillas[n_casilla], false);
-            }
-            this.hotel_seleccionado.n_entradas++;
-            this.hotel_seleccionado.entradas.AddLast(this.juego.casillas[n_casilla]);
             // Desactivar el hotel de la lista para no comprar más entradas en este turno
             this.listaHoteles.Items.Remove(this.listaHoteles.SelectedItem);
             this.listaHoteles.SelectedIndex = -1;
@@ -167,9 +179,11 @@ namespace Juego_Hotel
             if (this.interfaz.online)
             {
                 int game_id = this.interfaz.game_id;
-                this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.hotel_seleccionado.nombre_txt, n_casilla.ToString(),
-                    this.jugador.n_billetes_5000.ToString(), this.jugador.n_billetes_1000.ToString(), this.jugador.n_billetes_500.ToString(), this.jugador.n_billetes_100.ToString(),
-                    this.jugador.n_billetes_50.ToString());
+                if (this.entrada_gratis)
+                    this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.hotel_seleccionado.nombre_txt, n_casilla.ToString(), "0");
+                else
+                    this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.hotel_seleccionado.nombre_txt, n_casilla.ToString(), "1",
+                        sel_n_5000.ToString(), sel_n_1000.ToString(), sel_n_500.ToString(), sel_n_100.ToString(), sel_n_50.ToString());
             }
         }
     }
