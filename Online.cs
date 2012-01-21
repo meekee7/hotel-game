@@ -1069,6 +1069,8 @@ namespace Juego_Hotel
                 partida.interfaz.BeginInvoke(new Finalizar_Partida_Callback(partida.interfaz.Finalizar_Partida), jugador);
         }
 
+        delegate void Pedir_Noches_Online_Callback(Jugador jugador, int cantidad);
+
         private void Pagar_noches()
         {
             int bytes_recibidos = 0;
@@ -1080,7 +1082,7 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             MessageBox.Show("Debes pagar " + noches + " noches (" + cantidad + ") al jugador " + jugador.color + " (" + jugador.nombre_online + ")");
-
+            partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador, cantidad);
         }
     }
 }
