@@ -6,12 +6,13 @@ Player::Player(string ip, Portable_socket* socket_client)
    this->socket = socket_client;
    this->connected = true;
    this->active = true;
-   this->paid_last_turn = false;
    this->rolled_last_turn = false;
    this->charged_bank_last_turn = false;
    this->bought_last_turn = false;
    this->built_last_turn = false;
    this->asked_nights_last_turn = false;
+   this->debt_last_turn = 0;
+   this->debt_nights_to_last_turn = NULL;
    this->position = new Position(0);
 }
 

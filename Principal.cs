@@ -141,10 +141,10 @@ namespace Juego_Hotel
                 this.bEntradasJ2.Enabled = false;
                 this.bEntradasJ3.Enabled = false;
                 this.bEntradasJ4.Enabled = false;
-                this.bPedirNochesJ1.Enabled = false;
-                this.bPedirNochesJ2.Enabled = false;
-                this.bPedirNochesJ3.Enabled = false;
-                this.bPedirNochesJ4.Enabled = false;
+                this.bPedirNochesJ1.Enabled = true;
+                this.bPedirNochesJ2.Enabled = true;
+                this.bPedirNochesJ3.Enabled = true;
+                this.bPedirNochesJ4.Enabled = true;
                 this.bRetirarseJ1.Enabled = false;
                 this.bRetirarseJ2.Enabled = false;
                 this.bRetirarseJ3.Enabled = false;
@@ -373,10 +373,10 @@ namespace Juego_Hotel
                 this.bConstruir.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
                 this.bCobrarBanca.Enabled = false;
-                this.bPedirNochesJ1.Enabled = false;
-                this.bPedirNochesJ2.Enabled = false;
-                this.bPedirNochesJ3.Enabled = false;
-                this.bPedirNochesJ4.Enabled = false;
+                this.bPedirNochesJ1.Enabled = true;
+                this.bPedirNochesJ2.Enabled = true;
+                this.bPedirNochesJ3.Enabled = true;
+                this.bPedirNochesJ4.Enabled = true;
                 this.bRetirarseJ1.Enabled = false;
                 this.bRetirarseJ2.Enabled = false;
                 this.bRetirarseJ3.Enabled = false;
@@ -541,7 +541,11 @@ namespace Juego_Hotel
                 this.bEntradasJ4.Enabled = false;
                 if (this.Puede_poner_entradas(this.juego.jugador_actual))
                     this.Activar_Poner_Entradas(this.juego.jug_actual);
-                switch (jugador.n_jugador)
+                this.bPedirNochesJ1.Enabled = true;
+                this.bPedirNochesJ2.Enabled = true;
+                this.bPedirNochesJ3.Enabled = true;
+                this.bPedirNochesJ4.Enabled = true;
+                /*switch (jugador.n_jugador)
                 {
                     case 0: this.bPedirNochesJ1.Enabled = true;
                         break;
@@ -551,7 +555,7 @@ namespace Juego_Hotel
                         break;
                     case 3: this.bPedirNochesJ4.Enabled = true;
                         break;
-                }
+                }*/
                 if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
                     this.bCobrarBanca.Enabled = true;
                 switch (jugador.posicion.tipo)
@@ -1282,6 +1286,9 @@ namespace Juego_Hotel
             PedirPago frm_pago = new PedirPago(cantidad, ref this.juego, this.juego.jugador_actual, this, jugador);
             frm_pago.ShowDialog();
             jugador.pago_ultimo_turno = true;
+            int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_500, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
+            this.frm_online.enviar_comando("pay_nights", this.game_id.ToString(), n_5000.ToString(), n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
+            frm_pago.Close();
         }
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)

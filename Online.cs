@@ -1052,6 +1052,8 @@ namespace Juego_Hotel
             if (jugador.Eliminado())
                 return;
             partida.interfaz.juego.Eliminar_Jugador(jugador, null);
+            if (jugador.nombre_online != partida.interfaz.nombre_online)
+                MessageBox.Show("El jugador " + jugador.color + " (" + jugador.nombre_online + ") se ha retirado");
             partida.interfaz.BeginInvoke(new Marcar_Jugador_Eliminado_Callback(partida.interfaz.Marcar_Jugador_Eliminado), jugador.n_jugador);
         }
 

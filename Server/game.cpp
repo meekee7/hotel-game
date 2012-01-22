@@ -17,9 +17,15 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    // Create all positions
    this->positions = vector<Position*>(32);
    for (int i = 0 ; i < 32 ; i++)
-   {
       this->positions[i] = new Position(i);
-   }
+   hlist.push_back(new Hotel(Fujiyama));
+   hlist.push_back(new Hotel(Boomerang));
+   hlist.push_back(new Hotel(Letoile));
+   hlist.push_back(new Hotel(President));
+   hlist.push_back(new Hotel(Royal));
+   hlist.push_back(new Hotel(Waikiki));
+   hlist.push_back(new Hotel(Taj_Mahal));
+   hlist.push_back(new Hotel(Safari));
 }
 
 void Game::set_players_money(config configuration)
@@ -148,7 +154,7 @@ TBuild_dice_res Game::roll_construction_dice()
    return this->last_construction_dice_res;
 }
 
-void Game::move_player(Player* p)
+void Game::move_player(Player* p, dlib::mutex* debt_mutex)
 {
    // Uses last dice result
    p->position->occupied = false; // Free the position
@@ -167,19 +173,32 @@ void Game::move_player(Player* p)
    }
    p->position->occupied = true; // Occupy the position
    this->current_player->rolled_last_turn = false;
-   this->current_player->paid_last_turn = false;
    this->current_player->bought_last_turn = false;
    this->current_player->built_last_turn = false;
    this->current_player->charged_bank_last_turn = false;
+   if (this->current_player->debt_last_turn > 0)
+   {
+      debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
+      this->current_player->debt_last_turn = 0;
+      this->current_player->debt_nights_to_last_turn = NULL;
+      debt_mutex->unlock();
+   }
 }
 
-Player* Game::turn_pass()
+Player* Game::turn_pass(dlib::mutex* debt_mutex)
 {
    list<Player*>::iterator i;
    i = find(this->plist.begin(), this->plist.end(), this->current_player);
    bool valid = false;
    this->current_player->rolled_last_turn = false;
    this->current_player->asked_nights_last_turn = false;
+   if (this->current_player->debt_last_turn > 0)
+   {
+      debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
+      this->current_player->debt_last_turn = 0;
+      this->current_player->debt_nights_to_last_turn = NULL;
+      debt_mutex->unlock();
+   }
 
    while (!valid)
    {

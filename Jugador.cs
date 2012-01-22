@@ -19,7 +19,6 @@ namespace Juego_Hotel
         public Tipos.Tcolor color;
         public Boolean pago_ultimo_turno;
         public Boolean eliminado;
-        public Boolean ha_de_pagar_noches;
         public String nombre_online;
 
         public Jugador (int n_5000, int n_1000, int n_500, int n_100, int n_50, Tipos.Tcolor color, int n_jugador)
@@ -33,14 +32,13 @@ namespace Juego_Hotel
             this.hoteles = new LinkedList<Hotel>();
             this.n_hoteles = 0;
             this.posicion = new Casilla (0);
-            this.calcular_dinero_total ();
+            this.calcular_dinero_total();
             this.pago_ultimo_turno = false;
             this.eliminado = false;
-            this.ha_de_pagar_noches = false;
             this.n_jugador = n_jugador;
         }
 
-        public void calcular_dinero_total ()
+        public void calcular_dinero_total()
         {
             this.dinero_total = (5000 * this.n_billetes_5000) + (1000 * this.n_billetes_1000) +
                                 (500 * this.n_billetes_500) + (100 * this.n_billetes_100) +

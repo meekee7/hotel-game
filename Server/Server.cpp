@@ -27,10 +27,10 @@ list<Player*> plist; // Player list
 list<Game*> glist; // Game list
 list<Player*> global_chat_list; // Players in global chat
 list<Chat*> chat_list;
-list<Hotel*> hotel_list;
 dlib::mutex mutex_ids;
 dlib::mutex mutex_lists;
 dlib::mutex mutex_disconnects;
+dlib::mutex debt_mutex;
 int id_count = 0;
 string config_content;
 struct config configuration;
@@ -194,11 +194,11 @@ Player* get_player_from_game(wstring name, Game* game)
    }
 }
 
-Hotel* get_hotel_from_name(wstring name_txt)
+Hotel* get_hotel_from_name(wstring name_txt, Game* game)
 {
    bool found = false;
-	list<Hotel*>::iterator i = hotel_list.begin();
-	while (!found && i != hotel_list.end())
+	list<Hotel*>::iterator i = game->hlist.begin();
+	while (!found && i != game->hlist.end())
 	{
 		if ((*i)->name_txt == name_txt)
 			found = true;
@@ -878,10 +878,12 @@ void handle_command(string command, Player* p)
          return;
       if (game->current_player != p) // Hack, retire player
          return;
-      else if (p->rolled_last_turn) // Hack, retire player
+      if (p->rolled_last_turn) // Hack, retire player
+         return;
+      if (p->debt_last_turn > 0) // Hack, retire player
          return;
       int dice_res = game->roll_dice();
-      game->move_player(p);
+      game->move_player(p, &debt_mutex);
       if (dice_res < 6)
          p->rolled_last_turn = true;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -933,7 +935,9 @@ void handle_command(string command, Player* p)
          return;
       if (!p->rolled_last_turn) // Hack, retire player
          return;
-      Player* next_player = game->turn_pass();
+      if (p->debt_last_turn > 0) // Hack, retire player
+         return;
+      Player* next_player = game->turn_pass(&debt_mutex);
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
@@ -1003,7 +1007,7 @@ void handle_command(string command, Player* p)
          return;
       if (player->bought_last_turn) // Hack, retire player
          return;
-      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != NULL) // Hack, retire player
          return;
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
@@ -1074,7 +1078,7 @@ void handle_command(string command, Player* p)
          return;
       if (player->bought_last_turn) // Hack, retire player
          return;
-      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if ((hotel->owner == NULL) || (hotel->owner == player) || (hotel->n_built_phases > 0)) // Hack, retire player
          return;
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
@@ -1160,7 +1164,7 @@ void handle_command(string command, Player* p)
          return;
       if (player->built_last_turn) // Hack, retire player
          return;
-      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != player) // Hack, retire player
          return;
       if ((type == 0) && (player->position->type != free_phase)) // Hack, retire player
@@ -1256,7 +1260,7 @@ void handle_command(string command, Player* p)
          return;
       if ((player->position->type != free_entrance) && (!game->can_buy_entrance(player))) // Hack, retire player
          return;
-      Hotel* hotel = get_hotel_from_name(hotel_name);
+      Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != player) // Hack, retire player
          return;
       if (hotel->n_built_phases == 0) // Hack, retire player
@@ -1356,8 +1360,6 @@ void handle_command(string command, Player* p)
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
          return;
-      if (game->current_player != p) // Hack, retire player
-         return;
       if (p->asked_nights_last_turn) // Hack, retire player
          return;
       p->asked_nights_last_turn = true;
@@ -1370,7 +1372,10 @@ void handle_command(string command, Player* p)
             amount = game->get_money_for_nights(p, dest, &nights);
             if (amount > 0) // The player is in a entrance
             {
-               dest->asked_nights_last_turn = true;
+               debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
+               dest->debt_last_turn = amount;
+               dest->debt_nights_to_last_turn = p;
+               debt_mutex.unlock();
                send_command("ask_pay_nights", dest); // Will force the player to pay nights, if he hacks the game, in next turn pass he will be retired
                send_int(dest, id);
                send_int(dest, get_utf8_length(p->name));
@@ -1380,6 +1385,66 @@ void handle_command(string command, Player* p)
             }
          }
       }
+   }
+   else if (command == "pay_nights")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int n_5000, n_1000, n_500, n_100, n_50;
+      len_int = receive_int(p, &bytes_received);
+      n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      // We have selected money by player, change needs to be calculated
+      Game* game = get_game_from_id(id);
+      if (game == NULL) // To avoid commands sent when game does not exist anymore
+         return;
+      if ((!game->started) || game->ended) // Hack, game not started yet or already ended
+         return;
+      Player* player = get_player_from_game(p->name, game);
+      if (player == NULL) // Hack, retire player
+         return;
+      int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
+      if (total_selected <= 0) // Hack, retire player, the command is only sent if player has something to pay
+         return;
+      if ((player->debt_last_turn == 0) || (player->debt_nights_to_last_turn == NULL)) // Hack, retire player
+         return;
+      player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
+      // Calculate change
+      if (total_selected > player->debt_last_turn)
+      {
+         game->calculate_return(player->debt_nights_to_last_turn, total_selected - player->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+         player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+      }
+      send_command("update_player_money", player);
+      send_int(player, id);
+      send_int(player, get_utf8_length(player->name));
+      send_wstring(player, player->name);
+      send_int(player, player->n_50);
+      send_int(player, player->n_100);
+      send_int(player, player->n_500);
+      send_int(player, player->n_1000);
+      send_int(player, player->n_5000);
+      send_command("update_player_money", player->debt_nights_to_last_turn);
+      send_int(player->debt_nights_to_last_turn, id);
+      send_int(player->debt_nights_to_last_turn, get_utf8_length(player->debt_nights_to_last_turn->name));
+      send_wstring(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->name);
+      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_50);
+      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_100);
+      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_500);
+      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_1000);
+      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_5000);
+      debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
+      player->debt_last_turn = 0;
+      player->debt_nights_to_last_turn = NULL;
+      debt_mutex.unlock();
    }
 }
 
@@ -1471,18 +1536,6 @@ void read_config(TiXmlDocument* config_xml)
    configuration.three_or_four_players.n_50 = atoi(node->FirstChild()->Value());
 }
 
-void create_hotel_list()
-{
-   hotel_list.push_back(new Hotel(Fujiyama));
-   hotel_list.push_back(new Hotel(Boomerang));
-   hotel_list.push_back(new Hotel(Letoile));
-   hotel_list.push_back(new Hotel(President));
-   hotel_list.push_back(new Hotel(Royal));
-   hotel_list.push_back(new Hotel(Waikiki));
-   hotel_list.push_back(new Hotel(Taj_Mahal));
-   hotel_list.push_back(new Hotel(Safari));
-}
-
 void run_server()
 {
    #ifdef _WIN32
@@ -1533,7 +1586,6 @@ void run_server()
    }
    // Load Config.xml to have configuration loaded for future checks
    read_config(&config_xml);
-   create_hotel_list();
    while (closing == 0)
    {
       addrlen = sizeof(client_info);

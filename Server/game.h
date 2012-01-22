@@ -16,6 +16,7 @@ public:
    Player* creator;
    int n_players;
    list<Player*> plist;
+   list<Hotel*> hlist;
    Chat* chat;
    bool started, ended;
    Player* current_player;
@@ -33,8 +34,8 @@ public:
    void start();
    int roll_dice();
    TBuild_dice_res roll_construction_dice();
-   void move_player(Player* p);
-   Player* turn_pass();
+   void move_player(Player* p, dlib::mutex* debt_mutex);
+   Player* turn_pass(dlib::mutex* debt_mutex);
    int get_active_players_count();
    Player* get_winner();
    void eliminate_player(Player* player);
