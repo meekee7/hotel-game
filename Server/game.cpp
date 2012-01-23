@@ -178,6 +178,10 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
    this->current_player->built_last_turn = false;
    this->current_player->charged_bank_last_turn = false;
    this->rolled_construction_dice = false;
+   // Allow again all players to ask for nights
+   list<Player*>::iterator i;
+   for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
+      (*i)->asked_nights_last_turn = false;
    if (this->current_player->debt_last_turn > 0)
    {
       debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
@@ -195,6 +199,10 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
    this->current_player->rolled_last_turn = false;
    this->current_player->asked_nights_last_turn = false;
    this->rolled_construction_dice = false;
+   // Allow again all players to ask for nights
+   list<Player*>::iterator i;
+   for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
+      (*i)->asked_nights_last_turn = false;
    if (this->current_player->debt_last_turn > 0)
    {
       debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous

@@ -884,8 +884,7 @@ void handle_command(string command, Player* p)
          return;
       int dice_res = game->roll_dice();
       game->move_player(p, &debt_mutex);
-      if (dice_res < 6)
-         p->rolled_last_turn = true;
+      p->rolled_last_turn = true;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
