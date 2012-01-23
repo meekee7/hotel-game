@@ -179,26 +179,36 @@ namespace Juego_Hotel
             {
                 if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
                 {
-                    DialogResult res = MessageBox.Show("Tienes dinero suficiente para pagar " + fase + "\n" +
-                                                        "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                                        "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
+                    DialogResult res = new DialogResult();
+                    if ((num_fase != 6) && (!this.comprando_suelo))
+                       res = MessageBox.Show("Tienes dinero suficiente para pagar " + fase + "\n" +
+                                             "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
+                                             "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
+                    else
+                       res = MessageBox.Show("Tienes dinero suficiente para pagar los complejos recreativos.\n" +
+                                              "No se necesita el permiso para construirlos. ¿Deseas continuar?", "Confirmación de construcción", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
                     {
-                        Dado_construccion dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id);
-                        dado_cons.ShowDialog(); // El resultado será comprobado por el servidor
-                        if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
-                            this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
-                            this.total_a_pagar = 0;
-                        else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                        if ((num_fase != 6) && (!this.comprando_suelo))
                         {
-                            this.total_a_pagar = -1;
-                            this.cancelado = true;
-                            this.DialogResult = DialogResult.Abort;
+                            Dado_construccion dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id);
+                            dado_cons.ShowDialog(); // El resultado será comprobado por el servidor
+                            if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
+                                this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
+                            else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
+                                this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
+                            else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
+                                this.total_a_pagar = 0;
+                            else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
+                            {
+                                this.total_a_pagar = -1;
+                                this.cancelado = true;
+                                this.DialogResult = DialogResult.Abort;
+                            }
+                            dado_cons.Close();
                         }
-                        dado_cons.Close();
+                        else
+                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
                         if (this.total_a_pagar > 0)
                         {
                             PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);

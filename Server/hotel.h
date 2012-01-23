@@ -13,6 +13,7 @@ public:
    int price, expropriation_price;
    bool ground_bought;
    bool entrance_bought_last_turn;
+   bool next_expansion_is_ground;
    int n_max_phases;
    int n_built_phases;
    int entrance_price;

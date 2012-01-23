@@ -933,7 +933,7 @@ void handle_command(string command, Player* p)
          return;
       if (game->current_player != p) // Hack, retire player
          return;
-      if (!p->rolled_last_turn) // Hack, retire player
+      if ((!p->rolled_last_turn) && (game->last_dice_res < 6)) // Hack, retire player
          return;
       if (p->debt_last_turn > 0) // Hack, retire player
          return;
@@ -1169,7 +1169,15 @@ void handle_command(string command, Player* p)
          return;
       if ((type == 0) && (player->position->type != free_phase)) // Hack, retire player
          return;
+      if (hotel->next_expansion_is_ground)
+         game->rolled_construction_dice = true; // As it is not really rolled, simplify checks
+      if ((type == 1) && (hotel->next_expansion_is_ground)) // Hack, retire player, ground can't be free (only in free phases positions) because construction dice is not rolled
+         return;
+      if ((type == 1) && (!game->rolled_construction_dice)) // Hack, retire player, he didn't ask for permission when building anything different than ground
+         return;
       if ((type == 1) && (game->last_construction_dice_res != Free)) // Hack, retire player
+         return;
+      if ((type == 2) && (!game->rolled_construction_dice)) // Hack, retire player, didn't ask for permission when building anything different than ground
          return;
       int total_selected = 0;
       if (!hotel->Can_extend()) // Hack, retire player

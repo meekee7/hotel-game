@@ -18,7 +18,7 @@ public:
    list<Player*> plist;
    list<Hotel*> hlist;
    Chat* chat;
-   bool started, ended;
+   bool started, ended, rolled_construction_dice;
    Player* current_player;
    int starting_player;
    int last_dice_res;

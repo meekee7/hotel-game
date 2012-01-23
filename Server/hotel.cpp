@@ -8,6 +8,7 @@ Hotel::Hotel(THotel_name name)
    this->n_entrances = 0;
    this->entrance_bought_last_turn = false;
    this->ground_bought = false;
+   this->next_expansion_is_ground = false;
    this->n_built_phases = 0;
    switch (this->name)
    {
@@ -345,6 +346,8 @@ void Hotel::Extend()
    this->n_built_phases++;
    if (this->n_built_phases == this->n_max_phases)
       this->ground_bought = true;
+   else if (this->n_built_phases + 1 == this->n_max_phases)
+      this->next_expansion_is_ground = true;
 }
 
 void Hotel::Add_entrance(int position)
@@ -364,7 +367,7 @@ bool Hotel::Has_entrance_in_position(int position)
 
 bool Hotel::Is_a_valid_entrance_position(Position* position)
 {
-   if ((position->hotel_left == this->name) || (position->hotel_right == this->name))
+   if (((position->hotel_left == this->name) || (position->hotel_right == this->name)) && (!position->occupied))
       return true;
    else
       return false;

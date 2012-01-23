@@ -87,7 +87,10 @@ namespace Juego_Hotel
             if (this.listaCasillas.SelectedItem != null)
             {
                 int n_casilla = Convert.ToInt16(this.listaCasillas.SelectedItem);
-                if (this.juego.casillas[n_casilla].entrada_en_izq == true || this.juego.casillas[n_casilla].entrada_en_der == true)
+                this.bComprar.Enabled = false;
+                if (this.juego.casillas[n_casilla].ocupada)
+                    MessageBox.Show("Esta casilla está ocupada y no puedes añadir una entrada ahora mismo en ella");
+                else if (this.juego.casillas[n_casilla].entrada_en_izq == true || this.juego.casillas[n_casilla].entrada_en_der == true)
                 {
                     String nombre_hotel;
                     if (this.juego.casillas[n_casilla].entrada_en_izq)
@@ -95,7 +98,6 @@ namespace Juego_Hotel
                     else
                         nombre_hotel = this.juego.casillas[n_casilla].hotel_der.ToString();
                     MessageBox.Show("Esta casilla ya tiene una entrada comprada para el hotel " + nombre_hotel);
-                    this.bComprar.Enabled = false;
                 }
                 else
                     this.bComprar.Enabled = true;
