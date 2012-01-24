@@ -173,7 +173,6 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
       this->last_auto_advance++;
    }
    p->position->occupied = true; // Occupy the position
-   this->current_player->rolled_last_turn = false;
    this->current_player->bought_last_turn = false;
    this->current_player->built_last_turn = false;
    this->current_player->charged_bank_last_turn = false;
