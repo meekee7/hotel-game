@@ -878,7 +878,7 @@ void handle_command(string command, Player* p)
          return;
       if (game->current_player != p) // Hack, retire player
          return;
-      if (p->rolled_last_turn) // Hack, retire player
+      if ((p->rolled_last_turn) && (game->last_dice_res < 6)) // Hack, retire player
          return;
       if (p->debt_last_turn > 0) // Hack, retire player
          return;
@@ -1274,7 +1274,7 @@ void handle_command(string command, Player* p)
          return;
       if (hotel->entrance_bought_last_turn) // Hack, retire player
          return;
-      if ((type == 0) && (player->position->type != free_entrance)) // Hack, retire player
+      if ((type == 0) && (player->position->type != free_entrance) && (player->free_entrance_used)) // Hack, retire player
          return;
       if (hotel->Has_entrance_in_position(position)) // Hack, retire player
          return;
@@ -1292,6 +1292,8 @@ void handle_command(string command, Player* p)
             player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
          }
       }
+      else if (type == 0)
+         player->free_entrance_used = true;
       hotel->entrance_bought_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
@@ -1377,11 +1379,12 @@ void handle_command(string command, Player* p)
          if (dest != p) // Player doesn't have to pay himself :D
          {
             amount = game->get_money_for_nights(p, dest, &nights);
-            if (amount > 0) // The player is in a entrance
+            if (amount > 0) // The player is in a entrance and hasn't paid this turn
             {
                debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
                dest->debt_last_turn = amount;
                dest->debt_nights_to_last_turn = p;
+               dest->paid_last_turn = false;
                debt_mutex.unlock();
                send_command("ask_pay_nights", dest); // Will force the player to pay nights, if he hacks the game, in next turn pass he will be retired
                send_int(dest, id);
@@ -1424,6 +1427,7 @@ void handle_command(string command, Player* p)
       if ((player->debt_last_turn == 0) || (player->debt_nights_to_last_turn == NULL)) // Hack, retire player
          return;
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
+      player->paid_last_turn = true;
       // Calculate change
       if (total_selected > player->debt_last_turn)
       {

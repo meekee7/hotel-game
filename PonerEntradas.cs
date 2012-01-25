@@ -23,11 +23,14 @@ namespace Juego_Hotel
             this.juego = juego;
             this.jugador = this.juego.jugadores[jugador];
             Hotel[] lista = new Hotel[this.jugador.hoteles.Count];
-            this.juego.jugadores[jugador].hoteles.CopyTo(lista, 0);
+            this.jugador.hoteles.CopyTo(lista, 0);
             this.Rellenar_lista(ref lista);
             this.interfaz = interfaz;
-            if (this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.entrada_gratis)
+            if ((this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.entrada_gratis) && (!this.jugador.entrada_gratis_usada) && this.interfaz.Puede_poner_entradas(this.jugador))
+            {
+                MessageBox.Show("La primera entrada que selecciones será la gratuíta debido a la casilla en la que estás. Las consecutivas serán según el método normal (una por hotel)");
                 this.entrada_gratis = true;
+            }
             else
                 this.entrada_gratis = false;
         }
@@ -39,7 +42,7 @@ namespace Juego_Hotel
             this.listaHoteles.Items.Clear();
             foreach (Hotel hotel in lista)
             {
-                if (!hotel.entrada_comprada_ultimo_turno)
+                if ((!hotel.entrada_comprada_ultimo_turno) || (!this.jugador.entrada_gratis_usada))
                     this.listaHoteles.Items.Add(hotel.nombre_txt);
             }
             this.listaHoteles.EndUpdate();

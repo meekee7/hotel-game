@@ -14,6 +14,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->id = this->chat->id;
    this->started = false;
    this->ended = false;
+   this->turn_number = 1;
    // Create all positions
    this->positions = vector<Position*>(32);
    for (int i = 0 ; i < 32 ; i++)
@@ -176,11 +177,17 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
    this->current_player->bought_last_turn = false;
    this->current_player->built_last_turn = false;
    this->current_player->charged_bank_last_turn = false;
+   this->current_player->paid_last_turn = false;
+   this->current_player->free_entrance_used = false;
    this->rolled_construction_dice = false;
    // Allow again all players to ask for nights
    list<Player*>::iterator i;
    for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
       (*i)->asked_nights_last_turn = false;
+   list<Hotel*>::iterator i2;
+   // Allow new entrances in all player hotels
+   for (i2 = this->current_player->hotels.begin() ; i2 != this->current_player->hotels.end() ; ++i2)
+      (*i2)->entrance_bought_last_turn = false;
    if (this->current_player->debt_last_turn > 0)
    {
       debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
@@ -192,16 +199,14 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
 
 Player* Game::turn_pass(dlib::mutex* debt_mutex)
 {
-   list<Player*>::iterator i;
-   i = find(this->plist.begin(), this->plist.end(), this->current_player);
    bool valid = false;
    this->current_player->rolled_last_turn = false;
-   this->current_player->asked_nights_last_turn = false;
-   this->rolled_construction_dice = false;
+   // There is no need to reset more variables because the player always must roll before doing anything, and the function move_player does the reset
    // Allow again all players to ask for nights
    list<Player*>::iterator i;
    for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
       (*i)->asked_nights_last_turn = false;
+   i = find(this->plist.begin(), this->plist.end(), this->current_player);
    if (this->current_player->debt_last_turn > 0)
    {
       debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
@@ -228,6 +233,7 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
    list<Hotel*>::iterator i2;
    for (i2 = this->current_player->hotels.begin() ; i2 != this->current_player->hotels.end() ; ++i2)
       (*i2)->entrance_bought_last_turn = false;
+   this->turn_number++;
    wcout << L"Turn passed, next player: " << this->current_player->name << endl;
    return this->current_player;
 }
@@ -270,7 +276,7 @@ void Game::eliminate_player(Player* player)
    player->hotels.clear();
 }
 
-int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance)
+int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)
 {
    list<Hotel*>::iterator i;
    int amount = 0, dice_res = 0;
@@ -278,7 +284,7 @@ int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Ch
    for (i = owner->hotels.begin() ; i != owner->hotels.end() ; ++i)
    {
       pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player->position->number);
-      if (pos != (*i)->entrances.end()) // Player is in an entrance of this hotel, and it cant be in any other entrance
+      if ((pos != (*i)->entrances.end()) && (!player->paid_last_turn)) // Player is in an entrance of this hotel, (it can't be in any other entrance). Enters only if player hasn't already paid this turn
       {
          dice_res = this->random->RollDice(6, 1);
          wcout << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;

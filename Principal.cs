@@ -545,17 +545,6 @@ namespace Juego_Hotel
                 this.bPedirNochesJ2.Enabled = true;
                 this.bPedirNochesJ3.Enabled = true;
                 this.bPedirNochesJ4.Enabled = true;
-                /*switch (jugador.n_jugador)
-                {
-                    case 0: this.bPedirNochesJ1.Enabled = true;
-                        break;
-                    case 1: this.bPedirNochesJ2.Enabled = true;
-                        break;
-                    case 2: this.bPedirNochesJ3.Enabled = true;
-                        break;
-                    case 3: this.bPedirNochesJ4.Enabled = true;
-                        break;
-                }*/
                 if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
                     this.bCobrarBanca.Enabled = true;
                 switch (jugador.posicion.tipo)
@@ -1163,7 +1152,7 @@ namespace Juego_Hotel
             frm_ver_hoteles.Show();
         }
 
-        private Boolean Puede_poner_entradas(Jugador jugador)
+        public Boolean Puede_poner_entradas(Jugador jugador)
         {
             int pos = jugador.posicion.numero;
             if ((pos >= 27) && ((pos - this.juego.ultimo_res_dado - this.juego.ultimo_avance_auto) < 27))

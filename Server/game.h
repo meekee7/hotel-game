@@ -23,6 +23,7 @@ public:
    int starting_player;
    int last_dice_res;
    int last_auto_advance;
+   int turn_number; // For statistics
    vector<Position*> positions;
    CRandomMT* random;
    TBuild_dice_res last_construction_dice_res;

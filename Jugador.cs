@@ -20,6 +20,7 @@ namespace Juego_Hotel
         public Boolean pago_ultimo_turno;
         public Boolean eliminado;
         public String nombre_online;
+        public Boolean entrada_gratis_usada;
 
         public Jugador (int n_5000, int n_1000, int n_500, int n_100, int n_50, Tipos.Tcolor color, int n_jugador)
         {
@@ -36,6 +37,7 @@ namespace Juego_Hotel
             this.pago_ultimo_turno = false;
             this.eliminado = false;
             this.n_jugador = n_jugador;
+            this.entrada_gratis_usada = false;
         }
 
         public void calcular_dinero_total()

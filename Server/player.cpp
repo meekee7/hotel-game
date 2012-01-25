@@ -11,6 +11,8 @@ Player::Player(string ip, Portable_socket* socket_client)
    this->bought_last_turn = false;
    this->built_last_turn = false;
    this->asked_nights_last_turn = false;
+   this->paid_last_turn = false;
+   this->free_entrance_used = false;
    this->debt_last_turn = 0;
    this->debt_nights_to_last_turn = NULL;
    this->position = new Position(0);
