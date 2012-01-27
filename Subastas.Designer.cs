@@ -31,7 +31,7 @@
             this.bCerrar = new System.Windows.Forms.Button();
             this.etiHotel = new System.Windows.Forms.Label();
             this.listaHoteles = new System.Windows.Forms.ComboBox();
-            this.bHotel = new System.Windows.Forms.Button();
+            this.bSubastar = new System.Windows.Forms.Button();
             this.grupoHotel = new System.Windows.Forms.GroupBox();
             this.bVerHoteles = new System.Windows.Forms.Button();
             this.txtCantidad = new System.Windows.Forms.Label();
@@ -79,20 +79,20 @@
             this.listaHoteles.TabIndex = 2;
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
-            // bHotel
+            // bSubastar
             // 
-            this.bHotel.Enabled = false;
-            this.bHotel.Location = new System.Drawing.Point(107, 71);
-            this.bHotel.Name = "bHotel";
-            this.bHotel.Size = new System.Drawing.Size(75, 23);
-            this.bHotel.TabIndex = 3;
-            this.bHotel.Text = "Subastar";
-            this.bHotel.UseVisualStyleBackColor = true;
-            this.bHotel.Click += new System.EventHandler(this.bHotel_Click);
+            this.bSubastar.Enabled = false;
+            this.bSubastar.Location = new System.Drawing.Point(107, 71);
+            this.bSubastar.Name = "bSubastar";
+            this.bSubastar.Size = new System.Drawing.Size(75, 23);
+            this.bSubastar.TabIndex = 3;
+            this.bSubastar.Text = "Subastar";
+            this.bSubastar.UseVisualStyleBackColor = true;
+            this.bSubastar.Click += new System.EventHandler(this.bSubastar_Click);
             // 
             // grupoHotel
             // 
-            this.grupoHotel.Controls.Add(this.bHotel);
+            this.grupoHotel.Controls.Add(this.bSubastar);
             this.grupoHotel.Controls.Add(this.etiHotel);
             this.grupoHotel.Controls.Add(this.listaHoteles);
             this.grupoHotel.Location = new System.Drawing.Point(21, 22);
@@ -252,6 +252,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Subastas";
             this.Text = "Subastas";
+            this.Click += new System.EventHandler(this.bSubastar_Click);
             this.grupoHotel.ResumeLayout(false);
             this.grupoHotel.PerformLayout();
             this.grupoEstado.ResumeLayout(false);
@@ -265,7 +266,7 @@
         private System.Windows.Forms.Button bCerrar;
         private System.Windows.Forms.Label etiHotel;
         private System.Windows.Forms.ComboBox listaHoteles;
-        private System.Windows.Forms.Button bHotel;
+        private System.Windows.Forms.Button bSubastar;
         private System.Windows.Forms.GroupBox grupoHotel;
         private System.Windows.Forms.Button bVerHoteles;
         private System.Windows.Forms.Label txtCantidad;

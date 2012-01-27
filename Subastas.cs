@@ -48,11 +48,11 @@ namespace Juego_Hotel
 
         private void listaHoteles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.bHotel.Enabled = true;
+            this.bSubastar.Enabled = true;
             this.hotel_seleccionado = this.juego.hoteles.First(Hotel => Hotel.nombre_txt == this.listaHoteles.SelectedItem.ToString());
         }
 
-        private void bHotel_Click(object sender, EventArgs e)
+        private void bSubastar_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show("¿Estás seguro de que quieres subastar el hotel?\nEsta operación no se puede cancelar",
                                                "Confirmación de inicio de subasta", MessageBoxButtons.YesNo);
@@ -87,6 +87,8 @@ namespace Juego_Hotel
                     bJ4.Enabled = false;
                 this.bVender.Enabled = true;
                 this.bCerrar.Enabled = false;
+                if (this.interfaz.online)
+                    this.interfaz.frm_online.enviar_comando("auction_start", this.interfaz.game_id.ToString(), this.hotel_seleccionado.nombre_txt.ToString());
             }
         }
 
@@ -124,7 +126,7 @@ namespace Juego_Hotel
                     this.bJ3.Enabled = false;
                     this.bJ4.Enabled = false;
                     this.bVender.Enabled = false;
-                    this.bHotel.Enabled = false;
+                    this.bSubastar.Enabled = false;
                     this.bCerrar.Enabled = true;
                 }
             }
@@ -155,6 +157,8 @@ namespace Juego_Hotel
                     this.precio_mayor.Text = cantidad_num.ToString();
                     this.mayor_postor.Text = "J1 - " + this.juego.jugadores[0].color.ToString();
                     this.n_mayor_postor = 0;
+                    if (this.interfaz.online)
+                        this.interfaz.frm_online.enviar_comando("auction_bid", this.interfaz.game_id.ToString(), cantidad_num.ToString());
                 }
             }
         }

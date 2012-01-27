@@ -27,6 +27,10 @@ public:
    vector<Position*> positions;
    CRandomMT* random;
    TBuild_dice_res last_construction_dice_res;
+   // Auctions
+   Player* best_bidder;
+   int best_bid;
+   Hotel* hotel_at_auction;
 
    void set_players_money(config configuration);
    bool join(Player* p);

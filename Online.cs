@@ -1046,9 +1046,9 @@ namespace Juego_Hotel
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            //int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            //String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
-            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-            long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             int casilla = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);

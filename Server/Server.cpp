@@ -923,7 +923,7 @@ void handle_command(string command, Player* p)
          return;
       if (p->debt_last_turn > 0) // Hack, retire player
          return;
-      int dice_res = game->roll_dice();
+      game->roll_dice();
       game->move_player(p, &debt_mutex);
       p->rolled_last_turn = true;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -1343,8 +1343,8 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("entrance_added", dest);
          send_int(dest, id);
-         send_int(dest, get_utf8_length(p->name));
-         send_wstring(dest, p->name);
+         //send_int(dest, get_utf8_length(p->name));
+         //send_wstring(dest, p->name);
          send_int(dest, get_utf8_length(hotel_name));
          send_wstring(dest, hotel_name);
          send_int(dest, position);
@@ -1497,6 +1497,21 @@ void handle_command(string command, Player* p)
       player->debt_last_turn = 0;
       player->debt_nights_to_last_turn = NULL;
       debt_mutex.unlock();
+   }
+   else if (command == "auction_start")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int len_name = receive_int(p, &bytes_received);
+      wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+      Game* game = get_game_from_id(id);
+      if (game == NULL) // To avoid commands sent when game does not exist anymore
+         return;
+      Hotel* hotel = get_hotel_from_name(hotel_name, game);
+      if (hotel->owner != p) // Hack, retire player
+         return;
+      game->hotel_at_auction = hotel;
    }
 }
 
