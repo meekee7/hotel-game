@@ -92,12 +92,18 @@ namespace Juego_Hotel
             this.mensaje.Text = "";
         }
 
+        delegate void Cerrar_partida_Callback();
+
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!this.cerrando_por_desconexion)
+            {
                 this.frm_online.salir_de_partida();
-            this.frm_online.enviar_comando("leave_game", this.id.ToString());
-            this.frm_online.lista_partidas.Remove(this);
+                this.frm_online.enviar_comando("leave_game", this.id.ToString());
+                this.frm_online.lista_partidas.Remove(this);
+            }
+            this.interfaz.partida_activa = false;
+            this.interfaz.BeginInvoke(new Cerrar_partida_Callback(this.interfaz.Close));
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);

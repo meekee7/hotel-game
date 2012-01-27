@@ -22,7 +22,7 @@ namespace Juego_Hotel
         public int game_id;
         public String nombre_online;
         public String online_config;
-        public Boolean partida_cargada, dado_tirado;
+        public Boolean partida_cargada, dado_tirado, partida_activa;
         int ancho_ini;
         int alto_ini;
         Point pos_rojo_orig, pos_azul_orig, pos_verde_orig, pos_amarillo_orig, pos_banco_orig, pos_ayto_orig;
@@ -70,11 +70,13 @@ namespace Juego_Hotel
             {
                 this.online = true;
                 this.frm_online = frm_online;
+                this.partida_activa = true;
             }
             else
             {
                 this.online = false;
                 this.frm_online = null;
+                this.partida_activa = false;
             }
         }
 
@@ -314,6 +316,21 @@ namespace Juego_Hotel
             return this.juego.n_jugadores_activos == 1;
         }
 
+        public void Conexion_perdida()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control is Button) control.Enabled = false;
+            }
+            this.bReiniciar.Enabled = false;
+            this.bSalir.Enabled = true;
+            this.controlJ1.Enabled = false;
+            this.controlJ2.Enabled = false;
+            this.controlJ3.Enabled = false;
+            this.controlJ4.Enabled = false;
+            this.partida_activa = false;
+        }
+
         public void Finalizar_Partida(Jugador ganador)
         {
             foreach (Control control in this.Controls)
@@ -393,9 +410,8 @@ namespace Juego_Hotel
                         break;
                 }
                 this.juego.jugador_actual.pago_ultimo_turno = false;
+
                 this.dado_tirado = false;
-                foreach (Hotel hotel in this.juego.hoteles)
-                    hotel.entrada_comprada_ultimo_turno = false;
             }
         }
 
@@ -534,6 +550,9 @@ namespace Juego_Hotel
             // Activar botones según el tipo de casilla
             if ((!this.online) || (this.online && (this.nombre_online == jugador.nombre_online)))
             {
+                jugador.entrada_gratis_usada = false;
+                foreach (Hotel hotel in this.juego.hoteles)
+                    hotel.entrada_comprada_ultimo_turno = false;
                 this.bComprarSuelo.Enabled = true;
                 this.bEntradasJ1.Enabled = false;
                 this.bEntradasJ2.Enabled = false;
@@ -1377,7 +1396,7 @@ namespace Juego_Hotel
 
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.online)
+            if (this.partida_activa)
                 this.Retirarse(this.juego.jugador_actual.n_jugador);
         }
 

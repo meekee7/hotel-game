@@ -298,43 +298,6 @@ Chat* get_chat_from_id(int id)
       return (*i);
 }
 
-void disconnect_client(Player* p)
-{
-   if (!p->connected)
-      return;
-   mutex_disconnects.lock();
-   // Leave all normal chats and global chat
-   list<Chat*>::iterator i;
-   for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
-   {
-      (*i)->leave(p);
-      if (delete_chat_if_empty(get_chat_from_id((*i)->id)))
-      {
-         if (chat_list.size() > 0)
-            i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
-         else
-            break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
-      }
-   }
-   global_chat_list.remove(p);
-   // Leave games
-   list<Game*>::iterator i2;
-   for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
-   {
-      (*i2)->leave(p);
-      if (delete_game_if_empty(*i2))
-      {
-         if (glist.size() > 0)
-            i2 = glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
-         else
-            break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
-      }
-   }
-   delete_player_from_player_list(p);
-   p->connected = false;
-   mutex_disconnects.unlock();
-}
-
 int get_utf8_length(wstring data)
 {
    int res;
@@ -451,6 +414,84 @@ void send_command(string command, Player* p)
 	wcout << L"Sending command to player " << p->name << L": " << w_command << endl;
    send_int(p, command.length());
    send_string(p, command);
+}
+
+void disconnect_client(Player* p)
+{
+   if (!p->connected)
+      return;
+   mutex_disconnects.lock();
+   // Leave all normal chats and global chat
+   list<Chat*>::iterator i;
+   for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+   {
+      (*i)->leave(p);
+      if (delete_chat_if_empty(get_chat_from_id((*i)->id)))
+      {
+         if (chat_list.size() > 0)
+            i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
+         else
+            break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
+      }
+      else
+      {
+         // Notify all chat users of the player disconnexion
+         list<Player*>::iterator i4, j;
+         Player* dest;
+         for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
+         {
+            dest = *i4;
+            send_command("chat_userlist", dest);
+            send_int(dest, (*i)->id);
+            send_int(dest, (*i)->players.size()); // Number of players
+            for (j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
+            {
+               send_int(dest, get_utf8_length((*j)->name));
+               send_wstring(dest, (*j)->name);
+            }
+         }
+      }
+   }
+   global_chat_list.remove(p);
+   // Leave games
+   list<Game*>::iterator i2;
+   for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
+   {
+      (*i2)->leave(p);
+      if (delete_game_if_empty(*i2))
+      {
+         if (glist.size() > 0)
+            i2 = glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
+         else
+            break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
+      }
+      else
+      {
+         // Notify the rest of players that the player left the game
+         list<Player*>::iterator i3;
+         Player* dest, * winner;
+         for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
+         {
+            dest = (*i3);
+            send_command("player_retired", dest);
+            send_int(dest, (*i2)->id);
+            send_int(dest, get_utf8_length(p->name));
+            send_wstring(dest, p->name);
+            if ((*i2)->get_active_players_count() == 1)
+            {
+               (*i2)->ended = true;
+               send_command("game_ended", dest);
+               send_int(dest, (*i2)->id);
+               winner = (*i2)->get_winner();
+               send_int(dest, get_utf8_length(winner->name));
+               send_wstring(dest, winner->name);
+            }
+         }
+      }
+   }
+   delete_player_from_player_list(p);
+   p->connected = false;
+   mutex_disconnects.unlock();
 }
 
 void handle_command(string command, Player* p)

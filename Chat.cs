@@ -16,17 +16,20 @@ namespace Juego_Hotel
         Online frm_online;
         public int id;
         public String creador;
+        public Boolean conectado;
 
         public Chat(Boolean global, Online frm_online)
         {
             InitializeComponent();
             this.global = global;
             this.frm_online = frm_online;
+            this.conectado = true;
         }
 
         public void desactivar_envio()
         {
             this.bEnviar.Enabled = false;
+            this.conectado = false;
         }
 
         delegate void Actualizar_lista_jugadores_Callback(String[] lista);
@@ -75,6 +78,8 @@ namespace Juego_Hotel
 
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!this.conectado) // not connected
+                return;
             if (this.global)
             {
                 this.frm_online.enviar_comando("leave_global_chat");

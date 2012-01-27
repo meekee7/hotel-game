@@ -41,6 +41,11 @@ namespace Juego_Hotel
 
         public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
         {
+            if (!this.socket.Connected)
+            {
+                MessageBox.Show("No conectado");
+                return "";
+            }
             try
             {
                 byte[] data = new byte[longitud];
@@ -66,6 +71,11 @@ namespace Juego_Hotel
 
         public int recibir_int(Socket s, ref int bytes_recibidos)
         {
+            if (!this.socket.Connected)
+            {
+                MessageBox.Show("No conectado");
+                return 0;
+            }
             try
             {
                 byte[] b_int = new byte[4];
@@ -87,6 +97,11 @@ namespace Juego_Hotel
 
         public int enviar_string(Socket s, String texto)
         {
+            if (!this.socket.Connected)
+            {
+                MessageBox.Show("No conectado");
+                return 0;
+            }
             try
             {
                 byte[] texto_bytes = Encoding.UTF8.GetBytes(texto);
@@ -105,6 +120,11 @@ namespace Juego_Hotel
 
         public int enviar_int(Socket s, int num)
         {
+            if (!this.socket.Connected)
+            {
+                MessageBox.Show("No conectado");
+                return 0;
+            }
             try
             {
                 byte[] b_int = BitConverter.GetBytes(num);
@@ -353,11 +373,13 @@ namespace Juego_Hotel
             {
                 if (this.frm_chat_global != null)
                 {
+                    this.frm_chat_global.conectado = false;
                     this.frm_chat_global.Close();
                     this.frm_chat_global = null;
                 }
                 for (i = this.chats_abiertos.Count - 1 ; i >= 0 ; i--)
                 {
+                    this.chats_abiertos.ToArray()[i].conectado = false;
                     this.Cerrar_Chat(this.chats_abiertos.ToArray()[i]);
                 }
                 this.chats_abiertos.Clear();
@@ -373,6 +395,8 @@ namespace Juego_Hotel
             }
             this.bDesconectar.PerformClick();
         }
+
+        delegate void desactivar_envio_Callback();
 
         private void bDesconectar_Click(object sender, EventArgs e)
         {
@@ -404,7 +428,10 @@ namespace Juego_Hotel
             if (this.frm_chat_global != null)
                 this.frm_chat_global.desactivar_envio();
             foreach (Chat chat in this.chats_abiertos)
-                chat.desactivar_envio();
+                chat.BeginInvoke(new desactivar_envio_Callback(chat.desactivar_envio));
+                //chat.desactivar_envio();
+            foreach (PartidaOnline partida in this.lista_partidas)
+                partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
@@ -434,7 +461,7 @@ namespace Juego_Hotel
                     MessageBox.Show("El nombre de la partida no puede contener el carácter '~'");
                     return;
                 }
-                string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "");
+                string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "2");
                 if (s_n_jugadores == "")
                 {
                     MessageBox.Show("No se puede dejar el número de jugadores en blanco", "Crear partida");
@@ -722,8 +749,9 @@ namespace Juego_Hotel
                     if (msg == "")
                         MessageBox.Show("Ha habido un problema de conexión con el servidor");
                     else
-                        MessageBox.Show("Comando " + msg + " desconocido");
-                    this.continuar_thread = false;
+                        MessageBox.Show("Comando " + ((msg != null) ? msg : "") + " desconocido");
+                    this.conectado = false;
+                    this.Finalizar_todas_las_partidas();
                     this.Pulsar_Desconectar();
                 }
                 msg = null;
@@ -1085,6 +1113,14 @@ namespace Juego_Hotel
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             MessageBox.Show("Debes pagar " + noches + " noches (" + cantidad + ") al jugador " + jugador.color + " (" + jugador.nombre_online + ")");
             partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador, cantidad);
+        }
+
+        delegate void Conexion_perdida_Callback();
+
+        private void Finalizar_todas_las_partidas()
+        {
+            foreach (PartidaOnline partida in this.lista_partidas)
+                partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
         }
     }
 }
