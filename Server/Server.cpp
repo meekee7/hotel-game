@@ -1508,10 +1508,57 @@ void handle_command(string command, Player* p)
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
+      if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
+         return;
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != p) // Hack, retire player
          return;
+      if (game->hotel_at_auction != NULL) // Hack, auction already in progress
+         return;
       game->hotel_at_auction = hotel;
+      game->best_bid = 0;
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("auction_started", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(hotel->name_txt));
+         send_wstring(dest, hotel->name_txt);
+      }
+   }
+   else if (command == "auction_bid")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      int amount = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      Game* game = get_game_from_id(id);
+      if (game == NULL) // To avoid commands sent when game does not exist anymore
+         return;
+      if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
+         return;
+      if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
+         return;
+      if (p == game->hotel_at_auction->owner) // Hack, retire player, he is trying to bid in his own auction
+         return;
+      if ((amount <= 0) || (amount < game->best_bid) || amount > p->total_money || ((amount % 50) != 0)) // Hack, retire player, invalid values
+         return;
+      game->best_bid = amount;
+      game->best_bidder = p;
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("auction_bid_placed", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
+         send_int(dest, amount);
+      }
    }
 }
 

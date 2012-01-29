@@ -744,6 +744,10 @@ namespace Juego_Hotel
                     this.Juego_terminado();
                 else if (msg == "ask_pay_nights")
                     this.Pagar_noches();
+                else if (msg == "auction_started")
+                    this.Subasta_iniciada();
+                else if (msg == "auction_bid_placed")
+                    this.Nueva_puja();
                 else
                 {
                     if (msg == "")
@@ -1046,8 +1050,6 @@ namespace Juego_Hotel
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
-            //int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
-            //String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             int casilla = this.recibir_int(this.socket, ref bytes_recibidos);
@@ -1121,6 +1123,43 @@ namespace Juego_Hotel
         {
             foreach (PartidaOnline partida in this.lista_partidas)
                 partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
+        }
+
+        private void Subasta_iniciada()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.hotel_a_subastar_online = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
+            if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
+            {
+                Thread thread_envio_comando = new Thread(Manejar_subasta);
+                thread_envio_comando.Start(partida);
+            }
+        }
+
+        private void Manejar_subasta(object parametro)
+        {
+            PartidaOnline partida = (PartidaOnline)parametro;
+            Juego juego = partida.interfaz.juego;
+            partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
+            partida.interfaz.frm_subasta_en_curso.ShowDialog();
+        }
+
+        delegate void Nueva_puja_Callback(Jugador jugador, int cantidad);
+
+        private void Nueva_puja()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Nueva_puja_Callback(partida.interfaz.frm_subasta_en_curso.Nueva_puja), jugador, cantidad);
         }
     }
 }

@@ -255,11 +255,11 @@ namespace Juego_Hotel
         {
             if (this.pagador.hoteles.Count != 0)
             {
-                Subastas frm_subastas = new Subastas(ref this.juego, this.interfaz);
-                frm_subastas.ShowDialog();
-                frm_subastas.Close();
+                this.interfaz.frm_subasta_en_curso = new Subastas(ref this.juego, this.interfaz, this.interfaz.online);
+                this.interfaz.frm_subasta_en_curso.ShowDialog();
+                this.interfaz.frm_subasta_en_curso.Close();
                 // Refrescar valores después de la subasta
-                if (frm_subastas.hotel_seleccionado.nombre_txt == this.hotel_en_construccion.nombre_txt)
+                if (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt == this.hotel_en_construccion.nombre_txt)
                 {
                     MessageBox.Show("Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción.", "Construcción cancelada");
                     this.cancelado = true;

@@ -15,6 +15,9 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->started = false;
    this->ended = false;
    this->turn_count = 1;
+   this->hotel_at_auction = NULL;
+   this->best_bid = 0;
+   this->best_bidder = NULL;
    // Create all positions
    this->positions = vector<Position*>(32);
    for (int i = 0 ; i < 32 ; i++)

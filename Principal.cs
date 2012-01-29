@@ -32,6 +32,8 @@ namespace Juego_Hotel
         int alto_entrada = 15;
         int ancho_fase = 18;
         int alto_fase = 18;
+        public Subastas frm_subasta_en_curso;
+        public Hotel hotel_a_subastar_online;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online)
