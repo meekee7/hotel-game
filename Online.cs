@@ -748,6 +748,8 @@ namespace Juego_Hotel
                     this.Subasta_iniciada();
                 else if (msg == "auction_bid_placed")
                     this.Nueva_puja();
+                else if (msg == "auction_sold")
+                    this.Subasta_vendida();
                 else
                 {
                     if (msg == "")
@@ -1160,6 +1162,15 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Nueva_puja_Callback(partida.interfaz.frm_subasta_en_curso.Nueva_puja), jugador, cantidad);
+        }
+
+        private void Subasta_vendida()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            // Pedir el pago al jugador, este comando solo lo recibe el que ha de pagar
         }
     }
 }

@@ -148,6 +148,7 @@ namespace Juego_Hotel
 
         private void bVender_Click(object sender, EventArgs e)
         {
+            int game_id;
             if (this.precio_mayor.Text.ToString().Trim() == "")
                 MessageBox.Show("No se ha pujado todavía");
             else
@@ -156,26 +157,36 @@ namespace Juego_Hotel
                                     "El jugador " + this.mayor_postor.Text + " deberá abonar " + this.precio_mayor.Text,
                                     "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego, true, this.juego.jugadores[n_mayor_postor], this.interfaz); // Subasta deshabilitada al estar ya en una subasta
-                    frm_pago.ShowDialog();
-                    Jugador dueño_ant = hotel_seleccionado.dueño;
-                    dueño_ant.Hotel_Expropiado(ref hotel_seleccionado);
-                    this.juego.jugadores[n_mayor_postor].Comprar_Hotel(ref hotel_seleccionado, ref dueño_ant, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                    if (frm_pago.total_seleccionado > this.n_precio_mayor)
+                    
+                    if (!this.interfaz.online)
                     {
-                        int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                        Principal.Calcular_Devolucion(ref dueño_ant, (frm_pago.total_seleccionado - this.n_precio_mayor), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                        this.juego.jugadores[n_mayor_postor].Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        PedirPago frm_pago = new PedirPago(this.n_precio_mayor, ref this.juego, true, this.juego.jugadores[n_mayor_postor], this.interfaz); // Subasta deshabilitada al estar ya en una subasta
+                        frm_pago.ShowDialog();
+                        Jugador dueño_ant = hotel_seleccionado.dueño;
+                        dueño_ant.Hotel_Expropiado(ref hotel_seleccionado);
+                        this.juego.jugadores[n_mayor_postor].Comprar_Hotel(ref hotel_seleccionado, ref dueño_ant, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                        if (frm_pago.total_seleccionado > this.n_precio_mayor)
+                        {
+                            int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
+                            Principal.Calcular_Devolucion(ref dueño_ant, (frm_pago.total_seleccionado - this.n_precio_mayor), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                            this.juego.jugadores[n_mayor_postor].Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        }
+                        frm_pago.Close();
+                        this.Rellenar_Lista_Hoteles(this.online);
+                        this.listaHoteles.Enabled = true;
                     }
-                    frm_pago.Close();
-                    this.Rellenar_Lista_Hoteles(this.online);
+                    else
+                    {
+                        game_id = this.interfaz.game_id;
+                        this.interfaz.frm_online.enviar_comando("auction_sell", game_id.ToString());
+                        this.listaHoteles.Enabled = false; ; // No se permite subastar de nuevo hasta que no llegue el pago
+                    }
                     this.bJ1.Enabled = false;
                     this.bJ2.Enabled = false;
                     this.bJ3.Enabled = false;
                     this.bJ4.Enabled = false;
                     this.bVender.Enabled = false;
                     this.bSubastar.Enabled = false;
-                    this.listaHoteles.Enabled = true;
                     this.bCerrar.Enabled = true;
                 }
             }

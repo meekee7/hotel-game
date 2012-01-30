@@ -1560,6 +1560,28 @@ void handle_command(string command, Player* p)
          send_int(dest, amount);
       }
    }
+   else if (command == "auction_sell")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      Game* game = get_game_from_id(id);
+      if (game == NULL) // To avoid commands sent when game does not exist anymore
+         return;
+      if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
+         return;
+      if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
+         return;
+      if (p != game->hotel_at_auction->owner) // Hack, retire player, he is trying to end the auction without being the owner
+         return;
+      if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
+         return;
+      // Send command to best bidder, so he can pay for the hotel
+      send_command("auction_sold", game->best_bidder);
+      send_int(game->best_bidder, id);
+      send_int(game->best_bidder, game->best_bid);
+   }
 }
 
 void handle_client(void* arg)
