@@ -750,6 +750,8 @@ namespace Juego_Hotel
                     this.Nueva_puja();
                 else if (msg == "auction_sold")
                     this.Subasta_vendida();
+                else if (msg == "auction_ended")
+                    this.Subasta_terminada();
                 else
                 {
                     if (msg == "")
@@ -1137,8 +1139,10 @@ namespace Juego_Hotel
             partida.interfaz.hotel_a_subastar_online = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
-                Thread thread_envio_comando = new Thread(Manejar_subasta);
-                thread_envio_comando.Start(partida);
+                partida.interfaz.frm_subasta_en_curso = new Subastas(ref partida.interfaz.juego, partida.interfaz, true);
+                partida.interfaz.frm_subasta_en_curso.Show();
+                //Thread thread_envio_comando = new Thread(Manejar_subasta);
+                //thread_envio_comando.Start(partida);
             }
         }
 
@@ -1171,6 +1175,22 @@ namespace Juego_Hotel
             int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             // Pedir el pago al jugador, este comando solo lo recibe el que ha de pagar
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == this.txtLogin.Text);
+            PedirPago frm_pago = new PedirPago(cantidad, ref partida.interfaz.juego, true, jugador, partida.interfaz);
+            frm_pago.ShowDialog();
+            this.enviar_comando("auction_pay", id.ToString(), frm_pago.n_5000.ToString(), frm_pago.n_1000.ToString(),
+                frm_pago.n_500.ToString(), frm_pago.n_100.ToString(), frm_pago.n_50.ToString());
+            frm_pago.Close();
+        }
+
+        delegate void Subasta_terminada_Callback();
+
+        private void Subasta_terminada()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_terminada_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
         }
     }
 }

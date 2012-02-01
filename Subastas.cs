@@ -133,6 +133,7 @@ namespace Juego_Hotel
                     this.bJ2.Enabled = false;
                     this.bJ3.Enabled = false;
                     this.bJ4.Enabled = false;
+                    this.cantidad.Enabled = false;
                     int id = this.interfaz.game_id;
                     this.interfaz.frm_online.enviar_comando("auction_start", id.ToString(), this.hotel_seleccionado.nombre_txt.ToString());
                 }
@@ -174,6 +175,7 @@ namespace Juego_Hotel
                         frm_pago.Close();
                         this.Rellenar_Lista_Hoteles(this.online);
                         this.listaHoteles.Enabled = true;
+                        this.bCerrar.Enabled = true;
                     }
                     else
                     {
@@ -187,7 +189,6 @@ namespace Juego_Hotel
                     this.bJ4.Enabled = false;
                     this.bVender.Enabled = false;
                     this.bSubastar.Enabled = false;
-                    this.bCerrar.Enabled = true;
                 }
             }
         }
@@ -260,6 +261,13 @@ namespace Juego_Hotel
             this.precio_mayor.Text = cantidad.ToString();
             this.mayor_postor.Text = "J" + (jugador.n_jugador + 1) + " - " + jugador.color.ToString();
             this.n_mayor_postor = jugador.n_jugador;
+        }
+
+        public void Subasta_terminada()
+        {
+            this.Rellenar_Lista_Hoteles(this.online);
+            this.listaHoteles.Enabled = true;
+            this.bCerrar.Enabled = true;
         }
     }
 }

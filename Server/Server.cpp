@@ -1343,8 +1343,6 @@ void handle_command(string command, Player* p)
          dest = (*i);
          send_command("entrance_added", dest);
          send_int(dest, id);
-         //send_int(dest, get_utf8_length(p->name));
-         //send_wstring(dest, p->name);
          send_int(dest, get_utf8_length(hotel_name));
          send_wstring(dest, hotel_name);
          send_int(dest, position);
@@ -1475,24 +1473,30 @@ void handle_command(string command, Player* p)
          game->calculate_return(player->debt_nights_to_last_turn, total_selected - player->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
          player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
       }
-      send_command("update_player_money", player);
-      send_int(player, id);
-      send_int(player, get_utf8_length(player->name));
-      send_wstring(player, player->name);
-      send_int(player, player->n_50);
-      send_int(player, player->n_100);
-      send_int(player, player->n_500);
-      send_int(player, player->n_1000);
-      send_int(player, player->n_5000);
-      send_command("update_player_money", player->debt_nights_to_last_turn);
-      send_int(player->debt_nights_to_last_turn, id);
-      send_int(player->debt_nights_to_last_turn, get_utf8_length(player->debt_nights_to_last_turn->name));
-      send_wstring(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->name);
-      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_50);
-      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_100);
-      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_500);
-      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_1000);
-      send_int(player->debt_nights_to_last_turn, player->debt_nights_to_last_turn->n_5000);
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player->name));
+         send_wstring(dest, player->name);
+         send_int(dest, player->n_50);
+         send_int(dest, player->n_100);
+         send_int(dest, player->n_500);
+         send_int(dest, player->n_1000);
+         send_int(dest, player->n_5000);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(player->debt_nights_to_last_turn->name));
+         send_wstring(dest, player->debt_nights_to_last_turn->name);
+         send_int(dest, player->debt_nights_to_last_turn->n_50);
+         send_int(dest, player->debt_nights_to_last_turn->n_100);
+         send_int(dest, player->debt_nights_to_last_turn->n_500);
+         send_int(dest, player->debt_nights_to_last_turn->n_1000);
+         send_int(dest, player->debt_nights_to_last_turn->n_5000);
+      }
       debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
       player->debt_last_turn = 0;
       player->debt_nights_to_last_turn = NULL;
@@ -1565,7 +1569,6 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      len_int = receive_int(p, &bytes_received);
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
@@ -1581,6 +1584,81 @@ void handle_command(string command, Player* p)
       send_command("auction_sold", game->best_bidder);
       send_int(game->best_bidder, id);
       send_int(game->best_bidder, game->best_bid);
+   }
+   else if (command == "auction_pay")
+   {
+      int bytes_received;
+      int len_int = receive_int(p, &bytes_received);
+      int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int n_5000, n_1000, n_500, n_100, n_50;
+      len_int = receive_int(p, &bytes_received);
+      n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      len_int = receive_int(p, &bytes_received);
+      n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      Game* game = get_game_from_id(id);
+      if (game == NULL) // To avoid commands sent when game does not exist anymore
+         return;
+      if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
+         return;
+      if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
+         return;
+      if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
+         return;
+      if (p != game->best_bidder) // Hack, retire player, the player who pays must be the best bidder
+         return;
+      int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
+      if ((total_selected <= 0) || (total_selected < game->best_bid)) // Hack, retire player, the command is only sent if player has something to pay and >= than best bid
+         return;
+      Player* previous_owner = game->hotel_at_auction->owner;
+      previous_owner->Expropriate_hotel(game->hotel_at_auction);
+      p->Buy_hotel(game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
+      // Calculate change
+      if (total_selected > game->best_bid)
+      {
+         game->calculate_return(previous_owner, total_selected - game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+         p->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+      }
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("hotel_expropriated", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
+         send_int(dest, get_utf8_length(game->hotel_at_auction->name_txt));
+         send_wstring(dest, game->hotel_at_auction->name_txt);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(p->name));
+         send_wstring(dest, p->name);
+         send_int(dest, p->n_50);
+         send_int(dest, p->n_100);
+         send_int(dest, p->n_500);
+         send_int(dest, p->n_1000);
+         send_int(dest, p->n_5000);
+         send_command("update_player_money", dest);
+         send_int(dest, id);
+         send_int(dest, get_utf8_length(previous_owner->name));
+         send_wstring(dest, previous_owner->name);
+         send_int(dest, previous_owner->n_50);
+         send_int(dest, previous_owner->n_100);
+         send_int(dest, previous_owner->n_500);
+         send_int(dest, previous_owner->n_1000);
+         send_int(dest, previous_owner->n_5000);
+         send_command("auction_ended", dest);
+         send_int(dest, id);
+      }
+      game->best_bidder = NULL;
+      game->best_bid = 0;
+      game->hotel_at_auction = NULL;
    }
 }
 
