@@ -482,7 +482,7 @@
     <value>Principal</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bCargar.Name" xml:space="preserve">
     <value>bCargar</value>
@@ -491,7 +491,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bCargar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bCargar.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -503,7 +503,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bCobrarBanca.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bCobrarBanca.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -515,7 +515,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bColores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bColores.ZOrder" xml:space="preserve">
     <value>31</value>
@@ -527,7 +527,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bComprar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bComprar.ZOrder" xml:space="preserve">
     <value>21</value>
@@ -539,7 +539,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bComprarSuelo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bComprarSuelo.ZOrder" xml:space="preserve">
     <value>13</value>
@@ -551,7 +551,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bConstruir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bConstruir.ZOrder" xml:space="preserve">
     <value>20</value>
@@ -563,7 +563,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bDado.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bDado.ZOrder" xml:space="preserve">
     <value>30</value>
@@ -575,7 +575,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;bEntradasJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bEntradasJ1.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -587,7 +587,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;bEntradasJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bEntradasJ2.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -599,7 +599,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;bEntradasJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bEntradasJ3.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -611,7 +611,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;bEntradasJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bEntradasJ4.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -623,7 +623,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bIniciar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bIniciar.ZOrder" xml:space="preserve">
     <value>33</value>
@@ -635,7 +635,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bNormas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bNormas.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -647,7 +647,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ1.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -659,7 +659,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ2.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -671,7 +671,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ3.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -683,7 +683,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ4.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -695,7 +695,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bReiniciar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bReiniciar.ZOrder" xml:space="preserve">
     <value>26</value>
@@ -707,7 +707,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ1.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -719,7 +719,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ2.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -731,7 +731,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ3.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -743,7 +743,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bRetirarseJ4.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -755,7 +755,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bSalir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bSalir.ZOrder" xml:space="preserve">
     <value>8</value>
@@ -767,7 +767,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bSalvar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bSalvar.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -779,7 +779,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bTurno.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bTurno.ZOrder" xml:space="preserve">
     <value>27</value>
@@ -791,7 +791,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bVerHoteles.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bVerHoteles.ZOrder" xml:space="preserve">
     <value>19</value>
@@ -803,7 +803,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ1.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -815,7 +815,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ2.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -827,7 +827,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ3.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -839,7 +839,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bVerHotelesJ4.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -851,7 +851,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;colorJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colorJ1.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -863,7 +863,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;colorJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colorJ2.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -875,7 +875,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;colorJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colorJ3.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -887,7 +887,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;colorJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colorJ4.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -899,7 +899,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;colorJugIni.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;colorJugIni.ZOrder" xml:space="preserve">
     <value>18</value>
@@ -911,7 +911,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboBoxIdiomas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;comboBoxIdiomas.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -923,7 +923,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;controlJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
     <value>25</value>
@@ -935,7 +935,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;controlJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
     <value>24</value>
@@ -947,7 +947,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;controlJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
     <value>23</value>
@@ -959,7 +959,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;controlJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;controlJ4.ZOrder" xml:space="preserve">
     <value>22</value>
@@ -971,7 +971,7 @@
     <value>grupoNJugadores</value>
   </data>
   <data name="&gt;&gt;cuatro_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cuatro_jugadores.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -983,7 +983,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;dineroJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dineroJ1.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -995,7 +995,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;dineroJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dineroJ2.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -1007,7 +1007,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;dineroJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dineroJ3.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -1019,7 +1019,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;dineroJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dineroJ4.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -1031,7 +1031,7 @@
     <value>grupoNJugadores</value>
   </data>
   <data name="&gt;&gt;dos_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dos_jugadores.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1043,7 +1043,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;grupoNJugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;grupoNJugadores.ZOrder" xml:space="preserve">
     <value>32</value>
@@ -1055,7 +1055,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;imgTablero.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;imgTablero.ZOrder" xml:space="preserve">
     <value>34</value>
@@ -1067,7 +1067,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;img_ayto.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;img_ayto.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -1079,7 +1079,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;img_Banco.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;img_Banco.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -1091,7 +1091,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;jug_ini.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;jug_ini.ZOrder" xml:space="preserve">
     <value>28</value>
@@ -1103,7 +1103,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelIdioma.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelIdioma.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1115,7 +1115,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelTablero.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelTablero.ZOrder" xml:space="preserve">
     <value>35</value>
@@ -1127,7 +1127,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;nombreJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;nombreJ1.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1139,7 +1139,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;nombreJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;nombreJ2.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1151,7 +1151,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;nombreJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;nombreJ3.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1163,7 +1163,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;nombreJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;nombreJ4.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1175,7 +1175,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;posAmarillo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posAmarillo.ZOrder" xml:space="preserve">
     <value>15</value>
@@ -1187,7 +1187,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;posAzul.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posAzul.ZOrder" xml:space="preserve">
     <value>16</value>
@@ -1199,7 +1199,7 @@
     <value>controlJ1</value>
   </data>
   <data name="&gt;&gt;posJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posJ1.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -1211,7 +1211,7 @@
     <value>controlJ2</value>
   </data>
   <data name="&gt;&gt;posJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posJ2.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -1223,7 +1223,7 @@
     <value>controlJ3</value>
   </data>
   <data name="&gt;&gt;posJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posJ3.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -1235,7 +1235,7 @@
     <value>controlJ4</value>
   </data>
   <data name="&gt;&gt;posJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posJ4.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -1247,7 +1247,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;posRojo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posRojo.ZOrder" xml:space="preserve">
     <value>17</value>
@@ -1259,7 +1259,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;posVerde.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;posVerde.ZOrder" xml:space="preserve">
     <value>14</value>
@@ -1271,7 +1271,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;resDado.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;resDado.ZOrder" xml:space="preserve">
     <value>29</value>
@@ -1283,7 +1283,7 @@
     <value>grupoNJugadores</value>
   </data>
   <data name="&gt;&gt;tres_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tres_jugadores.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1295,7 +1295,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;turnoJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;turnoJ1.ZOrder" xml:space="preserve">
     <value>12</value>
@@ -1307,7 +1307,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;turnoJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;turnoJ2.ZOrder" xml:space="preserve">
     <value>11</value>
@@ -1319,7 +1319,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;turnoJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;turnoJ3.ZOrder" xml:space="preserve">
     <value>10</value>
@@ -1331,7 +1331,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;turnoJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;turnoJ4.ZOrder" xml:space="preserve">
     <value>9</value>

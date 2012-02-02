@@ -1,4 +1,4 @@
 ﻿public interface IReLocalizable
 {
-    void ReLocalize();
+    void ReLocalize(System.Globalization.CultureInfo antiguoCulture);
 }

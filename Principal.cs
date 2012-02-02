@@ -1676,12 +1676,25 @@ namespace Juego_Hotel
             resources.ApplyResources(this.bIniciar, "bIniciar");
         }
 
-        void IReLocalizable.ReLocalize()
+        void IReLocalizable.ReLocalize(CultureInfo antiguoCulture)
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(this.GetType());
             resources.ApplyResources(this, "$this");
-            foreach (Control c in this.Controls)
-                resources.ApplyResources(c, c.Name);
+            foreach (Control c in this.Controls) 
+            {
+                if (c is Label)
+                {
+                    String nombreAntiguo=(String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                    MessageBox.Show("Nombre Antiguo: " + nombreAntiguo);
+                    MessageBox.Show("Nombre Nuevo: "+resources.GetString(c.Name + ".Text"));
+                    if(nombreAntiguo!=null)
+                    c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                }
+                else
+                c.Text = resources.GetString(c.Name + ".Text");
+                //resources.ApplyResources(c, c.Name);
+                
+            }
         }
     }
 }

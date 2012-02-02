@@ -56,10 +56,11 @@ namespace Juego_Hotel
 
         internal static void ReLocalizeAll(System.Globalization.CultureInfo NewCulture)
         {
+            CultureInfo antiguoCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = NewCulture;
             foreach (Form f in Application.OpenForms)
                 if (f is IReLocalizable)
-                    ((IReLocalizable)f).ReLocalize();
+                    ((IReLocalizable)f).ReLocalize(antiguoCulture);
         }
     }
 }
