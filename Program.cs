@@ -16,8 +16,6 @@ namespace Juego_Hotel
 
         static void Main ()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             XmlDocument configuracion = new XmlDocument();
             configuracion.Load("Config.xml");
             XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];
@@ -29,6 +27,8 @@ namespace Juego_Hotel
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             if (MessageBox.Show("¿Quieres comprobar si existe una versión del juego más actualizada?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Actualizador actualizador = new Actualizador();
@@ -52,6 +52,14 @@ namespace Juego_Hotel
                 Application.Run(new Principal(false, null));
             else
                 Application.Run(new Online());
+        }
+
+        internal static void ReLocalizeAll(System.Globalization.CultureInfo NewCulture)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = NewCulture;
+            foreach (Form f in Application.OpenForms)
+                if (f is IReLocalizable)
+                    ((IReLocalizable)f).ReLocalize();
         }
     }
 }

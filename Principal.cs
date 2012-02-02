@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace Juego_Hotel
 {
-    public partial class Principal : Form
+    public partial class Principal : Form, IReLocalizable
     {
         public Juego juego;
         int[] tiradas_ini;
@@ -1638,17 +1638,18 @@ namespace Juego_Hotel
             if (senderComboBox.SelectedIndex.Equals(0))
             {
                 MessageBox.Show("Idioma Elegido: " + senderComboBox.SelectedItem);
-                CambiarIdioma(new CultureInfo("es"));
-                InitializeComponent();
+                //CambiarIdioma(new CultureInfo("es"));
+                Program.ReLocalizeAll(new CultureInfo("es"));
             }
             else if (senderComboBox.SelectedIndex.Equals(1))
             {
                 MessageBox.Show("Idioma Elegido: " + senderComboBox.SelectedItem);
-                CambiarIdioma(new CultureInfo("en"));
+                //CambiarIdioma(new CultureInfo("en"));
+                Program.ReLocalizeAll(new CultureInfo("en"));
             }
         }
 
-        private void CambiarIdioma(CultureInfo nuevaCulture)
+        public void CambiarIdioma(CultureInfo nuevaCulture)
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = nuevaCulture;
             /*foreach (Form f in Application.OpenForms)
@@ -1673,6 +1674,14 @@ namespace Juego_Hotel
             //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             resources.ApplyResources(this.labelIdioma, "labelIdioma");
             resources.ApplyResources(this.bIniciar, "bIniciar");
+        }
+
+        void IReLocalizable.ReLocalize()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(this.GetType());
+            resources.ApplyResources(this, "$this");
+            foreach (Control c in this.Controls)
+                resources.ApplyResources(c, c.Name);
         }
     }
 }
