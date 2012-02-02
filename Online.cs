@@ -1139,7 +1139,8 @@ namespace Juego_Hotel
             partida.interfaz.hotel_a_subastar_online = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
-                partida.interfaz.frm_subasta_en_curso = new Subastas(ref partida.interfaz.juego, partida.interfaz, true);
+                Juego juego = partida.interfaz.juego;
+                partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
                 partida.interfaz.frm_subasta_en_curso.Show();
                 //Thread thread_envio_comando = new Thread(Manejar_subasta);
                 //thread_envio_comando.Start(partida);
@@ -1176,10 +1177,12 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             // Pedir el pago al jugador, este comando solo lo recibe el que ha de pagar
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == this.txtLogin.Text);
-            PedirPago frm_pago = new PedirPago(cantidad, ref partida.interfaz.juego, true, jugador, partida.interfaz);
+            Juego juego = partida.interfaz.juego;
+            PedirPago frm_pago = new PedirPago(cantidad, ref juego, true, jugador, partida.interfaz);
             frm_pago.ShowDialog();
-            this.enviar_comando("auction_pay", id.ToString(), frm_pago.n_5000.ToString(), frm_pago.n_1000.ToString(),
-                frm_pago.n_500.ToString(), frm_pago.n_100.ToString(), frm_pago.n_50.ToString());
+            int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_5000, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
+            this.enviar_comando("auction_pay", id.ToString(), n_5000.ToString(), n_1000.ToString(),
+                n_500.ToString(), n_100.ToString(), n_50.ToString());
             frm_pago.Close();
         }
 
