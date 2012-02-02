@@ -272,6 +272,7 @@
   <ItemGroup>
     <Content Include="Config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Icono.ico" />
     <None Include="Images\Icono.ico" />

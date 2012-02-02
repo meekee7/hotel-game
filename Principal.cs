@@ -1658,7 +1658,7 @@ namespace Juego_Hotel
             resources.ApplyResources(this, "$this");
             foreach (Control c in this.Controls)
             {
-                if (c.Name.Equals("comboBoxIdiomas"))
+                /*if (c.Name.Equals("comboBoxIdiomas"))
                 {
                     int i=0;
                     ComboBox.ObjectCollection elementos = ((ComboBox)c).Items;
@@ -1667,7 +1667,7 @@ namespace Juego_Hotel
                     {
                         Object o=elementos.GetEnumerator().Current;
                     }
-                }
+                }*/
                 resources.ApplyResources(c, c.Name);
             }
             //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));

@@ -596,7 +596,6 @@
             resources.GetString("comboBoxIdiomas.Items"),
             resources.GetString("comboBoxIdiomas.Items1")});
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
-            this.comboBoxIdiomas.SelectedIndex = 0;
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
             // 
             // Principal
