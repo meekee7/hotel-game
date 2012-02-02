@@ -1685,10 +1685,10 @@ namespace Juego_Hotel
                 if (c is Label)
                 {
                     String nombreAntiguo=(String)resources.GetObject(c.Name + ".Text", antiguoCulture);
-                    MessageBox.Show("Nombre Antiguo: " + nombreAntiguo);
-                    MessageBox.Show("Nombre Nuevo: "+resources.GetString(c.Name + ".Text"));
+                    //MessageBox.Show("Nombre Antiguo: " + nombreAntiguo);
+                    //MessageBox.Show("Nombre Nuevo: "+resources.GetString(c.Name + ".Text"));
                     if(nombreAntiguo!=null)
-                    c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                        c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
                 }
                 else
                 c.Text = resources.GetString(c.Name + ".Text");
