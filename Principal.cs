@@ -12,8 +12,10 @@ using System.Globalization;
 
 namespace Juego_Hotel
 {
+    
     public partial class Principal : Form, IReLocalizable
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
         public Juego juego;
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();
@@ -88,7 +90,7 @@ namespace Juego_Hotel
             // Buscar número de jugadores
             if (this.juego.n_jugadores == 0)
             {
-                MessageBox.Show("Seleccione el nº de jugadores", "No es posible iniciar");
+                MessageBox.Show(resources.GetString("mensajeSelecJugadores"), resources.GetString("tituloSelecJugadores"));
                 return;
             }
             else
@@ -347,9 +349,9 @@ namespace Juego_Hotel
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
             if (ganador != null)
-                MessageBox.Show("Partida finalizada. Ha ganado el jugador " + ganador.color.ToString(), "Hotel");
+                MessageBox.Show(String.Format(resources.GetString("mensajePartidaFinalizada"),ganador.color.ToString()), resources.GetString("tituloPartidaFinalizada"));
             else
-                MessageBox.Show("Partida finalizada porque todos los jugadores se han retirado");
+                MessageBox.Show(resources.GetString("mensajeJugadoresRetidados"));
         }
 
         public int Sig_jugador_Activo()
@@ -1677,12 +1679,20 @@ namespace Juego_Hotel
         }
 
         void IReLocalizable.ReLocalize(CultureInfo antiguoCulture)
-        {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(this.GetType());
+        {            
             resources.ApplyResources(this, "$this");
             foreach (Control c in this.Controls) 
             {
-                if (c is Label)
+                if (c is ComboBox)
+                {
+                    ((ComboBox)c).Items[0] = resources.GetString("comboBoxIdiomas.Items");
+                    ((ComboBox)c).Items[1] = resources.GetString("comboBoxIdiomas.Items1");
+                    if(antiguoCulture.Name.Equals("es"))
+                        ((ComboBox)c).SelectedIndex=1;
+                    else
+                        ((ComboBox)c).SelectedIndex = 0;
+                }
+                else if (c is Label)
                 {
                     String nombreAntiguo=(String)resources.GetObject(c.Name + ".Text", antiguoCulture);
                     //MessageBox.Show("Nombre Antiguo: " + nombreAntiguo);
@@ -1691,7 +1701,7 @@ namespace Juego_Hotel
                         c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
                 }
                 else
-                c.Text = resources.GetString(c.Name + ".Text");
+                    c.Text = resources.GetString(c.Name + ".Text");
                 //resources.ApplyResources(c, c.Name);
                 
             }

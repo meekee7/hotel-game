@@ -476,7 +476,7 @@
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Hotel - Construye tu propio imperio hotelero</value>
+    <value>Hotel - Build your own hotel empire</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Principal</value>
@@ -1340,34 +1340,34 @@
     <value>Load</value>
   </data>
   <data name="bCobrarBanca.Text" xml:space="preserve">
-    <value>Cobrar banca</value>
+    <value>Retrieve bank</value>
   </data>
   <data name="bColores.Text" xml:space="preserve">
-    <value>Colores</value>
+    <value>Colours</value>
   </data>
   <data name="bComprar.Text" xml:space="preserve">
     <value>Buy</value>
   </data>
   <data name="bComprarSuelo.Text" xml:space="preserve">
-    <value>Comprar suelo</value>
+    <value>Buy floor</value>
   </data>
   <data name="bConstruir.Text" xml:space="preserve">
     <value>Build</value>
   </data>
   <data name="bDado.Text" xml:space="preserve">
-    <value>Tirar dado</value>
+    <value>Pull dice</value>
   </data>
   <data name="bEntradasJ1.Text" xml:space="preserve">
-    <value>Poner entradas</value>
+    <value>Put entries</value>
   </data>
   <data name="bEntradasJ2.Text" xml:space="preserve">
-    <value>Poner entradas</value>
+    <value>Put entries</value>
   </data>
   <data name="bEntradasJ3.Text" xml:space="preserve">
-    <value>Poner entradas</value>
+    <value>Put entries</value>
   </data>
   <data name="bEntradasJ4.Text" xml:space="preserve">
-    <value>Poner entradas</value>
+    <value>Put entries</value>
   </data>
   <data name="bIniciar.Text" xml:space="preserve">
     <value>Start</value>
@@ -1376,31 +1376,31 @@
     <value>Rules</value>
   </data>
   <data name="bPedirNochesJ1.Text" xml:space="preserve">
-    <value>Pedir abonar noches</value>
+    <value>Order paid nights</value>
   </data>
   <data name="bPedirNochesJ2.Text" xml:space="preserve">
-    <value>Pedir abonar noches</value>
+    <value>Order paid nights</value>
   </data>
   <data name="bPedirNochesJ3.Text" xml:space="preserve">
-    <value>Pedir abonar noches</value>
+    <value>Order paid nights</value>
   </data>
   <data name="bPedirNochesJ4.Text" xml:space="preserve">
-    <value>Pedir abonar noches</value>
+    <value>Order paid nights</value>
   </data>
   <data name="bReiniciar.Text" xml:space="preserve">
-    <value>Reinciar</value>
+    <value>Restart</value>
   </data>
   <data name="bRetirarseJ1.Text" xml:space="preserve">
-    <value>Retirarse</value>
+    <value>Retire</value>
   </data>
   <data name="bRetirarseJ2.Text" xml:space="preserve">
-    <value>Retirarse</value>
+    <value>Retire</value>
   </data>
   <data name="bRetirarseJ3.Text" xml:space="preserve">
-    <value>Retirarse</value>
+    <value>Retire</value>
   </data>
   <data name="bRetirarseJ4.Text" xml:space="preserve">
-    <value>Retirarse</value>
+    <value>Retire</value>
   </data>
   <data name="bSalir.Text" xml:space="preserve">
     <value>Exit</value>
@@ -1409,22 +1409,22 @@
     <value>Save</value>
   </data>
   <data name="bTurno.Text" xml:space="preserve">
-    <value>Pasar turno</value>
+    <value>Pass turn</value>
   </data>
   <data name="bVerHoteles.Text" xml:space="preserve">
-    <value>Ver hoteles</value>
+    <value>View hotels</value>
   </data>
   <data name="bVerHotelesJ1.Text" xml:space="preserve">
-    <value>Ver hoteles</value>
+    <value>View hotels</value>
   </data>
   <data name="bVerHotelesJ2.Text" xml:space="preserve">
-    <value>Ver hoteles</value>
+    <value>View hotels</value>
   </data>
   <data name="bVerHotelesJ3.Text" xml:space="preserve">
-    <value>Ver hoteles</value>
+    <value>View hotels</value>
   </data>
   <data name="bVerHotelesJ4.Text" xml:space="preserve">
-    <value>Ver hoteles</value>
+    <value>View hotels</value>
   </data>
   <data name="colorJ1.Text" xml:space="preserve">
     <value>Color:</value>
@@ -1445,40 +1445,40 @@
     <value>English</value>
   </data>
   <data name="controlJ1.Text" xml:space="preserve">
-    <value>Jugador 1</value>
+    <value>Player 1</value>
   </data>
   <data name="controlJ2.Text" xml:space="preserve">
-    <value>Jugador 2</value>
+    <value>Player 2</value>
   </data>
   <data name="controlJ3.Text" xml:space="preserve">
-    <value>Jugador 3</value>
+    <value>Player 3</value>
   </data>
   <data name="controlJ4.Text" xml:space="preserve">
-    <value>Jugador 4</value>
+    <value>Player 4</value>
   </data>
   <data name="cuatro_jugadores.Text" xml:space="preserve">
-    <value>4 Jugadores</value>
+    <value>4 Players</value>
   </data>
   <data name="dineroJ1.Text" xml:space="preserve">
-    <value>Dinero:</value>
+    <value>Money:</value>
   </data>
   <data name="dineroJ2.Text" xml:space="preserve">
-    <value>Dinero:</value>
+    <value>Money:</value>
   </data>
   <data name="dineroJ3.Text" xml:space="preserve">
-    <value>Dinero:</value>
+    <value>Money:</value>
   </data>
   <data name="dineroJ4.Text" xml:space="preserve">
-    <value>Dinero:</value>
+    <value>Money:</value>
   </data>
   <data name="dos_jugadores.Text" xml:space="preserve">
-    <value>2 Jugadores</value>
+    <value>2 Players</value>
   </data>
   <data name="grupoNJugadores.Text" xml:space="preserve">
-    <value>Nº de jugadores</value>
+    <value>Nº of Players</value>
   </data>
   <data name="jug_ini.Text" xml:space="preserve">
-    <value>Jugador inicial: </value>
+    <value>Starting player:</value>
   </data>
   <data name="labelIdioma.Text" xml:space="preserve">
     <value>Language: </value>
@@ -1487,33 +1487,48 @@
     <value>Board</value>
   </data>
   <data name="nombreJ1.Text" xml:space="preserve">
-    <value>Nombre:</value>
+    <value>Name:</value>
   </data>
   <data name="nombreJ2.Text" xml:space="preserve">
-    <value>Nombre:</value>
+    <value>Name:</value>
   </data>
   <data name="nombreJ3.Text" xml:space="preserve">
-    <value>Nombre:</value>
+    <value>Name:</value>
   </data>
   <data name="nombreJ4.Text" xml:space="preserve">
-    <value>Nombre:</value>
+    <value>Name:</value>
   </data>
   <data name="posJ1.Text" xml:space="preserve">
-    <value>Casilla:</value>
+    <value>Square:</value>
   </data>
   <data name="posJ2.Text" xml:space="preserve">
-    <value>Casilla:</value>
+    <value>Square:</value>
   </data>
   <data name="posJ3.Text" xml:space="preserve">
-    <value>Casilla:</value>
+    <value>Square:</value>
   </data>
   <data name="posJ4.Text" xml:space="preserve">
-    <value>Casilla:</value>
+    <value>Square:</value>
   </data>
   <data name="resDado.Text" xml:space="preserve">
-    <value>Dado: </value>
+    <value>Dice: </value>
   </data>
   <data name="tres_jugadores.Text" xml:space="preserve">
-    <value>3 Jugadores</value>
+    <value>3 Players</value>
+  </data>
+  <data name="mensajeJugadoresRetidados" xml:space="preserve">
+    <value>Game ends because all players have folded</value>
+  </data>
+  <data name="mensajePartidaFinalizada" xml:space="preserve">
+    <value>Game ends. He won the Player {0}</value>
+  </data>
+  <data name="mensajeSelecJugadores" xml:space="preserve">
+    <value>Select the number of players</value>
+  </data>
+  <data name="tituloPartidaFinalizada" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="tituloSelecJugadores" xml:space="preserve">
+    <value>Unable to Start</value>
   </data>
 </root>

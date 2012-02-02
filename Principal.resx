@@ -2379,7 +2379,22 @@
   <data name="&gt;&gt;bEntradasJ2.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
+  </data>
+  <data name="mensajeJugadoresRetidados" xml:space="preserve">
+    <value>Partida finalizada porque todos los jugadores se han retirado</value>
+  </data>
+  <data name="mensajePartidaFinalizada" xml:space="preserve">
+    <value>Partida finalizada. Ha ganado el jugador {0}</value>
+  </data>
+  <data name="mensajeSelecJugadores" xml:space="preserve">
+    <value>Seleccione el nº de jugadores</value>
+  </data>
+  <data name="tituloPartidaFinalizada" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="tituloSelecJugadores" xml:space="preserve">
+    <value>No es posible Iniciar</value>
+  </data>
 </root>
