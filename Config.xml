@@ -17,4 +17,7 @@
          <n_50>2</n_50>
       </three_or_four_players>
    </money_per_player>
+  <language>    
+    <selected>English</selected>
+  </language>
 </config>

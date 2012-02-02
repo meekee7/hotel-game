@@ -185,6 +185,9 @@
     <EmbeddedResource Include="PonerEntradas.resx">
       <DependentUpon>PonerEntradas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Principal.en.resx">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reglas.resx">
       <DependentUpon>Reglas.cs</DependentUpon>
     </EmbeddedResource>

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Xml;
+using System.Globalization;
 
 namespace Juego_Hotel
 {
@@ -1623,6 +1624,54 @@ namespace Juego_Hotel
                 entrada.Location = Calcular_Posicion(x, y);
                 entrada.Size = Calcular_Tamaño(ancho_entrada, alto_entrada);
             }
+        }
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void IdiomaElegido(object sender, EventArgs e)
+        {
+            ComboBox senderComboBox = (ComboBox)sender;
+
+            if (senderComboBox.SelectedIndex.Equals(0))
+            {
+                MessageBox.Show("Idioma Elegido: " + senderComboBox.SelectedItem);
+                CambiarIdioma(new CultureInfo("es"));
+                InitializeComponent();
+            }
+            else if (senderComboBox.SelectedIndex.Equals(1))
+            {
+                MessageBox.Show("Idioma Elegido: " + senderComboBox.SelectedItem);
+                CambiarIdioma(new CultureInfo("en"));
+            }
+        }
+
+        private void CambiarIdioma(CultureInfo nuevaCulture)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = nuevaCulture;
+            /*foreach (Form f in Application.OpenForms)
+                //if (f is IReLocalizable)
+                  //  ((IReLocalizable)f).ReLocalize();*/
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(this.GetType());
+            resources.ApplyResources(this, "$this");
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name.Equals("comboBoxIdiomas"))
+                {
+                    int i=0;
+                    ComboBox.ObjectCollection elementos = ((ComboBox)c).Items;
+
+                    while (i < elementos.Count)
+                    {
+                        Object o=elementos.GetEnumerator().Current;
+                    }
+                }
+                resources.ApplyResources(c, c.Name);
+            }
+            //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
+            //resources.ApplyResources(this.labelIdioma, "labelIdioma");
         }
     }
 }

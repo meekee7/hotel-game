@@ -43,6 +43,7 @@
             this.bReiniciar = new System.Windows.Forms.Button();
             this.colorJugIni = new System.Windows.Forms.Label();
             this.controlJ1 = new System.Windows.Forms.GroupBox();
+            this.nombreJ1 = new System.Windows.Forms.Label();
             this.bRetirarseJ1 = new System.Windows.Forms.Button();
             this.colorJ1 = new System.Windows.Forms.Label();
             this.bPedirNochesJ1 = new System.Windows.Forms.Button();
@@ -53,6 +54,7 @@
             this.turnoJ1 = new System.Windows.Forms.Label();
             this.bVerHotelesJ2 = new System.Windows.Forms.Button();
             this.controlJ2 = new System.Windows.Forms.GroupBox();
+            this.nombreJ2 = new System.Windows.Forms.Label();
             this.bRetirarseJ2 = new System.Windows.Forms.Button();
             this.colorJ2 = new System.Windows.Forms.Label();
             this.bPedirNochesJ2 = new System.Windows.Forms.Button();
@@ -62,6 +64,7 @@
             this.turnoJ2 = new System.Windows.Forms.Label();
             this.bVerHotelesJ3 = new System.Windows.Forms.Button();
             this.controlJ3 = new System.Windows.Forms.GroupBox();
+            this.nombreJ3 = new System.Windows.Forms.Label();
             this.bRetirarseJ3 = new System.Windows.Forms.Button();
             this.colorJ3 = new System.Windows.Forms.Label();
             this.bPedirNochesJ3 = new System.Windows.Forms.Button();
@@ -71,6 +74,7 @@
             this.turnoJ3 = new System.Windows.Forms.Label();
             this.bVerHotelesJ4 = new System.Windows.Forms.Button();
             this.controlJ4 = new System.Windows.Forms.GroupBox();
+            this.nombreJ4 = new System.Windows.Forms.Label();
             this.bRetirarseJ4 = new System.Windows.Forms.Button();
             this.colorJ4 = new System.Windows.Forms.Label();
             this.bPedirNochesJ4 = new System.Windows.Forms.Button();
@@ -94,10 +98,8 @@
             this.bCargar = new System.Windows.Forms.Button();
             this.img_Banco = new System.Windows.Forms.PictureBox();
             this.img_ayto = new System.Windows.Forms.PictureBox();
-            this.nombreJ1 = new System.Windows.Forms.Label();
-            this.nombreJ2 = new System.Windows.Forms.Label();
-            this.nombreJ3 = new System.Windows.Forms.Label();
-            this.nombreJ4 = new System.Windows.Forms.Label();
+            this.labelIdioma = new System.Windows.Forms.Label();
+            this.comboBoxIdiomas = new System.Windows.Forms.ComboBox();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -114,152 +116,96 @@
             // 
             // labelTablero
             // 
-            this.labelTablero.AutoSize = true;
-            this.labelTablero.Location = new System.Drawing.Point(10, 9);
+            resources.ApplyResources(this.labelTablero, "labelTablero");
             this.labelTablero.Name = "labelTablero";
-            this.labelTablero.Size = new System.Drawing.Size(43, 13);
-            this.labelTablero.TabIndex = 0;
-            this.labelTablero.Text = "Tablero";
             // 
             // bIniciar
             // 
-            this.bIniciar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bIniciar.Location = new System.Drawing.Point(708, 31);
+            resources.ApplyResources(this.bIniciar, "bIniciar");
             this.bIniciar.Name = "bIniciar";
-            this.bIniciar.Size = new System.Drawing.Size(83, 23);
-            this.bIniciar.TabIndex = 2;
-            this.bIniciar.Text = "Iniciar";
             this.bIniciar.UseVisualStyleBackColor = true;
             this.bIniciar.Click += new System.EventHandler(this.bIniciar_Click);
             // 
             // dos_jugadores
             // 
-            this.dos_jugadores.AutoSize = true;
-            this.dos_jugadores.Location = new System.Drawing.Point(13, 19);
+            resources.ApplyResources(this.dos_jugadores, "dos_jugadores");
             this.dos_jugadores.Name = "dos_jugadores";
-            this.dos_jugadores.Size = new System.Drawing.Size(83, 17);
-            this.dos_jugadores.TabIndex = 3;
             this.dos_jugadores.TabStop = true;
-            this.dos_jugadores.Text = "2 Jugadores";
             this.dos_jugadores.UseVisualStyleBackColor = true;
             this.dos_jugadores.CheckedChanged += new System.EventHandler(this.dos_jugadores_CheckedChanged);
             // 
             // tres_jugadores
             // 
-            this.tres_jugadores.AutoSize = true;
-            this.tres_jugadores.Location = new System.Drawing.Point(13, 42);
+            resources.ApplyResources(this.tres_jugadores, "tres_jugadores");
             this.tres_jugadores.Name = "tres_jugadores";
-            this.tres_jugadores.Size = new System.Drawing.Size(83, 17);
-            this.tres_jugadores.TabIndex = 4;
             this.tres_jugadores.TabStop = true;
-            this.tres_jugadores.Text = "3 Jugadores";
             this.tres_jugadores.UseVisualStyleBackColor = true;
             this.tres_jugadores.CheckedChanged += new System.EventHandler(this.tres_jugadores_CheckedChanged);
             // 
             // cuatro_jugadores
             // 
-            this.cuatro_jugadores.AutoSize = true;
-            this.cuatro_jugadores.Location = new System.Drawing.Point(13, 65);
+            resources.ApplyResources(this.cuatro_jugadores, "cuatro_jugadores");
             this.cuatro_jugadores.Name = "cuatro_jugadores";
-            this.cuatro_jugadores.Size = new System.Drawing.Size(83, 17);
-            this.cuatro_jugadores.TabIndex = 5;
             this.cuatro_jugadores.TabStop = true;
-            this.cuatro_jugadores.Text = "4 Jugadores";
             this.cuatro_jugadores.UseVisualStyleBackColor = true;
             this.cuatro_jugadores.CheckedChanged += new System.EventHandler(this.cuatro_jugadores_CheckedChanged);
             // 
             // grupoNJugadores
             // 
-            this.grupoNJugadores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.grupoNJugadores, "grupoNJugadores");
             this.grupoNJugadores.Controls.Add(this.dos_jugadores);
             this.grupoNJugadores.Controls.Add(this.tres_jugadores);
             this.grupoNJugadores.Controls.Add(this.cuatro_jugadores);
-            this.grupoNJugadores.Location = new System.Drawing.Point(695, 62);
             this.grupoNJugadores.Name = "grupoNJugadores";
-            this.grupoNJugadores.Size = new System.Drawing.Size(107, 92);
-            this.grupoNJugadores.TabIndex = 6;
             this.grupoNJugadores.TabStop = false;
-            this.grupoNJugadores.Text = "Nº de jugadores";
             // 
             // bColores
             // 
-            this.bColores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bColores.Location = new System.Drawing.Point(708, 167);
+            resources.ApplyResources(this.bColores, "bColores");
             this.bColores.Name = "bColores";
-            this.bColores.Size = new System.Drawing.Size(83, 23);
-            this.bColores.TabIndex = 8;
-            this.bColores.Text = "Colores";
             this.bColores.UseVisualStyleBackColor = true;
             this.bColores.Click += new System.EventHandler(this.bColores_Click);
             // 
             // bDado
             // 
-            this.bDado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bDado.Enabled = false;
-            this.bDado.Location = new System.Drawing.Point(708, 212);
+            resources.ApplyResources(this.bDado, "bDado");
             this.bDado.Name = "bDado";
-            this.bDado.Size = new System.Drawing.Size(83, 23);
-            this.bDado.TabIndex = 9;
-            this.bDado.Text = "Tirar dado";
             this.bDado.UseVisualStyleBackColor = true;
             this.bDado.Click += new System.EventHandler(this.bDado_Click);
             // 
             // resDado
             // 
-            this.resDado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.resDado.AutoSize = true;
-            this.resDado.Location = new System.Drawing.Point(708, 275);
+            resources.ApplyResources(this.resDado, "resDado");
             this.resDado.Name = "resDado";
-            this.resDado.Size = new System.Drawing.Size(39, 13);
-            this.resDado.TabIndex = 10;
-            this.resDado.Text = "Dado: ";
             // 
             // jug_ini
             // 
-            this.jug_ini.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.jug_ini, "jug_ini");
             this.jug_ini.AutoEllipsis = true;
-            this.jug_ini.AutoSize = true;
-            this.jug_ini.Location = new System.Drawing.Point(708, 295);
             this.jug_ini.Name = "jug_ini";
-            this.jug_ini.Size = new System.Drawing.Size(80, 13);
-            this.jug_ini.TabIndex = 11;
-            this.jug_ini.Text = "Jugador inicial: ";
             // 
             // bTurno
             // 
-            this.bTurno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bTurno.Enabled = false;
-            this.bTurno.Location = new System.Drawing.Point(708, 241);
+            resources.ApplyResources(this.bTurno, "bTurno");
             this.bTurno.Name = "bTurno";
-            this.bTurno.Size = new System.Drawing.Size(83, 23);
-            this.bTurno.TabIndex = 12;
-            this.bTurno.Text = "Pasar turno";
             this.bTurno.UseVisualStyleBackColor = true;
             this.bTurno.Click += new System.EventHandler(this.bTurno_Click);
             // 
             // bReiniciar
             // 
-            this.bReiniciar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bReiniciar.Location = new System.Drawing.Point(708, 446);
+            resources.ApplyResources(this.bReiniciar, "bReiniciar");
             this.bReiniciar.Name = "bReiniciar";
-            this.bReiniciar.Size = new System.Drawing.Size(83, 23);
-            this.bReiniciar.TabIndex = 14;
-            this.bReiniciar.Text = "Reinciar";
             this.bReiniciar.UseVisualStyleBackColor = true;
             this.bReiniciar.Click += new System.EventHandler(this.bReiniciar_Click);
             // 
             // colorJugIni
             // 
-            this.colorJugIni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorJugIni.AutoSize = true;
-            this.colorJugIni.Location = new System.Drawing.Point(724, 321);
+            resources.ApplyResources(this.colorJugIni, "colorJugIni");
             this.colorJugIni.Name = "colorJugIni";
-            this.colorJugIni.Size = new System.Drawing.Size(0, 13);
-            this.colorJugIni.TabIndex = 15;
             // 
             // controlJ1
             // 
-            this.controlJ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.controlJ1, "controlJ1");
             this.controlJ1.Controls.Add(this.nombreJ1);
             this.controlJ1.Controls.Add(this.bRetirarseJ1);
             this.controlJ1.Controls.Add(this.colorJ1);
@@ -268,103 +214,72 @@
             this.controlJ1.Controls.Add(this.dineroJ1);
             this.controlJ1.Controls.Add(this.bVerHotelesJ1);
             this.controlJ1.Controls.Add(this.posJ1);
-            this.controlJ1.Enabled = false;
-            this.controlJ1.Location = new System.Drawing.Point(13, 516);
             this.controlJ1.Name = "controlJ1";
-            this.controlJ1.Size = new System.Drawing.Size(150, 179);
-            this.controlJ1.TabIndex = 19;
             this.controlJ1.TabStop = false;
-            this.controlJ1.Text = "Jugador 1";
+            // 
+            // nombreJ1
+            // 
+            resources.ApplyResources(this.nombreJ1, "nombreJ1");
+            this.nombreJ1.Name = "nombreJ1";
             // 
             // bRetirarseJ1
             // 
-            this.bRetirarseJ1.Location = new System.Drawing.Point(10, 148);
+            resources.ApplyResources(this.bRetirarseJ1, "bRetirarseJ1");
             this.bRetirarseJ1.Name = "bRetirarseJ1";
-            this.bRetirarseJ1.Size = new System.Drawing.Size(70, 23);
-            this.bRetirarseJ1.TabIndex = 34;
-            this.bRetirarseJ1.Text = "Retirarse";
             this.bRetirarseJ1.UseVisualStyleBackColor = true;
             this.bRetirarseJ1.Click += new System.EventHandler(this.bRetirarseJ1_Click);
             // 
             // colorJ1
             // 
-            this.colorJ1.AutoSize = true;
-            this.colorJ1.Location = new System.Drawing.Point(6, 52);
+            resources.ApplyResources(this.colorJ1, "colorJ1");
             this.colorJ1.Name = "colorJ1";
-            this.colorJ1.Size = new System.Drawing.Size(34, 13);
-            this.colorJ1.TabIndex = 33;
-            this.colorJ1.Text = "Color:";
             // 
             // bPedirNochesJ1
             // 
-            this.bPedirNochesJ1.Location = new System.Drawing.Point(85, 89);
+            resources.ApplyResources(this.bPedirNochesJ1, "bPedirNochesJ1");
             this.bPedirNochesJ1.Name = "bPedirNochesJ1";
-            this.bPedirNochesJ1.Size = new System.Drawing.Size(57, 47);
-            this.bPedirNochesJ1.TabIndex = 27;
-            this.bPedirNochesJ1.Text = "Pedir abonar noches";
             this.bPedirNochesJ1.UseVisualStyleBackColor = true;
             this.bPedirNochesJ1.Click += new System.EventHandler(this.bPedirNochesJ1_Click);
             // 
             // bEntradasJ1
             // 
-            this.bEntradasJ1.Location = new System.Drawing.Point(85, 138);
+            resources.ApplyResources(this.bEntradasJ1, "bEntradasJ1");
             this.bEntradasJ1.Name = "bEntradasJ1";
-            this.bEntradasJ1.Size = new System.Drawing.Size(57, 34);
-            this.bEntradasJ1.TabIndex = 4;
-            this.bEntradasJ1.Text = "Poner entradas";
             this.bEntradasJ1.UseVisualStyleBackColor = true;
             this.bEntradasJ1.Click += new System.EventHandler(this.bEntradasJ1_Click);
             // 
             // dineroJ1
             // 
-            this.dineroJ1.AutoSize = true;
-            this.dineroJ1.Location = new System.Drawing.Point(6, 35);
+            resources.ApplyResources(this.dineroJ1, "dineroJ1");
             this.dineroJ1.Name = "dineroJ1";
-            this.dineroJ1.Size = new System.Drawing.Size(41, 13);
-            this.dineroJ1.TabIndex = 2;
-            this.dineroJ1.Text = "Dinero:";
             // 
             // bVerHotelesJ1
             // 
-            this.bVerHotelesJ1.Location = new System.Drawing.Point(10, 120);
+            resources.ApplyResources(this.bVerHotelesJ1, "bVerHotelesJ1");
             this.bVerHotelesJ1.Name = "bVerHotelesJ1";
-            this.bVerHotelesJ1.Size = new System.Drawing.Size(70, 23);
-            this.bVerHotelesJ1.TabIndex = 1;
-            this.bVerHotelesJ1.Text = "Ver hoteles";
             this.bVerHotelesJ1.UseVisualStyleBackColor = true;
             this.bVerHotelesJ1.Click += new System.EventHandler(this.bVerHotelesJ1_Click);
             // 
             // posJ1
             // 
-            this.posJ1.AutoSize = true;
-            this.posJ1.Location = new System.Drawing.Point(6, 18);
+            resources.ApplyResources(this.posJ1, "posJ1");
             this.posJ1.Name = "posJ1";
-            this.posJ1.Size = new System.Drawing.Size(40, 13);
-            this.posJ1.TabIndex = 0;
-            this.posJ1.Text = "Casilla:";
             // 
             // turnoJ1
             // 
-            this.turnoJ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.turnoJ1.AutoSize = true;
-            this.turnoJ1.Location = new System.Drawing.Point(103, 536);
+            resources.ApplyResources(this.turnoJ1, "turnoJ1");
             this.turnoJ1.Name = "turnoJ1";
-            this.turnoJ1.Size = new System.Drawing.Size(0, 13);
-            this.turnoJ1.TabIndex = 3;
             // 
             // bVerHotelesJ2
             // 
-            this.bVerHotelesJ2.Location = new System.Drawing.Point(10, 120);
+            resources.ApplyResources(this.bVerHotelesJ2, "bVerHotelesJ2");
             this.bVerHotelesJ2.Name = "bVerHotelesJ2";
-            this.bVerHotelesJ2.Size = new System.Drawing.Size(70, 23);
-            this.bVerHotelesJ2.TabIndex = 1;
-            this.bVerHotelesJ2.Text = "Ver hoteles";
             this.bVerHotelesJ2.UseVisualStyleBackColor = true;
             this.bVerHotelesJ2.Click += new System.EventHandler(this.bVerHotelesJ2_Click);
             // 
             // controlJ2
             // 
-            this.controlJ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.controlJ2, "controlJ2");
             this.controlJ2.Controls.Add(this.nombreJ2);
             this.controlJ2.Controls.Add(this.bRetirarseJ2);
             this.controlJ2.Controls.Add(this.colorJ2);
@@ -373,93 +288,65 @@
             this.controlJ2.Controls.Add(this.dineroJ2);
             this.controlJ2.Controls.Add(this.bVerHotelesJ2);
             this.controlJ2.Controls.Add(this.posJ2);
-            this.controlJ2.Enabled = false;
-            this.controlJ2.Location = new System.Drawing.Point(183, 516);
             this.controlJ2.Name = "controlJ2";
-            this.controlJ2.Size = new System.Drawing.Size(150, 179);
-            this.controlJ2.TabIndex = 20;
             this.controlJ2.TabStop = false;
-            this.controlJ2.Text = "Jugador 2";
+            // 
+            // nombreJ2
+            // 
+            resources.ApplyResources(this.nombreJ2, "nombreJ2");
+            this.nombreJ2.Name = "nombreJ2";
             // 
             // bRetirarseJ2
             // 
-            this.bRetirarseJ2.Location = new System.Drawing.Point(10, 148);
+            resources.ApplyResources(this.bRetirarseJ2, "bRetirarseJ2");
             this.bRetirarseJ2.Name = "bRetirarseJ2";
-            this.bRetirarseJ2.Size = new System.Drawing.Size(70, 23);
-            this.bRetirarseJ2.TabIndex = 35;
-            this.bRetirarseJ2.Text = "Retirarse";
             this.bRetirarseJ2.UseVisualStyleBackColor = true;
             this.bRetirarseJ2.Click += new System.EventHandler(this.bRetirarseJ2_Click);
             // 
             // colorJ2
             // 
-            this.colorJ2.AutoSize = true;
-            this.colorJ2.Location = new System.Drawing.Point(6, 52);
+            resources.ApplyResources(this.colorJ2, "colorJ2");
             this.colorJ2.Name = "colorJ2";
-            this.colorJ2.Size = new System.Drawing.Size(34, 13);
-            this.colorJ2.TabIndex = 34;
-            this.colorJ2.Text = "Color:";
             // 
             // bPedirNochesJ2
             // 
-            this.bPedirNochesJ2.Location = new System.Drawing.Point(85, 89);
+            resources.ApplyResources(this.bPedirNochesJ2, "bPedirNochesJ2");
             this.bPedirNochesJ2.Name = "bPedirNochesJ2";
-            this.bPedirNochesJ2.Size = new System.Drawing.Size(57, 47);
-            this.bPedirNochesJ2.TabIndex = 28;
-            this.bPedirNochesJ2.Text = "Pedir abonar noches";
             this.bPedirNochesJ2.UseVisualStyleBackColor = true;
             this.bPedirNochesJ2.Click += new System.EventHandler(this.bPedirNochesJ2_Click);
             // 
             // bEntradasJ2
             // 
-            this.bEntradasJ2.Location = new System.Drawing.Point(85, 138);
+            resources.ApplyResources(this.bEntradasJ2, "bEntradasJ2");
             this.bEntradasJ2.Name = "bEntradasJ2";
-            this.bEntradasJ2.Size = new System.Drawing.Size(57, 34);
-            this.bEntradasJ2.TabIndex = 5;
-            this.bEntradasJ2.Text = "Poner entradas";
             this.bEntradasJ2.UseVisualStyleBackColor = true;
             this.bEntradasJ2.Click += new System.EventHandler(this.bEntradasJ2_Click);
             // 
             // dineroJ2
             // 
-            this.dineroJ2.AutoSize = true;
-            this.dineroJ2.Location = new System.Drawing.Point(6, 35);
+            resources.ApplyResources(this.dineroJ2, "dineroJ2");
             this.dineroJ2.Name = "dineroJ2";
-            this.dineroJ2.Size = new System.Drawing.Size(41, 13);
-            this.dineroJ2.TabIndex = 2;
-            this.dineroJ2.Text = "Dinero:";
             // 
             // posJ2
             // 
-            this.posJ2.AutoSize = true;
-            this.posJ2.Location = new System.Drawing.Point(6, 18);
+            resources.ApplyResources(this.posJ2, "posJ2");
             this.posJ2.Name = "posJ2";
-            this.posJ2.Size = new System.Drawing.Size(40, 13);
-            this.posJ2.TabIndex = 0;
-            this.posJ2.Text = "Casilla:";
             // 
             // turnoJ2
             // 
-            this.turnoJ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.turnoJ2.AutoSize = true;
-            this.turnoJ2.Location = new System.Drawing.Point(273, 536);
+            resources.ApplyResources(this.turnoJ2, "turnoJ2");
             this.turnoJ2.Name = "turnoJ2";
-            this.turnoJ2.Size = new System.Drawing.Size(0, 13);
-            this.turnoJ2.TabIndex = 4;
             // 
             // bVerHotelesJ3
             // 
-            this.bVerHotelesJ3.Location = new System.Drawing.Point(10, 120);
+            resources.ApplyResources(this.bVerHotelesJ3, "bVerHotelesJ3");
             this.bVerHotelesJ3.Name = "bVerHotelesJ3";
-            this.bVerHotelesJ3.Size = new System.Drawing.Size(70, 23);
-            this.bVerHotelesJ3.TabIndex = 1;
-            this.bVerHotelesJ3.Text = "Ver hoteles";
             this.bVerHotelesJ3.UseVisualStyleBackColor = true;
             this.bVerHotelesJ3.Click += new System.EventHandler(this.bVerHotelesJ3_Click);
             // 
             // controlJ3
             // 
-            this.controlJ3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.controlJ3, "controlJ3");
             this.controlJ3.Controls.Add(this.nombreJ3);
             this.controlJ3.Controls.Add(this.bRetirarseJ3);
             this.controlJ3.Controls.Add(this.colorJ3);
@@ -468,93 +355,65 @@
             this.controlJ3.Controls.Add(this.dineroJ3);
             this.controlJ3.Controls.Add(this.bVerHotelesJ3);
             this.controlJ3.Controls.Add(this.posJ3);
-            this.controlJ3.Enabled = false;
-            this.controlJ3.Location = new System.Drawing.Point(354, 516);
             this.controlJ3.Name = "controlJ3";
-            this.controlJ3.Size = new System.Drawing.Size(150, 179);
-            this.controlJ3.TabIndex = 21;
             this.controlJ3.TabStop = false;
-            this.controlJ3.Text = "Jugador 3";
+            // 
+            // nombreJ3
+            // 
+            resources.ApplyResources(this.nombreJ3, "nombreJ3");
+            this.nombreJ3.Name = "nombreJ3";
             // 
             // bRetirarseJ3
             // 
-            this.bRetirarseJ3.Location = new System.Drawing.Point(10, 148);
+            resources.ApplyResources(this.bRetirarseJ3, "bRetirarseJ3");
             this.bRetirarseJ3.Name = "bRetirarseJ3";
-            this.bRetirarseJ3.Size = new System.Drawing.Size(70, 23);
-            this.bRetirarseJ3.TabIndex = 36;
-            this.bRetirarseJ3.Text = "Retirarse";
             this.bRetirarseJ3.UseVisualStyleBackColor = true;
             this.bRetirarseJ3.Click += new System.EventHandler(this.bRetirarseJ3_Click);
             // 
             // colorJ3
             // 
-            this.colorJ3.AutoSize = true;
-            this.colorJ3.Location = new System.Drawing.Point(6, 52);
+            resources.ApplyResources(this.colorJ3, "colorJ3");
             this.colorJ3.Name = "colorJ3";
-            this.colorJ3.Size = new System.Drawing.Size(34, 13);
-            this.colorJ3.TabIndex = 35;
-            this.colorJ3.Text = "Color:";
             // 
             // bPedirNochesJ3
             // 
-            this.bPedirNochesJ3.Location = new System.Drawing.Point(85, 89);
+            resources.ApplyResources(this.bPedirNochesJ3, "bPedirNochesJ3");
             this.bPedirNochesJ3.Name = "bPedirNochesJ3";
-            this.bPedirNochesJ3.Size = new System.Drawing.Size(57, 47);
-            this.bPedirNochesJ3.TabIndex = 32;
-            this.bPedirNochesJ3.Text = "Pedir abonar noches";
             this.bPedirNochesJ3.UseVisualStyleBackColor = true;
             this.bPedirNochesJ3.Click += new System.EventHandler(this.bPedirNochesJ3_Click);
             // 
             // bEntradasJ3
             // 
-            this.bEntradasJ3.Location = new System.Drawing.Point(85, 138);
+            resources.ApplyResources(this.bEntradasJ3, "bEntradasJ3");
             this.bEntradasJ3.Name = "bEntradasJ3";
-            this.bEntradasJ3.Size = new System.Drawing.Size(57, 34);
-            this.bEntradasJ3.TabIndex = 25;
-            this.bEntradasJ3.Text = "Poner entradas";
             this.bEntradasJ3.UseVisualStyleBackColor = true;
             this.bEntradasJ3.Click += new System.EventHandler(this.bEntradasJ3_Click);
             // 
             // dineroJ3
             // 
-            this.dineroJ3.AutoSize = true;
-            this.dineroJ3.Location = new System.Drawing.Point(6, 35);
+            resources.ApplyResources(this.dineroJ3, "dineroJ3");
             this.dineroJ3.Name = "dineroJ3";
-            this.dineroJ3.Size = new System.Drawing.Size(41, 13);
-            this.dineroJ3.TabIndex = 2;
-            this.dineroJ3.Text = "Dinero:";
             // 
             // posJ3
             // 
-            this.posJ3.AutoSize = true;
-            this.posJ3.Location = new System.Drawing.Point(6, 18);
+            resources.ApplyResources(this.posJ3, "posJ3");
             this.posJ3.Name = "posJ3";
-            this.posJ3.Size = new System.Drawing.Size(40, 13);
-            this.posJ3.TabIndex = 0;
-            this.posJ3.Text = "Casilla:";
             // 
             // turnoJ3
             // 
-            this.turnoJ3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.turnoJ3.AutoSize = true;
-            this.turnoJ3.Location = new System.Drawing.Point(443, 536);
+            resources.ApplyResources(this.turnoJ3, "turnoJ3");
             this.turnoJ3.Name = "turnoJ3";
-            this.turnoJ3.Size = new System.Drawing.Size(0, 13);
-            this.turnoJ3.TabIndex = 5;
             // 
             // bVerHotelesJ4
             // 
-            this.bVerHotelesJ4.Location = new System.Drawing.Point(10, 120);
+            resources.ApplyResources(this.bVerHotelesJ4, "bVerHotelesJ4");
             this.bVerHotelesJ4.Name = "bVerHotelesJ4";
-            this.bVerHotelesJ4.Size = new System.Drawing.Size(70, 23);
-            this.bVerHotelesJ4.TabIndex = 1;
-            this.bVerHotelesJ4.Text = "Ver hoteles";
             this.bVerHotelesJ4.UseVisualStyleBackColor = true;
             this.bVerHotelesJ4.Click += new System.EventHandler(this.bVerHotelesJ4_Click);
             // 
             // controlJ4
             // 
-            this.controlJ4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.controlJ4, "controlJ4");
             this.controlJ4.Controls.Add(this.nombreJ4);
             this.controlJ4.Controls.Add(this.bRetirarseJ4);
             this.controlJ4.Controls.Add(this.colorJ4);
@@ -563,300 +422,189 @@
             this.controlJ4.Controls.Add(this.dineroJ4);
             this.controlJ4.Controls.Add(this.bVerHotelesJ4);
             this.controlJ4.Controls.Add(this.posJ4);
-            this.controlJ4.Enabled = false;
-            this.controlJ4.Location = new System.Drawing.Point(524, 516);
             this.controlJ4.Name = "controlJ4";
-            this.controlJ4.Size = new System.Drawing.Size(150, 179);
-            this.controlJ4.TabIndex = 22;
             this.controlJ4.TabStop = false;
-            this.controlJ4.Text = "Jugador 4";
+            // 
+            // nombreJ4
+            // 
+            resources.ApplyResources(this.nombreJ4, "nombreJ4");
+            this.nombreJ4.Name = "nombreJ4";
             // 
             // bRetirarseJ4
             // 
-            this.bRetirarseJ4.Location = new System.Drawing.Point(10, 148);
+            resources.ApplyResources(this.bRetirarseJ4, "bRetirarseJ4");
             this.bRetirarseJ4.Name = "bRetirarseJ4";
-            this.bRetirarseJ4.Size = new System.Drawing.Size(70, 23);
-            this.bRetirarseJ4.TabIndex = 37;
-            this.bRetirarseJ4.Text = "Retirarse";
             this.bRetirarseJ4.UseVisualStyleBackColor = true;
             this.bRetirarseJ4.Click += new System.EventHandler(this.bRetirarseJ4_Click);
             // 
             // colorJ4
             // 
-            this.colorJ4.AutoSize = true;
-            this.colorJ4.Location = new System.Drawing.Point(6, 52);
+            resources.ApplyResources(this.colorJ4, "colorJ4");
             this.colorJ4.Name = "colorJ4";
-            this.colorJ4.Size = new System.Drawing.Size(34, 13);
-            this.colorJ4.TabIndex = 36;
-            this.colorJ4.Text = "Color:";
             // 
             // bPedirNochesJ4
             // 
-            this.bPedirNochesJ4.Location = new System.Drawing.Point(85, 89);
+            resources.ApplyResources(this.bPedirNochesJ4, "bPedirNochesJ4");
             this.bPedirNochesJ4.Name = "bPedirNochesJ4";
-            this.bPedirNochesJ4.Size = new System.Drawing.Size(57, 47);
-            this.bPedirNochesJ4.TabIndex = 32;
-            this.bPedirNochesJ4.Text = "Pedir abonar noches";
             this.bPedirNochesJ4.UseVisualStyleBackColor = true;
             this.bPedirNochesJ4.Click += new System.EventHandler(this.bPedirNochesJ4_Click);
             // 
             // bEntradasJ4
             // 
-            this.bEntradasJ4.Location = new System.Drawing.Point(85, 138);
+            resources.ApplyResources(this.bEntradasJ4, "bEntradasJ4");
             this.bEntradasJ4.Name = "bEntradasJ4";
-            this.bEntradasJ4.Size = new System.Drawing.Size(57, 34);
-            this.bEntradasJ4.TabIndex = 25;
-            this.bEntradasJ4.Text = "Poner entradas";
             this.bEntradasJ4.UseVisualStyleBackColor = true;
             this.bEntradasJ4.Click += new System.EventHandler(this.bEntradasJ4_Click);
             // 
             // dineroJ4
             // 
-            this.dineroJ4.AutoSize = true;
-            this.dineroJ4.Location = new System.Drawing.Point(6, 35);
+            resources.ApplyResources(this.dineroJ4, "dineroJ4");
             this.dineroJ4.Name = "dineroJ4";
-            this.dineroJ4.Size = new System.Drawing.Size(41, 13);
-            this.dineroJ4.TabIndex = 2;
-            this.dineroJ4.Text = "Dinero:";
             // 
             // posJ4
             // 
-            this.posJ4.AutoSize = true;
-            this.posJ4.Location = new System.Drawing.Point(6, 18);
+            resources.ApplyResources(this.posJ4, "posJ4");
             this.posJ4.Name = "posJ4";
-            this.posJ4.Size = new System.Drawing.Size(40, 13);
-            this.posJ4.TabIndex = 0;
-            this.posJ4.Text = "Casilla:";
             // 
             // turnoJ4
             // 
-            this.turnoJ4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.turnoJ4.AutoSize = true;
-            this.turnoJ4.Location = new System.Drawing.Point(614, 536);
+            resources.ApplyResources(this.turnoJ4, "turnoJ4");
             this.turnoJ4.Name = "turnoJ4";
-            this.turnoJ4.Size = new System.Drawing.Size(0, 13);
-            this.turnoJ4.TabIndex = 6;
             // 
             // bComprar
             // 
-            this.bComprar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bComprar.Enabled = false;
-            this.bComprar.Location = new System.Drawing.Point(708, 545);
+            resources.ApplyResources(this.bComprar, "bComprar");
             this.bComprar.Name = "bComprar";
-            this.bComprar.Size = new System.Drawing.Size(83, 23);
-            this.bComprar.TabIndex = 23;
-            this.bComprar.Text = "Comprar";
             this.bComprar.UseVisualStyleBackColor = true;
             this.bComprar.Click += new System.EventHandler(this.bComprar_Click);
             // 
             // bConstruir
             // 
-            this.bConstruir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bConstruir.Enabled = false;
-            this.bConstruir.Location = new System.Drawing.Point(708, 574);
+            resources.ApplyResources(this.bConstruir, "bConstruir");
             this.bConstruir.Name = "bConstruir";
-            this.bConstruir.Size = new System.Drawing.Size(83, 23);
-            this.bConstruir.TabIndex = 24;
-            this.bConstruir.Text = "Construir";
             this.bConstruir.UseVisualStyleBackColor = true;
             this.bConstruir.Click += new System.EventHandler(this.bConstruir_Click);
             // 
             // bVerHoteles
             // 
-            this.bVerHoteles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bVerHoteles.Location = new System.Drawing.Point(708, 516);
+            resources.ApplyResources(this.bVerHoteles, "bVerHoteles");
             this.bVerHoteles.Name = "bVerHoteles";
-            this.bVerHoteles.Size = new System.Drawing.Size(83, 23);
-            this.bVerHoteles.TabIndex = 25;
-            this.bVerHoteles.Text = "Ver hoteles";
             this.bVerHoteles.UseVisualStyleBackColor = true;
             this.bVerHoteles.Click += new System.EventHandler(this.bVerHoteles_Click);
             // 
             // bComprarSuelo
             // 
-            this.bComprarSuelo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bComprarSuelo.Enabled = false;
-            this.bComprarSuelo.Location = new System.Drawing.Point(708, 603);
+            resources.ApplyResources(this.bComprarSuelo, "bComprarSuelo");
             this.bComprarSuelo.Name = "bComprarSuelo";
-            this.bComprarSuelo.Size = new System.Drawing.Size(83, 23);
-            this.bComprarSuelo.TabIndex = 30;
-            this.bComprarSuelo.Text = "Comprar suelo";
             this.bComprarSuelo.UseVisualStyleBackColor = true;
             this.bComprarSuelo.Click += new System.EventHandler(this.bComprarSuelo_Click);
             // 
             // bSalir
             // 
-            this.bSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSalir.Location = new System.Drawing.Point(708, 668);
+            resources.ApplyResources(this.bSalir, "bSalir");
             this.bSalir.Name = "bSalir";
-            this.bSalir.Size = new System.Drawing.Size(83, 23);
-            this.bSalir.TabIndex = 31;
-            this.bSalir.Text = "Salir";
             this.bSalir.UseVisualStyleBackColor = true;
             this.bSalir.Click += new System.EventHandler(this.bSalir_Click);
             // 
             // bCobrarBanca
             // 
-            this.bCobrarBanca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCobrarBanca.Enabled = false;
-            this.bCobrarBanca.Location = new System.Drawing.Point(708, 487);
+            resources.ApplyResources(this.bCobrarBanca, "bCobrarBanca");
             this.bCobrarBanca.Name = "bCobrarBanca";
-            this.bCobrarBanca.Size = new System.Drawing.Size(83, 23);
-            this.bCobrarBanca.TabIndex = 32;
-            this.bCobrarBanca.Text = "Cobrar banca";
             this.bCobrarBanca.UseVisualStyleBackColor = true;
             this.bCobrarBanca.Click += new System.EventHandler(this.bCobrarBanca_Click);
             // 
             // bNormas
             // 
-            this.bNormas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bNormas.Location = new System.Drawing.Point(708, 417);
+            resources.ApplyResources(this.bNormas, "bNormas");
             this.bNormas.Name = "bNormas";
-            this.bNormas.Size = new System.Drawing.Size(83, 23);
-            this.bNormas.TabIndex = 33;
-            this.bNormas.Text = "Reglas";
             this.bNormas.UseVisualStyleBackColor = true;
             this.bNormas.Click += new System.EventHandler(this.bNormas_Click);
             // 
             // posVerde
             // 
+            resources.ApplyResources(this.posVerde, "posVerde");
             this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
-            this.posVerde.Location = new System.Drawing.Point(80, 322);
             this.posVerde.Name = "posVerde";
-            this.posVerde.Size = new System.Drawing.Size(20, 20);
-            this.posVerde.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.posVerde.TabIndex = 29;
             this.posVerde.TabStop = false;
             // 
             // posAmarillo
             // 
+            resources.ApplyResources(this.posAmarillo, "posAmarillo");
             this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
-            this.posAmarillo.Location = new System.Drawing.Point(100, 322);
             this.posAmarillo.Name = "posAmarillo";
-            this.posAmarillo.Size = new System.Drawing.Size(20, 20);
-            this.posAmarillo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.posAmarillo.TabIndex = 28;
             this.posAmarillo.TabStop = false;
             // 
             // posAzul
             // 
+            resources.ApplyResources(this.posAzul, "posAzul");
             this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
-            this.posAzul.Location = new System.Drawing.Point(60, 322);
             this.posAzul.Name = "posAzul";
-            this.posAzul.Size = new System.Drawing.Size(20, 20);
-            this.posAzul.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.posAzul.TabIndex = 27;
             this.posAzul.TabStop = false;
             // 
             // posRojo
             // 
+            resources.ApplyResources(this.posRojo, "posRojo");
             this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
-            this.posRojo.Location = new System.Drawing.Point(40, 322);
             this.posRojo.Name = "posRojo";
-            this.posRojo.Size = new System.Drawing.Size(20, 20);
-            this.posRojo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.posRojo.TabIndex = 26;
             this.posRojo.TabStop = false;
             // 
             // imgTablero
             // 
-            this.imgTablero.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.imgTablero, "imgTablero");
             this.imgTablero.Image = global::Juego_Hotel.Properties.Resources.Tablero;
-            this.imgTablero.Location = new System.Drawing.Point(13, 30);
             this.imgTablero.Name = "imgTablero";
-            this.imgTablero.Size = new System.Drawing.Size(661, 477);
-            this.imgTablero.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imgTablero.TabIndex = 1;
             this.imgTablero.TabStop = false;
             // 
             // bSalvar
             // 
-            this.bSalvar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSalvar.Enabled = false;
-            this.bSalvar.Location = new System.Drawing.Point(708, 359);
+            resources.ApplyResources(this.bSalvar, "bSalvar");
             this.bSalvar.Name = "bSalvar";
-            this.bSalvar.Size = new System.Drawing.Size(83, 23);
-            this.bSalvar.TabIndex = 35;
-            this.bSalvar.Text = "Salvar";
             this.bSalvar.UseVisualStyleBackColor = true;
             this.bSalvar.Click += new System.EventHandler(this.bSalvar_Click);
             // 
             // bCargar
             // 
-            this.bCargar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCargar.Location = new System.Drawing.Point(708, 388);
+            resources.ApplyResources(this.bCargar, "bCargar");
             this.bCargar.Name = "bCargar";
-            this.bCargar.Size = new System.Drawing.Size(83, 23);
-            this.bCargar.TabIndex = 36;
-            this.bCargar.Text = "Cargar";
             this.bCargar.UseVisualStyleBackColor = true;
             this.bCargar.Click += new System.EventHandler(this.bCargar_Click);
             // 
             // img_Banco
             // 
+            resources.ApplyResources(this.img_Banco, "img_Banco");
             this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.img_Banco.Image = ((System.Drawing.Image)(resources.GetObject("img_Banco.Image")));
-            this.img_Banco.Location = new System.Drawing.Point(271, 69);
             this.img_Banco.Name = "img_Banco";
-            this.img_Banco.Size = new System.Drawing.Size(18, 18);
-            this.img_Banco.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.img_Banco.TabIndex = 37;
             this.img_Banco.TabStop = false;
             // 
             // img_ayto
             // 
+            resources.ApplyResources(this.img_ayto, "img_ayto");
             this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.img_ayto.Image = ((System.Drawing.Image)(resources.GetObject("img_ayto.Image")));
-            this.img_ayto.Location = new System.Drawing.Point(230, 389);
             this.img_ayto.Name = "img_ayto";
-            this.img_ayto.Size = new System.Drawing.Size(18, 18);
-            this.img_ayto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.img_ayto.TabIndex = 38;
             this.img_ayto.TabStop = false;
             // 
-            // nombreJ1
+            // labelIdioma
             // 
-            this.nombreJ1.AutoSize = true;
-            this.nombreJ1.Location = new System.Drawing.Point(6, 69);
-            this.nombreJ1.Name = "nombreJ1";
-            this.nombreJ1.Size = new System.Drawing.Size(47, 13);
-            this.nombreJ1.TabIndex = 35;
-            this.nombreJ1.Text = "Nombre:";
+            resources.ApplyResources(this.labelIdioma, "labelIdioma");
+            this.labelIdioma.Name = "labelIdioma";
             // 
-            // nombreJ2
+            // comboBoxIdiomas
             // 
-            this.nombreJ2.AutoSize = true;
-            this.nombreJ2.Location = new System.Drawing.Point(6, 70);
-            this.nombreJ2.Name = "nombreJ2";
-            this.nombreJ2.Size = new System.Drawing.Size(47, 13);
-            this.nombreJ2.TabIndex = 36;
-            this.nombreJ2.Text = "Nombre:";
-            // 
-            // nombreJ3
-            // 
-            this.nombreJ3.AutoSize = true;
-            this.nombreJ3.Location = new System.Drawing.Point(6, 70);
-            this.nombreJ3.Name = "nombreJ3";
-            this.nombreJ3.Size = new System.Drawing.Size(47, 13);
-            this.nombreJ3.TabIndex = 37;
-            this.nombreJ3.Text = "Nombre:";
-            // 
-            // nombreJ4
-            // 
-            this.nombreJ4.AutoSize = true;
-            this.nombreJ4.Location = new System.Drawing.Point(6, 70);
-            this.nombreJ4.Name = "nombreJ4";
-            this.nombreJ4.Size = new System.Drawing.Size(47, 13);
-            this.nombreJ4.TabIndex = 38;
-            this.nombreJ4.Text = "Nombre:";
+            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
+            this.comboBoxIdiomas.FormattingEnabled = true;
+            this.comboBoxIdiomas.Items.AddRange(new object[] {
+            resources.GetString("comboBoxIdiomas.Items"),
+            resources.GetString("comboBoxIdiomas.Items1")});
+            this.comboBoxIdiomas.Name = "comboBoxIdiomas";
+            this.comboBoxIdiomas.SelectedIndex = 0;
+            this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
             // 
             // Principal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 701);
+            this.Controls.Add(this.comboBoxIdiomas);
+            this.Controls.Add(this.labelIdioma);
             this.Controls.Add(this.img_ayto);
             this.Controls.Add(this.img_Banco);
             this.Controls.Add(this.bCargar);
@@ -891,11 +639,9 @@
             this.Controls.Add(this.bIniciar);
             this.Controls.Add(this.imgTablero);
             this.Controls.Add(this.labelTablero);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Principal";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Hotel - Construye tu propio imperio hotelero";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Principal_FormClosing);
+            this.Load += new System.EventHandler(this.Principal_Load);
             this.Shown += new System.EventHandler(this.Principal_Shown);
             this.Resize += new System.EventHandler(this.Principal_Resize);
             this.grupoNJugadores.ResumeLayout(false);
@@ -991,5 +737,7 @@
         public System.Windows.Forms.Label nombreJ2;
         public System.Windows.Forms.Label nombreJ3;
         public System.Windows.Forms.Label nombreJ4;
+        private System.Windows.Forms.Label labelIdioma;
+        private System.Windows.Forms.ComboBox comboBoxIdiomas;
     }
 }
