@@ -1655,8 +1655,8 @@ namespace Juego_Hotel
                 //if (f is IReLocalizable)
                   //  ((IReLocalizable)f).ReLocalize();*/
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(this.GetType());
-            resources.ApplyResources(this, "$this");
-            foreach (Control c in this.Controls)
+            //resources.ApplyResources(this, "$this");
+            /*foreach (Control c in this.Controls)
             {
                 /*if (c.Name.Equals("comboBoxIdiomas"))
                 {
@@ -1667,11 +1667,12 @@ namespace Juego_Hotel
                     {
                         Object o=elementos.GetEnumerator().Current;
                     }
-                }*/
+                }
                 resources.ApplyResources(c, c.Name);
-            }
+            }*/
             //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
-            //resources.ApplyResources(this.labelIdioma, "labelIdioma");
+            resources.ApplyResources(this.labelIdioma, "labelIdioma");
+            resources.ApplyResources(this.bIniciar, "bIniciar");
         }
     }
 }
