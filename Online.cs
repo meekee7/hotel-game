@@ -1139,11 +1139,8 @@ namespace Juego_Hotel
             partida.interfaz.hotel_a_subastar_online = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
-                Juego juego = partida.interfaz.juego;
-                partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
-                partida.interfaz.frm_subasta_en_curso.Show();
-                //Thread thread_envio_comando = new Thread(Manejar_subasta);
-                //thread_envio_comando.Start(partida);
+                Thread thread_envio_comando = new Thread(Manejar_subasta);
+                thread_envio_comando.Start(partida);
             }
         }
 
@@ -1152,6 +1149,7 @@ namespace Juego_Hotel
             PartidaOnline partida = (PartidaOnline)parametro;
             Juego juego = partida.interfaz.juego;
             partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
+            partida.interfaz.frm_subasta_en_curso.Activate();
             partida.interfaz.frm_subasta_en_curso.ShowDialog();
         }
 
@@ -1169,21 +1167,31 @@ namespace Juego_Hotel
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Nueva_puja_Callback(partida.interfaz.frm_subasta_en_curso.Nueva_puja), jugador, cantidad);
         }
 
+        delegate void Subasta_vendida_Callback();
+
         private void Subasta_vendida()
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            // Pedir el pago al jugador, este comando solo lo recibe el que ha de pagar
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == this.txtLogin.Text);
-            Juego juego = partida.interfaz.juego;
-            PedirPago frm_pago = new PedirPago(cantidad, ref juego, true, jugador, partida.interfaz);
-            frm_pago.ShowDialog();
-            int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_5000, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
-            this.enviar_comando("auction_pay", id.ToString(), n_5000.ToString(), n_1000.ToString(),
-                n_500.ToString(), n_100.ToString(), n_50.ToString());
-            frm_pago.Close();
+            if (jugador.n_jugador == partida.interfaz.frm_subasta_en_curso.n_mayor_postor)
+            {
+                Juego juego = partida.interfaz.juego;
+                PedirPago frm_pago = new PedirPago(cantidad, ref juego, true, jugador, partida.interfaz);
+                frm_pago.ShowDialog();
+                int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_5000, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
+                this.enviar_comando("auction_pay", id.ToString(), n_5000.ToString(), n_1000.ToString(),
+                    n_500.ToString(), n_100.ToString(), n_50.ToString());
+                frm_pago.Close();
+            }
+            else
+            {
+                partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_vendida_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_vendida));
+                MessageBox.Show("Hotel vendido al jugador " + partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].color + 
+                    " (" + partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online + ") por " + cantidad);
+            }
         }
 
         delegate void Subasta_terminada_Callback();
@@ -1193,6 +1201,7 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
+            MessageBox.Show("El hotel ha sido pagado. Subasta finalizada");
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_terminada_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
         }
     }

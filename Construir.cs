@@ -213,21 +213,26 @@ namespace Juego_Hotel
                         {
                             PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
                             frm_pago.ShowDialog();
-                            this.num_5000 = frm_pago.n_5000;
-                            this.num_1000 = frm_pago.n_1000;
-                            this.num_500 = frm_pago.n_500;
-                            this.num_100 = frm_pago.n_100;
-                            this.num_50 = frm_pago.n_50;
-                            if (!this.interfaz.online)
+                            if (!frm_pago.cancelado) // Sólo se puede cancelar si el jugador ha subastado el hotel en cuestión o si ha sido eliminado
                             {
-                                int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                                this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(this.num_5000, this.num_1000, this.num_500, this.num_100, this.num_50);
-                                if (frm_pago.total_seleccionado > this.total_a_pagar)
+                                this.num_5000 = frm_pago.n_5000;
+                                this.num_1000 = frm_pago.n_1000;
+                                this.num_500 = frm_pago.n_500;
+                                this.num_100 = frm_pago.n_100;
+                                this.num_50 = frm_pago.n_50;
+                                if (!this.interfaz.online)
                                 {
-                                    Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                    this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                                    int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
+                                    this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(this.num_5000, this.num_1000, this.num_500, this.num_100, this.num_50);
+                                    if (frm_pago.total_seleccionado > this.total_a_pagar)
+                                    {
+                                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                                        this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                                    }
                                 }
                             }
+                            else
+                                this.cancelado = true;
                             frm_pago.Close();
                         }
                         if ((this.total_a_pagar != -1) && (!this.interfaz.online))

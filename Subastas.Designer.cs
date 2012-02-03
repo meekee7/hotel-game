@@ -72,6 +72,7 @@
             // 
             // listaHoteles
             // 
+            this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
             this.listaHoteles.Location = new System.Drawing.Point(107, 39);
             this.listaHoteles.Name = "listaHoteles";

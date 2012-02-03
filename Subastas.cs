@@ -17,7 +17,7 @@ namespace Juego_Hotel
         public int n_100;
         public int n_50;
         Juego juego;
-        int n_mayor_postor; // nº de jugador
+        public int n_mayor_postor; // nº de jugador
         int n_precio_mayor = 0;
         public Hotel hotel_seleccionado;
         private Principal interfaz;
@@ -66,14 +66,21 @@ namespace Juego_Hotel
                 LinkedList<Hotel> lista = this.juego.jugador_actual.hoteles;
                 this.listaHoteles.BeginUpdate();
                 this.listaHoteles.Items.Clear();
-                foreach (Hotel hotel in lista)
-                    this.listaHoteles.Items.Add(hotel.nombre_txt);
+                if (lista.Count > 0)
+                {
+                    foreach (Hotel hotel in lista)
+                        this.listaHoteles.Items.Add(hotel.nombre_txt);
+                    this.listaHoteles.Enabled = true;
+                }
+                else
+                    this.listaHoteles.Enabled = false;
                 this.listaHoteles.EndUpdate();
-                this.listaHoteles.SelectedText = "";
+                this.listaHoteles.SelectedIndex = -1;
             }
             else
             {
                 this.listaHoteles.BeginUpdate();
+                this.listaHoteles.Enabled = false;
                 this.listaHoteles.Items.Clear();
                 this.listaHoteles.Items.Add(this.interfaz.hotel_a_subastar_online.nombre_txt);
                 this.listaHoteles.EndUpdate();
@@ -263,11 +270,36 @@ namespace Juego_Hotel
             this.n_mayor_postor = jugador.n_jugador;
         }
 
+        public void Subasta_vendida()
+        {
+            this.listaHoteles.Enabled = false;
+            this.bVender.Enabled = false;
+            this.bJ1.Enabled = false;
+            this.bJ2.Enabled = false;
+            this.bJ3.Enabled = false;
+            this.bJ4.Enabled = false;
+            this.cantidad.Enabled = false;
+        }
+
         public void Subasta_terminada()
         {
-            this.Rellenar_Lista_Hoteles(this.online);
-            this.listaHoteles.Enabled = true;
+            this.bJ1.Enabled = false;
+            this.bJ2.Enabled = false;
+            this.bJ3.Enabled = false;
+            this.bJ4.Enabled = false;
+            this.bVender.Enabled = false;
+            this.cantidad.Enabled = false;
             this.bCerrar.Enabled = true;
+            // Permitir que el creador de la subasta (el jugador actual) haga otra nueva
+            if (this.juego.jugador_actual.nombre_online == this.interfaz.nombre_online)
+                this.Rellenar_Lista_Hoteles(this.online);
+            else
+            {
+                this.listaHoteles.BeginUpdate();
+                this.listaHoteles.Items.Clear();
+                this.listaHoteles.Enabled = false;
+                this.listaHoteles.EndUpdate();
+            }
         }
     }
 }

@@ -103,7 +103,8 @@ namespace Juego_Hotel
                 this.frm_online.lista_partidas.Remove(this);
             }
             this.interfaz.partida_activa = false;
-            this.interfaz.BeginInvoke(new Cerrar_partida_Callback(this.interfaz.Close));
+            if (this.interfaz.Handle == null)
+                this.interfaz.BeginInvoke(new Cerrar_partida_Callback(this.interfaz.Close));
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);

@@ -1580,10 +1580,15 @@ void handle_command(string command, Player* p)
          return;
       if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
          return;
-      // Send command to best bidder, so he can pay for the hotel
-      send_command("auction_sold", game->best_bidder);
-      send_int(game->best_bidder, id);
-      send_int(game->best_bidder, game->best_bid);
+      list<Player*>::iterator i;
+      Player* dest;
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
+         send_command("auction_sold", dest);
+         send_int(dest, id);
+         send_int(dest, game->best_bid);
+      }
    }
    else if (command == "auction_pay")
    {
@@ -1653,6 +1658,11 @@ void handle_command(string command, Player* p)
          send_int(dest, previous_owner->n_500);
          send_int(dest, previous_owner->n_1000);
          send_int(dest, previous_owner->n_5000);
+      }
+      // If this command is sent before updating hotels and money to everyone, the client doesn't know who owns the hotels
+      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      {
+         dest = (*i);
          send_command("auction_ended", dest);
          send_int(dest, id);
       }
