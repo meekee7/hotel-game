@@ -597,6 +597,10 @@
             resources.GetString("comboBoxIdiomas.Items1")});
             resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
+            if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Equals("es"))
+                this.comboBoxIdiomas.SelectedIndex = 0;
+            else
+                this.comboBoxIdiomas.SelectedIndex = 1;
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
             // 
             // Principal
