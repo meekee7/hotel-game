@@ -71,6 +71,10 @@ namespace Juego_Hotel
             this.img_ayto.Parent = this.imgTablero;
             this.pos_ayto_orig = this.img_ayto.Location;
             this.img_ayto.Location = Calcular_Posicion(this.img_ayto.Location.X, this.img_ayto.Location.Y);
+            if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Equals("es"))
+                this.comboBoxIdiomas.SelectedIndex = 0;
+            else
+                this.comboBoxIdiomas.SelectedIndex = 1;
             if (frm_online != null)
             {
                 this.online = true;
