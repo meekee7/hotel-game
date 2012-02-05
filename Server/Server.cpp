@@ -1623,6 +1623,7 @@ void handle_command(string command, Player* p)
       Player* previous_owner = game->hotel_at_auction->owner;
       previous_owner->Expropriate_hotel(game->hotel_at_auction);
       p->Buy_hotel(game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
+      game->hotel_at_auction->owner = p;
       // Calculate change
       if (total_selected > game->best_bid)
       {

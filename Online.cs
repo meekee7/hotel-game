@@ -1139,8 +1139,8 @@ namespace Juego_Hotel
             partida.interfaz.hotel_a_subastar_online = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
-                Thread thread_envio_comando = new Thread(Manejar_subasta);
-                thread_envio_comando.Start(partida);
+                Thread thread_manejar_subasta = new Thread(Manejar_subasta);
+                thread_manejar_subasta.Start(partida);
             }
         }
 
@@ -1149,7 +1149,6 @@ namespace Juego_Hotel
             PartidaOnline partida = (PartidaOnline)parametro;
             Juego juego = partida.interfaz.juego;
             partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
-            partida.interfaz.frm_subasta_en_curso.Activate();
             partida.interfaz.frm_subasta_en_curso.ShowDialog();
         }
 

@@ -259,7 +259,8 @@ namespace Juego_Hotel
                 this.interfaz.frm_subasta_en_curso.ShowDialog();
                 
                 // Refrescar valores después de la subasta
-                if (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt == this.hotel_en_construccion.nombre_txt)
+                // Entra si se estaba construyendo, no comprando
+                if ((this.hotel_en_construccion != null) && (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre == this.hotel_en_construccion.nombre))
                 {
                     this.interfaz.frm_subasta_en_curso.Close();
                     MessageBox.Show("Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción.", "Construcción cancelada");

@@ -71,15 +71,18 @@ namespace Juego_Hotel
             this.img_ayto.Parent = this.imgTablero;
             this.pos_ayto_orig = this.img_ayto.Location;
             this.img_ayto.Location = Calcular_Posicion(this.img_ayto.Location.X, this.img_ayto.Location.Y);
-            if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Equals("es"))
-                this.comboBoxIdiomas.SelectedIndex = 0;
-            else
-                this.comboBoxIdiomas.SelectedIndex = 1;
             if (frm_online != null)
             {
                 this.online = true;
                 this.frm_online = frm_online;
                 this.partida_activa = true;
+                XmlDocument configuracion = new XmlDocument();
+                configuracion.Load("Config.xml");
+                XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];
+                if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("Spanish"))
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
+                else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
             else
             {
@@ -87,6 +90,10 @@ namespace Juego_Hotel
                 this.frm_online = null;
                 this.partida_activa = false;
             }
+            if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Equals("es"))
+                this.comboBoxIdiomas.SelectedIndex = 0;
+            else
+                this.comboBoxIdiomas.SelectedIndex = 1;
         }
 
         private void bIniciar_Click(object sender, EventArgs e)
@@ -1661,7 +1668,14 @@ namespace Juego_Hotel
                     c.Text = resources.GetString(c.Name + ".Text");
                     foreach(Control o in ((GroupBox)c).Controls)
                     {
-                        resources.ApplyResources(o, o.Name); 
+                        if (o is Label)
+                        {
+                            String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                            if (nombreAntiguo != null)
+                                o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                        }
+                        else
+                            resources.ApplyResources(o, o.Name); 
                         //MessageBox.Show("Nombre:" + o.Name);
                         //MessageBox.Show("Texto Antiguo:" + o.Text);
                         //MessageBox.Show("Texto Nuevo:" + resources.GetString(o.Name + ".Text"));
