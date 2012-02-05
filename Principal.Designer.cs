@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.labelTablero = new System.Windows.Forms.Label();
             this.bIniciar = new System.Windows.Forms.Button();
@@ -592,9 +593,8 @@
             // 
             this.comboBoxIdiomas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomas.FormattingEnabled = true;
-            this.comboBoxIdiomas.Items.AddRange(new object[] {
-            resources.GetString("comboBoxIdiomas.Items"),
-            resources.GetString("comboBoxIdiomas.Items1")});
+            comboBoxIdiomas.Items.Add(resources.GetString("comboBoxIdiomas.Items"));
+            comboBoxIdiomas.Items.Add(resources.GetString("comboBoxIdiomas.Items1"));
             resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
@@ -739,5 +739,6 @@
         public System.Windows.Forms.Label nombreJ4;
         private System.Windows.Forms.Label labelIdioma;
         private System.Windows.Forms.ComboBox comboBoxIdiomas;
+
     }
 }

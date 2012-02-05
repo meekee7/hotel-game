@@ -128,11 +128,15 @@ namespace Juego_Hotel
                     }
                     this.juego.jug_inicial++; // Para no comenzar en 0
                 }
-                this.jug_ini.Text = "Jugador inicial:" + Environment.NewLine + Environment.NewLine + this.juego.jug_inicial.ToString();
+                this.jug_ini.Text = resources.GetString("jug_ini.Text") + Environment.NewLine + Environment.NewLine + this.juego.jug_inicial.ToString();
                 this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
                 this.juego.jug_actual = this.juego.jug_inicial;
                 this.juego.Cambiar_jugador_actual();
                 this.Establecer_Turno();
+                this.turnoJ1.Visible = true;
+                this.turnoJ2.Visible = true;
+                this.turnoJ3.Visible = true;
+                this.turnoJ4.Visible = true;
                 this.bIniciar.Enabled = false;
                 this.bColores.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
@@ -144,10 +148,10 @@ namespace Juego_Hotel
                 this.posAmarillo.Visible = true;
                 this.img_Banco.Visible = true;
                 this.img_ayto.Visible = true;
-                this.posJ1.Text = "Casilla: 0";
-                this.posJ2.Text = "Casilla: 0";
-                this.posJ3.Text = "Casilla: 0";
-                this.posJ4.Text = "Casilla: 0";
+                this.posJ1.Text = resources.GetString("posJ1.Text") + "0";
+                this.posJ2.Text = resources.GetString("posJ2.Text") + "0";
+                this.posJ3.Text = resources.GetString("posJ3.Text") + "0";
+                this.posJ4.Text = resources.GetString("posJ4.Text") + "0";
                 this.bEntradasJ1.Enabled = false;
                 this.bEntradasJ2.Enabled = false;
                 this.bEntradasJ3.Enabled = false;
@@ -171,19 +175,19 @@ namespace Juego_Hotel
                     case 3: this.bRetirarseJ4.Enabled = true;
                         break;
                 }
-                this.colorJ1.Text = "Color: " + this.juego.jugadores[0].color.ToString();
-                this.colorJ2.Text = "Color: " + this.juego.jugadores[1].color.ToString();
-                this.dineroJ1.Text = "Dinero: " + this.juego.jugadores[0].dinero_total;
-                this.dineroJ2.Text = "Dinero: " + this.juego.jugadores[1].dinero_total;
+                this.colorJ1.Text = resources.GetString("colorJ1.Text") + this.juego.jugadores[0].color.ToString();
+                this.colorJ2.Text = resources.GetString("colorJ2.Text") + this.juego.jugadores[1].color.ToString();
+                this.dineroJ1.Text = resources.GetString("dineroJ1.Text") + this.juego.jugadores[0].dinero_total;
+                this.dineroJ2.Text = resources.GetString("dineroJ2.Text") + this.juego.jugadores[1].dinero_total;
                 if (this.juego.n_jugadores > 2)
                 {
-                    this.dineroJ3.Text = "Dinero: " + this.juego.jugadores[2].dinero_total;
-                    this.colorJ3.Text = "Color: " + this.juego.jugadores[2].color.ToString();
+                    this.dineroJ3.Text = resources.GetString("dineroJ3.Text") + this.juego.jugadores[2].dinero_total;
+                    this.colorJ3.Text = resources.GetString("colorJ3.Text") + this.juego.jugadores[2].color.ToString();
                 }
                 if (this.juego.n_jugadores > 3)
                 {
-                    this.dineroJ4.Text = "Dinero: " + this.juego.jugadores[3].dinero_total;
-                    this.colorJ4.Text = "Color: " + this.juego.jugadores[3].color.ToString();
+                    this.dineroJ4.Text = resources.GetString("dineroJ4.Text") + this.juego.jugadores[3].dinero_total;
+                    this.colorJ4.Text = resources.GetString("colorJ4.Text") + this.juego.jugadores[3].color.ToString();
                 }
                 if (!this.online)
                 {
@@ -214,7 +218,7 @@ namespace Juego_Hotel
                     this.bDado.Enabled = true;
                 if (this.partida_cargada) // Reajustar posiciones de los jugadores y rellenar datos
                 {
-                    this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado;
+                    this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado;
                     foreach (Jugador jugador in this.juego.jugadores)
                     {
                         if (jugador.posicion.numero != 0)
@@ -244,12 +248,12 @@ namespace Juego_Hotel
                     // Poner casilla actual a cada uno
                     switch (this.juego.n_jugadores)
                     {
-                        case 4: this.posJ4.Text = "Casilla: " + this.juego.jugadores[3].posicion.numero.ToString();
+                        case 4: this.posJ4.Text = resources.GetString("posJ4.Text") + this.juego.jugadores[3].posicion.numero.ToString();
                                 goto case 3;
-                        case 3: this.posJ3.Text = "Casilla: " + this.juego.jugadores[2].posicion.numero.ToString();
+                        case 3: this.posJ3.Text = resources.GetString("posJ3.Text") + this.juego.jugadores[2].posicion.numero.ToString();
                                 goto case 2;
-                        case 2: this.posJ2.Text = "Casilla: " + this.juego.jugadores[1].posicion.numero.ToString();
-                                this.posJ1.Text = "Casilla: " + this.juego.jugadores[0].posicion.numero.ToString();
+                        case 2: this.posJ2.Text = resources.GetString("posJ2.Text") + this.juego.jugadores[1].posicion.numero.ToString();
+                                this.posJ1.Text = resources.GetString("posJ1.Text") + this.juego.jugadores[0].posicion.numero.ToString();
                                 break;
                     }
                     this.Actualizar_Dinero_Jugadores();
@@ -309,13 +313,13 @@ namespace Juego_Hotel
             this.bEntradasJ4.Enabled = false;
             switch (this.juego.jug_actual)
             {
-                case 1: this.turnoJ1.Text = "Te toca";
+                case 1: this.turnoJ1.Text = resources.GetString("turnoJ1.Text");
                         break;
-                case 2: this.turnoJ2.Text = "Te toca";
+                case 2: this.turnoJ2.Text = resources.GetString("turnoJ2.Text");
                         break;
-                case 3: this.turnoJ3.Text = "Te toca";
+                case 3: this.turnoJ3.Text = resources.GetString("turnoJ3.Text");
                         break;
-                case 4: this.turnoJ4.Text = "Te toca";
+                case 4: this.turnoJ4.Text = resources.GetString("turnoJ4.Text");
                         break;
             }
         }
@@ -508,7 +512,7 @@ namespace Juego_Hotel
         {
             if (!this.online)
                 this.juego.ultimo_res_dado = this.juego.dado.tirar();
-            this.resDado.Text = "Dado: " + this.juego.ultimo_res_dado.ToString();
+            this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado.ToString();
             if (!this.online)
             {
                 jugador.posicion.ocupada = false; // Desocupamos la casilla
@@ -547,13 +551,13 @@ namespace Juego_Hotel
             // Poner casilla actual a cada uno
             switch (this.juego.jug_actual)
             {
-                case 1: this.posJ1.Text = "Casilla: " + jugador.posicion.numero.ToString();
+                case 1: this.posJ1.Text = resources.GetString("posJ1.Text") + jugador.posicion.numero.ToString();
                     break;
-                case 2: this.posJ2.Text = "Casilla: " + jugador.posicion.numero.ToString();
+                case 2: this.posJ2.Text = resources.GetString("posJ2.Text") + jugador.posicion.numero.ToString();
                     break;
-                case 3: this.posJ3.Text = "Casilla: " + jugador.posicion.numero.ToString();
+                case 3: this.posJ3.Text = resources.GetString("posJ3.Text") + jugador.posicion.numero.ToString();
                     break;
-                case 4: this.posJ4.Text = "Casilla: " + jugador.posicion.numero.ToString();
+                case 4: this.posJ4.Text = resources.GetString("posJ4.Text") + jugador.posicion.numero.ToString();
                     break;
             }
             // Activar botones según el tipo de casilla
@@ -657,20 +661,20 @@ namespace Juego_Hotel
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
             this.bCobrarBanca.Enabled = false;
-            this.jug_ini.Text = "Jugador inicial:";
+            this.jug_ini.Text = resources.GetString("jug_ini.Text");
             this.colorJugIni.Text = "";
-            this.posJ1.Text = "Casilla:";
-            this.posJ2.Text = "Casilla:";
-            this.posJ3.Text = "Casilla:";
-            this.posJ4.Text = "Casilla:";
-            this.dineroJ1.Text = "Dinero:";
-            this.dineroJ2.Text = "Dinero:";
-            this.dineroJ3.Text = "Dinero:";
-            this.dineroJ4.Text = "Dinero:";
-            this.colorJ1.Text = "Color:";
-            this.colorJ2.Text = "Color:";
-            this.colorJ3.Text = "Color:";
-            this.colorJ4.Text = "Color:";
+            this.posJ1.Text = resources.GetString("posJ1.Text");
+            this.posJ2.Text = resources.GetString("posJ2.Text");
+            this.posJ3.Text = resources.GetString("posJ3.Text");
+            this.posJ4.Text = resources.GetString("posJ4.Text");
+            this.dineroJ1.Text = resources.GetString("dineroJ1.Text");
+            this.dineroJ2.Text = resources.GetString("dineroJ2.Text");
+            this.dineroJ3.Text = resources.GetString("dineroJ3.Text");
+            this.dineroJ4.Text = resources.GetString("dineroJ4.Text");
+            this.colorJ1.Text = resources.GetString("colorJ1.Text");
+            this.colorJ2.Text = resources.GetString("colorJ2.Text");
+            this.colorJ3.Text = resources.GetString("colorJ3.Text");
+            this.colorJ4.Text = resources.GetString("colorJ4.Text");
             this.juego.jugadores = null;
             this.posRojo.Image = posRojo_orig;
             this.posAzul.Image = posAzul_orig;
@@ -1003,13 +1007,13 @@ namespace Juego_Hotel
             jugador.calcular_dinero_total();
             switch (jugador.n_jugador)
             {
-                case 0: this.dineroJ1.Text = "Dinero: " + jugador.dinero_total;
+                case 0: this.dineroJ1.Text = resources.GetString("dineroJ1.Text") + jugador.dinero_total;
                     break;
-                case 1: this.dineroJ2.Text = "Dinero: " + jugador.dinero_total;
+                case 1: this.dineroJ2.Text = resources.GetString("dineroJ2.Text") + jugador.dinero_total;
                     break;
-                case 2: this.dineroJ3.Text = "Dinero: " + jugador.dinero_total;
+                case 2: this.dineroJ3.Text = resources.GetString("dineroJ3.Text") + jugador.dinero_total;
                     break;
-                case 3: this.dineroJ4.Text = "Dinero: " + jugador.dinero_total;
+                case 3: this.dineroJ4.Text = resources.GetString("dineroJ4.Text") + jugador.dinero_total;
                     break;
             }
         }
@@ -1018,13 +1022,13 @@ namespace Juego_Hotel
         {
             switch (this.juego.jug_actual)
             {
-                case 1: this.dineroJ1.Text = "Dinero: " + this.juego.jugador_actual.dinero_total;
+                case 1: this.dineroJ1.Text = resources.GetString("dineroJ1.Text") + this.juego.jugador_actual.dinero_total;
                         break;
-                case 2: this.dineroJ2.Text = "Dinero: " + this.juego.jugador_actual.dinero_total;
+                case 2: this.dineroJ2.Text = resources.GetString("dineroJ2.Text") + this.juego.jugador_actual.dinero_total;
                         break;
-                case 3: this.dineroJ3.Text = "Dinero: " + this.juego.jugador_actual.dinero_total;
+                case 3: this.dineroJ3.Text = resources.GetString("dineroJ3.Text") + this.juego.jugador_actual.dinero_total;
                         break;
-                case 4: this.dineroJ4.Text = "Dinero: " + this.juego.jugador_actual.dinero_total;
+                case 4: this.dineroJ4.Text = resources.GetString("dineroJ4.Text") + this.juego.jugador_actual.dinero_total;
                         break;
             }
         }
@@ -1033,12 +1037,12 @@ namespace Juego_Hotel
         {
             switch (this.juego.n_jugadores)
             {
-                case 4: this.dineroJ4.Text = "Dinero: " + this.juego.jugadores[3].dinero_total;
+                case 4: this.dineroJ4.Text = resources.GetString("dineroJ1.Text") + this.juego.jugadores[3].dinero_total;
                         goto case 3;
-                case 3: this.dineroJ3.Text = "Dinero: " + this.juego.jugadores[2].dinero_total;
+                case 3: this.dineroJ3.Text = resources.GetString("dineroJ2.Text") + this.juego.jugadores[2].dinero_total;
                         goto case 2;
-                case 2: this.dineroJ2.Text = "Dinero: " + this.juego.jugadores[1].dinero_total;
-                        this.dineroJ1.Text = "Dinero: " + this.juego.jugadores[0].dinero_total;
+                case 2: this.dineroJ2.Text = resources.GetString("dineroJ3.Text") + this.juego.jugadores[1].dinero_total;
+                        this.dineroJ1.Text = resources.GetString("dineroJ4.Text") + this.juego.jugadores[0].dinero_total;
                         break;
             }
         }
@@ -1652,7 +1656,19 @@ namespace Juego_Hotel
             resources.ApplyResources(this, "$this");
             foreach (Control c in this.Controls) 
             {
-                if (c is ComboBox)
+                if (c is GroupBox)
+                {
+                    c.Text = resources.GetString(c.Name + ".Text");
+                    foreach(Control o in ((GroupBox)c).Controls)
+                    {
+                        resources.ApplyResources(o, o.Name); 
+                        //MessageBox.Show("Nombre:" + o.Name);
+                        //MessageBox.Show("Texto Antiguo:" + o.Text);
+                        //MessageBox.Show("Texto Nuevo:" + resources.GetString(o.Name + ".Text"));
+                        //o.Text = resources.GetString(o.Name + ".Text");
+                    }
+                }
+                else if (c is ComboBox)
                 {
                     ((ComboBox)c).Items[0] = resources.GetString("comboBoxIdiomas.Items");
                     ((ComboBox)c).Items[1] = resources.GetString("comboBoxIdiomas.Items1");
@@ -1663,16 +1679,15 @@ namespace Juego_Hotel
                 }
                 else if (c is Label)
                 {
-                    String nombreAntiguo=(String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                    String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
                     //MessageBox.Show("Nombre Antiguo: " + nombreAntiguo);
                     //MessageBox.Show("Nombre Nuevo: "+resources.GetString(c.Name + ".Text"));
-                    if(nombreAntiguo!=null)
+                    if (nombreAntiguo != null)
                         c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
                 }
                 else
                     c.Text = resources.GetString(c.Name + ".Text");
-                //resources.ApplyResources(c, c.Name);
-                
+                //resources.ApplyResources(c, c.Name);                
             }
         }
     }
