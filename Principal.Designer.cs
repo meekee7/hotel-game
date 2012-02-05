@@ -101,6 +101,7 @@
             this.img_ayto = new System.Windows.Forms.PictureBox();
             this.labelIdioma = new System.Windows.Forms.Label();
             this.comboBoxIdiomas = new System.Windows.Forms.ComboBox();
+            this.imageListIdiomas = new System.Windows.Forms.ImageList(this.components);
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -523,29 +524,29 @@
             // 
             // posVerde
             // 
-            this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
             resources.ApplyResources(this.posVerde, "posVerde");
+            this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
             this.posVerde.Name = "posVerde";
             this.posVerde.TabStop = false;
             // 
             // posAmarillo
             // 
-            this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
             resources.ApplyResources(this.posAmarillo, "posAmarillo");
+            this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
             this.posAmarillo.Name = "posAmarillo";
             this.posAmarillo.TabStop = false;
             // 
             // posAzul
             // 
-            this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
             resources.ApplyResources(this.posAzul, "posAzul");
+            this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
             this.posAzul.Name = "posAzul";
             this.posAzul.TabStop = false;
             // 
             // posRojo
             // 
-            this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
             resources.ApplyResources(this.posRojo, "posRojo");
+            this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
             this.posRojo.Name = "posRojo";
             this.posRojo.TabStop = false;
             // 
@@ -572,15 +573,15 @@
             // 
             // img_Banco
             // 
-            this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
             resources.ApplyResources(this.img_Banco, "img_Banco");
+            this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.img_Banco.Name = "img_Banco";
             this.img_Banco.TabStop = false;
             // 
             // img_ayto
             // 
-            this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
             resources.ApplyResources(this.img_ayto, "img_ayto");
+            this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.img_ayto.Name = "img_ayto";
             this.img_ayto.TabStop = false;
             // 
@@ -591,13 +592,22 @@
             // 
             // comboBoxIdiomas
             // 
+            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
+            this.comboBoxIdiomas.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxIdiomas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomas.FormattingEnabled = true;
-            comboBoxIdiomas.Items.Add(resources.GetString("comboBoxIdiomas.Items"));
-            comboBoxIdiomas.Items.Add(resources.GetString("comboBoxIdiomas.Items1"));
-            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
+            this.comboBoxIdiomas.DrawItem += comboBoxIdiomas_DrawItem;
+            // 
+            // imageListIdiomas
+            // 
+            this.imageListIdiomas.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListIdiomas.ImageStream")));
+            this.imageListIdiomas.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListIdiomas.Images.SetKeyName(0, "spanish.png");
+            this.imageListIdiomas.Images.SetKeyName(1, "english.jpg");
+            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(resources.GetString("comboBoxIdiomas.Items"), 0));
+            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(resources.GetString("comboBoxIdiomas.Items1"), 1));
             // 
             // Principal
             // 
@@ -739,6 +749,7 @@
         public System.Windows.Forms.Label nombreJ4;
         private System.Windows.Forms.Label labelIdioma;
         private System.Windows.Forms.ComboBox comboBoxIdiomas;
+        private System.Windows.Forms.ImageList imageListIdiomas;
 
     }
 }

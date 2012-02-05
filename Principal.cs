@@ -1684,8 +1684,10 @@ namespace Juego_Hotel
                 }
                 else if (c is ComboBox)
                 {
-                    ((ComboBox)c).Items[0] = resources.GetString("comboBoxIdiomas.Items");
-                    ((ComboBox)c).Items[1] = resources.GetString("comboBoxIdiomas.Items1");
+                    ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = resources.GetString("comboBoxIdiomas.Items");
+                    ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = resources.GetString("comboBoxIdiomas.Items1");
+                    //((ComboBox)c).Items[0] = resources.GetString("comboBoxIdiomas.Items");
+                    //((ComboBox)c).Items[1] = resources.GetString("comboBoxIdiomas.Items1");
                     if(antiguoCulture.Name.Equals("es"))
                         ((ComboBox)c).SelectedIndex=1;
                     else
@@ -1702,6 +1704,21 @@ namespace Juego_Hotel
                 else
                     c.Text = resources.GetString(c.Name + ".Text");
                 //resources.ApplyResources(c, c.Name);                
+            }
+        }
+        
+        private void comboBoxIdiomas_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index != -1)
+            {
+                ComboItemImagen item = comboBoxIdiomas.Items[e.Index] as ComboItemImagen;
+                e.DrawBackground();
+                if (item != null)
+                {
+                    if (item.ImageIndex >= 0 && item.ImageIndex < imageListIdiomas.Images.Count)
+                        e.Graphics.DrawImage(imageListIdiomas.Images[item.ImageIndex], new PointF(e.Bounds.Left, e.Bounds.Top));
+                    e.Graphics.DrawString(item.Etiqueta, e.Font, new SolidBrush(e.ForeColor), new PointF(e.Bounds.Left + imageListIdiomas.ImageSize.Width + 1, e.Bounds.Top));
+                }
             }
         }
     }
