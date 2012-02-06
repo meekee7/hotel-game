@@ -26,10 +26,16 @@ namespace Juego_Hotel
             this.jugador.hoteles.CopyTo(lista, 0);
             this.Rellenar_lista(ref lista);
             this.interfaz = interfaz;
-            if ((this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.entrada_gratis) && (!this.jugador.entrada_gratis_usada) && this.interfaz.Puede_poner_entradas(this.jugador))
+            if (this.jugador.posicion.tipo == Tipos.Tcasilla.entrada_gratis)
             {
-                MessageBox.Show("La primera entrada que selecciones será la gratuíta debido a la casilla en la que estás. Las consecutivas serán según el método normal (una por hotel)");
-                this.entrada_gratis = true;
+                if (this.jugador.entrada_gratis_usada)
+                    this.listaHoteles.Enabled = false;
+                else
+                {
+                    if (this.interfaz.Puede_poner_entradas(this.jugador))
+                        MessageBox.Show("La primera entrada que selecciones será la gratuíta debido a la casilla en la que estás. Las consecutivas serán según el método normal (una por hotel)");
+                    this.entrada_gratis = true;
+                }
             }
             else
                 this.entrada_gratis = false;
@@ -42,7 +48,7 @@ namespace Juego_Hotel
             this.listaHoteles.Items.Clear();
             foreach (Hotel hotel in lista)
             {
-                if ((!hotel.entrada_comprada_ultimo_turno) || (!this.jugador.entrada_gratis_usada))
+                if (!hotel.entrada_comprada_ultimo_turno)
                     this.listaHoteles.Items.Add(hotel.nombre_txt);
             }
             this.listaHoteles.EndUpdate();
@@ -124,7 +130,11 @@ namespace Juego_Hotel
             {
                 MessageBox.Show("Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!");
                 this.entrada_gratis = false;
-                this.bUnaMas.Enabled = false; // Sólo se permite una por ser la casilla especial
+                this.jugador.entrada_gratis_usada = true;
+                if (this.interfaz.Puede_poner_entradas(jugador))
+                    this.bUnaMas.Enabled = true;
+                else
+                    this.bUnaMas.Enabled = false; // Sólo se permite una por ser la casilla especial
                 this.hotel_seleccionado.entrada_comprada_ultimo_turno = false; // No cuenta para el turno
             }
             else

@@ -430,7 +430,6 @@ namespace Juego_Hotel
                         break;
                 }
                 this.juego.jugador_actual.pago_ultimo_turno = false;
-
                 this.dado_tirado = false;
             }
         }
