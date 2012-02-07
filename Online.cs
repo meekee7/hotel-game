@@ -638,7 +638,8 @@ namespace Juego_Hotel
             chat.id = Convert.ToInt32(lista_params[0]);
             chat.creador = lista_params[1];
             this.chats_abiertos.AddFirst(chat);
-            chat.ShowDialog();
+            //chat.ShowDialog();
+            Application.Run(chat);
         }
 
         private void Manejar_nueva_partida(object parametros)
@@ -650,7 +651,8 @@ namespace Juego_Hotel
             partida.nombre = lista_params[2];
             partida.num_jugadores = Convert.ToInt32(lista_params[3]);
             this.lista_partidas.AddFirst(partida);
-            partida.ShowDialog();
+            //partida.ShowDialog();
+            Application.Run(partida);
         }
 
         private Chat Buscar_chat(int id)

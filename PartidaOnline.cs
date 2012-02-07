@@ -197,7 +197,8 @@ namespace Juego_Hotel
                         this.interfaz.nombreJ1.Text = "Nombre: " + lista_jugadores[0];
                         break;
             }
-            this.interfaz.ShowDialog();
+            //this.interfaz.ShowDialog();
+            Application.Run(this.interfaz);
         }
 
         private void mensaje_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

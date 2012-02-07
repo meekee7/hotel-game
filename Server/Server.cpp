@@ -1306,7 +1306,7 @@ void handle_command(string command, Player* p)
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return;
-      if ((player->position->type != free_entrance) && (!game->can_buy_entrance(player))) // Hack, retire player
+      if ((player->position->type != free_entrance) && (!game->can_buy_entrances(player))) // Hack, retire player
          return;
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != player) // Hack, retire player
@@ -1315,7 +1315,9 @@ void handle_command(string command, Player* p)
          return;
       if (hotel->entrance_bought_last_turn) // Hack, retire player
          return;
-      if ((type == 0) && (player->position->type != free_entrance) && (player->free_entrance_used)) // Hack, retire player
+      if ((type == 0) && (player->position->type != free_entrance)) // Hack, retire player
+         return;
+      if ((type == 0) && player->free_entrance_used) // Hack, retire player
          return;
       if (hotel->Has_entrance_in_position(position)) // Hack, retire player
          return;
@@ -1332,10 +1334,10 @@ void handle_command(string command, Player* p)
             game->calculate_return(total_selected - hotel->entrance_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
             player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
          }
+         hotel->entrance_bought_last_turn = true; // Only if it is not free
       }
       else if (type == 0)
          player->free_entrance_used = true;
-      hotel->entrance_bought_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)

@@ -305,9 +305,11 @@ bool Game::can_charge_bank(Player* p)
       return false;
 }
 
-bool Game::can_buy_entrance(Player* p)
+bool Game::can_buy_entrances(Player* p)
 {
    int pos = p->position->number;
+   if (pos - this->last_dice_res - this->last_auto_advance < 1) // In case of doing a lap in same roll
+      pos += 31;
    if ((pos >= 27) && ((pos - this->last_dice_res - this->last_auto_advance) < 27))
       return true;
    else

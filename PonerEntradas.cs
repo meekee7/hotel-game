@@ -132,7 +132,6 @@ namespace Juego_Hotel
             if (this.entrada_gratis)
             {
                 MessageBox.Show("Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!");
-                this.entrada_gratis = false;
                 this.jugador.entrada_gratis_usada = true;
                 if (this.interfaz.Puede_poner_entradas(jugador))
                     this.bUnaMas.Enabled = true;
@@ -186,7 +185,6 @@ namespace Juego_Hotel
                 this.hotel_seleccionado.n_entradas++;
                 this.hotel_seleccionado.entradas.AddLast(this.juego.casillas[n_casilla]);
             }
-            // Desactivar el hotel de la lista para no comprar más entradas en este turno
             this.Rellenar_lista();
             // Limpiar lista de casillas disponibles
             this.listaCasillas.Items.Clear();
@@ -201,6 +199,7 @@ namespace Juego_Hotel
                     this.interfaz.frm_online.enviar_comando("buy_entrance", game_id.ToString(), this.hotel_seleccionado.nombre_txt, n_casilla.ToString(), "1",
                         sel_n_5000.ToString(), sel_n_1000.ToString(), sel_n_500.ToString(), sel_n_100.ToString(), sel_n_50.ToString());
             }
+            this.entrada_gratis = false; // Si no se ha usado, es porque ya estaba a falso, se puede poner a falso seguro
         }
     }
 }
