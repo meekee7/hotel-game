@@ -1556,78 +1556,6 @@
   <data name="labelTablero.Text" xml:space="preserve">
     <value>Tablero</value>
   </data>
-  <data name="mensajeCargarPartida" xml:space="preserve">
-    <value>La partida actual se perderá si continúas, tanto si la carga es exitosa como no, ¿Quieres proceder?</value>
-  </data>
-  <data name="mensajeCasillaEntradaGratis" xml:space="preserve">
-    <value>Has caído en una casilla de tipo Entrada Gratis, ¡aprovecha!</value>
-  </data>
-  <data name="mensajeCasillaFaseGratis" xml:space="preserve">
-    <value>Has caído en una casilla de tipo Fase Gratis, ¡aprovecha!</value>
-  </data>
-  <data name="mensajeComprarHotel" xml:space="preserve">
-    <value>Puedes comprar el hotel. Si decides continuar, estás obligado a pagarlo\n¿Deseas realizar la compra?</value>
-  </data>
-  <data name="mensajeDebePagarNoches" xml:space="preserve">
-    <value>El jugador {0} debe pagar las noches al jugador {1}. Pulsa OK para lanzar el dado.</value>
-  </data>
-  <data name="mensajeErrorAlCargar" xml:space="preserve">
-    <value>Error cargando la partida: {0}</value>
-  </data>
-  <data name="mensajeErrorAlSalvar" xml:space="preserve">
-    <value>Error salvando la partida: {0}</value>
-  </data>
-  <data name="mensajeErrorCargarConfig" xml:space="preserve">
-    <value>No se puede cargar el fichero de configuración Config.xml</value>
-  </data>
-  <data name="mensajeErrorCargarConfigServidor" xml:space="preserve">
-    <value>No se puede cargar la configuración desde el servidor</value>
-  </data>
-  <data name="mensajeExpropiacionImposible" xml:space="preserve">
-    <value>El hotel ya tiene dueño y no es expropiable</value>
-  </data>
-  <data name="mensajeExpropiacionPosible" xml:space="preserve">
-    <value>¿Quieres expropiar el hotel {0} al jugador {1}?</value>
-  </data>
-  <data name="mensajeFondosInsuficientesParaComprarHotel" xml:space="preserve">
-    <value>No tienes suficientes fondos para realizar la compra del hotel {0}</value>
-  </data>
-  <data name="mensajeImposibleComprarHotelTuyo" xml:space="preserve">
-    <value>Ya posees este hotel</value>
-  </data>
-  <data name="mensajeJugadoresRetidados" xml:space="preserve">
-    <value>Partida finalizada porque todos los jugadores se han retirado</value>
-  </data>
-  <data name="mensajeNoIndicadoJugadores" xml:space="preserve">
-    <value>No se ha indicado aun el número de jugadores</value>
-  </data>
-  <data name="mensajeNoPoseesHoteles" xml:space="preserve">
-    <value>No posees ningún hotel</value>
-  </data>
-  <data name="mensajePartidaFinalizada" xml:space="preserve">
-    <value>Partida finalizada. Ha ganado el jugador {0}</value>
-  </data>
-  <data name="mensajeReiniciarPartida" xml:space="preserve">
-    <value>¿Estás seguro de que quieres reiniciar la partida?</value>
-  </data>
-  <data name="mensajeRetirarse" xml:space="preserve">
-    <value>¿Estás seguro de que quieres retirarte?</value>
-  </data>
-  <data name="mensajeSacadoUnSeis" xml:space="preserve">
-    <value>Has sacado un 6. Puedes volver a tirar</value>
-  </data>
-  <data name="mensajeSalvarAntesDeTirar" xml:space="preserve">
-    <value>Sólo se puede salvar antes de tirar el dado</value>
-  </data>
-  <data name="mensajeSelecJugadores" xml:space="preserve">
-    <value>Selecciona el nº de jugadores</value>
-  </data>
-  <data name="mensajeSinFondosParaExpropiacion" xml:space="preserve">
-    <value>No tienes suficientes fondos para realizar la expropiación</value>
-  </data>
-  <data name="mensajeTotalAPagar" xml:space="preserve">
-    <value>Has sacado un {0}, por lo que el jugador {1} debe abonar {2} al jugador {3}</value>
-  </data>
   <data name="nombreJ1.Text" xml:space="preserve">
     <value>Nombre: </value>
   </data>
@@ -1654,48 +1582,6 @@
   </data>
   <data name="resDado.Text" xml:space="preserve">
     <value>Dado: </value>
-  </data>
-  <data name="tituloCargarPartida" xml:space="preserve">
-    <value>Cargar Partida</value>
-  </data>
-  <data name="tituloComprarHotel" xml:space="preserve">
-    <value>Comprar hotel</value>
-  </data>
-  <data name="tituloDialogoCargarPartida" xml:space="preserve">
-    <value>Cargar una partida</value>
-  </data>
-  <data name="tituloDialogoGuardarPartida" xml:space="preserve">
-    <value>Guardar una partida</value>
-  </data>
-  <data name="tituloError" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="tituloExpropiacionImposible" xml:space="preserve">
-    <value>Expropriación imposible</value>
-  </data>
-  <data name="tituloExpropiacionPosible" xml:space="preserve">
-    <value>Expropriación posible</value>
-  </data>
-  <data name="tituloHotel" xml:space="preserve">
-    <value>Hotel</value>
-  </data>
-  <data name="tituloImposibleComprarHotelTuyo" xml:space="preserve">
-    <value>No es posible realizar la compra</value>
-  </data>
-  <data name="tituloNoEsPosibleMostrarTusHoteles" xml:space="preserve">
-    <value>No es posible mostrar tus hoteles</value>
-  </data>
-  <data name="tituloNoesPosiblePonerEntradas" xml:space="preserve">
-    <value>No es posible poner entradas</value>
-  </data>
-  <data name="tituloNoIndicadoJugadores" xml:space="preserve">
-    <value>Selección de colores</value>
-  </data>
-  <data name="tituloPagarNoches" xml:space="preserve">
-    <value>Pagar noches</value>
-  </data>
-  <data name="tituloSelecJugadores" xml:space="preserve">
-    <value>No es posible iniciar</value>
   </data>
   <data name="tres_jugadores.Text" xml:space="preserve">
     <value>3 Jugadores</value>
