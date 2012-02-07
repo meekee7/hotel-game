@@ -252,6 +252,7 @@
             this.Controls.Add(this.bCerrar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Subastas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Subastas";
             this.Click += new System.EventHandler(this.bSubastar_Click);
             this.grupoHotel.ResumeLayout(false);

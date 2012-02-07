@@ -159,6 +159,7 @@
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.grupoChat);
             this.Name = "PartidaOnline";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Partida Online";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PartidaOnline_FormClosing);
             this.Shown += new System.EventHandler(this.PartidaOnline_Shown);

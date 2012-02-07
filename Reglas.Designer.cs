@@ -50,6 +50,7 @@
             this.ClientSize = new System.Drawing.Size(879, 599);
             this.Controls.Add(this.img_reglas);
             this.Name = "Reglas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Reglas del juego";
             ((System.ComponentModel.ISupportInitialize)(this.img_reglas)).EndInit();
             this.ResumeLayout(false);

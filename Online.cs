@@ -1149,7 +1149,8 @@ namespace Juego_Hotel
             PartidaOnline partida = (PartidaOnline)parametro;
             Juego juego = partida.interfaz.juego;
             partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
-            partida.interfaz.frm_subasta_en_curso.ShowDialog();
+            //partida.interfaz.frm_subasta_en_curso.ShowDialog();
+            Application.Run(partida.interfaz.frm_subasta_en_curso);
         }
 
         delegate void Nueva_puja_Callback(Jugador jugador, int cantidad);

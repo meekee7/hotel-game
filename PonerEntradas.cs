@@ -17,19 +17,22 @@ namespace Juego_Hotel
         Jugador jugador;
         Boolean entrada_gratis;
 
-        public PonerEntradas(ref Juego juego, int jugador, Principal interfaz)
+        public PonerEntradas(Juego juego, int jugador, Principal interfaz)
         {
             InitializeComponent();
             this.juego = juego;
             this.jugador = this.juego.jugadores[jugador];
-            Hotel[] lista = new Hotel[this.jugador.hoteles.Count];
-            this.jugador.hoteles.CopyTo(lista, 0);
-            this.Rellenar_lista(ref lista);
+            //Hotel[] lista = new Hotel[this.jugador.hoteles.Count];
+            //this.jugador.hoteles.CopyTo(lista, 0);
+            this.Rellenar_lista(/*ref lista*/);
             this.interfaz = interfaz;
             if (this.jugador.posicion.tipo == Tipos.Tcasilla.entrada_gratis)
             {
                 if (this.jugador.entrada_gratis_usada)
-                    this.listaHoteles.Enabled = false;
+                {
+                    if (!this.interfaz.Puede_poner_entradas(this.jugador))
+                        this.listaHoteles.Enabled = false;
+                }
                 else
                 {
                     if (this.interfaz.Puede_poner_entradas(this.jugador))
@@ -41,12 +44,12 @@ namespace Juego_Hotel
                 this.entrada_gratis = false;
         }
 
-        void Rellenar_lista(ref Hotel[] lista)
+        void Rellenar_lista(/*ref Hotel[] lista*/)
         {
             // Ya se ha comprobado que la lista tiene hoteles
             this.listaHoteles.BeginUpdate();
             this.listaHoteles.Items.Clear();
-            foreach (Hotel hotel in lista)
+            foreach (Hotel hotel in this.jugador.hoteles)
             {
                 if (!hotel.entrada_comprada_ultimo_turno)
                     this.listaHoteles.Items.Add(hotel.nombre_txt);
@@ -118,15 +121,15 @@ namespace Juego_Hotel
         {
             this.bComprar.Enabled = false;
             this.bUnaMas.Enabled = false;
-            this.listaCasillas.SelectedItem = null;
-            this.listaCasillas.Enabled = true;
+            this.listaCasillas.Items.Clear();
+            this.listaCasillas.Enabled = false;
             this.listaHoteles.Enabled = true;
         }
 
         private void bComprar_Click(object sender, EventArgs e)
         {
             int sel_n_5000 = 0, sel_n_1000 = 0, sel_n_500 = 0, sel_n_100 = 0, sel_n_50 = 0;
-            if (this.entrada_gratis == true)
+            if (this.entrada_gratis)
             {
                 MessageBox.Show("Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!");
                 this.entrada_gratis = false;
@@ -184,9 +187,7 @@ namespace Juego_Hotel
                 this.hotel_seleccionado.entradas.AddLast(this.juego.casillas[n_casilla]);
             }
             // Desactivar el hotel de la lista para no comprar más entradas en este turno
-            this.listaHoteles.Items.Remove(this.listaHoteles.SelectedItem);
-            this.listaHoteles.SelectedIndex = -1;
-            this.listaHoteles.Refresh();
+            this.Rellenar_lista();
             // Limpiar lista de casillas disponibles
             this.listaCasillas.Items.Clear();
             this.listaCasillas.SelectedIndex = -1;

@@ -188,6 +188,7 @@
             this.Controls.Add(this.bCancelar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Construir";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Construir partes de un hotel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Construir_FormClosing);
             this.ResumeLayout(false);

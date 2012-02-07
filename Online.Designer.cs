@@ -207,6 +207,7 @@
             this.Controls.Add(this.bLogin);
             this.Controls.Add(this.txtLogin);
             this.Name = "Online";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Online";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Online_FormClosing);
             this.Load += new System.EventHandler(this.Online_Load);

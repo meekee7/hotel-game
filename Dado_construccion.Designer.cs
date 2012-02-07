@@ -64,6 +64,7 @@
             this.Controls.Add(this.cuadro);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Dado_construccion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Dado de construcción";
             this.Load += new System.EventHandler(this.Dado_construccion_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Dado_construccion_Paint);

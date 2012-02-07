@@ -122,6 +122,7 @@
             this.Controls.Add(this.cajaDerecha);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ComprarHotel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Comprar Hotel";
             this.cajaIzquierda.ResumeLayout(false);
             this.cajaIzquierda.PerformLayout();

@@ -315,6 +315,7 @@
             this.Controls.Add(this.bOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Sel_colores";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Seleccionar Colores";
             this.colorJ4.ResumeLayout(false);
             this.colorJ4.PerformLayout();

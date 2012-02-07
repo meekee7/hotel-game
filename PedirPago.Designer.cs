@@ -307,6 +307,7 @@
             this.Controls.Add(this.img50);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "PedirPago";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Seleccione billetes";
             ((System.ComponentModel.ISupportInitialize)(this.img100)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img50)).EndInit();

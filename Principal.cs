@@ -1142,7 +1142,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[0].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, false);
-                frm_ver_hoteles.Show();
+                frm_ver_hoteles.Show(this);
             }
             else
                 MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
@@ -1153,7 +1153,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[1].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 1, false);
-                frm_ver_hoteles.Show();
+                frm_ver_hoteles.Show(this);
             }
             else
                 MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
@@ -1164,7 +1164,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[2].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 2, false);
-                frm_ver_hoteles.Show();
+                frm_ver_hoteles.Show(this);
             }
             else
                 MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
@@ -1175,7 +1175,7 @@ namespace Juego_Hotel
             if (this.juego.jugadores[3].hoteles.Count != 0)
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 3, false);
-                frm_ver_hoteles.Show();
+                frm_ver_hoteles.Show(this);
             }
             else
                 MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
@@ -1184,12 +1184,14 @@ namespace Juego_Hotel
         private void bVerHoteles_Click(object sender, EventArgs e)
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
-            frm_ver_hoteles.Show();
+            frm_ver_hoteles.Show(this);
         }
 
         public Boolean Puede_poner_entradas(Jugador jugador)
         {
             int pos = jugador.posicion.numero;
+            if (pos - this.juego.ultimo_res_dado - this.juego.ultimo_avance_auto < 1) // En caso de pasarse de la vuelta al tablero en la misma tirada que te toca poner entradas
+                pos += 31;
             if ((pos >= 27) && ((pos - this.juego.ultimo_res_dado - this.juego.ultimo_avance_auto) < 27))
                 return true;
             else
@@ -1198,9 +1200,9 @@ namespace Juego_Hotel
 
         private void Poner_entradas(int num_jugador)
         {
-            if (this.juego.jugadores[num_jugador].hoteles.Count != 0) // TODO revisar el caso de la casilla de entrada gratis después del Ayto. Solo permitir una entrada por casilla gratis
+            if (this.juego.jugadores[num_jugador].hoteles.Count != 0)
             {
-                PonerEntradas frm_poner_entradas = new PonerEntradas(ref this.juego, num_jugador, this);
+                PonerEntradas frm_poner_entradas = new PonerEntradas(this.juego, num_jugador, this);
                 frm_poner_entradas.ShowDialog();
             }
             else

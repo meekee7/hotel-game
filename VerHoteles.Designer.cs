@@ -128,6 +128,7 @@
             this.Controls.Add(this.selHotel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "VerHoteles";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Tus hoteles";
             this.Shown += new System.EventHandler(this.VerHoteles_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.imgTarjeta)).EndInit();

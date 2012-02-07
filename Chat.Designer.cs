@@ -90,6 +90,7 @@
             this.Controls.Add(this.mensajes);
             this.MinimumSize = new System.Drawing.Size(368, 300);
             this.Name = "Chat";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Chat";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Chat_FormClosing);
             this.Shown += new System.EventHandler(this.Chat_Shown);

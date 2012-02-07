@@ -126,6 +126,7 @@
             this.Controls.Add(this.bCerrar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "PonerEntradas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Poner Entradas";
             this.ResumeLayout(false);
             this.PerformLayout();
