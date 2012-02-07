@@ -82,7 +82,7 @@
       <DependentUpon>Chat.cs</DependentUpon>
     </Compile>
     <Compile Include="ComboItemImagen.cs" />
-    <Compile Include="resources\mensajes.Designer.cs">
+    <Compile Include="Resources\mensajes.Designer.cs">
       <DependentUpon>mensajes.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,7 +110,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IReLocalizable.cs" />
-    <Compile Include="resources\mensajes_en.Designer.cs">
+    <Compile Include="Resources\mensajes_en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>mensajes_en.resx</DependentUpon>
@@ -185,14 +185,14 @@
     <EmbeddedResource Include="Construir.resx">
       <DependentUpon>Construir.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="resources\mensajes.resx">
+    <EmbeddedResource Include="Resources\mensajes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>mensajes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Dado_construccion.resx">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="resources\mensajes_en.resx">
+    <EmbeddedResource Include="Resources\mensajes_en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>mensajes_en.Designer.cs</LastGenOutput>
     </EmbeddedResource>

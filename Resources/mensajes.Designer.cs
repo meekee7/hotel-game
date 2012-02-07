@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Juego_Hotel.resources {
+namespace Juego_Hotel.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Juego_Hotel.resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Juego_Hotel.resources.mensajes", typeof(mensajes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Juego_Hotel.Resources.mensajes", typeof(mensajes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
