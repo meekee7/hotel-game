@@ -11,6 +11,7 @@ using System.Xml;
 using System.Globalization;
 using System.Resources;
 using System.Reflection;
+using Juego_Hotel.resources;
 
 namespace Juego_Hotel
 {
@@ -100,12 +101,12 @@ namespace Juego_Hotel
 
         private void bIniciar_Click(object sender, EventArgs e)
         {
-            Assembly ass = Assembly.GetExecutingAssembly();
-            ResourceManager resourcesMensajes = new ResourceManager("Hotel.resources.mensajes", ass);
+            //Assembly ass = Assembly.GetExecutingAssembly();
+            //ResourceManager resourcesMensajes = new ResourceManager("Hotel.resources.mensajes", ass);
             // Buscar número de jugadores
             if (this.juego.n_jugadores == 0)
             {
-                MessageBox.Show(resourcesMensajes.GetString("mensajeSelecJugadores"), resourcesMensajes.GetString("tituloSelecJugadores"));
+                MessageBox.Show(mensajes.mensajeSelecJugadores, mensajes.tituloSelecJugadores);
                 return;
             }
             else
