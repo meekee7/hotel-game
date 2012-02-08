@@ -110,11 +110,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IReLocalizable.cs" />
-    <Compile Include="Resources\mensajes_en.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>mensajes_en.resx</DependentUpon>
-    </Compile>
     <Compile Include="Online.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,16 +180,13 @@
     <EmbeddedResource Include="Construir.resx">
       <DependentUpon>Construir.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\mensajes.en.resx" />
     <EmbeddedResource Include="Resources\mensajes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>mensajes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Dado_construccion.resx">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\mensajes_en.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>mensajes_en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Online.resx">
       <DependentUpon>Online.cs</DependentUpon>
@@ -206,9 +198,6 @@
       <DependentUpon>PonerEntradas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Principal.en.resx">
-      <DependentUpon>Principal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Principal.es.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reglas.resx">

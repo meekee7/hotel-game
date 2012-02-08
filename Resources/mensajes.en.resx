@@ -231,4 +231,13 @@
   <data name="tituloSelecJugadores" xml:space="preserve">
     <value>Unable to Start</value>
   </data>
+  <data name="comboBoxIdiomas1" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="comboBoxIdiomas2" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="filtroDialogoCargarGuardarPartida" xml:space="preserve">
+    <value>Game of Hotel|*.xml</value>
+  </data>
 </root>

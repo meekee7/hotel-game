@@ -9,9 +9,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Xml;
 using System.Globalization;
-using System.Resources;
-using System.Reflection;
-using Juego_Hotel.resources;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -93,6 +91,9 @@ namespace Juego_Hotel
                 this.frm_online = null;
                 this.partida_activa = false;
             }
+            // Rellenar combobox de idiomas
+            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(mensajes.comboBoxIdiomas1, 0));
+            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(mensajes.comboBoxIdiomas2, 1));
             if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Equals("es"))
                 this.comboBoxIdiomas.SelectedIndex = 0;
             else
@@ -101,8 +102,6 @@ namespace Juego_Hotel
 
         private void bIniciar_Click(object sender, EventArgs e)
         {
-            //Assembly ass = Assembly.GetExecutingAssembly();
-            //ResourceManager resourcesMensajes = new ResourceManager("Hotel.resources.mensajes", ass);
             // Buscar número de jugadores
             if (this.juego.n_jugadores == 0)
             {
@@ -1646,20 +1645,17 @@ namespace Juego_Hotel
             }
         }
 
-        private void Principal_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void IdiomaElegido(object sender, EventArgs e)
         {
             ComboBox senderComboBox = (ComboBox)sender;
             if (senderComboBox.SelectedIndex.Equals(0))
             {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
                 Program.ReLocalizeAll(new CultureInfo("es"));
             }
             else if (senderComboBox.SelectedIndex.Equals(1))
             {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
                 Program.ReLocalizeAll(new CultureInfo("en"));
             }
         }
@@ -1681,35 +1677,26 @@ namespace Juego_Hotel
                                 o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
                         }
                         else
-                            resources.ApplyResources(o, o.Name); 
-                        //MessageBox.Show("Nombre:" + o.Name);
-                        //MessageBox.Show("Texto Antiguo:" + o.Text);
-                        //MessageBox.Show("Texto Nuevo:" + resources.GetString(o.Name + ".Text"));
-                        //o.Text = resources.GetString(o.Name + ".Text");
+                            resources.ApplyResources(o, o.Name);
                     }
                 }
                 else if (c is ComboBox)
                 {
-                    ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = resources.GetString("comboBoxIdiomas.Items");
-                    ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = resources.GetString("comboBoxIdiomas.Items1");
-                    //((ComboBox)c).Items[0] = resources.GetString("comboBoxIdiomas.Items");
-                    //((ComboBox)c).Items[1] = resources.GetString("comboBoxIdiomas.Items1");
+                    ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = mensajes.comboBoxIdiomas1;
+                    ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = mensajes.comboBoxIdiomas2;
                     if(antiguoCulture.Name.Equals("es"))
-                        ((ComboBox)c).SelectedIndex=1;
-                    else
                         ((ComboBox)c).SelectedIndex = 0;
+                    else
+                        ((ComboBox)c).SelectedIndex = 1;
                 }
                 else if (c is Label)
                 {
                     String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
-                    //MessageBox.Show("Nombre Antiguo: " + nombreAntiguo);
-                    //MessageBox.Show("Nombre Nuevo: "+resources.GetString(c.Name + ".Text"));
                     if (nombreAntiguo != null)
                         c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
                 }
                 else
                     c.Text = resources.GetString(c.Name + ".Text");
-                //resources.ApplyResources(c, c.Name);                
             }
         }
         

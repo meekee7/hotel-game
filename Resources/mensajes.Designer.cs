@@ -61,6 +61,33 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Español.
+        /// </summary>
+        internal static string comboBoxIdiomas1 {
+            get {
+                return ResourceManager.GetString("comboBoxIdiomas1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Inglés.
+        /// </summary>
+        internal static string comboBoxIdiomas2 {
+            get {
+                return ResourceManager.GetString("comboBoxIdiomas2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida de Hotel|*.xml.
+        /// </summary>
+        internal static string filtroDialogoCargarGuardarPartida {
+            get {
+                return ResourceManager.GetString("filtroDialogoCargarGuardarPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La partida actual se perderá si continúas, tanto si la carga es exitosa como no, ¿Quieres proceder?.
         /// </summary>
         internal static string mensajeCargarPartida {

@@ -597,8 +597,8 @@
             this.comboBoxIdiomas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomas.FormattingEnabled = true;
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
+            this.comboBoxIdiomas.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxIdiomas_DrawItem);
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
-            this.comboBoxIdiomas.DrawItem += comboBoxIdiomas_DrawItem;
             // 
             // imageListIdiomas
             // 
@@ -606,8 +606,6 @@
             this.imageListIdiomas.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListIdiomas.Images.SetKeyName(0, "spanish.png");
             this.imageListIdiomas.Images.SetKeyName(1, "english.jpg");
-            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(resources.GetString("comboBoxIdiomas.Items"), 0));
-            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(resources.GetString("comboBoxIdiomas.Items1"), 1));
             // 
             // Principal
             // 
@@ -651,7 +649,6 @@
             this.Controls.Add(this.labelTablero);
             this.Name = "Principal";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Principal_FormClosing);
-            this.Load += new System.EventHandler(this.Principal_Load);
             this.Shown += new System.EventHandler(this.Principal_Shown);
             this.Resize += new System.EventHandler(this.Principal_Resize);
             this.grupoNJugadores.ResumeLayout(false);

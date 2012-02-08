@@ -121,6 +121,237 @@
   <data name="labelTablero.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
   </data>
+  <data name="labelTablero.Text" xml:space="preserve">
+    <value>Board</value>
+  </data>
+  <data name="bIniciar.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="dos_jugadores.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="dos_jugadores.Text" xml:space="preserve">
+    <value>2 Players</value>
+  </data>
+  <data name="tres_jugadores.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="tres_jugadores.Text" xml:space="preserve">
+    <value>3 Players</value>
+  </data>
+  <data name="cuatro_jugadores.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="cuatro_jugadores.Text" xml:space="preserve">
+    <value>4 Players</value>
+  </data>
+  <data name="grupoNJugadores.Text" xml:space="preserve">
+    <value>Nº of Players</value>
+  </data>
+  <data name="bColores.Text" xml:space="preserve">
+    <value>Colours</value>
+  </data>
+  <data name="bDado.Text" xml:space="preserve">
+    <value>Pull dice</value>
+  </data>
+  <data name="resDado.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="resDado.Text" xml:space="preserve">
+    <value>Dice: </value>
+  </data>
+  <data name="jug_ini.Text" xml:space="preserve">
+    <value>Starting player: </value>
+  </data>
+  <data name="bTurno.Text" xml:space="preserve">
+    <value>Pass turn</value>
+  </data>
+  <data name="bReiniciar.Text" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="controlJ1.Text" xml:space="preserve">
+    <value>Player 1</value>
+  </data>
+  <data name="nombreJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="nombreJ1.Text" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="bRetirarseJ1.Text" xml:space="preserve">
+    <value>Retire</value>
+  </data>
+  <data name="bPedirNochesJ1.Text" xml:space="preserve">
+    <value>Order paid nights</value>
+  </data>
+  <data name="bEntradasJ1.Text" xml:space="preserve">
+    <value>Put entries</value>
+  </data>
+  <data name="dineroJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 13</value>
+  </data>
+  <data name="dineroJ1.Text" xml:space="preserve">
+    <value>Money: </value>
+  </data>
+  <data name="bVerHotelesJ1.Text" xml:space="preserve">
+    <value>View hotels</value>
+  </data>
+  <data name="posJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="posJ1.Text" xml:space="preserve">
+    <value>Square: </value>
+  </data>
+  <data name="turnoJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="turnoJ1.Text" xml:space="preserve">
+    <value>Your turn</value>
+  </data>
+  <data name="bVerHotelesJ2.Text" xml:space="preserve">
+    <value>View hotels</value>
+  </data>
+  <data name="controlJ2.Text" xml:space="preserve">
+    <value>Player 2</value>
+  </data>
+  <data name="nombreJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="nombreJ2.Text" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="bRetirarseJ2.Text" xml:space="preserve">
+    <value>Retire</value>
+  </data>
+  <data name="bPedirNochesJ2.Text" xml:space="preserve">
+    <value>Order paid nights</value>
+  </data>
+  <data name="bEntradasJ2.Text" xml:space="preserve">
+    <value>Put entries</value>
+  </data>
+  <data name="dineroJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 13</value>
+  </data>
+  <data name="dineroJ2.Text" xml:space="preserve">
+    <value>Money: </value>
+  </data>
+  <data name="posJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="posJ2.Text" xml:space="preserve">
+    <value>Square: </value>
+  </data>
+  <data name="turnoJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="turnoJ2.Text" xml:space="preserve">
+    <value>Your turn</value>
+  </data>
+  <data name="bVerHotelesJ3.Text" xml:space="preserve">
+    <value>View hotels</value>
+  </data>
+  <data name="controlJ3.Text" xml:space="preserve">
+    <value>Player 3</value>
+  </data>
+  <data name="nombreJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="nombreJ3.Text" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="bRetirarseJ3.Text" xml:space="preserve">
+    <value>Retire</value>
+  </data>
+  <data name="bPedirNochesJ3.Text" xml:space="preserve">
+    <value>Order paid nights</value>
+  </data>
+  <data name="bEntradasJ3.Text" xml:space="preserve">
+    <value>Put entries</value>
+  </data>
+  <data name="dineroJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 13</value>
+  </data>
+  <data name="dineroJ3.Text" xml:space="preserve">
+    <value>Money: </value>
+  </data>
+  <data name="posJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="posJ3.Text" xml:space="preserve">
+    <value>Square: </value>
+  </data>
+  <data name="turnoJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="turnoJ3.Text" xml:space="preserve">
+    <value>Your turn</value>
+  </data>
+  <data name="bVerHotelesJ4.Text" xml:space="preserve">
+    <value>View hotels</value>
+  </data>
+  <data name="controlJ4.Text" xml:space="preserve">
+    <value>Player 4</value>
+  </data>
+  <data name="nombreJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="nombreJ4.Text" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="bRetirarseJ4.Text" xml:space="preserve">
+    <value>Retire</value>
+  </data>
+  <data name="bPedirNochesJ4.Text" xml:space="preserve">
+    <value>Order paid nights</value>
+  </data>
+  <data name="bEntradasJ4.Text" xml:space="preserve">
+    <value>Put entries</value>
+  </data>
+  <data name="dineroJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 13</value>
+  </data>
+  <data name="dineroJ4.Text" xml:space="preserve">
+    <value>Money: </value>
+  </data>
+  <data name="posJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="posJ4.Text" xml:space="preserve">
+    <value>Square: </value>
+  </data>
+  <data name="turnoJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="turnoJ4.Text" xml:space="preserve">
+    <value>Your turn</value>
+  </data>
+  <data name="bComprar.Text" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="bConstruir.Text" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="bVerHoteles.Text" xml:space="preserve">
+    <value>View hotels</value>
+  </data>
+  <data name="bComprarSuelo.Text" xml:space="preserve">
+    <value>Buy floor</value>
+  </data>
+  <data name="bSalir.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="bCobrarBanca.Text" xml:space="preserve">
+    <value>Retrieve bank</value>
+  </data>
+  <data name="bNormas.Text" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="bSalvar.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="bCargar.Text" xml:space="preserve">
+    <value>Load</value>
+  </data>
   <data name="img_Banco.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEAYABgAAD/4QAWRXhpZgAATU0AKgAAAAgAAAAAAAD/2wBDAAgGBgcGBQgHBwcJ
@@ -399,6 +630,73 @@
         CaXFAWgABpc0YpcUAANKDRiigAzS0lGKAFooooAXNFJQKAFooooAKKKKACiiigAooooAKKKKAP/Z
 </value>
   </data>
+  <data name="labelIdioma.Text" xml:space="preserve">
+    <value>Language: </value>
+  </data>
+  <data name="imageListIdiomas.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAq
+        DQAAAk1TRnQBSQFMAgEBAgEAAUwBAAFMAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABEAMAAQEBAAEgBgABEFIAA/sB/wP7Af8D+wH/A/sB/wP7Af8D+wH/A/sB/wP8Af8D/AH/A/sB/wP7
+        Af8D+wH/Af0C+wH/Af0C+wH/A/sB/wP7Af+AAAMCAQMDBwQJAQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMJ
+        AQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMHAQkDAgEDAfoB+QH7Af8B+gH5AfsB/wH6AfkB+wH/AfkB+AH6
+        Af8B+QH4AfoB/wH3AfkB+gH/AfgB9wH5Af8B9gH4AfkB/wH4AfcB+QH/AfkB+AH6Af8B+QH4AfoB/wH5
+        AfgB+gH/AfkB+AH6Af8B+QH4AfoB/wH5AfgB+gH/AfoB+QH7Af+AAAMLAQ8DHQEqAyUBNwMlATcDJQE3
+        AyUBNwMlATcDJQE3AyUBNwMlATcDJQE3AyUBNwMlATcDJQE3Ax0BKgMLAQ8C/AL/AvwC/wL7Av8C/QL/
+        Av0C/wH7Af4C/wH9AfwC/wH7Af0C/wL9Av8C/QL/Av0C/wL9Av8C/QL/Av0C/wH9Af4C/wH8Af0C/4AA
+        AxUBHQIAAbIB/wIAAbEB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIA
+        AbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wMVAR0B1QHYAe0B/wHJAcwB4QH/AcYBxwHcAf8BswG0
+        AckB/wGrAawBwQH/AaEBowG7Af8BmAGZAbMB/wGoAakBwwH/AasBrAHGAf8BqgGrAcUB/wHAAb8B2QH/
+        AcgBxwHhAf8BuQG7AdMB/wGnAagBvQH/AbQBtQHJAf8C2wHtAf+AAAMZASMBAQEAAbUB/wEOAQYB3wH/
+        AQ4BBgHfAf8BDgEGAd8B/wEOAQYB3wH/AQ4BBgHfAf8BDgEGAd8B/wEOAQYB3wH/AQ4BBgHfAf8BDgEG
+        Ad8B/wEOAQYB3wH/AQ4BBgHfAf8BDgEGAd8B/wEBAQABtQH/AxkBIwGrAa4B4QH/AZQBlwHKAf8BmwGc
+        Ac8B/wGOAZEBxAH/AXIBdQGwAf8BcAFyAbAB/wFkAWUBpQH/AWoBbAGuAf8BdgF3AbsB/wFyAXYBuQH/
+        AZIBkwHQAf8BogGjAd8B/wGPAZABygH/AWsBbgGpAf8ChQGzAf8BsQGyAd4B/4AAAxkBIwEGAQABvAH/
+        ARABCAHgAf8BCAEAAd8B/wEHAQAB3wH/AQgBAAHfAf8BCAEAAd8B/wEIAQAB3wH/AQgBAAHfAf8BBwEA
+        Ad8B/wEHAQAB3wH/AQgBAAHfAf8BCAEAAd8B/wEQAQgB4AH/AQcBAAG8Af8DGQEjAZMBmAHXAf8BggGE
+        AcQB/wKQAdAB/wKOAc4B/wFrAW0BtgH/AWoBbQG5Af8BawFsAb4B/wFkAWcBugH/AWkBawHBAf8BXwFj
+        AboB/wFyAXMBywH/AYYBiAHWAf8CcgHGAf8BZgFpAbUB/wFuAW8BswH/AaIBowHbAf+AAAMZASMBDgHS
+        Ad8B/wERAe8C/wEwAeYB4QH/ARwB0QHsAf8BIwGjAeMB/wEeAb4B3wH/ASUB7gHrAf8BBwHvAv8BBgHv
+        Av8BBgHvAv8BBgHvAv8BBgHvAv8BEgHvAv8BDgHSAd8B/wMZASMBnwGiAd8B/wGGAYcBwwH/AnQBuAH/
+        AosBxwH/AoIBwgH/AWEBYgGuAf8BaAFpAbsB/wFuAXABxgH/AXMBdQHLAf8BagFuAcUB/wFzAXYBzwH/
+        AZABlAHjAf8BgAGCAdAB/wFiAWQBsgH/AW8BcAG1Af8BpAGmAeAB/4AAAxkBIwEVAdoB5wH/ARUB8QL/
+        AT4BxAHzAf8BFgGEAdgB/wEqATUBqAH/AUMBhAHeAf8BKQHTAfUB/wEJAfAC/wEJAfEC/wEJAfAC/wEJ
+        AfAC/wEJAfAC/wEVAfIC/wEVAdoB5wH/AxkBIwG4Aa8B2gH/AbIBqAHSAf8BrAGeAccB/wGfAZEBuwH/
+        AZUBiAG0Af8BhAF0AbEB/wGCAXcBxAH/AoYB0gH/AZEBkwHhAf8BhgGKAdkB/wGBAYQB1QH/AZQBmAHn
+        Af8BhQGHAdUB/wFpAWsBugH/AXIBdQG6Af8BowGlAd8B/4AAAxkBIwEeAeIB7wH/ARoB8QL/ATABxwHx
+        Af8BEgFYAcoB/wGLAW0ByQH/AYkBtwHnAf8BGQHWAfMB/wELAfAC/wELAfAC/wELAfAC/wELAfAC/wEL
+        AfAC/wEaAfEC/wEeAeIB7wH/AxkBIwGYAXEBggH/AYIBWQFgAf8BbgFJAVEB/wFwAUkBUQH/AWgBQwFN
+        Af8BSAEuAUYB/wFlAVoBmgH/AXcBdAHEAf8CigHWAf8BlgGYAeYB/wGDAYQB1AH/AYkBiwHZAf8BgAGF
+        AdAB/wFdAWEBsAH/AWABYgGqAf8BnAGdAdkB/4AAAxkBIwEnAeoB9gH/AT0B8wL/AS4B5QH1Af8BMQGk
+        AeQB/wFCAYMB2QH/AToBxgHnAf8BLAHrAfYB/wEtAfIC/wEtAfMC/wEtAfMC/wEtAfMC/wEtAfMC/wE9
+        AfQC/wEnAesB9gH/AxkBIwGqAXQBbQH/AZUBXwFXAf8BmAFfAVcB/wGRAVgBUAH/AYMBSgFCAf8BUQEs
+        ATYB/wFyAWUBmwH/AaMBoAHlAf8BlQGUAd4B/wKgAewB/wKnAfMB/wGjAaYB8AH/AZsBngHoAf8BhQGI
+        AcwB/wFsAW0BsQH/AZ4BnwHXAf+AAAMZASMBMAHvAfwB/wFPAfQC/wE9AfMC/wFCAewB+AH/AUMB3AHu
+        Af8BPwHyAfsB/wE9AfMC/wE9AfMC/wE9AfMC/wE9AfMC/wE9AfMC/wE9AfMC/wFPAfQC/wEwAe8B/AH/
+        AxkBIwGyAYIBdgH/AZgBYAFaAf8BowFrAWUB/wGgAWYBYAH/AZIBWAFSAf8BYgE6AUUB/wFlAVQBhwH/
+        AYsBiAHGAf8BlwGYAdwB/wGaAZwB4wH/AaUBpwHtAf8BrgGxAfUB/wGqAa0B8QH/AZQBlwHUAf8BiwGO
+        AcEB/wGiAaQB1AH/gAADGQEjATYBMAHlAf8BYAFbAesB/wFNAUgB6AH/AU0BSAHoAf8BTQFIAegB/wFN
+        AUgB6AH/AUwBRwHoAf8BTAFHAegB/wFNAUgB6AH/AU0BSAHoAf8BTQFIAegB/wFNAUgB6AH/AWABWwHr
+        Af8BNgEwAeUB/wMZASMBswGKAYcB/wGNAVwBWQH/AakBgQF0Af8BpgF2AXEB/wGcAWoBZQH/AXIBUQFY
+        Af8BdgFpAZEB/wGFAYIBswH/ApABxgH/AZQBlQHNAf8BlgGYAc4B/wGsAa8B4gH/Aa0BrgHhAf8BjgGR
+        Ab4B/wKBAakB/wGjAaQBxgH/gAADFwEgATsBNgHmAf8BbQFpAe0B/wFtAWkB7QH/AW0BaQHtAf8BbQFp
+        Ae0B/wFtAWkB7QH/AW0BaQHtAf8BbQFpAe0B/wFtAWkB7QH/AW0BaQHtAf8BbQFpAe0B/wFuAWoB7QH/
+        AW0BaQHtAf8BOwE2AeYB/wMXASABzgG4AbMB/wGrAZUBkAH/AbsBpQGgAf8ByAGyAa0B/wHIAa8BqwH/
+        AbYBowGmAf8BvgG2AccB/wG3AbQBzQH/AbsBvAHWAf8BzQHOAeoB/wHOAc8B6wH/AdYB1wHxAf8B3gHd
+        AfcB/wHMAc0B4gH/AcMBwgHWAf8CzAHcAf+AAAMQARUBPwE5AeYB/wE8ATkB5QH/AT8BOQHmAf8BPwE5
+        AeYB/wE/ATkB5gH/AT8BOQHmAf8BPwE5AeYB/wE/ATkB5gH/AT8BOQHmAf8BPwE5AeYB/wE/ATkB5gH/
+        AT8BOQHmAf8BPwE5AeYB/wE/ATkB5gH/AxABFQH/Af0B+gL/AfsB+AL/AfgB9gL/AfwB+gL/Af4B/AL/
+        Av4B/wH9AfkC/wH7AfoC/wH5AfoC/wH2AfcC/wH0AfUC/wH2AfUC/wH3AfYC/wH3AfYC/wL5Av8C+gL/
+        gAADBAEGAw0EEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDDQES
+        AwQBBgH/AfsB+gL/AfsB+gL/AfwB+wL/AfsB+gH/Af4B+gH5Af8B/AL6Af8B+wH6AfwB/wH7AfoB/AH/
+        AfkB+wH8Af8B+gH8Af0B/wH6AfsC/wH8AfsC/wH8AfsB/QH/AfsB+gH8Af8B+wH6AfwB/wH7AfoB/AH/
+        wAAD+wH/A/sB/wP7Af8D+wH/A/wB/wP7Af8D+wH/A/sB/wH7AfwB+gH/AfsB/AH6Af8B+wH6AfwB/wP7
+        Af8B/QL7Af8B/AH6AfkB/wP7Af8D+wH/gAABQgFNAT4HAAE+AwABKAMAAUADAAEQAwABAQEAAQEFAAGA
+        FwAD/wEAAv92AAL/BgAL
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -477,1064 +775,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Hotel - Build your own hotel empire</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>Principal</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bCargar.Name" xml:space="preserve">
-    <value>bCargar</value>
-  </data>
-  <data name="&gt;&gt;bCargar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bCargar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bCargar.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bCobrarBanca.Name" xml:space="preserve">
-    <value>bCobrarBanca</value>
-  </data>
-  <data name="&gt;&gt;bCobrarBanca.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bCobrarBanca.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bCobrarBanca.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;bColores.Name" xml:space="preserve">
-    <value>bColores</value>
-  </data>
-  <data name="&gt;&gt;bColores.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bColores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bColores.ZOrder" xml:space="preserve">
-    <value>31</value>
-  </data>
-  <data name="&gt;&gt;bComprar.Name" xml:space="preserve">
-    <value>bComprar</value>
-  </data>
-  <data name="&gt;&gt;bComprar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bComprar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bComprar.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="&gt;&gt;bComprarSuelo.Name" xml:space="preserve">
-    <value>bComprarSuelo</value>
-  </data>
-  <data name="&gt;&gt;bComprarSuelo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bComprarSuelo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bComprarSuelo.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;bConstruir.Name" xml:space="preserve">
-    <value>bConstruir</value>
-  </data>
-  <data name="&gt;&gt;bConstruir.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bConstruir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bConstruir.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;bDado.Name" xml:space="preserve">
-    <value>bDado</value>
-  </data>
-  <data name="&gt;&gt;bDado.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bDado.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bDado.ZOrder" xml:space="preserve">
-    <value>30</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Name" xml:space="preserve">
-    <value>bEntradasJ1</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Name" xml:space="preserve">
-    <value>bEntradasJ2</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Name" xml:space="preserve">
-    <value>bEntradasJ3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.Name" xml:space="preserve">
-    <value>bEntradasJ4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bIniciar.Name" xml:space="preserve">
-    <value>bIniciar</value>
-  </data>
-  <data name="&gt;&gt;bIniciar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bIniciar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bIniciar.ZOrder" xml:space="preserve">
-    <value>33</value>
-  </data>
-  <data name="&gt;&gt;bNormas.Name" xml:space="preserve">
-    <value>bNormas</value>
-  </data>
-  <data name="&gt;&gt;bNormas.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bNormas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bNormas.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Name" xml:space="preserve">
-    <value>bPedirNochesJ1</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Name" xml:space="preserve">
-    <value>bPedirNochesJ2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Name" xml:space="preserve">
-    <value>bPedirNochesJ3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.Name" xml:space="preserve">
-    <value>bPedirNochesJ4</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bReiniciar.Name" xml:space="preserve">
-    <value>bReiniciar</value>
-  </data>
-  <data name="&gt;&gt;bReiniciar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bReiniciar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bReiniciar.ZOrder" xml:space="preserve">
-    <value>26</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Name" xml:space="preserve">
-    <value>bRetirarseJ1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Name" xml:space="preserve">
-    <value>bRetirarseJ2</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Name" xml:space="preserve">
-    <value>bRetirarseJ3</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.Name" xml:space="preserve">
-    <value>bRetirarseJ4</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bSalir.Name" xml:space="preserve">
-    <value>bSalir</value>
-  </data>
-  <data name="&gt;&gt;bSalir.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bSalir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bSalir.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;bSalvar.Name" xml:space="preserve">
-    <value>bSalvar</value>
-  </data>
-  <data name="&gt;&gt;bSalvar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bSalvar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bSalvar.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;bTurno.Name" xml:space="preserve">
-    <value>bTurno</value>
-  </data>
-  <data name="&gt;&gt;bTurno.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bTurno.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bTurno.ZOrder" xml:space="preserve">
-    <value>27</value>
-  </data>
-  <data name="&gt;&gt;bVerHoteles.Name" xml:space="preserve">
-    <value>bVerHoteles</value>
-  </data>
-  <data name="&gt;&gt;bVerHoteles.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bVerHoteles.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHoteles.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Name" xml:space="preserve">
-    <value>bVerHotelesJ1</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ2.Name" xml:space="preserve">
-    <value>bVerHotelesJ2</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ2.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ3.Name" xml:space="preserve">
-    <value>bVerHotelesJ3</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ3.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ4.Name" xml:space="preserve">
-    <value>bVerHotelesJ4</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ4.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Name" xml:space="preserve">
-    <value>colorJ1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Name" xml:space="preserve">
-    <value>colorJ2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Name" xml:space="preserve">
-    <value>colorJ3</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.Name" xml:space="preserve">
-    <value>colorJ4</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJugIni.Name" xml:space="preserve">
-    <value>colorJugIni</value>
-  </data>
-  <data name="&gt;&gt;colorJugIni.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;colorJugIni.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJugIni.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;comboBoxIdiomas.Name" xml:space="preserve">
-    <value>comboBoxIdiomas</value>
-  </data>
-  <data name="&gt;&gt;comboBoxIdiomas.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;comboBoxIdiomas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBoxIdiomas.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Name" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
-    <value>25</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Name" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Name" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.Name" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;cuatro_jugadores.Name" xml:space="preserve">
-    <value>cuatro_jugadores</value>
-  </data>
-  <data name="&gt;&gt;cuatro_jugadores.Parent" xml:space="preserve">
-    <value>grupoNJugadores</value>
-  </data>
-  <data name="&gt;&gt;cuatro_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cuatro_jugadores.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Name" xml:space="preserve">
-    <value>dineroJ1</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Name" xml:space="preserve">
-    <value>dineroJ2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Name" xml:space="preserve">
-    <value>dineroJ3</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.Name" xml:space="preserve">
-    <value>dineroJ4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dos_jugadores.Name" xml:space="preserve">
-    <value>dos_jugadores</value>
-  </data>
-  <data name="&gt;&gt;dos_jugadores.Parent" xml:space="preserve">
-    <value>grupoNJugadores</value>
-  </data>
-  <data name="&gt;&gt;dos_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dos_jugadores.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;grupoNJugadores.Name" xml:space="preserve">
-    <value>grupoNJugadores</value>
-  </data>
-  <data name="&gt;&gt;grupoNJugadores.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grupoNJugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grupoNJugadores.ZOrder" xml:space="preserve">
-    <value>32</value>
-  </data>
-  <data name="&gt;&gt;imgTablero.Name" xml:space="preserve">
-    <value>imgTablero</value>
-  </data>
-  <data name="&gt;&gt;imgTablero.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;imgTablero.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;imgTablero.ZOrder" xml:space="preserve">
-    <value>34</value>
-  </data>
-  <data name="&gt;&gt;img_ayto.Name" xml:space="preserve">
-    <value>img_ayto</value>
-  </data>
-  <data name="&gt;&gt;img_ayto.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;img_ayto.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;img_ayto.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;img_Banco.Name" xml:space="preserve">
-    <value>img_Banco</value>
-  </data>
-  <data name="&gt;&gt;img_Banco.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;img_Banco.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;img_Banco.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;jug_ini.Name" xml:space="preserve">
-    <value>jug_ini</value>
-  </data>
-  <data name="&gt;&gt;jug_ini.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;jug_ini.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;jug_ini.ZOrder" xml:space="preserve">
-    <value>28</value>
-  </data>
-  <data name="&gt;&gt;labelIdioma.Name" xml:space="preserve">
-    <value>labelIdioma</value>
-  </data>
-  <data name="&gt;&gt;labelIdioma.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelIdioma.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelIdioma.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;labelTablero.Name" xml:space="preserve">
-    <value>labelTablero</value>
-  </data>
-  <data name="&gt;&gt;labelTablero.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelTablero.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelTablero.ZOrder" xml:space="preserve">
-    <value>35</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Name" xml:space="preserve">
-    <value>nombreJ1</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Name" xml:space="preserve">
-    <value>nombreJ2</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Name" xml:space="preserve">
-    <value>nombreJ3</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.Name" xml:space="preserve">
-    <value>nombreJ4</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;posAmarillo.Name" xml:space="preserve">
-    <value>posAmarillo</value>
-  </data>
-  <data name="&gt;&gt;posAmarillo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;posAmarillo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posAmarillo.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;posAzul.Name" xml:space="preserve">
-    <value>posAzul</value>
-  </data>
-  <data name="&gt;&gt;posAzul.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;posAzul.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posAzul.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Name" xml:space="preserve">
-    <value>posJ1</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Name" xml:space="preserve">
-    <value>posJ2</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ2.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Name" xml:space="preserve">
-    <value>posJ3</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ3.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;posJ4.Name" xml:space="preserve">
-    <value>posJ4</value>
-  </data>
-  <data name="&gt;&gt;posJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;posJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ4.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;posRojo.Name" xml:space="preserve">
-    <value>posRojo</value>
-  </data>
-  <data name="&gt;&gt;posRojo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;posRojo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posRojo.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;posVerde.Name" xml:space="preserve">
-    <value>posVerde</value>
-  </data>
-  <data name="&gt;&gt;posVerde.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;posVerde.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posVerde.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;resDado.Name" xml:space="preserve">
-    <value>resDado</value>
-  </data>
-  <data name="&gt;&gt;resDado.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;resDado.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;resDado.ZOrder" xml:space="preserve">
-    <value>29</value>
-  </data>
-  <data name="&gt;&gt;tres_jugadores.Name" xml:space="preserve">
-    <value>tres_jugadores</value>
-  </data>
-  <data name="&gt;&gt;tres_jugadores.Parent" xml:space="preserve">
-    <value>grupoNJugadores</value>
-  </data>
-  <data name="&gt;&gt;tres_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tres_jugadores.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.Name" xml:space="preserve">
-    <value>turnoJ1</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.Name" xml:space="preserve">
-    <value>turnoJ2</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.Name" xml:space="preserve">
-    <value>turnoJ3</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.Name" xml:space="preserve">
-    <value>turnoJ4</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=en, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="bCargar.Text" xml:space="preserve">
-    <value>Load</value>
-  </data>
-  <data name="bCobrarBanca.Text" xml:space="preserve">
-    <value>Retrieve bank</value>
-  </data>
-  <data name="bColores.Text" xml:space="preserve">
-    <value>Colours</value>
-  </data>
-  <data name="bComprar.Text" xml:space="preserve">
-    <value>Buy</value>
-  </data>
-  <data name="bComprarSuelo.Text" xml:space="preserve">
-    <value>Buy floor</value>
-  </data>
-  <data name="bConstruir.Text" xml:space="preserve">
-    <value>Build</value>
-  </data>
-  <data name="bDado.Text" xml:space="preserve">
-    <value>Pull dice</value>
-  </data>
-  <data name="bEntradasJ1.Text" xml:space="preserve">
-    <value>Put entries</value>
-  </data>
-  <data name="bEntradasJ2.Text" xml:space="preserve">
-    <value>Put entries</value>
-  </data>
-  <data name="bEntradasJ3.Text" xml:space="preserve">
-    <value>Put entries</value>
-  </data>
-  <data name="bEntradasJ4.Text" xml:space="preserve">
-    <value>Put entries</value>
-  </data>
-  <data name="bIniciar.Text" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="bNormas.Text" xml:space="preserve">
-    <value>Rules</value>
-  </data>
-  <data name="bPedirNochesJ1.Text" xml:space="preserve">
-    <value>Order paid nights</value>
-  </data>
-  <data name="bPedirNochesJ2.Text" xml:space="preserve">
-    <value>Order paid nights</value>
-  </data>
-  <data name="bPedirNochesJ3.Text" xml:space="preserve">
-    <value>Order paid nights</value>
-  </data>
-  <data name="bPedirNochesJ4.Text" xml:space="preserve">
-    <value>Order paid nights</value>
-  </data>
-  <data name="bReiniciar.Text" xml:space="preserve">
-    <value>Restart</value>
-  </data>
-  <data name="bRetirarseJ1.Text" xml:space="preserve">
-    <value>Retire</value>
-  </data>
-  <data name="bRetirarseJ2.Text" xml:space="preserve">
-    <value>Retire</value>
-  </data>
-  <data name="bRetirarseJ3.Text" xml:space="preserve">
-    <value>Retire</value>
-  </data>
-  <data name="bRetirarseJ4.Text" xml:space="preserve">
-    <value>Retire</value>
-  </data>
-  <data name="bSalir.Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="bSalvar.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="bTurno.Text" xml:space="preserve">
-    <value>Pass turn</value>
-  </data>
-  <data name="bVerHoteles.Text" xml:space="preserve">
-    <value>View hotels</value>
-  </data>
-  <data name="bVerHotelesJ1.Text" xml:space="preserve">
-    <value>View hotels</value>
-  </data>
-  <data name="bVerHotelesJ2.Text" xml:space="preserve">
-    <value>View hotels</value>
-  </data>
-  <data name="bVerHotelesJ3.Text" xml:space="preserve">
-    <value>View hotels</value>
-  </data>
-  <data name="bVerHotelesJ4.Text" xml:space="preserve">
-    <value>View hotels</value>
-  </data>
-  <data name="colorJ1.Text" xml:space="preserve">
-    <value>Color: </value>
-  </data>
-  <data name="colorJ2.Text" xml:space="preserve">
-    <value>Color: </value>
-  </data>
-  <data name="colorJ3.Text" xml:space="preserve">
-    <value>Color: </value>
-  </data>
-  <data name="colorJ4.Text" xml:space="preserve">
-    <value>Color: </value>
-  </data>
-  <data name="comboBoxIdiomas.Items" xml:space="preserve">
-    <value>Spanish</value>
-  </data>
-  <data name="comboBoxIdiomas.Items1" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="controlJ1.Text" xml:space="preserve">
-    <value>Player 1</value>
-  </data>
-  <data name="controlJ2.Text" xml:space="preserve">
-    <value>Player 2</value>
-  </data>
-  <data name="controlJ3.Text" xml:space="preserve">
-    <value>Player 3</value>
-  </data>
-  <data name="controlJ4.Text" xml:space="preserve">
-    <value>Player 4</value>
-  </data>
-  <data name="cuatro_jugadores.Text" xml:space="preserve">
-    <value>4 Players</value>
-  </data>
-  <data name="dineroJ1.Text" xml:space="preserve">
-    <value>Money: </value>
-  </data>
-  <data name="dineroJ2.Text" xml:space="preserve">
-    <value>Money: </value>
-  </data>
-  <data name="dineroJ3.Text" xml:space="preserve">
-    <value>Money: </value>
-  </data>
-  <data name="dineroJ4.Text" xml:space="preserve">
-    <value>Money: </value>
-  </data>
-  <data name="dos_jugadores.Text" xml:space="preserve">
-    <value>2 Players</value>
-  </data>
-  <data name="grupoNJugadores.Text" xml:space="preserve">
-    <value>Nº of Players</value>
-  </data>
-  <data name="jug_ini.Text" xml:space="preserve">
-    <value>Starting player: </value>
-  </data>
-  <data name="labelIdioma.Text" xml:space="preserve">
-    <value>Language: </value>
-  </data>
-  <data name="labelTablero.Text" xml:space="preserve">
-    <value>Board</value>
-  </data>
-  <data name="nombreJ1.Text" xml:space="preserve">
-    <value>Name: </value>
-  </data>
-  <data name="nombreJ2.Text" xml:space="preserve">
-    <value>Name: </value>
-  </data>
-  <data name="nombreJ3.Text" xml:space="preserve">
-    <value>Name: </value>
-  </data>
-  <data name="nombreJ4.Text" xml:space="preserve">
-    <value>Name: </value>
-  </data>
-  <data name="posJ1.Text" xml:space="preserve">
-    <value>Square: </value>
-  </data>
-  <data name="posJ2.Text" xml:space="preserve">
-    <value>Square: </value>
-  </data>
-  <data name="posJ3.Text" xml:space="preserve">
-    <value>Square: </value>
-  </data>
-  <data name="posJ4.Text" xml:space="preserve">
-    <value>Square: </value>
-  </data>
-  <data name="resDado.Text" xml:space="preserve">
-    <value>Dice: </value>
-  </data>
-  <data name="tres_jugadores.Text" xml:space="preserve">
-    <value>3 Players</value>
-  </data>
-  <data name="filtroDialogoCargarGuardarPartida" xml:space="preserve">
-    <value>Game of Hotel|*.xml</value>
-  </data>
-  <data name="turnoJ1.Text" xml:space="preserve">
-    <value>Your turn</value>
-  </data>
-  <data name="turnoJ2.Text" xml:space="preserve">
-    <value>Your turn</value>
-  </data>
-  <data name="turnoJ3.Text" xml:space="preserve">
-    <value>Your turn</value>
-  </data>
-  <data name="turnoJ4.Text" xml:space="preserve">
-    <value>Your turn</value>
-  </data>
-  <data name="&gt;&gt;imageListIdiomas.Name" xml:space="preserve">
-    <value>imageListIdiomas</value>
-  </data>
-  <data name="&gt;&gt;imageListIdiomas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
