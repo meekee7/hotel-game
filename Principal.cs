@@ -368,9 +368,9 @@ namespace Juego_Hotel
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
             if (ganador != null)
-                MessageBox.Show(String.Format(resources.GetString("mensajePartidaFinalizada"), ganador.color.ToString()), resources.GetString("tituloHotel"));
+                MessageBox.Show(String.Format(Mensajes.mensajePartidaFinalizada, ganador.color.ToString()), resources.GetString("tituloHotel"));
             else
-                MessageBox.Show(resources.GetString("mensajeJugadoresRetidados"));
+                MessageBox.Show(Mensajes.mensajeJugadoresRetidados);
         }
 
         public int Sig_jugador_Activo()
@@ -456,13 +456,13 @@ namespace Juego_Hotel
                 {
                     if (!this.online)
                     {
-                        MessageBox.Show(resources.GetString("mensajeErrorCargarConfig"), resources.GetString("tituloError"));
+                        MessageBox.Show(Mensajes.mensajeErrorCargarConfig, resources.GetString("tituloError"));
                         this.juego.jugadores = null;
                         throw;
                     }
                     else
                     {
-                        MessageBox.Show(resources.GetString("mensajeErrorCargarConfigServidor"), resources.GetString("tituloError"));
+                        MessageBox.Show(Mensajes.mensajeErrorCargarConfigServidor, resources.GetString("tituloError"));
                         this.juego.jugadores = null;
                         throw;
                     }
@@ -599,12 +599,12 @@ namespace Juego_Hotel
                         break;
                     case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
                         this.bComprar.Enabled = false;
-                        MessageBox.Show(resources.GetString("mensajeCasillaFaseGratis"));
+                        MessageBox.Show(Mensajes.mensajeCasillaFaseGratis);
                         break;
                     case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
                         this.bComprar.Enabled = false;
                         this.Activar_Poner_Entradas(this.juego.jug_actual);
-                        MessageBox.Show(resources.GetString("mensajeCasillaEntradaGratis"));
+                        MessageBox.Show(Mensajes.mensajeCasillaEntradaGratis);
                         break;
                     default: this.bConstruir.Enabled = false;
                         this.bComprar.Enabled = false;
@@ -612,7 +612,7 @@ namespace Juego_Hotel
                 }
                 if (this.juego.ultimo_res_dado == 6)
                 {
-                    MessageBox.Show(resources.GetString("mensajeSacadoUnSeis"));
+                    MessageBox.Show(Mensajes.mensajeSacadoUnSeis);
                     this.bDado.Enabled = true;
                 }
                 else
@@ -647,7 +647,7 @@ namespace Juego_Hotel
 
         private void bReiniciar_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show(resources.GetString("mensajeReiniciarPartida"), resources.GetString("tituloHotel"), MessageBoxButtons.YesNo);
+            DialogResult dr = MessageBox.Show(Mensajes.mensajeReiniciarPartida, resources.GetString("tituloHotel"), MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
                 Reiniciar_partida();
         }
@@ -725,7 +725,7 @@ namespace Juego_Hotel
         private void bColores_Click(object sender, EventArgs e)
         {
             if (this.juego.n_jugadores == 0)
-                MessageBox.Show(resources.GetString("mensajeNoIndicadoJugadores"), resources.GetString("tituloNoIndicadoJugadores"));
+                MessageBox.Show(Mensajes.mensajeNoIndicadoJugadores, resources.GetString("tituloNoIndicadoJugadores"));
             else
             {
                 this.frm_colores.habilitarControles(this.juego.n_jugadores);
@@ -773,11 +773,11 @@ namespace Juego_Hotel
                     {
                         if (hotel.n_fases_construidas == 0) // Se puede expropiar
                         {
-                            DialogResult dr = MessageBox.Show(String.Format(resources.GetString("mensajeExpropiacionPosible"), hotel.nombre, hotel.dueño.color.ToString()), resources.GetString("tituloExpropiacionPosible"), MessageBoxButtons.YesNo);
+                            DialogResult dr = MessageBox.Show(String.Format(Mensajes.mensajeExpropiacionPosible, hotel.nombre, hotel.dueño.color.ToString()), resources.GetString("tituloExpropiacionPosible"), MessageBoxButtons.YesNo);
                             if (dr == DialogResult.Yes)
                             {
                                 if (hotel.precio_expropiacion > this.juego.jugador_actual.dinero_total)
-                                    MessageBox.Show(resources.GetString("mensajeSinFondosParaExpropiacion"));
+                                    MessageBox.Show(Mensajes.mensajeSinFondosParaExpropiacion);
                                 else
                                     this.Comprar_hotel(ref hotel, ref jugador, true);
                             }
@@ -786,15 +786,15 @@ namespace Juego_Hotel
                             MessageBox.Show("mensajeExpropiacionImposible", resources.GetString("tituloExpropiacionImposible"));
                     }
                     else
-                        MessageBox.Show(resources.GetString("mensajeImposibleComprarHotelTuyo"), resources.GetString("tituloImposibleComprarHotelTuyo"));
+                        MessageBox.Show(Mensajes.mensajeImposibleComprarHotelTuyo, resources.GetString("tituloImposibleComprarHotelTuyo"));
                 }
                 else // Es posible comprar el hotel
                 {
                     if (hotel.precio > jugador.dinero_total)
-                        MessageBox.Show(String.Format(resources.GetString("mensajeFondosInsuficientesParaComprarHotel"),hotel.nombre_txt));
+                        MessageBox.Show(String.Format(Mensajes.mensajeFondosInsuficientesParaComprarHotel, hotel.nombre_txt));
                     else
                     {
-                        DialogResult dr = MessageBox.Show(resources.GetString("mensajeComprarHotel"), resources.GetString("tituloComprarHotel"), MessageBoxButtons.YesNo);
+                        DialogResult dr = MessageBox.Show(Mensajes.mensajeComprarHotel, Mensajes.tituloComprarHotel, MessageBoxButtons.YesNo);
                         if (dr == DialogResult.Yes)
                             this.Comprar_hotel(ref hotel, ref jugador, false);
                     }
@@ -1061,7 +1061,7 @@ namespace Juego_Hotel
         {
             if (this.juego.jugador_actual.hoteles.Count == 0)
             {
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles);
                 return;
             }
             Construir frm_construir = new Construir(ref this.juego, false, this);
@@ -1078,7 +1078,7 @@ namespace Juego_Hotel
         {
             if (this.juego.jugador_actual.hoteles.Count == 0)
             {
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles);
                 return;
             }
             Construir frm_construir = new Construir(ref this.juego, true, this);
@@ -1149,7 +1149,7 @@ namespace Juego_Hotel
                 frm_ver_hoteles.Show(this);
             }
             else
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
         }
 
         private void bVerHotelesJ2_Click(object sender, EventArgs e)
@@ -1160,7 +1160,7 @@ namespace Juego_Hotel
                 frm_ver_hoteles.Show(this);
             }
             else
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleMostrarTusHoteles);
         }
 
         private void bVerHotelesJ3_Click(object sender, EventArgs e)
@@ -1171,7 +1171,7 @@ namespace Juego_Hotel
                 frm_ver_hoteles.Show(this);
             }
             else
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleMostrarTusHoteles);
         }
 
         private void bVerHotelesJ4_Click(object sender, EventArgs e)
@@ -1182,7 +1182,7 @@ namespace Juego_Hotel
                 frm_ver_hoteles.Show(this);
             }
             else
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleMostrarTusHoteles);
         }
 
         private void bVerHoteles_Click(object sender, EventArgs e)
@@ -1210,7 +1210,7 @@ namespace Juego_Hotel
                 frm_poner_entradas.ShowDialog();
             }
             else
-                MessageBox.Show(resources.GetString("mensajeNoPoseesHoteles"), resources.GetString("tituloNoesPosiblePonerEntradas"));
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoesPosiblePonerEntradas);
         }
 
         private void bEntradasJ1_Click(object sender, EventArgs e)
@@ -1286,11 +1286,11 @@ namespace Juego_Hotel
                                 if ((jugador.color != this.juego.jugadores[n_jugador].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
                                 {
                                     // El jugador encontrado debe pagar las noches correspondientes
-                                    MessageBox.Show(String.Format(resources.GetString("mensajeDebePagarNoches"),jugador.color,
+                                    MessageBox.Show(String.Format(Mensajes.mensajeDebePagarNoches,jugador.color,
                                         hotel.dueño.color), resources.GetString("tituloPagarNoches"), MessageBoxButtons.OK);
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show(String.Format(resources.GetString("mensajeTotalAPagar"),num_noches, jugador.color, dinero_necesario, hotel.dueño.color));
+                                    MessageBox.Show(String.Format(Mensajes.mensajeTotalAPagar, num_noches, jugador.color, dinero_necesario, hotel.dueño.color));
                                     PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this, hotel.dueño);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
@@ -1384,7 +1384,7 @@ namespace Juego_Hotel
         {
             if (this.juego.jugadores[num_jugador].Eliminado()) // Ya está eliminado
                 return;
-            if (MessageBox.Show(resources.GetString("mensajeRetirarse"), resources.GetString("tituloHotel"), MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 if (!this.online)
                 {
@@ -1432,7 +1432,7 @@ namespace Juego_Hotel
         {
             if (this.dado_tirado)
             {
-                MessageBox.Show(resources.GetString("mensajeSalvarAntesDeTirar"));
+                MessageBox.Show(Mensajes.mensajeSalvarAntesDeTirar);
                 return;
             }
             SaveFileDialog dialogo = new SaveFileDialog();
@@ -1450,7 +1450,7 @@ namespace Juego_Hotel
                 {
                     Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(ref this.juego);
                     if (mgr_salvar.Salvar_partida(dialogo.FileName) == false)
-                        MessageBox.Show(String.Format(resources.GetString("mensajeErrorAlSalvar"), mgr_salvar.error));
+                        MessageBox.Show(String.Format(Mensajes.mensajeErrorAlSalvar, mgr_salvar.error));
                 }
             }
             dialogo = null;
@@ -1459,7 +1459,7 @@ namespace Juego_Hotel
         private void bCargar_Click(object sender, EventArgs e)
         {
             if (!this.bIniciar.Enabled)
-                if (MessageBox.Show(resources.GetString("mensajeCargarPartida"), resources.GetString("tituloCargarPartida"), MessageBoxButtons.YesNo) == DialogResult.No)
+                if (MessageBox.Show(Mensajes.mensajeCargarPartida, Mensajes.tituloCargarPartida, MessageBoxButtons.YesNo) == DialogResult.No)
                     return;
             OpenFileDialog dialogo = new OpenFileDialog();
             dialogo.AddExtension = true;
@@ -1479,7 +1479,7 @@ namespace Juego_Hotel
                     Salvar_y_cargar mgr_cargar = new Salvar_y_cargar(ref this.juego);
                     if (mgr_cargar.Cargar_partida(dialogo.FileName, this) == false)
                     {
-                        MessageBox.Show(String.Format(resources.GetString("mensajeErrorAlCargar"), Environment.NewLine + mgr_cargar.error));
+                        MessageBox.Show(String.Format(Mensajes.mensajeErrorAlCargar, Environment.NewLine + mgr_cargar.error));
                         this.Reiniciar_partida();
                     }
                     else
@@ -1650,13 +1650,13 @@ namespace Juego_Hotel
             ComboBox senderComboBox = (ComboBox)sender;
             if (senderComboBox.SelectedIndex.Equals(0))
             {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
                 Program.ReLocalizeAll(new CultureInfo("es"));
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
             }
             else if (senderComboBox.SelectedIndex.Equals(1))
             {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
                 Program.ReLocalizeAll(new CultureInfo("en"));
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
         }
 
@@ -1685,9 +1685,9 @@ namespace Juego_Hotel
                     ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = Mensajes.comboBoxIdiomas1;
                     ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = Mensajes.comboBoxIdiomas2;
                     if(antiguoCulture.Name.Equals("es"))
-                        ((ComboBox)c).SelectedIndex = 0;
-                    else
                         ((ComboBox)c).SelectedIndex = 1;
+                    else
+                        ((ComboBox)c).SelectedIndex = 0;
                 }
                 else if (c is Label)
                 {

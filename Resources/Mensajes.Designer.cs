@@ -88,6 +88,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Quieres comprobar si existe una versión del juego más actualizada?.
+        /// </summary>
+        internal static string mensajeActualizar {
+            get {
+                return ResourceManager.GetString("mensajeActualizar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La partida actual se perderá si continúas, tanto si la carga es exitosa como no, ¿Quieres proceder?.
         /// </summary>
         internal static string mensajeCargarPartida {
@@ -115,7 +124,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Puedes comprar el hotel. Si decides continuar, estás obligado a pagarlo\n¿Deseas realizar la compra?.
+        ///   Busca una cadena traducida similar a Puedes comprar el hotel. Si decides continuar, estás obligado a pagarlo. ¿Deseas realizar la compra?.
         /// </summary>
         internal static string mensajeComprarHotel {
             get {
@@ -129,6 +138,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeDebePagarNoches {
             get {
                 return ResourceManager.GetString("mensajeDebePagarNoches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se produjo un error comprobando la versión. Ve a https://sourceforge.net/projects/hotels-game/ para comprobar la versión manualmente..
+        /// </summary>
+        internal static string mensajeErrorActualizador {
+            get {
+                return ResourceManager.GetString("mensajeErrorActualizador", resourceCulture);
             }
         }
         
@@ -214,11 +232,29 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El error producido fue:.
+        /// </summary>
+        internal static string mensajeMostrarErrorActualizador {
+            get {
+                return ResourceManager.GetString("mensajeMostrarErrorActualizador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se ha indicado aun el número de jugadores.
         /// </summary>
         internal static string mensajeNoIndicadoJugadores {
             get {
                 return ResourceManager.GetString("mensajeNoIndicadoJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No existe una versión más nueva :).
+        /// </summary>
+        internal static string mensajeNoNuevaVersion {
+            get {
+                return ResourceManager.GetString("mensajeNoNuevaVersion", resourceCulture);
             }
         }
         
@@ -232,11 +268,29 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Partida finalizada. Ha ganado el jugador {0}.
+        ///   Busca una cadena traducida similar a Existe una versión diferente ({0}) que la que estás usando ({1}). ¿Quieres acceder a la página del proyecto en SourceForge? El juego se cerrará..
+        /// </summary>
+        internal static string mensajeNuevaVersion {
+            get {
+                return ResourceManager.GetString("mensajeNuevaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida finalizada. ¡Ha ganado el jugador {0}!.
         /// </summary>
         internal static string mensajePartidaFinalizada {
             get {
                 return ResourceManager.GetString("mensajePartidaFinalizada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Quieres jugar online?.
+        /// </summary>
+        internal static string mensajePreguntarSiOnline {
+            get {
+                return ResourceManager.GetString("mensajePreguntarSiOnline", resourceCulture);
             }
         }
         
@@ -259,7 +313,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Has sacado un 6. Puedes volver a tirar.
+        ///   Busca una cadena traducida similar a ¡Has sacado un 6. Puedes volver a tirar!.
         /// </summary>
         internal static string mensajeSacadoUnSeis {
             get {
@@ -300,6 +354,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeTotalAPagar {
             get {
                 return ResourceManager.GetString("mensajeTotalAPagar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Bienvenido a Hotel!.
+        /// </summary>
+        internal static string tituloBienvenido {
+            get {
+                return ResourceManager.GetString("tituloBienvenido", resourceCulture);
             }
         }
         
@@ -367,7 +430,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Hotel.
+        ///   Busca una cadena traducida similar a Hotels.
         /// </summary>
         internal static string tituloHotel {
             get {

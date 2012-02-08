@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="mensajeCargarPartida" xml:space="preserve">
-    <value>The current game will be lost if you continue, whether the load is successful or not, will you proceed?</value>
+    <value>The current game will be lost if you continue, whether loading is successful or not, Do you want to proceed?</value>
   </data>
   <data name="mensajeCasillaEntradaGratis" xml:space="preserve">
-    <value>You have fallen into a free input type square,advantage!</value>
+    <value>You have fallen into a position of type Free Entrance, do not miss the chance!</value>
   </data>
   <data name="mensajeCasillaFaseGratis" xml:space="preserve">
-    <value>You have fallen into a phase free type square, advantage!</value>
+    <value>You have fallen into a position of type Phase Free, do not miss the chance!</value>
   </data>
   <data name="mensajeComprarHotel" xml:space="preserve">
-    <value>You can buy the hotel. If you decide to continue, you are obliged to pay\nDo you want to purchase?</value>
+    <value>You can buy the hotel. If you want to continue, you are obliged to pay. Do you want to purchase it?</value>
   </data>
   <data name="mensajeDebePagarNoches" xml:space="preserve">
-    <value>The player {0} must pay night to player {1}. Click OK to roll the dice.</value>
+    <value>The player {0} must pay for nights to player {1}. Click OK to roll the dice.</value>
   </data>
   <data name="mensajeErrorAlCargar" xml:space="preserve">
     <value>Error loading the game: {0}</value>
@@ -145,28 +145,28 @@
     <value>Unable to load the configuration from the server</value>
   </data>
   <data name="mensajeExpropiacionImposible" xml:space="preserve">
-    <value>The hotel already has an owner and is not expropriate</value>
+    <value>The hotel already has an owner and is not expropriable</value>
   </data>
   <data name="mensajeExpropiacionPosible" xml:space="preserve">
     <value>Do you want to expropriate the hotel {0} to the player {1}?</value>
   </data>
   <data name="mensajeFondosInsuficientesParaComprarHotel" xml:space="preserve">
-    <value>You do not have sufficient funds for the purchase of the hotel {0}</value>
+    <value>You do not have sufficient funds to purchase the hotel {0}</value>
   </data>
   <data name="mensajeImposibleComprarHotelTuyo" xml:space="preserve">
-    <value>Already own this hotel</value>
+    <value>You already own this hotel</value>
   </data>
   <data name="mensajeJugadoresRetidados" xml:space="preserve">
-    <value>Game ends because all players have folded</value>
+    <value>The game ends because all players have retired</value>
   </data>
   <data name="mensajeNoIndicadoJugadores" xml:space="preserve">
-    <value>Not been indicated even the number of players</value>
+    <value>You haven't set yet the number of players</value>
   </data>
   <data name="mensajeNoPoseesHoteles" xml:space="preserve">
-    <value>You do not have any hotels</value>
+    <value>You don't own any hotels</value>
   </data>
   <data name="mensajePartidaFinalizada" xml:space="preserve">
-    <value>Game ends. He won the Player {0}</value>
+    <value>Game ended. Player {0} wins!</value>
   </data>
   <data name="mensajeReiniciarPartida" xml:space="preserve">
     <value>Are you sure you want to restart the game?</value>
@@ -175,19 +175,19 @@
     <value>Are you sure you want to retire?</value>
   </data>
   <data name="mensajeSacadoUnSeis" xml:space="preserve">
-    <value>You get a 6. You can re-roll</value>
+    <value>You got a 6. You can roll again!</value>
   </data>
   <data name="mensajeSalvarAntesDeTirar" xml:space="preserve">
-    <value>You can only save before throwing the dice</value>
+    <value>You can only save before rolling the dice</value>
   </data>
   <data name="mensajeSelecJugadores" xml:space="preserve">
     <value>Select the number of players</value>
   </data>
   <data name="mensajeSinFondosParaExpropiacion" xml:space="preserve">
-    <value>You do not have sufficient funds to carry out the expropriation</value>
+    <value>You don't have sufficient funds to carry out the expropriation</value>
   </data>
   <data name="mensajeTotalAPagar" xml:space="preserve">
-    <value>You get a {0}, so the player {1} must pay {2} to player {3}</value>
+    <value>You got a {0}, so the player {1} must pay {2} to player {3}</value>
   </data>
   <data name="tituloCargarPartida" xml:space="preserve">
     <value>Load game</value>
@@ -205,10 +205,10 @@
     <value>Error</value>
   </data>
   <data name="tituloExpropiacionImposible" xml:space="preserve">
-    <value>Expropriation impossible</value>
+    <value>Expropriation not possible</value>
   </data>
   <data name="tituloExpropiacionPosible" xml:space="preserve">
-    <value>Expropriation possible</value>
+    <value>Expropriation is possible</value>
   </data>
   <data name="tituloHotel" xml:space="preserve">
     <value>Hotel</value>
@@ -239,5 +239,26 @@
   </data>
   <data name="filtroDialogoCargarGuardarPartida" xml:space="preserve">
     <value>Game of Hotel|*.xml</value>
+  </data>
+  <data name="mensajeActualizar" xml:space="preserve">
+    <value>Do you want to check if there is a newer version of the game?</value>
+  </data>
+  <data name="mensajeErrorActualizador" xml:space="preserve">
+    <value>An error ocurred while checking the version. Go to https://sourceforge.net/projects/hotels-game/ to check it manually.</value>
+  </data>
+  <data name="mensajeMostrarErrorActualizador" xml:space="preserve">
+    <value>The error was: </value>
+  </data>
+  <data name="mensajeNoNuevaVersion" xml:space="preserve">
+    <value>You have latest version :)</value>
+  </data>
+  <data name="mensajeNuevaVersion" xml:space="preserve">
+    <value>There is a different version ({0}) of the one you are using ({1}). Do you want to go to project page in SourceForge? The game will be closed.</value>
+  </data>
+  <data name="mensajePreguntarSiOnline" xml:space="preserve">
+    <value>Do you want to play online?</value>
+  </data>
+  <data name="tituloBienvenido" xml:space="preserve">
+    <value>¡Welcome to Hotels!</value>
   </data>
 </root>

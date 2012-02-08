@@ -524,29 +524,29 @@
             // 
             // posVerde
             // 
-            resources.ApplyResources(this.posVerde, "posVerde");
             this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
+            resources.ApplyResources(this.posVerde, "posVerde");
             this.posVerde.Name = "posVerde";
             this.posVerde.TabStop = false;
             // 
             // posAmarillo
             // 
-            resources.ApplyResources(this.posAmarillo, "posAmarillo");
             this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
+            resources.ApplyResources(this.posAmarillo, "posAmarillo");
             this.posAmarillo.Name = "posAmarillo";
             this.posAmarillo.TabStop = false;
             // 
             // posAzul
             // 
-            resources.ApplyResources(this.posAzul, "posAzul");
             this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
+            resources.ApplyResources(this.posAzul, "posAzul");
             this.posAzul.Name = "posAzul";
             this.posAzul.TabStop = false;
             // 
             // posRojo
             // 
-            resources.ApplyResources(this.posRojo, "posRojo");
             this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
+            resources.ApplyResources(this.posRojo, "posRojo");
             this.posRojo.Name = "posRojo";
             this.posRojo.TabStop = false;
             // 
@@ -573,15 +573,15 @@
             // 
             // img_Banco
             // 
-            resources.ApplyResources(this.img_Banco, "img_Banco");
             this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            resources.ApplyResources(this.img_Banco, "img_Banco");
             this.img_Banco.Name = "img_Banco";
             this.img_Banco.TabStop = false;
             // 
             // img_ayto
             // 
-            resources.ApplyResources(this.img_ayto, "img_ayto");
             this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            resources.ApplyResources(this.img_ayto, "img_ayto");
             this.img_ayto.Name = "img_ayto";
             this.img_ayto.TabStop = false;
             // 
@@ -592,10 +592,10 @@
             // 
             // comboBoxIdiomas
             // 
-            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxIdiomas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomas.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
             this.comboBoxIdiomas.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxIdiomas_DrawItem);
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);

@@ -127,7 +127,7 @@
     <value>Has caído en una casilla de tipo Fase Gratis, ¡aprovecha!</value>
   </data>
   <data name="mensajeComprarHotel" xml:space="preserve">
-    <value>Puedes comprar el hotel. Si decides continuar, estás obligado a pagarlo\n¿Deseas realizar la compra?</value>
+    <value>Puedes comprar el hotel. Si decides continuar, estás obligado a pagarlo. ¿Deseas realizar la compra?</value>
   </data>
   <data name="mensajeDebePagarNoches" xml:space="preserve">
     <value>El jugador {0} debe pagar las noches al jugador {1}. Pulsa OK para lanzar el dado.</value>
@@ -166,7 +166,7 @@
     <value>No posees ningún hotel</value>
   </data>
   <data name="mensajePartidaFinalizada" xml:space="preserve">
-    <value>Partida finalizada. Ha ganado el jugador {0}</value>
+    <value>Partida finalizada. ¡Ha ganado el jugador {0}!</value>
   </data>
   <data name="mensajeReiniciarPartida" xml:space="preserve">
     <value>¿Estás seguro de que quieres reiniciar la partida?</value>
@@ -175,7 +175,7 @@
     <value>¿Estás seguro de que quieres retirarte?</value>
   </data>
   <data name="mensajeSacadoUnSeis" xml:space="preserve">
-    <value>Has sacado un 6. Puedes volver a tirar</value>
+    <value>¡Has sacado un 6. Puedes volver a tirar!</value>
   </data>
   <data name="mensajeSalvarAntesDeTirar" xml:space="preserve">
     <value>Sólo se puede salvar antes de tirar el dado</value>
@@ -211,7 +211,7 @@
     <value>Expropriación posible</value>
   </data>
   <data name="tituloHotel" xml:space="preserve">
-    <value>Hotel</value>
+    <value>Hotels</value>
   </data>
   <data name="tituloImposibleComprarHotelTuyo" xml:space="preserve">
     <value>No es posible realizar la compra</value>
@@ -239,5 +239,26 @@
   </data>
   <data name="filtroDialogoCargarGuardarPartida" xml:space="preserve">
     <value>Partida de Hotel|*.xml</value>
+  </data>
+  <data name="mensajeActualizar" xml:space="preserve">
+    <value>¿Quieres comprobar si existe una versión del juego más actualizada?</value>
+  </data>
+  <data name="mensajeErrorActualizador" xml:space="preserve">
+    <value>Se produjo un error comprobando la versión. Ve a https://sourceforge.net/projects/hotels-game/ para comprobar la versión manualmente.</value>
+  </data>
+  <data name="mensajeMostrarErrorActualizador" xml:space="preserve">
+    <value>El error producido fue:</value>
+  </data>
+  <data name="mensajeNoNuevaVersion" xml:space="preserve">
+    <value>No existe una versión más nueva :)</value>
+  </data>
+  <data name="mensajeNuevaVersion" xml:space="preserve">
+    <value>Existe una versión diferente ({0}) que la que estás usando ({1}). ¿Quieres acceder a la página del proyecto en SourceForge? El juego se cerrará.</value>
+  </data>
+  <data name="mensajePreguntarSiOnline" xml:space="preserve">
+    <value>¿Quieres jugar online?</value>
+  </data>
+  <data name="tituloBienvenido" xml:space="preserve">
+    <value>¡Bienvenido a Hotel!</value>
   </data>
 </root>

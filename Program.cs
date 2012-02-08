@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Globalization;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -29,13 +30,13 @@ namespace Juego_Hotel
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (MessageBox.Show("¿Quieres comprobar si existe una versión del juego más actualizada?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(Mensajes.mensajeActualizar, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Actualizador actualizador = new Actualizador();
                 if (actualizador.comprobar_actualizacion())
                 {
-                    if (MessageBox.Show("Existe una versión diferente (" + actualizador.ultima_version + ") que la que estás usando (" + actualizador.version_actual + "). ¿Quieres acceder a la página del proyecto en SourceForge?\nEl juego se cerrará.",
-                        "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show(String.Format(Mensajes.mensajeNuevaVersion, actualizador.ultima_version, actualizador.version_actual),
+                        Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         System.Diagnostics.Process.Start("https://sourceforge.net/projects/hotels-game/files");
                         return;
@@ -44,11 +45,11 @@ namespace Juego_Hotel
                 else
                 {
                     if (!actualizador.error)
-                        MessageBox.Show("No existe una versión más nueva :)");
+                        MessageBox.Show(Mensajes.mensajeNoNuevaVersion);
                 }
                 actualizador = null;
             }
-            if (MessageBox.Show("¿Quieres jugar online?", "¡Bienvenido a Hotel!", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (MessageBox.Show(Mensajes.mensajePreguntarSiOnline, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.No)
                 Application.Run(new Principal(false, null));
             else
                 Application.Run(new Online());
