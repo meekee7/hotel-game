@@ -92,8 +92,8 @@ namespace Juego_Hotel
                 this.partida_activa = false;
             }
             // Rellenar combobox de idiomas
-            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(mensajes.comboBoxIdiomas1, 0));
-            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(mensajes.comboBoxIdiomas2, 1));
+            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(Mensajes.comboBoxIdiomas1, 0));
+            this.comboBoxIdiomas.Items.Add(new ComboItemImagen(Mensajes.comboBoxIdiomas2, 1));
             if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Equals("es"))
                 this.comboBoxIdiomas.SelectedIndex = 0;
             else
@@ -105,7 +105,7 @@ namespace Juego_Hotel
             // Buscar número de jugadores
             if (this.juego.n_jugadores == 0)
             {
-                MessageBox.Show(mensajes.mensajeSelecJugadores, mensajes.tituloSelecJugadores);
+                MessageBox.Show(Mensajes.mensajeSelecJugadores, Mensajes.tituloSelecJugadores);
                 return;
             }
             else
@@ -1682,8 +1682,8 @@ namespace Juego_Hotel
                 }
                 else if (c is ComboBox)
                 {
-                    ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = mensajes.comboBoxIdiomas1;
-                    ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = mensajes.comboBoxIdiomas2;
+                    ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = Mensajes.comboBoxIdiomas1;
+                    ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = Mensajes.comboBoxIdiomas2;
                     if(antiguoCulture.Name.Equals("es"))
                         ((ComboBox)c).SelectedIndex = 0;
                     else
