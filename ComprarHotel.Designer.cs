@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComprarHotel));
             this.bIzq = new System.Windows.Forms.Button();
             this.bCancelar = new System.Windows.Forms.Button();
             this.cajaIzquierda = new System.Windows.Forms.GroupBox();
@@ -41,89 +42,63 @@
             // 
             // bIzq
             // 
-            this.bIzq.Enabled = false;
-            this.bIzq.Location = new System.Drawing.Point(26, 60);
+            resources.ApplyResources(this.bIzq, "bIzq");
             this.bIzq.Name = "bIzq";
-            this.bIzq.Size = new System.Drawing.Size(90, 23);
-            this.bIzq.TabIndex = 1;
-            this.bIzq.Text = "Comprar";
             this.bIzq.UseVisualStyleBackColor = true;
             this.bIzq.Click += new System.EventHandler(this.bIzq_Click);
             // 
             // bCancelar
             // 
+            resources.ApplyResources(this.bCancelar, "bCancelar");
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancelar.Location = new System.Drawing.Point(110, 117);
             this.bCancelar.Name = "bCancelar";
-            this.bCancelar.Size = new System.Drawing.Size(90, 23);
-            this.bCancelar.TabIndex = 7;
-            this.bCancelar.Text = "Cancelar";
             this.bCancelar.UseVisualStyleBackColor = true;
             this.bCancelar.Click += new System.EventHandler(this.bCancelar_Click);
             // 
             // cajaIzquierda
             // 
+            resources.ApplyResources(this.cajaIzquierda, "cajaIzquierda");
             this.cajaIzquierda.Controls.Add(this.bIzq);
             this.cajaIzquierda.Controls.Add(this.nombreIzq);
-            this.cajaIzquierda.Location = new System.Drawing.Point(7, 22);
             this.cajaIzquierda.Name = "cajaIzquierda";
-            this.cajaIzquierda.Size = new System.Drawing.Size(140, 89);
-            this.cajaIzquierda.TabIndex = 4;
             this.cajaIzquierda.TabStop = false;
-            this.cajaIzquierda.Text = "Zona Izquierda";
             // 
             // nombreIzq
             // 
-            this.nombreIzq.AutoSize = true;
-            this.nombreIzq.Location = new System.Drawing.Point(27, 22);
+            resources.ApplyResources(this.nombreIzq, "nombreIzq");
             this.nombreIzq.Name = "nombreIzq";
-            this.nombreIzq.Size = new System.Drawing.Size(0, 13);
-            this.nombreIzq.TabIndex = 0;
             // 
             // bDer
             // 
-            this.bDer.Enabled = false;
-            this.bDer.Location = new System.Drawing.Point(29, 58);
+            resources.ApplyResources(this.bDer, "bDer");
             this.bDer.Name = "bDer";
-            this.bDer.Size = new System.Drawing.Size(90, 23);
-            this.bDer.TabIndex = 1;
-            this.bDer.Text = "Comprar";
             this.bDer.UseVisualStyleBackColor = true;
             this.bDer.Click += new System.EventHandler(this.bDer_Click);
             // 
             // cajaDerecha
             // 
+            resources.ApplyResources(this.cajaDerecha, "cajaDerecha");
             this.cajaDerecha.Controls.Add(this.bDer);
             this.cajaDerecha.Controls.Add(this.nombreDer);
-            this.cajaDerecha.Location = new System.Drawing.Point(158, 24);
             this.cajaDerecha.Name = "cajaDerecha";
-            this.cajaDerecha.Size = new System.Drawing.Size(140, 87);
-            this.cajaDerecha.TabIndex = 5;
             this.cajaDerecha.TabStop = false;
-            this.cajaDerecha.Text = "Zona Derecha";
             // 
             // nombreDer
             // 
-            this.nombreDer.AutoSize = true;
-            this.nombreDer.Location = new System.Drawing.Point(27, 20);
+            resources.ApplyResources(this.nombreDer, "nombreDer");
             this.nombreDer.Name = "nombreDer";
-            this.nombreDer.Size = new System.Drawing.Size(0, 13);
-            this.nombreDer.TabIndex = 0;
             // 
             // ComprarHotel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancelar;
-            this.ClientSize = new System.Drawing.Size(305, 151);
             this.ControlBox = false;
             this.Controls.Add(this.bCancelar);
             this.Controls.Add(this.cajaIzquierda);
             this.Controls.Add(this.cajaDerecha);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ComprarHotel";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Comprar Hotel";
             this.cajaIzquierda.ResumeLayout(false);
             this.cajaIzquierda.PerformLayout();
             this.cajaDerecha.ResumeLayout(false);

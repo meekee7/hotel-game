@@ -117,4 +117,202 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;nombreIzq.Name" xml:space="preserve">
+    <value>nombreIzq</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bIzq.Parent" xml:space="preserve">
+    <value>cajaIzquierda</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="nombreIzq.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 22</value>
+  </data>
+  <data name="&gt;&gt;cajaDerecha.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cajaIzquierda.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 22</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ComprarHotel</value>
+  </data>
+  <data name="&gt;&gt;bDer.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="bDer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 58</value>
+  </data>
+  <data name="&gt;&gt;nombreDer.Name" xml:space="preserve">
+    <value>nombreDer</value>
+  </data>
+  <data name="&gt;&gt;bDer.Name" xml:space="preserve">
+    <value>bDer</value>
+  </data>
+  <data name="&gt;&gt;bIzq.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="bIzq.Text" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
+  <data name="nombreIzq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="cajaIzquierda.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 89</value>
+  </data>
+  <data name="&gt;&gt;nombreIzq.Parent" xml:space="preserve">
+    <value>cajaIzquierda</value>
+  </data>
+  <data name="&gt;&gt;cajaIzquierda.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;nombreIzq.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;cajaIzquierda.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bDer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="&gt;&gt;cajaDerecha.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cajaIzquierda.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="nombreDer.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;cajaDerecha.Name" xml:space="preserve">
+    <value>cajaDerecha</value>
+  </data>
+  <data name="bCancelar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 117</value>
+  </data>
+  <data name="&gt;&gt;bDer.Parent" xml:space="preserve">
+    <value>cajaDerecha</value>
+  </data>
+  <data name="bIzq.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 60</value>
+  </data>
+  <data name="nombreDer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="bIzq.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="bCancelar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="cajaDerecha.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 24</value>
+  </data>
+  <data name="&gt;&gt;bDer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nombreDer.Parent" xml:space="preserve">
+    <value>cajaDerecha</value>
+  </data>
+  <data name="bDer.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="bIzq.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="nombreIzq.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="bCancelar.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="bDer.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="bIzq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="nombreDer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 20</value>
+  </data>
+  <data name="bDer.Text" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
+  <data name="nombreDer.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="nombreIzq.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cajaDerecha.Text" xml:space="preserve">
+    <value>Zona Derecha</value>
+  </data>
+  <data name="cajaIzquierda.Text" xml:space="preserve">
+    <value>Zona Izquierda</value>
+  </data>
+  <data name="&gt;&gt;bIzq.Name" xml:space="preserve">
+    <value>bIzq</value>
+  </data>
+  <data name="&gt;&gt;nombreDer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nombreDer.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;bIzq.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bCancelar.Text" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Comprar Hotel</value>
+  </data>
+  <data name="cajaIzquierda.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;nombreIzq.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.Name" xml:space="preserve">
+    <value>bCancelar</value>
+  </data>
+  <data name="cajaDerecha.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 87</value>
+  </data>
+  <data name="&gt;&gt;cajaDerecha.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;cajaIzquierda.Name" xml:space="preserve">
+    <value>cajaIzquierda</value>
+  </data>
+  <data name="cajaDerecha.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>305, 151</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>
