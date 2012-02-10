@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using Juego_Hotel.Resources;
+
 
 namespace Juego_Hotel
 {
@@ -99,13 +101,13 @@ namespace Juego_Hotel
                         this.resultado = Tipos.Resultado_dado_cons.Doble;
                 } while (resultado != res_online);
                 if (resultado == Tipos.Resultado_dado_cons.Permitido)
-                    MessageBox.Show("Construcción permitida");
+                    MessageBox.Show(Mensajes.mensajeConstruccionPermitida);
                 else if (resultado == Tipos.Resultado_dado_cons.Gratis)
-                    MessageBox.Show("Construcción gratuita");
+                    MessageBox.Show(Mensajes.mensajeConstruccionGratuita);
                 else if (resultado == Tipos.Resultado_dado_cons.Doble)
-                    MessageBox.Show("Construcción de coste doble");
+                    MessageBox.Show(Mensajes.mensajeConstruccionDobleCoste);
                 else if (resultado == Tipos.Resultado_dado_cons.Denegado)
-                    MessageBox.Show("Construcción denegada");
+                    MessageBox.Show(Mensajes.mensajeConstruccionDenegada);
             }
             else
             {
@@ -127,22 +129,22 @@ namespace Juego_Hotel
 
                 if (cara_mas_cercana.color == Brushes.Green)
                 {
-                    MessageBox.Show("Construcción permitida");
+                    MessageBox.Show(Mensajes.mensajeConstruccionPermitida);
                     this.resultado = Tipos.Resultado_dado_cons.Permitido;
                 }
                 else if (cara_mas_cercana.color == Brushes.Red)
                 {
-                    MessageBox.Show("Construcción denegada");
+                    MessageBox.Show(Mensajes.mensajeConstruccionDenegada);
                     this.resultado = Tipos.Resultado_dado_cons.Denegado;
                 }
                 else if (cara_mas_cercana.color == Brushes.Yellow)
                 {
-                    MessageBox.Show("Construcción gratuita");
+                    MessageBox.Show(Mensajes.mensajeConstruccionGratuita);
                     this.resultado = Tipos.Resultado_dado_cons.Gratis;
                 }
                 else if (cara_mas_cercana.color == Brushes.Orange)
                 {
-                    MessageBox.Show("Construcción de coste doble");
+                    MessageBox.Show(Mensajes.mensajeConstruccionDobleCoste);
                     this.resultado = Tipos.Resultado_dado_cons.Doble;
                 }
             }

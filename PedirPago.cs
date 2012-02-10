@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -62,19 +63,19 @@ namespace Juego_Hotel
             this.n_500 = 0;
             this.n_1000 = 0;
             this.n_5000 = 0;
-            this.n50j.Text = "Tienes: " + this.pagador.n_billetes_50.ToString();
-            this.n100j.Text = "Tienes: " + this.pagador.n_billetes_100.ToString();
-            this.n500j.Text = "Tienes: " + this.pagador.n_billetes_500.ToString();
-            this.n1000j.Text = "Tienes: " + this.pagador.n_billetes_1000.ToString();
-            this.n5000j.Text = "Tienes: " + this.pagador.n_billetes_5000.ToString();
-            this.n50.Text = "Usas: 0";
-            this.n100.Text = "Usas: 0";
-            this.n500.Text = "Usas: 0";
-            this.n1000.Text = "Usas: 0";
-            this.n5000.Text = "Usas: 0";
-            this.total.Text = "Total: 0";
+            this.n50j.Text = Mensajes.textoTienes + this.pagador.n_billetes_50.ToString();
+            this.n100j.Text = Mensajes.textoTienes + this.pagador.n_billetes_100.ToString();
+            this.n500j.Text = Mensajes.textoTienes + this.pagador.n_billetes_500.ToString();
+            this.n1000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_1000.ToString();
+            this.n5000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_5000.ToString();
+            this.n50.Text = Mensajes.textoUsas+"0";
+            this.n100.Text = Mensajes.textoUsas+"0";
+            this.n500.Text = Mensajes.textoUsas+"0";
+            this.n1000.Text = Mensajes.textoUsas+"0";
+            this.n5000.Text = Mensajes.textoUsas+"0";
+            this.total.Text = Mensajes.textoTotal+"0";
             this.total_seleccionado = 0;
-            this.necesario.Text = "Necesario: " + this.dinero_necesario;
+            this.necesario.Text = Mensajes.textoNecesario + this.dinero_necesario;
             if (this.subasta_deshabilitada)
                 this.bSubastar.Enabled = false;
             else
@@ -86,12 +87,12 @@ namespace Juego_Hotel
             if (this.n_50 < this.pagador.n_billetes_50)
             {
                 this.n_50++;
-                this.n50.Text = "Usas: " + this.n_50.ToString();
+                this.n50.Text = Mensajes.textoUsas + this.n_50.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 50", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe50, Mensajes.tituloImposibleIncrementar);
             }
         }
 
@@ -101,12 +102,12 @@ namespace Juego_Hotel
             if (this.n_50 < this.pagador.n_billetes_50)
             {
                 this.n_50++;
-                this.n50.Text = "Usas: " + this.n_50.ToString();
+                this.n50.Text = Mensajes.textoUsas + this.n_50.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 50", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe50, Mensajes.tituloImposibleIncrementar);
             }
         }
 
@@ -115,12 +116,12 @@ namespace Juego_Hotel
             if (this.n_100 < this.pagador.n_billetes_100)
             {
                 this.n_100++;
-                this.n100.Text = "Usas: " + this.n_100.ToString();
+                this.n100.Text = Mensajes.textoUsas + this.n_100.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 100", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe100, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -129,12 +130,12 @@ namespace Juego_Hotel
             if (this.n_100 < this.pagador.n_billetes_100)
             {
                 this.n_100++;
-                this.n100.Text = "Usas: " + this.n_100.ToString();
+                this.n100.Text = Mensajes.textoUsas + this.n_100.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 100", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe100, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -143,12 +144,12 @@ namespace Juego_Hotel
             if (this.n_500 < this.pagador.n_billetes_500)
             {
                 this.n_500++;
-                this.n500.Text = "Usas: " + this.n_500.ToString();
+                this.n500.Text = Mensajes.textoUsas + this.n_500.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 500", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe500, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -157,12 +158,12 @@ namespace Juego_Hotel
             if (this.n_500 < this.pagador.n_billetes_500)
             {
                 this.n_500++;
-                this.n500.Text = "Usas: " + this.n_500.ToString();
+                this.n500.Text = Mensajes.textoUsas + this.n_500.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 500", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe500, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -171,12 +172,12 @@ namespace Juego_Hotel
             if (this.n_1000 < this.pagador.n_billetes_1000)
             {
                 this.n_1000++;
-                this.n1000.Text = "Usas: " + this.n_1000.ToString();
+                this.n1000.Text = Mensajes.textoUsas + this.n_1000.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 1000", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe1000, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -185,12 +186,12 @@ namespace Juego_Hotel
             if (this.n_1000 < this.pagador.n_billetes_1000)
             {
                 this.n_1000++;
-                this.n1000.Text = "Usas: " + this.n_1000.ToString();
+                this.n1000.Text = Mensajes.textoUsas + this.n_1000.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 1000", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe1000, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -199,12 +200,12 @@ namespace Juego_Hotel
             if (this.n_5000 < this.pagador.n_billetes_5000)
             {
                 this.n_5000++;
-                this.n5000.Text = "Usas: " + this.n_5000.ToString();
+                this.n5000.Text = Mensajes.textoUsas + this.n_5000.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 5000", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe5000, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
@@ -213,19 +214,19 @@ namespace Juego_Hotel
             if (this.n_5000 < this.pagador.n_billetes_5000)
             {
                 this.n_5000++;
-                this.n5000.Text = "Usas: " + this.n_5000.ToString();
+                this.n5000.Text = Mensajes.textoUsas + this.n_5000.ToString();
                 this.Calcular_total();
             }
             else
             {
-                MessageBox.Show("No tienes tantos billetes de 5000", "Imposible incrementar");
+                MessageBox.Show(Mensajes.mensajeSinBilletesDe5000, Mensajes.tituloImposibleIncrementar); 
             }
         }
 
         private void bOk_Click(object sender, EventArgs e)
         {
             if (this.total_seleccionado < this.dinero_necesario)
-                MessageBox.Show("No se ha indicado el dinero mínimo necesario", "Dinero insuficiente");
+                MessageBox.Show(Mensajes.mensajeNoIndicadoDineroNecesario, Mensajes.tituloDineroInsuficiente);
             else
             {
                 this.cancelado = false;
@@ -243,7 +244,7 @@ namespace Juego_Hotel
         {
             this.total_seleccionado = (this.n_50 * 50) + (this.n_100 * 100) + (this.n_500 * 500) +
                 (this.n_1000 * 1000) + (this.n_5000 * 5000);
-            this.total.Text = "Total: " + this.total_seleccionado.ToString();
+            this.total.Text = Mensajes.textoTotal + this.total_seleccionado.ToString();
         }
 
         private void bReset_Click(object sender, EventArgs e)
@@ -263,24 +264,24 @@ namespace Juego_Hotel
                 if ((this.hotel_en_construccion != null) && (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre == this.hotel_en_construccion.nombre))
                 {
                     this.interfaz.frm_subasta_en_curso.Close();
-                    MessageBox.Show("Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción.", "Construcción cancelada");
+                    MessageBox.Show(Mensajes.tituloDineroInsuficiente, Mensajes.tituloConstruccionCancelada);
                     this.cancelado = true;
                     this.Hide();
                     return;
                 }
                 this.interfaz.frm_subasta_en_curso.Close();
                 this.pagador.calcular_dinero_total();
-                this.n50j.Text   = "Tienes: " + this.pagador.n_billetes_50.ToString();
-                this.n100j.Text  = "Tienes: " + this.pagador.n_billetes_100.ToString();
-                this.n500j.Text  = "Tienes: " + this.pagador.n_billetes_500.ToString();
-                this.n1000j.Text = "Tienes: " + this.pagador.n_billetes_1000.ToString();
-                this.n5000j.Text = "Tienes: " + this.pagador.n_billetes_5000.ToString();
+                this.n50j.Text   = Mensajes.textoTienes + this.pagador.n_billetes_50.ToString();
+                this.n100j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_100.ToString();
+                this.n500j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_500.ToString();
+                this.n1000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_1000.ToString();
+                this.n5000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_5000.ToString();
             }
             else
             {
                 if (this.pagador.dinero_total < this.dinero_necesario)
                 {
-                    MessageBox.Show("No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida :(", "Jugador eliminado");
+                    MessageBox.Show(Mensajes.mensajeSinPropiedadesNiFondos, Mensajes.tituloJugadorEliminado);
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
                     this.juego.Eliminar_Jugador(this.pagador, this.receptor);
                     this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
@@ -290,7 +291,7 @@ namespace Juego_Hotel
                     return;
                 }
                 else
-                    MessageBox.Show("No tienes propiedades para subastar", "Subastas");
+                    MessageBox.Show(Mensajes.mensajeSinPropiedadesParaSubastar, Mensajes.tituloSubastas);
             }
         }
     }

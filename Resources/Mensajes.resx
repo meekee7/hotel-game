@@ -261,4 +261,70 @@
   <data name="tituloBienvenido" xml:space="preserve">
     <value>¡Bienvenido a Hotel!</value>
   </data>
+  <data name="mensajeIntentarConstruirHotelVendido" xml:space="preserve">
+    <value>Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción.</value>
+  </data>
+  <data name="mensajeNoIndicadoDineroNecesario" xml:space="preserve">
+    <value>No se ha indicado el dinero mínimo necesario</value>
+  </data>
+  <data name="mensajeSinBilletesDe100" xml:space="preserve">
+    <value>No tienes tantos billetes de 100</value>
+  </data>
+  <data name="mensajeSinBilletesDe1000" xml:space="preserve">
+    <value>No tienes tantos billetes de 1000</value>
+  </data>
+  <data name="mensajeSinBilletesDe50" xml:space="preserve">
+    <value>No tienes tantos billetes de 50</value>
+  </data>
+  <data name="mensajeSinBilletesDe500" xml:space="preserve">
+    <value>No tienes tantos billetes de 500</value>
+  </data>
+  <data name="mensajeSinBilletesDe5000" xml:space="preserve">
+    <value>No tienes tantos billetes de 5000</value>
+  </data>
+  <data name="mensajeSinPropiedadesNiFondos" xml:space="preserve">
+    <value>No tienes propiedades para subastar ni fondos suficientes para pagar. Quedas eliminado de la partida :(</value>
+  </data>
+  <data name="mensajeSinPropiedadesParaSubastar" xml:space="preserve">
+    <value>No tienes propiedades para subastar</value>
+  </data>
+  <data name="textoNecesario" xml:space="preserve">
+    <value>Necesario: </value>
+  </data>
+  <data name="textoTienes" xml:space="preserve">
+    <value>Tienes: </value>
+  </data>
+  <data name="textoTotal" xml:space="preserve">
+    <value>Total: </value>
+  </data>
+  <data name="textoUsas" xml:space="preserve">
+    <value>Usas: </value>
+  </data>
+  <data name="tituloConstruccionCancelada" xml:space="preserve">
+    <value>Construcción cancelada</value>
+  </data>
+  <data name="tituloDineroInsuficiente" xml:space="preserve">
+    <value>Dinero insuficiente</value>
+  </data>
+  <data name="tituloImposibleIncrementar" xml:space="preserve">
+    <value>Imposible Incrementar</value>
+  </data>
+  <data name="tituloJugadorEliminado" xml:space="preserve">
+    <value>Jugador eliminado</value>
+  </data>
+  <data name="tituloSubastas" xml:space="preserve">
+    <value>Subastas</value>
+  </data>
+  <data name="mensajeConstruccionDenegada" xml:space="preserve">
+    <value>Construcción denegada</value>
+  </data>
+  <data name="mensajeConstruccionDobleCoste" xml:space="preserve">
+    <value>Construcción de coste doble</value>
+  </data>
+  <data name="mensajeConstruccionGratuita" xml:space="preserve">
+    <value>Construcción gratuita</value>
+  </data>
+  <data name="mensajeConstruccionPermitida" xml:space="preserve">
+    <value>Construcción permitida</value>
+  </data>
 </root>
