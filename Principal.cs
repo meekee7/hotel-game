@@ -1579,6 +1579,8 @@ namespace Juego_Hotel
         private void Principal_Resize(object sender, EventArgs e)
         {
             // Obtener nuevo tamaño y recolocar todos los picturebox
+            if (this.juego == null)
+               return; // No se ha inicializado la ventana aun, el constructor no se ha ejecutado
             if (this.juego.jugadores == null) // Partida no empezada
             {
                 this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
