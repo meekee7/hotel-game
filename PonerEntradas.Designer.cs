@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PonerEntradas));
             this.bCerrar = new System.Windows.Forms.Button();
             this.listaHoteles = new System.Windows.Forms.ComboBox();
             this.selHotel = new System.Windows.Forms.Label();
@@ -39,83 +40,58 @@
             // 
             // bCerrar
             // 
+            resources.ApplyResources(this.bCerrar, "bCerrar");
             this.bCerrar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCerrar.Location = new System.Drawing.Point(169, 101);
             this.bCerrar.Name = "bCerrar";
-            this.bCerrar.Size = new System.Drawing.Size(75, 23);
-            this.bCerrar.TabIndex = 0;
-            this.bCerrar.Text = "Cerrar";
             this.bCerrar.UseVisualStyleBackColor = true;
             this.bCerrar.Click += new System.EventHandler(this.bCerrar_Click);
             // 
             // listaHoteles
             // 
+            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
-            this.listaHoteles.Location = new System.Drawing.Point(123, 6);
             this.listaHoteles.Name = "listaHoteles";
-            this.listaHoteles.Size = new System.Drawing.Size(121, 21);
-            this.listaHoteles.TabIndex = 4;
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
             // selHotel
             // 
-            this.selHotel.AutoSize = true;
-            this.selHotel.Location = new System.Drawing.Point(12, 9);
+            resources.ApplyResources(this.selHotel, "selHotel");
             this.selHotel.Name = "selHotel";
-            this.selHotel.Size = new System.Drawing.Size(100, 13);
-            this.selHotel.TabIndex = 3;
-            this.selHotel.Text = "Selecciona el hotel:";
             // 
             // listaCasillas
             // 
+            resources.ApplyResources(this.listaCasillas, "listaCasillas");
             this.listaCasillas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.listaCasillas.Enabled = false;
             this.listaCasillas.FormattingEnabled = true;
-            this.listaCasillas.Location = new System.Drawing.Point(123, 54);
             this.listaCasillas.Name = "listaCasillas";
-            this.listaCasillas.Size = new System.Drawing.Size(121, 21);
-            this.listaCasillas.TabIndex = 5;
             this.listaCasillas.SelectedIndexChanged += new System.EventHandler(this.listaCasillas_SelectedIndexChanged);
             // 
             // selCasilla
             // 
-            this.selCasilla.AutoSize = true;
-            this.selCasilla.Location = new System.Drawing.Point(12, 57);
+            resources.ApplyResources(this.selCasilla, "selCasilla");
             this.selCasilla.Name = "selCasilla";
-            this.selCasilla.Size = new System.Drawing.Size(106, 13);
-            this.selCasilla.TabIndex = 6;
-            this.selCasilla.Text = "Selecciona la casilla:";
             // 
             // bUnaMas
             // 
-            this.bUnaMas.Enabled = false;
-            this.bUnaMas.Location = new System.Drawing.Point(88, 101);
+            resources.ApplyResources(this.bUnaMas, "bUnaMas");
             this.bUnaMas.Name = "bUnaMas";
-            this.bUnaMas.Size = new System.Drawing.Size(75, 23);
-            this.bUnaMas.TabIndex = 7;
-            this.bUnaMas.Text = "Una más";
             this.bUnaMas.UseVisualStyleBackColor = true;
             this.bUnaMas.Click += new System.EventHandler(this.bUnaMas_Click);
             // 
             // bComprar
             // 
-            this.bComprar.Enabled = false;
-            this.bComprar.Location = new System.Drawing.Point(7, 101);
+            resources.ApplyResources(this.bComprar, "bComprar");
             this.bComprar.Name = "bComprar";
-            this.bComprar.Size = new System.Drawing.Size(75, 23);
-            this.bComprar.TabIndex = 8;
-            this.bComprar.Text = "Comprar";
             this.bComprar.UseVisualStyleBackColor = true;
             this.bComprar.Click += new System.EventHandler(this.bComprar_Click);
             // 
             // PonerEntradas
             // 
             this.AcceptButton = this.bCerrar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCerrar;
-            this.ClientSize = new System.Drawing.Size(256, 136);
             this.ControlBox = false;
             this.Controls.Add(this.bComprar);
             this.Controls.Add(this.bUnaMas);
@@ -126,8 +102,6 @@
             this.Controls.Add(this.bCerrar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "PonerEntradas";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Poner Entradas";
             this.ResumeLayout(false);
             this.PerformLayout();
 

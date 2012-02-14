@@ -124,6 +124,33 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Esta casilla está ocupada y no puedes añadir una entrada ahora mismo en ella.
+        /// </summary>
+        internal static string mensajeCasillaOcupada {
+            get {
+                return ResourceManager.GetString("mensajeCasillaOcupada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Esta casilla ya tiene una entrada comprada para el hotel .
+        /// </summary>
+        internal static string mensajeCasillaYaPoseeEntrada {
+            get {
+                return ResourceManager.GetString("mensajeCasillaYaPoseeEntrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Si aceptas comprar la entrada, estás obligado a pagarla. ¿Deseas realizar la compra?.
+        /// </summary>
+        internal static string mensajeComprarEntradas {
+            get {
+                return ResourceManager.GetString("mensajeComprarEntradas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Puedes comprar el hotel. Si decides continuar, estás obligado a pagarlo. ¿Deseas realizar la compra?.
         /// </summary>
         internal static string mensajeComprarHotel {
@@ -223,6 +250,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!.
+        /// </summary>
+        internal static string mensajeEstasEnCasillaTipoEntrada {
+            get {
+                return ResourceManager.GetString("mensajeEstasEnCasillaTipoEntrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El hotel ya tiene dueño y no es expropiable.
         /// </summary>
         internal static string mensajeExpropiacionImposible {
@@ -286,6 +322,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El hotel {0} no tiene fases construídas y por tanto no se le pueden añadir entradas aun.
+        /// </summary>
+        internal static string mensajeNohayFasesConstruidasParaPonerEntradas {
+            get {
+                return ResourceManager.GetString("mensajeNohayFasesConstruidasParaPonerEntradas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se ha indicado el dinero mínimo necesario.
         /// </summary>
         internal static string mensajeNoIndicadoDineroNecesario {
@@ -345,6 +390,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajePreguntarSiOnline {
             get {
                 return ResourceManager.GetString("mensajePreguntarSiOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La primera entrada que selecciones será la gratuíta debido a la casilla en la que estás. Las consecutivas serán según el método normal (una por hotel).
+        /// </summary>
+        internal static string mensajePrimeraEntradaGratis {
+            get {
+                return ResourceManager.GetString("mensajePrimeraEntradaGratis", resourceCulture);
             }
         }
         
@@ -439,6 +493,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No tienes dinero suficiente para pagar una entrada del hotel .
+        /// </summary>
+        internal static string mensajeSinDineroParaComprarEntradas {
+            get {
+                return ResourceManager.GetString("mensajeSinDineroParaComprarEntradas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No tienes suficientes fondos para realizar la expropiación.
         /// </summary>
         internal static string mensajeSinFondosParaExpropiacion {
@@ -525,6 +588,15 @@ namespace Juego_Hotel.Resources {
         internal static string tituloCargarPartida {
             get {
                 return ResourceManager.GetString("tituloCargarPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comprar Entrada.
+        /// </summary>
+        internal static string tituloComprarEntrada {
+            get {
+                return ResourceManager.GetString("tituloComprarEntrada", resourceCulture);
             }
         }
         

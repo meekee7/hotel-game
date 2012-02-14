@@ -327,4 +327,28 @@
   <data name="mensajeConstruccionPermitida" xml:space="preserve">
     <value>Permitted construction</value>
   </data>
+  <data name="mensajeCasillaOcupada" xml:space="preserve">
+    <value>This square is busy and can not add an entrance</value>
+  </data>
+  <data name="mensajeCasillaYaPoseeEntrada" xml:space="preserve">
+    <value>This square already has a entrance purchased for the hotel </value>
+  </data>
+  <data name="mensajeComprarEntradas" xml:space="preserve">
+    <value>If you agree to buy the entrance, you are obliged to pay. Do you want to purchase?</value>
+  </data>
+  <data name="mensajeEstasEnCasillaTipoEntrada" xml:space="preserve">
+    <value>You're in a Free Entrance type square.Enjoy it!</value>
+  </data>
+  <data name="mensajeNohayFasesConstruidasParaPonerEntradas" xml:space="preserve">
+    <value>The hotel {0} does not have built stages and therefore no entrances can be added even</value>
+  </data>
+  <data name="mensajePrimeraEntradaGratis" xml:space="preserve">
+    <value>The first entry you select will be free, due to the square on which you are. The consecutive will be according to the normal method (one per hotel)</value>
+  </data>
+  <data name="mensajeSinDineroParaComprarEntradas" xml:space="preserve">
+    <value>You do not have enough money to pay a hotel entrance </value>
+  </data>
+  <data name="tituloComprarEntrada" xml:space="preserve">
+    <value>Buy Entrance</value>
+  </data>
 </root>

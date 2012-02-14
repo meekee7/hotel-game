@@ -186,6 +186,9 @@
     <EmbeddedResource Include="PedirPago.en.resx">
       <DependentUpon>PedirPago.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PonerEntradas.en.resx">
+      <DependentUpon>PonerEntradas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Mensajes.en.resx" />
     <EmbeddedResource Include="Resources\Mensajes.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -36,7 +37,7 @@ namespace Juego_Hotel
                 else
                 {
                     if (this.interfaz.Puede_poner_entradas(this.jugador))
-                        MessageBox.Show("La primera entrada que selecciones será la gratuíta debido a la casilla en la que estás. Las consecutivas serán según el método normal (una por hotel)");
+                        MessageBox.Show(Mensajes.mensajePrimeraEntradaGratis);
                     this.entrada_gratis = true;
                 }
             }
@@ -69,12 +70,12 @@ namespace Juego_Hotel
             this.hotel_seleccionado = this.juego.hoteles.First(Hotel => Hotel.nombre_txt == this.listaHoteles.SelectedItem.ToString());
             if (this.hotel_seleccionado.n_fases_construidas == 0)
             {
-                MessageBox.Show("El hotel " + this.hotel_seleccionado.nombre_txt + " no tiene fases construídas y por tanto no se le pueden añadir entradas aun");
+                MessageBox.Show(String.Format(Mensajes.mensajeNohayFasesConstruidasParaPonerEntradas,this.hotel_seleccionado.nombre_txt));
                 return;
             }
             if (this.hotel_seleccionado.precio_entrada > this.jugador.dinero_total)
             {
-                MessageBox.Show("No tienes dinero suficiente para pagar una entrada del hotel " + this.hotel_seleccionado.nombre_txt);
+                MessageBox.Show(Mensajes.mensajeSinDineroParaComprarEntradas + this.hotel_seleccionado.nombre_txt);
                 return;
             }
             // Hay que obtener todas las casillas de un Hotel, buscando el hotel entre todas las casillas
@@ -101,7 +102,7 @@ namespace Juego_Hotel
                 int n_casilla = Convert.ToInt16(this.listaCasillas.SelectedItem);
                 this.bComprar.Enabled = false;
                 if (this.juego.casillas[n_casilla].ocupada)
-                    MessageBox.Show("Esta casilla está ocupada y no puedes añadir una entrada ahora mismo en ella");
+                    MessageBox.Show(Mensajes.mensajeCasillaOcupada);
                 else if (this.juego.casillas[n_casilla].entrada_en_izq == true || this.juego.casillas[n_casilla].entrada_en_der == true)
                 {
                     String nombre_hotel;
@@ -109,7 +110,7 @@ namespace Juego_Hotel
                         nombre_hotel = this.juego.casillas[n_casilla].hotel_izq.ToString();
                     else
                         nombre_hotel = this.juego.casillas[n_casilla].hotel_der.ToString();
-                    MessageBox.Show("Esta casilla ya tiene una entrada comprada para el hotel " + nombre_hotel);
+                    MessageBox.Show(Mensajes.mensajeCasillaYaPoseeEntrada + nombre_hotel);
                 }
                 else
                     this.bComprar.Enabled = true;
@@ -131,7 +132,7 @@ namespace Juego_Hotel
             int sel_n_5000 = 0, sel_n_1000 = 0, sel_n_500 = 0, sel_n_100 = 0, sel_n_50 = 0;
             if (this.entrada_gratis)
             {
-                MessageBox.Show("Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!");
+                MessageBox.Show(Mensajes.mensajeEstasEnCasillaTipoEntrada);
                 this.jugador.entrada_gratis_usada = true;
                 if (this.interfaz.Puede_poner_entradas(jugador))
                     this.bUnaMas.Enabled = true;
@@ -141,7 +142,7 @@ namespace Juego_Hotel
             }
             else
             {
-                if (MessageBox.Show("Si aceptas comprar la entrada, estás obligado a pagarla. ¿Deseas realizar la compra?", "Comprar entrada", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (MessageBox.Show(Mensajes.mensajeComprarEntradas, Mensajes.tituloComprarEntrada, MessageBoxButtons.YesNo) == DialogResult.No)
                     return;
                 int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
                 PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);

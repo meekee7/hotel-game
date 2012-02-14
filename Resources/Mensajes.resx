@@ -327,4 +327,28 @@
   <data name="mensajeConstruccionPermitida" xml:space="preserve">
     <value>Construcción permitida</value>
   </data>
+  <data name="mensajeCasillaOcupada" xml:space="preserve">
+    <value>Esta casilla está ocupada y no puedes añadir una entrada ahora mismo en ella</value>
+  </data>
+  <data name="mensajeCasillaYaPoseeEntrada" xml:space="preserve">
+    <value>Esta casilla ya tiene una entrada comprada para el hotel </value>
+  </data>
+  <data name="mensajeComprarEntradas" xml:space="preserve">
+    <value>Si aceptas comprar la entrada, estás obligado a pagarla. ¿Deseas realizar la compra?</value>
+  </data>
+  <data name="mensajeEstasEnCasillaTipoEntrada" xml:space="preserve">
+    <value>Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!</value>
+  </data>
+  <data name="mensajeNohayFasesConstruidasParaPonerEntradas" xml:space="preserve">
+    <value>El hotel {0} no tiene fases construídas y por tanto no se le pueden añadir entradas aun</value>
+  </data>
+  <data name="mensajePrimeraEntradaGratis" xml:space="preserve">
+    <value>La primera entrada que selecciones será la gratuíta debido a la casilla en la que estás. Las consecutivas serán según el método normal (una por hotel)</value>
+  </data>
+  <data name="mensajeSinDineroParaComprarEntradas" xml:space="preserve">
+    <value>No tienes dinero suficiente para pagar una entrada del hotel </value>
+  </data>
+  <data name="tituloComprarEntrada" xml:space="preserve">
+    <value>Comprar Entrada</value>
+  </data>
 </root>
