@@ -1383,6 +1383,8 @@ void handle_command(string command, Player* p)
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
+         if (!dest->active) // Avoid sending commands to retired players, because their windows might be closed and would make client crash
+            continue;
          send_command("player_retired", dest);
          send_int(dest, id);
          send_int(dest, get_utf8_length(p->name));

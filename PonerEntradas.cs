@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
@@ -23,9 +19,7 @@ namespace Juego_Hotel
             InitializeComponent();
             this.juego = juego;
             this.jugador = this.juego.jugadores[jugador];
-            //Hotel[] lista = new Hotel[this.jugador.hoteles.Count];
-            //this.jugador.hoteles.CopyTo(lista, 0);
-            this.Rellenar_lista(/*ref lista*/);
+            this.Rellenar_lista();
             this.interfaz = interfaz;
             if (this.jugador.posicion.tipo == Tipos.Tcasilla.entrada_gratis)
             {
@@ -45,7 +39,7 @@ namespace Juego_Hotel
                 this.entrada_gratis = false;
         }
 
-        void Rellenar_lista(/*ref Hotel[] lista*/)
+        void Rellenar_lista()
         {
             // Ya se ha comprobado que la lista tiene hoteles
             this.listaHoteles.BeginUpdate();
