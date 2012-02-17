@@ -15,7 +15,7 @@ public:
    wstring name;
    Player* creator;
    int n_players;
-   list<Player*> plist;
+   list<Player*> plist, active_plist;
    list<Hotel*> hlist;
    Chat* chat;
    bool started, ended, rolled_construction_dice;
@@ -43,6 +43,7 @@ public:
    Player* turn_pass(dlib::mutex* debt_mutex);
    int get_active_players_count();
    Player* get_winner();
+   bool is_active(Player* player);
    void eliminate_player(Player* player);
    int get_money_for_nights(Player* owner, Player* player, int* nights);
    bool can_charge_bank(Player* p);

@@ -187,7 +187,7 @@ Player* get_player_from_game(wstring name, Game* game)
 		return NULL;
 	else
    {
-      if ((*i)->active) // To avoid hack: sending commands when retired
+      if (game->is_active(*i)) // To avoid hack: sending commands when retired
 		   return (*i);
       else
          return NULL;
@@ -647,6 +647,7 @@ void handle_command(string command, Player* p)
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when chat does not exist anymore
          return;
+      game->eliminate_player(p);
       if (!game->leave(p)) // Possible hack
          return;
       list<Player*>::iterator i, j;
@@ -1375,7 +1376,7 @@ void handle_command(string command, Player* p)
       Player* player = get_player_from_game(p->name, game);
       if (player == NULL) // Hack, retire player
          return;
-      if (!player->active) // Hack, already retired
+      if (!game->is_active(player)) // Hack, already retired
          return;
       game->eliminate_player(player);
       list<Player*>::iterator i;
@@ -1383,7 +1384,7 @@ void handle_command(string command, Player* p)
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
       {
          dest = (*i);
-         if (!dest->active) // Avoid sending commands to retired players, because their windows might be closed and would make client crash
+         if (!game->is_active(dest)) // Avoid sending commands to retired players, because their windows might be closed and would make client crash
             continue;
          send_command("player_retired", dest);
          send_int(dest, id);

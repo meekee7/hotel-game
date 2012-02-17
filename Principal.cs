@@ -367,6 +367,7 @@ namespace Juego_Hotel
             this.controlJ2.Enabled = false;
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
+            this.partida_activa = false;
             if (ganador != null)
                 MessageBox.Show(String.Format(Mensajes.mensajePartidaFinalizada, ganador.color.ToString()), resources.GetString("tituloHotel"));
             else

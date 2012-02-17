@@ -5,7 +5,6 @@ Player::Player(string ip, Portable_socket* socket_client)
    this->ip = ip;
    this->socket = socket_client;
    this->connected = true;
-   this->active = true;
    this->rolled_last_turn = false;
    this->charged_bank_last_turn = false;
    this->bought_last_turn = false;
@@ -21,11 +20,6 @@ Player::Player(string ip, Portable_socket* socket_client)
 void Player::Calculate_total_money()
 {
    this->total_money = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-}
-
-void Player::Eliminate()
-{
-   this->active = false;
 }
 
 void Player::Charge_bank()

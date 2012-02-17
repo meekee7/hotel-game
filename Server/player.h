@@ -16,7 +16,7 @@ public:
    string ip;
    Portable_socket* socket;
    bool connected;
-   bool active;
+   //bool active;
    bool rolled_last_turn, bought_last_turn, built_last_turn, charged_bank_last_turn, asked_nights_last_turn, paid_last_turn, free_entrance_used;
    int debt_last_turn;
    Player* debt_nights_to_last_turn;
@@ -28,7 +28,6 @@ public:
 
    Player(string ip, Portable_socket* socket_client);
    void Calculate_total_money();
-   void Eliminate();
    void Charge_bank();
    void Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50);
    void Buy_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50);

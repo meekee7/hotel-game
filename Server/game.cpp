@@ -9,6 +9,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->n_players = n_players;
    this->creator = creator;
    this->plist.push_back(creator);
+   this->active_plist.push_back(creator);
    this->chat = new Chat(this->creator, false, mutex_ids, id_count);
    this->chat->join(this->creator);
    this->id = this->chat->id;
@@ -66,6 +67,7 @@ bool Game::join(Player* p)
    if ((int) this->plist.size() < this->n_players)
    {
       this->plist.push_back(p);
+      this->active_plist.push_back(p);
       this->chat->join(p);
       wcout << L"Player " << p->name << L" joined game " << this->name << endl;
       return true;
@@ -101,6 +103,8 @@ bool Game::leave(Player* p)
 		wcout << L"Player " << p->name << L" not found in game " << this->name << " (WARNING: Possible hack)" << endl;
    else
    {
+      if (this->is_active(p))
+         this->eliminate_player(p);
       this->chat->leave(p);
       this->plist.erase(i);
 		wcout << L"Player "<< p->name << L" left game " << this->name << endl;
@@ -192,7 +196,7 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
    }
    // Allow again all players to ask for nights
    list<Player*>::iterator i;
-   for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
+   for (i = this->active_plist.begin() ; i != this->active_plist.end() ; ++i)
       (*i)->asked_nights_last_turn = false;
    list<Hotel*>::iterator i2;
    // Allow new entrances in all player hotels
@@ -202,7 +206,6 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
 
 Player* Game::turn_pass(dlib::mutex* debt_mutex)
 {
-   bool valid = false;
    this->current_player->rolled_last_turn = false;
    // There is no need to reset more variables because the player always must roll before doing anything, and the function move_player does the reset
    if (this->current_player->debt_last_turn > 0)
@@ -214,21 +217,16 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
    }
 
    list<Player*>::iterator i;
-   i = find(this->plist.begin(), this->plist.end(), this->current_player);
-   while (!valid)
+   i = find(this->active_plist.begin(), this->active_plist.end(), this->current_player);
+   if (i == --this->active_plist.end())
    {
-      if (i == --this->plist.end())
-      {
-         this->current_player = *(this->plist.begin());
-         i = plist.begin();
-      }
-      else
-      {
-         advance(i, 1);
-         this->current_player = *i;
-      }
-      if (this->current_player->active)
-         valid = true;
+      i = active_plist.begin();
+      this->current_player = (*i);
+   }
+   else
+   {
+      advance(i, 1);
+      this->current_player = *i;
    }
    this->turn_count++;
    wcout << L"Turn passed, next player: " << this->current_player->name << endl;
@@ -237,38 +235,53 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
 
 int Game::get_active_players_count()
 {
-   int num = 0;
+   return this->active_plist.size();
+   /*int num = 0;
    list<Player*>::iterator i;
    for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
    {
       if ((*i)->active)
          num++;
    }
-   return num;
+   return num;*/
 }
 
 Player* Game::get_winner() // Only called when active players count is 1, so it gets first active player in list
 {
-   list<Player*>::iterator i = this->plist.begin();
+   return this->active_plist.front();
+   /*list<Player*>::iterator i = this->active_plist.begin();
    bool found = false;
-   while (!found && (i != this->plist.end())) // Second part shouldn't happen
+   while (!found && (i != this->active_plist.end())) // Second part shouldn't happen
    {
       if ((*i)->active)
          found = true;
       else
          ++i;
    }
-   return (*i);
+   return (*i);*/
+}
+
+bool Game::is_active(Player* player)
+{
+   list<Player*>::iterator i;
+   i = find(this->active_plist.begin(), this->active_plist.end(), player);
+   if (i == this->active_plist.end())
+      return false;
+   else
+      return true;
 }
 
 void Game::eliminate_player(Player* player)
 {
-   player->Eliminate();
+   // Find the player
+   list<Player*>::iterator i;
+   i = find(this->active_plist.begin(), this->active_plist.end(), player);
+   this->active_plist.erase(i);
    // Return all hotels to bank
-   list<Hotel*>::iterator i;
-   for (i = player->hotels.begin() ; i != player->hotels.end() ; ++i)
+   list<Hotel*>::iterator i2;
+   for (i2 = player->hotels.begin() ; i2 != player->hotels.end() ; ++i2)
    {
-      (*i)->Return_to_bank();
+      (*i2)->Return_to_bank();
    }
    player->hotels.clear();
 }
@@ -457,4 +470,5 @@ Game::~Game(void)
    this->creator = NULL;
    delete this->chat;
    this->plist.clear();
+   this->active_plist.clear();
 }
