@@ -935,7 +935,7 @@ void handle_command(string command, Player* p)
       game->roll_dice();
       game->move_player(p, &debt_mutex);
       p->rolled_last_turn = true;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("rolled_dice", dest);
@@ -987,7 +987,7 @@ void handle_command(string command, Player* p)
       if (p->debt_last_turn > 0) // Hack, retire player
          return;
       Player* next_player = game->turn_pass(&debt_mutex);
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("turn_passed", dest);
@@ -1012,7 +1012,7 @@ void handle_command(string command, Player* p)
          return;
       else
          p->Charge_bank();
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("update_player_money", dest);
@@ -1075,7 +1075,7 @@ void handle_command(string command, Player* p)
       player->bought_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("hotel_purchased", dest);
@@ -1148,7 +1148,7 @@ void handle_command(string command, Player* p)
       player->bought_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("hotel_expropriated", dest);
@@ -1260,7 +1260,7 @@ void handle_command(string command, Player* p)
       player->built_last_turn = true;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("phase_built", dest);
@@ -1349,7 +1349,7 @@ void handle_command(string command, Player* p)
          player->free_entrance_used = true;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("entrance_added", dest);
@@ -1386,14 +1386,15 @@ void handle_command(string command, Player* p)
          return;
       if (!game->is_active(player)) // Hack, already retired
          return;
+      Player* next_player;
+      if (game->get_active_players_count() > 2)
+         next_player = game->turn_pass(&debt_mutex);
       game->eliminate_player(player);
       list<Player*>::iterator i;
       Player* dest, * winner;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Avoid sending commands to retired players, because their forms can be already closed and could lead to a client crash
       {
          dest = (*i);
-         if (!game->is_active(dest)) // Avoid sending commands to retired players, because their windows might be closed and would make client crash
-            continue;
          send_command("player_retired", dest);
          send_int(dest, id);
          send_int(dest, get_utf8_length(p->name));
@@ -1406,6 +1407,13 @@ void handle_command(string command, Player* p)
             winner = game->get_winner();
             send_int(dest, get_utf8_length(winner->name));
             send_wstring(dest, winner->name);
+         }
+         else
+         {
+            send_command("turn_passed", dest);
+            send_int(dest, id);
+            send_int(dest, get_utf8_length(next_player->name));
+            send_wstring(dest, next_player->name);
          }
       }
    }
@@ -1425,7 +1433,7 @@ void handle_command(string command, Player* p)
          return;
       p->asked_nights_last_turn = true;
       int amount = 0, nights = 0;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
       {
          dest = (*i);
          if (dest != p) // Player doesn't have to pay himself :D
@@ -1488,7 +1496,7 @@ void handle_command(string command, Player* p)
       }
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("update_player_money", dest);
@@ -1536,7 +1544,7 @@ void handle_command(string command, Player* p)
       game->best_bid = 0;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("auction_started", dest);
@@ -1567,7 +1575,7 @@ void handle_command(string command, Player* p)
       game->best_bidder = p;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("auction_bid_placed", dest);
@@ -1595,7 +1603,7 @@ void handle_command(string command, Player* p)
          return;
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("auction_sold", dest);
@@ -1645,7 +1653,7 @@ void handle_command(string command, Player* p)
       }
       list<Player*>::iterator i;
       Player* dest;
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("hotel_expropriated", dest);
@@ -1674,7 +1682,7 @@ void handle_command(string command, Player* p)
          send_int(dest, previous_owner->n_5000);
       }
       // If this command is sent before updating hotels and money to everyone, the client doesn't know who owns the hotels
-      for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+      for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
          dest = (*i);
          send_command("auction_ended", dest);

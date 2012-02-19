@@ -210,7 +210,7 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
    // There is no need to reset more variables because the player always must roll before doing anything, and the function move_player does the reset
    if (this->current_player->debt_last_turn > 0)
    {
-      debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
+      debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is somehow asynchronous
       this->current_player->debt_last_turn = 0;
       this->current_player->debt_nights_to_last_turn = NULL;
       debt_mutex->unlock();

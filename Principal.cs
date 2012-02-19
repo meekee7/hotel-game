@@ -1379,7 +1379,7 @@ namespace Juego_Hotel
                     if (control is Button) control.Enabled = false;
                 }
                 this.bSalir.Enabled = true;
-                return; // Se hace en el comando enviado por el server
+                return;
             }
             if (n_jugador + 1 == this.juego.jug_actual)
             {

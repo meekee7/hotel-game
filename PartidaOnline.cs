@@ -104,6 +104,8 @@ namespace Juego_Hotel
             }
             else
                 this.interfaz.partida_activa = false;
+            if (this.interfaz == null)
+                return;
             if (!this.interfaz.IsDisposed)
                 this.interfaz.BeginInvoke(new Cerrar_partida_Callback(this.interfaz.Close));
         }
