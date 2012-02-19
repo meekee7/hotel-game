@@ -102,11 +102,10 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("leave_game", this.id.ToString());
                 this.frm_online.lista_partidas.Remove(this);
             }
-            if (this.interfaz != null)
-            {
-                //this.interfaz.partida_activa = false;
+            else
+                this.interfaz.partida_activa = false;
+            if (!this.interfaz.IsDisposed)
                 this.interfaz.BeginInvoke(new Cerrar_partida_Callback(this.interfaz.Close));
-            }
         }
 
         delegate void Nuevo_mensaje_Callback(String msg);

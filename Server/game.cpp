@@ -275,8 +275,12 @@ void Game::eliminate_player(Player* player)
 {
    // Find the player
    list<Player*>::iterator i;
-   i = find(this->active_plist.begin(), this->active_plist.end(), player);
-   this->active_plist.erase(i);
+   if (this->active_plist.size() > 0)
+   {
+      i = find(this->active_plist.begin(), this->active_plist.end(), player);
+      if (i != this->active_plist.end())
+         this->active_plist.erase(i);
+   }
    // Return all hotels to bank
    list<Hotel*>::iterator i2;
    for (i2 = player->hotels.begin() ; i2 != player->hotels.end() ; ++i2)

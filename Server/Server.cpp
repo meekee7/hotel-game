@@ -468,7 +468,7 @@ void disconnect_client(Player* p)
       else
       {
          // Notify the rest of players that the player left the game
-         list<Player*>::iterator i3;
+         list<Player*>::iterator i3, j;
          Player* dest, * winner;
          for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
          {
@@ -477,6 +477,14 @@ void disconnect_client(Player* p)
             send_int(dest, (*i2)->id);
             send_int(dest, get_utf8_length(p->name));
             send_wstring(dest, p->name);
+            send_command("chat_userlist", dest);
+            send_int(dest, (*i2)->id);
+            send_int(dest, (*i2)->plist.size()); // Number of players
+            for (j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
+            {
+               send_int(dest, get_utf8_length((*j)->name));
+               send_wstring(dest, (*j)->name);
+            }
             if ((*i2)->get_active_players_count() == 1)
             {
                (*i2)->ended = true;

@@ -361,7 +361,8 @@ namespace Juego_Hotel
             {
                 if (control is Button) control.Enabled = false;
             }
-            this.bReiniciar.Enabled = true;
+            if (!this.online)
+                this.bReiniciar.Enabled = true;
             this.bSalir.Enabled = true;
             this.controlJ1.Enabled = false;
             this.controlJ2.Enabled = false;
@@ -1372,7 +1373,14 @@ namespace Juego_Hotel
                     break;
             }
             if (this.online)
+            {
+                foreach (Control control in this.Controls)
+                {
+                    if (control is Button) control.Enabled = false;
+                }
+                this.bSalir.Enabled = true;
                 return; // Se hace en el comando enviado por el server
+            }
             if (n_jugador + 1 == this.juego.jug_actual)
             {
                 this.bTurno.Enabled = true;
@@ -1381,20 +1389,24 @@ namespace Juego_Hotel
             }
         }
 
-        private void Retirarse(int num_jugador)
+        private Boolean Retirarse(int num_jugador)
         {
             if (this.juego.jugadores[num_jugador].Eliminado()) // Ya está eliminado
-                return;
+                return true;
             if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 if (!this.online)
-                {
                     this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
-                    this.Marcar_Jugador_Eliminado(num_jugador);
-                }
                 else
+                {
                     this.frm_online.enviar_comando("retire", this.game_id.ToString());
+                    this.partida_activa = false;
+                }
+                this.Marcar_Jugador_Eliminado(num_jugador);
+                return true;
             }
+            else
+                return false;
         }
 
         private void bRetirarseJ1_Click(object sender, EventArgs e)
@@ -1420,7 +1432,8 @@ namespace Juego_Hotel
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.partida_activa)
-                this.Retirarse(this.juego.jugador_actual.n_jugador);
+                if (!this.Retirarse(this.juego.jugador_actual.n_jugador))
+                    e.Cancel = true;
         }
 
         private void Principal_Shown(object sender, EventArgs e)

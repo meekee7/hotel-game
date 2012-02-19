@@ -486,129 +486,6 @@
   <data name="controlJ1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="&gt;&gt;nombreJ1.Name" xml:space="preserve">
-    <value>nombreJ1</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Name" xml:space="preserve">
-    <value>bRetirarseJ1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Name" xml:space="preserve">
-    <value>colorJ1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Name" xml:space="preserve">
-    <value>bPedirNochesJ1</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Name" xml:space="preserve">
-    <value>bEntradasJ1</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Name" xml:space="preserve">
-    <value>dineroJ1</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Name" xml:space="preserve">
-    <value>bVerHotelesJ1</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Name" xml:space="preserve">
-    <value>posJ1</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;posJ1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="controlJ1.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 516</value>
-  </data>
-  <data name="controlJ1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ1.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="controlJ1.Text" xml:space="preserve">
-    <value>Jugador 1</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Name" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
-    <value>25</value>
-  </data>
   <data name="nombreJ1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -813,6 +690,33 @@
   <data name="&gt;&gt;posJ1.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="controlJ1.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="controlJ1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 516</value>
+  </data>
+  <data name="controlJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
+  </data>
+  <data name="controlJ1.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="controlJ1.Text" xml:space="preserve">
+    <value>Jugador 1</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.Name" xml:space="preserve">
+    <value>controlJ1</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
   <data name="turnoJ1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -872,117 +776,6 @@
   </data>
   <data name="controlJ2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Name" xml:space="preserve">
-    <value>nombreJ2</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Name" xml:space="preserve">
-    <value>bRetirarseJ2</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Name" xml:space="preserve">
-    <value>colorJ2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Name" xml:space="preserve">
-    <value>bPedirNochesJ2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Name" xml:space="preserve">
-    <value>bEntradasJ2</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Name" xml:space="preserve">
-    <value>dineroJ2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Name" xml:space="preserve">
-    <value>posJ2</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;posJ2.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="controlJ2.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 516</value>
-  </data>
-  <data name="controlJ2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ2.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="controlJ2.Text" xml:space="preserve">
-    <value>Jugador 2</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Name" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
-    <value>24</value>
   </data>
   <data name="nombreJ2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1164,6 +957,33 @@
   <data name="&gt;&gt;posJ2.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="controlJ2.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="controlJ2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 516</value>
+  </data>
+  <data name="controlJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
+  </data>
+  <data name="controlJ2.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="controlJ2.Text" xml:space="preserve">
+    <value>Jugador 2</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.Name" xml:space="preserve">
+    <value>controlJ2</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
   <data name="turnoJ2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -1223,117 +1043,6 @@
   </data>
   <data name="controlJ3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Name" xml:space="preserve">
-    <value>nombreJ3</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Name" xml:space="preserve">
-    <value>bRetirarseJ3</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Name" xml:space="preserve">
-    <value>colorJ3</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Name" xml:space="preserve">
-    <value>bPedirNochesJ3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Name" xml:space="preserve">
-    <value>bEntradasJ3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Name" xml:space="preserve">
-    <value>dineroJ3</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Name" xml:space="preserve">
-    <value>posJ3</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;posJ3.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="controlJ3.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>354, 516</value>
-  </data>
-  <data name="controlJ3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ3.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="controlJ3.Text" xml:space="preserve">
-    <value>Jugador 3</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Name" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
-    <value>23</value>
   </data>
   <data name="nombreJ3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1515,6 +1224,33 @@
   <data name="&gt;&gt;posJ3.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="controlJ3.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="controlJ3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>354, 516</value>
+  </data>
+  <data name="controlJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
+  </data>
+  <data name="controlJ3.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="controlJ3.Text" xml:space="preserve">
+    <value>Jugador 3</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.Name" xml:space="preserve">
+    <value>controlJ3</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
   <data name="turnoJ3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -1574,117 +1310,6 @@
   </data>
   <data name="controlJ4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.Name" xml:space="preserve">
-    <value>nombreJ4</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;nombreJ4.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.Name" xml:space="preserve">
-    <value>bRetirarseJ4</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.Name" xml:space="preserve">
-    <value>colorJ4</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;colorJ4.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.Name" xml:space="preserve">
-    <value>bPedirNochesJ4</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.Name" xml:space="preserve">
-    <value>bEntradasJ4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ4.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.Name" xml:space="preserve">
-    <value>dineroJ4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;dineroJ4.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;posJ4.Name" xml:space="preserve">
-    <value>posJ4</value>
-  </data>
-  <data name="&gt;&gt;posJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;posJ4.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="controlJ4.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 516</value>
-  </data>
-  <data name="controlJ4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ4.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="controlJ4.Text" xml:space="preserve">
-    <value>Jugador 4</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.Name" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ4.ZOrder" xml:space="preserve">
-    <value>22</value>
   </data>
   <data name="nombreJ4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1865,6 +1490,33 @@
   </data>
   <data name="&gt;&gt;posJ4.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="controlJ4.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="controlJ4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>524, 516</value>
+  </data>
+  <data name="controlJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
+  </data>
+  <data name="controlJ4.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="controlJ4.Text" xml:space="preserve">
+    <value>Jugador 4</value>
+  </data>
+  <data name="&gt;&gt;controlJ4.Name" xml:space="preserve">
+    <value>controlJ4</value>
+  </data>
+  <data name="&gt;&gt;controlJ4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ4.ZOrder" xml:space="preserve">
+    <value>22</value>
   </data>
   <data name="turnoJ4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -2658,8 +2310,8 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAm
-        DQAAAk1TRnQBSQFMAgEBAgEAAYwBAAGMAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAk
+        DQAAAk1TRnQBSQFMAgEBAgEAAZQBAAGUAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEgBgABEFIAA/sB/wP7Af8D+wH/A/sB/wP7Af8D+wH/A/sB/wP8Af8D/AH/A/sB/wP7
         Af8D+wH/Af0C+wH/Af0C+wH/A/sB/wP7Af+AAAMCAQMDBwQJAQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMJ
         AQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMHAQkDAgEDAfoB+QH7Af8B+gH5AfsB/wH6AfkB+wH/AfkB+AH6
@@ -2670,52 +2322,52 @@
         AxUBHQIAAbIB/wIAAbEB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIA
         AbIB/wIAAbIB/wIAAbIB/wIAAbIB/wIAAbIB/wMVAR0B1QHYAe0B/wHJAcwB4QH/AcYBxwHcAf8BswG0
         AckB/wGrAawBwQH/AaEBowG7Af8BmAGZAbMB/wGoAakBwwH/AasBrAHGAf8BqgGrAcUB/wHAAb8B2QH/
-        AcgBxwHhAf8BuQG7AdMB/wGnAagBvQH/AbQBtQHJAf8C2wHtAf+AAAMZASMCAAG1Af8BCwEDAd8B/wEL
-        AQMB3wH/AQsBAwHfAf8BCwEDAd8B/wELAQMB3wH/AQsBAwHfAf8BCwEDAd8B/wELAQMB3wH/AQsBAwHf
-        Af8BCwEDAd8B/wELAQMB3wH/AQsBAwHfAf8CAAG1Af8DGQEjAasBrgHhAf8BlAGXAcoB/wGbAZwBzwH/
-        AY4BkQHEAf8BbwFyAbAB/wFtAW8BsAH/AWEBYgGlAf8BZwFpAa4B/wFzAXQBuwH/AW8BcwG5Af8BkgGT
-        AdAB/wGiAaMB3wH/AY8BkAHKAf8BaAFrAakB/wKFAbMB/wGxAbIB3gH/gAADGQEjAQMBAAG8Af8BDQEF
-        AeAB/wEFAQAB3wH/AQQBAAHfAf8BBQEAAd8B/wEFAQAB3wH/AQUBAAHfAf8BBQEAAd8B/wEEAQAB3wH/
-        AQQBAAHfAf8BBQEAAd8B/wEFAQAB3wH/AQ0BBQHgAf8BBAEAAbwB/wMZASMBkwGYAdcB/wGCAYQBxAH/
-        ApAB0AH/Ao4BzgH/AWgBagG2Af8BZwFqAbkB/wFoAWkBvgH/AWEBZAG6Af8BZgFoAcEB/wFcAWABugH/
-        AW8BcAHLAf8BhgGIAdYB/wJvAcYB/wFjAWYBtQH/AWsBbAGzAf8BogGjAdsB/4AAAxkBIwELAdIB3wH/
-        AQ4B7wL/AS0B5gHhAf8BGQHRAewB/wEgAaMB4wH/ARsBvgHfAf8BIgHuAesB/wEEAe8C/wEDAe8C/wED
-        Ae8C/wEDAe8C/wEDAe8C/wEPAe8C/wELAdIB3wH/AxkBIwGfAaIB3wH/AYYBhwHDAf8CcQG4Af8CiwHH
-        Af8CggHCAf8BXgFfAa4B/wFlAWYBuwH/AWsBbQHGAf8BcAFyAcsB/wFnAWsBxQH/AXABcwHPAf8BkAGU
-        AeMB/wGAAYIB0AH/AV8BYQGyAf8BbAFtAbUB/wGkAaYB4AH/gAADGQEjARIB2gHnAf8BEgHxAv8BOwHE
-        AfMB/wETAYQB2AH/AScBMgGoAf8BQAGEAd4B/wEmAdMB9QH/AQYB8AL/AQYB8QL/AQYB8AL/AQYB8AL/
-        AQYB8AL/ARIB8gL/ARIB2gHnAf8DGQEjAbgBrwHaAf8BsgGoAdIB/wGsAZ4BxwH/AZ8BkQG7Af8BlQGI
-        AbQB/wGEAXEBsQH/AYIBdAHEAf8ChgHSAf8BkQGTAeEB/wGGAYoB2QH/AYEBhAHVAf8BlAGYAecB/wGF
-        AYcB1QH/AWYBaAG6Af8BbwFyAboB/wGjAaUB3wH/gAADGQEjARsB4gHvAf8BFwHxAv8BLQHHAfEB/wEP
-        AVUBygH/AYsBagHJAf8BiQG3AecB/wEWAdYB8wH/AQgB8AL/AQgB8AL/AQgB8AL/AQgB8AL/AQgB8AL/
-        ARcB8QL/ARsB4gHvAf8DGQEjAZgBbgGCAf8BggFWAV0B/wFrAUYBTgH/AW0BRgFOAf8BZQFAAUoB/wFF
-        ASsBQwH/AWIBVwGaAf8BdAFxAcQB/wKKAdYB/wGWAZgB5gH/AYMBhAHUAf8BiQGLAdkB/wGAAYUB0AH/
-        AVoBXgGwAf8BXQFfAaoB/wGcAZ0B2QH/gAADGQEjASQB6gH2Af8BOgHzAv8BKwHlAfUB/wEuAaQB5AH/
-        AT8BgwHZAf8BNwHGAecB/wEpAesB9gH/ASoB8gL/ASoB8wL/ASoB8wL/ASoB8wL/ASoB8wL/AToB9AL/
-        ASQB6wH2Af8DGQEjAaoBcQFqAf8BlQFcAVQB/wGYAVwBVAH/AZEBVQFNAf8BgwFHAT8B/wFOASkBMwH/
-        AW8BYgGbAf8BowGgAeUB/wGVAZQB3gH/AqAB7AH/AqcB8wH/AaMBpgHwAf8BmwGeAegB/wGFAYgBzAH/
-        AWkBagGxAf8BngGfAdcB/4AAAxkBIwEtAe8B/AH/AUwB9AL/AToB8wL/AT8B7AH4Af8BQAHcAe4B/wE8
-        AfIB+wH/AToB8wL/AToB8wL/AToB8wL/AToB8wL/AToB8wL/AToB8wL/AUwB9AL/AS0B7wH8Af8DGQEj
-        AbIBggFzAf8BmAFdAVcB/wGjAWgBYgH/AaABYwFdAf8BkgFVAU8B/wFfATcBQgH/AWIBUQGHAf8BiwGI
-        AcYB/wGXAZgB3AH/AZoBnAHjAf8BpQGnAe0B/wGuAbEB9QH/AaoBrQHxAf8BlAGXAdQB/wGLAY4BwQH/
-        AaIBpAHUAf+AAAMZASMBMwEtAeUB/wFdAVgB6wH/AUoBRQHoAf8BSgFFAegB/wFKAUUB6AH/AUoBRQHo
-        Af8BSQFEAegB/wFJAUQB6AH/AUoBRQHoAf8BSgFFAegB/wFKAUUB6AH/AUoBRQHoAf8BXQFYAesB/wEz
-        AS0B5QH/AxkBIwGzAYoBhwH/AY0BWQFWAf8BqQGBAXEB/wGmAXMBbgH/AZwBZwFiAf8BbwFOAVUB/wFz
-        AWYBkQH/AYUBggGzAf8CkAHGAf8BlAGVAc0B/wGWAZgBzgH/AawBrwHiAf8BrQGuAeEB/wGOAZEBvgH/
-        AoEBqQH/AaMBpAHGAf+AAAMXASABOAEzAeYB/wFqAWYB7QH/AWoBZgHtAf8BagFmAe0B/wFqAWYB7QH/
-        AWoBZgHtAf8BagFmAe0B/wFqAWYB7QH/AWoBZgHtAf8BagFmAe0B/wFqAWYB7QH/AWsBZwHtAf8BagFm
-        Ae0B/wE4ATMB5gH/AxcBIAHOAbgBswH/AasBlQGQAf8BuwGlAaAB/wHIAbIBrQH/AcgBrwGrAf8BtgGj
-        AaYB/wG+AbYBxwH/AbcBtAHNAf8BuwG8AdYB/wHNAc4B6gH/Ac4BzwHrAf8B1gHXAfEB/wHeAd0B9wH/
-        AcwBzQHiAf8BwwHCAdYB/wLMAdwB/4AAAxABFQE8ATYB5gH/ATkBNgHlAf8BPAE2AeYB/wE8ATYB5gH/
-        ATwBNgHmAf8BPAE2AeYB/wE8ATYB5gH/ATwBNgHmAf8BPAE2AeYB/wE8ATYB5gH/ATwBNgHmAf8BPAE2
-        AeYB/wE8ATYB5gH/ATwBNgHmAf8DEAEVAf8B/QH6Av8B+wH4Av8B+AH2Av8B/AH6Av8B/gH8Av8C/gH/
-        Af0B+QL/AfsB+gL/AfkB+gL/AfYB9wL/AfQB9QL/AfYB9QL/AfcB9gL/AfcB9gL/AvkC/wL6Av+AAAME
-        AQYDDQQSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMNARIDBAEG
-        Af8B+wH6Av8B+wH6Av8B/AH7Av8B+wH6Af8B/gH6AfkB/wH8AvoB/wH7AfoB/AH/AfsB+gH8Af8B+QH7
-        AfwB/wH6AfwB/QH/AfoB+wL/AfwB+wL/AfwB+wH9Af8B+wH6AfwB/wH7AfoB/AH/AfsB+gH8Af/AAAP7
-        Af8D+wH/A/sB/wP7Af8D/AH/A/sB/wP7Af8D+wH/AfsB/AH6Af8B+wH8AfoB/wH7AfoB/AH/A/sB/wH9
-        AvsB/wH8AfoB+QH/A/sB/wP7Af+AAAFCAU0BPgcAAT4DAAEoAwABQAMAARADAAEBAQABAQUAAYAXAAP/
-        AQAC/3YAAv8GAAs=
+        AcgBxwHhAf8BuQG7AdMB/wGnAagBvQH/AbQBtQHJAf8C2wHtAf+AAAMZASMCAAG1Af8BCgECAd8B/wEK
+        AQIB3wH/AQoBAgHfAf8BCgECAd8B/wEKAQIB3wH/AQoBAgHfAf8BCgECAd8B/wEKAQIB3wH/AQoBAgHf
+        Af8BCgECAd8B/wEKAQIB3wH/AQoBAgHfAf8CAAG1Af8DGQEjAasBrgHhAf8BlAGXAcoB/wGbAZwBzwH/
+        AY4BkQHEAf8BbgFxAbAB/wFsAW4BsAH/AWABYQGlAf8BZgFoAa4B/wFyAXMBuwH/AW4BcgG5Af8BkgGT
+        AdAB/wGiAaMB3wH/AY8BkAHKAf8BZwFqAakB/wKFAbMB/wGxAbIB3gH/gAADGQEjAQIBAAG8Af8BDAEE
+        AeAB/wEEAQAB3wH/AQMBAAHfAf8BBAEAAd8B/wEEAQAB3wH/AQQBAAHfAf8BBAEAAd8B/wEDAQAB3wH/
+        AQMBAAHfAf8BBAEAAd8B/wEEAQAB3wH/AQwBBAHgAf8BAwEAAbwB/wMZASMBkwGYAdcB/wGCAYQBxAH/
+        ApAB0AH/Ao4BzgH/AWcBaQG2Af8BZgFpAbkB/wFnAWgBvgH/AWABYwG6Af8BZQFnAcEB/wFbAV8BugH/
+        AW4BbwHLAf8BhgGIAdYB/wJuAcYB/wFiAWUBtQH/AWoBawGzAf8BogGjAdsB/4AAAxkBIwEKAdIB3wH/
+        AQ0B7wL/ASwB5gHhAf8BGAHRAewB/wEfAaMB4wH/ARoBvgHfAf8BIQHuAesB/wEDAe8C/wECAe8C/wEC
+        Ae8C/wECAe8C/wECAe8C/wEOAe8C/wEKAdIB3wH/AxkBIwGfAaIB3wH/AYYBhwHDAf8CcAG4Af8CiwHH
+        Af8CggHCAf8BXQFeAa4B/wFkAWUBuwH/AWoBbAHGAf8BbwFxAcsB/wFmAWoBxQH/AW8BcgHPAf8BkAGU
+        AeMB/wGAAYIB0AH/AV4BYAGyAf8BawFsAbUB/wGkAaYB4AH/gAADGQEjAREB2gHnAf8BEQHxAv8BOgHE
+        AfMB/wESAYQB2AH/ASYBMQGoAf8BPwGEAd4B/wElAdMB9QH/AQUB8AL/AQUB8QL/AQUB8AL/AQUB8AL/
+        AQUB8AL/AREB8gL/AREB2gHnAf8DGQEjAbgBrwHaAf8BsgGoAdIB/wGsAZ4BxwH/AZ8BkQG7Af8BlQGI
+        AbQB/wGEAXABsQH/AYIBcwHEAf8ChgHSAf8BkQGTAeEB/wGGAYoB2QH/AYEBhAHVAf8BlAGYAecB/wGF
+        AYcB1QH/AWUBZwG6Af8BbgFxAboB/wGjAaUB3wH/gAADGQEjARoB4gHvAf8BFgHxAv8BLAHHAfEB/wEO
+        AVQBygH/AYsBaQHJAf8BiQG3AecB/wEVAdYB8wH/AQcB8AL/AQcB8AL/AQcB8AL/AQcB8AL/AQcB8AL/
+        ARYB8QL/ARoB4gHvAf8DGQEjAZgBbQGCAf8BggFVAVwB/wFqAUUBTQH/AWwBRQFNAf8BZAE/AUkB/wFE
+        ASoBQgH/AWEBVgGaAf8BcwFwAcQB/wKKAdYB/wGWAZgB5gH/AYMBhAHUAf8BiQGLAdkB/wGAAYUB0AH/
+        AVkBXQGwAf8BXAFeAaoB/wGcAZ0B2QH/gAADGQIjAeoB9gH/ATkB8wL/ASoB5QH1Af8BLQGkAeQB/wE+
+        AYMB2QH/ATYBxgHnAf8BKAHrAfYB/wEpAfIC/wEpAfMC/wEpAfMC/wEpAfMC/wEpAfMC/wE5AfQC/wEj
+        AesB9gH/AxkBIwGqAXABaQH/AZUBWwFTAf8BmAFbAVMB/wGRAVQBTAH/AYMBRgE+Af8BTQEoATIB/wFu
+        AWEBmwH/AaMBoAHlAf8BlQGUAd4B/wKgAewB/wKnAfMB/wGjAaYB8AH/AZsBngHoAf8BhQGIAcwB/wFo
+        AWkBsQH/AZ4BnwHXAf+AAAMZASMBLAHvAfwB/wFLAfQC/wE5AfMC/wE+AewB+AH/AT8B3AHuAf8BOwHy
+        AfsB/wE5AfMC/wE5AfMC/wE5AfMC/wE5AfMC/wE5AfMC/wE5AfMC/wFLAfQC/wEsAe8B/AH/AxkBIwGy
+        AYIBcgH/AZgBXAFWAf8BowFnAWEB/wGgAWIBXAH/AZIBVAFOAf8BXgE2AUEB/wFhAVABhwH/AYsBiAHG
+        Af8BlwGYAdwB/wGaAZwB4wH/AaUBpwHtAf8BrgGxAfUB/wGqAa0B8QH/AZQBlwHUAf8BiwGOAcEB/wGi
+        AaQB1AH/gAADGQEjATIBLAHlAf8BXAFXAesB/wFJAUQB6AH/AUkBRAHoAf8BSQFEAegB/wFJAUQB6AH/
+        AUgBQwHoAf8BSAFDAegB/wFJAUQB6AH/AUkBRAHoAf8BSQFEAegB/wFJAUQB6AH/AVwBVwHrAf8BMgEs
+        AeUB/wMZASMBswGKAYcB/wGNAVgBVQH/AakBgQFwAf8BpgFyAW0B/wGcAWYBYQH/AW4BTQFUAf8BcgFl
+        AZEB/wGFAYIBswH/ApABxgH/AZQBlQHNAf8BlgGYAc4B/wGsAa8B4gH/Aa0BrgHhAf8BjgGRAb4B/wKB
+        AakB/wGjAaQBxgH/gAADFwEgATcBMgHmAf8BaQFlAe0B/wFpAWUB7QH/AWkBZQHtAf8BaQFlAe0B/wFp
+        AWUB7QH/AWkBZQHtAf8BaQFlAe0B/wFpAWUB7QH/AWkBZQHtAf8BaQFlAe0B/wFqAWYB7QH/AWkBZQHt
+        Af8BNwEyAeYB/wMXASABzgG4AbMB/wGrAZUBkAH/AbsBpQGgAf8ByAGyAa0B/wHIAa8BqwH/AbYBowGm
+        Af8BvgG2AccB/wG3AbQBzQH/AbsBvAHWAf8BzQHOAeoB/wHOAc8B6wH/AdYB1wHxAf8B3gHdAfcB/wHM
+        Ac0B4gH/AcMBwgHWAf8CzAHcAf+AAAMQARUBOwE1AeYB/wE4ATUB5QH/ATsBNQHmAf8BOwE1AeYB/wE7
+        ATUB5gH/ATsBNQHmAf8BOwE1AeYB/wE7ATUB5gH/ATsBNQHmAf8BOwE1AeYB/wE7ATUB5gH/ATsBNQHm
+        Af8BOwE1AeYB/wE7ATUB5gH/AxABFQH/Af0B+gL/AfsB+AL/AfgB9gL/AfwB+gL/Af4B/AL/Av4B/wH9
+        AfkC/wH7AfoC/wH5AfoC/wH2AfcC/wH0AfUC/wH2AfUC/wH3AfYC/wH3AfYC/wL5Av8C+gL/gAADBAEG
+        Aw0EEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDDQESAwQBBgH/
+        AfsB+gL/AfsB+gL/AfwB+wL/AfsB+gH/Af4B+gH5Af8B/AL6Af8B+wH6AfwB/wH7AfoB/AH/AfkB+wH8
+        Af8B+gH8Af0B/wH6AfsC/wH8AfsC/wH8AfsB/QH/AfsB+gH8Af8B+wH6AfwB/wH7AfoB/AH/wAAD+wH/
+        A/sB/wP7Af8D+wH/A/wB/wP7Af8D+wH/A/sB/wH7AfwB+gH/AfsB/AH6Af8B+wH6AfwB/wP7Af8B/QL7
+        Af8B/AH6AfkB/wP7Af8D+wH/gAABQgFNAT4HAAE+AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/wEA
+        Av92AAL/BgAL
 </value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

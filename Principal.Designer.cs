@@ -504,6 +504,7 @@
             // bSalir
             // 
             resources.ApplyResources(this.bSalir, "bSalir");
+            this.bSalir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bSalir.Name = "bSalir";
             this.bSalir.UseVisualStyleBackColor = true;
             this.bSalir.Click += new System.EventHandler(this.bSalir_Click);
@@ -609,8 +610,10 @@
             // 
             // Principal
             // 
+            this.AcceptButton = this.bIniciar;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.bSalir;
             this.Controls.Add(this.comboBoxIdiomas);
             this.Controls.Add(this.labelIdioma);
             this.Controls.Add(this.img_ayto);

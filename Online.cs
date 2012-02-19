@@ -377,21 +377,33 @@ namespace Juego_Hotel
                     this.frm_chat_global.Close();
                     this.frm_chat_global = null;
                 }
-                for (i = this.chats_abiertos.Count - 1 ; i >= 0 ; i--)
+                for (i = this.chats_abiertos.Count - 1; i >= 0; i--)
                 {
                     this.chats_abiertos.ToArray()[i].conectado = false;
                     this.Cerrar_Chat(this.chats_abiertos.ToArray()[i]);
                 }
                 this.chats_abiertos.Clear();
             }
+            else
+            {
+                if (this.frm_chat_global != null)
+                    this.frm_chat_global.conectado = false;
+                for (i = this.chats_abiertos.Count - 1; i >= 0; i--)
+                    this.chats_abiertos.ToArray()[i].conectado = false;
+            }
             if ((this.lista_partidas.Count > 0) &&
                 (MessageBox.Show("¿Quieres que se cierre cualquier partida abierta?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 for (i = this.lista_partidas.Count - 1; i >= 0; i--)
-                {
                     this.Cerrar_Partida(this.lista_partidas.ToArray()[i]);
-                }
                 this.lista_partidas.Clear();
+            }
+            else
+            {
+                for (i = this.lista_partidas.Count - 1; i >= 0; i--)
+                {
+                    this.lista_partidas.ToArray()[i].cerrando_por_desconexion = true;
+                }
             }
             this.bDesconectar.PerformClick();
         }
