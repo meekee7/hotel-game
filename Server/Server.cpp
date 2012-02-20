@@ -416,7 +416,7 @@ void send_command(string command, Player* p)
    send_string(p, command);
 }
 
-void disconnect_client(Player* p)
+void disconnect_client(Player* p, bool kicking)
 {
    if (!p->connected)
       return;
@@ -473,10 +473,20 @@ void disconnect_client(Player* p)
          for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
          {
             dest = (*i3);
-            send_command("player_retired", dest);
-            send_int(dest, (*i2)->id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            if (kicking)
+            {
+               send_command("player_kicked", dest);
+               send_int(dest, (*i2)->id);
+               send_int(dest, get_utf8_length(p->name));
+               send_wstring(dest, p->name);
+            }
+            else
+            {
+               send_command("player_retired", dest);
+               send_int(dest, (*i2)->id);
+               send_int(dest, get_utf8_length(p->name));
+               send_wstring(dest, p->name);
+            }
             send_command("chat_userlist", dest);
             send_int(dest, (*i2)->id);
             send_int(dest, (*i2)->plist.size()); // Number of players
@@ -502,11 +512,18 @@ void disconnect_client(Player* p)
    mutex_disconnects.unlock();
 }
 
+void kick_hacker(int reason, Player* p) // Retire from all games and disconnect him using existing function
+{
+   wcout << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)";
+   send_command("#disconnect#", p);
+   disconnect_client(p, true);
+}
+
 void handle_command(string command, Player* p)
 {
    if (command == "#disconnect#")
    {
-      disconnect_client(p);
+      disconnect_client(p, false);
       send_command("#disconnect#", p);
       // Send player list to all players, so they are notified about the diconnected user
       // Send as much strings as connected players, with a count first
@@ -568,7 +585,7 @@ void handle_command(string command, Player* p)
       int long_n_players = receive_int(p, &bytes_received);
       int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
       if (name.empty()) // Hack, kick player
-         return;
+         return kick_hacker(1, p);
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
       wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
@@ -657,7 +674,7 @@ void handle_command(string command, Player* p)
          return;
       game->eliminate_player(p);
       if (!game->leave(p)) // Possible hack
-         return;
+         return kick_hacker(2, p);
       list<Player*>::iterator i, j;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -746,7 +763,7 @@ void handle_command(string command, Player* p)
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (chat->check_already_joined(p)) // Don't allow join a chat twice (hack)
-         return;
+         return kick_hacker(3, p);
       chat->join(p);
       list<Player*>::iterator i, j;
       Player* dest;
@@ -789,7 +806,7 @@ void handle_command(string command, Player* p)
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (!chat->leave(p)) // Possible hack
-         return;
+         return kick_hacker(4, p);
       list<Player*>::iterator i, j;
       Player* dest;
       for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
@@ -863,9 +880,9 @@ void handle_command(string command, Player* p)
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (!chat->check_already_joined(p)) // hack, send messages to chats the player hasn't joined: kick player
-         return;
+         return kick_hacker(5, p);
       if ((msg.length() > 1024) || (dlib::trim(msg).length() == 0)) // hack, send messages longer or shorter than limits
-         return;
+         return kick_hacker(6, p);
       list<Player*>::iterator i;
       Player* dest;
       for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
@@ -888,9 +905,9 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (game->creator != p) // Hack, trying to start a game not created by the player
-         return;
+         return kick_hacker(7, p);
       if (game->started || game->ended) // Hack, start a already started game or an ended game
-         return;
+         return kick_hacker(8, p);
       game->set_players_money(configuration);
       game->start();
       list<Player*>::iterator i, j;
@@ -925,13 +942,13 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(9, p);
       if (game->current_player != p) // Hack, retire player
-         return;
+         return kick_hacker(10, p); 
       if ((p->rolled_last_turn) && (game->last_dice_res < 6)) // Hack, retire player
-         return;
+         return kick_hacker(11, p);
       if (p->debt_last_turn > 0) // Hack, retire player
-         return;
+         return kick_hacker(12, p);
       game->roll_dice();
       game->move_player(p, &debt_mutex);
       p->rolled_last_turn = true;
@@ -956,11 +973,11 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(13, p);
       if (game->current_player != p) // Hack, retire player
-         return;
+         return kick_hacker(14, p);
       if (p->position->type != build) // Hack, retire player
-         return;
+         return kick_hacker(15, p);
       TBuild_dice_res construction_dice_res = game->roll_construction_dice();
       send_command("rolled_construction_dice", p);
       send_int(p, id);
@@ -979,13 +996,13 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(16, p);
       if (game->current_player != p) // Hack, retire player
-         return;
+         return kick_hacker(17, p);
       if ((!p->rolled_last_turn) && (game->last_dice_res < 6)) // Hack, retire player
-         return;
+         return kick_hacker(18, p);
       if (p->debt_last_turn > 0) // Hack, retire player
-         return;
+         return kick_hacker(19, p);
       Player* next_player = game->turn_pass(&debt_mutex);
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
       {
@@ -1007,9 +1024,9 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(20, p);
       if ((game->current_player != p) || (game->can_charge_bank(p) == false) || (p->charged_bank_last_turn)) // Hack, retire player
-         return;
+         return kick_hacker(21, p);
       else
          p->Charge_bank();
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1048,22 +1065,22 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(22, p);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
-         return;
+         return kick_hacker(23, p);
       if (player->position->type != buy)  // Hack, retire player
-         return;
+         return kick_hacker(24, p);
       if (player->bought_last_turn) // Hack, retire player
-         return;
+         return kick_hacker(25, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != NULL) // Hack, retire player
-         return;
+         return kick_hacker(26, p);
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
-         return;
+         return kick_hacker(27, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
       if (total_selected < hotel->price) // Hack, retire player
-         return;
+         return kick_hacker(28, p);
       hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
       // Calculate change
@@ -1119,22 +1136,22 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(29, p);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
-         return;
+         return kick_hacker(30, p);
       if (player->position->type != buy)  // Hack, retire player
-         return;
+         return kick_hacker(31, p);
       if (player->bought_last_turn) // Hack, retire player
-         return;
+         return kick_hacker(32, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if ((hotel->owner == NULL) || (hotel->owner == player) || (hotel->n_built_phases > 0)) // Hack, retire player
-         return;
+         return kick_hacker(33, p);
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
-         return;
+         return kick_hacker(34, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
       if (total_selected < hotel->expropriation_price) // Hack, retire player
-         return;
+         return kick_hacker(35, p);
       Player* previous_owner = hotel->owner;
       hotel->owner = player;
       previous_owner->Expropriate_hotel(hotel);
@@ -1205,32 +1222,32 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(36, p);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
-         return;
+         return kick_hacker(37, p);
       if ((player->position->type != build) && (player->position->type != free_phase)) // Hack, retire player
-         return;
+         return kick_hacker(38, p);
       if (player->built_last_turn) // Hack, retire player
-         return;
+         return kick_hacker(39, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != player) // Hack, retire player
-         return;
+         return kick_hacker(40, p);
       if ((type == 0) && (player->position->type != free_phase)) // Hack, retire player
-         return;
+         return kick_hacker(41, p);
       if (hotel->next_expansion_is_ground)
          game->rolled_construction_dice = true; // As it is not really rolled, simplify checks
       if ((type == 1) && (hotel->next_expansion_is_ground)) // Hack, retire player, ground can't be free (only in free phases positions) because construction dice is not rolled
-         return;
+         return kick_hacker(42, p);
       if ((type == 1) && (!game->rolled_construction_dice)) // Hack, retire player, he didn't ask for permission when building anything different than ground
-         return;
+         return kick_hacker(43, p);
       if ((type == 1) && (game->last_construction_dice_res != Free)) // Hack, retire player
-         return;
+         return kick_hacker(44, p);
       if ((type == 2) && (!game->rolled_construction_dice)) // Hack, retire player, didn't ask for permission when building anything different than ground
-         return;
+         return kick_hacker(45, p);
       int total_selected = 0;
       if (!hotel->Can_extend()) // Hack, retire player
-         return;
+         return kick_hacker(46, p);
       int total_price;
       switch (type)
       {
@@ -1242,9 +1259,9 @@ void handle_command(string command, Player* p)
                   if (game->last_construction_dice_res == Double)
                      total_price = hotel->Price_next_expansion() * 2;
                   if (total_selected < hotel->Price_next_expansion()) // Hack, retire player
-                     return;
+                     return kick_hacker(47, p);
                   break;
-         default: return; // Hack, retire player
+         default: return kick_hacker(48, p); // Hack, retire player
       }
       hotel->Extend();
       if (type == 2)
@@ -1311,27 +1328,27 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(49, p);
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
-         return;
+         return kick_hacker(50, p);
       if ((player->position->type != free_entrance) && (!game->can_buy_entrances(player))) // Hack, retire player
-         return;
+         return kick_hacker(51, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != player) // Hack, retire player
-         return;
+         return kick_hacker(52, p);
       if (hotel->n_built_phases == 0) // Hack, retire player
-         return;
+         return kick_hacker(53, p);
       if (hotel->entrance_bought_last_turn) // Hack, retire player
-         return;
+         return kick_hacker(54, p);
       if ((type == 0) && (player->position->type != free_entrance)) // Hack, retire player
-         return;
+         return kick_hacker(55, p);
       if ((type == 0) && player->free_entrance_used) // Hack, retire player
-         return;
+         return kick_hacker(56, p);
       if (hotel->Has_entrance_in_position(position)) // Hack, retire player
-         return;
+         return kick_hacker(57, p);
       if (!hotel->Is_a_valid_entrance_position(game->positions[position])) // Hack, retire player
-         return;
+         return kick_hacker(58, p);
       hotel->Add_entrance(position);
       if (type == 1)
       {
@@ -1380,12 +1397,12 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(59, p);
       Player* player = get_player_from_game(p->name, game);
       if (player == NULL) // Hack, retire player
-         return;
+         return kick_hacker(60, p);
       if (!game->is_active(player)) // Hack, already retired
-         return;
+         return kick_hacker(61, p);
       Player* next_player;
       if (game->get_active_players_count() > 2)
          next_player = game->turn_pass(&debt_mutex);
@@ -1428,9 +1445,9 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(62, p);
       if (p->asked_nights_last_turn) // Hack, retire player
-         return;
+         return kick_hacker(63, p);
       p->asked_nights_last_turn = true;
       int amount = 0, nights = 0;
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
@@ -1477,15 +1494,15 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return;
+         return kick_hacker(64, p);
       Player* player = get_player_from_game(p->name, game);
       if (player == NULL) // Hack, retire player
-         return;
+         return kick_hacker(65, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
       if (total_selected <= 0) // Hack, retire player, the command is only sent if player has something to pay
-         return;
+         return kick_hacker(66, p);
       if ((player->debt_last_turn == 0) || (player->debt_nights_to_last_turn == NULL)) // Hack, retire player
-         return;
+         return kick_hacker(67, p);
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
       player->paid_last_turn = true;
       // Calculate change
@@ -1534,12 +1551,12 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-         return;
+         return kick_hacker(68, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
       if (hotel->owner != p) // Hack, retire player
-         return;
+         return kick_hacker(69, p);
       if (game->hotel_at_auction != NULL) // Hack, auction already in progress
-         return;
+         return kick_hacker(70, p);
       game->hotel_at_auction = hotel;
       game->best_bid = 0;
       list<Player*>::iterator i;
@@ -1564,13 +1581,13 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-         return;
+         return kick_hacker(71, p);
       if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
-         return;
+         return kick_hacker(72, p);
       if (p == game->hotel_at_auction->owner) // Hack, retire player, he is trying to bid in his own auction
-         return;
+         return kick_hacker(73, p);
       if ((amount <= 0) || (amount < game->best_bid) || amount > p->total_money || ((amount % 50) != 0)) // Hack, retire player, invalid values
-         return;
+         return kick_hacker(74, p);
       game->best_bid = amount;
       game->best_bidder = p;
       list<Player*>::iterator i;
@@ -1594,13 +1611,13 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-         return;
+         return kick_hacker(75, p);
       if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
-         return;
+         return kick_hacker(76, p);
       if (p != game->hotel_at_auction->owner) // Hack, retire player, he is trying to end the auction without being the owner
-         return;
+         return kick_hacker(77, p);
       if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
-         return;
+         return kick_hacker(78, p);
       list<Player*>::iterator i;
       Player* dest;
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1631,16 +1648,16 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-         return;
+         return kick_hacker(79, p);
       if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
-         return;
+         return kick_hacker(80, p);
       if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
-         return;
+         return kick_hacker(81, p);
       if (p != game->best_bidder) // Hack, retire player, the player who pays must be the best bidder
-         return;
+         return kick_hacker(82, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
       if ((total_selected <= 0) || (total_selected < game->best_bid)) // Hack, retire player, the command is only sent if player has something to pay and >= than best bid
-         return;
+         return kick_hacker(83, p);
       Player* previous_owner = game->hotel_at_auction->owner;
       previous_owner->Expropriate_hotel(game->hotel_at_auction);
       p->Buy_hotel(game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
@@ -1748,7 +1765,7 @@ void handle_client(void* arg)
          else
          {
             online = false;
-            disconnect_client(p);
+            disconnect_client(p, false);
             delete p;
             wcout << L"Client disconnected" << endl;
          }
