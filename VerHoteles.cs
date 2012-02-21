@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -49,10 +50,10 @@ namespace Juego_Hotel
         {
             this.hotel_seleccionado = this.juego.hoteles.First(Hotel => Hotel.nombre_txt == this.listaHoteles.SelectedItem.ToString());
             this.imgTarjeta.Image = this.hotel_seleccionado.img_tarjeta;
-            this.n_amplis.Text = "Nº de ampliaciones\r\nconstruidas: " + this.hotel_seleccionado.n_fases_construidas.ToString();
-            this.sueloComprado.Text = "Suelo comprado: " + ((this.hotel_seleccionado.suelo_comprado) ? "Sí" : "No");
-            this.dueño.Text = "Dueño: " + ((this.hotel_seleccionado.dueño == null) ? "-" : "Jugador " + this.hotel_seleccionado.dueño.color.ToString());
-            this.n_entradas.Text = "Nº de entradas: " + this.hotel_seleccionado.n_entradas.ToString();
+            this.n_amplis.Text = Mensajes.mensajeNumAmpliaciones + "\r\n"+Mensajes.mensajeConstruidas + this.hotel_seleccionado.n_fases_construidas.ToString();
+            this.sueloComprado.Text = Mensajes.mensajeSueloComprado + ((this.hotel_seleccionado.suelo_comprado) ? Mensajes.mensajeSi : Mensajes.mensajeNo);
+            this.dueño.Text = Mensajes.mensajeDuenio + ((this.hotel_seleccionado.dueño == null) ? "-" : Mensajes.mensajeJugador + this.hotel_seleccionado.dueño.color.ToString());
+            this.n_entradas.Text = Mensajes.mensajeNumEntradas + this.hotel_seleccionado.n_entradas.ToString();
         }
 
         private void bOK_Click(object sender, EventArgs e)

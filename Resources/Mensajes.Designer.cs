@@ -196,11 +196,29 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a construidas: .
+        /// </summary>
+        internal static string mensajeConstruidas {
+            get {
+                return ResourceManager.GetString("mensajeConstruidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador {0} debe pagar las noches al jugador {1}. Pulsa OK para lanzar el dado..
         /// </summary>
         internal static string mensajeDebePagarNoches {
             get {
                 return ResourceManager.GetString("mensajeDebePagarNoches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Dueño: .
+        /// </summary>
+        internal static string mensajeDuenio {
+            get {
+                return ResourceManager.GetString("mensajeDuenio", resourceCulture);
             }
         }
         
@@ -304,6 +322,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Jugador .
+        /// </summary>
+        internal static string mensajeJugador {
+            get {
+                return ResourceManager.GetString("mensajeJugador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Partida finalizada porque todos los jugadores se han retirado.
         /// </summary>
         internal static string mensajeJugadoresRetidados {
@@ -318,6 +345,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeMostrarErrorActualizador {
             get {
                 return ResourceManager.GetString("mensajeMostrarErrorActualizador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No.
+        /// </summary>
+        internal static string mensajeNo {
+            get {
+                return ResourceManager.GetString("mensajeNo", resourceCulture);
             }
         }
         
@@ -372,6 +408,24 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeNuevaVersion {
             get {
                 return ResourceManager.GetString("mensajeNuevaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nº de ampliaciones.
+        /// </summary>
+        internal static string mensajeNumAmpliaciones {
+            get {
+                return ResourceManager.GetString("mensajeNumAmpliaciones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nº de entradas: .
+        /// </summary>
+        internal static string mensajeNumEntradas {
+            get {
+                return ResourceManager.GetString("mensajeNumEntradas", resourceCulture);
             }
         }
         
@@ -444,6 +498,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeSelecJugadores {
             get {
                 return ResourceManager.GetString("mensajeSelecJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sí.
+        /// </summary>
+        internal static string mensajeSi {
+            get {
+                return ResourceManager.GetString("mensajeSi", resourceCulture);
             }
         }
         
@@ -525,6 +588,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeSinPropiedadesParaSubastar {
             get {
                 return ResourceManager.GetString("mensajeSinPropiedadesParaSubastar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Suelo comprado: .
+        /// </summary>
+        internal static string mensajeSueloComprado {
+            get {
+                return ResourceManager.GetString("mensajeSueloComprado", resourceCulture);
             }
         }
         

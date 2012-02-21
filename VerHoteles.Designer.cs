@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VerHoteles));
             this.selHotel = new System.Windows.Forms.Label();
             this.listaHoteles = new System.Windows.Forms.ComboBox();
             this.imgTarjeta = new System.Windows.Forms.PictureBox();
@@ -41,82 +42,57 @@
             // 
             // selHotel
             // 
-            this.selHotel.AutoSize = true;
-            this.selHotel.Location = new System.Drawing.Point(10, 17);
+            resources.ApplyResources(this.selHotel, "selHotel");
             this.selHotel.Name = "selHotel";
-            this.selHotel.Size = new System.Drawing.Size(100, 13);
-            this.selHotel.TabIndex = 0;
-            this.selHotel.Text = "Selecciona el hotel:";
             // 
             // listaHoteles
             // 
+            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
-            this.listaHoteles.Location = new System.Drawing.Point(132, 12);
             this.listaHoteles.Name = "listaHoteles";
-            this.listaHoteles.Size = new System.Drawing.Size(121, 21);
-            this.listaHoteles.TabIndex = 2;
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
             // imgTarjeta
             // 
-            this.imgTarjeta.Location = new System.Drawing.Point(132, 39);
+            resources.ApplyResources(this.imgTarjeta, "imgTarjeta");
             this.imgTarjeta.Name = "imgTarjeta";
-            this.imgTarjeta.Size = new System.Drawing.Size(513, 301);
-            this.imgTarjeta.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imgTarjeta.TabIndex = 3;
             this.imgTarjeta.TabStop = false;
             // 
             // bOK
             // 
+            resources.ApplyResources(this.bOK, "bOK");
             this.bOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bOK.Location = new System.Drawing.Point(18, 317);
             this.bOK.Name = "bOK";
-            this.bOK.Size = new System.Drawing.Size(75, 23);
-            this.bOK.TabIndex = 4;
-            this.bOK.Text = "OK";
             this.bOK.UseVisualStyleBackColor = true;
             this.bOK.Click += new System.EventHandler(this.bOK_Click);
             // 
             // n_amplis
             // 
-            this.n_amplis.AutoSize = true;
-            this.n_amplis.Location = new System.Drawing.Point(10, 69);
+            resources.ApplyResources(this.n_amplis, "n_amplis");
             this.n_amplis.Name = "n_amplis";
-            this.n_amplis.Size = new System.Drawing.Size(0, 13);
-            this.n_amplis.TabIndex = 5;
             // 
             // sueloComprado
             // 
-            this.sueloComprado.AutoSize = true;
-            this.sueloComprado.Location = new System.Drawing.Point(10, 113);
+            resources.ApplyResources(this.sueloComprado, "sueloComprado");
             this.sueloComprado.Name = "sueloComprado";
-            this.sueloComprado.Size = new System.Drawing.Size(0, 13);
-            this.sueloComprado.TabIndex = 6;
             // 
             // dueño
             // 
-            this.dueño.AutoSize = true;
-            this.dueño.Location = new System.Drawing.Point(10, 143);
+            resources.ApplyResources(this.dueño, "dueño");
             this.dueño.Name = "dueño";
-            this.dueño.Size = new System.Drawing.Size(0, 13);
-            this.dueño.TabIndex = 7;
             // 
             // n_entradas
             // 
-            this.n_entradas.AutoSize = true;
-            this.n_entradas.Location = new System.Drawing.Point(10, 173);
+            resources.ApplyResources(this.n_entradas, "n_entradas");
             this.n_entradas.Name = "n_entradas";
-            this.n_entradas.Size = new System.Drawing.Size(0, 13);
-            this.n_entradas.TabIndex = 8;
             // 
             // VerHoteles
             // 
             this.AcceptButton = this.bOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bOK;
-            this.ClientSize = new System.Drawing.Size(657, 352);
             this.ControlBox = false;
             this.Controls.Add(this.n_entradas);
             this.Controls.Add(this.dueño);
@@ -128,8 +104,6 @@
             this.Controls.Add(this.selHotel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "VerHoteles";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Tus hoteles";
             this.Shown += new System.EventHandler(this.VerHoteles_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.imgTarjeta)).EndInit();
             this.ResumeLayout(false);

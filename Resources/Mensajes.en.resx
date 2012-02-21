@@ -351,4 +351,28 @@
   <data name="tituloComprarEntrada" xml:space="preserve">
     <value>Buy Entrance</value>
   </data>
+  <data name="mensajeConstruidas" xml:space="preserve">
+    <value>constructed: </value>
+  </data>
+  <data name="mensajeDuenio" xml:space="preserve">
+    <value>Owner: </value>
+  </data>
+  <data name="mensajeJugador" xml:space="preserve">
+    <value>Player </value>
+  </data>
+  <data name="mensajeNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="mensajeNumAmpliaciones" xml:space="preserve">
+    <value>Nº of extensions</value>
+  </data>
+  <data name="mensajeNumEntradas" xml:space="preserve">
+    <value>Nº of entries: </value>
+  </data>
+  <data name="mensajeSi" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="mensajeSueloComprado" xml:space="preserve">
+    <value>Ground purchased: </value>
+  </data>
 </root>

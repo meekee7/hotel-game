@@ -215,6 +215,9 @@
     <EmbeddedResource Include="Subastas.resx">
       <DependentUpon>Subastas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VerHoteles.en.resx">
+      <DependentUpon>VerHoteles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VerHoteles.resx">
       <DependentUpon>VerHoteles.cs</DependentUpon>
     </EmbeddedResource>
