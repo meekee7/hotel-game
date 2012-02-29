@@ -283,6 +283,8 @@ namespace Juego_Hotel
                 {
                     MessageBox.Show(Mensajes.mensajeSinPropiedadesNiFondos, Mensajes.tituloJugadorEliminado);
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
+                    if (this.interfaz.online)
+                       this.interfaz.frm_online.enviar_comando("retire", this.interfaz.game_id.ToString(), "1");
                     this.juego.Eliminar_Jugador(this.pagador, this.receptor);
                     this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
                     this.interfaz.Actualizar_Dinero_Jugadores();

@@ -1399,7 +1399,7 @@ namespace Juego_Hotel
                     this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
                 else
                 {
-                    this.frm_online.enviar_comando("retire", this.game_id.ToString());
+                    this.frm_online.enviar_comando("retire", this.game_id.ToString(), "0");
                     this.partida_activa = false;
                 }
                 this.Marcar_Jugador_Eliminado(num_jugador);

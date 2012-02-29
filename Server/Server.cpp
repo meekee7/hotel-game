@@ -1393,6 +1393,8 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      int len_int = receive_int(p, &bytes_received);
+      int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
