@@ -331,6 +331,42 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador 1 no tiene color asociado.
+        /// </summary>
+        internal static string mensajeJugador1SinColor {
+            get {
+                return ResourceManager.GetString("mensajeJugador1SinColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador 2 no tiene color asociado.
+        /// </summary>
+        internal static string mensajeJugador2SinColor {
+            get {
+                return ResourceManager.GetString("mensajeJugador2SinColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador 3 no tiene color asociado.
+        /// </summary>
+        internal static string mensajeJugador3SinColor {
+            get {
+                return ResourceManager.GetString("mensajeJugador3SinColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador 4 no tiene color asociado.
+        /// </summary>
+        internal static string mensajeJugador4SinColor {
+            get {
+                return ResourceManager.GetString("mensajeJugador4SinColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Partida finalizada porque todos los jugadores se han retirado.
         /// </summary>
         internal static string mensajeJugadoresRetidados {

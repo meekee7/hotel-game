@@ -212,6 +212,9 @@
     <EmbeddedResource Include="Reglas.resx">
       <DependentUpon>Reglas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Sel_colores.en.resx">
+      <DependentUpon>Sel_colores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subastas.resx">
       <DependentUpon>Subastas.cs</DependentUpon>
     </EmbeddedResource>

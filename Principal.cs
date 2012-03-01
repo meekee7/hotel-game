@@ -1455,8 +1455,8 @@ namespace Juego_Hotel
             dialogo.DefaultExt = "xml";
             dialogo.SupportMultiDottedExtensions = true;
             dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            dialogo.Filter = resources.GetString("filtroDialogoCargarGuardarPartida");
-            dialogo.Title = resources.GetString("tituloDialogoGuardarPartida");
+            dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
+            dialogo.Title = Mensajes.tituloDialogoGuardarPartida;
             dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
             if (dialogo.ShowDialog() != DialogResult.Cancel)
             {
@@ -1482,8 +1482,8 @@ namespace Juego_Hotel
             dialogo.SupportMultiDottedExtensions = true;
             String dir_trabajo = System.IO.Directory.GetCurrentDirectory(); // Después de cargar el fichero, el directorio actual se pierde
             dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            dialogo.Filter = resources.GetString("filtroDialogoCargarGuardarPartida");
-            dialogo.Title = resources.GetString("tituloDialogoCargarPartida");
+            dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
+            dialogo.Title = Mensajes.tituloDialogoCargarPartida;
             dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
             if (dialogo.ShowDialog() != DialogResult.Cancel)
             {
@@ -1714,6 +1714,7 @@ namespace Juego_Hotel
                 else
                     c.Text = resources.GetString(c.Name + ".Text");
             }
+            frm_colores.ReLocalize(antiguoCulture);
         }
         
         private void comboBoxIdiomas_DrawItem(object sender, DrawItemEventArgs e)

@@ -10,7 +10,7 @@ using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
-    public partial class VerHoteles : Form
+    public partial class VerHoteles : Form 
     {
         Juego juego;
         Hotel hotel_seleccionado;

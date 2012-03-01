@@ -60,8 +60,10 @@ namespace Juego_Hotel
             CultureInfo antiguoCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = NewCulture;
             foreach (Form f in Application.OpenForms)
+            {
                 if (f is IReLocalizable)
                     ((IReLocalizable)f).ReLocalize(antiguoCulture);
+            }   
         }
     }
 }

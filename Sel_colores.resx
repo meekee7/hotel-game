@@ -117,4 +117,583 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;j1Azul.Parent" xml:space="preserve">
+    <value>colorJ1</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="j3Amarillo.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;j4Rojo.Parent" xml:space="preserve">
+    <value>colorJ4</value>
+  </data>
+  <data name="&gt;&gt;j2Rojo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j3Verde.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;j2Azul.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;j4Azul.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;colorJ3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j2Amarillo.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;j1Rojo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="bOK.Location" type="System.Drawing.Point, System.Drawing">
+    <value>312, 102</value>
+  </data>
+  <data name="j4Verde.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="j4Amarillo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 17</value>
+  </data>
+  <data name="j3Amarillo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;j4Verde.Parent" xml:space="preserve">
+    <value>colorJ4</value>
+  </data>
+  <data name="&gt;&gt;colorJ1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;j2Azul.Name" xml:space="preserve">
+    <value>j2Azul</value>
+  </data>
+  <data name="&gt;&gt;j3Rojo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j3Rojo.Text" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="&gt;&gt;j3Azul.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorJ4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j1Amarillo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j2Verde.Parent" xml:space="preserve">
+    <value>colorJ2</value>
+  </data>
+  <data name="j3Azul.Text" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="&gt;&gt;j4Amarillo.Parent" xml:space="preserve">
+    <value>colorJ4</value>
+  </data>
+  <data name="j2Verde.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="colorJ2.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="j3Verde.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="&gt;&gt;j3Azul.Name" xml:space="preserve">
+    <value>j3Azul</value>
+  </data>
+  <data name="&gt;&gt;j2Rojo.Parent" xml:space="preserve">
+    <value>colorJ2</value>
+  </data>
+  <data name="&gt;&gt;j4Verde.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;colorJ2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Seleccionar Colores</value>
+  </data>
+  <data name="j4Azul.Text" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="&gt;&gt;j2Verde.Name" xml:space="preserve">
+    <value>j2Verde</value>
+  </data>
+  <data name="&gt;&gt;j2Verde.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j4Amarillo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 51</value>
+  </data>
+  <data name="j1Rojo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 28</value>
+  </data>
+  <data name="&gt;&gt;j2Amarillo.Parent" xml:space="preserve">
+    <value>colorJ2</value>
+  </data>
+  <data name="&gt;&gt;j1Verde.Parent" xml:space="preserve">
+    <value>colorJ1</value>
+  </data>
+  <data name="bOK.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="j4Rojo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="j3Rojo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;j2Rojo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="j1Amarillo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 17</value>
+  </data>
+  <data name="&gt;&gt;colorJ3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="colorJ1.Text" xml:space="preserve">
+    <value>Color Jugador 1</value>
+  </data>
+  <data name="colorJ1.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;j3Amarillo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="j3Amarillo.Text" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="j2Amarillo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;j4Verde.Name" xml:space="preserve">
+    <value>j4Verde</value>
+  </data>
+  <data name="&gt;&gt;j4Verde.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j4Rojo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j1Rojo.Text" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="&gt;&gt;j3Azul.Parent" xml:space="preserve">
+    <value>colorJ3</value>
+  </data>
+  <data name="&gt;&gt;j3Amarillo.Parent" xml:space="preserve">
+    <value>colorJ3</value>
+  </data>
+  <data name="j3Rojo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="&gt;&gt;colorJ4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="colorJ2.Text" xml:space="preserve">
+    <value>Color Jugador 2</value>
+  </data>
+  <data name="j2Verde.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 51</value>
+  </data>
+  <data name="&gt;&gt;j1Verde.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;j3Verde.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="j4Rojo.Text" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="j2Azul.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;colorJ1.Name" xml:space="preserve">
+    <value>colorJ1</value>
+  </data>
+  <data name="j4Azul.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 28</value>
+  </data>
+  <data name="j1Rojo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="j1Rojo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="j4Verde.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="j4Azul.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="j1Rojo.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="j4Azul.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="j3Azul.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;j4Rojo.Name" xml:space="preserve">
+    <value>j4Rojo</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>Sel_colores</value>
+  </data>
+  <data name="&gt;&gt;colorJ2.Name" xml:space="preserve">
+    <value>colorJ2</value>
+  </data>
+  <data name="&gt;&gt;j1Rojo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="j2Amarillo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 51</value>
+  </data>
+  <data name="&gt;&gt;j4Azul.Parent" xml:space="preserve">
+    <value>colorJ4</value>
+  </data>
+  <data name="&gt;&gt;bOK.Name" xml:space="preserve">
+    <value>bOK</value>
+  </data>
+  <data name="&gt;&gt;bOK.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="j4Amarillo.Text" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="&gt;&gt;j4Azul.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j2Rojo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;bOK.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="j3Rojo.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;j2Amarillo.Name" xml:space="preserve">
+    <value>j2Amarillo</value>
+  </data>
+  <data name="j2Verde.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="j1Azul.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;colorJ3.Name" xml:space="preserve">
+    <value>colorJ3</value>
+  </data>
+  <data name="j2Verde.Text" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="j2Rojo.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="j1Amarillo.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="j3Rojo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 28</value>
+  </data>
+  <data name="j2Verde.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="j2Amarillo.Text" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="j3Azul.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 28</value>
+  </data>
+  <data name="&gt;&gt;j3Amarillo.Name" xml:space="preserve">
+    <value>j3Amarillo</value>
+  </data>
+  <data name="&gt;&gt;j1Azul.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j1Amarillo.Parent" xml:space="preserve">
+    <value>colorJ1</value>
+  </data>
+  <data name="j4Amarillo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="j1Verde.Text" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="&gt;&gt;colorJ4.Name" xml:space="preserve">
+    <value>colorJ4</value>
+  </data>
+  <data name="&gt;&gt;j4Amarillo.Name" xml:space="preserve">
+    <value>j4Amarillo</value>
+  </data>
+  <data name="&gt;&gt;j3Rojo.Name" xml:space="preserve">
+    <value>j3Rojo</value>
+  </data>
+  <data name="&gt;&gt;j1Amarillo.Name" xml:space="preserve">
+    <value>j1Amarillo</value>
+  </data>
+  <data name="j2Rojo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="&gt;&gt;j3Amarillo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j2Verde.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="colorJ2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 12</value>
+  </data>
+  <data name="&gt;&gt;j4Amarillo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="j4Amarillo.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="j2Rojo.Text" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="&gt;&gt;j4Azul.Name" xml:space="preserve">
+    <value>j4Azul</value>
+  </data>
+  <data name="j3Amarillo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 17</value>
+  </data>
+  <data name="&gt;&gt;j1Azul.Name" xml:space="preserve">
+    <value>j1Azul</value>
+  </data>
+  <data name="j2Rojo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 28</value>
+  </data>
+  <data name="colorJ1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="&gt;&gt;j2Amarillo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="j1Verde.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="bOK.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="j4Rojo.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="colorJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 84</value>
+  </data>
+  <data name="colorJ4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>522, 12</value>
+  </data>
+  <data name="&gt;&gt;j3Rojo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="j3Azul.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;colorJ1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;j2Rojo.Name" xml:space="preserve">
+    <value>j2Rojo</value>
+  </data>
+  <data name="j2Amarillo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 17</value>
+  </data>
+  <data name="&gt;&gt;j1Verde.Name" xml:space="preserve">
+    <value>j1Verde</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j4Verde.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 51</value>
+  </data>
+  <data name="j2Azul.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="j1Amarillo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 51</value>
+  </data>
+  <data name="colorJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 84</value>
+  </data>
+  <data name="&gt;&gt;j4Amarillo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j3Rojo.Parent" xml:space="preserve">
+    <value>colorJ3</value>
+  </data>
+  <data name="j2Azul.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 28</value>
+  </data>
+  <data name="&gt;&gt;bOK.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorJ2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="j1Azul.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 17</value>
+  </data>
+  <data name="&gt;&gt;j2Azul.Parent" xml:space="preserve">
+    <value>colorJ2</value>
+  </data>
+  <data name="&gt;&gt;j3Verde.Name" xml:space="preserve">
+    <value>j3Verde</value>
+  </data>
+  <data name="&gt;&gt;j3Verde.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;j1Verde.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j2Azul.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 17</value>
+  </data>
+  <data name="j3Azul.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 17</value>
+  </data>
+  <data name="j2Azul.Text" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="j1Amarillo.Text" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="colorJ3.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;j2Amarillo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j1Amarillo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="j1Verde.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;colorJ3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="j4Azul.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 17</value>
+  </data>
+  <data name="j4Verde.Text" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="j3Amarillo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 51</value>
+  </data>
+  <data name="&gt;&gt;j1Rojo.Name" xml:space="preserve">
+    <value>j1Rojo</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>698, 134</value>
+  </data>
+  <data name="&gt;&gt;j2Azul.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="j1Azul.Text" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="&gt;&gt;j4Rojo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="j1Azul.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="j4Verde.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;j1Azul.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;colorJ1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colorJ4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="j3Verde.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 51</value>
+  </data>
+  <data name="j3Verde.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;j3Azul.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="j1Verde.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 17</value>
+  </data>
+  <data name="&gt;&gt;j3Verde.Parent" xml:space="preserve">
+    <value>colorJ3</value>
+  </data>
+  <data name="&gt;&gt;j1Amarillo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="colorJ3.Text" xml:space="preserve">
+    <value>Color Jugador 3</value>
+  </data>
+  <data name="j3Verde.Text" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="j1Azul.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 28</value>
+  </data>
+  <data name="colorJ4.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="colorJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 84</value>
+  </data>
+  <data name="&gt;&gt;j1Rojo.Parent" xml:space="preserve">
+    <value>colorJ1</value>
+  </data>
+  <data name="j1Verde.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 51</value>
+  </data>
+  <data name="j4Rojo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 28</value>
+  </data>
+  <data name="&gt;&gt;colorJ2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bOK.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="j4Rojo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colorJ3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>352, 12</value>
+  </data>
+  <data name="colorJ4.Text" xml:space="preserve">
+    <value>Color Jugador 4</value>
+  </data>
+  <data name="colorJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 84</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>en</value>
+  </metadata>
 </root>

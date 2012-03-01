@@ -375,4 +375,16 @@
   <data name="mensajeSueloComprado" xml:space="preserve">
     <value>Ground purchased: </value>
   </data>
+  <data name="mensajeJugador1SinColor" xml:space="preserve">
+    <value>Player 1 has no associated color</value>
+  </data>
+  <data name="mensajeJugador2SinColor" xml:space="preserve">
+    <value>Player 2 has no associated color</value>
+  </data>
+  <data name="mensajeJugador3SinColor" xml:space="preserve">
+    <value>Player 3 has no associated color</value>
+  </data>
+  <data name="mensajeJugador4SinColor" xml:space="preserve">
+    <value>Player 4 has no associated color</value>
+  </data>
 </root>

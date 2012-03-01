@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
+
 
 namespace Juego_Hotel
 {
-    public partial class Sel_colores : Form
+    public partial class Sel_colores : Form, IReLocalizable
     {
-
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sel_colores));
         public Tipos.Tcolor color_j1, color_j2, color_j3, color_j4;
         int n_jugadores;
 
@@ -304,21 +306,52 @@ namespace Juego_Hotel
         {
             // Comprobación para ver si algún jugador no tiene color asociado
             if (!j1Rojo.Checked && !j1Verde.Checked && !j1Amarillo.Checked && !j1Azul.Checked)
-                MessageBox.Show("El jugador 1 no tiene color asociado");
+                MessageBox.Show(Mensajes.mensajeJugador1SinColor);
             else if (!j2Rojo.Checked && !j2Verde.Checked && !j2Amarillo.Checked && !j2Azul.Checked)
-                MessageBox.Show("El jugador 2 no tiene color asociado");
+                MessageBox.Show(Mensajes.mensajeJugador2SinColor);
             else if (!j3Rojo.Checked && !j3Verde.Checked && !j3Amarillo.Checked && !j3Azul.Checked)
                 if (this.n_jugadores >= 3)
-                    MessageBox.Show("El jugador 3 no tiene color asociado");
+                    MessageBox.Show(Mensajes.mensajeJugador3SinColor);
                 else
                     this.Hide();
             else if (!j4Rojo.Checked && !j4Verde.Checked && !j4Amarillo.Checked && !j4Azul.Checked)
                 if (this.n_jugadores >= 4)
-                    MessageBox.Show("El jugador 4 no tiene color asociado");
+                    MessageBox.Show(Mensajes.mensajeJugador4SinColor);
                 else
                     this.Hide();
             else
                 this.Hide();
+        }
+
+        public void ReLocalize(System.Globalization.CultureInfo antiguoCulture)
+        {
+            resources.ApplyResources(this, "$this");
+            foreach (Control c in this.Controls)
+            {
+                if (c is GroupBox)
+                {
+                    c.Text = resources.GetString(c.Name + ".Text");
+                    foreach (Control o in ((GroupBox)c).Controls)
+                    {
+                        if (o is Label)
+                        {
+                            String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                            if (nombreAntiguo != null)
+                                o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                        }
+                        else
+                            resources.ApplyResources(o, o.Name);
+                    }
+                }
+                else if (c is Label)
+                {
+                    String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                    if (nombreAntiguo != null)
+                        c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                }
+                else
+                    c.Text = resources.GetString(c.Name + ".Text");
+            }
         }
     }
 }
