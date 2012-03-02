@@ -1395,6 +1395,11 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_int = receive_int(p, &bytes_received);
       int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
+      if (type == 1) // Player is automatically retired because he tried to create an auction and he doesn't have enough money to pay
+      {
+         int len_name = receive_int(p, &bytes_received);
+         wstring receiver_name = receive_wstring(p, len_name, &bytes_received);
+      }
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
