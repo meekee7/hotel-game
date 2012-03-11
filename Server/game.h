@@ -44,7 +44,7 @@ public:
    int get_active_players_count();
    Player* get_winner();
    bool is_active(Player* player);
-   void eliminate_player(Player* player);
+   void eliminate_player(Player* player, Player* reiciving_player);
    int get_money_for_nights(Player* owner, Player* player, int* nights);
    bool can_charge_bank(Player* p);
    bool can_buy_entrances(Player* p);

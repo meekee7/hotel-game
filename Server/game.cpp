@@ -104,7 +104,7 @@ bool Game::leave(Player* p)
    else
    {
       if (this->is_active(p))
-         this->eliminate_player(p);
+         this->eliminate_player(p, NULL);
       this->chat->leave(p);
       this->plist.erase(i);
 		wcout << L"Player "<< p->name << L" left game " << this->name << endl;
@@ -271,7 +271,7 @@ bool Game::is_active(Player* player)
       return true;
 }
 
-void Game::eliminate_player(Player* player)
+void Game::eliminate_player(Player* player, Player* reiciving_player)
 {
    // Find the player
    list<Player*>::iterator i;
@@ -288,6 +288,10 @@ void Game::eliminate_player(Player* player)
       (*i2)->Return_to_bank();
    }
    player->hotels.clear();
+   if (reiciving_player != NULL)
+   {
+      player->Pay_nights(reiciving_player, player->n_5000, player->n_1000, player->n_500, player->n_100, player->n_50);
+   }
 }
 
 int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)

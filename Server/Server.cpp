@@ -672,7 +672,7 @@ void handle_command(string command, Player* p)
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when chat does not exist anymore
          return;
-      game->eliminate_player(p);
+      game->eliminate_player(p, NULL);
       if (!game->leave(p)) // Possible hack
          return kick_hacker(2, p);
       list<Player*>::iterator i, j;
@@ -1393,12 +1393,14 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      int len_int = receive_int(p, &bytes_received);
+      len_int = receive_int(p, &bytes_received);
       int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      if (type == 1) // Player is automatically retired because he tried to create an auction and he doesn't have enough money to pay
+      Player* receiving_player = NULL;
+      if (type == 1) // Player is automatically retired because he tried to create an auction and he doesn't have any hotel or enough money to pay
       {
          int len_name = receive_int(p, &bytes_received);
          wstring receiver_name = receive_wstring(p, len_name, &bytes_received);
+         receiving_player = get_player_from_name(receiver_name);
       }
       Game* game = get_game_from_id(id);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
@@ -1413,7 +1415,7 @@ void handle_command(string command, Player* p)
       Player* next_player;
       if (game->get_active_players_count() > 2)
          next_player = game->turn_pass(&debt_mutex);
-      game->eliminate_player(player);
+      game->eliminate_player(player, receiving_player);
       list<Player*>::iterator i;
       Player* dest, * winner;
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Avoid sending commands to retired players, because their forms can be already closed and could lead to a client crash
@@ -1423,6 +1425,27 @@ void handle_command(string command, Player* p)
          send_int(dest, id);
          send_int(dest, get_utf8_length(p->name));
          send_wstring(dest, p->name);
+         if (type == 1) // Update affected players money
+         {
+            send_command("update_player_money", dest);
+            send_int(dest, id);
+            send_int(dest, get_utf8_length(receiving_player->name));
+            send_wstring(dest, receiving_player->name);
+            send_int(dest, receiving_player->n_50);
+            send_int(dest, receiving_player->n_100);
+            send_int(dest, receiving_player->n_500);
+            send_int(dest, receiving_player->n_1000);
+            send_int(dest, receiving_player->n_5000);
+            send_command("update_player_money", dest);
+            send_int(dest, id);
+            send_int(dest, get_utf8_length(p->name));
+            send_wstring(dest, p->name);
+            send_int(dest, p->n_50);
+            send_int(dest, p->n_100);
+            send_int(dest, p->n_500);
+            send_int(dest, p->n_1000);
+            send_int(dest, p->n_5000);
+         }
          if (game->get_active_players_count() == 1)
          {
             game->ended = true;

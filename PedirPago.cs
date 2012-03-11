@@ -293,7 +293,6 @@ namespace Juego_Hotel
                     }
                     this.cancelado = true;
                     this.Hide();
-                    return;
                 }
                 else
                     MessageBox.Show(Mensajes.mensajeSinPropiedadesParaSubastar, Mensajes.tituloSubastas);
