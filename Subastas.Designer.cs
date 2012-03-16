@@ -254,7 +254,6 @@
             this.Name = "Subastas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Subastas";
-            this.Click += new System.EventHandler(this.bSubastar_Click);
             this.grupoHotel.ResumeLayout(false);
             this.grupoHotel.PerformLayout();
             this.grupoEstado.ResumeLayout(false);

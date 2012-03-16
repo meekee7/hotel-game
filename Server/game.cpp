@@ -294,7 +294,7 @@ void Game::eliminate_player(Player* player, Player* reiciving_player)
    }
 }
 
-int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks player position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)
+int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks 'player' position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)
 {
    list<Hotel*>::iterator i;
    int amount = 0, dice_res = 0;

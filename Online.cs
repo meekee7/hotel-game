@@ -753,7 +753,9 @@ namespace Juego_Hotel
                 else if (msg == "entrance_added")
                     this.Entrada_añadida();
                 else if (msg == "player_retired")
-                    this.Jugador_retirado();
+                    this.Jugador_retirado(false);
+                else if (msg == "player_kicked")
+                    this.Jugador_retirado(true);
                 else if (msg == "game_ended")
                     this.Juego_terminado();
                 else if (msg == "ask_pay_nights")
@@ -1089,7 +1091,7 @@ namespace Juego_Hotel
 
         delegate void Marcar_Jugador_Eliminado_Callback(int jugador);
 
-        private void Jugador_retirado()
+        private void Jugador_retirado(Boolean expulsado)
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
@@ -1101,7 +1103,12 @@ namespace Juego_Hotel
                 return;
             partida.interfaz.juego.Eliminar_Jugador(jugador, null);
             if (jugador.nombre_online != partida.interfaz.nombre_online)
-                MessageBox.Show("El jugador " + jugador.color + " (" + jugador.nombre_online + ") se ha retirado");
+            {
+                if (expulsado)
+                    MessageBox.Show("El jugador " + jugador.color + " (" + jugador.nombre_online + ") ha sido expulsado por hacer trampas");
+                else
+                    MessageBox.Show("El jugador " + jugador.color + " (" + jugador.nombre_online + ") se ha retirado");
+            }
             partida.interfaz.BeginInvoke(new Marcar_Jugador_Eliminado_Callback(partida.interfaz.Marcar_Jugador_Eliminado), jugador.n_jugador);
         }
 
@@ -1195,7 +1202,7 @@ namespace Juego_Hotel
                 Juego juego = partida.interfaz.juego;
                 PedirPago frm_pago = new PedirPago(cantidad, ref juego, true, jugador, partida.interfaz);
                 frm_pago.ShowDialog();
-                int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_5000, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
+                int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_500, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
                 this.enviar_comando("auction_pay", id.ToString(), n_5000.ToString(), n_1000.ToString(),
                     n_500.ToString(), n_100.ToString(), n_50.ToString());
                 frm_pago.Close();

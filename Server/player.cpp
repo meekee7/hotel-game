@@ -62,7 +62,7 @@ void Player::Buy_hotel(Hotel* hotel, Player* previous_owner, int n_5000, int n_1
 void Player::Expropriate_hotel(Hotel* hotel)
 {
    // Money its already calculated, client does the math
-   this->hotels.push_back(hotel);
+   this->hotels.remove(hotel);
 }
 
 void Player::Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50)

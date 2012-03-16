@@ -264,7 +264,7 @@ namespace Juego_Hotel
                 if ((this.hotel_en_construccion != null) && (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre == this.hotel_en_construccion.nombre))
                 {
                     this.interfaz.frm_subasta_en_curso.Close();
-                    MessageBox.Show(Mensajes.tituloDineroInsuficiente, Mensajes.tituloConstruccionCancelada);
+                    MessageBox.Show(Mensajes.mensajeIntentarConstruirHotelVendido, Mensajes.tituloConstruccionCancelada);
                     this.cancelado = true;
                     this.Hide();
                     return;
@@ -284,7 +284,10 @@ namespace Juego_Hotel
                     MessageBox.Show(Mensajes.mensajeSinPropiedadesNiFondos, Mensajes.tituloJugadorEliminado);
                     // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
                     if (this.interfaz.online)
-                        this.interfaz.frm_online.enviar_comando("retire", this.interfaz.game_id.ToString(), "1", this.receptor.ToString());
+                    {
+                        int game_id = this.interfaz.game_id;
+                        this.interfaz.frm_online.enviar_comando("retire", game_id.ToString(), "1", this.receptor.nombre_online.ToString());
+                    }
                     else
                     {
                         this.juego.Eliminar_Jugador(this.pagador, this.receptor);

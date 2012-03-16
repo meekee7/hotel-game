@@ -514,7 +514,7 @@ void disconnect_client(Player* p, bool kicking)
 
 void kick_hacker(int reason, Player* p) // Retire from all games and disconnect him using existing function
 {
-   wcout << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)";
+   wcout << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
    send_command("#disconnect#", p);
    disconnect_client(p, true);
 }
