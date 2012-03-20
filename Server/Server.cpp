@@ -1829,7 +1829,7 @@ void read_config(TiXmlDocument* config_xml)
    configuration.three_or_four_players.n_50 = atoi(node->FirstChild()->Value());
 }
 
-void run_server()
+void run_server(int port)
 {
    #ifdef _WIN32
       SetConsoleOutputCP(CP_UTF8);
@@ -1837,14 +1837,14 @@ void run_server()
    #else
       setlocale(LC_ALL, "es_ES.utf8");
    #endif
-   wcout << L"Starting Hotel server..." << endl;
+   wcout << L"Starting Hotel server on port " << port << "..." << endl;
    socket_server = new Portable_socket();
    sockaddr_in server_info;
    sockaddr_in client_info;
    socklen_t addrlen;
 
    server_info.sin_family=AF_INET;
-   server_info.sin_port=htons(12345);
+   server_info.sin_port=htons(port);
    server_info.sin_addr.s_addr=INADDR_ANY;
    if (socket_server->pbind((sockaddr*) &server_info,sizeof(server_info)) < 0)
    {
@@ -1910,5 +1910,10 @@ void run_server()
 
 int main(int argc, char* argv[])
 {
-   run_server();
+   int port;
+   if (argc == 2) // Port specified
+      port = atoi(argv[1]);
+   else
+      port = 12345;
+   run_server(port);
 }
