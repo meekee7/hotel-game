@@ -190,7 +190,7 @@
     <value>Has sacado un {0}, por lo que el jugador {1} debe abonar {2} al jugador {3}</value>
   </data>
   <data name="tituloCargarPartida" xml:space="preserve">
-    <value>Cargar Partida</value>
+    <value>Cargar partida</value>
   </data>
   <data name="tituloComprarHotel" xml:space="preserve">
     <value>Comprar hotel</value>
@@ -250,7 +250,7 @@
     <value>El error producido fue:</value>
   </data>
   <data name="mensajeNoNuevaVersion" xml:space="preserve">
-    <value>No existe una versión más nueva :)</value>
+    <value>Ya tienes la versión más nueva :)</value>
   </data>
   <data name="mensajeNuevaVersion" xml:space="preserve">
     <value>Existe una versión diferente ({0}) que la que estás usando ({1}). ¿Quieres acceder a la página del proyecto en SourceForge? El juego se cerrará.</value>
@@ -307,7 +307,7 @@
     <value>Dinero insuficiente</value>
   </data>
   <data name="tituloImposibleIncrementar" xml:space="preserve">
-    <value>Imposible Incrementar</value>
+    <value>Imposible incrementar</value>
   </data>
   <data name="tituloJugadorEliminado" xml:space="preserve">
     <value>Jugador eliminado</value>
@@ -349,7 +349,7 @@
     <value>No tienes dinero suficiente para pagar una entrada del hotel </value>
   </data>
   <data name="tituloComprarEntrada" xml:space="preserve">
-    <value>Comprar Entrada</value>
+    <value>Comprar entrada</value>
   </data>
   <data name="mensajeConstruidas" xml:space="preserve">
     <value>construidas: </value>

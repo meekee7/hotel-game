@@ -142,7 +142,7 @@
     <value>Unable to load the configuration file Config.xml</value>
   </data>
   <data name="mensajeErrorCargarConfigServidor" xml:space="preserve">
-    <value>Unable to load the configuration from the server</value>
+    <value>Unable to load configuration from the server</value>
   </data>
   <data name="mensajeExpropiacionImposible" xml:space="preserve">
     <value>The hotel already has an owner and is not expropriable</value>
@@ -205,7 +205,7 @@
     <value>Error</value>
   </data>
   <data name="tituloExpropiacionImposible" xml:space="preserve">
-    <value>Expropriation not possible</value>
+    <value>Expropriation is not possible</value>
   </data>
   <data name="tituloExpropiacionPosible" xml:space="preserve">
     <value>Expropriation is possible</value>
@@ -214,16 +214,16 @@
     <value>Hotel</value>
   </data>
   <data name="tituloImposibleComprarHotelTuyo" xml:space="preserve">
-    <value>You can not buy</value>
+    <value>Impossible to purchase</value>
   </data>
   <data name="tituloNoEsPosibleMostrarTusHoteles" xml:space="preserve">
     <value>Unable to show your hotels</value>
   </data>
   <data name="tituloNoesPosiblePonerEntradas" xml:space="preserve">
-    <value>It is not possible to put entrances</value>
+    <value>It is not possible to buy entrances</value>
   </data>
   <data name="tituloNoIndicadoJugadores" xml:space="preserve">
-    <value>Selection of colors</value>
+    <value>Color selection</value>
   </data>
   <data name="tituloPagarNoches" xml:space="preserve">
     <value>Pay nights</value>
@@ -238,7 +238,7 @@
     <value>English</value>
   </data>
   <data name="filtroDialogoCargarGuardarPartida" xml:space="preserve">
-    <value>Game of Hotel|*.xml</value>
+    <value>Hotels saved game|*.xml</value>
   </data>
   <data name="mensajeActualizar" xml:space="preserve">
     <value>Do you want to check if there is a newer version of the game?</value>
@@ -250,7 +250,7 @@
     <value>The error was: </value>
   </data>
   <data name="mensajeNoNuevaVersion" xml:space="preserve">
-    <value>You have latest version :)</value>
+    <value>You have the latest version :)</value>
   </data>
   <data name="mensajeNuevaVersion" xml:space="preserve">
     <value>There is a different version ({0}) of the one you are using ({1}). Do you want to go to project page in SourceForge? The game will be closed.</value>
@@ -262,34 +262,34 @@
     <value>¡Welcome to Hotels!</value>
   </data>
   <data name="mensajeIntentarConstruirHotelVendido" xml:space="preserve">
-    <value>It has sold the hotel was trying to enlarge, construction is canceled.</value>
+    <value>The hotel being built has been sold, construction is cancelled.</value>
   </data>
   <data name="mensajeNoIndicadoDineroNecesario" xml:space="preserve">
-    <value>Not indicated the minimum money necessary</value>
+    <value>You haven't selected the minimum necessary money</value>
   </data>
   <data name="mensajeSinBilletesDe100" xml:space="preserve">
-    <value>You have so many tickets of 100</value>
+    <value>You don't have enough 100 bills</value>
   </data>
   <data name="mensajeSinBilletesDe1000" xml:space="preserve">
-    <value>You have so many tickets of 1000</value>
+    <value>You don't have enough 1000 bills</value>
   </data>
   <data name="mensajeSinBilletesDe50" xml:space="preserve">
-    <value>You have so many tickets of 50</value>
+    <value>You don't have enough 50 bills</value>
   </data>
   <data name="mensajeSinBilletesDe500" xml:space="preserve">
-    <value>You have so many tickets of 500</value>
+    <value>You don't have enough 500 bills</value>
   </data>
   <data name="mensajeSinBilletesDe5000" xml:space="preserve">
-    <value>You have so many tickets of 5000</value>
+    <value>You don't have enough 5000 bills</value>
   </data>
   <data name="mensajeSinPropiedadesNiFondos" xml:space="preserve">
-    <value>You have no properties to auction or sufficient funds to pay. Stay out of the game :(</value>
+    <value>You have no properties to sell at auction or sufficient funds to pay. You are out of the game :(</value>
   </data>
   <data name="mensajeSinPropiedadesParaSubastar" xml:space="preserve">
-    <value>You have no properties for auction</value>
+    <value>You have no properties to sell at auction</value>
   </data>
   <data name="textoNecesario" xml:space="preserve">
-    <value>Necessary:</value>
+    <value>Necessary: </value>
   </data>
   <data name="textoTienes" xml:space="preserve">
     <value>Have: </value>
@@ -301,16 +301,16 @@
     <value>Using: </value>
   </data>
   <data name="tituloConstruccionCancelada" xml:space="preserve">
-    <value>Construction canceled</value>
+    <value>Construction cancelled</value>
   </data>
   <data name="tituloDineroInsuficiente" xml:space="preserve">
     <value>Insufficient money</value>
   </data>
   <data name="tituloImposibleIncrementar" xml:space="preserve">
-    <value>Unable to Increase</value>
+    <value>Unable to increase</value>
   </data>
   <data name="tituloJugadorEliminado" xml:space="preserve">
-    <value>Eliminated player</value>
+    <value>Player eliminated</value>
   </data>
   <data name="tituloSubastas" xml:space="preserve">
     <value>Auctions</value>
@@ -319,40 +319,40 @@
     <value>Construction denied</value>
   </data>
   <data name="mensajeConstruccionDobleCoste" xml:space="preserve">
-    <value>Double-cost construction</value>
+    <value>Construction will cost double</value>
   </data>
   <data name="mensajeConstruccionGratuita" xml:space="preserve">
-    <value>Free construction</value>
+    <value>Construction is free </value>
   </data>
   <data name="mensajeConstruccionPermitida" xml:space="preserve">
-    <value>Permitted construction</value>
+    <value>Construction allowed </value>
   </data>
   <data name="mensajeCasillaOcupada" xml:space="preserve">
-    <value>This square is busy and can not add an entrance</value>
+    <value>This square is busy and can not add an entrance in it right now</value>
   </data>
   <data name="mensajeCasillaYaPoseeEntrada" xml:space="preserve">
     <value>This square already has a entrance purchased for the hotel </value>
   </data>
   <data name="mensajeComprarEntradas" xml:space="preserve">
-    <value>If you agree to buy the entrance, you are obliged to pay. Do you want to purchase?</value>
+    <value>If you agree to buy the entrance, you are obliged to pay. Do you want to purchase it?</value>
   </data>
   <data name="mensajeEstasEnCasillaTipoEntrada" xml:space="preserve">
-    <value>You're in a Free Entrance type square.Enjoy it!</value>
+    <value>You're in a Free Entrance type position. Enjoy it!</value>
   </data>
   <data name="mensajeNohayFasesConstruidasParaPonerEntradas" xml:space="preserve">
-    <value>The hotel {0} does not have built stages and therefore no entrances can be added even</value>
+    <value>The hotel {0} does not have any built phase, so no entrances can be added yet</value>
   </data>
   <data name="mensajePrimeraEntradaGratis" xml:space="preserve">
-    <value>The first entry you select will be free, due to the square on which you are. The consecutive will be according to the normal method (one per hotel)</value>
+    <value>The first entrance you select will be free, due to the position on which you are. The consecutive will be processed according to the normal method (one per hotel)</value>
   </data>
   <data name="mensajeSinDineroParaComprarEntradas" xml:space="preserve">
-    <value>You do not have enough money to pay a hotel entrance </value>
+    <value>You do not have enough money to buy an entrance of the hotel </value>
   </data>
   <data name="tituloComprarEntrada" xml:space="preserve">
-    <value>Buy Entrance</value>
+    <value>Buy entrance</value>
   </data>
   <data name="mensajeConstruidas" xml:space="preserve">
-    <value>constructed: </value>
+    <value>built: </value>
   </data>
   <data name="mensajeDuenio" xml:space="preserve">
     <value>Owner: </value>
@@ -364,10 +364,10 @@
     <value>No</value>
   </data>
   <data name="mensajeNumAmpliaciones" xml:space="preserve">
-    <value>Nº of extensions</value>
+    <value>Nº of phases</value>
   </data>
   <data name="mensajeNumEntradas" xml:space="preserve">
-    <value>Nº of entries: </value>
+    <value>Nº of entrances: </value>
   </data>
   <data name="mensajeSi" xml:space="preserve">
     <value>Yes</value>

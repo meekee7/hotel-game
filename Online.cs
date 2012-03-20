@@ -202,8 +202,40 @@ namespace Juego_Hotel
         {
             try
             {
-                IPAddress dir = Dns.GetHostAddresses(this.txtServidor.Text).First(IPAddress => IPAddress.AddressFamily == AddressFamily.InterNetwork);
-                IPEndPoint Ep = new IPEndPoint(dir, 12345);
+                String servidor;
+                int puerto;
+                if (this.checkSrvOficial.Checked)
+                {
+                    servidor = "betovserver.no-ip.org";
+                    puerto = 12345;
+                }
+                else
+                {
+                    servidor = this.txtServidor.Text.Trim();
+                    if (this.txtPuerto.Text.Trim() == "")
+                        puerto = 12345;
+                    else
+                    {
+                        Boolean res_puerto = int.TryParse(this.txtPuerto.Text.Trim(), out puerto);
+                        if (res_puerto == false)
+                        {
+                            MessageBox.Show("El puerto especificado no es numérico");
+                            return;
+                        }
+                        else if (puerto > 65535)
+                        {
+                            MessageBox.Show("El puerto especificado es demasiado alto");
+                            return;
+                        }
+                        else if (puerto <= 0)
+                        {
+                            MessageBox.Show("El puerto especificado es demasiado bajo");
+                            return;
+                        }
+                    }
+                }
+                IPAddress dir = Dns.GetHostAddresses(servidor).First(IPAddress => IPAddress.AddressFamily == AddressFamily.InterNetwork);
+                IPEndPoint Ep = new IPEndPoint(dir, puerto);
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(Ep);
                 this.bLogin.Enabled = true;
@@ -511,6 +543,12 @@ namespace Juego_Hotel
         }
 
         private void txtServidor_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                this.bConectar.PerformClick();
+        }
+
+        private void txtPuerto_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 this.bConectar.PerformClick();
@@ -1224,6 +1262,20 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             MessageBox.Show("El hotel ha sido pagado. Subasta finalizada");
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_terminada_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
+        }
+
+        private void checkSrvOficial_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkSrvOficial.Checked)
+            {
+                this.txtServidor.Enabled = false;
+                this.txtPuerto.Enabled = false;
+            }
+            else
+            {
+                this.txtServidor.Enabled = true;
+                this.txtPuerto.Enabled = true;
+            }
         }
     }
 }

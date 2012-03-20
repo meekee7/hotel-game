@@ -41,6 +41,9 @@
             this.LPartidas = new System.Windows.Forms.Label();
             this.bChatGlobal = new System.Windows.Forms.Button();
             this.bUnirse = new System.Windows.Forms.Button();
+            this.checkSrvOficial = new System.Windows.Forms.CheckBox();
+            this.txtPuerto = new System.Windows.Forms.TextBox();
+            this.labelDosPuntos = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtLogin
@@ -78,6 +81,7 @@
             // 
             this.txtServidor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtServidor.Enabled = false;
             this.txtServidor.Location = new System.Drawing.Point(93, 15);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(100, 20);
@@ -188,11 +192,46 @@
             this.bUnirse.UseVisualStyleBackColor = true;
             this.bUnirse.Click += new System.EventHandler(this.bUnirse_Click);
             // 
+            // checkSrvOficial
+            // 
+            this.checkSrvOficial.AutoSize = true;
+            this.checkSrvOficial.Checked = true;
+            this.checkSrvOficial.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkSrvOficial.Location = new System.Drawing.Point(199, 46);
+            this.checkSrvOficial.Name = "checkSrvOficial";
+            this.checkSrvOficial.Size = new System.Drawing.Size(95, 17);
+            this.checkSrvOficial.TabIndex = 13;
+            this.checkSrvOficial.Text = "Servidor oficial";
+            this.checkSrvOficial.UseVisualStyleBackColor = true;
+            this.checkSrvOficial.CheckedChanged += new System.EventHandler(this.checkSrvOficial_CheckedChanged);
+            // 
+            // txtPuerto
+            // 
+            this.txtPuerto.Enabled = false;
+            this.txtPuerto.Location = new System.Drawing.Point(205, 15);
+            this.txtPuerto.Name = "txtPuerto";
+            this.txtPuerto.Size = new System.Drawing.Size(63, 20);
+            this.txtPuerto.TabIndex = 14;
+            this.txtPuerto.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtPuerto_PreviewKeyDown);
+            // 
+            // labelDosPuntos
+            // 
+            this.labelDosPuntos.AutoSize = true;
+            this.labelDosPuntos.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDosPuntos.Location = new System.Drawing.Point(194, 17);
+            this.labelDosPuntos.Name = "labelDosPuntos";
+            this.labelDosPuntos.Size = new System.Drawing.Size(11, 15);
+            this.labelDosPuntos.TabIndex = 15;
+            this.labelDosPuntos.Text = ":";
+            // 
             // Online
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(303, 388);
+            this.Controls.Add(this.labelDosPuntos);
+            this.Controls.Add(this.txtPuerto);
+            this.Controls.Add(this.checkSrvOficial);
             this.Controls.Add(this.bUnirse);
             this.Controls.Add(this.bChatGlobal);
             this.Controls.Add(this.LPartidas);
@@ -231,5 +270,8 @@
         private System.Windows.Forms.Button bChatGlobal;
         private System.Windows.Forms.Button bUnirse;
         public System.Windows.Forms.TextBox txtLogin;
+        private System.Windows.Forms.CheckBox checkSrvOficial;
+        private System.Windows.Forms.TextBox txtPuerto;
+        private System.Windows.Forms.Label labelDosPuntos;
     }
 }
