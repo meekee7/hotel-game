@@ -177,6 +177,9 @@
     <EmbeddedResource Include="ComprarHotel.resx">
       <DependentUpon>ComprarHotel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Construir.en.resx">
+      <DependentUpon>Construir.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Construir.resx">
       <DependentUpon>Construir.cs</DependentUpon>
     </EmbeddedResource>

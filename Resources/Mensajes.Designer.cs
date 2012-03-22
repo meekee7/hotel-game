@@ -304,6 +304,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El hotel {0} está completamente construido.
+        /// </summary>
+        internal static string mensajeHotelContruidoEntero {
+            get {
+                return ResourceManager.GetString("mensajeHotelContruidoEntero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ya posees este hotel.
         /// </summary>
         internal static string mensajeImposibleComprarHotelTuyo {
@@ -813,6 +822,15 @@ namespace Juego_Hotel.Resources {
         internal static string tituloJugadorEliminado {
             get {
                 return ResourceManager.GetString("tituloJugadorEliminado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No es posible construir.
+        /// </summary>
+        internal static string tituloNoEsPosibleConstruir {
+            get {
+                return ResourceManager.GetString("tituloNoEsPosibleConstruir", resourceCulture);
             }
         }
         

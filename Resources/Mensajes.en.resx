@@ -387,4 +387,10 @@
   <data name="mensajeJugador4SinColor" xml:space="preserve">
     <value>Player 4 has no associated color</value>
   </data>
+  <data name="mensajeHotelContruidoEntero" xml:space="preserve">
+    <value>The hotel {0} is completely constructed</value>
+  </data>
+  <data name="tituloNoEsPosibleConstruir" xml:space="preserve">
+    <value>Not possible to construct</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -47,7 +48,7 @@ namespace Juego_Hotel
             LinkedList <Hotel> lista = this.juego.jugador_actual.hoteles;
             if (lista.Count == 0)
             {
-                MessageBox.Show("No posees ningún hotel", "No es posible construir");
+                MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleConstruir);
                 this.cancelado = true;
                 this.DialogResult = DialogResult.Cancel;
                 this.Hide();
@@ -77,7 +78,7 @@ namespace Juego_Hotel
             this.bSuelo.Enabled = false;
             this.listaHoteles.BringToFront();
             if (!this.hotel_seleccionado.Ampliable())
-                MessageBox.Show ("El hotel " + this.hotel_seleccionado.nombre_txt + " está completamente construido", "No es posible construir");
+                MessageBox.Show (String.Format(Mensajes.mensajeHotelContruidoEntero,this.hotel_seleccionado.nombre_txt), Mensajes.tituloNoEsPosibleConstruir);
             else if (this.comprando_suelo)
             {
                 if (this.hotel_seleccionado.n_fases_construidas == this.hotel_seleccionado.n_fases_max - 1)

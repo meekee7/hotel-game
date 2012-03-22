@@ -117,4 +117,337 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="bSelHotel.Text" xml:space="preserve">
+    <value>Seleccionar Hotel</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="bVerHoteles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 23</value>
+  </data>
+  <data name="&gt;&gt;bSuelo.Name" xml:space="preserve">
+    <value>bSuelo</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="nombreHotel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="listaHoteles.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;bAmpli4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="nombreHotel.Text" xml:space="preserve">
+    <value>Hotel:</value>
+  </data>
+  <data name="bAmpli1.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;bSelHotel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bAmpli1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;bAmpli4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="listaHoteles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 15</value>
+  </data>
+  <data name="bSuelo.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;bSelHotel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bSuelo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="bSelHotel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;bPrincipal.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;nombreHotel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;bPrincipal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="nombreHotel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="&gt;&gt;bAmpli1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bAmpli1.Name" xml:space="preserve">
+    <value>bAmpli1</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;bAmpli1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bAmpli3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="HotelSeleccionado.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Name" xml:space="preserve">
+    <value>listaHoteles</value>
+  </data>
+  <data name="HotelSeleccionado.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="bAmpli3.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;bPrincipal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bAmpli2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="nombreHotel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 17</value>
+  </data>
+  <data name="bPrincipal.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;nombreHotel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="bPrincipal.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;bAmpli2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="bAmpli2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 66</value>
+  </data>
+  <data name="HotelSeleccionado.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 17</value>
+  </data>
+  <data name="bPrincipal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 66</value>
+  </data>
+  <data name="bAmpli3.Text" xml:space="preserve">
+    <value>Ampliación 3</value>
+  </data>
+  <data name="&gt;&gt;HotelSeleccionado.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="bAmpli3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;HotelSeleccionado.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bCancelar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bAmpli2.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="bAmpli1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>165, 66</value>
+  </data>
+  <data name="&gt;&gt;nombreHotel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="bAmpli4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bSelHotel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 23</value>
+  </data>
+  <data name="&gt;&gt;bAmpli4.Name" xml:space="preserve">
+    <value>bAmpli4</value>
+  </data>
+  <data name="bCancelar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>56, 170</value>
+  </data>
+  <data name="bCancelar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="bSuelo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 118</value>
+  </data>
+  <data name="&gt;&gt;bAmpli4.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.Name" xml:space="preserve">
+    <value>bVerHoteles</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bSelHotel.Name" xml:space="preserve">
+    <value>bSelHotel</value>
+  </data>
+  <data name="bSelHotel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="bAmpli4.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;bSuelo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bAmpli3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>360, 205</value>
+  </data>
+  <data name="nombreHotel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;bPrincipal.Name" xml:space="preserve">
+    <value>bPrincipal</value>
+  </data>
+  <data name="bAmpli2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="listaHoteles.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="bAmpli4.Text" xml:space="preserve">
+    <value>Ampliación 4</value>
+  </data>
+  <data name="&gt;&gt;HotelSeleccionado.Name" xml:space="preserve">
+    <value>HotelSeleccionado</value>
+  </data>
+  <data name="bAmpli1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;bAmpli3.Name" xml:space="preserve">
+    <value>bAmpli3</value>
+  </data>
+  <data name="&gt;&gt;HotelSeleccionado.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bAmpli1.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;bAmpli3.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="bCancelar.Text" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Construir partes de un hotel</value>
+  </data>
+  <data name="listaHoteles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 21</value>
+  </data>
+  <data name="&gt;&gt;bCancelar.Name" xml:space="preserve">
+    <value>bCancelar</value>
+  </data>
+  <data name="bVerHoteles.Text" xml:space="preserve">
+    <value>Ver hoteles</value>
+  </data>
+  <data name="HotelSeleccionado.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="bAmpli3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>165, 118</value>
+  </data>
+  <data name="bVerHoteles.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="bAmpli1.Text" xml:space="preserve">
+    <value>Ampliación 1</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>Construir</value>
+  </data>
+  <data name="bSuelo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 23</value>
+  </data>
+  <data name="bSuelo.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="bAmpli3.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="bPrincipal.Text" xml:space="preserve">
+    <value>Edificio Principal</value>
+  </data>
+  <data name="bAmpli2.Text" xml:space="preserve">
+    <value>Ampliación 2</value>
+  </data>
+  <data name="&gt;&gt;bAmpli2.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;nombreHotel.Name" xml:space="preserve">
+    <value>nombreHotel</value>
+  </data>
+  <data name="&gt;&gt;bAmpli2.Name" xml:space="preserve">
+    <value>bAmpli2</value>
+  </data>
+  <data name="bAmpli4.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;bSelHotel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bSuelo.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bPrincipal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 23</value>
+  </data>
+  <data name="bAmpli2.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="bAmpli4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 118</value>
+  </data>
+  <data name="bSuelo.Text" xml:space="preserve">
+    <value>Complejos recreativos</value>
+  </data>
+  <data name="bVerHoteles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>207, 170</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

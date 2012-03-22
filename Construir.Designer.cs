@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Construir));
             this.bCancelar = new System.Windows.Forms.Button();
             this.bSelHotel = new System.Windows.Forms.Button();
             this.bAmpli1 = new System.Windows.Forms.Button();
@@ -44,135 +45,91 @@
             // 
             // bCancelar
             // 
+            resources.ApplyResources(this.bCancelar, "bCancelar");
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancelar.Location = new System.Drawing.Point(56, 170);
             this.bCancelar.Name = "bCancelar";
-            this.bCancelar.Size = new System.Drawing.Size(75, 23);
-            this.bCancelar.TabIndex = 1;
-            this.bCancelar.Text = "Cancelar";
             this.bCancelar.UseVisualStyleBackColor = true;
             this.bCancelar.Click += new System.EventHandler(this.bCancelar_Click);
             // 
             // bSelHotel
             // 
-            this.bSelHotel.Location = new System.Drawing.Point(12, 12);
+            resources.ApplyResources(this.bSelHotel, "bSelHotel");
             this.bSelHotel.Name = "bSelHotel";
-            this.bSelHotel.Size = new System.Drawing.Size(101, 23);
-            this.bSelHotel.TabIndex = 2;
-            this.bSelHotel.Text = "Seleccionar Hotel";
             this.bSelHotel.UseVisualStyleBackColor = true;
             this.bSelHotel.Click += new System.EventHandler(this.bSelHotel_Click);
             // 
             // bAmpli1
             // 
-            this.bAmpli1.Enabled = false;
-            this.bAmpli1.Location = new System.Drawing.Point(165, 66);
+            resources.ApplyResources(this.bAmpli1, "bAmpli1");
             this.bAmpli1.Name = "bAmpli1";
-            this.bAmpli1.Size = new System.Drawing.Size(75, 23);
-            this.bAmpli1.TabIndex = 3;
-            this.bAmpli1.Text = "Ampliación 1";
             this.bAmpli1.UseVisualStyleBackColor = true;
             this.bAmpli1.Click += new System.EventHandler(this.bAmpli1_Click);
             // 
             // bPrincipal
             // 
-            this.bPrincipal.Enabled = false;
-            this.bPrincipal.Location = new System.Drawing.Point(12, 66);
+            resources.ApplyResources(this.bPrincipal, "bPrincipal");
             this.bPrincipal.Name = "bPrincipal";
-            this.bPrincipal.Size = new System.Drawing.Size(92, 23);
-            this.bPrincipal.TabIndex = 4;
-            this.bPrincipal.Text = "Edificio Principal";
             this.bPrincipal.UseVisualStyleBackColor = true;
             this.bPrincipal.Click += new System.EventHandler(this.bPrincipal_Click);
             // 
             // bAmpli2
             // 
-            this.bAmpli2.Enabled = false;
-            this.bAmpli2.Location = new System.Drawing.Point(268, 66);
+            resources.ApplyResources(this.bAmpli2, "bAmpli2");
             this.bAmpli2.Name = "bAmpli2";
-            this.bAmpli2.Size = new System.Drawing.Size(75, 23);
-            this.bAmpli2.TabIndex = 5;
-            this.bAmpli2.Text = "Ampliación 2";
             this.bAmpli2.UseVisualStyleBackColor = true;
             this.bAmpli2.Click += new System.EventHandler(this.bAmpli2_Click);
             // 
             // bAmpli3
             // 
-            this.bAmpli3.Enabled = false;
-            this.bAmpli3.Location = new System.Drawing.Point(165, 118);
+            resources.ApplyResources(this.bAmpli3, "bAmpli3");
             this.bAmpli3.Name = "bAmpli3";
-            this.bAmpli3.Size = new System.Drawing.Size(75, 23);
-            this.bAmpli3.TabIndex = 6;
-            this.bAmpli3.Text = "Ampliación 3";
             this.bAmpli3.UseVisualStyleBackColor = true;
             this.bAmpli3.Click += new System.EventHandler(this.bAmpli3_Click);
             // 
             // bAmpli4
             // 
-            this.bAmpli4.Enabled = false;
-            this.bAmpli4.Location = new System.Drawing.Point(268, 118);
+            resources.ApplyResources(this.bAmpli4, "bAmpli4");
             this.bAmpli4.Name = "bAmpli4";
-            this.bAmpli4.Size = new System.Drawing.Size(75, 23);
-            this.bAmpli4.TabIndex = 7;
-            this.bAmpli4.Text = "Ampliación 4";
             this.bAmpli4.UseVisualStyleBackColor = true;
             this.bAmpli4.Click += new System.EventHandler(this.bAmpli4_Click);
             // 
             // bSuelo
             // 
-            this.bSuelo.Enabled = false;
-            this.bSuelo.Location = new System.Drawing.Point(12, 118);
+            resources.ApplyResources(this.bSuelo, "bSuelo");
             this.bSuelo.Name = "bSuelo";
-            this.bSuelo.Size = new System.Drawing.Size(119, 23);
-            this.bSuelo.TabIndex = 8;
-            this.bSuelo.Text = "Complejos recreativos";
             this.bSuelo.UseVisualStyleBackColor = true;
             this.bSuelo.Click += new System.EventHandler(this.bSuelo_Click);
             // 
             // nombreHotel
             // 
-            this.nombreHotel.AutoSize = true;
-            this.nombreHotel.Location = new System.Drawing.Point(162, 17);
+            resources.ApplyResources(this.nombreHotel, "nombreHotel");
             this.nombreHotel.Name = "nombreHotel";
-            this.nombreHotel.Size = new System.Drawing.Size(35, 13);
-            this.nombreHotel.TabIndex = 9;
-            this.nombreHotel.Text = "Hotel:";
             // 
             // listaHoteles
             // 
+            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
-            this.listaHoteles.Location = new System.Drawing.Point(203, 15);
             this.listaHoteles.Name = "listaHoteles";
-            this.listaHoteles.Size = new System.Drawing.Size(101, 21);
-            this.listaHoteles.TabIndex = 10;
-            this.listaHoteles.Visible = false;
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
             // HotelSeleccionado
             // 
-            this.HotelSeleccionado.AutoSize = true;
-            this.HotelSeleccionado.Location = new System.Drawing.Point(204, 17);
+            resources.ApplyResources(this.HotelSeleccionado, "HotelSeleccionado");
             this.HotelSeleccionado.Name = "HotelSeleccionado";
-            this.HotelSeleccionado.Size = new System.Drawing.Size(0, 13);
-            this.HotelSeleccionado.TabIndex = 11;
             // 
             // bVerHoteles
             // 
-            this.bVerHoteles.Location = new System.Drawing.Point(207, 170);
+            resources.ApplyResources(this.bVerHoteles, "bVerHoteles");
             this.bVerHoteles.Name = "bVerHoteles";
-            this.bVerHoteles.Size = new System.Drawing.Size(83, 23);
-            this.bVerHoteles.TabIndex = 26;
-            this.bVerHoteles.Text = "Ver hoteles";
             this.bVerHoteles.UseVisualStyleBackColor = true;
             this.bVerHoteles.Click += new System.EventHandler(this.bVerHoteles_Click);
             // 
             // Construir
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancelar;
-            this.ClientSize = new System.Drawing.Size(360, 205);
             this.ControlBox = false;
             this.Controls.Add(this.bVerHoteles);
             this.Controls.Add(this.HotelSeleccionado);
@@ -188,8 +145,6 @@
             this.Controls.Add(this.bCancelar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Construir";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Construir partes de un hotel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Construir_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
