@@ -4,7 +4,8 @@
 #ifdef _WIN32
    #include <winsock2.h>
    #pragma comment(lib, "Ws2_32.lib")
-   #define socklen_t int
+   //#define socklen_t int
+   typedef int socklen_t;
 #else
    #include <sys/types.h>
    #include <sys/socket.h>
