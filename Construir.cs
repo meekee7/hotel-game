@@ -84,7 +84,7 @@ namespace Juego_Hotel
                 if (this.hotel_seleccionado.n_fases_construidas == this.hotel_seleccionado.n_fases_max - 1)
                     this.bSuelo.Enabled = true;
                 else
-                    MessageBox.Show("El hotel " + this.hotel_seleccionado.nombre_txt + " aun no tiene todas las fases hechas", "No se puede comprar el suelo");
+                    MessageBox.Show(String.Format(Mensajes.mensajeHotelFasesIncompletas,this.hotel_seleccionado.nombre_txt, Mensajes.tituloNoSePuedeComparSuelo));
             }
             else
             {
@@ -156,22 +156,22 @@ namespace Juego_Hotel
             String fase = "";
             switch (num_fase)
             {
-                case 1: fase = "el edificio principal";
+                case 1: fase = Mensajes.textoEdificioPrincipal;
                     break;
-                case 2: fase = "la primera ampliación";
+                case 2: fase = Mensajes.textoPrimeraAmpliacion;
                     break;
-                case 3: fase = "la segunda ampliación";
+                case 3: fase = Mensajes.textoSegundaAmpliacion;
                     break;
-                case 4: fase = "la tercera ampliación";
+                case 4: fase = Mensajes.textoTerceraAmpliacion;
                     break;
-                case 5: fase = "la cuarta ampliación";
+                case 5: fase = Mensajes.textoCuartaAmpliacion;
                     break;
-                case 6: fase = "los complejos recreativos";
+                case 6: fase = Mensajes.textoComplejosRecreativos;
                     break;
             }
             if (this.fase_gratis)
             {
-                MessageBox.Show("Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!");
+                MessageBox.Show(Mensajes.mensajeEstasEnCasillaTipoFaseGratis);
                 if (!this.interfaz.online)
                     this.hotel_seleccionado.Ampliar();
                 this.Close();
@@ -182,12 +182,9 @@ namespace Juego_Hotel
                 {
                     DialogResult res = new DialogResult();
                     if ((num_fase != 6) && (!this.comprando_suelo))
-                       res = MessageBox.Show("Tienes dinero suficiente para pagar " + fase + "\n" +
-                                             "Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente\n" +
-                                             "¿Deseas tirar el dado?", "Confirmación de construcción", MessageBoxButtons.YesNo);
+                       res = MessageBox.Show(String.Format(Mensajes.mensajeSuficienteDineroParaFase,fase), Mensajes.tituloConfirmacionDeConstruccion, MessageBoxButtons.YesNo);
                     else
-                       res = MessageBox.Show("Tienes dinero suficiente para pagar los complejos recreativos.\n" +
-                                              "No se necesita el permiso para construirlos. ¿Deseas continuar?", "Confirmación de construcción", MessageBoxButtons.YesNo);
+                       res = MessageBox.Show(Mensajes.mensajeSufucienteDineroParaComplejos, Mensajes.tituloConfirmacionDeConstruccion, MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
                     {
                         if ((num_fase != 6) && (!this.comprando_suelo))
@@ -242,7 +239,7 @@ namespace Juego_Hotel
                     }
                 }
                 else
-                    MessageBox.Show("No tienes el dinero suficiente para comprar " + fase, "No es posible construir");
+                    MessageBox.Show(String.Format(Mensajes.mensajeSinDineroParaComprar, fase), Mensajes.tituloNoEsPosibleConstruir);
             }
         }
 

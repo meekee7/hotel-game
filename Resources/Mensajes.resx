@@ -393,4 +393,70 @@
   <data name="tituloNoEsPosibleConstruir" xml:space="preserve">
     <value>No es posible construir</value>
   </data>
+  <data name="mensajeEstasEnCasillaTipoFaseGratis" xml:space="preserve">
+    <value>Estás en una casilla de tipo Fase Gratis. ¡Disfrútala!</value>
+  </data>
+  <data name="mensajeHotelFasesIncompletas" xml:space="preserve">
+    <value>El hotel {0} aun no tiene todas las fases hechas</value>
+  </data>
+  <data name="mensajeSinDineroParaComprar" xml:space="preserve">
+    <value>No tienes el dinero suficiente para comprar</value>
+  </data>
+  <data name="mensajeSuficienteDineroParaFase" xml:space="preserve">
+    <value>Tienes dinero suficiente para pagar {0}  
+Si decides continuar, el resultado del dado ha de ser cumplido obligatoriamente.
+¿Deseas tirar el dado?</value>
+  </data>
+  <data name="mensajeSufucienteDineroParaComplejos" xml:space="preserve">
+    <value>Tienes dinero suficiente para pagar los complejos recreativos.
+No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
+  </data>
+  <data name="textoComplejosRecreativos" xml:space="preserve">
+    <value>los complejos recreativos</value>
+  </data>
+  <data name="textoCuartaAmpliacion" xml:space="preserve">
+    <value>la cuarta ampliación</value>
+  </data>
+  <data name="textoEdificioPrincipal" xml:space="preserve">
+    <value>el edificio principal</value>
+  </data>
+  <data name="textoPrimeraAmpliacion" xml:space="preserve">
+    <value>la primera ampliación</value>
+  </data>
+  <data name="textoSegundaAmpliacion" xml:space="preserve">
+    <value>la segunda ampliación</value>
+  </data>
+  <data name="textoTerceraAmpliacion" xml:space="preserve">
+    <value>la tercera ampliación</value>
+  </data>
+  <data name="tituloConfirmacionDeConstruccion" xml:space="preserve">
+    <value>Confirmación de construcción</value>
+  </data>
+  <data name="tituloNoSePuedeComparSuelo" xml:space="preserve">
+    <value>No se puede comprar el suelo</value>
+  </data>
+  <data name="mensajeErrorActualizandoListaJugadores" xml:space="preserve">
+    <value>Error actualizando lista de jugadores: </value>
+  </data>
+  <data name="mensajeErrorAlComprobarVersion" xml:space="preserve">
+    <value>Se produjo un error comprobando la versión. Ve a {0} para comprobar la versión manualmente.</value>
+  </data>
+  <data name="mensajeErrorCarcarHotelConEntradasErroneas" xml:space="preserve">
+    <value>El fichero de la partida ha sido modificado incorrectamente: El hotel {0} tiene unas entradas asignadas que no pertenecen al hotel</value>
+  </data>
+  <data name="mensajeErrorCargarHotelConMasFases" xml:space="preserve">
+    <value>El hotel {0} tiene más fases construidas que el número máximo de fases</value>
+  </data>
+  <data name="mensajeErrorCargarPartidaSinDatosJugadores" xml:space="preserve">
+    <value>La partida no contiene datos de todos los jugadores</value>
+  </data>
+  <data name="mensajeNoEnvMensajeVacio" xml:space="preserve">
+    <value>No puedes enviar un mensaje vacío</value>
+  </data>
+  <data name="mensajeTamMensajeMax" xml:space="preserve">
+    <value>No puedes enviar un mensaje de más de 1024 caracteres</value>
+  </data>
+  <data name="tituloErrorAlComprobarVersion" xml:space="preserve">
+    <value>El error producido fue:</value>
+  </data>
 </root>

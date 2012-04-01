@@ -393,4 +393,70 @@
   <data name="tituloNoEsPosibleConstruir" xml:space="preserve">
     <value>Not possible to construct</value>
   </data>
+  <data name="mensajeEstasEnCasillaTipoFaseGratis" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mensajeHotelFasesIncompletas" xml:space="preserve">
+    <value>The hotel {0} has not yet made ​​all phases</value>
+  </data>
+  <data name="mensajeSinDineroParaComprar" xml:space="preserve">
+    <value>You do not have enough money to buy</value>
+  </data>
+  <data name="mensajeSuficienteDineroParaFase" xml:space="preserve">
+    <value>Have enough money to pay {0}
+If you decide to continue, given the result must necessarily be fulfilled.
+Want to roll the dice?</value>
+  </data>
+  <data name="mensajeSufucienteDineroParaComplejos" xml:space="preserve">
+    <value>Have enough money to pay for recreational complexes.
+No permission is needed to build them. Continue?</value>
+  </data>
+  <data name="textoComplejosRecreativos" xml:space="preserve">
+    <value>recreational complexes</value>
+  </data>
+  <data name="textoCuartaAmpliacion" xml:space="preserve">
+    <value>the fourth expansion</value>
+  </data>
+  <data name="textoEdificioPrincipal" xml:space="preserve">
+    <value>the main building</value>
+  </data>
+  <data name="textoPrimeraAmpliacion" xml:space="preserve">
+    <value>the first expansion</value>
+  </data>
+  <data name="textoSegundaAmpliacion" xml:space="preserve">
+    <value>the second expansion</value>
+  </data>
+  <data name="textoTerceraAmpliacion" xml:space="preserve">
+    <value>the third expansion</value>
+  </data>
+  <data name="tituloConfirmacionDeConstruccion" xml:space="preserve">
+    <value>Confirmation of construction</value>
+  </data>
+  <data name="tituloNoSePuedeComparSuelo" xml:space="preserve">
+    <value>You can not buy the ground</value>
+  </data>
+  <data name="mensajeErrorActualizandoListaJugadores" xml:space="preserve">
+    <value>Error updating list of players:</value>
+  </data>
+  <data name="mensajeErrorAlComprobarVersion" xml:space="preserve">
+    <value>An error occurred checking the version. Go to {0} to check the version manually.</value>
+  </data>
+  <data name="mensajeErrorCarcarHotelConEntradasErroneas" xml:space="preserve">
+    <value>The the game file has been modified incorrectly: The {0} hotel has entries assigned to non hotel</value>
+  </data>
+  <data name="mensajeErrorCargarHotelConMasFases" xml:space="preserve">
+    <value>The hotel {0} has constructed more phases than the maximum number of phases</value>
+  </data>
+  <data name="mensajeErrorCargarPartidaSinDatosJugadores" xml:space="preserve">
+    <value>The game does not contain data for all players</value>
+  </data>
+  <data name="mensajeNoEnvMensajeVacio" xml:space="preserve">
+    <value>You can not send an empty message</value>
+  </data>
+  <data name="mensajeTamMensajeMax" xml:space="preserve">
+    <value>You can send a message longer than 1024 characters</value>
+  </data>
+  <data name="tituloErrorAlComprobarVersion" xml:space="preserve">
+    <value>The error was:</value>
+  </data>
 </root>

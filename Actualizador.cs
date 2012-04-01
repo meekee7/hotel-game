@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -38,8 +39,8 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                MessageBox.Show("Se produjo un error comprobando la versión. Ve a https://sourceforge.net/projects/hotels-game/ para comprobar la versión manualmente." + 
-                    Environment.NewLine + "El error producido fue: " + e.Message);
+                MessageBox.Show(String.Format(Mensajes.mensajeErrorAlComprobarVersion,"https://sourceforge.net/projects/hotels-game/") + 
+                    Environment.NewLine + Mensajes.tituloErrorAlComprobarVersion + e.Message);
                 this.error = true;
                 return false;
             }

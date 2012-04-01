@@ -73,7 +73,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error actualizando lista de jugadores: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorActualizandoListaJugadores + ex.Message);
             }
         }
 
@@ -117,12 +117,12 @@ namespace Juego_Hotel
         {
             if (this.mensaje.Text.Trim().Length == 0)
             {
-                MessageBox.Show("No puedes enviar un mensaje vacío");
+                MessageBox.Show(Mensajes.mensajeNoEnvMensajeVacio);
                 return;
             }
             if (this.mensaje.Text.Length > 1024)
             {
-                MessageBox.Show("No puedes enviar un mensaje de más de 1024 caracteres");
+                MessageBox.Show(Mensajes.mensajeTamMensajeMax);
                 return;
             }
             if (this.global)

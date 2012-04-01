@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -195,7 +196,7 @@ namespace Juego_Hotel
                     hotel.n_fases_construidas = Convert.ToInt16(elemHotel.GetElementsByTagName("num_fases_construidas")[0].FirstChild.Value);
                     if (hotel.n_fases_construidas > hotel.n_fases_max)
                     {
-                        this.error = "El hotel " + hotel.nombre_txt + " tiene más fases construidas que el número máximo de fases";
+                        this.error = String.Format(Mensajes.mensajeErrorCargarHotelConMasFases,hotel.nombre_txt);
                         return false;
                     }   
                     hotel.entrada_comprada_ultimo_turno = Convert.ToBoolean(elemHotel.GetElementsByTagName("entrada_comprada_ultimo_turno")[0].FirstChild.Value.Replace("si", "true").Replace("no", "false"));
@@ -221,8 +222,7 @@ namespace Juego_Hotel
                             }
                             else // Nº de casilla incorrecta, fichero modificado
                             {
-                                this.error = "El fichero de la partida ha sido modificado incorrectamente: El hotel " +
-                                    hotel.nombre_txt + " tiene unas entradas asignadas que no pertenecen al hotel";
+                                this.error = String.Format(Mensajes.mensajeErrorCarcarHotelConEntradasErroneas,hotel.nombre_txt);
                                 return false;
                             }
                             hotel.entradas.AddLast(this.juego.casillas[num_casilla]);
@@ -269,7 +269,7 @@ namespace Juego_Hotel
                 {
                     if (jugador == null)
                     {
-                        this.error = "La partida no contiene datos de todos los jugadores";
+                        this.error = Mensajes.mensajeErrorCargarPartidaSinDatosJugadores;
                         return false;
                     }
                 }

@@ -171,8 +171,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Chat.en.resx">
+      <DependentUpon>Chat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Chat.resx">
       <DependentUpon>Chat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarHotel.en.resx">
+      <DependentUpon>ComprarHotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarHotel.resx">
       <DependentUpon>ComprarHotel.cs</DependentUpon>
@@ -185,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dado_construccion.en.resx">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputBoxDialog.resx">
+      <DependentUpon>InputBoxDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PedirPago.en.resx">
       <DependentUpon>PedirPago.cs</DependentUpon>
