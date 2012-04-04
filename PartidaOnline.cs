@@ -161,14 +161,13 @@ namespace Juego_Hotel
             parametros.AddLast(lista_nombres.Length.ToString());
             foreach (String nombre in lista_nombres)
                 parametros.AddLast(nombre);
-
             thread_partida.Start(parametros);
         }
 
         void manejar_partida(object parametros)
         {
             LinkedList<String> l_parametros = (LinkedList<String>)parametros;
-            this.interfaz = new Principal(true, this.frm_online);
+            this.interfaz = new Principal(true, this.frm_online, this.frm_online.configuracion_local);
             int num_jugadores = Convert.ToInt32((l_parametros.First.Value));
             l_parametros.RemoveFirst();
             this.interfaz.juego.jug_inicial = Convert.ToInt32((l_parametros.First.Value)) + 1;
@@ -198,7 +197,6 @@ namespace Juego_Hotel
                         this.interfaz.nombreJ1.Text = "Nombre: " + lista_jugadores[0];
                         break;
             }
-            //this.interfaz.ShowDialog();
             Application.Run(this.interfaz);
         }
 

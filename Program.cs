@@ -18,13 +18,14 @@ namespace Juego_Hotel
         static void Main ()
         {
             XmlDocument configuracion = new XmlDocument();
+            configuracion.PreserveWhitespace = true;
             configuracion.Load("Config.xml");
             XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];
-            if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("Spanish"))
+            if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("Spanish"))
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
             }
-            else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
+            else if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("English"))
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
@@ -50,9 +51,9 @@ namespace Juego_Hotel
                 actualizador = null;
             }
             if (MessageBox.Show(Mensajes.mensajePreguntarSiOnline, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.No)
-                Application.Run(new Principal(false, null));
+                Application.Run(new Principal(false, null, configuracion));
             else
-                Application.Run(new Online());
+                Application.Run(new Online(configuracion));
         }
 
         internal static void ReLocalizeAll(System.Globalization.CultureInfo NewCulture)

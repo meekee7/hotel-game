@@ -459,4 +459,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="tituloErrorAlComprobarVersion" xml:space="preserve">
     <value>El error producido fue:</value>
   </data>
+  <data name="mensajeErrorSalvandoIdioma" xml:space="preserve">
+    <value>Se produjo un error al salvar el idioma en Config.xml</value>
+  </data>
 </root>

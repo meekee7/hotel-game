@@ -313,6 +313,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Se produjo un error al salvar el idioma en Config.xml.
+        /// </summary>
+        internal static string mensajeErrorSalvandoIdioma {
+            get {
+                return ResourceManager.GetString("mensajeErrorSalvandoIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!.
         /// </summary>
         internal static string mensajeEstasEnCasillaTipoEntrada {

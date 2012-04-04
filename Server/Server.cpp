@@ -1871,6 +1871,7 @@ void run_server(int port)
    {
       config_content += line + '\n';
    }
+   config_file.close();
    TiXmlDocument config_xml("Config.xml");
    if (!(config_xml.LoadFile()))
    {

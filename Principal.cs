@@ -38,9 +38,10 @@ namespace Juego_Hotel
         int alto_fase = 18;
         public Subastas frm_subasta_en_curso;
         public Hotel hotel_a_subastar_online;
+        XmlDocument configuracion;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
-        public Principal(Boolean autostart, Online frm_online)
+        public Principal(Boolean autostart, Online frm_online, XmlDocument configuracion)
         {
             InitializeComponent();
             this.juego = new Juego();
@@ -72,17 +73,18 @@ namespace Juego_Hotel
             this.img_ayto.Parent = this.imgTablero;
             this.pos_ayto_orig = this.img_ayto.Location;
             this.img_ayto.Location = Calcular_Posicion(this.img_ayto.Location.X, this.img_ayto.Location.Y);
+            this.configuracion = configuracion;
             if (frm_online != null)
             {
                 this.online = true;
                 this.frm_online = frm_online;
                 this.partida_activa = true;
-                XmlDocument configuracion = new XmlDocument();
-                configuracion.Load("Config.xml");
-                XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];
-                if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("Spanish"))
+                //XmlDocument configuracion = new XmlDocument();
+                //configuracion.Load("Config.xml");
+                XmlNode nodo_Idioma = this.configuracion.GetElementsByTagName("language")[0];
+                if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("Spanish"))
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
-                else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
+                else if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("English"))
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
             else
@@ -446,13 +448,18 @@ namespace Juego_Hotel
             {
                 this.juego.jugadores = new Jugador[this.juego.n_jugadores];
                 this.juego.n_jugadores_activos = this.juego.n_jugadores;
-                XmlDocument configuracion = new XmlDocument();
+                XmlDocument configuracion_online = new XmlDocument();
+                configuracion_online.PreserveWhitespace = true;
+                XmlNode config_dinero;
                 try
                 {
                     if (this.online)
-                        configuracion.LoadXml(this.online_config);
+                    {
+                        configuracion_online.LoadXml(this.online_config);
+                        config_dinero = configuracion_online.GetElementsByTagName("money_per_player")[0];
+                    }
                     else
-                        configuracion.Load("Config.xml");
+                        config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
                 }
                 catch
                 {
@@ -469,18 +476,17 @@ namespace Juego_Hotel
                         throw;
                     }
                 }
-                XmlNode config_dinero = configuracion.GetElementsByTagName("money_per_player")[0];
                 XmlNode nodo_cantidades;
                 if (this.juego.n_jugadores == 2)
                     nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("two_players")[0];
                 else
                     nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("three_or_four_players")[0];
                 int n_5000, n_1000, n_500, n_100, n_50;
-                n_5000 = Convert.ToInt16(nodo_cantidades.ChildNodes[0].FirstChild.Value);
-                n_1000 = Convert.ToInt16(nodo_cantidades.ChildNodes[1].FirstChild.Value);
-                n_500 = Convert.ToInt16(nodo_cantidades.ChildNodes[2].FirstChild.Value);
-                n_100 = Convert.ToInt16(nodo_cantidades.ChildNodes[3].FirstChild.Value);
-                n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[4].FirstChild.Value);
+                n_5000 = Convert.ToInt16(nodo_cantidades.ChildNodes[1].FirstChild.Value);
+                n_1000 = Convert.ToInt16(nodo_cantidades.ChildNodes[3].FirstChild.Value);
+                n_500 = Convert.ToInt16(nodo_cantidades.ChildNodes[5].FirstChild.Value);
+                n_100 = Convert.ToInt16(nodo_cantidades.ChildNodes[7].FirstChild.Value);
+                n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[9].FirstChild.Value);
                 switch (this.juego.n_jugadores)
                 {
                     case 4: this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
@@ -1664,6 +1670,32 @@ namespace Juego_Hotel
             }
         }
 
+        private void Guardar_idioma(CultureInfo culture)
+        {
+            XmlNode nodo_Idioma = this.configuracion.GetElementsByTagName("language")[0];
+            switch (culture.Name)
+            {
+                case "es": nodo_Idioma.ChildNodes[1].FirstChild.Value = "Spanish";
+                    break;
+                case "en": nodo_Idioma.ChildNodes[1].FirstChild.Value = "English";
+                    break;
+            }
+            XmlTextWriter writer = new XmlTextWriter("Config.xml", Encoding.UTF8);
+            try
+            {
+                writer.Formatting = Formatting.Indented;
+                this.configuracion.Save(writer);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(Mensajes.mensajeErrorSalvandoIdioma + ": " + e.Message);
+            }
+            finally
+            {
+                writer.Close();
+            }
+        }
+
         private void IdiomaElegido(object sender, EventArgs e)
         {
             ComboBox senderComboBox = (ComboBox)sender;
@@ -1677,6 +1709,7 @@ namespace Juego_Hotel
                 Program.ReLocalizeAll(new CultureInfo("en"));
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
+            this.Guardar_idioma(System.Threading.Thread.CurrentThread.CurrentUICulture);
         }
 
         void IReLocalizable.ReLocalize(CultureInfo antiguoCulture)

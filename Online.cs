@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Xml;
 
 namespace Juego_Hotel
 {
@@ -22,12 +23,14 @@ namespace Juego_Hotel
         Semaphore sem_en_comunicacion;
         Boolean continuar_thread, conectado = false, cerrando = false;
         public Tipos.Resultado_dado_cons ultimo_res_dado_cons;
+        public XmlDocument configuracion_local;
 
-        public Online()
+        public Online(XmlDocument configuracion)
         {
             InitializeComponent();
             this.chats_abiertos = new LinkedList<Chat>();
             this.lista_partidas = new LinkedList<PartidaOnline>();
+            this.configuracion_local = configuracion;
         }
 
         private void Online_Load(object sender, EventArgs e)
