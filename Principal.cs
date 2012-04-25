@@ -1443,6 +1443,7 @@ namespace Juego_Hotel
             if (this.partida_activa)
                 if (!this.Retirarse(this.juego.jugador_actual.n_jugador))
                     e.Cancel = true;
+            this.Guardar_idioma(System.Threading.Thread.CurrentThread.CurrentUICulture);
         }
 
         private void Principal_Shown(object sender, EventArgs e)
@@ -1675,9 +1676,9 @@ namespace Juego_Hotel
             XmlNode nodo_Idioma = this.configuracion.GetElementsByTagName("language")[0];
             switch (culture.Name)
             {
-                case "es": nodo_Idioma.ChildNodes[1].FirstChild.Value = "Spanish";
+                case "es": nodo_Idioma.ChildNodes[1].InnerText = "Spanish";
                     break;
-                case "en": nodo_Idioma.ChildNodes[1].FirstChild.Value = "English";
+                case "en": nodo_Idioma.ChildNodes[1].InnerText = "English";
                     break;
             }
             XmlTextWriter writer = new XmlTextWriter("Config.xml", Encoding.UTF8);

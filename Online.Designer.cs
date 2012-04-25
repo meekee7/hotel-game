@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Online));
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.bLogin = new System.Windows.Forms.Button();
             this.bConectar = new System.Windows.Forms.Button();
@@ -48,187 +49,114 @@
             // 
             // txtLogin
             // 
-            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLogin.Location = new System.Drawing.Point(93, 44);
+            resources.ApplyResources(this.txtLogin, "txtLogin");
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(100, 20);
-            this.txtLogin.TabIndex = 2;
             this.txtLogin.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtLogin_PreviewKeyDown);
             // 
             // bLogin
             // 
-            this.bLogin.Enabled = false;
-            this.bLogin.Location = new System.Drawing.Point(12, 42);
+            resources.ApplyResources(this.bLogin, "bLogin");
             this.bLogin.Name = "bLogin";
-            this.bLogin.Size = new System.Drawing.Size(75, 23);
-            this.bLogin.TabIndex = 3;
-            this.bLogin.Text = "Login";
             this.bLogin.UseVisualStyleBackColor = true;
             this.bLogin.Click += new System.EventHandler(this.bLogin_Click);
             // 
             // bConectar
             // 
-            this.bConectar.Location = new System.Drawing.Point(12, 13);
+            resources.ApplyResources(this.bConectar, "bConectar");
             this.bConectar.Name = "bConectar";
-            this.bConectar.Size = new System.Drawing.Size(75, 23);
-            this.bConectar.TabIndex = 1;
-            this.bConectar.Text = "Conectar";
             this.bConectar.UseVisualStyleBackColor = true;
             this.bConectar.Click += new System.EventHandler(this.bConectar_Click);
             // 
             // txtServidor
             // 
-            this.txtServidor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtServidor.Enabled = false;
-            this.txtServidor.Location = new System.Drawing.Point(93, 15);
+            resources.ApplyResources(this.txtServidor, "txtServidor");
             this.txtServidor.Name = "txtServidor";
-            this.txtServidor.Size = new System.Drawing.Size(100, 20);
-            this.txtServidor.TabIndex = 0;
             this.txtServidor.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtServidor_PreviewKeyDown);
             // 
             // listaUsuarios
             // 
-            this.listaUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listaUsuarios, "listaUsuarios");
             this.listaUsuarios.FormattingEnabled = true;
-            this.listaUsuarios.HorizontalScrollbar = true;
-            this.listaUsuarios.Location = new System.Drawing.Point(12, 88);
             this.listaUsuarios.Name = "listaUsuarios";
             this.listaUsuarios.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listaUsuarios.Size = new System.Drawing.Size(181, 134);
-            this.listaUsuarios.TabIndex = 4;
             // 
             // bDesconectar
             // 
-            this.bDesconectar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bDesconectar.Enabled = false;
-            this.bDesconectar.Location = new System.Drawing.Point(210, 353);
+            resources.ApplyResources(this.bDesconectar, "bDesconectar");
             this.bDesconectar.Name = "bDesconectar";
-            this.bDesconectar.Size = new System.Drawing.Size(80, 23);
-            this.bDesconectar.TabIndex = 8;
-            this.bDesconectar.Text = "Desconectar";
             this.bDesconectar.UseVisualStyleBackColor = true;
             this.bDesconectar.Click += new System.EventHandler(this.bDesconectar_Click);
             // 
             // bCrearPartida
             // 
-            this.bCrearPartida.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCrearPartida.Enabled = false;
-            this.bCrearPartida.Location = new System.Drawing.Point(210, 242);
+            resources.ApplyResources(this.bCrearPartida, "bCrearPartida");
             this.bCrearPartida.Name = "bCrearPartida";
-            this.bCrearPartida.Size = new System.Drawing.Size(80, 23);
-            this.bCrearPartida.TabIndex = 7;
-            this.bCrearPartida.Text = "Crear partida";
             this.bCrearPartida.UseVisualStyleBackColor = true;
             this.bCrearPartida.Click += new System.EventHandler(this.bCrearPartida_Click);
             // 
             // bCrearConv
             // 
-            this.bCrearConv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCrearConv.Enabled = false;
-            this.bCrearConv.Location = new System.Drawing.Point(210, 88);
+            resources.ApplyResources(this.bCrearConv, "bCrearConv");
             this.bCrearConv.Name = "bCrearConv";
-            this.bCrearConv.Size = new System.Drawing.Size(80, 35);
-            this.bCrearConv.TabIndex = 5;
-            this.bCrearConv.Text = "Crear conversación";
             this.bCrearConv.UseVisualStyleBackColor = true;
             this.bCrearConv.Click += new System.EventHandler(this.bCrearConv_Click);
             // 
             // listaPartidas
             // 
-            this.listaPartidas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listaPartidas, "listaPartidas");
             this.listaPartidas.FormattingEnabled = true;
-            this.listaPartidas.HorizontalScrollbar = true;
-            this.listaPartidas.Location = new System.Drawing.Point(12, 242);
             this.listaPartidas.Name = "listaPartidas";
-            this.listaPartidas.Size = new System.Drawing.Size(181, 134);
-            this.listaPartidas.TabIndex = 6;
             this.listaPartidas.SelectedIndexChanged += new System.EventHandler(this.listaPartidas_SelectedIndexChanged);
             this.listaPartidas.DoubleClick += new System.EventHandler(this.listaPartidas_DoubleClick);
             // 
             // LUsuarios
             // 
-            this.LUsuarios.AutoSize = true;
-            this.LUsuarios.Location = new System.Drawing.Point(12, 72);
+            resources.ApplyResources(this.LUsuarios, "LUsuarios");
             this.LUsuarios.Name = "LUsuarios";
-            this.LUsuarios.Size = new System.Drawing.Size(110, 13);
-            this.LUsuarios.TabIndex = 9;
-            this.LUsuarios.Text = "Usuarios conectados:";
             // 
             // LPartidas
             // 
-            this.LPartidas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.LPartidas.AutoSize = true;
-            this.LPartidas.Location = new System.Drawing.Point(12, 226);
+            resources.ApplyResources(this.LPartidas, "LPartidas");
             this.LPartidas.Name = "LPartidas";
-            this.LPartidas.Size = new System.Drawing.Size(89, 13);
-            this.LPartidas.TabIndex = 10;
-            this.LPartidas.Text = "Partidas creadas:";
             // 
             // bChatGlobal
             // 
-            this.bChatGlobal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bChatGlobal.Location = new System.Drawing.Point(210, 129);
+            resources.ApplyResources(this.bChatGlobal, "bChatGlobal");
             this.bChatGlobal.Name = "bChatGlobal";
-            this.bChatGlobal.Size = new System.Drawing.Size(80, 23);
-            this.bChatGlobal.TabIndex = 11;
-            this.bChatGlobal.Text = "Chat global";
             this.bChatGlobal.UseVisualStyleBackColor = true;
             this.bChatGlobal.Click += new System.EventHandler(this.bChatGlobal_Click);
             // 
             // bUnirse
             // 
-            this.bUnirse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bUnirse.Enabled = false;
-            this.bUnirse.Location = new System.Drawing.Point(210, 272);
+            resources.ApplyResources(this.bUnirse, "bUnirse");
             this.bUnirse.Name = "bUnirse";
-            this.bUnirse.Size = new System.Drawing.Size(80, 34);
-            this.bUnirse.TabIndex = 12;
-            this.bUnirse.Text = "Unirse a partida";
             this.bUnirse.UseVisualStyleBackColor = true;
             this.bUnirse.Click += new System.EventHandler(this.bUnirse_Click);
             // 
             // checkSrvOficial
             // 
-            this.checkSrvOficial.AutoSize = true;
+            resources.ApplyResources(this.checkSrvOficial, "checkSrvOficial");
             this.checkSrvOficial.Checked = true;
             this.checkSrvOficial.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkSrvOficial.Location = new System.Drawing.Point(199, 46);
             this.checkSrvOficial.Name = "checkSrvOficial";
-            this.checkSrvOficial.Size = new System.Drawing.Size(95, 17);
-            this.checkSrvOficial.TabIndex = 13;
-            this.checkSrvOficial.Text = "Servidor oficial";
             this.checkSrvOficial.UseVisualStyleBackColor = true;
             this.checkSrvOficial.CheckedChanged += new System.EventHandler(this.checkSrvOficial_CheckedChanged);
             // 
             // txtPuerto
             // 
-            this.txtPuerto.Enabled = false;
-            this.txtPuerto.Location = new System.Drawing.Point(205, 15);
+            resources.ApplyResources(this.txtPuerto, "txtPuerto");
             this.txtPuerto.Name = "txtPuerto";
-            this.txtPuerto.Size = new System.Drawing.Size(63, 20);
-            this.txtPuerto.TabIndex = 14;
             this.txtPuerto.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtPuerto_PreviewKeyDown);
             // 
             // labelDosPuntos
             // 
-            this.labelDosPuntos.AutoSize = true;
-            this.labelDosPuntos.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDosPuntos.Location = new System.Drawing.Point(194, 17);
+            resources.ApplyResources(this.labelDosPuntos, "labelDosPuntos");
             this.labelDosPuntos.Name = "labelDosPuntos";
-            this.labelDosPuntos.Size = new System.Drawing.Size(11, 15);
-            this.labelDosPuntos.TabIndex = 15;
-            this.labelDosPuntos.Text = ":";
             // 
             // Online
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(303, 388);
             this.Controls.Add(this.labelDosPuntos);
             this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.checkSrvOficial);
@@ -246,8 +174,6 @@
             this.Controls.Add(this.bLogin);
             this.Controls.Add(this.txtLogin);
             this.Name = "Online";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Online";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Online_FormClosing);
             this.Load += new System.EventHandler(this.Online_Load);
             this.ResumeLayout(false);

@@ -195,6 +195,12 @@
     <EmbeddedResource Include="InputBoxDialog.resx">
       <DependentUpon>InputBoxDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Online.en.resx">
+      <DependentUpon>Online.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartidaOnline.en.resx">
+      <DependentUpon>PartidaOnline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PedirPago.en.resx">
       <DependentUpon>PedirPago.cs</DependentUpon>
     </EmbeddedResource>
