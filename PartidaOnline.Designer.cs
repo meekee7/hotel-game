@@ -51,7 +51,6 @@
             // bEnviar
             // 
             resources.ApplyResources(this.bEnviar, "bEnviar");
-            this.bEnviar.ImageKey = global::Juego_Hotel.Resources.Mensajes_en.mensajeEstasEnCasillaTipoFaseGratis;
             this.bEnviar.Name = "bEnviar";
             this.bEnviar.UseVisualStyleBackColor = true;
             this.bEnviar.Click += new System.EventHandler(this.bEnviar_Click);
@@ -81,13 +80,11 @@
             // txtNombre
             // 
             resources.ApplyResources(this.txtNombre, "txtNombre");
-            this.txtNombre.ImageKey = global::Juego_Hotel.Resources.Mensajes_en.mensajeEstasEnCasillaTipoFaseGratis;
             this.txtNombre.Name = "txtNombre";
             // 
             // bAbandonar
             // 
             resources.ApplyResources(this.bAbandonar, "bAbandonar");
-            this.bAbandonar.ImageKey = global::Juego_Hotel.Resources.Mensajes_en.mensajeEstasEnCasillaTipoFaseGratis;
             this.bAbandonar.Name = "bAbandonar";
             this.bAbandonar.UseVisualStyleBackColor = true;
             this.bAbandonar.Click += new System.EventHandler(this.bAbandonar_Click);
@@ -95,7 +92,6 @@
             // bIniciar
             // 
             resources.ApplyResources(this.bIniciar, "bIniciar");
-            this.bIniciar.ImageKey = global::Juego_Hotel.Resources.Mensajes_en.mensajeEstasEnCasillaTipoFaseGratis;
             this.bIniciar.Name = "bIniciar";
             this.bIniciar.UseVisualStyleBackColor = true;
             this.bIniciar.Click += new System.EventHandler(this.bIniciar_Click);
@@ -103,13 +99,11 @@
             // txtCreador
             // 
             resources.ApplyResources(this.txtCreador, "txtCreador");
-            this.txtCreador.ImageKey = global::Juego_Hotel.Resources.Mensajes_en.mensajeEstasEnCasillaTipoFaseGratis;
             this.txtCreador.Name = "txtCreador";
             // 
             // txtNJugadores
             // 
             resources.ApplyResources(this.txtNJugadores, "txtNJugadores");
-            this.txtNJugadores.ImageKey = global::Juego_Hotel.Resources.Mensajes_en.mensajeEstasEnCasillaTipoFaseGratis;
             this.txtNJugadores.Name = "txtNJugadores";
             // 
             // PartidaOnline
