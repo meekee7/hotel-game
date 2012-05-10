@@ -16,7 +16,7 @@ namespace Juego_Hotel
     
     public partial class Principal : Form, IReLocalizable
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
+        public System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
         public Juego juego;
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();

@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
-    public partial class PartidaOnline : Form
+    public partial class PartidaOnline : Form, IReLocalizable
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartidaOnline));
         public Online frm_online;
         public Principal interfaz;
         public int id;
@@ -72,7 +74,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error actualizando lista de jugadores: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorActualizandoListaJugadores + ex.Message);
             }
         }
 
@@ -80,12 +82,12 @@ namespace Juego_Hotel
         {
             if (this.mensaje.Text.Trim().Length == 0)
             {
-                MessageBox.Show("No puedes enviar un mensaje vacío");
+                MessageBox.Show(Mensajes.mensajeNoEnvMensajeVacio);
                 return;
             }
             if (this.mensaje.Text.Length > 1024)
             {
-                MessageBox.Show("No puedes enviar un mensaje de más de 1024 caracteres");
+                MessageBox.Show(Mensajes.mensajeTamMensajeMax);
                 return;
             }
             this.frm_online.enviar_comando("send_chat_msg", this.id.ToString(), this.mensaje.Text);
@@ -132,9 +134,9 @@ namespace Juego_Hotel
 
         private void PartidaOnline_Shown(object sender, EventArgs e)
         {
-            this.txtNombre.Text = "Nombre: " + this.nombre;
-            this.txtCreador.Text = "Creador: " + this.creador;
-            this.txtNJugadores.Text = "Número de jugadores: " + this.num_jugadores.ToString();
+            this.txtNombre.Text = this.resources.GetString("txtNombre.Text") + this.nombre;
+            this.txtCreador.Text = this.resources.GetString("txtCreador.Text") + this.creador;
+            this.txtNJugadores.Text = this.resources.GetString("txtNJugadores.Text") + this.num_jugadores.ToString();
             this.mensaje.Focus();
             this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
@@ -189,12 +191,12 @@ namespace Juego_Hotel
             this.interfaz.nombre_online = this.frm_online.txtLogin.Text;
             switch (num_jugadores)
             {
-                case 4: this.interfaz.nombreJ4.Text = "Nombre: " + lista_jugadores[3];
+                case 4: this.interfaz.nombreJ4.Text = this.interfaz.resources.GetString("nombreJ4.Text") + lista_jugadores[3];
                         goto case 3;
-                case 3: this.interfaz.nombreJ3.Text = "Nombre: " + lista_jugadores[2];
+                case 3: this.interfaz.nombreJ3.Text = this.interfaz.resources.GetString("nombreJ3.Text") + lista_jugadores[2];
                         goto case 2;
-                case 2: this.interfaz.nombreJ2.Text = "Nombre: " + lista_jugadores[1];
-                        this.interfaz.nombreJ1.Text = "Nombre: " + lista_jugadores[0];
+                case 2: this.interfaz.nombreJ2.Text = this.interfaz.resources.GetString("nombreJ2.Text") + lista_jugadores[1];
+                        this.interfaz.nombreJ1.Text = this.interfaz.resources.GetString("nombreJ1.Text") + lista_jugadores[0];
                         break;
             }
             Application.Run(this.interfaz);
@@ -204,6 +206,37 @@ namespace Juego_Hotel
         {
             if (e.KeyCode == Keys.Enter)
                 this.bEnviar.PerformClick();
+        }
+
+        public void ReLocalize(System.Globalization.CultureInfo antiguoCulture)
+        {
+            resources.ApplyResources(this, "$this");
+            foreach (Control c in this.Controls)
+            {
+                if (c is GroupBox)
+                {
+                    c.Text = resources.GetString(c.Name + ".Text");
+                    foreach (Control o in ((GroupBox)c).Controls)
+                    {
+                        if (o is Label)
+                        {
+                            String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                            if (nombreAntiguo != null)
+                                o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                        }
+                        else
+                            resources.ApplyResources(o, o.Name);
+                    }
+                }
+                else if (c is Label)
+                {
+                    String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                    if (nombreAntiguo != null)
+                        c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                }
+                else
+                    c.Text = resources.GetString(c.Name + ".Text");
+            }
         }
     }
 }

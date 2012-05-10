@@ -394,7 +394,7 @@
     <value>Not possible to construct</value>
   </data>
   <data name="mensajeEstasEnCasillaTipoFaseGratis" xml:space="preserve">
-    <value />
+    <value>You're in a Free Phase type position. Enjoy it!</value>
   </data>
   <data name="mensajeHotelFasesIncompletas" xml:space="preserve">
     <value>The hotel {0} has not yet made ​​all phases</value>

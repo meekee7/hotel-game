@@ -207,7 +207,9 @@
     <EmbeddedResource Include="PonerEntradas.en.resx">
       <DependentUpon>PonerEntradas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Mensajes.en.resx" />
+    <EmbeddedResource Include="Resources\Mensajes.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Mensajes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Mensajes.Designer.cs</LastGenOutput>

@@ -69,11 +69,11 @@
             // 
             // grupoChat
             // 
-            resources.ApplyResources(this.grupoChat, "grupoChat");
             this.grupoChat.Controls.Add(this.mensajes);
             this.grupoChat.Controls.Add(this.bEnviar);
             this.grupoChat.Controls.Add(this.listaJugadores);
             this.grupoChat.Controls.Add(this.mensaje);
+            resources.ApplyResources(this.grupoChat, "grupoChat");
             this.grupoChat.Name = "grupoChat";
             this.grupoChat.TabStop = false;
             // 
