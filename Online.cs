@@ -185,6 +185,7 @@ namespace Juego_Hotel
                             this.sem_en_comunicacion = new Semaphore(1, 1);
                             thread_recepcion = new Thread(esperar_comandos);
                             this.continuar_thread = true;
+                            thread_recepcion.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                             thread_recepcion.Start();
                             this.Text += ": " + this.txtLogin.Text;
                             this.enviar_comando("get_games");
@@ -664,6 +665,7 @@ namespace Juego_Hotel
                 lista_params.Add(nombre);
                 lista_params.Add(num_jugadores.ToString());
                 Thread thread_partida = new Thread(Manejar_nueva_partida);
+                thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                 thread_partida.Start(lista_params);
             }
             else
