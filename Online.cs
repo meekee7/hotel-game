@@ -634,6 +634,7 @@ namespace Juego_Hotel
                     lista_params.Add(id_chat.ToString());
                     lista_params.Add(creador);
                     Thread thread_chat = new Thread(Manejar_nuevo_chat);
+                    thread_chat.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                     thread_chat.Start(lista_params);
                 }
             }
@@ -644,6 +645,7 @@ namespace Juego_Hotel
                 lista_params.Add(id_chat.ToString());
                 lista_params.Add(creador);
                 Thread thread_chat = new Thread(Manejar_nuevo_chat);
+                thread_chat.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                 thread_chat.Start(lista_params);
             }
         }
@@ -833,6 +835,7 @@ namespace Juego_Hotel
             foreach (String parametro in parametros)
                 lista_parametros.Add(parametro);
             Thread thread_envio_comando = new Thread(enviar_comando_t);
+            thread_envio_comando.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
             thread_envio_comando.Start(lista_parametros);
         }
 
@@ -1204,6 +1207,7 @@ namespace Juego_Hotel
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
                 Thread thread_manejar_subasta = new Thread(Manejar_subasta);
+                thread_manejar_subasta.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                 thread_manejar_subasta.Start(partida);
             }
         }

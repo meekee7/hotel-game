@@ -156,6 +156,7 @@ namespace Juego_Hotel
         public void Iniciar(int num_jugadores, String config, int jug_inicial, String[] lista_nombres)
         {
             Thread thread_partida = new Thread(manejar_partida);
+            thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
             LinkedList<String> parametros = new LinkedList<String>();
             parametros.AddLast(num_jugadores.ToString());
             parametros.AddLast(jug_inicial.ToString());
