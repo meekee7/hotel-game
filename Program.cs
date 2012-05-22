@@ -23,7 +23,7 @@ namespace Juego_Hotel
             if (nodo_Idioma.ChildNodes[0].FirstChild == null)
             {
                 MessageBox.Show(Mensajes.mensajeIdiomaPorDefecto, Mensajes.tituloBienvenido);
-                if ((System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "es-ES") || (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "es"))
+                if ((System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "es-ES") || (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2) == "es"))
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
                 else
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
