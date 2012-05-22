@@ -6,7 +6,7 @@ all: server
 
 clean:
 	rm -rf *.o
-	rm -rf server
+	rm -rf hotel_server
 
 random.o: random.cpp random.h
 	$(CC) -c $(FLAGS) -o random.o random.cpp
@@ -45,4 +45,4 @@ Server.o: Server.cpp
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 
 server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o Server.o random.o
-	$(CC) -o server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
