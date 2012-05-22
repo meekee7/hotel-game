@@ -209,34 +209,41 @@ namespace Juego_Hotel
                 this.bEnviar.PerformClick();
         }
 
+        delegate void ReLocalize_Callback(System.Globalization.CultureInfo antiguoCulture);
+
         public void ReLocalize(System.Globalization.CultureInfo antiguoCulture)
         {
-            resources.ApplyResources(this, "$this");
-            foreach (Control c in this.Controls)
+            if (this.InvokeRequired)
+                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { antiguoCulture });
+            else
             {
-                if (c is GroupBox)
+                resources.ApplyResources(this, "$this");
+                foreach (Control c in this.Controls)
                 {
-                    c.Text = resources.GetString(c.Name + ".Text");
-                    foreach (Control o in ((GroupBox)c).Controls)
+                    if (c is GroupBox)
                     {
-                        if (o is Label)
+                        c.Text = resources.GetString(c.Name + ".Text");
+                        foreach (Control o in ((GroupBox)c).Controls)
                         {
-                            String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
-                            if (nombreAntiguo != null)
-                                o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                            if (o is Label)
+                            {
+                                String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                                if (nombreAntiguo != null)
+                                    o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                            }
+                            else
+                                resources.ApplyResources(o, o.Name);
                         }
-                        else
-                            resources.ApplyResources(o, o.Name);
                     }
+                    else if (c is Label)
+                    {
+                        String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                        if (nombreAntiguo != null)
+                            c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                    }
+                    else
+                        c.Text = resources.GetString(c.Name + ".Text");
                 }
-                else if (c is Label)
-                {
-                    String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
-                    if (nombreAntiguo != null)
-                        c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
-                }
-                else
-                    c.Text = resources.GetString(c.Name + ".Text");
             }
         }
     }

@@ -18,19 +18,21 @@ namespace Juego_Hotel
         static void Main ()
         {
             XmlDocument configuracion = new XmlDocument();
-            configuracion.PreserveWhitespace = true;
             configuracion.Load("Config.xml");
             XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];
-            if (nodo_Idioma.ChildNodes[1].FirstChild == null)
+            if (nodo_Idioma.ChildNodes[0].FirstChild == null)
             {
-                MessageBox.Show("There is no default language selected, defaulting to English. You can change it in the main window");
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+                MessageBox.Show(Mensajes.mensajeIdiomaPorDefecto, Mensajes.tituloBienvenido);
+                if ((System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "es-ES") || (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "es"))
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
+                else
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
-            else if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("Spanish"))
+            else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("Spanish"))
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
             }
-            else if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("English"))
+            else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }

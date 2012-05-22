@@ -462,4 +462,7 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeErrorSalvandoIdioma" xml:space="preserve">
     <value>An error ocurred when saving language to Config.xml</value>
   </data>
+  <data name="mensajeIdiomaPorDefecto" xml:space="preserve">
+    <value>There is no language selected yet, defaulting to operative system language or english if not supported. You can change it in the main window</value>
+  </data>
 </root>

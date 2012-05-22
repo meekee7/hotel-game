@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <config>
-   <money_per_player>
-      <two_players>
-         <n_5000>2</n_5000>
-         <n_1000>11</n_1000>
-         <n_500>6</n_500>
-         <n_100>8</n_100>
-         <n_50>4</n_50>
-      </two_players>
-      <three_or_four_players>
-         <n_5000>1</n_5000>
-         <n_1000>5</n_1000>
-         <n_500>3</n_500>
-         <n_100>4</n_100>
-         <n_50>2</n_50>
-      </three_or_four_players>
-   </money_per_player>
-  <language>    
+  <money_per_player>
+    <two_players>
+      <n_5000>2</n_5000>
+      <n_1000>11</n_1000>
+      <n_500>6</n_500>
+      <n_100>8</n_100>
+      <n_50>4</n_50>
+    </two_players>
+    <three_or_four_players>
+      <n_5000>1</n_5000>
+      <n_1000>5</n_1000>
+      <n_500>3</n_500>
+      <n_100>4</n_100>
+      <n_50>2</n_50>
+    </three_or_four_players>
+  </money_per_player>
+  <language>
     <selected></selected>
   </language>
 </config>

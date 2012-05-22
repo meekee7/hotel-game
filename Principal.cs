@@ -79,13 +79,16 @@ namespace Juego_Hotel
                 this.online = true;
                 this.frm_online = frm_online;
                 this.partida_activa = true;
-                //XmlDocument configuracion = new XmlDocument();
-                //configuracion.Load("Config.xml");
-                XmlNode nodo_Idioma = this.configuracion.GetElementsByTagName("language")[0];
-                if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("Spanish"))
-                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
-                else if (nodo_Idioma.ChildNodes[1].FirstChild.Value.Equals("English"))
-                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+                XmlDocument fichero_configuracion = new XmlDocument();
+                fichero_configuracion.Load("Config.xml");
+                XmlNode nodo_Idioma = fichero_configuracion.GetElementsByTagName("language")[0];
+                if (nodo_Idioma.ChildNodes[0].FirstChild != null)
+                {
+                    if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("Spanish"))
+                        System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
+                    else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
+                        System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+                }
             }
             else
             {
@@ -449,7 +452,6 @@ namespace Juego_Hotel
                 this.juego.jugadores = new Jugador[this.juego.n_jugadores];
                 this.juego.n_jugadores_activos = this.juego.n_jugadores;
                 XmlDocument configuracion_online = new XmlDocument();
-                configuracion_online.PreserveWhitespace = true;
                 XmlNode config_dinero;
                 try
                 {
@@ -482,11 +484,11 @@ namespace Juego_Hotel
                 else
                     nodo_cantidades = ((XmlElement)config_dinero).GetElementsByTagName("three_or_four_players")[0];
                 int n_5000, n_1000, n_500, n_100, n_50;
-                n_5000 = Convert.ToInt16(nodo_cantidades.ChildNodes[1].FirstChild.Value);
-                n_1000 = Convert.ToInt16(nodo_cantidades.ChildNodes[3].FirstChild.Value);
-                n_500 = Convert.ToInt16(nodo_cantidades.ChildNodes[5].FirstChild.Value);
-                n_100 = Convert.ToInt16(nodo_cantidades.ChildNodes[7].FirstChild.Value);
-                n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[9].FirstChild.Value);
+                n_5000 = Convert.ToInt16(nodo_cantidades.ChildNodes[0].FirstChild.Value);
+                n_1000 = Convert.ToInt16(nodo_cantidades.ChildNodes[1].FirstChild.Value);
+                n_500 = Convert.ToInt16(nodo_cantidades.ChildNodes[2].FirstChild.Value);
+                n_100 = Convert.ToInt16(nodo_cantidades.ChildNodes[3].FirstChild.Value);
+                n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[4].FirstChild.Value);
                 switch (this.juego.n_jugadores)
                 {
                     case 4: this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
@@ -1673,19 +1675,30 @@ namespace Juego_Hotel
 
         private void Guardar_idioma(CultureInfo culture)
         {
-            XmlNode nodo_Idioma = this.configuracion.GetElementsByTagName("language")[0];
+            XmlNode nodo_Idioma;
+            XmlDocument fichero_configuracion = new XmlDocument();
+            if (this.online)
+            {
+                fichero_configuracion.Load("Config.xml");
+                nodo_Idioma = fichero_configuracion.GetElementsByTagName("language")[0];
+            }
+            else
+                nodo_Idioma = this.configuracion.GetElementsByTagName("language")[0];
             switch (culture.Name)
             {
-                case "es": nodo_Idioma.ChildNodes[1].InnerText = "Spanish";
+                case "es": nodo_Idioma.ChildNodes[0].InnerText = "Spanish";
                     break;
-                case "en": nodo_Idioma.ChildNodes[1].InnerText = "English";
+                case "en": nodo_Idioma.ChildNodes[0].InnerText = "English";
                     break;
             }
             XmlTextWriter writer = new XmlTextWriter("Config.xml", Encoding.UTF8);
             try
             {
                 writer.Formatting = Formatting.Indented;
-                this.configuracion.Save(writer);
+                if (this.online)
+                    fichero_configuracion.Save(writer);
+                else
+                    this.configuracion.Save(writer);
             }
             catch (Exception e)
             {

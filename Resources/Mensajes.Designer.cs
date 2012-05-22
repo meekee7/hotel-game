@@ -385,6 +385,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se ha seleccionado aun un idioma. Se usará por defecto el idioma del sistema operativo o inglés si no está soportado. Puede cambiarse en la ventana prinicipal del juego..
+        /// </summary>
+        internal static string mensajeIdiomaPorDefecto {
+            get {
+                return ResourceManager.GetString("mensajeIdiomaPorDefecto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ya posees este hotel.
         /// </summary>
         internal static string mensajeImposibleComprarHotelTuyo {

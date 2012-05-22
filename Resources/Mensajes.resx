@@ -462,4 +462,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeErrorSalvandoIdioma" xml:space="preserve">
     <value>Se produjo un error al salvar el idioma en Config.xml</value>
   </data>
+  <data name="mensajeIdiomaPorDefecto" xml:space="preserve">
+    <value>No se ha seleccionado aun un idioma. Se usará por defecto el idioma del sistema operativo o inglés si no está soportado. Puede cambiarse en la ventana prinicipal del juego.</value>
+  </data>
 </root>
