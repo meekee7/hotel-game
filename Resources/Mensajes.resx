@@ -465,4 +465,127 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeIdiomaPorDefecto" xml:space="preserve">
     <value>No se ha seleccionado aun un idioma. Se usará por defecto el idioma del sistema operativo o inglés si no está soportado. Puede cambiarse en la ventana prinicipal del juego.</value>
   </data>
+  <data name="mensajeApodoDemasiadoLargo" xml:space="preserve">
+    <value>El apodo no puede superar 20 caracteres</value>
+  </data>
+  <data name="mensajeApodoEnUso" xml:space="preserve">
+    <value>El apodo ya está en uso</value>
+  </data>
+  <data name="mensajeApodoVacio" xml:space="preserve">
+    <value>El apodo no puede estar vacío</value>
+  </data>
+  <data name="mensajeCerrarChatsAbiertos" xml:space="preserve">
+    <value>¿Quieres que se cierre cualquier chat abierto?</value>
+  </data>
+  <data name="mensajeCerrarPartidasAbiertas" xml:space="preserve">
+    <value>¿Quieres que se cierre cualquier partida abierta?</value>
+  </data>
+  <data name="mensajeComandoDesconocido" xml:space="preserve">
+    <value>Comando desconocido: </value>
+  </data>
+  <data name="mensajeDatosIncorrectos" xml:space="preserve">
+    <value>Datos incorrectos: </value>
+  </data>
+  <data name="mensajeErrorConectando" xml:space="preserve">
+    <value>Error conectando: </value>
+  </data>
+  <data name="mensajeErrorConexion" xml:space="preserve">
+    <value>Error de conexión: </value>
+  </data>
+  <data name="mensajeErrorDesconectar" xml:space="preserve">
+    <value>Error al desconectar: </value>
+  </data>
+  <data name="mensajeErrorLogin" xml:space="preserve">
+    <value>Error haciendo login: </value>
+  </data>
+  <data name="mensajeErrorObteniendoListaPartidas" xml:space="preserve">
+    <value>Error obteniendo lista de partidas: </value>
+  </data>
+  <data name="mensajeErrorObteniendoListaUsuarios" xml:space="preserve">
+    <value>Error obteniendo lista de usuarios: </value>
+  </data>
+  <data name="mensajeErrorPuertoAlto" xml:space="preserve">
+    <value>El puerto especificado es demasiado alto</value>
+  </data>
+  <data name="mensajeErrorPuertoBajo" xml:space="preserve">
+    <value>El puerto especificado es demasiado bajo</value>
+  </data>
+  <data name="mensajeErrorPuertoNoNumerico" xml:space="preserve">
+    <value>El puerto especificado no es numérico</value>
+  </data>
+  <data name="mensajeErrorRecibiendoChat" xml:space="preserve">
+    <value>Error recibiendo nuevo mensaje de chat: </value>
+  </data>
+  <data name="mensajeErrorRecibiendoChatGlobal" xml:space="preserve">
+    <value>Error recibiendo nuevo mensaje de chat global: </value>
+  </data>
+  <data name="mensajeErrorTamañoApodo" xml:space="preserve">
+    <value>El apodo excede la longitud máxima</value>
+  </data>
+  <data name="mensajeExcepcionRecibiendoDatos" xml:space="preserve">
+    <value>Excepción recibiendo datos: </value>
+  </data>
+  <data name="mensajeHotelPagado" xml:space="preserve">
+    <value>El hotel ha sido pagado. Subasta finalizada</value>
+  </data>
+  <data name="mensajeHotelVendido" xml:space="preserve">
+    <value>Hotel vendido al jugador {0} ({1}) por {2}</value>
+  </data>
+  <data name="mensajeInputNombrePartida" xml:space="preserve">
+    <value>Nombre de la partida:</value>
+  </data>
+  <data name="mensajeInputNumJugadoresPartida" xml:space="preserve">
+    <value>Número de jugadores de la partida:</value>
+  </data>
+  <data name="mensajeJugadorExpulsadoTrampas" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha sido expulsado por hacer trampas</value>
+  </data>
+  <data name="mensajeJugadorRetirado" xml:space="preserve">
+    <value>El jugador {0} ({1}) se ha retirado</value>
+  </data>
+  <data name="mensajeNoConectado" xml:space="preserve">
+    <value>No conectado</value>
+  </data>
+  <data name="mensajeNombrePartidaEnBlanco" xml:space="preserve">
+    <value>No se puede dejar el nombre de la partida en blanco</value>
+  </data>
+  <data name="mensajeNombrePartidaInvalido" xml:space="preserve">
+    <value>El nombre de la partida no puede contener el carácter '~'</value>
+  </data>
+  <data name="mensajeNumJugadoresEnBlanco" xml:space="preserve">
+    <value>No se puede dejar el número de jugadores en blanco</value>
+  </data>
+  <data name="mensajeNumMaximoJugadores" xml:space="preserve">
+    <value>El número máximo de jugadores es 4</value>
+  </data>
+  <data name="mensajeNumMinimoJugadores" xml:space="preserve">
+    <value>El número mínimo de jugadores es 2</value>
+  </data>
+  <data name="mensajePagarNoches" xml:space="preserve">
+    <value>Debes pagar {0} noches ({1}) al jugador {2} ({3})</value>
+  </data>
+  <data name="mensajePartidaLlena" xml:space="preserve">
+    <value>La partida {0} está llena</value>
+  </data>
+  <data name="mensajeProblemaConexionConServidor" xml:space="preserve">
+    <value>Ha habido un problema de conexión con el servidor</value>
+  </data>
+  <data name="mensajeSeleccionarUsuarios" xml:space="preserve">
+    <value>Has de seleccionar al menos un usuario sin incluir el tuyo</value>
+  </data>
+  <data name="mensajeUnirseAChat" xml:space="preserve">
+    <value>El jugador {0} quiere que te unas a un chat privado. ¿Deseas hacerlo?</value>
+  </data>
+  <data name="mensajeYaDentroPartida" xml:space="preserve">
+    <value>Ya estás dentro de la partida </value>
+  </data>
+  <data name="tituloConfirmacionDesconectar" xml:space="preserve">
+    <value>Confirmación para desconectar</value>
+  </data>
+  <data name="tituloCrearPartida" xml:space="preserve">
+    <value>Crear partida</value>
+  </data>
+  <data name="tituloNuevoChat" xml:space="preserve">
+    <value>Nuevo chat</value>
+  </data>
 </root>

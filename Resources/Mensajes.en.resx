@@ -391,7 +391,7 @@
     <value>The hotel {0} is completely constructed</value>
   </data>
   <data name="tituloNoEsPosibleConstruir" xml:space="preserve">
-    <value>Not possible to construct</value>
+    <value>It is not possible to build</value>
   </data>
   <data name="mensajeEstasEnCasillaTipoFaseGratis" xml:space="preserve">
     <value>You're in a Free Phase type position. Enjoy it!</value>
@@ -433,7 +433,7 @@ No permission is needed to build them. Continue?</value>
     <value>Confirmation of construction</value>
   </data>
   <data name="tituloNoSePuedeComparSuelo" xml:space="preserve">
-    <value>You can not buy the ground</value>
+    <value>You can't buy the ground</value>
   </data>
   <data name="mensajeErrorActualizandoListaJugadores" xml:space="preserve">
     <value>Error updating list of players:</value>
@@ -464,5 +464,128 @@ No permission is needed to build them. Continue?</value>
   </data>
   <data name="mensajeIdiomaPorDefecto" xml:space="preserve">
     <value>There is no language selected yet, defaulting to operative system language or english if not supported. You can change it in the main window</value>
+  </data>
+  <data name="mensajeApodoDemasiadoLargo" xml:space="preserve">
+    <value>Nickname can't be longer than 20 characters</value>
+  </data>
+  <data name="mensajeApodoEnUso" xml:space="preserve">
+    <value>Nickname is already in use</value>
+  </data>
+  <data name="mensajeApodoVacio" xml:space="preserve">
+    <value>Nickname can't be empty</value>
+  </data>
+  <data name="mensajeCerrarChatsAbiertos" xml:space="preserve">
+    <value>Do you want to close any opened chat?</value>
+  </data>
+  <data name="mensajeCerrarPartidasAbiertas" xml:space="preserve">
+    <value>Do you want to close any opened game?</value>
+  </data>
+  <data name="mensajeComandoDesconocido" xml:space="preserve">
+    <value>Unknown command: </value>
+  </data>
+  <data name="mensajeDatosIncorrectos" xml:space="preserve">
+    <value>Incorrect data: </value>
+  </data>
+  <data name="mensajeErrorConectando" xml:space="preserve">
+    <value>Error connecting: </value>
+  </data>
+  <data name="mensajeErrorConexion" xml:space="preserve">
+    <value>Connection error: </value>
+  </data>
+  <data name="mensajeErrorDesconectar" xml:space="preserve">
+    <value>Error disconnecting: </value>
+  </data>
+  <data name="mensajeErrorLogin" xml:space="preserve">
+    <value>Error logging in: </value>
+  </data>
+  <data name="mensajeErrorObteniendoListaPartidas" xml:space="preserve">
+    <value>Error obtaining game list:</value>
+  </data>
+  <data name="mensajeErrorObteniendoListaUsuarios" xml:space="preserve">
+    <value>Error obtaining user list: </value>
+  </data>
+  <data name="mensajeErrorPuertoAlto" xml:space="preserve">
+    <value>The port specified is too high</value>
+  </data>
+  <data name="mensajeErrorPuertoBajo" xml:space="preserve">
+    <value>The port specified is too low</value>
+  </data>
+  <data name="mensajeErrorPuertoNoNumerico" xml:space="preserve">
+    <value>The port specified is not numeric</value>
+  </data>
+  <data name="mensajeErrorRecibiendoChat" xml:space="preserve">
+    <value>Error receiving new chat message: </value>
+  </data>
+  <data name="mensajeErrorRecibiendoChatGlobal" xml:space="preserve">
+    <value>Error receiving new global chat message: </value>
+  </data>
+  <data name="mensajeErrorTamañoApodo" xml:space="preserve">
+    <value>Nickname exceeds maximum length</value>
+  </data>
+  <data name="mensajeExcepcionRecibiendoDatos" xml:space="preserve">
+    <value>Exception receiving data: </value>
+  </data>
+  <data name="mensajeHotelPagado" xml:space="preserve">
+    <value>The hotel has been paid. Auction ended</value>
+  </data>
+  <data name="mensajeHotelVendido" xml:space="preserve">
+    <value>Hotel sold to {0} player ({1}) for {2}</value>
+  </data>
+  <data name="mensajeInputNombrePartida" xml:space="preserve">
+    <value>Game name:</value>
+  </data>
+  <data name="mensajeInputNumJugadoresPartida" xml:space="preserve">
+    <value>Number of players of the game</value>
+  </data>
+  <data name="mensajeJugadorExpulsadoTrampas" xml:space="preserve">
+    <value>{0} player ({1}) has been kicked because of cheating</value>
+  </data>
+  <data name="mensajeJugadorRetirado" xml:space="preserve">
+    <value>{0} player ({1}) has retired</value>
+  </data>
+  <data name="mensajeNoConectado" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="mensajeNombrePartidaEnBlanco" xml:space="preserve">
+    <value>Game name cannot be empty</value>
+  </data>
+  <data name="mensajeNombrePartidaInvalido" xml:space="preserve">
+    <value>Game name can't contain character '~'</value>
+  </data>
+  <data name="mensajeNumJugadoresEnBlanco" xml:space="preserve">
+    <value>Player number can't be empty</value>
+  </data>
+  <data name="mensajeNumMaximoJugadores" xml:space="preserve">
+    <value>Maximum number of players is 4</value>
+  </data>
+  <data name="mensajeNumMinimoJugadores" xml:space="preserve">
+    <value>Minimum number of players is 2</value>
+  </data>
+  <data name="mensajePagarNoches" xml:space="preserve">
+    <value>You must pay {0} nights ({1}) to {2} player ({3})</value>
+  </data>
+  <data name="mensajePartidaLlena" xml:space="preserve">
+    <value>Game {0} is full</value>
+  </data>
+  <data name="mensajeProblemaConexionConServidor" xml:space="preserve">
+    <value>A connection problem with server occurred</value>
+  </data>
+  <data name="mensajeSeleccionarUsuarios" xml:space="preserve">
+    <value>You must select at least one user excluding yours</value>
+  </data>
+  <data name="mensajeUnirseAChat" xml:space="preserve">
+    <value>Player {0} is asking you to join a private chat. Do you want to do it?</value>
+  </data>
+  <data name="mensajeYaDentroPartida" xml:space="preserve">
+    <value>You already joined game </value>
+  </data>
+  <data name="tituloConfirmacionDesconectar" xml:space="preserve">
+    <value>Confirmation of disconnection</value>
+  </data>
+  <data name="tituloCrearPartida" xml:space="preserve">
+    <value>Create game</value>
+  </data>
+  <data name="tituloNuevoChat" xml:space="preserve">
+    <value>New chat</value>
   </data>
 </root>

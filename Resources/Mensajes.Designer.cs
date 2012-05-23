@@ -97,6 +97,33 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El apodo no puede superar 20 caracteres.
+        /// </summary>
+        internal static string mensajeApodoDemasiadoLargo {
+            get {
+                return ResourceManager.GetString("mensajeApodoDemasiadoLargo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El apodo ya está en uso.
+        /// </summary>
+        internal static string mensajeApodoEnUso {
+            get {
+                return ResourceManager.GetString("mensajeApodoEnUso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El apodo no puede estar vacío.
+        /// </summary>
+        internal static string mensajeApodoVacio {
+            get {
+                return ResourceManager.GetString("mensajeApodoVacio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La partida actual se perderá si continúas, tanto si la carga es exitosa como no, ¿Quieres proceder?.
         /// </summary>
         internal static string mensajeCargarPartida {
@@ -138,6 +165,33 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeCasillaYaPoseeEntrada {
             get {
                 return ResourceManager.GetString("mensajeCasillaYaPoseeEntrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Quieres que se cierre cualquier chat abierto?.
+        /// </summary>
+        internal static string mensajeCerrarChatsAbiertos {
+            get {
+                return ResourceManager.GetString("mensajeCerrarChatsAbiertos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Quieres que se cierre cualquier partida abierta?.
+        /// </summary>
+        internal static string mensajeCerrarPartidasAbiertas {
+            get {
+                return ResourceManager.GetString("mensajeCerrarPartidasAbiertas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comando desconocido: .
+        /// </summary>
+        internal static string mensajeComandoDesconocido {
+            get {
+                return ResourceManager.GetString("mensajeComandoDesconocido", resourceCulture);
             }
         }
         
@@ -201,6 +255,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeConstruidas {
             get {
                 return ResourceManager.GetString("mensajeConstruidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Datos incorrectos: .
+        /// </summary>
+        internal static string mensajeDatosIncorrectos {
+            get {
+                return ResourceManager.GetString("mensajeDatosIncorrectos", resourceCulture);
             }
         }
         
@@ -313,11 +376,119 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error conectando: .
+        /// </summary>
+        internal static string mensajeErrorConectando {
+            get {
+                return ResourceManager.GetString("mensajeErrorConectando", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de conexión: .
+        /// </summary>
+        internal static string mensajeErrorConexion {
+            get {
+                return ResourceManager.GetString("mensajeErrorConexion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al desconectar: .
+        /// </summary>
+        internal static string mensajeErrorDesconectar {
+            get {
+                return ResourceManager.GetString("mensajeErrorDesconectar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error haciendo login: .
+        /// </summary>
+        internal static string mensajeErrorLogin {
+            get {
+                return ResourceManager.GetString("mensajeErrorLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error obteniendo lista de partidas: .
+        /// </summary>
+        internal static string mensajeErrorObteniendoListaPartidas {
+            get {
+                return ResourceManager.GetString("mensajeErrorObteniendoListaPartidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error obteniendo lista de usuarios: .
+        /// </summary>
+        internal static string mensajeErrorObteniendoListaUsuarios {
+            get {
+                return ResourceManager.GetString("mensajeErrorObteniendoListaUsuarios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El puerto especificado es demasiado alto.
+        /// </summary>
+        internal static string mensajeErrorPuertoAlto {
+            get {
+                return ResourceManager.GetString("mensajeErrorPuertoAlto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El puerto especificado es demasiado bajo.
+        /// </summary>
+        internal static string mensajeErrorPuertoBajo {
+            get {
+                return ResourceManager.GetString("mensajeErrorPuertoBajo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El puerto especificado no es numérico.
+        /// </summary>
+        internal static string mensajeErrorPuertoNoNumerico {
+            get {
+                return ResourceManager.GetString("mensajeErrorPuertoNoNumerico", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error recibiendo nuevo mensaje de chat: .
+        /// </summary>
+        internal static string mensajeErrorRecibiendoChat {
+            get {
+                return ResourceManager.GetString("mensajeErrorRecibiendoChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error recibiendo nuevo mensaje de chat global: .
+        /// </summary>
+        internal static string mensajeErrorRecibiendoChatGlobal {
+            get {
+                return ResourceManager.GetString("mensajeErrorRecibiendoChatGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Se produjo un error al salvar el idioma en Config.xml.
         /// </summary>
         internal static string mensajeErrorSalvandoIdioma {
             get {
                 return ResourceManager.GetString("mensajeErrorSalvandoIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El apodo excede la longitud máxima.
+        /// </summary>
+        internal static string mensajeErrorTamañoApodo {
+            get {
+                return ResourceManager.GetString("mensajeErrorTamañoApodo", resourceCulture);
             }
         }
         
@@ -336,6 +507,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeEstasEnCasillaTipoFaseGratis {
             get {
                 return ResourceManager.GetString("mensajeEstasEnCasillaTipoFaseGratis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Excepción recibiendo datos: .
+        /// </summary>
+        internal static string mensajeExcepcionRecibiendoDatos {
+            get {
+                return ResourceManager.GetString("mensajeExcepcionRecibiendoDatos", resourceCulture);
             }
         }
         
@@ -385,6 +565,24 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El hotel ha sido pagado. Subasta finalizada.
+        /// </summary>
+        internal static string mensajeHotelPagado {
+            get {
+                return ResourceManager.GetString("mensajeHotelPagado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hotel vendido al jugador {0} ({1}) por {2}.
+        /// </summary>
+        internal static string mensajeHotelVendido {
+            get {
+                return ResourceManager.GetString("mensajeHotelVendido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se ha seleccionado aun un idioma. Se usará por defecto el idioma del sistema operativo o inglés si no está soportado. Puede cambiarse en la ventana prinicipal del juego..
         /// </summary>
         internal static string mensajeIdiomaPorDefecto {
@@ -399,6 +597,24 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeImposibleComprarHotelTuyo {
             get {
                 return ResourceManager.GetString("mensajeImposibleComprarHotelTuyo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre de la partida:.
+        /// </summary>
+        internal static string mensajeInputNombrePartida {
+            get {
+                return ResourceManager.GetString("mensajeInputNombrePartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Número de jugadores de la partida:.
+        /// </summary>
+        internal static string mensajeInputNumJugadoresPartida {
+            get {
+                return ResourceManager.GetString("mensajeInputNumJugadoresPartida", resourceCulture);
             }
         }
         
@@ -466,6 +682,24 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha sido expulsado por hacer trampas.
+        /// </summary>
+        internal static string mensajeJugadorExpulsadoTrampas {
+            get {
+                return ResourceManager.GetString("mensajeJugadorExpulsadoTrampas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) se ha retirado.
+        /// </summary>
+        internal static string mensajeJugadorRetirado {
+            get {
+                return ResourceManager.GetString("mensajeJugadorRetirado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El error producido fue:.
         /// </summary>
         internal static string mensajeMostrarErrorActualizador {
@@ -480,6 +714,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeNo {
             get {
                 return ResourceManager.GetString("mensajeNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No conectado.
+        /// </summary>
+        internal static string mensajeNoConectado {
+            get {
+                return ResourceManager.GetString("mensajeNoConectado", resourceCulture);
             }
         }
         
@@ -516,6 +759,24 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeNoIndicadoJugadores {
             get {
                 return ResourceManager.GetString("mensajeNoIndicadoJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se puede dejar el nombre de la partida en blanco.
+        /// </summary>
+        internal static string mensajeNombrePartidaEnBlanco {
+            get {
+                return ResourceManager.GetString("mensajeNombrePartidaEnBlanco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El nombre de la partida no puede contener el carácter &apos;~&apos;.
+        /// </summary>
+        internal static string mensajeNombrePartidaInvalido {
+            get {
+                return ResourceManager.GetString("mensajeNombrePartidaInvalido", resourceCulture);
             }
         }
         
@@ -565,11 +826,56 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se puede dejar el número de jugadores en blanco.
+        /// </summary>
+        internal static string mensajeNumJugadoresEnBlanco {
+            get {
+                return ResourceManager.GetString("mensajeNumJugadoresEnBlanco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El número máximo de jugadores es 4.
+        /// </summary>
+        internal static string mensajeNumMaximoJugadores {
+            get {
+                return ResourceManager.GetString("mensajeNumMaximoJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El número mínimo de jugadores es 2.
+        /// </summary>
+        internal static string mensajeNumMinimoJugadores {
+            get {
+                return ResourceManager.GetString("mensajeNumMinimoJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Debes pagar {0} noches ({1}) al jugador {2} ({3}).
+        /// </summary>
+        internal static string mensajePagarNoches {
+            get {
+                return ResourceManager.GetString("mensajePagarNoches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Partida finalizada. ¡Ha ganado el jugador {0}!.
         /// </summary>
         internal static string mensajePartidaFinalizada {
             get {
                 return ResourceManager.GetString("mensajePartidaFinalizada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida {0} está llena.
+        /// </summary>
+        internal static string mensajePartidaLlena {
+            get {
+                return ResourceManager.GetString("mensajePartidaLlena", resourceCulture);
             }
         }
         
@@ -588,6 +894,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajePrimeraEntradaGratis {
             get {
                 return ResourceManager.GetString("mensajePrimeraEntradaGratis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ha habido un problema de conexión con el servidor.
+        /// </summary>
+        internal static string mensajeProblemaConexionConServidor {
+            get {
+                return ResourceManager.GetString("mensajeProblemaConexionConServidor", resourceCulture);
             }
         }
         
@@ -624,6 +939,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeSalvarAntesDeTirar {
             get {
                 return ResourceManager.GetString("mensajeSalvarAntesDeTirar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Has de seleccionar al menos un usuario sin incluir el tuyo.
+        /// </summary>
+        internal static string mensajeSeleccionarUsuarios {
+            get {
+                return ResourceManager.GetString("mensajeSeleccionarUsuarios", resourceCulture);
             }
         }
         
@@ -784,6 +1108,24 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} quiere que te unas a un chat privado. ¿Deseas hacerlo?.
+        /// </summary>
+        internal static string mensajeUnirseAChat {
+            get {
+                return ResourceManager.GetString("mensajeUnirseAChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ya estás dentro de la partida .
+        /// </summary>
+        internal static string mensajeYaDentroPartida {
+            get {
+                return ResourceManager.GetString("mensajeYaDentroPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a los complejos recreativos.
         /// </summary>
         internal static string textoComplejosRecreativos {
@@ -919,11 +1261,29 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Confirmación para desconectar.
+        /// </summary>
+        internal static string tituloConfirmacionDesconectar {
+            get {
+                return ResourceManager.GetString("tituloConfirmacionDesconectar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Construcción cancelada.
         /// </summary>
         internal static string tituloConstruccionCancelada {
             get {
                 return ResourceManager.GetString("tituloConstruccionCancelada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Crear partida.
+        /// </summary>
+        internal static string tituloCrearPartida {
+            get {
+                return ResourceManager.GetString("tituloCrearPartida", resourceCulture);
             }
         }
         
@@ -1068,6 +1428,15 @@ namespace Juego_Hotel.Resources {
         internal static string tituloNoSePuedeComparSuelo {
             get {
                 return ResourceManager.GetString("tituloNoSePuedeComparSuelo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nuevo chat.
+        /// </summary>
+        internal static string tituloNuevoChat {
+            get {
+                return ResourceManager.GetString("tituloNuevoChat", resourceCulture);
             }
         }
         

@@ -10,11 +10,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Xml;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
     public partial class Online : Form
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Online));
         public Socket socket;
         Chat frm_chat_global;
         public LinkedList<Chat> chats_abiertos;
@@ -46,7 +48,7 @@ namespace Juego_Hotel
         {
             if (!this.socket.Connected)
             {
-                MessageBox.Show("No conectado");
+                MessageBox.Show(Mensajes.mensajeNoConectado);
                 return "";
             }
             try
@@ -66,7 +68,7 @@ namespace Juego_Hotel
                 if (this.continuar_thread == true)
                 {
                     this.Pulsar_Desconectar();
-                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 }
                 return null;
             }
@@ -76,7 +78,7 @@ namespace Juego_Hotel
         {
             if (!this.socket.Connected)
             {
-                MessageBox.Show("No conectado");
+                MessageBox.Show(Mensajes.mensajeNoConectado);
                 return 0;
             }
             try
@@ -92,7 +94,7 @@ namespace Juego_Hotel
                 if (this.continuar_thread == true)
                 {
                     this.Pulsar_Desconectar();
-                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 }
                 return 0;
             }
@@ -102,7 +104,7 @@ namespace Juego_Hotel
         {
             if (!this.socket.Connected)
             {
-                MessageBox.Show("No conectado");
+                MessageBox.Show(Mensajes.mensajeNoConectado);
                 return 0;
             }
             try
@@ -115,7 +117,7 @@ namespace Juego_Hotel
                 if (this.continuar_thread == true)
                 {
                     this.Pulsar_Desconectar();
-                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 }
                 return 0;
             }
@@ -125,7 +127,7 @@ namespace Juego_Hotel
         {
             if (!this.socket.Connected)
             {
-                MessageBox.Show("No conectado");
+                MessageBox.Show(Mensajes.mensajeNoConectado);
                 return 0;
             }
             try
@@ -140,7 +142,7 @@ namespace Juego_Hotel
                 if (this.continuar_thread == true)
                 {
                     this.Pulsar_Desconectar();
-                    MessageBox.Show("Excepción recibiendo datos: " + e.Message);
+                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 }
                 return 0;
             }
@@ -151,9 +153,9 @@ namespace Juego_Hotel
             if (socket.Connected)
             {
                 if (this.txtLogin.Text.Length == 0)
-                    MessageBox.Show("El apodo no puede estar vacío");
+                    MessageBox.Show(Mensajes.mensajeApodoVacio);
                 else if (this.txtLogin.Text.Length > 20)
-                    MessageBox.Show("El apodo no puede superar 20 caracteres");
+                    MessageBox.Show(Mensajes.mensajeApodoDemasiadoLargo);
                 else
                 {
                     try
@@ -164,13 +166,13 @@ namespace Juego_Hotel
                         String res_login = recibir_string(this.socket, 8, ref bytes_recibidos);
                         if (res_login == "login ko")
                         {
-                            MessageBox.Show("El apodo ya está en uso");
+                            MessageBox.Show(Mensajes.mensajeApodoEnUso);
                             this.bDesconectar.PerformClick();
                             this.txtLogin.Enabled = true;
                         }
                         else if (res_login == "login no")
                         {
-                            MessageBox.Show("El apodo excede el tamaño máximo");
+                            MessageBox.Show(Mensajes.mensajeErrorTamañoApodo);
                             this.bDesconectar.PerformClick();
                             this.txtLogin.Enabled = true;
                         }
@@ -193,13 +195,13 @@ namespace Juego_Hotel
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error haciendo login: " + ex.Message);
+                        MessageBox.Show(Mensajes.mensajeErrorLogin + ex.Message);
                         this.Pulsar_Desconectar();
                     }
                 }
             }
             else
-                MessageBox.Show("No estás conectado");
+                MessageBox.Show(Mensajes.mensajeNoConectado);
         }
 
         private void bConectar_Click(object sender, EventArgs e)
@@ -223,17 +225,17 @@ namespace Juego_Hotel
                         Boolean res_puerto = int.TryParse(this.txtPuerto.Text.Trim(), out puerto);
                         if (res_puerto == false)
                         {
-                            MessageBox.Show("El puerto especificado no es numérico");
+                            MessageBox.Show(Mensajes.mensajeErrorPuertoNoNumerico);
                             return;
                         }
                         else if (puerto > 65535)
                         {
-                            MessageBox.Show("El puerto especificado es demasiado alto");
+                            MessageBox.Show(Mensajes.mensajeErrorPuertoAlto);
                             return;
                         }
                         else if (puerto <= 0)
                         {
-                            MessageBox.Show("El puerto especificado es demasiado bajo");
+                            MessageBox.Show(Mensajes.mensajeErrorPuertoBajo);
                             return;
                         }
                     }
@@ -250,7 +252,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error conectando: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorConectando + ex.Message);
                 this.Pulsar_Desconectar();
             }
         }
@@ -296,7 +298,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obteniendo lista de usuarios: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorObteniendoListaUsuarios + ex.Message);
                 this.Pulsar_Desconectar();
             }
         }
@@ -363,7 +365,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obteniendo lista de partidas: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorObteniendoListaPartidas + ex.Message);
                 this.Pulsar_Desconectar();
             }
         }
@@ -405,7 +407,7 @@ namespace Juego_Hotel
             this.cerrando = true;
             if (((this.frm_chat_global != null) ||
                 (this.chats_abiertos.Count > 0)) &&
-                (MessageBox.Show("¿Quieres que se cierre cualquier chat abierto?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                (MessageBox.Show(Mensajes.mensajeCerrarChatsAbiertos, Mensajes.tituloConfirmacionDesconectar, MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 if (this.frm_chat_global != null)
                 {
@@ -428,7 +430,7 @@ namespace Juego_Hotel
                     this.chats_abiertos.ToArray()[i].conectado = false;
             }
             if ((this.lista_partidas.Count > 0) &&
-                (MessageBox.Show("¿Quieres que se cierre cualquier partida abierta?", "Confirmación para desconectar", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                (MessageBox.Show(Mensajes.mensajeCerrarPartidasAbiertas, Mensajes.tituloConfirmacionDesconectar, MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 for (i = this.lista_partidas.Count - 1; i >= 0; i--)
                     this.Cerrar_Partida(this.lista_partidas.ToArray()[i]);
@@ -458,7 +460,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al desconectar: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorDesconectar + ex.Message);
             }
             this.socket.Close();
             this.socket = null;
@@ -498,21 +500,21 @@ namespace Juego_Hotel
         {
             try
             {
-                string nombre = this.InputBox("Nombre de la partida:", "Crear partida", "");
+                string nombre = this.InputBox(Mensajes.mensajeInputNombrePartida, Mensajes.tituloCrearPartida, "");
                 if (nombre == "")
                 {
-                    MessageBox.Show("No se puede dejar el nombre en blanco", "Crear partida");
+                    MessageBox.Show(Mensajes.mensajeNombrePartidaEnBlanco, Mensajes.tituloCrearPartida);
                     return;
                 }
                 else if (nombre.Contains('~'))
                 {
-                    MessageBox.Show("El nombre de la partida no puede contener el carácter '~'");
+                    MessageBox.Show(Mensajes.mensajeNombrePartidaInvalido);
                     return;
                 }
-                string s_n_jugadores = this.InputBox("Número de jugadores de la partida:", "Crear partida", "2");
+                string s_n_jugadores = this.InputBox(Mensajes.mensajeInputNumJugadoresPartida, Mensajes.tituloCrearPartida, "2");
                 if (s_n_jugadores == "")
                 {
-                    MessageBox.Show("No se puede dejar el número de jugadores en blanco", "Crear partida");
+                    MessageBox.Show(Mensajes.mensajeNumJugadoresEnBlanco, Mensajes.tituloCrearPartida);
                     return;
                 }
                 int n_jugadores;
@@ -522,17 +524,17 @@ namespace Juego_Hotel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Datos incorrectos: " + ex.Message);
+                    MessageBox.Show(Mensajes.mensajeDatosIncorrectos + ex.Message);
                     return;
                 }
                 if (n_jugadores < 2)
                 {
-                    MessageBox.Show("El número mínimo de jugadores es 2");
+                    MessageBox.Show(Mensajes.mensajeNumMinimoJugadores);
                     return;
                 }
                 if (n_jugadores > 4)
                 {
-                    MessageBox.Show("El número máximo de jugadores es 4");
+                    MessageBox.Show(Mensajes.mensajeNumMaximoJugadores);
                     return;
                 }
                 this.enviar_comando("create_game", nombre, n_jugadores.ToString());
@@ -541,7 +543,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error de conexión: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorConexion + ex.Message);
                 this.Pulsar_Desconectar();
             }
         }
@@ -569,7 +571,7 @@ namespace Juego_Hotel
             if ((this.listaUsuarios.SelectedItems.Count < 1) ||
                 (this.listaUsuarios.SelectedItems.Contains(this.txtLogin.Text)))
             {
-                MessageBox.Show("Has de seleccionar al menos un usuario sin incluir el tuyo");
+                MessageBox.Show(Mensajes.mensajeSeleccionarUsuarios);
                 return;
             }
             // Este mecanismo funciona así:
@@ -627,7 +629,7 @@ namespace Juego_Hotel
             String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
             if (creador != this.txtLogin.Text)
             {
-                if (MessageBox.Show("El jugador " + creador + " quiere que te unas a un chat privado. ¿Deseas hacerlo?", "Nuevo chat", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(String.Format(Mensajes.mensajeUnirseAChat, creador), Mensajes.tituloNuevoChat, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     this.enviar_comando("join_chat", id_chat.ToString());
                     List<String> lista_params = new List<String>(2);
@@ -672,7 +674,7 @@ namespace Juego_Hotel
             }
             else
             {
-                MessageBox.Show("La partida " + nombre + " está llena");
+                MessageBox.Show(String.Format(Mensajes.mensajePartidaLlena, nombre));
                 this.Activar_bUnirse();
                 this.Activar_bCrearPartida();
             }
@@ -683,7 +685,7 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
             String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-            MessageBox.Show("Ya estás dentro de la partida " + nombre);
+            MessageBox.Show(Mensajes.mensajeYaDentroPartida + nombre);
             this.Activar_bUnirse();
             this.Activar_bCrearPartida();
         }
@@ -816,9 +818,9 @@ namespace Juego_Hotel
                 else
                 {
                     if (msg == "")
-                        MessageBox.Show("Ha habido un problema de conexión con el servidor");
+                        MessageBox.Show(Mensajes.mensajeProblemaConexionConServidor);
                     else
-                        MessageBox.Show("Comando " + ((msg != null) ? msg : "") + " desconocido");
+                        MessageBox.Show(Mensajes.mensajeComandoDesconocido + ((msg != null) ? msg : ""));
                     this.conectado = false;
                     this.Finalizar_todas_las_partidas();
                     this.Pulsar_Desconectar();
@@ -879,7 +881,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error recibiendo nuevo mensaje de chat global: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorRecibiendoChatGlobal + ex.Message);
                 this.Pulsar_Desconectar();
             }
         }
@@ -911,7 +913,7 @@ namespace Juego_Hotel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error recibiendo nuevo mensaje de chat global: " + ex.Message);
+                MessageBox.Show(Mensajes.mensajeErrorRecibiendoChat + ex.Message);
                 this.Pulsar_Desconectar();
             }
         }
@@ -1151,9 +1153,9 @@ namespace Juego_Hotel
             if (jugador.nombre_online != partida.interfaz.nombre_online)
             {
                 if (expulsado)
-                    MessageBox.Show("El jugador " + jugador.color + " (" + jugador.nombre_online + ") ha sido expulsado por hacer trampas");
+                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorExpulsadoTrampas, jugador.color, jugador.nombre_online));
                 else
-                    MessageBox.Show("El jugador " + jugador.color + " (" + jugador.nombre_online + ") se ha retirado");
+                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorRetirado, jugador.color, jugador.nombre_online));
             }
             partida.interfaz.BeginInvoke(new Marcar_Jugador_Eliminado_Callback(partida.interfaz.Marcar_Jugador_Eliminado), jugador.n_jugador);
         }
@@ -1184,7 +1186,7 @@ namespace Juego_Hotel
             int noches = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            MessageBox.Show("Debes pagar " + noches + " noches (" + cantidad + ") al jugador " + jugador.color + " (" + jugador.nombre_online + ")");
+            MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, noches, cantidad, jugador.color, jugador.nombre_online));
             partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador, cantidad);
         }
 
@@ -1257,8 +1259,8 @@ namespace Juego_Hotel
             else
             {
                 partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_vendida_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_vendida));
-                MessageBox.Show("Hotel vendido al jugador " + partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].color + 
-                    " (" + partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online + ") por " + cantidad);
+                MessageBox.Show(String.Format(Mensajes.mensajeHotelVendido, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].color, 
+                    partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online, cantidad));
             }
         }
 
@@ -1269,7 +1271,7 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            MessageBox.Show("El hotel ha sido pagado. Subasta finalizada");
+            MessageBox.Show("");
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_terminada_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
         }
 
@@ -1284,6 +1286,44 @@ namespace Juego_Hotel
             {
                 this.txtServidor.Enabled = true;
                 this.txtPuerto.Enabled = true;
+            }
+        }
+
+        delegate void ReLocalize_Callback(System.Globalization.CultureInfo antiguoCulture);
+
+        public void ReLocalize(System.Globalization.CultureInfo antiguoCulture)
+        {
+            if (this.InvokeRequired)
+                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { antiguoCulture });
+            else
+            {
+                resources.ApplyResources(this, "$this");
+                foreach (Control c in this.Controls)
+                {
+                    if (c is GroupBox)
+                    {
+                        c.Text = resources.GetString(c.Name + ".Text");
+                        foreach (Control o in ((GroupBox)c).Controls)
+                        {
+                            if (o is Label)
+                            {
+                                String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                                if (nombreAntiguo != null)
+                                    o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                            }
+                            else
+                                resources.ApplyResources(o, o.Name);
+                        }
+                    }
+                    else if (c is Label)
+                    {
+                        String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                        if (nombreAntiguo != null)
+                            c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                    }
+                    else
+                        c.Text = resources.GetString(c.Name + ".Text");
+                }
             }
         }
     }
