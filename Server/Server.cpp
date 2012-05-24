@@ -457,52 +457,55 @@ void disconnect_client(Player* p, bool kicking)
    list<Game*>::iterator i2;
    for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
    {
-      (*i2)->leave(p);
-      if (delete_game_if_empty(*i2))
+      if ((*i2)->check_already_joined(p))
       {
-         if (glist.size() > 0)
-            i2 = glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
-         else
-            break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
-      }
-      else
-      {
-         // Notify the rest of players that the player left the game
-         list<Player*>::iterator i3, j;
-         Player* dest, * winner;
-         for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
+         (*i2)->leave(p);
+         if (delete_game_if_empty(*i2))
          {
-            dest = (*i3);
-            if (kicking)
-            {
-               send_command("player_kicked", dest);
-               send_int(dest, (*i2)->id);
-               send_int(dest, get_utf8_length(p->name));
-               send_wstring(dest, p->name);
-            }
+            if (glist.size() > 0)
+               i2 = glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
             else
+               break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
+         }
+         else
+         {
+            // Notify the rest of players that the player left the game
+            list<Player*>::iterator i3, j;
+            Player* dest, * winner;
+            for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
             {
-               send_command("player_retired", dest);
+               dest = (*i3);
+               if (kicking)
+               {
+                  send_command("player_kicked", dest);
+                  send_int(dest, (*i2)->id);
+                  send_int(dest, get_utf8_length(p->name));
+                  send_wstring(dest, p->name);
+               }
+               else
+               {
+                  send_command("player_retired", dest);
+                  send_int(dest, (*i2)->id);
+                  send_int(dest, get_utf8_length(p->name));
+                  send_wstring(dest, p->name);
+               }
+               send_command("chat_userlist", dest);
                send_int(dest, (*i2)->id);
-               send_int(dest, get_utf8_length(p->name));
-               send_wstring(dest, p->name);
-            }
-            send_command("chat_userlist", dest);
-            send_int(dest, (*i2)->id);
-            send_int(dest, (*i2)->plist.size()); // Number of players
-            for (j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
-            {
-               send_int(dest, get_utf8_length((*j)->name));
-               send_wstring(dest, (*j)->name);
-            }
-            if ((*i2)->get_active_players_count() == 1)
-            {
-               (*i2)->ended = true;
-               send_command("game_ended", dest);
-               send_int(dest, (*i2)->id);
-               winner = (*i2)->get_winner();
-               send_int(dest, get_utf8_length(winner->name));
-               send_wstring(dest, winner->name);
+               send_int(dest, (*i2)->plist.size()); // Number of players
+               for (j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
+               {
+                  send_int(dest, get_utf8_length((*j)->name));
+                  send_wstring(dest, (*j)->name);
+               }
+               if ((*i2)->get_active_players_count() == 1)
+               {
+                  (*i2)->ended = true;
+                  send_command("game_ended", dest);
+                  send_int(dest, (*i2)->id);
+                  winner = (*i2)->get_winner();
+                  send_int(dest, get_utf8_length(winner->name));
+                  send_wstring(dest, winner->name);
+               }
             }
          }
       }
