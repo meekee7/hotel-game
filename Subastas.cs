@@ -213,7 +213,7 @@ namespace Juego_Hotel
             else if (cantidad_num <= n_precio_mayor)
                 MessageBox.Show("La cantidad es menor o igual que la puja máxima");
             else if (cantidad_num > this.juego.jugadores[n_jugador].dinero_total)
-                MessageBox.Show("La cantidad es mayor que el dinero total del jugador " + this.juego.jugadores[n_jugador].color);
+                MessageBox.Show("La cantidad es mayor que el dinero total del jugador " + this.juego.jugadores[n_jugador].Nombre_color());
             else if (cantidad_num % 50 != 0)
                 MessageBox.Show("La cantidad no es múltiplo de 50");
             else
@@ -230,7 +230,7 @@ namespace Juego_Hotel
                     {
                         this.n_precio_mayor = cantidad_num;
                         this.precio_mayor.Text = cantidad_num.ToString();
-                        this.mayor_postor.Text = "J" + (n_jugador + 1) + " - " + this.juego.jugadores[n_jugador].color.ToString();
+                        this.mayor_postor.Text = "J" + (n_jugador + 1) + " - " + this.juego.jugadores[n_jugador].Nombre_color();
                         this.n_mayor_postor = n_jugador;
                     }
                 }
@@ -266,7 +266,7 @@ namespace Juego_Hotel
         {
             this.n_precio_mayor = cantidad;
             this.precio_mayor.Text = cantidad.ToString();
-            this.mayor_postor.Text = "J" + (jugador.n_jugador + 1) + " - " + jugador.color.ToString();
+            this.mayor_postor.Text = "J" + (jugador.n_jugador + 1) + " - " + jugador.Nombre_color();
             this.n_mayor_postor = jugador.n_jugador;
         }
 

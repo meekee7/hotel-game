@@ -187,7 +187,7 @@
     <value>You don't have sufficient funds to carry out the expropriation</value>
   </data>
   <data name="mensajeTotalAPagar" xml:space="preserve">
-    <value>You got a {0}, so the player {1} must pay {2} to player {3}</value>
+    <value>You got a {0}, so the {1} player must pay {2} to {3} player</value>
   </data>
   <data name="tituloCargarPartida" xml:space="preserve">
     <value>Load game</value>
@@ -358,16 +358,16 @@
     <value>Owner: </value>
   </data>
   <data name="mensajeJugador" xml:space="preserve">
-    <value>Player </value>
+    <value>{0} player</value>
   </data>
   <data name="mensajeNo" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="mensajeNumAmpliaciones" xml:space="preserve">
-    <value>Nº of phases</value>
+    <value>Number of phases</value>
   </data>
   <data name="mensajeNumEntradas" xml:space="preserve">
-    <value>Nº of entrances: </value>
+    <value>Number of entrances: </value>
   </data>
   <data name="mensajeSi" xml:space="preserve">
     <value>Yes</value>
@@ -587,5 +587,17 @@ No permission is needed to build them. Continue?</value>
   </data>
   <data name="tituloNuevoChat" xml:space="preserve">
     <value>New chat</value>
+  </data>
+  <data name="colorAmarillo" xml:space="preserve">
+    <value>yellow</value>
+  </data>
+  <data name="colorAzul" xml:space="preserve">
+    <value>blue</value>
+  </data>
+  <data name="colorRojo" xml:space="preserve">
+    <value>red</value>
+  </data>
+  <data name="colorVerde" xml:space="preserve">
+    <value>green</value>
   </data>
 </root>

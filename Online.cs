@@ -1152,10 +1152,11 @@ namespace Juego_Hotel
             partida.interfaz.juego.Eliminar_Jugador(jugador, null);
             if (jugador.nombre_online != partida.interfaz.nombre_online)
             {
+                String color = jugador.Nombre_color();
                 if (expulsado)
-                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorExpulsadoTrampas, jugador.color, jugador.nombre_online));
+                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorExpulsadoTrampas, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online));
                 else
-                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorRetirado, jugador.color, jugador.nombre_online));
+                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorRetirado, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online));
             }
             partida.interfaz.BeginInvoke(new Marcar_Jugador_Eliminado_Callback(partida.interfaz.Marcar_Jugador_Eliminado), jugador.n_jugador);
         }
@@ -1186,7 +1187,7 @@ namespace Juego_Hotel
             int noches = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, noches, cantidad, jugador.color, jugador.nombre_online));
+            MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, noches, cantidad, jugador.Nombre_color(), jugador.nombre_online));
             partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador, cantidad);
         }
 
@@ -1259,7 +1260,7 @@ namespace Juego_Hotel
             else
             {
                 partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_vendida_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_vendida));
-                MessageBox.Show(String.Format(Mensajes.mensajeHotelVendido, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].color, 
+                MessageBox.Show(String.Format(Mensajes.mensajeHotelVendido, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].Nombre_color(), 
                     partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online, cantidad));
             }
         }
@@ -1289,14 +1290,15 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void ReLocalize_Callback(System.Globalization.CultureInfo antiguoCulture);
+        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
 
-        public void ReLocalize(System.Globalization.CultureInfo antiguoCulture)
+        public void ReLocalize(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture)
         {
             if (this.InvokeRequired)
-                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { antiguoCulture });
+                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
                 resources.ApplyResources(this, "$this");
                 foreach (Control c in this.Controls)
                 {

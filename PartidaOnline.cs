@@ -209,14 +209,15 @@ namespace Juego_Hotel
                 this.bEnviar.PerformClick();
         }
 
-        delegate void ReLocalize_Callback(System.Globalization.CultureInfo antiguoCulture);
+        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
 
-        public void ReLocalize(System.Globalization.CultureInfo antiguoCulture)
+        public void ReLocalize(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture)
         {
             if (this.InvokeRequired)
-                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { antiguoCulture });
+                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
                 resources.ApplyResources(this, "$this");
                 foreach (Control c in this.Controls)
                 {

@@ -112,7 +112,7 @@ namespace Juego_Hotel
                     nodo.AppendChild(doc.CreateTextNode(jugador.posicion.numero.ToString()));
                     nodoEstadoJugador.AppendChild(nodo);
                     nodo = doc.CreateElement("color");
-                    nodo.AppendChild(doc.CreateTextNode(jugador.color.ToString()));
+                    nodo.AppendChild(doc.CreateTextNode(jugador.Nombre_color()));
                     nodoEstadoJugador.AppendChild(nodo);
                     nodo = doc.CreateElement("pago_ultimo_turno");
                     if (jugador.pago_ultimo_turno)

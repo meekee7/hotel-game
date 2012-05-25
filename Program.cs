@@ -63,14 +63,14 @@ namespace Juego_Hotel
                 Application.Run(new Online(configuracion));
         }
 
-        internal static void ReLocalizeAll(System.Globalization.CultureInfo NewCulture)
+        internal static void ReLocalizeAll(System.Globalization.CultureInfo nuevoCulture)
         {
             CultureInfo antiguoCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = NewCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
             foreach (Form f in Application.OpenForms)
             {
                 if (f is IReLocalizable)
-                    ((IReLocalizable)f).ReLocalize(antiguoCulture);
+                    ((IReLocalizable)f).ReLocalize(nuevoCulture, antiguoCulture);
             }   
         }
     }

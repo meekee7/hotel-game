@@ -61,6 +61,42 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a amarillo.
+        /// </summary>
+        internal static string colorAmarillo {
+            get {
+                return ResourceManager.GetString("colorAmarillo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a azul.
+        /// </summary>
+        internal static string colorAzul {
+            get {
+                return ResourceManager.GetString("colorAzul", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a rojo.
+        /// </summary>
+        internal static string colorRojo {
+            get {
+                return ResourceManager.GetString("colorRojo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a verde.
+        /// </summary>
+        internal static string colorVerde {
+            get {
+                return ResourceManager.GetString("colorVerde", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Español.
         /// </summary>
         internal static string comboBoxIdiomas1 {
@@ -628,7 +664,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Jugador .
+        ///   Busca una cadena traducida similar a Jugador {0}.
         /// </summary>
         internal static string mensajeJugador {
             get {

@@ -367,6 +367,18 @@ namespace Juego_Hotel
             this.calcular_dinero_total();
         }
 
+        public String Nombre_color()
+        {
+            switch (this.color)
+            {
+                case Tipos.Tcolor.rojo: return Juego_Hotel.Resources.Mensajes.colorRojo;
+                case Tipos.Tcolor.azul: return Juego_Hotel.Resources.Mensajes.colorAzul;
+                case Tipos.Tcolor.amarillo: return Juego_Hotel.Resources.Mensajes.colorAmarillo;
+                case Tipos.Tcolor.verde: return Juego_Hotel.Resources.Mensajes.colorVerde;
+                default: return String.Empty;
+            }
+        }
+
         ~Jugador()
         {
             this.hoteles = null;

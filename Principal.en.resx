@@ -146,7 +146,7 @@
     <value>4 Players</value>
   </data>
   <data name="grupoNJugadores.Text" xml:space="preserve">
-    <value>Nº of players</value>
+    <value>Number of players</value>
   </data>
   <data name="bColores.Text" xml:space="preserve">
     <value>Colours</value>
@@ -200,7 +200,7 @@
     <value>47, 13</value>
   </data>
   <data name="posJ1.Text" xml:space="preserve">
-    <value>Square: </value>
+    <value>Position: </value>
   </data>
   <data name="turnoJ1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -239,7 +239,7 @@
     <value>47, 13</value>
   </data>
   <data name="posJ2.Text" xml:space="preserve">
-    <value>Square: </value>
+    <value>Position: </value>
   </data>
   <data name="turnoJ2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -278,7 +278,7 @@
     <value>47, 13</value>
   </data>
   <data name="posJ3.Text" xml:space="preserve">
-    <value>Square: </value>
+    <value>Position: </value>
   </data>
   <data name="turnoJ3.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -317,7 +317,7 @@
     <value>47, 13</value>
   </data>
   <data name="posJ4.Text" xml:space="preserve">
-    <value>Square: </value>
+    <value>Position: </value>
   </data>
   <data name="turnoJ4.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>

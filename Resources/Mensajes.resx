@@ -358,7 +358,7 @@
     <value>Dueño: </value>
   </data>
   <data name="mensajeJugador" xml:space="preserve">
-    <value>Jugador </value>
+    <value>Jugador {0}</value>
   </data>
   <data name="mensajeNo" xml:space="preserve">
     <value>No</value>
@@ -587,5 +587,17 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   </data>
   <data name="tituloNuevoChat" xml:space="preserve">
     <value>Nuevo chat</value>
+  </data>
+  <data name="colorAmarillo" xml:space="preserve">
+    <value>amarillo</value>
+  </data>
+  <data name="colorAzul" xml:space="preserve">
+    <value>azul</value>
+  </data>
+  <data name="colorRojo" xml:space="preserve">
+    <value>rojo</value>
+  </data>
+  <data name="colorVerde" xml:space="preserve">
+    <value>verde</value>
   </data>
 </root>

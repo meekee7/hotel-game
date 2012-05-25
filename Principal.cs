@@ -145,7 +145,7 @@ namespace Juego_Hotel
                     this.juego.jug_inicial++; // Para no comenzar en 0
                 }
                 this.jug_ini.Text = resources.GetString("jug_ini.Text") + Environment.NewLine + Environment.NewLine + this.juego.jug_inicial.ToString();
-                this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].color.ToString();
+                this.colorJugIni.Text = this.juego.jugadores[this.juego.jug_inicial - 1].Nombre_color();
                 this.juego.jug_actual = this.juego.jug_inicial;
                 this.juego.Cambiar_jugador_actual();
                 this.Establecer_Turno();
@@ -191,19 +191,19 @@ namespace Juego_Hotel
                     case 3: this.bRetirarseJ4.Enabled = true;
                         break;
                 }
-                this.colorJ1.Text = resources.GetString("colorJ1.Text") + this.juego.jugadores[0].color.ToString();
-                this.colorJ2.Text = resources.GetString("colorJ2.Text") + this.juego.jugadores[1].color.ToString();
+                this.colorJ1.Text = resources.GetString("colorJ1.Text") + this.juego.jugadores[0].Nombre_color();
+                this.colorJ2.Text = resources.GetString("colorJ2.Text") + this.juego.jugadores[1].Nombre_color();
                 this.dineroJ1.Text = resources.GetString("dineroJ1.Text") + this.juego.jugadores[0].dinero_total;
                 this.dineroJ2.Text = resources.GetString("dineroJ2.Text") + this.juego.jugadores[1].dinero_total;
                 if (this.juego.n_jugadores > 2)
                 {
                     this.dineroJ3.Text = resources.GetString("dineroJ3.Text") + this.juego.jugadores[2].dinero_total;
-                    this.colorJ3.Text = resources.GetString("colorJ3.Text") + this.juego.jugadores[2].color.ToString();
+                    this.colorJ3.Text = resources.GetString("colorJ3.Text") + this.juego.jugadores[2].Nombre_color();
                 }
                 if (this.juego.n_jugadores > 3)
                 {
                     this.dineroJ4.Text = resources.GetString("dineroJ4.Text") + this.juego.jugadores[3].dinero_total;
-                    this.colorJ4.Text = resources.GetString("colorJ4.Text") + this.juego.jugadores[3].color.ToString();
+                    this.colorJ4.Text = resources.GetString("colorJ4.Text") + this.juego.jugadores[3].Nombre_color();
                 }
                 if (!this.online)
                 {
@@ -375,7 +375,7 @@ namespace Juego_Hotel
             this.controlJ4.Enabled = false;
             this.partida_activa = false;
             if (ganador != null)
-                MessageBox.Show(String.Format(Mensajes.mensajePartidaFinalizada, ganador.color.ToString()), resources.GetString("tituloHotel"));
+                MessageBox.Show(String.Format(Mensajes.mensajePartidaFinalizada, ganador.Nombre_color()), resources.GetString("tituloHotel"));
             else
                 MessageBox.Show(Mensajes.mensajeJugadoresRetidados);
         }
@@ -783,7 +783,7 @@ namespace Juego_Hotel
                     {
                         if (hotel.n_fases_construidas == 0) // Se puede expropiar
                         {
-                            DialogResult dr = MessageBox.Show(String.Format(Mensajes.mensajeExpropiacionPosible, hotel.nombre, hotel.dueño.color.ToString()), resources.GetString("tituloExpropiacionPosible"), MessageBoxButtons.YesNo);
+                            DialogResult dr = MessageBox.Show(String.Format(Mensajes.mensajeExpropiacionPosible, hotel.nombre, hotel.dueño.Nombre_color()), resources.GetString("tituloExpropiacionPosible"), MessageBoxButtons.YesNo);
                             if (dr == DialogResult.Yes)
                             {
                                 if (hotel.precio_expropiacion > this.juego.jugador_actual.dinero_total)
@@ -1296,11 +1296,11 @@ namespace Juego_Hotel
                                 if ((jugador.color != this.juego.jugadores[n_jugador].color) && (jugador.posicion.numero == casilla.numero) && (jugador.pago_ultimo_turno == false))
                                 {
                                     // El jugador encontrado debe pagar las noches correspondientes
-                                    MessageBox.Show(String.Format(Mensajes.mensajeDebePagarNoches,jugador.color,
-                                        hotel.dueño.color), resources.GetString("tituloPagarNoches"), MessageBoxButtons.OK);
+                                    MessageBox.Show(String.Format(Mensajes.mensajeDebePagarNoches, jugador.Nombre_color(),
+                                        hotel.dueño.Nombre_color()), resources.GetString("tituloPagarNoches"), MessageBoxButtons.OK);
                                     int num_noches = this.juego.dado.tirar();
                                     int dinero_necesario = hotel.Calcular_noches(num_noches);
-                                    MessageBox.Show(String.Format(Mensajes.mensajeTotalAPagar, num_noches, jugador.color, dinero_necesario, hotel.dueño.color));
+                                    MessageBox.Show(String.Format(Mensajes.mensajeTotalAPagar, num_noches, jugador.Nombre_color(), dinero_necesario, hotel.dueño.Nombre_color()));
                                     PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, jugador, this, hotel.dueño);
                                     frm_pago.ShowDialog();
                                     jugador.pago_ultimo_turno = true;
@@ -1620,25 +1620,25 @@ namespace Juego_Hotel
             }
             else
             {
-                Jugador jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "rojo");
+                Jugador jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "rojo");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
                 else
                     this.posRojo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "azul");
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "azul");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
                 else
                     this.posAzul.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "verde");
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "verde");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
                 else
                     this.posVerde.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.color.ToString() == "amarillo");
+                jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "amarillo");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
                 else
@@ -1726,45 +1726,73 @@ namespace Juego_Hotel
             this.Guardar_idioma(System.Threading.Thread.CurrentThread.CurrentUICulture);
         }
 
-        void IReLocalizable.ReLocalize(CultureInfo antiguoCulture)
-        {            
-            resources.ApplyResources(this, "$this");
-            foreach (Control c in this.Controls) 
+        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
+
+        public void ReLocalize(CultureInfo nuevoCulture, CultureInfo antiguoCulture)
+        {
+            if (this.InvokeRequired)
+                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
+            else
             {
-                if (c is GroupBox)
+                System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
+                resources.ApplyResources(this, "$this");
+                foreach (Control c in this.Controls)
                 {
-                    c.Text = resources.GetString(c.Name + ".Text");
-                    foreach(Control o in ((GroupBox)c).Controls)
+                    if (c is GroupBox)
                     {
-                        if (o is Label)
+                        c.Text = resources.GetString(c.Name + ".Text");
+                        foreach (Control o in ((GroupBox)c).Controls)
                         {
-                            String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
-                            if (nombreAntiguo != null)
-                                o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                            if (o is Label)
+                            {
+                                switch (o.Name) // Etiquetas con el color
+                                {
+                                    case "colorJ1": o.Text = resources.GetString(o.Name + ".Text");
+                                                    if (this.juego.n_jugadores > 0)
+                                                        o.Text += this.juego.jugadores[0].Nombre_color();
+                                                    break;
+                                    case "colorJ2": o.Text = resources.GetString(o.Name + ".Text");
+                                                    if (this.juego.n_jugadores > 1)
+                                                        o.Text += this.juego.jugadores[1].Nombre_color();
+                                                    break;
+                                    case "colorJ3": o.Text = resources.GetString(o.Name + ".Text");
+                                                    if (this.juego.n_jugadores > 2)
+                                                        o.Text += this.juego.jugadores[2].Nombre_color();
+                                                    break;
+                                    case "colorJ4": o.Text = resources.GetString(o.Name + ".Text");
+                                                    if (this.juego.n_jugadores > 3)
+                                                        o.Text += this.juego.jugadores[3].Nombre_color();
+                                                    break;
+                                    default:    String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                                                if (nombreAntiguo != null)
+                                                    o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
+                                                break;
+                                }
+                            }
+                            else
+                                resources.ApplyResources(o, o.Name);
                         }
-                        else
-                            resources.ApplyResources(o, o.Name);
                     }
-                }
-                else if (c is ComboBox)
-                {
-                    ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = Mensajes.comboBoxIdiomas1;
-                    ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = Mensajes.comboBoxIdiomas2;
-                    if(antiguoCulture.Name.Equals("es"))
-                        ((ComboBox)c).SelectedIndex = 1;
+                    else if (c is ComboBox)
+                    {
+                        ((ComboItemImagen)((ComboBox)c).Items[0]).Etiqueta = Mensajes.comboBoxIdiomas1;
+                        ((ComboItemImagen)((ComboBox)c).Items[1]).Etiqueta = Mensajes.comboBoxIdiomas2;
+                        if (antiguoCulture.Name.Equals("es"))
+                            ((ComboBox)c).SelectedIndex = 1;
+                        else
+                            ((ComboBox)c).SelectedIndex = 0;
+                    }
+                    else if (c is Label)
+                    {
+                        String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                        if (nombreAntiguo != null)
+                            c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                    }
                     else
-                        ((ComboBox)c).SelectedIndex = 0;
+                        c.Text = resources.GetString(c.Name + ".Text");
                 }
-                else if (c is Label)
-                {
-                    String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
-                    if (nombreAntiguo != null)
-                        c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
-                }
-                else
-                    c.Text = resources.GetString(c.Name + ".Text");
+                frm_colores.ReLocalize(nuevoCulture, antiguoCulture);
             }
-            frm_colores.ReLocalize(antiguoCulture);
         }
         
         private void comboBoxIdiomas_DrawItem(object sender, DrawItemEventArgs e)
