@@ -1146,6 +1146,8 @@ namespace Juego_Hotel
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
+            if (partida.interfaz == null) // La partida no fue iniciada
+                return;
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             if (jugador.Eliminado())
                 return;

@@ -425,29 +425,32 @@ void disconnect_client(Player* p, bool kicking)
    list<Chat*>::iterator i;
    for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
    {
-      (*i)->leave(p);
-      if (delete_chat_if_empty(get_chat_from_id((*i)->id)))
+      if ((*i)->check_already_joined(p))
       {
-         if (chat_list.size() > 0)
-            i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
-         else
-            break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
-      }
-      else
-      {
-         // Notify all chat users of the player disconnexion
-         list<Player*>::iterator i4, j;
-         Player* dest;
-         for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
+         (*i)->leave(p);
+         if (delete_chat_if_empty(get_chat_from_id((*i)->id)))
          {
-            dest = *i4;
-            send_command("chat_userlist", dest);
-            send_int(dest, (*i)->id);
-            send_int(dest, (*i)->players.size()); // Number of players
-            for (j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
+            if (chat_list.size() > 0)
+               i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
+            else
+               break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
+         }
+         else
+         {
+            // Notify all chat users of the player disconnexion
+            list<Player*>::iterator i4, j;
+            Player* dest;
+            for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
             {
-               send_int(dest, get_utf8_length((*j)->name));
-               send_wstring(dest, (*j)->name);
+               dest = *i4;
+               send_command("chat_userlist", dest);
+               send_int(dest, (*i)->id);
+               send_int(dest, (*i)->players.size()); // Number of players
+               for (j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
+               {
+                  send_int(dest, get_utf8_length((*j)->name));
+                  send_wstring(dest, (*j)->name);
+               }
             }
          }
       }
