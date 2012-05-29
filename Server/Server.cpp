@@ -676,7 +676,7 @@ void handle_command(string command, Player* p)
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       Game* game = get_game_from_id(id);
-      if (game == NULL) // To avoid commands sent when chat does not exist anymore
+      if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       game->eliminate_player(p, NULL);
       if (!game->leave(p)) // Possible hack
