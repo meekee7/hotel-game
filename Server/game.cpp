@@ -107,7 +107,7 @@ bool Game::leave(Player* p)
          this->eliminate_player(p, NULL);
       this->chat->leave(p);
       this->plist.erase(i);
-      if (this->creator == p)
+      if ((this->plist.size()) > 0 && (this->creator == p))
          this->creator = this->plist.front(); // New creator
 		wcout << L"Player "<< p->name << L" left game " << this->name << endl;
    }

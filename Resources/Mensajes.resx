@@ -600,4 +600,22 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="colorVerde" xml:space="preserve">
     <value>verde</value>
   </data>
+  <data name="textoEstadoDisponible" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="textoEstadoEmpezada" xml:space="preserve">
+    <value>Empezada</value>
+  </data>
+  <data name="textoEstadoFinalizada" xml:space="preserve">
+    <value>Finalizada</value>
+  </data>
+  <data name="textoEstadoLlena" xml:space="preserve">
+    <value>Llena</value>
+  </data>
+  <data name="textoPartidaPlural" xml:space="preserve">
+    <value>{0} ({1} jugadores de {2}). Estado: {3}</value>
+  </data>
+  <data name="textoPartidaSingular" xml:space="preserve">
+    <value>{0} (1 jugador de {1}). Estado: {2}</value>
+  </data>
 </root>

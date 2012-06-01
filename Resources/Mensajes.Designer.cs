@@ -1189,11 +1189,65 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Disponible.
+        /// </summary>
+        internal static string textoEstadoDisponible {
+            get {
+                return ResourceManager.GetString("textoEstadoDisponible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Empezada.
+        /// </summary>
+        internal static string textoEstadoEmpezada {
+            get {
+                return ResourceManager.GetString("textoEstadoEmpezada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Finalizada.
+        /// </summary>
+        internal static string textoEstadoFinalizada {
+            get {
+                return ResourceManager.GetString("textoEstadoFinalizada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Llena.
+        /// </summary>
+        internal static string textoEstadoLlena {
+            get {
+                return ResourceManager.GetString("textoEstadoLlena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Necesario: .
         /// </summary>
         internal static string textoNecesario {
             get {
                 return ResourceManager.GetString("textoNecesario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} ({1} jugadores de {2}). Estado: {3}.
+        /// </summary>
+        internal static string textoPartidaPlural {
+            get {
+                return ResourceManager.GetString("textoPartidaPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} (1 jugador de {1}). Estado: {2}.
+        /// </summary>
+        internal static string textoPartidaSingular {
+            get {
+                return ResourceManager.GetString("textoPartidaSingular", resourceCulture);
             }
         }
         

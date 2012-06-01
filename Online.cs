@@ -46,6 +46,8 @@ namespace Juego_Hotel
 
         public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
         {
+            if (this.socket == null)
+                return "";
             if (!this.socket.Connected)
             {
                 MessageBox.Show(Mensajes.mensajeNoConectado);
@@ -76,6 +78,8 @@ namespace Juego_Hotel
 
         public int recibir_int(Socket s, ref int bytes_recibidos)
         {
+            if (this.socket == null)
+                return 0;
             if (!this.socket.Connected)
             {
                 MessageBox.Show(Mensajes.mensajeNoConectado);
@@ -102,6 +106,8 @@ namespace Juego_Hotel
 
         public int enviar_string(Socket s, String texto)
         {
+            if (this.socket == null)
+                return 0;
             if (!this.socket.Connected)
             {
                 MessageBox.Show(Mensajes.mensajeNoConectado);
@@ -125,6 +131,8 @@ namespace Juego_Hotel
 
         public int enviar_int(Socket s, int num)
         {
+            if (this.socket == null)
+                return 0;
             if (!this.socket.Connected)
             {
                 MessageBox.Show(Mensajes.mensajeNoConectado);
@@ -248,6 +256,7 @@ namespace Juego_Hotel
                 this.bConectar.Enabled = false;
                 this.bDesconectar.Enabled = true;
                 this.txtServidor.Enabled = false;
+                this.txtPuerto.Enabled = false;
                 this.txtLogin.Focus();
             }
             catch (Exception ex)
@@ -353,13 +362,33 @@ namespace Juego_Hotel
                     this.Borrar_lista_partidas();
                     return;
                 }
-                int i;
-                int long_nombre;
+                int i, long_nombre, capacidad, n_jugadores_dentro;
+                Boolean empezada, finalizada;
+                String nombre, estado;
                 String[] lista_partidas = new String[cuantas];
                 for (i = 0; i < cuantas; i++)
                 {
                     long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
-                    lista_partidas[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                    nombre = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                    capacidad = this.recibir_int(this.socket, ref bytes_recibidos);
+                    n_jugadores_dentro = this.recibir_int(this.socket, ref bytes_recibidos);
+                    empezada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    finalizada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    if (!empezada && !finalizada)
+                    {
+                        if (n_jugadores_dentro == capacidad)
+                            estado = Mensajes.textoEstadoLlena;
+                        else
+                            estado = Mensajes.textoEstadoDisponible;
+                    }
+                    else if (empezada && !finalizada)
+                        estado = Mensajes.textoEstadoEmpezada;
+                    else
+                        estado = Mensajes.textoEstadoFinalizada;
+                    if (n_jugadores_dentro == 1)
+                        lista_partidas[i] = String.Format(Mensajes.textoPartidaSingular, nombre, capacidad, estado);
+                    else
+                        lista_partidas[i] = String.Format(Mensajes.textoPartidaPlural, nombre, n_jugadores_dentro, capacidad, estado);
                 }
                 this.Actualizar_lista_partidas(lista_partidas);
             }
@@ -473,6 +502,7 @@ namespace Juego_Hotel
             this.bChatGlobal.Enabled = false;
             this.txtLogin.Enabled = true;
             this.txtServidor.Enabled = true;
+            this.txtPuerto.Enabled = true;
             this.Text = "Online";
             // Desactivar el botón Enviar de cada chat
             if (this.frm_chat_global != null)
@@ -758,6 +788,7 @@ namespace Juego_Hotel
             do
             {
                 long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
+                this.sem_en_comunicacion.WaitOne(10000);
                 msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
                 if (msg == "#disconnect#")
                     this.continuar_thread = false;
@@ -826,6 +857,7 @@ namespace Juego_Hotel
                     this.Pulsar_Desconectar();
                 }
                 msg = null;
+                this.sem_en_comunicacion.Release();
             }
             while (this.continuar_thread);
         }
@@ -924,8 +956,7 @@ namespace Juego_Hotel
         {
             if (this.bDesconectar.InvokeRequired)
             {
-                Pulsar_Desconectar_Callback d = new Pulsar_Desconectar_Callback(Pulsar_Desconectar);
-                this.Invoke(d);
+                this.BeginInvoke(new Pulsar_Desconectar_Callback(Pulsar_Desconectar));
             }
             else
             {
@@ -965,7 +996,8 @@ namespace Juego_Hotel
 
         private void bUnirse_Click(object sender, EventArgs e)
         {
-            this.enviar_comando("join_game", this.listaPartidas.SelectedItem.ToString());
+            String linea = this.listaPartidas.SelectedItem.ToString();
+            this.enviar_comando("join_game", linea.Substring(0, linea.IndexOf(" (")));
             this.bUnirse.Enabled = false;
             this.bCrearPartida.Enabled = false;
         }
@@ -1198,7 +1230,8 @@ namespace Juego_Hotel
         private void Finalizar_todas_las_partidas()
         {
             foreach (PartidaOnline partida in this.lista_partidas)
-                partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
+                if (partida.interfaz != null)
+                    partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
         }
 
         private void Subasta_iniciada()
