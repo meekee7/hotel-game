@@ -1875,7 +1875,11 @@ void run_server(int port)
       else
       {
          bind_retries++;
-         Sleep(5000);
+         #ifdef _WIN32
+            Sleep(5000);
+         #else
+            sleep(5000);
+         #endif
          wcout << L"bind retries: " << bind_retries << endl;
       }
    }
