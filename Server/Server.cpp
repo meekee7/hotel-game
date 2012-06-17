@@ -31,7 +31,6 @@ dlib::mutex mutex_ids;
 dlib::mutex mutex_lists;
 dlib::mutex mutex_disconnects;
 dlib::mutex debt_mutex;
-dlib::mutex command_mutex;
 int id_count = 0;
 string config_content;
 struct config configuration;
@@ -447,7 +446,6 @@ void disconnect_client(Player* p, bool kicking)
             for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
             {
                dest = *i4;
-               command_mutex.lock();
                send_command("chat_userlist", dest);
                send_int(dest, (*i)->id);
                send_int(dest, (*i)->players.size()); // Number of players
@@ -456,7 +454,6 @@ void disconnect_client(Player* p, bool kicking)
                   send_int(dest, get_utf8_length((*j)->name));
                   send_wstring(dest, (*j)->name);
                }
-               command_mutex.unlock();
             }
          }
       }
@@ -486,23 +483,18 @@ void disconnect_client(Player* p, bool kicking)
                dest = (*i3);
                if (kicking)
                {
-                  command_mutex.lock();
                   send_command("player_kicked", dest);
                   send_int(dest, (*i2)->id);
                   send_int(dest, get_utf8_length(p->name));
                   send_wstring(dest, p->name);
-                  command_mutex.unlock();
                }
                else
                {
-                  command_mutex.lock();
                   send_command("player_retired", dest);
                   send_int(dest, (*i2)->id);
                   send_int(dest, get_utf8_length(p->name));
                   send_wstring(dest, p->name);
-                  command_mutex.unlock();
                }
-               command_mutex.lock();
                send_command("chat_userlist", dest);
                send_int(dest, (*i2)->id);
                send_int(dest, (*i2)->plist.size()); // Number of players
@@ -520,7 +512,6 @@ void disconnect_client(Player* p, bool kicking)
                   send_int(dest, get_utf8_length(winner->name));
                   send_wstring(dest, winner->name);
                }
-               command_mutex.unlock();
             }
          }
       }
@@ -533,10 +524,7 @@ void disconnect_client(Player* p, bool kicking)
 void kick_hacker(int reason, Player* p) // Retire from all games and disconnect him using existing function
 {
    wcout << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
-   command_mutex.unlock();
-   command_mutex.lock();
    send_command("#disconnect#", p);
-   command_mutex.unlock();
    disconnect_client(p, true);
 }
 
@@ -544,11 +532,8 @@ void handle_command(string command, Player* p)
 {
    if (command == "#disconnect#")
    {
-      command_mutex.unlock();
       disconnect_client(p, false);
-      command_mutex.lock();
       send_command("#disconnect#", p);
-      command_mutex.unlock();
       // Send player list to all players, so they are notified about the diconnected user
       // Send as much strings as connected players, with a count first
       list<Player*>::iterator i, j;
@@ -557,7 +542,6 @@ void handle_command(string command, Player* p)
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
          dest = *i;
-         command_mutex.lock();
          send_command("player_list", dest);
          send_int(dest, plist.size()); // Number of players
          for (j = plist.begin() ; j != plist.end() ; ++j)
@@ -565,23 +549,18 @@ void handle_command(string command, Player* p)
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
          }
-         command_mutex.unlock();
-         command_mutex.lock();
          send_command("game_list", dest);
          send_int(dest, glist.size());
          if (glist.size() != 0)
          {
             for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
             {
-               send_int(dest, get_utf8_length((*i2)->name));
-               send_wstring(dest, (*i2)->name);
-               send_int(p, (*i2)->n_players); // Capacity
-               send_int(p, (*i2)->plist.size()); // Number of players inside
-               send_int(p, ((*i2)->started ? 1 : 0)); // 1 if Started is true, 0 otherwise
-               send_int(p, ((*i2)->ended ? 1 : 0)); // 1 if Ended is true, 0 otherwise
+               wstringstream game_info;
+               game_info << (*i2)->name << L'~' << (*i2)->n_players << L'~' << (*i2)->plist.size() << L'~' << ((*i2)->started ? 1 : 0) << L'~' << ((*i2)->ended ? 1 : 0);
+               send_int(dest, get_utf8_length(game_info.str()));
+               send_wstring(dest, game_info.str());
             }
          }
-         command_mutex.unlock();
       }
 	}
    else if (command == "get_players")
@@ -604,12 +583,10 @@ void handle_command(string command, Player* p)
       {
          for (i = glist.begin() ; i != glist.end() ; ++i)
          {
-            send_int(p, get_utf8_length((*i)->name));
-            send_wstring(p, (*i)->name);
-            send_int(p, (*i)->n_players); // Capacity
-            send_int(p, (*i)->plist.size()); // Number of players inside
-            send_int(p, ((*i)->started ? 1 : 0)); // 1 if Started is true, 0 otherwise
-            send_int(p, ((*i)->ended ? 1 : 0)); // 1 if Ended is true, 0 otherwise
+            wstringstream game_info;
+            game_info << (*i)->name << L'~' << (*i)->n_players << L'~' << (*i)->plist.size() << L'~' << ((*i)->started ? 1 : 0) << L'~' << ((*i)->ended ? 1 : 0);
+            send_int(p, get_utf8_length(game_info.str()));
+            send_wstring(p, game_info.str());
          }
       }
 	}
@@ -644,12 +621,10 @@ void handle_command(string command, Player* p)
          {
             for (i = glist.begin() ; i != glist.end() ; ++i)
             {
-               send_int(dest, get_utf8_length((*i)->name));
-               send_wstring(dest, (*i)->name);
-               send_int(p, (*i)->n_players); // Capacity
-               send_int(p, (*i)->plist.size()); // Number of players inside
-               send_int(p, ((*i)->started ? 1 : 0)); // 1 if Started is true, 0 otherwise
-               send_int(p, ((*i)->ended ? 1 : 0)); // 1 if Ended is true, 0 otherwise
+               wstringstream game_info;
+               game_info << (*i)->name << L'~' << (*i)->n_players << L'~' << (*i)->plist.size() << L'~' << ((*i)->started ? 1 : 0) << L'~' << ((*i)->ended ? 1 : 0);
+               send_int(dest, get_utf8_length(game_info.str()));
+               send_wstring(dest, game_info.str());
             }
          }	
       }
@@ -741,12 +716,10 @@ void handle_command(string command, Player* p)
             {
                for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
                {
-                  send_int(dest, get_utf8_length((*i2)->name));
-                  send_wstring(dest, (*i2)->name);
-                  send_int(p, (*i2)->n_players); // Capacity
-                  send_int(p, (*i2)->plist.size()); // Number of players inside
-                  send_int(p, ((*i2)->started ? 1 : 0)); // 1 if Started is true, 0 otherwise
-                  send_int(p, ((*i2)->ended ? 1 : 0)); // 1 if Ended is true, 0 otherwise
+                  wstringstream game_info;
+                  game_info << (*i2)->name << L'~' << (*i2)->n_players << L'~' << (*i2)->plist.size() << L'~' << ((*i2)->started ? 1 : 0) << L'~' << ((*i2)->ended ? 1 : 0);
+                  send_int(dest, get_utf8_length(game_info.str()));
+                  send_wstring(dest, game_info.str());
                }
             }
          }
@@ -1816,7 +1789,6 @@ void handle_client(void* arg)
       for (i = plist.begin() ; i != plist.end() ; ++i)
       {
          dest = *i;
-         command_mutex.lock();
          send_command("player_list", dest);
          send_int(dest, plist.size()); // Number of players
          for (j = plist.begin() ; j != plist.end() ; ++j)
@@ -1824,13 +1796,11 @@ void handle_client(void* arg)
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
          }
-         command_mutex.unlock();
       }
       int long_command;
       while (online)
       {
          long_command = receive_int(p, &bytes_received);
-         command_mutex.lock();
          string command = receive_string(p, long_command, &bytes_received);
          if (bytes_received > 0)
          {
@@ -1838,11 +1808,9 @@ void handle_client(void* arg)
             w_command.assign(command.begin(), command.end());
             wcout << L"Received command from player " << p->name << ": " << w_command << endl;
             handle_command(command, p);
-            command_mutex.unlock();
          }
          else
          {
-            command_mutex.unlock();
             online = false;
             disconnect_client(p, false);
             delete p;
