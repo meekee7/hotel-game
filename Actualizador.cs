@@ -16,9 +16,10 @@ namespace Juego_Hotel
         
         public Actualizador()
         {
-            this.version_actual = "2.0.1";
+            this.version_actual = "2.1.0";
             this.error = false;
         }
+
         public Boolean comprobar_actualizacion()
         {
             System.Net.HttpWebRequest peticion = (HttpWebRequest)WebRequest.Create("http://betovserver.no-ip.org/version_hotel.txt");

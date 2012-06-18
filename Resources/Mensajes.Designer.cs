@@ -916,6 +916,24 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La partida {0} ya está empezada.
+        /// </summary>
+        internal static string mensajePartidaYaEmpezada {
+            get {
+                return ResourceManager.GetString("mensajePartidaYaEmpezada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida {0} ya está terminada.
+        /// </summary>
+        internal static string mensajePartidaYaTerminada {
+            get {
+                return ResourceManager.GetString("mensajePartidaYaTerminada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Quieres jugar online?.
         /// </summary>
         internal static string mensajePreguntarSiOnline {
@@ -1149,6 +1167,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeUnirseAChat {
             get {
                 return ResourceManager.GetString("mensajeUnirseAChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La versión del juego que estás ejecutando no es compatible con el servidor al que has conectado. Necesitas la versión {0}.
+        /// </summary>
+        internal static string mensajeVersionNoActualizada {
+            get {
+                return ResourceManager.GetString("mensajeVersionNoActualizada", resourceCulture);
             }
         }
         

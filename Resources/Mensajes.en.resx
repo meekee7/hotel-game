@@ -618,4 +618,13 @@ No permission is needed to build them. Continue?</value>
   <data name="textoPartidaSingular" xml:space="preserve">
     <value>{0} (1 player of {1}). Status: {2}</value>
   </data>
+  <data name="mensajeVersionNoActualizada" xml:space="preserve">
+    <value>The game version you are running is not compatible with the server you are connecting to. You need version {0}</value>
+  </data>
+  <data name="mensajePartidaYaEmpezada" xml:space="preserve">
+    <value>Game {0} is already started</value>
+  </data>
+  <data name="mensajePartidaYaTerminada" xml:space="preserve">
+    <value>Game {0} is already finished</value>
+  </data>
 </root>

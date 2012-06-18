@@ -618,4 +618,13 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="textoPartidaSingular" xml:space="preserve">
     <value>{0} (1 jugador de {1}). Estado: {2}</value>
   </data>
+  <data name="mensajeVersionNoActualizada" xml:space="preserve">
+    <value>La versión del juego que estás ejecutando no es compatible con el servidor al que has conectado. Necesitas la versión {0}</value>
+  </data>
+  <data name="mensajePartidaYaEmpezada" xml:space="preserve">
+    <value>La partida {0} ya está empezada</value>
+  </data>
+  <data name="mensajePartidaYaTerminada" xml:space="preserve">
+    <value>La partida {0} ya está terminada</value>
+  </data>
 </root>

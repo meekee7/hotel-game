@@ -250,11 +250,25 @@ namespace Juego_Hotel
                 }
                 IPAddress dir = Dns.GetHostAddresses(servidor).First(IPAddress => IPAddress.AddressFamily == AddressFamily.InterNetwork);
                 IPEndPoint Ep = new IPEndPoint(dir, puerto);
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                socket.Connect(Ep);
+                this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                this.socket.Connect(Ep);
+                this.bDesconectar.Enabled = true;
+                // Comprobar versión correcta:
+                Actualizador actualizador = new Actualizador();
+                this.enviar_int(this.socket, Encoding.UTF8.GetBytes(actualizador.version_actual).Length);
+                this.enviar_string(this.socket, actualizador.version_actual);
+                int bytes_recibidos = 0;
+                int long_res_version = this.recibir_int(this.socket, ref bytes_recibidos);
+                String res_version = this.recibir_string(this.socket, long_res_version, ref bytes_recibidos);
+                actualizador = null;
+                if (res_version != "ok")
+                {
+                    MessageBox.Show(String.Format(Mensajes.mensajeVersionNoActualizada, res_version));
+                    this.Pulsar_Desconectar();
+                    return;
+                }
                 this.bLogin.Enabled = true;
                 this.bConectar.Enabled = false;
-                this.bDesconectar.Enabled = true;
                 this.txtServidor.Enabled = false;
                 this.txtPuerto.Enabled = false;
                 this.txtLogin.Focus();
@@ -710,6 +724,25 @@ namespace Juego_Hotel
             }
         }
 
+        private void Partida_empezada_o_terminada(Boolean empezada)
+        {
+            int bytes_recibidos = 0;
+            int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
+            String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            if (empezada)
+            {
+                MessageBox.Show(String.Format(Mensajes.mensajePartidaYaEmpezada, nombre));
+                this.Activar_bUnirse();
+                this.Activar_bCrearPartida();
+            }
+            else
+            {
+                MessageBox.Show(String.Format(Mensajes.mensajePartidaYaTerminada, nombre));
+                this.Activar_bUnirse();
+                this.Activar_bCrearPartida();
+            }
+        }
+
         private void No_unirse_a_partida()
         {
             int bytes_recibidos = 0;
@@ -810,6 +843,10 @@ namespace Juego_Hotel
                     this.Unirse_a_partida(true);
                 else if (msg == "cant_join_game_full")
                     this.Unirse_a_partida(false);
+                else if (msg == "cant_join_game_started")
+                    this.Partida_empezada_o_terminada(true);
+                else if (msg == "cant_join_game_ended")
+                    this.Partida_empezada_o_terminada(false);
                 else if (msg == "cant_join_already_joined")
                     this.No_unirse_a_partida();
                 else if (msg == "rolled_dice")
