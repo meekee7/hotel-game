@@ -64,8 +64,18 @@ void Game::set_players_money(config configuration)
 
 bool Game::join(Player* p)
 {
-   if ((int) this->plist.size() < this->n_players)
+   if (((int) this->plist.size() < this->n_players))
    {
+      if (this->started)
+      {
+         wcout << L"Player " << p->name << L" cant join game " << this->name << L" because is already started" << endl;
+         return false;
+      }
+      if (this->ended)
+      {
+         wcout << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
+         return false;
+      }
       this->plist.push_back(p);
       this->active_plist.push_back(p);
       this->chat->join(p);
@@ -74,7 +84,7 @@ bool Game::join(Player* p)
    }
    else
    {
-      wcout << L"Player " << p->name << L" cant join game " << this->name << L" because it's full" << endl;
+      wcout << L"Player " << p->name << L" cant join game " << this->name << L" because is full" << endl;
       return false;
    }
 }

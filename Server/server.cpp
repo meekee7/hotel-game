@@ -20,6 +20,7 @@
 
 using namespace std;
 
+string compatible_version = "2.1.0";
 volatile int closing = 0;
 Portable_socket* socket_server;
 Portable_socket* socket_client;
@@ -677,6 +678,18 @@ void handle_command(string command, Player* p)
                }
             }
          }
+      }
+      else if (game->started)
+      {
+         send_command("cant_join_game_started", p);
+         send_int(p, get_utf8_length(name));
+         send_wstring(p, name);
+      }
+      else if (game->ended)
+      {
+         send_command("cant_join_game_ended", p);
+         send_int(p, get_utf8_length(name));
+         send_wstring(p, name);
       }
       else
       {
@@ -1770,6 +1783,22 @@ void handle_client(void* arg)
 {
    Player* p = (Player*) arg;
    int bytes_received;
+   int len_version = receive_int(p, &bytes_received);
+   string version = receive_string(p, len_version, &bytes_received);
+   if (compatible_version != version)
+   {
+      send_int(p, compatible_version.length());
+      send_string(p, compatible_version);
+      wstring w_version;
+      w_version.assign(version.begin(), version.end());
+      wcout << L"Player rejected because of incompatible versions. It is using version " << w_version << endl;
+      wcout << L"Disconnecting client" << endl;
+   }
+   else
+   {
+      send_int(p, 2);
+      send_string(p, "ok");
+   }
    int len_name = receive_int(p, &bytes_received);
    p->name = receive_wstring(p, len_name, &bytes_received);
    wcout << L"Handling new player. Player name: " << p->name << endl;

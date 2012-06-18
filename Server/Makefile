@@ -41,8 +41,8 @@ tinyxmlerror.o: tinyxmlerror.cpp
 tinyxmlparser.o: tinyxmlparser.cpp
 	$(CC) -c $(FLAGS) -o tinyxmlparser.o tinyxmlparser.cpp
 
-Server.o: Server.cpp
-	$(CC) -c $(FLAGS) -o Server.o Server.cpp
+server.o: server.cpp
+	$(CC) -c $(FLAGS) -o server.o server.cpp
 
-server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o Server.o random.o
-	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o server.o random.o
+	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
