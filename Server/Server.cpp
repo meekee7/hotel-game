@@ -161,7 +161,7 @@ Player* get_player_from_name(wstring name)
 	list<Player*>::iterator i = plist.begin();
 	while (!found && i != plist.end())
 	{
-		if ((*i)->name == name)
+		if (((*i)->name) == wstring(name))
 			found = true;
       else
          ++i;
@@ -178,7 +178,7 @@ Player* get_player_from_game(wstring name, Game* game)
 	list<Player*>::iterator i = game->plist.begin();
 	while (!found && i != game->plist.end())
 	{
-		if ((*i)->name == name)
+		if (((*i)->name) == wstring(name))
 			found = true;
       else
          ++i;
@@ -200,14 +200,14 @@ Hotel* get_hotel_from_name(wstring name_txt, Game* game)
 	list<Hotel*>::iterator i = game->hlist.begin();
 	while (!found && i != game->hlist.end())
 	{
-		if ((*i)->name_txt == name_txt)
+      if (((*i)->name_txt).compare(wstring(name_txt.data())) == 0)
 			found = true;
       else
          ++i;
 	}
 	if (!found)
    {
-      wcout << L"Warning: Hotel name " << name_txt << "not found in hotel list of game " << game->name << endl;
+      wcout << L"Warning: Hotel name " << name_txt << " not found in hotel list of game " << game->name << endl;
       return NULL;
    }
 	else
@@ -253,7 +253,7 @@ Game* get_game_from_name(wstring name)
    list<Game*>::iterator i = glist.begin();
    while (!found && i != glist.end())
    {
-      if ((*i)->name == name)
+      if (((*i)->name) == wstring(name))
          found = true;
       else
          ++i;
@@ -1099,24 +1099,12 @@ void handle_command(string command, Player* p)
       if (player->bought_last_turn) // Hack, retire player
          return kick_hacker(25, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
-      if (hotel == NULL)
-      {
-         wcout << L"Warning, hotel " << hotel_name << L" not found in game " << game->name << endl;
-         wcout << L"Game hlist: " << endl;
-         list<Hotel*>::iterator iter = game->hlist.begin();
-         while (iter != game->hlist.end())
-         {
-            wcout << (*iter)->name;
-            ++iter;
-         }
-         wcout << endl << L"End hotel list" << endl;
-      }
       if (hotel->owner != NULL) // Hack, retire player
          return kick_hacker(26, p);
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
          return kick_hacker(27, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-      if (total_selected < hotel->price) // Hack, retire player
+      if (total_selected < (hotel->price)) // Hack, retire player
          return kick_hacker(28, p);
       hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);

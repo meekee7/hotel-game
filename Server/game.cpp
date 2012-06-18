@@ -23,14 +23,14 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
    this->positions = vector<Position*>(32);
    for (int i = 0 ; i < 32 ; i++)
       this->positions[i] = new Position(i);
-   hlist.push_back(new Hotel(Fujiyama));
-   hlist.push_back(new Hotel(Boomerang));
-   hlist.push_back(new Hotel(Letoile));
-   hlist.push_back(new Hotel(President));
-   hlist.push_back(new Hotel(Royal));
-   hlist.push_back(new Hotel(Waikiki));
-   hlist.push_back(new Hotel(Taj_Mahal));
-   hlist.push_back(new Hotel(Safari));
+   this->hlist.push_back(new Hotel(Fujiyama));
+   this->hlist.push_back(new Hotel(Boomerang));
+   this->hlist.push_back(new Hotel(Letoile));
+   this->hlist.push_back(new Hotel(President));
+   this->hlist.push_back(new Hotel(Royal));
+   this->hlist.push_back(new Hotel(Waikiki));
+   this->hlist.push_back(new Hotel(Taj_Mahal));
+   this->hlist.push_back(new Hotel(Safari));
 }
 
 void Game::set_players_money(config configuration)
