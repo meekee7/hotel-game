@@ -1099,6 +1099,18 @@ void handle_command(string command, Player* p)
       if (player->bought_last_turn) // Hack, retire player
          return kick_hacker(25, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
+      if (hotel == NULL)
+      {
+         wcout << L"Warning, hotel " << hotel_name << L" not found in game " << game->name << endl;
+         wcout << L"Game hlist: " << endl;
+         list<Hotel*>::iterator iter = game->hlist.begin();
+         while (iter != game->hlist.end())
+         {
+            wcout << (*iter)->name;
+            ++iter;
+         }
+         wcout << endl << L"End hotel list" << endl;
+      }
       if (hotel->owner != NULL) // Hack, retire player
          return kick_hacker(26, p);
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
