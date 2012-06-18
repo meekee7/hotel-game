@@ -983,7 +983,7 @@ void handle_command(string command, Player* p)
          return kick_hacker(9, p);
       if (game->current_player != p) // Hack, retire player
          return kick_hacker(10, p); 
-      if ((p->rolled_last_turn) && (game->last_dice_res < 6)) // Hack, retire player
+      if ((p->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
          return kick_hacker(11, p);
       if (p->debt_last_turn > 0) // Hack, retire player
          return kick_hacker(12, p);
@@ -1037,7 +1037,7 @@ void handle_command(string command, Player* p)
          return kick_hacker(16, p);
       if (game->current_player != p) // Hack, retire player
          return kick_hacker(17, p);
-      if ((!p->rolled_last_turn) && (game->last_dice_res < 6)) // Hack, retire player
+      if ((!p->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
          return kick_hacker(18, p);
       if (p->debt_last_turn > 0) // Hack, retire player
          return kick_hacker(19, p);
@@ -1122,7 +1122,7 @@ void handle_command(string command, Player* p)
       hotel->owner = player;
       player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
       // Calculate change
-      if (total_selected > hotel->price)
+      if (total_selected > (hotel->price))
       {
          game->calculate_return(total_selected - hotel->price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
          player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
@@ -1183,19 +1183,19 @@ void handle_command(string command, Player* p)
       if (player->bought_last_turn) // Hack, retire player
          return kick_hacker(32, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
-      if ((hotel->owner == NULL) || (hotel->owner == player) || (hotel->n_built_phases > 0)) // Hack, retire player
+      if ((hotel->owner == NULL) || (hotel->owner == player) || ((hotel->n_built_phases) > 0)) // Hack, retire player
          return kick_hacker(33, p);
       if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
          return kick_hacker(34, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-      if (total_selected < hotel->expropriation_price) // Hack, retire player
+      if (total_selected < (hotel->expropriation_price)) // Hack, retire player
          return kick_hacker(35, p);
       Player* previous_owner = hotel->owner;
       hotel->owner = player;
       previous_owner->Expropriate_hotel(hotel);
       player->Buy_hotel(hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
       // Calculate change
-      if (total_selected > hotel->expropriation_price)
+      if (total_selected > (hotel->expropriation_price))
       {
          game->calculate_return(previous_owner, total_selected - hotel->expropriation_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
          player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
@@ -1393,7 +1393,7 @@ void handle_command(string command, Player* p)
          int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
          player->Pay_phase_or_entrance(n_5000, n_1000, n_500, n_100, n_50);
          // Calculate change
-         if (total_selected > hotel->entrance_price)
+         if (total_selected > (hotel->entrance_price))
          {
             game->calculate_return(total_selected - hotel->entrance_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
             player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
@@ -1574,7 +1574,7 @@ void handle_command(string command, Player* p)
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
       player->paid_last_turn = true;
       // Calculate change
-      if (total_selected > player->debt_last_turn)
+      if (total_selected > (player->debt_last_turn))
       {
          game->calculate_return(player->debt_nights_to_last_turn, total_selected - player->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
          player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
@@ -1654,7 +1654,7 @@ void handle_command(string command, Player* p)
          return kick_hacker(72, p);
       if (p == game->hotel_at_auction->owner) // Hack, retire player, he is trying to bid in his own auction
          return kick_hacker(73, p);
-      if ((amount <= 0) || (amount < game->best_bid) || amount > p->total_money || ((amount % 50) != 0)) // Hack, retire player, invalid values
+      if ((amount <= 0) || (amount < (game->best_bid)) || amount > (p->total_money) || ((amount % 50) != 0)) // Hack, retire player, invalid values
          return kick_hacker(74, p);
       game->best_bid = amount;
       game->best_bidder = p;
@@ -1724,14 +1724,14 @@ void handle_command(string command, Player* p)
       if (p != game->best_bidder) // Hack, retire player, the player who pays must be the best bidder
          return kick_hacker(82, p);
       int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-      if ((total_selected <= 0) || (total_selected < game->best_bid)) // Hack, retire player, the command is only sent if player has something to pay and >= than best bid
+      if ((total_selected <= 0) || (total_selected < (game->best_bid))) // Hack, retire player, the command is only sent if player has something to pay and >= than best bid
          return kick_hacker(83, p);
       Player* previous_owner = game->hotel_at_auction->owner;
       previous_owner->Expropriate_hotel(game->hotel_at_auction);
       p->Buy_hotel(game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
       game->hotel_at_auction->owner = p;
       // Calculate change
-      if (total_selected > game->best_bid)
+      if (total_selected > (game->best_bid))
       {
          game->calculate_return(previous_owner, total_selected - game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
          p->Return_change(n_5000, n_1000, n_500, n_100, n_50);
