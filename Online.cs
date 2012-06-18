@@ -362,20 +362,18 @@ namespace Juego_Hotel
                     this.Borrar_lista_partidas();
                     return;
                 }
-                int i, long_info_juego, capacidad, n_jugadores_dentro;
+                int i, long_nombre, capacidad, n_jugadores_dentro;
                 Boolean empezada, finalizada;
                 String nombre, estado;
                 String[] lista_partidas = new String[cuantas];
-                String[] campos_juego;
                 for (i = 0; i < cuantas; i++)
                 {
-                    long_info_juego = this.recibir_int(this.socket, ref bytes_recibidos);
-                    campos_juego = this.recibir_string(this.socket, long_info_juego, ref bytes_recibidos).Split('~');
-                    nombre = campos_juego[0];
-                    capacidad = Convert.ToInt16(campos_juego[1]);
-                    n_jugadores_dentro = Convert.ToInt16(campos_juego[2]);
-                    empezada = Convert.ToBoolean(Convert.ToInt16(campos_juego[3]));
-                    finalizada = Convert.ToBoolean(Convert.ToInt16(campos_juego[4]));
+                    long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+                    nombre = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                    capacidad = this.recibir_int(this.socket, ref bytes_recibidos);
+                    n_jugadores_dentro = this.recibir_int(this.socket, ref bytes_recibidos);
+                    empezada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    finalizada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
                     if (!empezada && !finalizada)
                     {
                         if (n_jugadores_dentro == capacidad)

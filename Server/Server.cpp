@@ -555,10 +555,12 @@ void handle_command(string command, Player* p)
          {
             for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
             {
-               wstringstream game_info;
-               game_info << (*i2)->name << L'~' << (*i2)->n_players << L'~' << (*i2)->plist.size() << L'~' << ((*i2)->started ? 1 : 0) << L'~' << ((*i2)->ended ? 1 : 0);
-               send_int(dest, get_utf8_length(game_info.str()));
-               send_wstring(dest, game_info.str());
+               send_int(dest, get_utf8_length((*i2)->name));
+               send_wstring(dest, (*i2)->name);
+               send_int(dest, (*i2)->n_players);
+               send_int(dest, (*i2)->plist.size());
+               send_int(dest, ((*i2)->started ? 1 : 0));
+               send_int(dest, ((*i2)->ended ? 1 : 0));
             }
          }
       }
@@ -583,10 +585,12 @@ void handle_command(string command, Player* p)
       {
          for (i = glist.begin() ; i != glist.end() ; ++i)
          {
-            wstringstream game_info;
-            game_info << (*i)->name << L'~' << (*i)->n_players << L'~' << (*i)->plist.size() << L'~' << ((*i)->started ? 1 : 0) << L'~' << ((*i)->ended ? 1 : 0);
-            send_int(p, get_utf8_length(game_info.str()));
-            send_wstring(p, game_info.str());
+            send_int(p, get_utf8_length((*i)->name));
+            send_wstring(p, (*i)->name);
+            send_int(p, (*i)->n_players);
+            send_int(p, (*i)->plist.size());
+            send_int(p, ((*i)->started ? 1 : 0));
+            send_int(p, ((*i)->ended ? 1 : 0));
          }
       }
 	}
@@ -621,10 +625,12 @@ void handle_command(string command, Player* p)
          {
             for (i = glist.begin() ; i != glist.end() ; ++i)
             {
-               wstringstream game_info;
-               game_info << (*i)->name << L'~' << (*i)->n_players << L'~' << (*i)->plist.size() << L'~' << ((*i)->started ? 1 : 0) << L'~' << ((*i)->ended ? 1 : 0);
-               send_int(dest, get_utf8_length(game_info.str()));
-               send_wstring(dest, game_info.str());
+               send_int(dest, get_utf8_length((*i)->name));
+               send_wstring(dest, (*i)->name);
+               send_int(dest, (*i)->n_players);
+               send_int(dest, (*i)->plist.size());
+               send_int(dest, ((*i)->started ? 1 : 0));
+               send_int(dest, ((*i)->ended ? 1 : 0));
             }
          }	
       }
@@ -716,10 +722,12 @@ void handle_command(string command, Player* p)
             {
                for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
                {
-                  wstringstream game_info;
-                  game_info << (*i2)->name << L'~' << (*i2)->n_players << L'~' << (*i2)->plist.size() << L'~' << ((*i2)->started ? 1 : 0) << L'~' << ((*i2)->ended ? 1 : 0);
-                  send_int(dest, get_utf8_length(game_info.str()));
-                  send_wstring(dest, game_info.str());
+                  send_int(dest, get_utf8_length((*i2)->name));
+                  send_wstring(dest, (*i2)->name);
+                  send_int(dest, (*i2)->n_players);
+                  send_int(dest, (*i2)->plist.size());
+                  send_int(dest, ((*i2)->started ? 1 : 0));
+                  send_int(dest, ((*i2)->ended ? 1 : 0));
                }
             }
          }
@@ -1852,7 +1860,7 @@ void run_server(int port)
       SetConsoleOutputCP(CP_UTF8);
       //wcout.imbue(locale("Spanish_Spain.1256"));
    #else
-      setlocale(LC_ALL, "es_ES.utf8");
+      setlocale(LC_ALL, "es_ES.UTF8");
    #endif
    wcout << L"Starting Hotel server on port " << port << "..." << endl;
    socket_server = new Portable_socket();
