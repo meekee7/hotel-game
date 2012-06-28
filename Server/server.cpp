@@ -1444,7 +1444,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(59, p);
+         //return kick_hacker(59, p);
+         return;
       Player* player = get_player_from_game(p->name, game);
       if (player == NULL) // Hack, retire player
          return kick_hacker(60, p);
