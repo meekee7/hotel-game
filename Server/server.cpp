@@ -217,6 +217,8 @@ Hotel* get_hotel_from_name(wstring name_txt, Game* game)
 
 bool delete_chat_if_empty(Chat* chat)
 {
+   if (chat == NULL)
+      return true;
    mutex_lists.lock();
    if (chat->players.empty())
    {
@@ -296,7 +298,11 @@ Chat* get_chat_from_id(int id)
    if (!found)
    {
       // If not found it should be a game chat
-      return get_game_from_id(id)->chat;
+      Game* game = get_game_from_id(id);
+      if (game != NULL)
+         return game->chat;
+      else
+         return NULL;
    }
    else
       return (*i);
@@ -394,7 +400,10 @@ int receive_int (Player* p, int* bytes_received)
 
 int send_string (Player* p, string data)
 {
-   return p->socket->psend(data.c_str(), data.length(), 0);
+   if (p->socket != NULL)
+      return p->socket->psend(data.c_str(), data.length(), 0);
+   else
+      return -1;
 }
 
 int send_wstring (Player* p, wstring data)
@@ -402,13 +411,19 @@ int send_wstring (Player* p, wstring data)
    string data_utf8 = utf16_to_utf8(data);
    const char* c_data = data_utf8.c_str();
    int c_length = strlen(c_data);
-   return p->socket->psend(c_data, c_length, 0);
+   if (p->socket != NULL)
+      return p->socket->psend(c_data, c_length, 0);
+   else
+      return -1;
 }
 
 int send_int (Player* p, int data)
 {
    data = htonl(data);
-   return p->socket->psend(&data, sizeof(data), 0);
+   if (p->socket != NULL)
+      return p->socket->psend(&data, sizeof(data), 0);
+   else
+      return -1;
 }
 
 void send_command(string command, Player* p)
