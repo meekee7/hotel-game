@@ -537,9 +537,25 @@ void disconnect_client(Player* p, bool kicking)
    mutex_disconnects.unlock();
 }
 
+// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
+const std::string currentDateTime() {
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    // Visit http://www.cplusplus.com/reference/clibrary/ctime/strftime/
+    // for more information about date/time format
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+    return buf;
+}
+
 void kick_hacker(int reason, Player* p) // Retire from all games and disconnect him using existing function
 {
    wcout << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
+   wofstream kick_log("kick_log.log");
+   kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << utf8_to_utf16(currentDateTime()) << endl;
+   kick_log.close();
    send_command("#disconnect#", p);
    disconnect_client(p, true);
 }
