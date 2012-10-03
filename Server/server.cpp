@@ -85,10 +85,70 @@ void empty_plist()
 	}
 }
 
+int get_utf8_length(wstring data)
+{
+   int res;
+   #ifdef _WIN32
+      res = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
+   #else
+      res = wcstombs(NULL, data.c_str(), 0);
+   #endif
+   return res;
+}
+
+wstring utf8_to_utf16 (string data)
+{
+   if (data.empty())
+      return L"";
+   wstring res;
+   #ifdef _WIN32
+      res.resize(MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0));
+      MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), &res[0], res.length());
+   #else
+      res.resize(mbstowcs(NULL, data.c_str(), 0)+1);
+      mbstowcs((wchar_t*)&res.data()[0], data.c_str(), res.size());
+   #endif
+   return res;
+}
+
+string utf16_to_utf8 (wstring data)
+{
+   if (data.empty())
+      return "";
+   #ifdef _WIN32
+      int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
+   #else
+      //setlocale(LC_ALL, "es_ES.utf8");
+      int size_utf8 = wcstombs(NULL, data.data(), 0);
+   #endif
+   string data_utf8;
+   data_utf8.resize(size_utf8);
+   #ifdef _WIN32
+      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
+   #else
+      //setlocale(LC_ALL, "es_ES.utf8");
+      wcstombs(&data_utf8[0], data.data(), size_utf8);
+   #endif
+   return data_utf8;
+}
+
+// Get current date/time, format is YYYY-MM-DD HH:mm:ss ->
+const std::wstring currentDateTime()
+{
+   time_t     now = time(0);
+   struct tm  tstruct;
+   char       buf[80];
+   tstruct = *localtime(&now);
+   // Visit http://www.cplusplus.com/reference/clibrary/ctime/strftime/
+   // for more information about date/time format
+   strftime(buf, sizeof(buf), "%Y-%m-%d %X -> ", &tstruct);
+   return utf8_to_utf16(buf);
+}
+
 void close_server (int signum)
 {
    closing = 1;
-   wcout << endl << L"Closing server" << endl;
+   wcout << currentDateTime() << endl << L"Closing server" << endl;
    unhook_signals();
    delete socket_server;
 }
@@ -116,13 +176,13 @@ bool add_player_to_player_list (Player* p)
 	}
 	if (found)
 	{
-		wcout << L"Player already connected" << endl;
+		wcout << currentDateTime() << L"Player already connected" << endl;
       mutex_lists.unlock();
 		return false;
 	}
 	else
 	{
-		wcout << L"Player accepted" << endl;
+		wcout << currentDateTime() << L"Player accepted" << endl;
 		plist.push_back(p);
       mutex_lists.unlock();
 		return true;
@@ -143,13 +203,13 @@ bool delete_player_from_player_list(Player* p)
 	}
 	if (!found)
    {
-		wcout << L"Player not found in player list" << endl;
+		wcout << currentDateTime() << L"Player not found in player list" << endl;
       mutex_lists.unlock();
       return false;
    }
 	else
 	{
-		wcout << L"Player deleted from player list" << endl;
+		wcout << currentDateTime() << L"Player deleted from player list" << endl;
 		plist.erase(i);
       mutex_lists.unlock();
       return true;
@@ -208,7 +268,7 @@ Hotel* get_hotel_from_name(wstring name_txt, Game* game)
 	}
 	if (!found)
    {
-      wcout << L"Warning: Hotel name " << name_txt << " not found in hotel list of game " << game->name << endl;
+      wcout << currentDateTime() << L"Warning: Hotel name " << name_txt << " not found in hotel list of game " << game->name << endl;
       return NULL;
    }
 	else
@@ -222,7 +282,7 @@ bool delete_chat_if_empty(Chat* chat)
    mutex_lists.lock();
    if (chat->players.empty())
    {
-      wcout << L"Chat " << chat->id << L" deleted because it's empty" << endl;
+      wcout << currentDateTime() << L"Chat " << chat->id << L" deleted because it's empty" << endl;
       chat_list.remove(chat);
       delete chat;
       mutex_lists.unlock();
@@ -237,7 +297,7 @@ bool delete_game_if_empty(Game* game)
    mutex_lists.lock();
    if (game->plist.empty())
    {
-      wcout << L"Game " << game->name << L" deleted because it's empty" << endl;
+      wcout << currentDateTime() << L"Game " << game->name << L" deleted because it's empty" << endl;
       glist.remove(game);
       delete game;
       mutex_lists.unlock();
@@ -306,53 +366,6 @@ Chat* get_chat_from_id(int id)
    }
    else
       return (*i);
-}
-
-int get_utf8_length(wstring data)
-{
-   int res;
-   #ifdef _WIN32
-      res = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
-   #else
-      res = wcstombs(NULL, data.c_str(), 0);
-   #endif
-   return res;
-}
-
-wstring utf8_to_utf16 (string data)
-{
-   if (data.empty())
-      return L"";
-   wstring res;
-   #ifdef _WIN32
-      res.resize(MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0));
-      MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), &res[0], res.length());
-   #else
-      res.resize(mbstowcs(NULL, data.c_str(), 0)+1);
-      mbstowcs((wchar_t*)&res.data()[0], data.c_str(), res.size());
-   #endif
-   return res;
-}
-
-string utf16_to_utf8 (wstring data)
-{
-   if (data.empty())
-      return "";
-   #ifdef _WIN32
-      int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
-   #else
-      //setlocale(LC_ALL, "es_ES.utf8");
-      int size_utf8 = wcstombs(NULL, data.data(), 0);
-   #endif
-   string data_utf8;
-   data_utf8.resize(size_utf8);
-   #ifdef _WIN32
-      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
-   #else
-      //setlocale(LC_ALL, "es_ES.utf8");
-      wcstombs(&data_utf8[0], data.data(), size_utf8);
-   #endif
-   return data_utf8;
 }
 
 string receive_string (Player* p, int length, int* bytes_received)
@@ -430,7 +443,7 @@ void send_command(string command, Player* p)
 {
    wstring w_command;
    w_command.assign(command.begin(), command.end());
-	wcout << L"Sending command to player " << p->name << L": " << w_command << endl;
+	wcout << currentDateTime() << L"Sending command to player " << p->name << L": " << w_command << endl;
    send_int(p, command.length());
    send_string(p, command);
 }
@@ -537,24 +550,12 @@ void disconnect_client(Player* p, bool kicking)
    mutex_disconnects.unlock();
 }
 
-// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-const std::string currentDateTime() {
-    time_t     now = time(0);
-    struct tm  tstruct;
-    char       buf[80];
-    tstruct = *localtime(&now);
-    // Visit http://www.cplusplus.com/reference/clibrary/ctime/strftime/
-    // for more information about date/time format
-    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-
-    return buf;
-}
-
 void kick_hacker(int reason, Player* p) // Retire from all games and disconnect him using existing function
 {
-   wcout << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
-   wofstream kick_log("kick_log.log");
-   kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << utf8_to_utf16(currentDateTime()) << endl;
+   wcout << currentDateTime() << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
+   wofstream kick_log;
+   kick_log.open("kick_log.log", wofstream::app);
+   kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << currentDateTime() << endl;
    kick_log.close();
    send_command("#disconnect#", p);
    disconnect_client(p, true);
@@ -1875,7 +1876,7 @@ void handle_client(void* arg)
          {
             wstring w_command;
             w_command.assign(command.begin(), command.end());
-            wcout << L"Received command from player " << p->name << ": " << w_command << endl;
+            wcout << currentDateTime() << L"Received command from player " << p->name << ": " << w_command << endl;
             handle_command(command, p);
          }
          else
@@ -1883,7 +1884,7 @@ void handle_client(void* arg)
             online = false;
             disconnect_client(p, false);
             delete p;
-            wcout << L"Client disconnected" << endl;
+            wcout << currentDateTime() << L"Client disconnected" << endl;
          }
       }
    }
@@ -1923,7 +1924,7 @@ void run_server(int port)
    #else
       setlocale(LC_ALL, "es_ES.UTF8");
    #endif
-   wcout << L"Starting Hotel server on port " << port << "..." << endl;
+   wcout << currentDateTime() << L"Starting Hotel server on port " << port << "..." << endl;
    socket_server = new Portable_socket();
    sockaddr_in server_info;
    sockaddr_in client_info;
@@ -1935,7 +1936,7 @@ void run_server(int port)
    int bind_retries = 0;
    while (socket_server->pbind((sockaddr*) &server_info,sizeof(server_info)) < 0)
    {
-	   wcout << L"bind error: " << socket_server->get_last_error() << endl;
+	   wcout << currentDateTime() << L"bind error: " << socket_server->get_last_error() << endl;
       if (bind_retries == 5)
       {
 	      delete socket_server;
@@ -1949,16 +1950,16 @@ void run_server(int port)
          #else
             sleep(5000);
          #endif
-         wcout << L"bind retries: " << bind_retries << endl;
+         wcout << currentDateTime() << L"bind retries: " << bind_retries << endl;
       }
    }
    if (socket_server->plisten(MAXCONN) < 0)
    {
-	   wcout << L"listen error: " << socket_server->get_last_error() << endl;
+	   wcout << currentDateTime() << L"listen error: " << socket_server->get_last_error() << endl;
 	   delete socket_server;
 	   return;
    }
-   wcout << L"Listening for connections" << endl;
+   wcout << currentDateTime() << L"Listening for connections" << endl;
 
    hook_signals();
    Player* p;
@@ -1975,7 +1976,7 @@ void run_server(int port)
    TiXmlDocument config_xml("Config.xml");
    if (!(config_xml.LoadFile()))
    {
-      wcout << L"Error loading Config.xml" << endl;
+      wcout << currentDateTime() << L"Error loading Config.xml" << endl;
       return;
    }
    // Load Config.xml to have configuration loaded for future checks
@@ -1985,22 +1986,22 @@ void run_server(int port)
       addrlen = sizeof(client_info);
       socket_client = socket_server->paccept((sockaddr*) &client_info, &addrlen);
       if (socket_client != NULL)
-         wcout << L"Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
+         wcout << currentDateTime() << L"Client connection from " << inet_ntoa(client_info.sin_addr) << ":" << ntohs(client_info.sin_port) << endl;
       else
       {
          if (closing == 0)
-            wcout << L"accept error: " << socket_server->get_last_error() << endl;
+            wcout << currentDateTime() << L"accept error: " << socket_server->get_last_error() << endl;
          else
          {
             // The server is closing
             empty_global_chat_list();
-            wcout << L"Global Chat cleaned" << endl;
+            wcout << currentDateTime() << L"Global Chat cleaned" << endl;
             empty_chat_list();
-            wcout << L"Chat list cleaned" << endl;
+            wcout << currentDateTime() << L"Chat list cleaned" << endl;
             empty_glist();
-            wcout << L"Game list cleaned" << endl;
+            wcout << currentDateTime() << L"Game list cleaned" << endl;
             empty_plist();
-            wcout << L"Player list cleaned" << endl;
+            wcout << currentDateTime() << L"Player list cleaned" << endl;
             return;
          }
       }
