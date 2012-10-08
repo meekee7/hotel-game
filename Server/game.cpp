@@ -1,5 +1,6 @@
 #include "game.h"
 #include "position.h"
+#include "aux_functions.h"
 #include <iostream>
 
 Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random)
@@ -68,23 +69,23 @@ bool Game::join(Player* p)
    {
       if (this->started)
       {
-         wcout << L"Player " << p->name << L" cant join game " << this->name << L" because is already started" << endl;
+         wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already started" << endl;
          return false;
       }
       if (this->ended)
       {
-         wcout << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
+         wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
          return false;
       }
       this->plist.push_back(p);
       this->active_plist.push_back(p);
       this->chat->join(p);
-      wcout << L"Player " << p->name << L" joined game " << this->name << endl;
+      wcout << currentDateTime() << L"Player " << p->name << L" joined game " << this->name << endl;
       return true;
    }
    else
    {
-      wcout << L"Player " << p->name << L" cant join game " << this->name << L" because is full" << endl;
+      wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is full" << endl;
       return false;
    }
 }
@@ -110,7 +111,7 @@ bool Game::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		wcout << L"Player " << p->name << L" not found in game " << this->name << " (WARNING: Possible hack)" << endl;
+		wcout << currentDateTime() << L"Player " << p->name << L" not found in game " << this->name << " (WARNING: Possible hack)" << endl;
    else
    {
       if (this->is_active(p))
@@ -119,7 +120,7 @@ bool Game::leave(Player* p)
       this->plist.erase(i);
       if ((this->plist.size()) > 0 && (this->creator == p))
          this->creator = this->plist.front(); // New creator
-		wcout << L"Player "<< p->name << L" left game " << this->name << endl;
+		wcout << currentDateTime() << L"Player "<< p->name << L" left game " << this->name << endl;
    }
    return found;
 }
@@ -133,13 +134,13 @@ void Game::start()
    this->current_player = (*i);
    this->starting_player = res;
    this->started = true;
-   wcout << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")" << endl;
+   wcout << currentDateTime() << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")" << endl;
 }
 
 int Game::roll_dice()
 {
    this->last_dice_res = this->random->RollDice(6, 1);
-   wcout << "Dice result: " << this->last_dice_res << endl;
+   wcout << currentDateTime() << "Dice result: " << this->last_dice_res << endl;
    return this->last_dice_res;
 }
 
@@ -159,7 +160,7 @@ TBuild_dice_res Game::roll_construction_dice()
       case 6: this->last_construction_dice_res = Deny;
               break;
    }
-   wcout << L"Construction dice result: ";
+   wcout << currentDateTime() << L"Construction dice result: ";
    switch (this->last_construction_dice_res)
    {
       case 0: wcout << L"Allow" << endl;
@@ -241,7 +242,7 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
       this->current_player = *i;
    }
    this->turn_count++;
-   wcout << L"Turn passed, next player: " << this->current_player->name << endl;
+   wcout << currentDateTime() << L"Turn passed, next player: " << this->current_player->name << endl;
    return this->current_player;
 }
 
@@ -317,7 +318,7 @@ int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Ch
       if ((pos != (*i)->entrances.end()) && (!player->paid_last_turn)) // Player is in an entrance of this hotel, (it can't be in any other entrance). Enters only if player hasn't already paid this turn
       {
          dice_res = this->random->RollDice(6, 1);
-         wcout << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;
+         wcout << currentDateTime() << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;
          amount = (*i)->prices_matrix[(*i)->n_built_phases-1][dice_res-1];
       }
    }

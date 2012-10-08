@@ -1,4 +1,5 @@
 #include "chat.h"
+#include "aux_functions.h"
 
 Chat::Chat(Player* creator, bool normal_chat, dlib::mutex* mutex_ids, int* id_count)
 {
@@ -13,7 +14,7 @@ Chat::Chat(Player* creator, bool normal_chat, dlib::mutex* mutex_ids, int* id_co
 bool Chat::join(Player* p)
 {
    this->players.push_back(p);
-   wcout << L"Player "<< p->name << L" joined chat " << this->id << endl;
+   wcout << currentDateTime() << L"Player "<< p->name << L" joined chat " << this->id << endl;
 	return true;
 }
 
@@ -38,11 +39,11 @@ bool Chat::leave(Player* p)
          ++i;
 	}
 	if (!found)
-		wcout << L"Player " << p->name << L" not found in chat " << this->id << " (WARNING: Possible hack)" << endl;
+		wcout << currentDateTime() << L"Player " << p->name << L" not found in chat " << this->id << " (WARNING: Possible hack)" << endl;
    else
    {
       this->players.erase(i);
-		wcout << L"Player "<< p->name << L" left chat " << this->id << endl;
+		wcout << currentDateTime() << L"Player "<< p->name << L" left chat " << this->id << endl;
    }
    return found;
 }

@@ -9,6 +9,7 @@
 #include "player.h"
 #include "game.h"
 #include "chat.h"
+#include "aux_functions.h"
 #include "tinyxml.h"
 #include "hotel.h"
 #include "types.h"
@@ -83,66 +84,6 @@ void empty_plist()
       Player* p = *i;
       delete p;
 	}
-}
-
-int get_utf8_length(wstring data)
-{
-   int res;
-   #ifdef _WIN32
-      res = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
-   #else
-      res = wcstombs(NULL, data.c_str(), 0);
-   #endif
-   return res;
-}
-
-wstring utf8_to_utf16 (string data)
-{
-   if (data.empty())
-      return L"";
-   wstring res;
-   #ifdef _WIN32
-      res.resize(MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), NULL, 0));
-      MultiByteToWideChar(CP_UTF8, 0, data.data(), data.length(), &res[0], res.length());
-   #else
-      res.resize(mbstowcs(NULL, data.c_str(), 0)+1);
-      mbstowcs((wchar_t*)&res.data()[0], data.c_str(), res.size());
-   #endif
-   return res;
-}
-
-string utf16_to_utf8 (wstring data)
-{
-   if (data.empty())
-      return "";
-   #ifdef _WIN32
-      int size_utf8 = WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), NULL, 0, NULL, NULL);
-   #else
-      //setlocale(LC_ALL, "es_ES.utf8");
-      int size_utf8 = wcstombs(NULL, data.data(), 0);
-   #endif
-   string data_utf8;
-   data_utf8.resize(size_utf8);
-   #ifdef _WIN32
-      WideCharToMultiByte(CP_UTF8, 0, data.data(), data.length(), &data_utf8[0], data_utf8.length(), NULL, NULL);
-   #else
-      //setlocale(LC_ALL, "es_ES.utf8");
-      wcstombs(&data_utf8[0], data.data(), size_utf8);
-   #endif
-   return data_utf8;
-}
-
-// Get current date/time, format is YYYY-MM-DD HH:mm:ss ->
-const std::wstring currentDateTime()
-{
-   time_t     now = time(0);
-   struct tm  tstruct;
-   char       buf[80];
-   tstruct = *localtime(&now);
-   // Visit http://www.cplusplus.com/reference/clibrary/ctime/strftime/
-   // for more information about date/time format
-   strftime(buf, sizeof(buf), "%Y-%m-%d %X -> ", &tstruct);
-   return utf8_to_utf16(buf);
 }
 
 void close_server (int signum)
@@ -637,7 +578,7 @@ void handle_command(string command, Player* p)
       if (name.empty()) // Hack, kick player
          return kick_hacker(1, p);
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
-      wcout << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
+      wcout << currentDateTime() << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
       send_command("joined_game", p);
       send_int(p, get_utf8_length(name));
@@ -795,7 +736,7 @@ void handle_command(string command, Player* p)
       (*i) = p->name;
       Chat* new_chat = new Chat(p, true, &mutex_ids, &id_count);
       chat_list.push_back(new_chat);
-      wcout << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
+      wcout << currentDateTime() << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
       // Send commands to selected players to ask them to join the chat
       Player* dest;
       for (i = player_list.begin() ; i != player_list.end() ; ++i)
@@ -1824,8 +1765,8 @@ void handle_client(void* arg)
       send_string(p, compatible_version);
       wstring w_version;
       w_version.assign(version.begin(), version.end());
-      wcout << L"Player rejected because of incompatible versions. It is using version " << w_version << endl;
-      wcout << L"Disconnecting client" << endl;
+      wcout << currentDateTime() << L"Player rejected because of incompatible versions. It is using version " << w_version << endl;
+      wcout << currentDateTime() << L"Disconnecting client" << endl;
    }
    else
    {
@@ -1834,19 +1775,19 @@ void handle_client(void* arg)
    }
    int len_name = receive_int(p, &bytes_received);
    p->name = receive_wstring(p, len_name, &bytes_received);
-   wcout << L"Handling new player. Player name: " << p->name << endl;
+   wcout << currentDateTime() << L"Handling new player. Player name: " << p->name << endl;
    if (p->name.length() > 20)
    {
-      wcout << L"Player " << p->name << L" rejected because the name is too long (WARNING: possible hacked client)" << endl;
+      wcout << currentDateTime() << L"Player " << p->name << L" rejected because the name is too long (WARNING: possible hacked client)" << endl;
       p->socket->psend("login no", 8, 0);
 	   delete p;
-      wcout << L"Disconnecting client" << endl;
+      wcout << currentDateTime() << L"Disconnecting client" << endl;
    }
    else if (add_player_to_player_list(p) == false)
    {
       p->socket->psend("login ko", 8, 0);
 	   delete p;
-      wcout << L"Disconnecting client" << endl;
+      wcout << currentDateTime() << L"Disconnecting client" << endl;
    }
    else
    {
