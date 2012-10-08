@@ -52,7 +52,11 @@ const wstring currentDateTime()
    time_t     now = time(0);
    struct tm  tstruct;
    char       buf[80];
-   tstruct = *localtime(&now);
+   #ifdef _WIN32
+      localtime_s(&tstruct, &now);
+   #else
+      tstruct = *localtime(&now);
+   #endif
    // Visit http://www.cplusplus.com/reference/clibrary/ctime/strftime/
    // for more information about date/time format
    strftime(buf, sizeof(buf), "%Y-%m-%d %X -> ", &tstruct);
