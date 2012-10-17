@@ -680,8 +680,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       game->eliminate_player(p, NULL);
-      if (!game->leave(p)) // Possible hack
-         return kick_hacker(2, p);
+      //if (!game->leave(p)) // Possible hack
+         //return kick_hacker(2, p);
       list<Player*>::iterator i, j;
       Player* dest;
       for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
