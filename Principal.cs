@@ -416,7 +416,6 @@ namespace Juego_Hotel
                     this.bDado.Enabled = true;
                 else
                     this.bDado.Enabled = false;
-                this.bTurno.Enabled = false;
                 this.bComprar.Enabled = false;
                 this.bConstruir.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
@@ -625,8 +624,6 @@ namespace Juego_Hotel
                     MessageBox.Show(Mensajes.mensajeSacadoUnSeis);
                     this.bDado.Enabled = true;
                 }
-                else
-                    this.bDado.Enabled = false;
                 this.bTurno.Enabled = true;
                 this.dado_tirado = true;
             }
@@ -634,6 +631,7 @@ namespace Juego_Hotel
 
         private void bDado_Click(object sender, EventArgs e)
         {
+            this.bDado.Enabled = false;
             if (this.online)
                 this.frm_online.enviar_comando("roll_dice", this.game_id.ToString());
             else
@@ -726,6 +724,7 @@ namespace Juego_Hotel
 
         private void bTurno_Click(object sender, EventArgs e)
         {
+            this.bTurno.Enabled = false;
             if (this.online)
                 this.frm_online.enviar_comando("turn_pass", this.game_id.ToString());
             else
@@ -1336,38 +1335,38 @@ namespace Juego_Hotel
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)
         {
+            this.bPedirNochesJ1.Enabled = false;
             if (this.online)
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(0);
-            this.bPedirNochesJ1.Enabled = false;
         }
 
         private void bPedirNochesJ2_Click(object sender, EventArgs e)
         {
+            this.bPedirNochesJ2.Enabled = false;
             if (this.online)
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(1);
-            this.bPedirNochesJ2.Enabled = false;
         }
 
         private void bPedirNochesJ3_Click(object sender, EventArgs e)
         {
+            this.bPedirNochesJ3.Enabled = false;
             if (this.online)
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(2);
-            this.bPedirNochesJ3.Enabled = false;
         }
 
         private void bPedirNochesJ4_Click(object sender, EventArgs e)
         {
+            this.bPedirNochesJ4.Enabled = false;
             if (this.online)
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
             else
                 this.Pedir_Noches(3);
-            this.bPedirNochesJ4.Enabled = false;
         }
 
         public void Marcar_Jugador_Eliminado(int n_jugador)

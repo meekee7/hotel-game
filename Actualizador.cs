@@ -16,7 +16,7 @@ namespace Juego_Hotel
         
         public Actualizador()
         {
-            this.version_actual = "2.1.2";
+            this.version_actual = "2.1.3";
             this.error = false;
         }
 
