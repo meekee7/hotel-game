@@ -1007,7 +1007,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(16, p);
+         return;
+         //return kick_hacker(16, p);
       if (game->current_player != p) // Hack, retire player
          return kick_hacker(17, p);
       if ((!p->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
@@ -1536,7 +1537,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(64, p);
+         return;
+         //return kick_hacker(64, p);
       Player* player = get_player_from_game(p->name, game);
       if (player == NULL) // Hack, retire player
          return kick_hacker(65, p);
