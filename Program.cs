@@ -17,7 +17,6 @@ namespace Juego_Hotel
 
         static void Main ()
         {
-            Application.Run(new ReporteBug());
             XmlDocument configuracion = new XmlDocument();
             configuracion.Load("Config.xml");
             XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];

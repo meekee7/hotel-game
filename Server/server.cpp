@@ -21,7 +21,7 @@
 
 using namespace std;
 
-string compatible_version = "2.1.2";
+string compatible_version = "2.1.3";
 volatile int closing = 0;
 Portable_socket* socket_server;
 Portable_socket* socket_client;

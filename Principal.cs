@@ -1808,5 +1808,11 @@ namespace Juego_Hotel
                 }
             }
         }
+
+        private void bReportarBug_Click(object sender, EventArgs e)
+        {
+            ReporteBug reportar_bug = new ReporteBug();
+            reportar_bug.ShowDialog();
+        }
     }
 }

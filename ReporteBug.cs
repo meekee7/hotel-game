@@ -20,10 +20,10 @@ namespace Juego_Hotel
 
         private void bEnviar_Click(object sender, EventArgs e)
         {
-            Stream response = WebRequest.Create("http://betovserver.no-ip.org/hotel_bug_report.php?texto=" + this.TextoBug.Text.ToString()).GetResponse().GetResponseStream();
+            String direccion = "http://betovserver.no-ip.org/hotel_bug_report.php?lang=" + System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() + "&text=" + this.TextoBug.Text.ToString();
+            Stream response = WebRequest.Create(direccion).GetResponse().GetResponseStream();
             StreamReader reader = new StreamReader(response);
-            reader.ReadToEnd();
-            MessageBox.Show("OK!");
+            MessageBox.Show(reader.ReadToEnd());
             this.Close();
         }
     }

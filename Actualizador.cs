@@ -16,7 +16,8 @@ namespace Juego_Hotel
         
         public Actualizador()
         {
-            this.version_actual = "2.1.3";
+            Version assembly_version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            this.version_actual = assembly_version.Major.ToString() + '.' + assembly_version.Minor + '.' + assembly_version.Build;
             this.error = false;
         }
 
