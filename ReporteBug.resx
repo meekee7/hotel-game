@@ -112,114 +112,111 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;TextoBug.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="bEnviar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>522, 364</value>
-  </data>
-  <data name="&gt;&gt;TextoBug.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="bEnviar.Text" xml:space="preserve">
-    <value>Enviar</value>
-  </data>
-  <data name="&gt;&gt;bEnviar.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="bEnviar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ReporteBug</value>
-  </data>
-  <data name="&gt;&gt;bEnviar.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;TextoBug.Name" xml:space="preserve">
-    <value>TextoBug</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="TextoBug.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TextoBug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 73</value>
+    <value>12, 120</value>
   </data>
-  <data name="bEnviar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>609, 399</value>
-  </data>
-  <data name="labelTitulo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 23</value>
-  </data>
-  <data name="labelTitulo.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;bEnviar.Name" xml:space="preserve">
-    <value>bEnviar</value>
-  </data>
-  <data name="&gt;&gt;labelTitulo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="bEnviar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="&gt;&gt;labelTitulo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="labelTitulo.Text" xml:space="preserve">
-    <value>Escriba todos los datos posibles para poder analizar el problema. Qué estaba haciendo (al pulsar qué botón, por ejemplo). Si el juego detectó que hacía trampas y no es así, describa las acciones previas hasta que se produjo el problema.</value>
-  </data>
-  <data name="&gt;&gt;labelTitulo.Name" xml:space="preserve">
-    <value>labelTitulo</value>
-  </data>
-  <data name="&gt;&gt;bEnviar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelTitulo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>585, 37</value>
-  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="TextoBug.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="TextoBug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>585, 285</value>
+    <value>585, 233</value>
   </data>
   <data name="TextoBug.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;TextoBug.Name" xml:space="preserve">
+    <value>TextoBug</value>
+  </data>
+  <data name="&gt;&gt;TextoBug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextoBug.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TextoBug.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="bEnviar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="bEnviar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>522, 364</value>
+  </data>
+  <data name="bEnviar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bEnviar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="bEnviar.Text" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="&gt;&gt;bEnviar.Name" xml:space="preserve">
+    <value>bEnviar</value>
+  </data>
+  <data name="&gt;&gt;bEnviar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bEnviar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bEnviar.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="labelTitulo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="labelTitulo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 23</value>
+  </data>
+  <data name="labelTitulo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>585, 94</value>
+  </data>
+  <data name="labelTitulo.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="labelTitulo.Text" xml:space="preserve">
+    <value>Escriba todos los datos posibles para poder analizar el problema. Qué estaba haciendo (al pulsar qué botón, por ejemplo). Si el juego detectó que hacía trampas y no es así, describa las acciones previas hasta que se produjo el problema. ¡Por favor incluye un email para que pueda contestarte! Estoy al tanto de los problemas en el modo online con la detección de hacks al pasar el turno, está relacionado con eventos que ocurren a la vez. Estoy intentando arreglarlo.</value>
+  </data>
+  <data name="&gt;&gt;labelTitulo.Name" xml:space="preserve">
+    <value>labelTitulo</value>
+  </data>
+  <data name="&gt;&gt;labelTitulo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelTitulo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelTitulo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>609, 399</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Reportar fallo</value>
   </data>
-  <data name="&gt;&gt;TextoBug.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ReporteBug</value>
   </data>
-  <data name="&gt;&gt;labelTitulo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
-  </metadata>
 </root>
