@@ -52,7 +52,7 @@ namespace Juego_Hotel
             this.imgTarjeta.Image = this.hotel_seleccionado.img_tarjeta;
             this.n_amplis.Text = Mensajes.mensajeNumAmpliaciones + "\r\n"+Mensajes.mensajeConstruidas + this.hotel_seleccionado.n_fases_construidas.ToString();
             this.sueloComprado.Text = Mensajes.mensajeSueloComprado + ((this.hotel_seleccionado.suelo_comprado) ? Mensajes.mensajeSi : Mensajes.mensajeNo);
-            String color = this.hotel_seleccionado.dueño.Nombre_color();
+            String color = (this.hotel_seleccionado.dueño != null ? this.hotel_seleccionado.dueño.Nombre_color() : "-");
             this.dueño.Text = Mensajes.mensajeDuenio + ((this.hotel_seleccionado.dueño == null) ? "-" : String.Format(Mensajes.mensajeJugador, Char.ToUpper(color[0]) + color.Substring(1)));
             this.n_entradas.Text = Mensajes.mensajeNumEntradas + this.hotel_seleccionado.n_entradas.ToString();
         }
