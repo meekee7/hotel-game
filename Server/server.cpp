@@ -953,7 +953,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(9, p);
+         //return kick_hacker(9, p);
+         return;
       if (game->current_player != p) // Hack, retire player
          return kick_hacker(10, p); 
       if ((p->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
@@ -984,7 +985,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(13, p);
+         //return kick_hacker(13, p);
+         return;
       if (game->current_player != p) // Hack, retire player
          return kick_hacker(14, p);
       if (p->position->type != build) // Hack, retire player
@@ -1036,7 +1038,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(20, p);
+         //return kick_hacker(20, p);
+         return;
       if ((game->current_player != p) || (game->can_charge_bank(p) == false) || (p->charged_bank_last_turn)) // Hack, retire player
          return kick_hacker(21, p);
       else
@@ -1077,7 +1080,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(22, p);
+         //return kick_hacker(22, p);
+         return;
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return kick_hacker(23, p);
@@ -1148,7 +1152,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(29, p);
+         //return kick_hacker(29, p);
+         return;
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return kick_hacker(30, p);
@@ -1234,7 +1239,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(36, p);
+         //return kick_hacker(36, p);
+         return;
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return kick_hacker(37, p);
@@ -1340,7 +1346,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(49, p);
+         //return kick_hacker(49, p);
+         return;
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return kick_hacker(50, p);
@@ -1488,7 +1495,8 @@ void handle_command(string command, Player* p)
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-         return kick_hacker(62, p);
+         //return kick_hacker(62, p);
+         return;
       if (p->asked_nights_last_turn) // Hack, retire player
          return kick_hacker(63, p);
       p->asked_nights_last_turn = true;
