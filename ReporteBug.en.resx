@@ -119,13 +119,13 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TextoBug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 85</value>
+    <value>12, 111</value>
   </data>
   <data name="TextoBug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>632, 233</value>
+    <value>585, 253</value>
   </data>
   <data name="bEnviar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>569, 324</value>
+    <value>522, 370</value>
   </data>
   <data name="bEnviar.Text" xml:space="preserve">
     <value>Send</value>
@@ -134,13 +134,16 @@
     <value>12, 14</value>
   </data>
   <data name="labelTitulo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>632, 68</value>
+    <value>585, 63</value>
   </data>
   <data name="labelTitulo.Text" xml:space="preserve">
-    <value>Write down as much details as you can to help analyze the problem. What where you doing (when clicking which button, for example). If the game detected that you were cheating and it's not true. Describe the previous actions until the problem occurred. Please include an email address so I can answer you! I'm aware of online hack detection problem, and it's related to events that happen at the same time. I'm trying to fix them</value>
+    <value>Write down as much details as you can to help analyze the problem. What where you doing (when clicking which button, for example). If the game detected that you were cheating and it's not true. Describe the previous actions until the problem occurred. Please include an email address so I can answer you! I'm aware of online hack detection problem, and it's related to events that happen at the same time. I'm trying to fix them.</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>656, 353</value>
+  <data name="labelEmail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 13</value>
+  </data>
+  <data name="labelEmail.Text" xml:space="preserve">
+    <value>Your email (So I can answer you): </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Report a bug</value>

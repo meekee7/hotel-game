@@ -32,6 +32,8 @@
             this.TextoBug = new System.Windows.Forms.TextBox();
             this.bEnviar = new System.Windows.Forms.Button();
             this.labelTitulo = new System.Windows.Forms.Label();
+            this.labelEmail = new System.Windows.Forms.Label();
+            this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // TextoBug
@@ -53,10 +55,22 @@
             resources.ApplyResources(this.labelTitulo, "labelTitulo");
             this.labelTitulo.Name = "labelTitulo";
             // 
+            // labelEmail
+            // 
+            resources.ApplyResources(this.labelEmail, "labelEmail");
+            this.labelEmail.Name = "labelEmail";
+            // 
+            // textBoxEmail
+            // 
+            resources.ApplyResources(this.textBoxEmail, "textBoxEmail");
+            this.textBoxEmail.Name = "textBoxEmail";
+            // 
             // ReporteBug
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBoxEmail);
+            this.Controls.Add(this.labelEmail);
             this.Controls.Add(this.labelTitulo);
             this.Controls.Add(this.bEnviar);
             this.Controls.Add(this.TextoBug);
@@ -71,5 +85,7 @@
         private System.Windows.Forms.TextBox TextoBug;
         private System.Windows.Forms.Button bEnviar;
         private System.Windows.Forms.Label labelTitulo;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
     }
 }
