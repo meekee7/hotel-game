@@ -1322,6 +1322,7 @@ namespace Juego_Hotel
 
         public void Pedir_Noches_Online(Jugador jugador, int cantidad)
         {
+            this.bTurno.Enabled = false;
             PedirPago frm_pago = new PedirPago(cantidad, ref this.juego, this.juego.jugador_actual, this, jugador);
             frm_pago.ShowDialog();
             if (!frm_pago.cancelado)
@@ -1331,6 +1332,7 @@ namespace Juego_Hotel
                 this.frm_online.enviar_comando("pay_nights", this.game_id.ToString(), n_5000.ToString(), n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
             }
             frm_pago.Close();
+            this.bTurno.Enabled = true;
         }
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)
