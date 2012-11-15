@@ -226,6 +226,10 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
       debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is somehow asynchronous
       this->current_player->debt_last_turn = 0;
       this->current_player->debt_nights_to_last_turn = NULL;
+      // Allow again all players to ask for nights
+      list<Player*>::iterator i;
+      for (i = this->active_plist.begin() ; i != this->active_plist.end() ; ++i)
+         (*i)->asked_nights_last_turn = false;
       debt_mutex->unlock();
    }
 
