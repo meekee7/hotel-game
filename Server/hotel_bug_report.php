@@ -9,6 +9,20 @@
    else
       $lang = "es";
 
+   if (!empty($_GET['email']))
+      $email_orig = $_GET['email'];
+   else
+      $email_orig = "Email no especificado";
+
+   if (($email_orig == "") || ($email_orig == "Email no especificado"))
+   {
+      if ($lang == "es")
+         echo "'email' no especificado";
+      else
+         echo "'email' not specified";
+      return;
+   }
+
    if ($texto == "")
    {
       if ($lang == "es")
@@ -21,6 +35,7 @@
       $email = "ifilgud@gmail.com";
       $from = "From: Bugs_hotel@hotel-game.com";
       $subject = "Reporte de bug de Hotel";
+      $texto .= "\n\nEmail: " . $email_orig;
       if (mail($email, $subject, $texto, $from))
       {
          if ($lang == "es")
