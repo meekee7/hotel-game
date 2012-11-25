@@ -1339,7 +1339,10 @@ namespace Juego_Hotel
         {
             this.bPedirNochesJ1.Enabled = false;
             if (this.online)
+            {
+                this.bTurno.Enabled = false;
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            }
             else
                 this.Pedir_Noches(0);
         }
@@ -1348,7 +1351,10 @@ namespace Juego_Hotel
         {
             this.bPedirNochesJ2.Enabled = false;
             if (this.online)
+            {
+                this.bTurno.Enabled = false;
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            }
             else
                 this.Pedir_Noches(1);
         }
@@ -1357,7 +1363,10 @@ namespace Juego_Hotel
         {
             this.bPedirNochesJ3.Enabled = false;
             if (this.online)
+            {
+                this.bTurno.Enabled = false;
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            }
             else
                 this.Pedir_Noches(2);
         }
@@ -1366,7 +1375,10 @@ namespace Juego_Hotel
         {
             this.bPedirNochesJ4.Enabled = false;
             if (this.online)
+            {
+                this.bTurno.Enabled = false;
                 this.frm_online.enviar_comando("ask_nights", this.game_id.ToString());
+            }
             else
                 this.Pedir_Noches(3);
         }
@@ -1815,6 +1827,11 @@ namespace Juego_Hotel
         {
             ReporteBug reportar_bug = new ReporteBug();
             reportar_bug.ShowDialog();
+        }
+
+        public void PermitirPasarTurno()
+        {
+            this.bTurno.Enabled = true;
         }
     }
 }

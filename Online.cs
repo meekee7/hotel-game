@@ -883,6 +883,8 @@ namespace Juego_Hotel
                     this.Subasta_vendida();
                 else if (msg == "auction_ended")
                     this.Subasta_terminada();
+                else if (msg == "allow_pass_turn")
+                    this.PermitirPasarTurno();
                 else
                 {
                     if (msg == "")
@@ -1344,7 +1346,7 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            MessageBox.Show("");
+            //MessageBox.Show("");
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_terminada_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
         }
 
@@ -1360,6 +1362,16 @@ namespace Juego_Hotel
                 this.txtServidor.Enabled = true;
                 this.txtPuerto.Enabled = true;
             }
+        }
+
+        delegate void PermitirPasarTurno_Callback();
+
+        private void PermitirPasarTurno()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.BeginInvoke(new PermitirPasarTurno_Callback(partida.interfaz.PermitirPasarTurno));
         }
 
         delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
