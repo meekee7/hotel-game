@@ -21,7 +21,7 @@
 
 using namespace std;
 
-string compatible_version = "2.1.4";
+string compatible_version = "2.1.5";
 volatile int closing = 0;
 Portable_socket* socket_server;
 Portable_socket* socket_client;
@@ -1244,8 +1244,9 @@ void handle_command(string command, Player* p)
       Player* player = get_player_from_game(p->name, game);
       if (game->current_player != player) // Hack, retire player
          return kick_hacker(37, p);
-      if ((player->position->type != build) && (player->position->type != free_phase)) // Hack, retire player
-         return kick_hacker(38, p);
+      // You can also buy the ground in any type of position
+      //if ((player->position->type != build) && (player->position->type != free_phase)) // Hack, retire player
+         //return kick_hacker(38, p);
       if (player->built_last_turn) // Hack, retire player
          return kick_hacker(39, p);
       Hotel* hotel = get_hotel_from_name(hotel_name, game);
@@ -1501,6 +1502,7 @@ void handle_command(string command, Player* p)
          return kick_hacker(63, p);
       p->asked_nights_last_turn = true;
       int amount = 0, nights = 0;
+      bool someone_has_to_pay = false;
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
       {
          dest = (*i);
@@ -1510,6 +1512,7 @@ void handle_command(string command, Player* p)
             if (amount > 0) // The player is in a entrance and hasn't paid this turn
             {
                debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
+               someone_has_to_pay = true;
                dest->debt_last_turn = amount;
                dest->debt_nights_to_last_turn = p;
                dest->paid_last_turn = false;
@@ -1522,6 +1525,11 @@ void handle_command(string command, Player* p)
                send_int(dest, nights);
             }
          }
+      }
+      if (!someone_has_to_pay)
+      {
+         send_command("allow_pass_turn", p);
+         send_int(p, id);
       }
    }
    else if (command == "pay_nights")
@@ -1557,6 +1565,8 @@ void handle_command(string command, Player* p)
          return kick_hacker(67, p);
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
       player->paid_last_turn = true;
+      send_command("allow_pass_turn", player->debt_nights_to_last_turn);
+      send_int(player->debt_nights_to_last_turn, id);
       // Calculate change
       if (total_selected > (player->debt_last_turn))
       {
