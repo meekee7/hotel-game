@@ -1526,7 +1526,7 @@ void handle_command(string command, Player* p)
             }
          }
       }
-      if (!someone_has_to_pay)
+      if ((!someone_has_to_pay) && (game->current_player == p))
       {
          send_command("allow_pass_turn", p);
          send_int(p, id);
@@ -1565,7 +1565,8 @@ void handle_command(string command, Player* p)
          return kick_hacker(67, p);
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
       player->paid_last_turn = true;
-      send_command("allow_pass_turn", player->debt_nights_to_last_turn);
+      if (game->current_player == player->debt_nights_to_last_turn)
+         send_command("allow_pass_turn", player->debt_nights_to_last_turn);
       send_int(player->debt_nights_to_last_turn, id);
       // Calculate change
       if (total_selected > (player->debt_last_turn))
