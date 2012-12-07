@@ -742,6 +742,9 @@ void handle_command(string command, Player* p)
       for (i = player_list.begin() ; i != player_list.end() ; ++i)
       {
          dest = get_player_from_name(*i);
+         // The requested player can disconnect while processing this command
+         if (dest == NULL)
+            continue;
          send_command("ask_join_chat", dest);
          send_int(dest, new_chat->id);
          send_int(dest, get_utf8_length(p->name));
