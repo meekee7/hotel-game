@@ -1502,7 +1502,8 @@ void handle_command(string command, Player* p)
          //return kick_hacker(62, p);
          return;
       if (p->asked_nights_last_turn) // Hack, retire player
-         return kick_hacker(63, p);
+         //return kick_hacker(63, p);
+         return;
       p->asked_nights_last_turn = true;
       int amount = 0, nights = 0;
       bool someone_has_to_pay = false;
