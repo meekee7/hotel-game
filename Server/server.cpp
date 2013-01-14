@@ -893,7 +893,7 @@ void handle_command(string command, Player* p)
       Chat* chat = get_chat_from_id(id);
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
-      if (!chat->check_already_joined(p)) // hack, send messages to chats the player hasn't joined: kick player
+      if (!chat->check_already_joined(p)) // hack, send messages to a chat the player hasn't joined: kick player
          return kick_hacker(5, p);
       if ((msg.length() > 1024) || (dlib::trim(msg).length() == 0)) // hack, send messages longer or shorter than limits
          return kick_hacker(6, p);
