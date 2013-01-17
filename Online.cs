@@ -874,7 +874,7 @@ namespace Juego_Hotel
                 else if (msg == "game_ended")
                     this.Juego_terminado();
                 else if (msg == "ask_pay_nights")
-                    this.Pagar_noches();
+                    this.Pedir_noches();
                 else if (msg == "auction_started")
                     this.Subasta_iniciada();
                 else if (msg == "auction_bid_placed")
@@ -883,8 +883,6 @@ namespace Juego_Hotel
                     this.Subasta_vendida();
                 else if (msg == "auction_ended")
                     this.Subasta_terminada();
-                else if (msg == "allow_pass_turn")
-                    this.PermitirPasarTurno();
                 else
                 {
                     if (msg == "")
@@ -1250,7 +1248,7 @@ namespace Juego_Hotel
 
         delegate void Pedir_Noches_Online_Callback(Jugador jugador, int cantidad);
 
-        private void Pagar_noches()
+        private void Pedir_noches()
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
@@ -1362,16 +1360,6 @@ namespace Juego_Hotel
                 this.txtServidor.Enabled = true;
                 this.txtPuerto.Enabled = true;
             }
-        }
-
-        delegate void PermitirPasarTurno_Callback();
-
-        private void PermitirPasarTurno()
-        {
-            int bytes_recibidos = 0;
-            int id = this.recibir_int(this.socket, ref bytes_recibidos);
-            PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.BeginInvoke(new PermitirPasarTurno_Callback(partida.interfaz.PermitirPasarTurno));
         }
 
         delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);

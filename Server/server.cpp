@@ -1501,12 +1501,9 @@ void handle_command(string command, Player* p)
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
          //return kick_hacker(62, p);
          return;
-      if (p->asked_nights_last_turn) // Hack, retire player
-         //return kick_hacker(63, p);
-         return;
-      p->asked_nights_last_turn = true;
+	  if (game->current_player == p) // The client does not allow this
+		  return kick_hacker(62, p);
       int amount = 0, nights = 0;
-      bool someone_has_to_pay = false;
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
       {
          dest = (*i);
@@ -1516,7 +1513,6 @@ void handle_command(string command, Player* p)
             if (amount > 0) // The player is in a entrance and hasn't paid this turn
             {
                debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
-               someone_has_to_pay = true;
                dest->debt_last_turn = amount;
                dest->debt_nights_to_last_turn = p;
                dest->paid_last_turn = false;
@@ -1529,11 +1525,6 @@ void handle_command(string command, Player* p)
                send_int(dest, nights);
             }
          }
-      }
-      if ((!someone_has_to_pay) && (game->current_player == p))
-      {
-         send_command("allow_pass_turn", p);
-         send_int(p, id);
       }
    }
    else if (command == "pay_nights")
@@ -1569,8 +1560,6 @@ void handle_command(string command, Player* p)
          return kick_hacker(67, p);
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
       player->paid_last_turn = true;
-      if (game->current_player == player->debt_nights_to_last_turn)
-         send_command("allow_pass_turn", player->debt_nights_to_last_turn);
       send_int(player->debt_nights_to_last_turn, id);
       // Calculate change
       if (total_selected > (player->debt_last_turn))

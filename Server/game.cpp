@@ -209,8 +209,8 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
    }
    // Allow again all players to ask for nights
    list<Player*>::iterator i;
-   for (i = this->active_plist.begin() ; i != this->active_plist.end() ; ++i)
-      (*i)->asked_nights_last_turn = false;
+   /*for (i = this->active_plist.begin() ; i != this->active_plist.end() ; ++i)
+      (*i)->asked_nights_last_turn = false;*/
    list<Hotel*>::iterator i2;
    // Allow new entrances in all player hotels
    for (i2 = this->current_player->hotels.begin() ; i2 != this->current_player->hotels.end() ; ++i2)
@@ -228,9 +228,6 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
       this->current_player->debt_nights_to_last_turn = NULL;
       debt_mutex->unlock();
    }
-   // Allow again all players to ask for nights
-   for (list<Player*>::iterator i = this->active_plist.begin() ; i != this->active_plist.end() ; ++i)
-      (*i)->asked_nights_last_turn = false;
 
    list<Player*>::iterator i;
    i = find(this->active_plist.begin(), this->active_plist.end(), this->current_player);
@@ -252,29 +249,11 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
 int Game::get_active_players_count()
 {
    return this->active_plist.size();
-   /*int num = 0;
-   list<Player*>::iterator i;
-   for (i = this->plist.begin() ; i != this->plist.end() ; ++i)
-   {
-      if ((*i)->active)
-         num++;
-   }
-   return num;*/
 }
 
 Player* Game::get_winner() // Only called when active players count is 1, so it gets first active player in list
 {
    return this->active_plist.front();
-   /*list<Player*>::iterator i = this->active_plist.begin();
-   bool found = false;
-   while (!found && (i != this->active_plist.end())) // Second part shouldn't happen
-   {
-      if ((*i)->active)
-         found = true;
-      else
-         ++i;
-   }
-   return (*i);*/
 }
 
 bool Game::is_active(Player* player)
