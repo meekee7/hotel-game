@@ -1502,7 +1502,8 @@ void handle_command(string command, Player* p)
          //return kick_hacker(62, p);
          return;
 	  if (game->current_player == p) // The client does not allow this
-		  return kick_hacker(62, p);
+		  return;
+		  //return kick_hacker(62, p);
       int amount = 0, nights = 0;
       for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
       {

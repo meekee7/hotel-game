@@ -258,7 +258,12 @@ namespace Juego_Hotel
             {
                 this.interfaz.frm_subasta_en_curso = new Subastas(ref this.juego, this.interfaz, this.interfaz.online);
                 this.interfaz.frm_subasta_en_curso.ShowDialog();
-                
+
+                if (this.interfaz.frm_subasta_en_curso.DialogResult == DialogResult.Cancel)
+                {
+                    this.interfaz.frm_subasta_en_curso.Close();
+                    return;
+                }
                 // Refrescar valores después de la subasta
                 // Entra si se estaba construyendo, no comprando
                 if ((this.hotel_en_construccion != null) && (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre == this.hotel_en_construccion.nombre))

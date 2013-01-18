@@ -259,6 +259,7 @@ namespace Juego_Hotel
 
         private void bCerrar_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Hide();
         }
 
