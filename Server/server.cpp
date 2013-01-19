@@ -21,7 +21,7 @@
 
 using namespace std;
 
-string compatible_version = "2.1.5";
+string compatible_version = "2.1.6";
 volatile int closing = 0;
 Portable_socket* socket_server;
 Portable_socket* socket_client;
@@ -1561,7 +1561,6 @@ void handle_command(string command, Player* p)
          return kick_hacker(67, p);
       player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
       player->paid_last_turn = true;
-      send_int(player->debt_nights_to_last_turn, id);
       // Calculate change
       if (total_selected > (player->debt_last_turn))
       {

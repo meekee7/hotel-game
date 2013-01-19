@@ -434,6 +434,7 @@ namespace Juego_Hotel
                 }
                 this.juego.jugador_actual.pago_ultimo_turno = false;
                 this.dado_tirado = false;
+                System.Media.SystemSounds.Beep.Play();
             }
         }
 
@@ -1334,9 +1335,9 @@ namespace Juego_Hotel
                 jugador.pago_ultimo_turno = true;
                 int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_500, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
                 this.frm_online.enviar_comando("pay_nights", this.game_id.ToString(), n_5000.ToString(), n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
+                this.bTurno.Enabled = true;
             }
             frm_pago.Close();
-            //this.bTurno.Enabled = true;
         }
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)
