@@ -633,4 +633,7 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeErrorBugReportTextoVacio" xml:space="preserve">
     <value>Please, write something as content!</value>
   </data>
+  <data name="mensajeNombrePartidaYaExiste" xml:space="preserve">
+    <value>A game with that name already exists</value>
+  </data>
 </root>

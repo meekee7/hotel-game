@@ -633,4 +633,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeErrorBugReportTextoVacio" xml:space="preserve">
     <value>Por favor, ¡escribe algo como contenido!</value>
   </data>
+  <data name="mensajeNombrePartidaYaExiste" xml:space="preserve">
+    <value>Ya existe una partida con ese nombre</value>
+  </data>
 </root>

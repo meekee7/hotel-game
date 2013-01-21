@@ -525,7 +525,10 @@ namespace Juego_Hotel
                 chat.BeginInvoke(new desactivar_envio_Callback(chat.desactivar_envio));
                 //chat.desactivar_envio();
             foreach (PartidaOnline partida in this.lista_partidas)
-                partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
+            {
+                if (partida.interfaz != null)
+                    partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
+            }
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
@@ -540,6 +543,20 @@ namespace Juego_Hotel
             return s;
         }
 
+        Boolean PartidaYaExiste(String nombre)
+        {
+            Boolean encontrada = false;
+            foreach (String item in this.listaPartidas.Items)
+            {
+                if (item.Substring(0, item.IndexOf(" (")) == nombre)
+                {
+                    encontrada = true;
+                    break;
+                }
+            }
+            return encontrada;
+        }
+
         private void bCrearPartida_Click(object sender, EventArgs e)
         {
             try
@@ -548,6 +565,11 @@ namespace Juego_Hotel
                 if (nombre == "")
                 {
                     MessageBox.Show(Mensajes.mensajeNombrePartidaEnBlanco, Mensajes.tituloCrearPartida);
+                    return;
+                }
+                else if (this.PartidaYaExiste(nombre))
+                {
+                    MessageBox.Show(Mensajes.mensajeNombrePartidaYaExiste, Mensajes.tituloCrearPartida);
                     return;
                 }
                 else if (nombre.Contains('~'))

@@ -157,65 +157,6 @@ bool delete_player_from_player_list(Player* p)
 	}
 }
 
-/*Player* get_player_from_name(wstring name)
-{
-   bool found = false;
-	list<Player*>::iterator i = plist.begin();
-	while (!found && i != plist.end())
-	{
-		if (((*i)->name) == wstring(name))
-			found = true;
-      else
-         ++i;
-	}
-	if (!found)
-		return NULL;
-	else
-		return (*i);
-}
-
-Player* get_player_from_game(wstring name, Game* game)
-{
-   bool found = false;
-	list<Player*>::iterator i = game->plist.begin();
-	while (!found && i != game->plist.end())
-	{
-		if (((*i)->name) == wstring(name))
-			found = true;
-      else
-         ++i;
-	}
-	if (!found)
-		return NULL;
-	else
-   {
-      if (game->is_active(*i)) // To avoid hack: sending commands when retired
-		   return (*i);
-      else
-         return NULL;
-   }
-}
-
-Hotel* get_hotel_from_name(wstring name_txt, Game* game)
-{
-   bool found = false;
-	list<Hotel*>::iterator i = game->hlist.begin();
-	while (!found && i != game->hlist.end())
-	{
-      if (((*i)->name_txt).compare(wstring(name_txt.data())) == 0)
-			found = true;
-      else
-         ++i;
-	}
-	if (!found)
-   {
-      wcout << currentDateTime() << L"Warning: Hotel name " << name_txt << " not found in hotel list of game " << game->name << endl;
-      return NULL;
-   }
-	else
-		return (*i);
-}*/
-
 bool delete_chat_if_empty(Chat* chat)
 {
    if (chat == NULL)
@@ -250,135 +191,6 @@ bool delete_game_if_empty(Game* game)
       return false;
    }
 }
-
-/*Game* get_game_from_name(wstring name)
-{
-   bool found = false;
-   list<Game*>::iterator i = glist.begin();
-   while (!found && i != glist.end())
-   {
-      if (((*i)->name) == wstring(name))
-         found = true;
-      else
-         ++i;
-   }
-   if (!found)
-      return NULL;
-   else
-      return (*i);
-}
-
-Game* get_game_from_id(int id)
-{
-   bool found = false;
-   list<Game*>::iterator i = glist.begin();
-   while (!found && i != glist.end())
-   {
-      if ((*i)->id == id)
-         found = true;
-      else
-         ++i;
-   }
-   if (!found)
-      return NULL;
-   else
-      return (*i);
-}
-
-Chat* get_chat_from_id(int id)
-{
-   bool found = false;
-	list<Chat*>::iterator i = chat_list.begin();
-	while (!found && i != chat_list.end())
-	{
-		if ((*i)->id == id)
-			found = true;
-      else
-         ++i;
-	}
-   if (!found)
-   {
-      // If not found it should be a game chat
-      Game* game = get_game_from_id(id);
-      if (game != NULL)
-         return game->chat;
-      else
-         return NULL;
-   }
-   else
-      return (*i);
-}
-
-string receive_string (Player* p, int length, int* bytes_received)
-{
-   char* data = new char[length+1];
-   *bytes_received = p->socket->precv(data, length, 0);
-   string s_data;
-   if (*bytes_received > 0)
-   {
-      data[length] = '\0';
-      s_data = string(data);
-   }
-   else
-      s_data = string("");
-   delete data;
-   return s_data;
-}
-
-wstring receive_wstring (Player* p, int length, int* bytes_received)
-{
-   char* data = new char[length+1];
-   *bytes_received = p->socket->precv(data, length, 0);
-   wstring s_data;
-   if (*bytes_received > 0)
-   {
-      data[length] = '\0';
-      s_data = utf8_to_utf16(data);
-   }
-   else
-      s_data = wstring(L"");
-   delete data;
-   return s_data;
-}
-
-int receive_int (Player* p, int* bytes_received)
-{
-   int data;
-   *bytes_received = p->socket->precv(&data, sizeof(data), 0);
-   if (*bytes_received > 0)
-      data = ntohl(data);
-   else
-      data = 0;
-   return data;
-}
-
-int send_string (Player* p, string data)
-{
-   if (p->socket != NULL)
-      return p->socket->psend(data.c_str(), data.length(), 0);
-   else
-      return -1;
-}
-
-int send_wstring (Player* p, wstring data)
-{
-   string data_utf8 = utf16_to_utf8(data);
-   const char* c_data = data_utf8.c_str();
-   int c_length = strlen(c_data);
-   if (p->socket != NULL)
-      return p->socket->psend(c_data, c_length, 0);
-   else
-      return -1;
-}
-
-int send_int (Player* p, int data)
-{
-   data = htonl(data);
-   if (p->socket != NULL)
-      return p->socket->psend(&data, sizeof(data), 0);
-   else
-      return -1;
-}*/
 
 void send_command(string command, Player* p)
 {
@@ -577,6 +389,8 @@ void handle_command(string command, Player* p)
       int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
       if (name.empty()) // Hack, kick player
          return kick_hacker(1, p);
+      if (get_game_from_name(name, &glist) != NULL) // Repeated name
+         return;
       Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
       wcout << currentDateTime() << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
       glist.push_back(new_game);
