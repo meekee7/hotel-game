@@ -157,7 +157,7 @@ bool delete_player_from_player_list(Player* p)
 	}
 }
 
-Player* get_player_from_name(wstring name)
+/*Player* get_player_from_name(wstring name)
 {
    bool found = false;
 	list<Player*>::iterator i = plist.begin();
@@ -214,7 +214,7 @@ Hotel* get_hotel_from_name(wstring name_txt, Game* game)
    }
 	else
 		return (*i);
-}
+}*/
 
 bool delete_chat_if_empty(Chat* chat)
 {
@@ -251,7 +251,7 @@ bool delete_game_if_empty(Game* game)
    }
 }
 
-Game* get_game_from_name(wstring name)
+/*Game* get_game_from_name(wstring name)
 {
    bool found = false;
    list<Game*>::iterator i = glist.begin();
@@ -378,7 +378,7 @@ int send_int (Player* p, int data)
       return p->socket->psend(&data, sizeof(data), 0);
    else
       return -1;
-}
+}*/
 
 void send_command(string command, Player* p)
 {
@@ -401,7 +401,7 @@ void disconnect_client(Player* p, bool kicking)
       if ((*i)->check_already_joined(p))
       {
          (*i)->leave(p);
-         if (delete_chat_if_empty(get_chat_from_id((*i)->id)))
+         if (delete_chat_if_empty(get_chat_from_id((*i)->id, &chat_list, &glist)))
          {
             if (chat_list.size() > 0)
                i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
@@ -614,7 +614,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_name = receive_int(p, &bytes_received);
       wstring name = receive_wstring(p, len_name, &bytes_received);
-      Game* game = get_game_from_name(name);
+      Game* game = get_game_from_name(name, &glist);
       if (game == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (game->check_already_joined(p))
@@ -676,7 +676,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       game->eliminate_player(p, NULL);
@@ -741,7 +741,7 @@ void handle_command(string command, Player* p)
       Player* dest;
       for (i = player_list.begin() ; i != player_list.end() ; ++i)
       {
-         dest = get_player_from_name(*i);
+         dest = get_player_from_name(*i, &plist);
          // The requested player can disconnect while processing this command
          if (dest == NULL)
             continue;
@@ -773,7 +773,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      Chat* chat = get_chat_from_id(id);
+      Chat* chat = get_chat_from_id(id, &chat_list, &glist);
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (chat->check_already_joined(p)) // Don't allow join a chat twice (hack)
@@ -816,7 +816,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      Chat* chat = get_chat_from_id(id);
+      Chat* chat = get_chat_from_id(id, &chat_list, &glist);
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (!chat->leave(p)) // Possible hack
@@ -853,7 +853,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      Chat* chat = get_chat_from_id(id);
+      Chat* chat = get_chat_from_id(id, &chat_list, &glist);
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       list<Player*>::iterator i; 
@@ -890,7 +890,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       int long_msg = receive_int(p, &bytes_received);
       wstring msg = receive_wstring(p, long_msg, &bytes_received);
-      Chat* chat = get_chat_from_id(id);
+      Chat* chat = get_chat_from_id(id, &chat_list, &glist);
       if (chat == NULL) // To avoid commands sent when chat does not exist anymore
          return;
       if (!chat->check_already_joined(p)) // hack, send messages to a chat the player hasn't joined: kick player
@@ -915,7 +915,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_id = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (game->creator != p) // Hack, trying to start a game not created by the player
@@ -952,7 +952,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       list<Player*>::iterator i;
       Player* dest;
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -984,7 +984,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1008,7 +1008,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       list<Player*>::iterator i;
       Player* dest;
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1037,7 +1037,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       list<Player*>::iterator i;
       Player* dest;
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1079,7 +1079,7 @@ void handle_command(string command, Player* p)
       len_int = receive_int(p, &bytes_received);
       int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       // We have selected money by player, change needs to be calculated
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1151,7 +1151,7 @@ void handle_command(string command, Player* p)
       // We have selected money by player, change needs to be calculated
       // Needs checking: hotel has owner and is different than player, hotel can be expropriated (player position is next to the hotel, no phases built),
       // player total money is previous total - hotel expropriation price, previous owner total money is previous total + hotel_expropriation price
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1238,7 +1238,7 @@ void handle_command(string command, Player* p)
          n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       }
       // We have selected money by player, change needs to be calculated
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1346,7 +1346,7 @@ void handle_command(string command, Player* p)
          n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       }
       // We have selected money by player, change needs to be calculated
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1423,9 +1423,9 @@ void handle_command(string command, Player* p)
       {
          int len_name = receive_int(p, &bytes_received);
          wstring receiver_name = receive_wstring(p, len_name, &bytes_received);
-         receiving_player = get_player_from_name(receiver_name);
+         receiving_player = get_player_from_name(receiver_name, &plist);
       }
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1495,7 +1495,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
       list<Player*>::iterator i;
       Player* dest;
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1545,7 +1545,7 @@ void handle_command(string command, Player* p)
       len_int = receive_int(p, &bytes_received);
       n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       // We have selected money by player, change needs to be calculated
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1603,7 +1603,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       int len_name = receive_int(p, &bytes_received);
       wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
@@ -1633,7 +1633,7 @@ void handle_command(string command, Player* p)
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
       len_int = receive_int(p, &bytes_received);
       int amount = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
@@ -1663,7 +1663,7 @@ void handle_command(string command, Player* p)
       int bytes_received;
       int len_int = receive_int(p, &bytes_received);
       int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
@@ -1700,7 +1700,7 @@ void handle_command(string command, Player* p)
       n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
       len_int = receive_int(p, &bytes_received);
       n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-      Game* game = get_game_from_id(id);
+      Game* game = get_game_from_id(id, &glist);
       if (game == NULL) // To avoid commands sent when game does not exist anymore
          return;
       if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
