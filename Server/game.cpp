@@ -207,10 +207,6 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
       this->current_player->debt_nights_to_last_turn = NULL;
       debt_mutex->unlock();
    }
-   // Allow again all players to ask for nights
-   list<Player*>::iterator i;
-   /*for (i = this->active_plist.begin() ; i != this->active_plist.end() ; ++i)
-      (*i)->asked_nights_last_turn = false;*/
    list<Hotel*>::iterator i2;
    // Allow new entrances in all player hotels
    for (i2 = this->current_player->hotels.begin() ; i2 != this->current_player->hotels.end() ; ++i2)
