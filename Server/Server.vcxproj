@@ -56,10 +56,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;C:\Program Files\MySQL\MySQL Connector C++ 1.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;C:\Program Files\MySQL\MySQL Connector C++ 1.1.1\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"</Command>
@@ -79,6 +82,7 @@
       </PrecompiledHeaderOutputFile>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;C:\Program Files\MySQL\MySQL Connector C++ 1.1.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +91,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ForceSymbolReferences>
       </ForceSymbolReferences>
+      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;C:\Program Files\MySQL\MySQL Connector C++ 1.1.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"</Command>
@@ -98,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="chat.cpp" />
+    <ClCompile Include="dbmgr.cpp" />
     <ClCompile Include="dlib\all\source.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hotel.cpp" />
@@ -114,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chat.h" />
+    <ClInclude Include="dbmgr.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="hotel.h" />
     <ClInclude Include="player.h" />
