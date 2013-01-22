@@ -80,8 +80,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <DisableSpecificWarnings>
-      </DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;C:\Program Files\MySQL\MySQL Connector C++ 1.1.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
