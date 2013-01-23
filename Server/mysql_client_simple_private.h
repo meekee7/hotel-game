@@ -12,7 +12,11 @@
 #include <sstream>
 #include <stdexcept> 
 #include <boost/shared_ptr.hpp>
+#ifdef _WIN32
+#include <mysql_driver.h>
+#else
 #include <mysql/mysql.h>
+#endif
 
 using namespace std;
 	namespace myprivate
