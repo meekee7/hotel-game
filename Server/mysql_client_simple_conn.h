@@ -21,6 +21,8 @@
 
 #include "mysql_client_simple_private.h"
 
+using namespace std;
+
 namespace sbs_mysql_simple
 {
 

@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-g -Wall
-LDOPT= -lpthread -lnsl
+LDOPT= -lpthread -lnsl -lmysqlclient
 
 all: server
 
@@ -47,7 +47,7 @@ tinyxmlparser.o: tinyxmlparser.cpp
 server.o: server.cpp
 	$(CC) -c $(FLAGS) -o server.o server.cpp
 	
-dbmgr.o: dbmgr.cpp
+dbmgr.o: dbmgr.cpp dbmgr.h
 	$(CC) -c $(FLAGS) -o dbmgr.o dbmgr.cpp
 
 server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o server.o random.o aux_functions.o dbmgr.o

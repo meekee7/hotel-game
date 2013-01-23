@@ -14,6 +14,7 @@
 #include <boost/shared_ptr.hpp>
 #include <mysql/mysql.h>
 
+using namespace std;
 	namespace myprivate
 	{
 		typedef boost::shared_ptr<MYSQL> ConnPtr;
