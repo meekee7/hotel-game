@@ -809,9 +809,17 @@ void handle_command(string command, Player* p)
       if (p->position->type != build) // Hack, retire player
          return kick_hacker(15, p);
       TBuild_dice_res construction_dice_res = game->roll_construction_dice();
-      send_command("rolled_construction_dice", p);
-      send_int(p, id);
-      send_int(p, (int)construction_dice_res);
+	  Player* dest;
+	  list<Player*>::iterator i;
+	  for (i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
+	  {
+		  dest = (*i);
+		  send_command("rolled_construction_dice", dest);
+		  send_int(dest, id);
+		  send_int(dest, (int)construction_dice_res);
+		  send_int(dest, get_utf8_length(p->name));
+		  send_wstring(dest, p->name);
+	  }
       if (construction_dice_res == Deny)
          p->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
    }
