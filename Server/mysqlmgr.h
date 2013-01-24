@@ -4,7 +4,11 @@
 #ifdef _WIN32
 	#include <mysql_driver.h>
 	#include <mysql_connection.h>
-	#include <cppconn\resultset.h>
+	#include <cppconn/exception.h>
+	#include <cppconn/resultset.h>
+	#include <cppconn/statement.h>
+	#pragma comment(lib, "mysqlcppconn.lib")
+	#pragma comment(lib, "libmysql.lib")
 #else
 	#include "mysql/mysql.h"
 #endif
@@ -29,16 +33,22 @@ public:
 	#else
 		MYSQL* conn;
 	#endif
+	MySQLResult* ExecuteQuery(string query);
+	MySQLConnection(void);
+	~MySQLConnection(void);
 };
 
 class MySQLMgr
 {
+private:
+	MySQLConnection* connection;
 public:
 	#ifdef _WIN32
 		sql::mysql::MySQL_Driver *driver;
 	#endif
-	MySQLConnection* conn;
 	MySQLConnection* Connect (string host, string username, string password, string database);
+	void Disconnect();
+	MySQLResult* ExecuteQuery(string query);
 	MySQLMgr(void);
 	~MySQLMgr(void);
 };

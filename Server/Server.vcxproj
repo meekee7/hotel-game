@@ -89,14 +89,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.1\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"</Command>
@@ -135,7 +136,7 @@
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +145,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ForceSymbolReferences>
       </ForceSymbolReferences>
-      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;C:\Program Files (x86)\MySQL\MySQL Connector C++ 1.1.1\lib\opt;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
