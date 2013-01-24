@@ -124,6 +124,42 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha comprado el hotel {2}..
+        /// </summary>
+        internal static string MAComprarHotel {
+            get {
+                return ResourceManager.GetString("MAComprarHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha tirado el dado y ha sacado un {2}..
+        /// </summary>
+        internal static string MADadoTirado {
+            get {
+                return ResourceManager.GetString("MADadoTirado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha pasado el turno..
+        /// </summary>
+        internal static string MAPasarTurno {
+            get {
+                return ResourceManager.GetString("MAPasarTurno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha tirado el dado de construcción y ha sacado un {2}..
+        /// </summary>
+        internal static string MATirarDadoConstruccion {
+            get {
+                return ResourceManager.GetString("MATirarDadoConstruccion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Quieres comprobar si existe una versión del juego más actualizada?.
         /// </summary>
         internal static string mensajeActualizar {
@@ -1356,6 +1392,51 @@ namespace Juego_Hotel.Resources {
         internal static string textoUsas {
             get {
                 return ResourceManager.GetString("textoUsas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comprar.
+        /// </summary>
+        internal static string TipoCasillaComprar {
+            get {
+                return ResourceManager.GetString("TipoCasillaComprar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Construir.
+        /// </summary>
+        internal static string TipoCasillaConstruir {
+            get {
+                return ResourceManager.GetString("TipoCasillaConstruir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Entrada gratis.
+        /// </summary>
+        internal static string TipoCasillaEntradaGratis {
+            get {
+                return ResourceManager.GetString("TipoCasillaEntradaGratis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fase gratis.
+        /// </summary>
+        internal static string TipoCasillaFaseGratis {
+            get {
+                return ResourceManager.GetString("TipoCasillaFaseGratis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Salida.
+        /// </summary>
+        internal static string TipoCasillaSalida {
+            get {
+                return ResourceManager.GetString("TipoCasillaSalida", resourceCulture);
             }
         }
         

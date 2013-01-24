@@ -1095,16 +1095,25 @@ namespace Juego_Hotel
             partida.interfaz.BeginInvoke(new Tirar_Dado_Callback(partida.interfaz.Tirar_dado), new object[] { jugador });
         }
 
+        delegate void Tirar_Dado_Construccion_Callback(Jugador jugador, Tipos.Resultado_dado_cons resultado);
+
         private void Dado_construccion_tirado()
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             this.ultimo_res_dado_cons = (Tipos.Resultado_dado_cons) this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.juego.sem_dado_cons.Release();
-            Thread.Sleep(200);
-            partida.interfaz.juego.sem_dado_cons.Close();
-            partida.interfaz.juego.sem_dado_cons = new Semaphore(0, 1);
+            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre);
+            if (jugador.nombre_online == partida.interfaz.nombre_online)
+            {
+                partida.interfaz.juego.sem_dado_cons.Release();
+                Thread.Sleep(200);
+                partida.interfaz.juego.sem_dado_cons.Close();
+                partida.interfaz.juego.sem_dado_cons = new Semaphore(0, 1);
+            }
+            partida.interfaz.BeginInvoke(new Tirar_Dado_Construccion_Callback(partida.interfaz.Tirar_Dado_Construccion), new object[] { jugador, ultimo_res_dado_cons });
         }
 
         private void Iniciar_partida()
@@ -1156,6 +1165,8 @@ namespace Juego_Hotel
             partida.interfaz.BeginInvoke(new Actualizar_Dinero_Jugador_Callback(partida.interfaz.Actualizar_Dinero_Jugador), jugador, n_50, n_100, n_500, n_1000, n_5000);
         }
 
+        delegate void Hotel_comprado_Callback(Hotel hotel, Jugador jugador);
+
         private void Hotel_comprado()
         {
             int bytes_recibidos = 0;
@@ -1170,6 +1181,7 @@ namespace Juego_Hotel
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
+            partida.interfaz.BeginInvoke(new Hotel_comprado_Callback(partida.interfaz.Hotel_Comprado), hotel, jugador);
         }
 
         private void Hotel_expropiado()

@@ -39,6 +39,7 @@ namespace Juego_Hotel
         public Subastas frm_subasta_en_curso;
         public Hotel hotel_a_subastar_online;
         XmlDocument configuracion;
+        public Actividad actividad;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online, XmlDocument configuracion)
@@ -78,6 +79,7 @@ namespace Juego_Hotel
             {
                 this.online = true;
                 this.frm_online = frm_online;
+                this.actividad = new Actividad();
                 this.partida_activa = true;
                 XmlDocument fichero_configuracion = new XmlDocument();
                 fichero_configuracion.Load("Config.xml");
@@ -164,10 +166,10 @@ namespace Juego_Hotel
                 this.posAmarillo.Visible = true;
                 this.img_Banco.Visible = true;
                 this.img_ayto.Visible = true;
-                this.posJ1.Text = resources.GetString("posJ1.Text") + "0";
-                this.posJ2.Text = resources.GetString("posJ2.Text") + "0";
-                this.posJ3.Text = resources.GetString("posJ3.Text") + "0";
-                this.posJ4.Text = resources.GetString("posJ4.Text") + "0";
+                this.posJ1.Text = resources.GetString("posJ1.Text") + "0 (" + Mensajes.TipoCasillaSalida + ")";
+                this.posJ2.Text = resources.GetString("posJ2.Text") + "0 (" + Mensajes.TipoCasillaSalida + ")";
+                this.posJ3.Text = resources.GetString("posJ3.Text") + "0 (" + Mensajes.TipoCasillaSalida + ")";
+                this.posJ4.Text = resources.GetString("posJ4.Text") + "0 (" + Mensajes.TipoCasillaSalida + ")";
                 this.bEntradasJ1.Enabled = false;
                 this.bEntradasJ2.Enabled = false;
                 this.bEntradasJ3.Enabled = false;
@@ -435,6 +437,8 @@ namespace Juego_Hotel
                 this.juego.jugador_actual.pago_ultimo_turno = false;
                 this.dado_tirado = false;
                 System.Media.SystemSounds.Beep.Play();
+                if (this.online)
+                    this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.color.ToString());//Actualizando datos de la actividad
             }
         }
 
@@ -524,10 +528,8 @@ namespace Juego_Hotel
         public void Tirar_dado(Jugador jugador)
         {
             if (!this.online)
-                this.juego.ultimo_res_dado = this.juego.dado.tirar();
-            this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado.ToString();
-            if (!this.online)
             {
+                this.juego.ultimo_res_dado = this.juego.dado.tirar();
                 jugador.posicion.ocupada = false; // Desocupamos la casilla
                 if ((jugador.posicion.numero + this.juego.ultimo_res_dado) <= 31) // Damos la vuelta al tablero
                     jugador.posicion = this.juego.casillas[jugador.posicion.numero + this.juego.ultimo_res_dado];
@@ -544,6 +546,9 @@ namespace Juego_Hotel
                 }
                 jugador.posicion.ocupada = true; // Ocupamos la casilla
             }
+            if (this.online)
+                this.actividad.DadoTirado(jugador, this.juego.ultimo_res_dado);//Actualizando datos de la actividad
+            this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado.ToString();
             // Pintamos el coche en su lugar
             Point posicion = Calcular_Posicion(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X, this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
             switch (jugador.color)
@@ -564,13 +569,13 @@ namespace Juego_Hotel
             // Poner casilla actual a cada uno
             switch (this.juego.jug_actual)
             {
-                case 1: this.posJ1.Text = resources.GetString("posJ1.Text") + jugador.posicion.numero.ToString();
+                case 1: this.posJ1.Text = resources.GetString("posJ1.Text") + jugador.posicion.numero.ToString() + " (" + jugador.posicion.ObtenerTipoTxt() + ")";
                     break;
-                case 2: this.posJ2.Text = resources.GetString("posJ2.Text") + jugador.posicion.numero.ToString();
+                case 2: this.posJ2.Text = resources.GetString("posJ2.Text") + jugador.posicion.numero.ToString() + " (" + jugador.posicion.ObtenerTipoTxt() + ")";
                     break;
-                case 3: this.posJ3.Text = resources.GetString("posJ3.Text") + jugador.posicion.numero.ToString();
+                case 3: this.posJ3.Text = resources.GetString("posJ3.Text") + jugador.posicion.numero.ToString() + " (" + jugador.posicion.ObtenerTipoTxt() + ")";
                     break;
-                case 4: this.posJ4.Text = resources.GetString("posJ4.Text") + jugador.posicion.numero.ToString();
+                case 4: this.posJ4.Text = resources.GetString("posJ4.Text") + jugador.posicion.numero.ToString() + " (" + jugador.posicion.ObtenerTipoTxt() + ")";
                     break;
             }
             // Activar botones según el tipo de casilla
@@ -797,10 +802,10 @@ namespace Juego_Hotel
                             }
                         }
                         else
-                            MessageBox.Show("mensajeExpropiacionImposible", resources.GetString("tituloExpropiacionImposible"));
+                            MessageBox.Show(Mensajes.mensajeExpropiacionImposible, Mensajes.tituloExpropiacionImposible);
                     }
                     else
-                        MessageBox.Show(Mensajes.mensajeImposibleComprarHotelTuyo, resources.GetString("tituloImposibleComprarHotelTuyo"));
+                        MessageBox.Show(Mensajes.mensajeImposibleComprarHotelTuyo, Mensajes.tituloImposibleComprarHotelTuyo);
                 }
                 else // Es posible comprar el hotel
                 {
@@ -881,6 +886,16 @@ namespace Juego_Hotel
             this.bComprar.Enabled = false;
             this.bComprarSuelo.Enabled = false;
             this.Actualizar_Dinero_Jugadores();
+        }
+
+        public void Hotel_Comprado(Hotel hotel, Jugador jugador)
+        {
+            this.actividad.ComprarHotel(jugador.nombre_online, jugador.color.ToString(), hotel.nombre_txt); //Actualizando datos de la actividad
+        }
+
+        public void Tirar_Dado_Construccion(Jugador jugador, Tipos.Resultado_dado_cons resultado)
+        {
+            this.actividad.Tirar_Dado_Construccion(jugador, resultado);
         }
 
         public static void Calcular_Devolucion (int cantidad, out int n_5000, out int n_1000, out int n_500, out int n_100, out int n_50)
@@ -1469,7 +1484,10 @@ namespace Juego_Hotel
         private void Principal_Shown(object sender, EventArgs e)
         {
             if (this.online)
+            { 
                 this.bIniciar.PerformClick();
+                this.actividad.Show();
+            }
         }
 
         private void bSalvar_Click(object sender, EventArgs e)

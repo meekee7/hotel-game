@@ -77,6 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actividad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actividad.Designer.cs">
+      <DependentUpon>Actividad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Actualizador.cs" />
     <Compile Include="Casilla.cs" />
     <Compile Include="Chat.cs">
@@ -181,6 +187,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Actividad.resx">
+      <DependentUpon>Actividad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Chat.en.resx">
       <DependentUpon>Chat.cs</DependentUpon>
       <SubType>Designer</SubType>

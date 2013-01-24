@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -285,6 +286,19 @@ namespace Juego_Hotel
                         this.pos_entrada_der.Establecer(345, 189, 317);
                         this.pos_entrada_izq.Establecer(345, 151, 327);
                         break;
+            }
+        }
+
+        public String ObtenerTipoTxt()
+        {
+            switch (this.tipo)
+            {
+                case Tipos.Tcasilla.salida: return Mensajes.TipoCasillaSalida;
+                case Tipos.Tcasilla.comprar: return Mensajes.TipoCasillaComprar;
+                case Tipos.Tcasilla.construir: return Mensajes.TipoCasillaConstruir;
+                case Tipos.Tcasilla.entrada_gratis: return Mensajes.TipoCasillaEntradaGratis;
+                case Tipos.Tcasilla.fase_gratis: return Mensajes.TipoCasillaFaseGratis;
+                default: return String.Empty;
             }
         }
     }

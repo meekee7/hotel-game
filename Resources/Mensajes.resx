@@ -636,4 +636,31 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeNombrePartidaYaExiste" xml:space="preserve">
     <value>Ya existe una partida con ese nombre</value>
   </data>
+  <data name="MADadoTirado" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha tirado el dado y ha sacado un {2}.</value>
+  </data>
+  <data name="MAPasarTurno" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha pasado el turno.</value>
+  </data>
+  <data name="MAComprarHotel" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha comprado el hotel {2}.</value>
+  </data>
+  <data name="MATirarDadoConstruccion" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha tirado el dado de construcción y ha sacado un {2}.</value>
+  </data>
+  <data name="TipoCasillaComprar" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
+  <data name="TipoCasillaConstruir" xml:space="preserve">
+    <value>Construir</value>
+  </data>
+  <data name="TipoCasillaEntradaGratis" xml:space="preserve">
+    <value>Entrada gratis</value>
+  </data>
+  <data name="TipoCasillaFaseGratis" xml:space="preserve">
+    <value>Fase gratis</value>
+  </data>
+  <data name="TipoCasillaSalida" xml:space="preserve">
+    <value>Salida</value>
+  </data>
 </root>

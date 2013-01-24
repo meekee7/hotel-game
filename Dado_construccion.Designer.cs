@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dado_construccion));
             this.cuadro = new System.Windows.Forms.PictureBox();
             this.bCancelar = new System.Windows.Forms.Button();
+            this.Tirardadocons = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.cuadro)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,12 +49,18 @@
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.UseVisualStyleBackColor = true;
             // 
+            // Tirardadocons
+            // 
+            resources.ApplyResources(this.Tirardadocons, "Tirardadocons");
+            this.Tirardadocons.Name = "Tirardadocons";
+            // 
             // Dado_construccion
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancelar;
             this.ControlBox = false;
+            this.Controls.Add(this.Tirardadocons);
             this.Controls.Add(this.bCancelar);
             this.Controls.Add(this.cuadro);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -62,6 +69,7 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Dado_construccion_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.cuadro)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,5 +77,6 @@
 
         private System.Windows.Forms.PictureBox cuadro;
         private System.Windows.Forms.Button bCancelar;
+        private System.Windows.Forms.Label Tirardadocons;
     }
 }

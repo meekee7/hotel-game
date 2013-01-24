@@ -217,6 +217,7 @@
             this.controlJ1.Controls.Add(this.dineroJ1);
             this.controlJ1.Controls.Add(this.bVerHotelesJ1);
             this.controlJ1.Controls.Add(this.posJ1);
+            this.controlJ1.Controls.Add(this.turnoJ1);
             this.controlJ1.Name = "controlJ1";
             this.controlJ1.TabStop = false;
             // 
@@ -291,6 +292,7 @@
             this.controlJ2.Controls.Add(this.dineroJ2);
             this.controlJ2.Controls.Add(this.bVerHotelesJ2);
             this.controlJ2.Controls.Add(this.posJ2);
+            this.controlJ2.Controls.Add(this.turnoJ2);
             this.controlJ2.Name = "controlJ2";
             this.controlJ2.TabStop = false;
             // 
@@ -358,6 +360,7 @@
             this.controlJ3.Controls.Add(this.dineroJ3);
             this.controlJ3.Controls.Add(this.bVerHotelesJ3);
             this.controlJ3.Controls.Add(this.posJ3);
+            this.controlJ3.Controls.Add(this.turnoJ3);
             this.controlJ3.Name = "controlJ3";
             this.controlJ3.TabStop = false;
             // 
@@ -425,6 +428,7 @@
             this.controlJ4.Controls.Add(this.dineroJ4);
             this.controlJ4.Controls.Add(this.bVerHotelesJ4);
             this.controlJ4.Controls.Add(this.posJ4);
+            this.controlJ4.Controls.Add(this.turnoJ4);
             this.controlJ4.Name = "controlJ4";
             this.controlJ4.TabStop = false;
             // 
@@ -526,29 +530,29 @@
             // 
             // posVerde
             // 
-            this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
             resources.ApplyResources(this.posVerde, "posVerde");
+            this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
             this.posVerde.Name = "posVerde";
             this.posVerde.TabStop = false;
             // 
             // posAmarillo
             // 
-            this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
             resources.ApplyResources(this.posAmarillo, "posAmarillo");
+            this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
             this.posAmarillo.Name = "posAmarillo";
             this.posAmarillo.TabStop = false;
             // 
             // posAzul
             // 
-            this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
             resources.ApplyResources(this.posAzul, "posAzul");
+            this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
             this.posAzul.Name = "posAzul";
             this.posAzul.TabStop = false;
             // 
             // posRojo
             // 
-            this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
             resources.ApplyResources(this.posRojo, "posRojo");
+            this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
             this.posRojo.Name = "posRojo";
             this.posRojo.TabStop = false;
             // 
@@ -575,15 +579,15 @@
             // 
             // img_Banco
             // 
-            this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
             resources.ApplyResources(this.img_Banco, "img_Banco");
+            this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.img_Banco.Name = "img_Banco";
             this.img_Banco.TabStop = false;
             // 
             // img_ayto
             // 
-            this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
             resources.ApplyResources(this.img_ayto, "img_ayto");
+            this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.img_ayto.Name = "img_ayto";
             this.img_ayto.TabStop = false;
             // 
@@ -594,10 +598,10 @@
             // 
             // comboBoxIdiomas
             // 
+            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxIdiomas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomas.FormattingEnabled = true;
-            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
             this.comboBoxIdiomas.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxIdiomas_DrawItem);
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);
@@ -633,10 +637,6 @@
             this.Controls.Add(this.bNormas);
             this.Controls.Add(this.bCobrarBanca);
             this.Controls.Add(this.bSalir);
-            this.Controls.Add(this.turnoJ4);
-            this.Controls.Add(this.turnoJ3);
-            this.Controls.Add(this.turnoJ2);
-            this.Controls.Add(this.turnoJ1);
             this.Controls.Add(this.bComprarSuelo);
             this.Controls.Add(this.posVerde);
             this.Controls.Add(this.posAmarillo);
