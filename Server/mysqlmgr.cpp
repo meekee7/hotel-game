@@ -7,7 +7,8 @@ MySQLConnection* MySQLMgr::Connect (string host, string username, string passwor
 		return this->conn;
 	#else
 		this->conn->conn = mysql_init(NULL);
-		mysql_real_connect(conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0);
+		mysql_real_connect(this->conn->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0);
+      return this->conn;
 	#endif
 }
 
