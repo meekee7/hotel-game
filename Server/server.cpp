@@ -1791,7 +1791,6 @@ void run_server(int port)
 int main(int argc, char* argv[])
 {
 	MySQLMgr* mgr = new MySQLMgr();
-	mgr->Connect("tcp://betovserver.no-ip.org:3306", "bd_multimedia", "basedatos", "pomdb");
     int port;
     if (argc == 2) // Port specified
 		port = atoi(argv[1]);

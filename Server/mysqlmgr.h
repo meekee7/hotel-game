@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 #ifdef _WIN32
 	#include <mysql_driver.h>

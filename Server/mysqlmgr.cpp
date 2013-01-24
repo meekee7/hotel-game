@@ -10,16 +10,18 @@ MySQLConnection* MySQLMgr::Connect (string host, string username, string passwor
 		}
 		catch (sql::SQLException e)
 		{
-			wcout << e.getSQLStateCStr() << " " << e.getErrorCode() << endl;
+			wcout << "Error connecting to database: " << e.getSQLStateCStr() << " " << e.getErrorCode() << endl;
 		}
 		sql::Statement* stmt = this->connection->conn->createStatement();
 		stmt->execute("USE " + database);
 		delete stmt;
 		return this->connection;
 	#else
-		this->conn->conn = mysql_init(NULL);
-		mysql_real_connect(this->conn->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0);
-        return this->conn;
+		this->connection->conn = mysql_init(NULL);
+		mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0);
+      if (this->connection == NULL)
+         wcout << "Error connecting to database" << endl;
+      return this->connection;
 	#endif
 }
 
@@ -64,7 +66,8 @@ MySQLResult* MySQLConnection::ExecuteQuery(string query)
 		result->result = stmt->executeQuery(query);
 		delete stmt;
 	#else
-		result->result = mysql_query(this->conn, query.c_str());
+      mysql_query(this->conn, query.c_str());
+		result->result = mysql_store_result(this->conn);
 	#endif
 	return result;
 }
