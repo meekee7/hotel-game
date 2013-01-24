@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="chat.cpp" />
-    <ClCompile Include="dbmgr.cpp" />
+    <ClCompile Include="mysqlmgr.cpp" />
     <ClCompile Include="dlib\all\source.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hotel.cpp" />
@@ -119,7 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chat.h" />
-    <ClInclude Include="dbmgr.h" />
+    <ClInclude Include="mysqlmgr.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="hotel.h" />
     <ClInclude Include="mysql_client_simple_conn.h" />

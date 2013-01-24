@@ -47,8 +47,8 @@ tinyxmlparser.o: tinyxmlparser.cpp
 server.o: server.cpp
 	$(CC) -c $(FLAGS) -o server.o server.cpp
 	
-dbmgr.o: dbmgr.cpp dbmgr.h
-	$(CC) -c $(FLAGS) -o dbmgr.o dbmgr.cpp
+mysqlmgr.o: mysqlmgr.cpp mysqlmgr.h
+	$(CC) -c $(FLAGS) -o mysqlmgr.o mysqlmgr.cpp
 
-server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o server.o random.o aux_functions.o dbmgr.o
-	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o aux_functions.o dbmgr.o server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o server.o random.o aux_functions.o mysqlmgr.o
+	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o aux_functions.o mysqlmgr.o server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
