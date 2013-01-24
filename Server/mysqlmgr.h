@@ -9,14 +9,20 @@
 
 using namespace std;
 
-class Connection
-{
-};
-
-class MysqlMgr
+class MySQLConnection
 {
 public:
-	Connection Connect (string host, string username, string password, string database);
-	MysqlMgr(void);
-	~MysqlMgr(void);
+	#ifdef _WIN32
+		sql::Connection* conn;
+	#else
+		MYSQL* conn;
+	#endif
+};
+
+class MySQLMgr
+{
+public:
+	MySQLConnection Connect (string host, string username, string password, string database);
+	MySQLMgr(void);
+	~MySQLMgr(void);
 };
