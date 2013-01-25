@@ -10,7 +10,7 @@ MySQLConnection* MySQLMgr::Connect (string host, string username, string passwor
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error connecting to database: " << e.getSQLStateCStr() << " " << e.getErrorCode() << endl;
+            wcout << "Error connecting to database. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
         }
         this->connection->conn->setSchema(database);
         return this->connection;
@@ -49,7 +49,7 @@ MySQLMgr::MySQLMgr(void)
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error creating MySQL Driver: " << e.getSQLStateCStr() << " " << e.getErrorCode() << endl;
+            wcout << "Error creating MySQL Driver. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
         }
     #endif
     this->connection = new MySQLConnection();
@@ -65,10 +65,17 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 {
     MySQLResult* result = new MySQLResult();
     #ifdef _WIN32
-        sql::Statement* stmt = this->conn->createStatement();
-        result->result = stmt->executeQuery(query);
-        result->row_count = result->result->rowsCount();
-        delete stmt;
+        try
+        {
+            sql::Statement* stmt = this->conn->createStatement();
+            result->result = stmt->executeQuery(query);
+            result->row_count = result->result->rowsCount();
+            delete stmt;
+        }
+        catch (sql::SQLException e)
+        {
+            wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+        }
     #else
         mysql_query(this->conn, query.c_str());
         result->result = mysql_store_result(this->conn);
@@ -81,9 +88,16 @@ int MySQLConnection::ExecuteQueryWithOutData(string query)
 {
     int num_rows_modified;
     #ifdef _WIN32
-        sql::Statement* stmt = this->conn->createStatement();
-        num_rows_modified = stmt->executeUpdate(query);
-        delete stmt;
+        try
+        {
+            sql::Statement* stmt = this->conn->createStatement();
+            num_rows_modified = stmt->executeUpdate(query);
+            delete stmt;
+        }
+        catch (sql::SQLException e)
+        {
+            wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+        }
     #else
         mysql_query(this->conn, query.c_str());
         num_rows_modified = mysql_affected_rows(this->conn);
