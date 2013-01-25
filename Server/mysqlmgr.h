@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 #include <stdlib.h>
+#include <sstream>
 
 #ifdef _WIN32
     #include <mysql_driver.h>
@@ -57,7 +58,7 @@ public:
     #ifdef _WIN32
         sql::mysql::MySQL_Driver *driver;
     #endif
-    MySQLConnection* Connect (string host, string username, string password, string database);
+    MySQLConnection* Connect (string host, int port, string username, string password, string database);
     void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithOutData(string query);

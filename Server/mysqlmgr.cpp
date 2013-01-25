@@ -1,12 +1,14 @@
 #include "mysqlmgr.h"
 
 // Class MySQLMgr
-MySQLConnection* MySQLMgr::Connect (string host, string username, string password, string database)
+MySQLConnection* MySQLMgr::Connect (string host, int port, string username, string password, string database)
 {
     #ifdef _WIN32
         try
         {
-            this->connection->conn = this->driver->connect(host, username, password);
+            stringstream full_host;
+            full_host << "tcp://" << host << ":" << port;
+            this->connection->conn = this->driver->connect(full_host.str(), username, password);
         }
         catch (sql::SQLException e)
         {
@@ -16,7 +18,7 @@ MySQLConnection* MySQLMgr::Connect (string host, string username, string passwor
         return this->connection;
     #else
         this->connection->conn = mysql_init(NULL);
-        mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), 0, NULL, 0);
+        mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), port, NULL, 0);
         if (this->connection == NULL)
             wcout << "Error connecting to database" << endl;
         return this->connection;
