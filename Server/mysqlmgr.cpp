@@ -12,9 +12,7 @@ MySQLConnection* MySQLMgr::Connect (string host, string username, string passwor
 		{
 			wcout << "Error connecting to database: " << e.getSQLStateCStr() << " " << e.getErrorCode() << endl;
 		}
-		sql::Statement* stmt = this->connection->conn->createStatement();
-		stmt->execute("USE " + database);
-		delete stmt;
+        this->connection->conn->setSchema(database);
 		return this->connection;
 	#else
 		this->connection->conn = mysql_init(NULL);
@@ -30,9 +28,14 @@ void MySQLMgr::Disconnect()
 	delete this->connection;
 }
 
-MySQLResult* MySQLMgr::ExecuteQuery(string query)
+MySQLResult* MySQLMgr::ExecuteQueryWithData(string query)
 {
-	return this->connection->ExecuteQuery(query);
+	return this->connection->ExecuteQueryWithData(query);
+}
+
+int MySQLMgr::ExecuteQueryWithOutData(string query)
+{
+    return this->connection->ExecuteQueryWithOutData(query);
 }
 
 MySQLMgr::MySQLMgr(void)
@@ -40,7 +43,7 @@ MySQLMgr::MySQLMgr(void)
 	#ifdef _WIN32
 		try
 		{
-		this->driver = sql::mysql::get_mysql_driver_instance();
+		    this->driver = sql::mysql::get_driver_instance();
 			if (this->driver == NULL)
 				throw sql::SQLException();
 		}
@@ -58,7 +61,7 @@ MySQLMgr::~MySQLMgr(void)
 }
 
 // Class MySQLConnection
-MySQLResult* MySQLConnection::ExecuteQuery(string query)
+MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 {
 	MySQLResult* result = new MySQLResult();
 	#ifdef _WIN32
@@ -72,8 +75,18 @@ MySQLResult* MySQLConnection::ExecuteQuery(string query)
 	return result;
 }
 
-MySQLConnection::MySQLConnection(void)
+int MySQLConnection::ExecuteQueryWithOutData(string query)
 {
+    int num_rows_modified;
+	#ifdef _WIN32
+		sql::Statement* stmt = this->conn->createStatement();
+		num_rows_modified = stmt->executeUpdate(query);
+		delete stmt;
+	#else
+        mysql_query(this->conn, query.c_str());
+		result->result = mysql_store_result(this->conn);
+	#endif
+	return num_rows_modified;
 }
 
 MySQLConnection::~MySQLConnection(void)

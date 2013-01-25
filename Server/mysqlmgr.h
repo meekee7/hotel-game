@@ -8,8 +8,8 @@
 	#include <cppconn/exception.h>
 	#include <cppconn/resultset.h>
 	#include <cppconn/statement.h>
-	#pragma comment(lib, "mysqlcppconn.lib")
-	#pragma comment(lib, "libmysql.lib")
+	//#pragma comment(lib, "mysqlcppconn.lib")
+	//#pragma comment(lib, "libmysql.lib")
 #else
 	#include "mysql/mysql.h"
 #endif
@@ -34,8 +34,8 @@ public:
 	#else
 		MYSQL* conn;
 	#endif
-	MySQLResult* ExecuteQuery(string query);
-	MySQLConnection(void);
+	MySQLResult* ExecuteQueryWithData(string query);
+    int ExecuteQueryWithOutData(string query);
 	~MySQLConnection(void);
 };
 
@@ -49,7 +49,8 @@ public:
 	#endif
 	MySQLConnection* Connect (string host, string username, string password, string database);
 	void Disconnect();
-	MySQLResult* ExecuteQuery(string query);
+	MySQLResult* ExecuteQueryWithData(string query);
+    int ExecuteQueryWithOutData(string query);
 	MySQLMgr(void);
 	~MySQLMgr(void);
 };

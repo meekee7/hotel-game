@@ -96,11 +96,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmysql.lib;mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"</Command>
+      <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"
+copy "$(SolutionDir)libs\$(Configuration)\mysqlcppconn.dll" "$(SolutionDir)\bin\$(Configuration)"
+copy "$(SolutionDir)libs\$(Configuration)\mysqlcppconn.pdb" "$(SolutionDir)\bin\$(Configuration)"
+copy "$(SolutionDir)libs\libmysql.dll" "$(SolutionDir)\bin\$(Configuration)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -137,6 +140,7 @@
       </PrecompiledHeaderOutputFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,11 +149,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ForceSymbolReferences>
       </ForceSymbolReferences>
-      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"</Command>
+      <Command>copy "$(SolutionDir)Config.xml" "$(SolutionDir)\bin\$(Configuration)"
+copy "$(SolutionDir)libs\$(Configuration)\mysqlcppconn.dll" "$(SolutionDir)\bin\$(Configuration)"
+copy "$(SolutionDir)libs\libmysql.dll" "$(SolutionDir)\bin\$(Configuration)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
