@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
+#include <string.h>
 #include <iostream>
+#include <stdlib.h>
 
 #ifdef _WIN32
     #include <mysql_driver.h>

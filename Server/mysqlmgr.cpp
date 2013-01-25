@@ -112,11 +112,10 @@ int MySQLResult::get_int_field(string name)
         return this->result->getInt(name);
     #else
         MYSQL_FIELD *field;
-        unsigned int num_fields = mysql_num_fields(this->result);
         int field_index = -1;
         for(unsigned int i = 0; (field = mysql_fetch_field(result)); i++)
         {
-            if (strcmp(name, field->name) == 0)
+            if (strcmp(name.c_str(), field->name) == 0)
             {
                 field_index = i;
                 break;
@@ -147,11 +146,10 @@ string MySQLResult::get_string_field(string name)
         return this->result->getString(name);
     #else
         MYSQL_FIELD *field;
-        unsigned int num_fields = mysql_num_fields(this->result);
         int field_index = -1;
         for(unsigned int i = 0; (field = mysql_fetch_field(result)); i++)
         {
-            if (strcmp(name, field->name) == 0)
+            if (strcmp(name.c_str(), field->name) == 0)
             {
                 field_index = i;
                 break;
@@ -160,7 +158,7 @@ string MySQLResult::get_string_field(string name)
         if (field_index < 0)
             return 0;
         else
-            return this->current_row[field_index]);
+            return this->current_row[field_index];
     #endif
 }
 
@@ -172,7 +170,7 @@ string MySQLResult::get_string_field(int index)
         if (index < 0)
             return 0;
         else
-            return this->current_row[index]);
+            return this->current_row[index];
     #endif
 }
 
@@ -182,11 +180,10 @@ bool MySQLResult::get_bool_field(string name)
         return this->result->getBoolean(name);
     #else
         MYSQL_FIELD* field;
-        unsigned int num_fields = mysql_num_fields(this->result);
         int field_index = -1;
         for(unsigned int i = 0; (field = mysql_fetch_field(result)); i++)
         {
-            if (strcmp(name, field->name) == 0)
+            if (strcmp(name.c_str(), field->name) == 0)
             {
                 field_index = i;
                 break;
@@ -210,7 +207,7 @@ bool MySQLResult::get_bool_field(int index)
     #ifdef _WIN32
         return this->result->getBoolean(index);
     #else
-        if (field_index < 0)
+        if (index < 0)
             return false;
         else
         {
