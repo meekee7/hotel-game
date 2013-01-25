@@ -69,7 +69,7 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 		result->result = stmt->executeQuery(query);
 		delete stmt;
 	#else
-      mysql_query(this->conn, query.c_str());
+        mysql_query(this->conn, query.c_str());
 		result->result = mysql_store_result(this->conn);
 	#endif
 	return result;
@@ -84,7 +84,7 @@ int MySQLConnection::ExecuteQueryWithOutData(string query)
 		delete stmt;
 	#else
         mysql_query(this->conn, query.c_str());
-		result->result = mysql_store_result(this->conn);
+		num_rows_modified = mysql_affected_rows(this->conn);
 	#endif
 	return num_rows_modified;
 }
