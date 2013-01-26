@@ -60,6 +60,9 @@
     <ClCompile Include="mysqlmgr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="savedgamesmgr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="portable_socket.h">
@@ -96,6 +99,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="mysqlmgr.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="savedgamesmgr.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

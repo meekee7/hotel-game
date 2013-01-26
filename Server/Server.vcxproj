@@ -201,6 +201,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
     <ClCompile Include="portable_socket.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="random.cpp" />
+    <ClCompile Include="savedgamesmgr.cpp" />
     <ClCompile Include="server.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
@@ -217,6 +218,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
     <ClInclude Include="portable_socket.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="random.h" />
+    <ClInclude Include="savedgamesmgr.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="types.h" />
