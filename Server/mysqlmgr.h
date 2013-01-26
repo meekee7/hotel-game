@@ -47,6 +47,7 @@ public:
     #endif
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithOutData(string query);
+    int GetLastInsertId();
     ~MySQLConnection(void);
 };
 
@@ -62,6 +63,7 @@ public:
     void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithOutData(string query);
+    int GetLastInsertId();
     MySQLMgr(void);
     ~MySQLMgr(void);
 };

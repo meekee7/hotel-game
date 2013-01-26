@@ -40,6 +40,11 @@ int MySQLMgr::ExecuteQueryWithOutData(string query)
     return this->connection->ExecuteQueryWithOutData(query);
 }
 
+int MySQLMgr::GetLastInsertId()
+{
+    return this->connection->GetLastInsertId();
+}
+
 MySQLMgr::MySQLMgr(void)
 {
     #ifdef _WIN32
@@ -107,6 +112,20 @@ int MySQLConnection::ExecuteQueryWithOutData(string query)
     return num_rows_modified;
 }
 
+int MySQLConnection::GetLastInsertId()
+{
+    #ifdef _WIN32
+        sql::Statement* stmt = this->conn->createStatement();
+        sql::ResultSet* result = stmt->executeQuery("SELECT LAST_INSERT_ID()");
+        int id = result->getInt(0);
+        delete result;
+        delete stmt;
+        return id;
+    #else
+        return mysql_insert_id(this->conn);
+    #endif
+}
+
 MySQLConnection::~MySQLConnection(void)
 {
     delete this->conn;
@@ -118,13 +137,11 @@ bool MySQLResult::fetch_row()
     #ifdef _WIN32
         return this->result->next();
     #else
-    {
         this->current_row = mysql_fetch_row(this->result);
         if (this->current_row == NULL)
             return false;
         else
             return true;
-    }
     #endif
 }
 
