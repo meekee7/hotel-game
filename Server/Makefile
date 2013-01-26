@@ -50,5 +50,8 @@ server.o: server.cpp
 mysqlmgr.o: mysqlmgr.cpp mysqlmgr.h
 	$(CC) -c $(FLAGS) -o mysqlmgr.o mysqlmgr.cpp
 
-server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o server.o random.o aux_functions.o mysqlmgr.o
-	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o aux_functions.o mysqlmgr.o server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+savedgamesmgr.o: savedgamesmgr.cpp savedgamesmgr.h
+	$(CC) -c $(FLAGS) -o savedgamesmgr.o savedgamesmgr.cpp
+
+server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o server.o random.o aux_functions.o mysqlmgr.o savedgamesmgr.o
+	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o position.o random.o aux_functions.o mysqlmgr.o savedgamesmgr.o server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT

@@ -118,7 +118,13 @@ bool MySQLResult::fetch_row()
     #ifdef _WIN32
         return this->result->next();
     #else
-        ((this->current_row = mysql_fetch_row(this->result) == NULL) ? false : true);
+    {
+        this->current_row = mysql_fetch_row(this->result);
+        if (this->current_row == NULL)
+            return false;
+        else
+            return true;
+    }
     #endif
 }
 
