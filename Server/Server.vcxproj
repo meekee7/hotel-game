@@ -213,8 +213,6 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
     <ClInclude Include="mysqlmgr.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="hotel.h" />
-    <ClInclude Include="mysql_client_simple_conn.h" />
-    <ClInclude Include="mysql_client_simple_private.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="portable_socket.h" />
     <ClInclude Include="position.h" />
