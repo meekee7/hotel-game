@@ -137,6 +137,7 @@ int MySQLResult::get_int_field(string name)
                 break;
             }
         }
+        mysql_field_seek(this->result, 0);
         if (field_index < 0)
             return 0;
         else
@@ -171,6 +172,7 @@ string MySQLResult::get_string_field(string name)
                 break;
             }
         }
+        mysql_field_seek(this->result, 0);
         if (field_index < 0)
             return 0;
         else
@@ -205,6 +207,7 @@ bool MySQLResult::get_bool_field(string name)
                 break;
             }
         }
+        mysql_field_seek(this->result, 0);
         if (field_index < 0)
             return false;
         else
