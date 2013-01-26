@@ -27,7 +27,7 @@ public:
         MYSQL_ROW current_row;
     #endif
     int row_count;
-    void fetch_row();
+    bool fetch_row();
     int get_int_field(string name);
     int get_int_field(int index);
     string get_string_field(string name);

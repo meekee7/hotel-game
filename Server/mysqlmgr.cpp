@@ -113,12 +113,12 @@ MySQLConnection::~MySQLConnection(void)
 }
 
 //Class MySQLResult
-void MySQLResult::fetch_row()
+bool MySQLResult::fetch_row()
 {
     #ifdef _WIN32
-        this->result->next();
+        return this->result->next();
     #else
-        this->current_row = mysql_fetch_row(this->result);
+        ((this->current_row = mysql_fetch_row(this->result) == NULL) ? false : true);
     #endif
 }
 
