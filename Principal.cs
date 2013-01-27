@@ -1353,6 +1353,7 @@ namespace Juego_Hotel
                 this.bTurno.Enabled = true;
             }
             frm_pago.Close();
+            this.actividad.Pedir_Noches_Online(this.juego.jugador_actual, jugador, cantidad);
         }
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)

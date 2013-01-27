@@ -151,6 +151,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) pide al jugador {2} ({3}) que pague {4}.
+        /// </summary>
+        internal static string MAPedirNochesOnline {
+            get {
+                return ResourceManager.GetString("MAPedirNochesOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha tirado el dado de construcción y ha sacado un {2}..
         /// </summary>
         internal static string MATirarDadoConstruccion {
