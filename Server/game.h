@@ -12,7 +12,7 @@ class Game
 {
 public:
    int id;
-   wstring name;
+   wstring name, password;
    Player* creator;
    int n_players;
    list<Player*> plist, active_plist;

@@ -1,8 +1,5 @@
 #pragma once
 #include <string>
-#include <string.h>
-#include <iostream>
-#include <stdlib.h>
 #include <sstream>
 
 #ifdef _WIN32
@@ -59,7 +56,7 @@ public:
     #ifdef _WIN32
         sql::mysql::MySQL_Driver *driver;
     #endif
-    MySQLConnection* Connect (string host, int port, string username, string password, string database);
+    bool Connect (string host, int port, string username, string password, string database);
     void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithOutData(string query);

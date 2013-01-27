@@ -1589,6 +1589,14 @@ void handle_command(string command, Player* p)
       game->best_bid = 0;
       game->hotel_at_auction = NULL;
    }
+   else if (command == "save_game")
+   {
+        int bytes_received;
+        int len_int = receive_int(p, &bytes_received);
+        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        Game* game = get_game_from_id(id, &glist);
+        savedgamesmgr->SaveGame(game);
+   }
 }
 
 void handle_client(void* arg)

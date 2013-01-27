@@ -1,7 +1,7 @@
 #include "mysqlmgr.h"
 
 // Class MySQLMgr
-MySQLConnection* MySQLMgr::Connect (string host, int port, string username, string password, string database)
+bool MySQLMgr::Connect (string host, int port, string username, string password, string database)
 {
     #ifdef _WIN32
         try
@@ -13,15 +13,24 @@ MySQLConnection* MySQLMgr::Connect (string host, int port, string username, stri
         catch (sql::SQLException e)
         {
             wcout << "Error connecting to database. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            return false;
         }
+        wcout << "Database connection succesful!" << endl;
         this->connection->conn->setSchema(database);
-        return this->connection;
+        return true;
     #else
         this->connection->conn = mysql_init(NULL);
         mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), port, NULL, 0);
         if (this->connection == NULL)
+        {
             wcout << "Error connecting to database" << endl;
-        return this->connection;
+            return false;
+        }
+        else
+        {
+            wcout << "Database connection succesful!" << endl;
+            return true;
+        }
     #endif
 }
 
@@ -116,8 +125,18 @@ int MySQLConnection::GetLastInsertId()
 {
     #ifdef _WIN32
         sql::Statement* stmt = this->conn->createStatement();
-        sql::ResultSet* result = stmt->executeQuery("SELECT LAST_INSERT_ID()");
-        int id = result->getInt(0);
+        sql::ResultSet* result;
+        int id;
+        try
+        {
+            result = stmt->executeQuery("SELECT LAST_INSERT_ID();");
+            result->next();
+            id = result->getInt(1);
+        }
+        catch (sql::SQLException e)
+        {
+            wcout << "Error obtanining last insert id. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+        }
         delete result;
         delete stmt;
         return id;
