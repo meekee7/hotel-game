@@ -37,12 +37,16 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
 void MySQLMgr::KeepAlive()
 {
     this->connection->ExecuteQueryWithoutData("DO 1;");
-    wcout << "MySQL keep alive" << endl;
+    wcout << L"MySQL keep alive" << endl;
 }
 
 void MySQLMgr::Disconnect()
 {
-    delete this->connection;
+    if (this->connection != NULL)
+    {
+        delete this->connection;
+        this->connection = NULL;
+    }
 }
 
 #ifdef _WIN32
@@ -86,13 +90,17 @@ MySQLMgr::MySQLMgr(void)
 
 MySQLMgr::~MySQLMgr(void)
 {
-    delete this->connection;
+    if (this->connection != NULL)
+    {
+        delete this->connection;
+        this->connection = NULL;
+    }
 }
 
 // Class MySQLConnection
 MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 {
-    this->query_mutex.lock();
+//    this->query_mutex.lock();
     MySQLResult* result = new MySQLResult();
     #ifdef _WIN32
         try
@@ -111,13 +119,13 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
         result->result = mysql_store_result(this->conn);
         result->row_count = mysql_num_rows(result->result);
     #endif
-    this->query_mutex.unlock();
+//    this->query_mutex.unlock();
     return result;
 }
 
 int MySQLConnection::ExecuteQueryWithoutData(string query)
 {
-    this->query_mutex.lock();
+    //this->query_mutex.lock();
     int num_rows_modified = 0;
     #ifdef _WIN32
         try
@@ -135,7 +143,7 @@ int MySQLConnection::ExecuteQueryWithoutData(string query)
             wcout << mysql_error(this->conn) << endl;
         num_rows_modified = mysql_affected_rows(this->conn);
     #endif
-    this->query_mutex.unlock();
+    //this->query_mutex.unlock();
     return num_rows_modified;
 }
 
@@ -175,10 +183,11 @@ MySQLConnection::~MySQLConnection(void)
 {
     #ifdef _WIN32
         this->conn->close();
+        delete this->conn;
     #else
+        // This function deletes the object
         mysql_close(this->conn);
     #endif
-    delete this->conn;
 }
 
 //Class MySQLResult

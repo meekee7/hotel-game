@@ -82,7 +82,11 @@ void SavedgamesMgr::KeepAlive()
         {
             if (!this->keeping_alive)
                 return;
-            Sleep(interval);
+            #ifdef _WIN32
+                Sleep(interval);
+            #else
+                usleep(interval * 1000);
+            #endif
             i += interval;
         }
         i = interval;
@@ -236,6 +240,7 @@ bool SavedgamesMgr::SaveGame(Game* game)
 SavedgamesMgr::~SavedgamesMgr(void)
 {
     this->keeping_alive = false;
+    wcout << "hey1" << endl;
     this->db->Disconnect();
     delete this->db;
 }
