@@ -44,10 +44,10 @@ public:
     #ifdef _WIN32
         sql::Connection* conn;
         bool IsClosed();
-        boost::mutex query_mutex;
     #else
         MYSQL* conn;
     #endif
+    boost::mutex query_mutex;
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithoutData(string query);
     int GetLastInsertId();
