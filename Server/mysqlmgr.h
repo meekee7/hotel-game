@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <sstream>
-#include <boost/thread/mutex.hpp>
 
 #ifdef _WIN32
     #include <mysql_driver.h>
@@ -47,7 +46,6 @@ public:
     #else
         MYSQL* conn;
     #endif
-    boost::mutex query_mutex;
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithoutData(string query);
     int GetLastInsertId();
