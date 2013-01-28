@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <sstream>
+#include <boost/thread/mutex.hpp>
 
 #ifdef _WIN32
     #include <mysql_driver.h>
@@ -43,6 +44,7 @@ public:
     #ifdef _WIN32
         sql::Connection* conn;
         bool IsClosed();
+        boost::mutex query_mutex;
     #else
         MYSQL* conn;
     #endif

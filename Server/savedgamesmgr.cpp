@@ -74,20 +74,19 @@ void SavedgamesMgr::KeepAlive()
 {
     int milliseconds = this->keep_alive_interval * 1000;
     this->keeping_alive = true;
+    int interval = 1000;
+    int i = interval;
     while (this->keeping_alive)
     {
-        Sleep(milliseconds); // 30 seconds
+        while (i <= milliseconds)
+        {
+            if (!this->keeping_alive)
+                return;
+            Sleep(interval);
+            i += interval;
+        }
+        i = interval;
         this->db->KeepAlive();
-    }
-}
-
-string GetValueOfID(int id)
-{
-    if (id == 0)
-        return "NULL";
-    else
-    {
-        return str(boost::format("%d") % id);
     }
 }
 

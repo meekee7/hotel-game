@@ -92,6 +92,7 @@ MySQLMgr::~MySQLMgr(void)
 // Class MySQLConnection
 MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 {
+    this->query_mutex.lock();
     MySQLResult* result = new MySQLResult();
     #ifdef _WIN32
         try
@@ -110,11 +111,13 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
         result->result = mysql_store_result(this->conn);
         result->row_count = mysql_num_rows(result->result);
     #endif
+    this->query_mutex.unlock();
     return result;
 }
 
 int MySQLConnection::ExecuteQueryWithoutData(string query)
 {
+    this->query_mutex.lock();
     int num_rows_modified = 0;
     #ifdef _WIN32
         try
@@ -132,6 +135,7 @@ int MySQLConnection::ExecuteQueryWithoutData(string query)
             wcout << mysql_error(this->conn) << endl;
         num_rows_modified = mysql_affected_rows(this->conn);
     #endif
+    this->query_mutex.unlock();
     return num_rows_modified;
 }
 
@@ -139,7 +143,7 @@ int MySQLConnection::GetLastInsertId()
 {
     #ifdef _WIN32
         sql::Statement* stmt = this->conn->createStatement();
-        sql::ResultSet* result;
+        sql::ResultSet* result = NULL;
         int id;
         try
         {
@@ -151,7 +155,8 @@ int MySQLConnection::GetLastInsertId()
         {
             wcout << "Error obtanining last insert id. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
         }
-        delete result;
+        if (result != NULL)
+            delete result;
         delete stmt;
         return id;
     #else
