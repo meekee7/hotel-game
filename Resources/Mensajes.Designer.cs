@@ -718,6 +718,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Especifica una contraseña para evitar que cualquiera la cargue.
+        /// </summary>
+        internal static string mensajeInputPasswordPartida {
+            get {
+                return ResourceManager.GetString("mensajeInputPasswordPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Se ha vendido el hotel que se estaba intentando ampliar, se anula la construcción..
         /// </summary>
         internal static string mensajeIntentarConstruirHotelVendido {
@@ -876,6 +885,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeNombrePartidaInvalido {
             get {
                 return ResourceManager.GetString("mensajeNombrePartidaInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El nombre de la partida no puede contener más de 50 caracteres.
+        /// </summary>
+        internal static string mensajeNombrePartidaLargo {
+            get {
+                return ResourceManager.GetString("mensajeNombrePartidaLargo", resourceCulture);
             }
         }
         

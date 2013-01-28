@@ -51,7 +51,7 @@
             // 
             resources.ApplyResources(this.txtLogin, "txtLogin");
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtLogin_PreviewKeyDown);
+            this.txtLogin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLogin_KeyDown);
             // 
             // bLogin
             // 

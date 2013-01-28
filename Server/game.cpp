@@ -77,6 +77,7 @@ bool Game::join(Player* p)
          wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
          return false;
       }
+      p->num = this->plist.size();
       this->plist.push_back(p);
       this->active_plist.push_back(p);
       this->chat->join(p);
@@ -134,6 +135,8 @@ void Game::start()
    this->current_player = (*i);
    this->starting_player = res;
    this->started = true;
+   this->last_dice_res = 0;
+   this->last_auto_advance = 0;
    wcout << currentDateTime() << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")" << endl;
 }
 

@@ -22,8 +22,8 @@ public:
    Player* debt_nights_to_last_turn;
    int n_5000, n_1000, n_500, n_100, n_50;
    int total_money;
+   int num;
    Position* position;
-   TColor color;
    list<Hotel*> hotels;
 
    Player(string ip, Portable_socket* socket_client);

@@ -3,3 +3,4 @@ port=3306
 username=hotelserver
 password=hotelsrv
 dbname=hotel
+keepalive=30

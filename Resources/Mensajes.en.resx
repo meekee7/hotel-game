@@ -666,4 +666,10 @@ No permission is needed to build them. Continue?</value>
   <data name="MAPedirNochesOnline" xml:space="preserve">
     <value>Player {0} ({1}) demand to player {2} ({3}) to pay {4}</value>
   </data>
+  <data name="mensajeNombrePartidaLargo" xml:space="preserve">
+    <value>Game name cannot have more than 50 characters</value>
+  </data>
+  <data name="mensajeInputPasswordPartida" xml:space="preserve">
+    <value>Specifiy a password in order to avoid anyone from loading it</value>
+  </data>
 </root>

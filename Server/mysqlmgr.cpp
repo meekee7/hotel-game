@@ -34,10 +34,23 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
     #endif
 }
 
+void MySQLMgr::KeepAlive()
+{
+    this->connection->ExecuteQueryWithOutData("DO 1;");
+    wcout << "MySQL keep alive" << endl;
+}
+
 void MySQLMgr::Disconnect()
 {
     delete this->connection;
 }
+
+#ifdef _WIN32
+bool MySQLMgr::IsClosed()
+{
+    return this->connection->IsClosed();
+}
+#endif
 
 MySQLResult* MySQLMgr::ExecuteQueryWithData(string query)
 {
@@ -102,7 +115,7 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 
 int MySQLConnection::ExecuteQueryWithOutData(string query)
 {
-    int num_rows_modified;
+    int num_rows_modified = 0;
     #ifdef _WIN32
         try
         {
@@ -146,8 +159,20 @@ int MySQLConnection::GetLastInsertId()
     #endif
 }
 
+#ifdef _WIN32
+bool MySQLConnection::IsClosed()
+{
+    return this->conn->isClosed();
+}
+#endif
+
 MySQLConnection::~MySQLConnection(void)
 {
+    #ifdef _WIN32
+        this->conn->close();
+    #else
+        mysql_close(this->conn);
+    #endif
     delete this->conn;
 }
 

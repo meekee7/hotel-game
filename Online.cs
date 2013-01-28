@@ -567,6 +567,11 @@ namespace Juego_Hotel
                     MessageBox.Show(Mensajes.mensajeNombrePartidaEnBlanco, Mensajes.tituloCrearPartida);
                     return;
                 }
+                if (nombre.Length > 50)
+                {
+                    MessageBox.Show(Mensajes.mensajeNombrePartidaLargo, Mensajes.tituloCrearPartida);
+                    return;
+                }
                 else if (this.PartidaYaExiste(nombre))
                 {
                     MessageBox.Show(Mensajes.mensajeNombrePartidaYaExiste, Mensajes.tituloCrearPartida);
@@ -626,16 +631,18 @@ namespace Juego_Hotel
                 this.bConectar.PerformClick();
         }
 
-        private void txtLogin_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void txtLogin_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
                 this.bLogin.PerformClick();
+            }
         }
 
         private void bCrearConv_Click(object sender, EventArgs e)
         {
-            if ((this.listaUsuarios.SelectedItems.Count < 1) ||
-                (this.listaUsuarios.SelectedItems.Contains(this.txtLogin.Text)))
+            if ((this.listaUsuarios.SelectedItems.Count < 1) || (this.listaUsuarios.SelectedItems.Contains(this.txtLogin.Text)))
             {
                 MessageBox.Show(Mensajes.mensajeSeleccionarUsuarios);
                 return;

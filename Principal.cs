@@ -1490,17 +1490,32 @@ namespace Juego_Hotel
             }
         }
 
+        public string InputBox(string prompt, string title, string defaultValue)
+        {
+            InputBoxDialog ib = new InputBoxDialog();
+            ib.FormPrompt = prompt;
+            ib.FormCaption = title;
+            ib.DefaultValue = defaultValue;
+            ib.ShowDialog();
+            string s = ib.InputResponse;
+            ib.Close();
+            return s;
+        }
+
         private void bSalvar_Click(object sender, EventArgs e)
         {
-            if (this.online)
-                this.frm_online.enviar_comando("save_game", this.game_id.ToString());
-            else
+            if (this.dado_tirado)
             {
-                if (this.dado_tirado)
-                {
-                    MessageBox.Show(Mensajes.mensajeSalvarAntesDeTirar);
-                    return;
-                }
+                MessageBox.Show(Mensajes.mensajeSalvarAntesDeTirar);
+                return;
+            }
+            if (this.online)
+            {
+                string password = this.InputBox(Mensajes.mensajeInputPasswordPartida, Mensajes.tituloCrearPartida, "");
+                this.frm_online.enviar_comando("save_game", this.game_id.ToString(), password);
+            }
+            else
+            {   
                 SaveFileDialog dialogo = new SaveFileDialog();
                 dialogo.AddExtension = true;
                 dialogo.CheckPathExists = true;

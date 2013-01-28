@@ -42,6 +42,7 @@ class MySQLConnection
 public:
     #ifdef _WIN32
         sql::Connection* conn;
+        bool IsClosed();
     #else
         MYSQL* conn;
     #endif
@@ -58,12 +59,14 @@ private:
 public:
     #ifdef _WIN32
         sql::mysql::MySQL_Driver *driver;
+        bool IsClosed();
     #endif
     bool Connect (string host, int port, string username, string password, string database);
     void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithOutData(string query);
     int GetLastInsertId();
+    void KeepAlive();
     MySQLMgr(void);
     ~MySQLMgr(void);
 };
