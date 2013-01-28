@@ -205,7 +205,6 @@ namespace Juego_Hotel
                 }
                 if (!this.online)
                 {
-                    this.bSalvar.Enabled = true;
                     this.bCargar.Enabled = true;
                     this.bDado.Enabled = true;
                 }
@@ -1493,30 +1492,35 @@ namespace Juego_Hotel
 
         private void bSalvar_Click(object sender, EventArgs e)
         {
-            if (this.dado_tirado)
+            if (this.online)
+                this.frm_online.enviar_comando("save_game", this.game_id.ToString());
+            else
             {
-                MessageBox.Show(Mensajes.mensajeSalvarAntesDeTirar);
-                return;
-            }
-            SaveFileDialog dialogo = new SaveFileDialog();
-            dialogo.AddExtension = true;
-            dialogo.CheckPathExists = true;
-            dialogo.DefaultExt = "xml";
-            dialogo.SupportMultiDottedExtensions = true;
-            dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
-            dialogo.Title = Mensajes.tituloDialogoGuardarPartida;
-            dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
-            if (dialogo.ShowDialog() != DialogResult.Cancel)
-            {
-                if (dialogo.FileName != "")
+                if (this.dado_tirado)
                 {
-                    Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(ref this.juego);
-                    if (mgr_salvar.Salvar_partida(dialogo.FileName) == false)
-                        MessageBox.Show(String.Format(Mensajes.mensajeErrorAlSalvar, mgr_salvar.error));
+                    MessageBox.Show(Mensajes.mensajeSalvarAntesDeTirar);
+                    return;
                 }
+                SaveFileDialog dialogo = new SaveFileDialog();
+                dialogo.AddExtension = true;
+                dialogo.CheckPathExists = true;
+                dialogo.DefaultExt = "xml";
+                dialogo.SupportMultiDottedExtensions = true;
+                dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
+                dialogo.Title = Mensajes.tituloDialogoGuardarPartida;
+                dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
+                if (dialogo.ShowDialog() != DialogResult.Cancel)
+                {
+                    if (dialogo.FileName != "")
+                    {
+                        Salvar_y_cargar mgr_salvar = new Salvar_y_cargar(ref this.juego);
+                        if (mgr_salvar.Salvar_partida(dialogo.FileName) == false)
+                            MessageBox.Show(String.Format(Mensajes.mensajeErrorAlSalvar, mgr_salvar.error));
+                    }
+                }
+                dialogo = null;
             }
-            dialogo = null;
         }
 
         private void bCargar_Click(object sender, EventArgs e)
