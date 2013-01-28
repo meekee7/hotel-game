@@ -36,8 +36,11 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
 
 void MySQLMgr::KeepAlive()
 {
-    this->connection->ExecuteQueryWithoutData("DO 1;");
-    wcout << L"MySQL keep alive" << endl;
+    if (this->connection != NULL)
+    {
+        this->connection->ExecuteQueryWithoutData("DO 1;");
+        wcout << L"MySQL keep alive" << endl;
+    }
 }
 
 void MySQLMgr::Disconnect()
@@ -188,6 +191,7 @@ MySQLConnection::~MySQLConnection(void)
         // This function deletes the object
         mysql_close(this->conn);
     #endif
+    wcout << L"DB connnection closed" << endl;
 }
 
 //Class MySQLResult
