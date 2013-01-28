@@ -1339,6 +1339,11 @@ namespace Juego_Hotel
             this.Actualizar_Dinero_Jugadores();
         }
 
+        public void Registrar_Pagar_Noches_Online(Jugador jugador_dueño, Jugador jugador_pagador, int cantidad)
+        {
+            this.actividad.Pedir_Noches_Online(jugador_dueño, jugador_pagador, cantidad);
+        }
+
         public void Pedir_Noches_Online(Jugador jugador, int cantidad)
         {
             this.bTurno.Enabled = false;
@@ -1352,7 +1357,7 @@ namespace Juego_Hotel
                 this.bTurno.Enabled = true;
             }
             frm_pago.Close();
-            this.actividad.Pedir_Noches_Online(this.juego.jugador_actual, jugador, cantidad);
+            this.Registrar_Pagar_Noches_Online(this.juego.jugador_actual, jugador, cantidad);
         }
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)

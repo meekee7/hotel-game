@@ -1288,6 +1288,7 @@ namespace Juego_Hotel
         }
 
         delegate void Pedir_Noches_Online_Callback(Jugador jugador, int cantidad);
+        delegate void Registrar_Pagar_Noches_Online_Callback(Jugador jugador_dueño, Jugador jugador_pagador, int cantidad);
 
         private void Pedir_noches()
         {
@@ -1295,12 +1296,20 @@ namespace Juego_Hotel
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int long_nombre_pagador = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador_pagador = this.recibir_string(this.socket, long_nombre_pagador, ref bytes_recibidos);
             int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
             int noches = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, noches, cantidad, jugador.Nombre_color(), jugador.nombre_online));
-            partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador, cantidad);
+            Jugador jugador_dueño = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            Jugador jugador_pagador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador_pagador);
+            if (jugador_pagador.nombre_online == partida.interfaz.nombre_online)
+            {
+                MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, noches, cantidad, jugador_dueño.Nombre_color(), jugador_dueño.nombre_online));
+                partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador_dueño, cantidad);
+            }
+            else
+                partida.interfaz.BeginInvoke(new Registrar_Pagar_Noches_Online_Callback(partida.interfaz.Registrar_Pagar_Noches_Online), jugador_dueño, jugador_pagador, cantidad);
         }
 
         delegate void Conexion_perdida_Callback();
