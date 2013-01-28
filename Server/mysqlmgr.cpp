@@ -36,7 +36,7 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
 
 void MySQLMgr::KeepAlive()
 {
-    this->connection->ExecuteQueryWithOutData("DO 1;");
+    this->connection->ExecuteQueryWithoutData("DO 1;");
     wcout << "MySQL keep alive" << endl;
 }
 
@@ -57,9 +57,9 @@ MySQLResult* MySQLMgr::ExecuteQueryWithData(string query)
     return this->connection->ExecuteQueryWithData(query);
 }
 
-int MySQLMgr::ExecuteQueryWithOutData(string query)
+int MySQLMgr::ExecuteQueryWithoutData(string query)
 {
-    return this->connection->ExecuteQueryWithOutData(query);
+    return this->connection->ExecuteQueryWithoutData(query);
 }
 
 int MySQLMgr::GetLastInsertId()
@@ -113,7 +113,7 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
     return result;
 }
 
-int MySQLConnection::ExecuteQueryWithOutData(string query)
+int MySQLConnection::ExecuteQueryWithoutData(string query)
 {
     int num_rows_modified = 0;
     #ifdef _WIN32

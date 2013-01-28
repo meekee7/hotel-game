@@ -47,7 +47,7 @@ public:
         MYSQL* conn;
     #endif
     MySQLResult* ExecuteQueryWithData(string query);
-    int ExecuteQueryWithOutData(string query);
+    int ExecuteQueryWithoutData(string query);
     int GetLastInsertId();
     ~MySQLConnection(void);
 };
@@ -64,7 +64,7 @@ public:
     bool Connect (string host, int port, string username, string password, string database);
     void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
-    int ExecuteQueryWithOutData(string query);
+    int ExecuteQueryWithoutData(string query);
     int GetLastInsertId();
     void KeepAlive();
     MySQLMgr(void);
