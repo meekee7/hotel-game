@@ -59,13 +59,10 @@ bool SavedgamesMgr::SaveGame(Game* game)
 {
     list<Player*>::iterator i;
     Player* p;
-    //wstringstream query;
     string query;
     for (i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
     {
         p = (*i);
-        //query.clear();
-        //query.str(L"");
         string color;
         switch (p->color)
         {
@@ -80,8 +77,6 @@ bool SavedgamesMgr::SaveGame(Game* game)
             default: color = "";
                 break;
         }
-        //query << "INSERT INTO estado_jugador VALUES (NULL,'" << p->name << "'," << p->position->number << ",'" << color << "'," << p->paid_last_turn << ",";
-        //query << p->n_50 << "," << p->n_100 << "," << p->n_500 << "," << p->n_1000 << "," << p->n_5000 << ",";
         wstring hotel_list;
         if (p->hotels.size() > 0)
         {
@@ -99,11 +94,9 @@ bool SavedgamesMgr::SaveGame(Game* game)
         }
         else
             hotel_list = L"";
-        //query << hotel_list << ");";
         query = str(boost::format("INSERT INTO estado_jugador VALUES (NULL,\"%s\",%d,\"%s\",%d,%d,%d,%d,%d,%d,\"%s\");")
             % utf16_to_utf8(p->name) % p->position->number % color % p->paid_last_turn % p->n_50 % p->n_100 % p->n_500
             % p->n_1000 % p->n_5000 % utf16_to_utf8(hotel_list));
-        cout << query << endl;
         if (this->db->ExecuteQueryWithOutData(query) <= 0)
         {
             wcout << "Error inserting player data" << endl;

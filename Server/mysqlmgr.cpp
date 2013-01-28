@@ -115,7 +115,6 @@ int MySQLConnection::ExecuteQueryWithOutData(string query)
             wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
         }
     #else
-        wcout << query.c_str() << endl;
         if (mysql_query(this->conn, query.c_str()) > 0)
             wcout << mysql_error(this->conn) << endl;
         num_rows_modified = mysql_affected_rows(this->conn);
