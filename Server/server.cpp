@@ -17,7 +17,6 @@
 #include "dlib/threads.h"
 #include "dlib/string.h"
 #include "savedgamesmgr.h"
-#include <boost/format.hpp>
 
 #define MAXCONN 100
 
