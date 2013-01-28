@@ -10,6 +10,9 @@
     #include <cppconn/statement.h>
 #else
     #include "mysql/mysql.h"
+    #include <string.h>
+    #include <cstdlib>
+    #include <iostream>
 #endif
 
 using namespace std;

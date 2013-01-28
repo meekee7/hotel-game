@@ -17,6 +17,7 @@
 #include "dlib/threads.h"
 #include "dlib/string.h"
 #include "savedgamesmgr.h"
+#include <boost/format.hpp>
 
 #define MAXCONN 100
 
@@ -1781,6 +1782,7 @@ void run_server(int port)
          else
          {
             // The server is closing
+            delete savedgamesmgr;
             empty_global_chat_list();
             wcout << currentDateTime() << L"Global Chat cleaned" << endl;
             empty_chat_list();
