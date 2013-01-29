@@ -562,7 +562,7 @@ No permission is needed to build them. Continue?</value>
     <value>Minimum number of players is 2</value>
   </data>
   <data name="mensajePagarNoches" xml:space="preserve">
-    <value>You must pay {0} nights ({1}) to {2} player ({3})</value>
+    <value>You must pay {0} for {1} nights in {2} to player {3} ({4})</value>
   </data>
   <data name="mensajePartidaLlena" xml:space="preserve">
     <value>Game {0} is full</value>
@@ -664,7 +664,7 @@ No permission is needed to build them. Continue?</value>
     <value>Start</value>
   </data>
   <data name="MAPedirNochesOnline" xml:space="preserve">
-    <value>Player {0} ({1}) demand to player {2} ({3}) to pay {4}</value>
+    <value>Player {0} ({1}) demands to player {2} ({3}) to pay {4} for {5} nights at {6}.</value>
   </data>
   <data name="mensajeNombrePartidaLargo" xml:space="preserve">
     <value>Game name cannot have more than 50 characters</value>

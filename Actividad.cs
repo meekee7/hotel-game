@@ -37,9 +37,9 @@ namespace Juego_Hotel
             this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccion, jugador.nombre_online, jugador.color, resultado.ToString()) + Environment.NewLine);
         }
 
-        public void Pedir_Noches_Online(Jugador jugador, Jugador jugadorD, int cantidad)
+        public void Pedir_Noches_Online(Jugador jugador, Jugador jugadorD, int cantidad, int noches, String hotel)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MAPedirNochesOnline, jugador.nombre_online, jugador.color, jugadorD.nombre_online, jugadorD.color, cantidad) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format(Mensajes.MAPedirNochesOnline, jugador.nombre_online, jugador.color, jugadorD.nombre_online, jugadorD.color, cantidad, noches, hotel) + Environment.NewLine);
         }
     }
 }

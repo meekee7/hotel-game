@@ -151,7 +151,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El jugador {0} ({1}) pide al jugador {2} ({3}) que pague {4}.
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) pide al jugador {2} ({3}) que pague {4} por {5} noches en el hotel {6}..
         /// </summary>
         internal static string MAPedirNochesOnline {
             get {
@@ -979,7 +979,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Debes pagar {0} noches ({1}) al jugador {2} ({3}).
+        ///   Busca una cadena traducida similar a Debes pagar {0} por {1} noches en el {2} al jugador {3} ({4}).
         /// </summary>
         internal static string mensajePagarNoches {
             get {

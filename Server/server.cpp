@@ -1334,7 +1334,8 @@ void handle_command(string command, Player* p)
             dest = (*i);
             if (dest != p) // Player doesn't have to pay himself :D
             {
-                amount = game->get_money_for_nights(p, dest, &nights);
+                wstring hotel_name;
+                amount = game->get_money_for_nights(p, dest, &nights, &hotel_name);
                 if (amount > 0) // The player is in a entrance and hasn't paid this turn
                 {
                     debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
@@ -1353,6 +1354,8 @@ void handle_command(string command, Player* p)
                         send_wstring(destj, dest->name);
                         send_int(destj, amount);
                         send_int(destj, nights);
+                        send_int(destj, get_utf8_length(hotel_name));
+                        send_wstring(destj, hotel_name);
                     }
                 }
             }

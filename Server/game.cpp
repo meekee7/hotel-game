@@ -288,7 +288,7 @@ void Game::eliminate_player(Player* player, Player* reiciving_player)
    }
 }
 
-int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Checks 'player' position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)
+int Game::get_money_for_nights(Player* owner, Player* player, int* nights, wstring* hotel) // Checks 'player' position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)
 {
    list<Hotel*>::iterator i;
    int amount = 0, dice_res = 0;
@@ -299,8 +299,10 @@ int Game::get_money_for_nights(Player* owner, Player* player, int* nights) // Ch
       if ((pos != (*i)->entrances.end()) && (!player->paid_last_turn)) // Player is in an entrance of this hotel, (it can't be in any other entrance). Enters only if player hasn't already paid this turn
       {
          dice_res = this->random->RollDice(6, 1);
-         wcout << currentDateTime() << L"Player: " << player->name << " must pay " << dice_res << " nights to player " << owner->name << endl;
          amount = (*i)->prices_matrix[(*i)->n_built_phases-1][dice_res-1];
+         (*hotel) = (*i)->name_txt;
+         wcout << currentDateTime() << L"Player: " << player->name << " must pay " << dice_res << " nights at " << hotel << " to player " << owner->name << endl;
+         break;
       }
    }
    (*nights) = dice_res;

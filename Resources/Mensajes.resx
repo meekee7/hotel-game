@@ -562,7 +562,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
     <value>El número mínimo de jugadores es 2</value>
   </data>
   <data name="mensajePagarNoches" xml:space="preserve">
-    <value>Debes pagar {0} noches ({1}) al jugador {2} ({3})</value>
+    <value>Debes pagar {0} por {1} noches en el {2} al jugador {3} ({4})</value>
   </data>
   <data name="mensajePartidaLlena" xml:space="preserve">
     <value>La partida {0} está llena</value>
@@ -664,7 +664,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
     <value>Salida</value>
   </data>
   <data name="MAPedirNochesOnline" xml:space="preserve">
-    <value>El jugador {0} ({1}) pide al jugador {2} ({3}) que pague {4}</value>
+    <value>El jugador {0} ({1}) pide al jugador {2} ({3}) que pague {4} por {5} noches en el hotel {6}.</value>
   </data>
   <data name="mensajeNombrePartidaLargo" xml:space="preserve">
     <value>El nombre de la partida no puede contener más de 50 caracteres</value>
