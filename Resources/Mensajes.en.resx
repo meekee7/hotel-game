@@ -672,4 +672,16 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeInputPasswordPartida" xml:space="preserve">
     <value>Specifiy a password in order to avoid anyone from loading it</value>
   </data>
+  <data name="MATirarDadoConstruccionDobleCoste" xml:space="preserve">
+    <value>Player {0} ({1}) has rolled the dice and he can build, but the cost will be double!</value>
+  </data>
+  <data name="MATirarDadoConstruccionGratis" xml:space="preserve">
+    <value>Player {0} ({1}) has rolled the dice and he can build, the cost will be free!</value>
+  </data>
+  <data name="MATirarDadoConstruccionKo" xml:space="preserve">
+    <value>Player {0} ({1}) has rolled the dice and he can't build!</value>
+  </data>
+  <data name="MATirarDadoConstruccionOk" xml:space="preserve">
+    <value>Player {0} ({1}) has rolled the dice and he can build!</value>
+  </data>
 </root>

@@ -672,4 +672,16 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeInputPasswordPartida" xml:space="preserve">
     <value>Especifica una contraseña para evitar que cualquiera la cargue</value>
   </data>
+  <data name="MATirarDadoConstruccionDobleCoste" xml:space="preserve">
+    <value>¡El jugador {0} ({1}) ha tirado el dado de construcción y puede construir pero con coste doble!</value>
+  </data>
+  <data name="MATirarDadoConstruccionGratis" xml:space="preserve">
+    <value>¡El jugador {0} ({1}) ha tirado el dado de construcción y puede construir gratis!</value>
+  </data>
+  <data name="MATirarDadoConstruccionKo" xml:space="preserve">
+    <value>¡El jugador {0} ({1}) ha tirado el dado de construcción pero no se le permite construir!</value>
+  </data>
+  <data name="MATirarDadoConstruccionOk" xml:space="preserve">
+    <value>¡El jugador {0} ({1}) ha tirado el dado de construcción y se le permite construir!</value>
+  </data>
 </root>

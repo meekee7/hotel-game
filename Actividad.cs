@@ -34,7 +34,23 @@ namespace Juego_Hotel
 
         public void Tirar_Dado_Construccion(Jugador jugador, Tipos.Resultado_dado_cons resultado)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccion, jugador.nombre_online, jugador.color, resultado.ToString()) + Environment.NewLine);
+            //this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccion, jugador.nombre_online, jugador.color, resultado.ToString()) + Environment.NewLine);
+            //Permitido, Gratis, Doble, Denegado
+            switch (resultado)
+            {
+                case (Tipos.Resultado_dado_cons.Permitido):
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionOk, jugador.nombre_online, jugador.color) + Environment.NewLine);
+                    break;
+                case (Tipos.Resultado_dado_cons.Gratis): 
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionGratis , jugador.nombre_online, jugador.color) + Environment.NewLine);
+                    break;
+                case (Tipos.Resultado_dado_cons.Doble):
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionDobleCoste, jugador.nombre_online, jugador.color) + Environment.NewLine);
+                    break;
+                case (Tipos.Resultado_dado_cons.Denegado): 
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionKo, jugador.nombre_online, jugador.color) + Environment.NewLine);
+                    break;
+            }
         }
 
         public void Pedir_Noches_Online(Jugador jugador, Jugador jugadorD, int cantidad, int noches, String hotel)

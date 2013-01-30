@@ -169,6 +169,42 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡El jugador {0} ({1}) ha tirado el dado de construcción y puede construir pero con coste doble!.
+        /// </summary>
+        internal static string MATirarDadoConstruccionDobleCoste {
+            get {
+                return ResourceManager.GetString("MATirarDadoConstruccionDobleCoste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡El jugador {0} ({1}) ha tirado el dado de construcción y puede construir gratis!.
+        /// </summary>
+        internal static string MATirarDadoConstruccionGratis {
+            get {
+                return ResourceManager.GetString("MATirarDadoConstruccionGratis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡El jugador {0} ({1}) ha tirado el dado de construcción pero no se le permite construir!.
+        /// </summary>
+        internal static string MATirarDadoConstruccionKo {
+            get {
+                return ResourceManager.GetString("MATirarDadoConstruccionKo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡El jugador {0} ({1}) ha tirado el dado de construcción y se le permite construir!.
+        /// </summary>
+        internal static string MATirarDadoConstruccionOk {
+            get {
+                return ResourceManager.GetString("MATirarDadoConstruccionOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Quieres comprobar si existe una versión del juego más actualizada?.
         /// </summary>
         internal static string mensajeActualizar {
