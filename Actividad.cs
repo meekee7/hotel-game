@@ -34,8 +34,6 @@ namespace Juego_Hotel
 
         public void Tirar_Dado_Construccion(Jugador jugador, Tipos.Resultado_dado_cons resultado)
         {
-            //this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccion, jugador.nombre_online, jugador.color, resultado.ToString()) + Environment.NewLine);
-            //Permitido, Gratis, Doble, Denegado
             switch (resultado)
             {
                 case (Tipos.Resultado_dado_cons.Permitido):
