@@ -55,5 +55,11 @@ namespace Juego_Hotel
         {
             this.mensajes.AppendText(String.Format(Mensajes.MAPedirNochesOnline, jugador.nombre_online, jugador.color, jugadorD.nombre_online, jugadorD.color, cantidad, noches, hotel) + Environment.NewLine);
         }
+
+        public void Expropiar_Hotel(Jugador expropiador, Jugador expropiado, String hotel)
+        {
+            this.mensajes.AppendText(String.Format(Mensajes.MAExpropiarHotel, expropiador.nombre_online, expropiador.color, expropiado.nombre_online, expropiado.color, hotel) + Environment.NewLine);
+        }
+
     }
 }

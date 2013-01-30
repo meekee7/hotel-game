@@ -142,6 +142,24 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha expropiado el hotel al jugador {2} ({3}) el hotel {4}..
+        /// </summary>
+        internal static string MAExpropiarHotel {
+            get {
+                return ResourceManager.GetString("MAExpropiarHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha intentado expropiar al jugador {2} ({3}) el hotel {4}, pero no ha podido..
+        /// </summary>
+        internal static string MAExpropiarHotelIntento {
+            get {
+                return ResourceManager.GetString("MAExpropiarHotelIntento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha pasado el turno..
         /// </summary>
         internal static string MAPasarTurno {

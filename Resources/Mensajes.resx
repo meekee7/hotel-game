@@ -672,6 +672,12 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeInputPasswordPartida" xml:space="preserve">
     <value>Especifica una contraseña para evitar que cualquiera la cargue</value>
   </data>
+  <data name="MAExpropiarHotel" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha expropiado el hotel al jugador {2} ({3}) el hotel {4}.</value>
+  </data>
+  <data name="MAExpropiarHotelIntento" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha intentado expropiar al jugador {2} ({3}) el hotel {4}, pero no ha podido.</value>
+  </data>
   <data name="MATirarDadoConstruccionDobleCoste" xml:space="preserve">
     <value>¡El jugador {0} ({1}) ha tirado el dado de construcción y puede construir pero con coste doble!</value>
   </data>

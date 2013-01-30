@@ -1189,6 +1189,8 @@ namespace Juego_Hotel
             partida.interfaz.BeginInvoke(new Hotel_comprado_Callback(partida.interfaz.Hotel_Comprado), hotel, jugador);
         }
 
+        delegate void Hotel_expropiado_Callback(Jugador jugador, Jugador expropiado, String hotel);
+
         private void Hotel_expropiado()
         {
             int bytes_recibidos = 0;
@@ -1204,6 +1206,7 @@ namespace Juego_Hotel
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
+            partida.interfaz.BeginInvoke(new Hotel_expropiado_Callback(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
         }
 
         delegate void Dibujar_Fase_Callback(Hotel hotel, int n_50);

@@ -892,6 +892,11 @@ namespace Juego_Hotel
             this.actividad.ComprarHotel(jugador.nombre_online, jugador.color.ToString(), hotel.nombre_txt); //Actualizando datos de la actividad
         }
 
+        public void Hotel_Expropiado(Jugador jugador,Jugador expropiado, String hotel)
+        {
+            this.actividad.Expropiar_Hotel(jugador, expropiado, hotel);
+        }
+
         public void Tirar_Dado_Construccion(Jugador jugador, Tipos.Resultado_dado_cons resultado)
         {
             this.actividad.Tirar_Dado_Construccion(jugador, resultado);

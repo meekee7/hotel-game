@@ -672,6 +672,12 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeInputPasswordPartida" xml:space="preserve">
     <value>Specifiy a password in order to avoid anyone from loading it</value>
   </data>
+  <data name="MAExpropiarHotel" xml:space="preserve">
+    <value>Player {0} ({1}) has expropiated to player {2} ({3}) the hotel {4}.</value>
+  </data>
+  <data name="MAExpropiarHotelIntento" xml:space="preserve">
+    <value>Player {0} ({1}) has tried to expropriate player {2} ({3}) the hotel {4}, he can't do it.</value>
+  </data>
   <data name="MATirarDadoConstruccionDobleCoste" xml:space="preserve">
     <value>Player {0} ({1}) has rolled the dice and he can build, but the cost will be double!</value>
   </data>
