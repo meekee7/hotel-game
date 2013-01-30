@@ -227,12 +227,13 @@ bool SavedgamesMgr::SaveGame(Game* game)
     return true;
 }
 
-Game* SavedgamesMgr::LoadGame(int id, wstring password)
+Game* SavedgamesMgr::LoadGame(int id, wstring password, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code)
 {
     if (!this->db_loaded_ok)
     {
         wcout << "Cannot load game because DB was not loaded ok" << endl;
-        return false;
+        (*error_code) = 1;
+        return NULL;
     }
     /*list<Player*>::iterator i;
     vector<int> bd_player_id_list;
@@ -240,6 +241,11 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password)
     MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM partida WHERE id = %d") % id));
     if (res->fetch_row())
     {
+        if (res->get_string_field("password") != utf16_to_utf8(password))
+        {
+            (*error_code) = 2;
+            return NULL;
+        }
         Game* game = NULL;
         return game;
     }

@@ -1609,6 +1609,16 @@ void handle_command(string command, Player* p)
         game->password = password;
         savedgamesmgr->SaveGame(game);
     }
+    else if (command == "load_game")
+    {
+        int bytes_received;
+        int len_int = receive_int(p, &bytes_received);
+        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_password = receive_int(p, &bytes_received);
+        wstring password = receive_wstring(p, len_password, &bytes_received);
+        int error_code = 0;
+        savedgamesmgr->LoadGame(id, password, &mutex_ids, &id_count, random_gen, &error_code);
+    }
 }
 
 void handle_client(void* arg)
