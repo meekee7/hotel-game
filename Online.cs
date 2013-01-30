@@ -1081,8 +1081,6 @@ namespace Juego_Hotel
             this.bUnirse.PerformClick();
         }
 
-        delegate void Tirar_Dado_Callback(Jugador jugador);
-
         private void Dado_tirado()
         {
             int bytes_recibidos = 0;
@@ -1099,7 +1097,7 @@ namespace Juego_Hotel
             jugador.posicion.ocupada = false;
             jugador.posicion = partida.interfaz.juego.casillas[pos];
             jugador.posicion.ocupada = true;
-            partida.interfaz.BeginInvoke(new Tirar_Dado_Callback(partida.interfaz.Tirar_dado), new object[] { jugador });
+            partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Tirar_dado), new object[] { jugador });
         }
 
         delegate void Tirar_Dado_Construccion_Callback(Jugador jugador, Tipos.Resultado_dado_cons resultado);

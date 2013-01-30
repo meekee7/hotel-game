@@ -227,6 +227,29 @@ bool SavedgamesMgr::SaveGame(Game* game)
     return true;
 }
 
+Game* SavedgamesMgr::LoadGame(int id, wstring password)
+{
+    if (!this->db_loaded_ok)
+    {
+        wcout << "Cannot load game because DB was not loaded ok" << endl;
+        return false;
+    }
+    /*list<Player*>::iterator i;
+    vector<int> bd_player_id_list;
+    vector<int> bd_hotel_id_list;*/
+    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM partida WHERE id = %d") % id));
+    if (res->fetch_row())
+    {
+        Game* game = NULL;
+        return game;
+    }
+    else
+    {
+        wcout << "Error retrieving game from DB" << endl;
+        return NULL;
+    }
+}
+
     /*MySQLResult* res = mgr->ExecuteQueryWithData("SELECT * FROM partida");
     if (res->fetch_row())
     {

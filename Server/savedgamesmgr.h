@@ -12,6 +12,7 @@ public:
     bool keeping_alive;
     void KeepAlive();
     bool SaveGame(Game* game);
+    Game* LoadGame(int id, wstring password);
     SavedgamesMgr(void);
     ~SavedgamesMgr(void);
 };
