@@ -247,17 +247,5 @@ namespace Juego_Hotel
                 }
             }
         }
-
-        public string InputBox(string prompt, string title, string defaultValue)
-        {
-            InputBoxDialog ib = new InputBoxDialog();
-            ib.FormPrompt = prompt;
-            ib.FormCaption = title;
-            ib.DefaultValue = defaultValue;
-            ib.ShowDialog();
-            string s = ib.InputResponse;
-            ib.Close();
-            return s;
-        }
     }
 }
