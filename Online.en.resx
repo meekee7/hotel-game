@@ -112,13 +112,17 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bConectar.Text" xml:space="preserve">
     <value>Connect</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="bDesconectar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 23</value>
   </data>
   <data name="bDesconectar.Text" xml:space="preserve">
     <value>Disconnect</value>
@@ -129,7 +133,6 @@
   <data name="bCrearConv.Text" xml:space="preserve">
     <value>Create conversation</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="LUsuarios.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 13</value>
   </data>
@@ -146,7 +149,7 @@
     <value>Global chat</value>
   </data>
   <data name="bUnirse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 23</value>
+    <value>82, 23</value>
   </data>
   <data name="bUnirse.Text" xml:space="preserve">
     <value>Join game</value>
@@ -156,5 +159,11 @@
   </data>
   <data name="checkSrvOficial.Text" xml:space="preserve">
     <value>Official server</value>
+  </data>
+  <data name="bCargarPartida.Location" type="System.Drawing.Point, System.Drawing">
+    <value>264, 315</value>
+  </data>
+  <data name="bCargarPartida.Text" xml:space="preserve">
+    <value>Load game</value>
   </data>
 </root>

@@ -128,15 +128,36 @@ bool SavedgamesMgr::SaveGame(Game* game)
             % p->n_1000 % p->n_5000 % utf16_to_utf8(hotel_list));
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
-            wcout << "Error inserting player data" << endl;
-            return false;
+            wcout << "Error inserting player data, reconnecting to try again..." << endl;
+            if (this->db->ReConnectWithLastUsedValues())
+            {
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                {
+                    wcout << "Error inserting player data" << endl;
+                    return false;
+                }
+            }
+            else
+            {
+                wcout << "Error inserting player data" << endl;
+                return false;
+            }
         }
-        else
+        int bd_id = this->db->GetLastInsertId();
+        if (bd_id < 0)
         {
-            int bd_id = this->db->GetLastInsertId();
-            wcout << "Player data inserted successfully with id " << bd_id << endl;
-            bd_player_id_list.push_back(bd_id);
+            if (this->db->ReConnectWithLastUsedValues())
+            {
+                bd_id = this->db->GetLastInsertId();
+            }
+            else
+            {
+                wcout << "Error getting last insert id" << endl;
+                return false;
+            }
         }
+        wcout << "Player data inserted successfully with id " << bd_id << endl;
+        bd_player_id_list.push_back(bd_id);
     }
     // Hotel status
     list<Hotel*>::iterator k;
@@ -161,7 +182,112 @@ bool SavedgamesMgr::SaveGame(Game* game)
             % utf16_to_utf8(h->name_txt) % h->n_built_phases % h->entrance_bought_last_turn % h->ground_bought % entrance_list);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
-            wcout << "Error inserting hotel data, rolling back..." << endl;
+            wcout << "Error inserting hotel data, reconnecting to try again..." << endl;
+            if (this->db->ReConnectWithLastUsedValues())
+            {
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                {
+                    wcout << "Error inserting hotel data, rolling back..." << endl;
+                    // Rollback
+                    vector<int>::iterator a;
+                    for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+                    {
+                        query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                        if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                            wcout << "Error deleting player data with id " << (*a) << endl;
+                        else
+                            wcout << "Deleted player data with id " << (*a) << endl;
+                    }
+                    for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+                    {
+                        query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                        if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                            wcout << "Error deleting hotel data with id " << (*a) << endl;
+                        else
+                            wcout << "Deleted hotel data with id " << (*a) << endl;
+                    }
+                    return false;
+                }
+            }
+            else
+            {
+                wcout << "Error inserting hotel data, rolling back..." << endl;
+                // Rollback
+                vector<int>::iterator a;
+                for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting player data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted player data with id " << (*a) << endl;
+                }
+                for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting hotel data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted hotel data with id " << (*a) << endl;
+                }
+                return false;
+            }
+        }
+        int bd_id = this->db->GetLastInsertId();
+        if (bd_id < 0)
+        {
+            if (this->db->ReConnectWithLastUsedValues())
+            {
+                bd_id = this->db->GetLastInsertId();
+            }
+            else
+            {
+                wcout << "Error getting last insert id" << endl;
+                return false;
+            }
+        }
+        wcout << "Hotel data inserted successfully with id " << bd_id << endl;
+        bd_hotel_id_list.push_back(bd_id);
+    }
+    // Game data
+    string query = str(boost::format("INSERT INTO partida VALUES (NULL,\"%s\",\"%s\",NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
+        % utf16_to_utf8(game->password) % utf16_to_utf8(game->name) % game->turn_count % game->n_players % game->active_plist.size() % game->starting_player
+        % game->current_player->num % game->last_dice_res % game->last_auto_advance
+        % bd_hotel_id_list[0] % bd_hotel_id_list[1] % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]
+        % bd_player_id_list[0] % bd_player_id_list[1] % (bd_player_id_list.size() > 2 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL")
+        % (bd_player_id_list.size() > 3 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL"));
+    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+    {
+        wcout << "Error inserting game data, reconnecting to try again..." << endl;
+        if (this->db->ReConnectWithLastUsedValues())
+        {
+            if (this->db->ExecuteQueryWithoutData(query) <= 0)
+            {
+                wcout << "Error inserting game data, rolling back..." << endl;
+                // Rollback
+                vector<int>::iterator a;
+                for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting player data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted player data with id " << (*a) << endl;
+                }
+                for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting hotel data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted hotel data with id " << (*a) << endl;
+                }
+                return false;
+            }
+        }
+        else
+        {
+            wcout << "Error inserting game data, rolling back..." << endl;
             // Rollback
             vector<int>::iterator a;
             for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
@@ -182,52 +308,25 @@ bool SavedgamesMgr::SaveGame(Game* game)
             }
             return false;
         }
+    }
+    int bd_id = this->db->GetLastInsertId();
+    if (bd_id < 0)
+    {
+        if (this->db->ReConnectWithLastUsedValues())
+        {
+            bd_id = this->db->GetLastInsertId();
+        }
         else
         {
-            int bd_id = this->db->GetLastInsertId();
-            wcout << "Hotel data inserted successfully with id " << bd_id << endl;
-            bd_hotel_id_list.push_back(bd_id);
+            wcout << "Error getting last insert id" << endl;
+            return false;
         }
     }
-    // Game data
-    string query = str(boost::format("INSERT INTO partida VALUES (NULL,\"%s\",\"%s\",NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
-        % utf16_to_utf8(game->password) % utf16_to_utf8(game->name) % game->turn_count % game->n_players % game->active_plist.size() % game->starting_player
-        % game->current_player->num % game->last_dice_res % game->last_auto_advance
-        % bd_hotel_id_list[0] % bd_hotel_id_list[1] % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]
-        % bd_player_id_list[0] % bd_player_id_list[1] % (bd_player_id_list.size() > 2 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL")
-        % (bd_player_id_list.size() > 3 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL"));
-    if (this->db->ExecuteQueryWithoutData(query) <= 0)
-    {
-        wcout << "Error inserting game data, rolling back..." << endl;
-        // Rollback
-        vector<int>::iterator a;
-        for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
-        {
-            query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
-            if (this->db->ExecuteQueryWithoutData(query) <= 0)
-                wcout << "Error deleting player data with id " << (*a) << endl;
-            else
-                wcout << "Deleted player data with id " << (*a) << endl;
-        }
-        for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
-        {
-            query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
-            if (this->db->ExecuteQueryWithoutData(query) <= 0)
-                wcout << "Error deleting hotel data with id " << (*a) << endl;
-            else
-                wcout << "Deleted hotel data with id " << (*a) << endl;
-        }
-        return false;
-    }
-    else
-    {
-        int bd_id = this->db->GetLastInsertId();
-        wcout << "Game data inserted successfully with id " << bd_id << endl;
-    }
+    wcout << "Game data inserted successfully with id " << bd_id << endl;
     return true;
 }
 
-Game* SavedgamesMgr::LoadGame(int id, wstring password, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code)
+Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code)
 {
     if (!this->db_loaded_ok)
     {
@@ -238,7 +337,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, dlib::mutex* mutex_ids, 
     /*list<Player*>::iterator i;
     vector<int> bd_player_id_list;
     vector<int> bd_hotel_id_list;*/
-    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM partida WHERE id = %d") % id));
+    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM partida WHERE id = %d;") % id));
     if (res->fetch_row())
     {
         if (res->get_string_field("password") != utf16_to_utf8(password))
@@ -246,7 +345,45 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, dlib::mutex* mutex_ids, 
             (*error_code) = 2;
             return NULL;
         }
-        Game* game = NULL;
+        wstring name = utf8_to_utf16(res->get_string_field("nombre"));
+        int n_players = res->get_int_field("num_jugadores");
+        int n_active_players = res->get_int_field("num_jugadores_activos");
+        int n_turns = res->get_int_field("num_turnos");
+        int starting_player = res->get_int_field("jugador_inicial");
+        int current_player = res->get_int_field("jugador_actual");
+        int last_dice_res = res->get_int_field("ultimo_res_dado");
+        int last_auto_advance = res->get_int_field("ultimo_avance_auto");
+        int Fujiyama_status_id = res->get_int_field("estado_Fujiyama");
+        int Boomerang_status_id = res->get_int_field("estado_Boomerang");
+        int Letoile_status_id = res->get_int_field("estado_Letoile");
+        int President_status_id = res->get_int_field("estado_President");
+        int Royal_status_id = res->get_int_field("estado_Royal");
+        int Waikiki_status_id = res->get_int_field("estado_Waikiki");
+        int TajMahal_status_id = res->get_int_field("estado_TajMahal");
+        int Safari_status_id = res->get_int_field("estado_Safari");
+        MySQLResult* res_hotel_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_hotel WHERE id IN (%d, %d, %d, %d, %d, %d, %d, %d) ORDER BY id ASC;")
+            % Fujiyama_status_id % Boomerang_status_id % Letoile_status_id % President_status_id % Royal_status_id % Waikiki_status_id % TajMahal_status_id % Safari_status_id));
+        int p1_status_id = res->get_int_field("estado_j1");
+        int p2_status_id = res->get_int_field("estado_j2");
+        MySQLResult* res_player_statuses;
+        if (n_players == 2)
+            res_player_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id IN (%d, %d) ORDER BY id ASC;") % p1_status_id % p2_status_id));
+        else
+        {
+            if (n_players > 2)
+            {
+                int p3_status_id = res->get_int_field("estado_j3");
+                res_player_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id IN (%d, %d, %d) ORDER BY id ASC;")
+                    % p1_status_id % p2_status_id % p3_status_id));
+                if (n_players > 3)
+                {
+                    int p4_status_id = res->get_int_field("estado_j4");
+                    res_player_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id IN (%d, %d, %d, %d) ORDER BY id ASC;")
+                        % p1_status_id % p2_status_id % p3_status_id));
+                }
+            }
+        }
+        Game* game = new Game(name, n_players, creator, mutex_ids, id_count, random_gen);
         return game;
     }
     else

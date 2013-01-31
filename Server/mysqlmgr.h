@@ -56,12 +56,15 @@ class MySQLMgr
 {
 private:
     MySQLConnection* connection;
+    string host, username, password, dbname;
+    int port;
 public:
     #ifdef _WIN32
         sql::mysql::MySQL_Driver *driver;
         bool IsClosed();
     #endif
     bool Connect (string host, int port, string username, string password, string database);
+    bool ReConnectWithLastUsedValues();
     void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithoutData(string query);

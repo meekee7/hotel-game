@@ -45,6 +45,7 @@
             this.checkSrvOficial = new System.Windows.Forms.CheckBox();
             this.txtPuerto = new System.Windows.Forms.TextBox();
             this.labelDosPuntos = new System.Windows.Forms.Label();
+            this.bCargarPartida = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtLogin
@@ -153,10 +154,18 @@
             resources.ApplyResources(this.labelDosPuntos, "labelDosPuntos");
             this.labelDosPuntos.Name = "labelDosPuntos";
             // 
+            // bCargarPartida
+            // 
+            resources.ApplyResources(this.bCargarPartida, "bCargarPartida");
+            this.bCargarPartida.Name = "bCargarPartida";
+            this.bCargarPartida.UseVisualStyleBackColor = true;
+            this.bCargarPartida.Click += new System.EventHandler(this.bCargarPartida_Click);
+            // 
             // Online
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.bCargarPartida);
             this.Controls.Add(this.labelDosPuntos);
             this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.checkSrvOficial);
@@ -199,5 +208,6 @@
         private System.Windows.Forms.CheckBox checkSrvOficial;
         private System.Windows.Forms.TextBox txtPuerto;
         private System.Windows.Forms.Label labelDosPuntos;
+        private System.Windows.Forms.Button bCargarPartida;
     }
 }

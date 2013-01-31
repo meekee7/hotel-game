@@ -17,6 +17,11 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
         }
         wcout << "Database connection succesful!" << endl;
         this->connection->conn->setSchema(database);
+        this->host = host;
+        this->port = port;
+        this->username = username;
+        this->password = password;
+        this->dbname = dbname;
         return true;
     #else
         this->connection->conn = mysql_init(NULL);
@@ -32,6 +37,11 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
             return true;
         }
     #endif
+}
+
+bool MySQLMgr::ReConnectWithLastUsedValues()
+{
+    return this->Connect(this->host, this->port, this->username, this->password, this->dbname);
 }
 
 void MySQLMgr::KeepAlive()
@@ -161,6 +171,7 @@ int MySQLConnection::GetLastInsertId()
         catch (sql::SQLException e)
         {
             wcout << "Error obtanining last insert id. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            id = -1;
         }
         if (result != NULL)
             delete result;
@@ -207,7 +218,15 @@ bool MySQLResult::fetch_row()
 int MySQLResult::get_int_field(string name)
 {
     #ifdef _WIN32
-        return this->result->getInt(name);
+        try
+        {
+            return this->result->getInt(name);
+        }
+        catch (sql::SQLException e)
+        {
+            cout << "Error getting field \"" << name << "\", does it exist?" << endl;
+            return -1;
+        }
     #else
         MYSQL_FIELD *field;
         int field_index = -1;
@@ -230,7 +249,15 @@ int MySQLResult::get_int_field(string name)
 int MySQLResult::get_int_field(int index)
 {
     #ifdef _WIN32
-        return this->result->getInt(index);
+        try
+        {
+            return this->result->getInt(index);
+        }
+        catch (sql::SQLException e)
+        {
+            cout << "Error getting field index " << index << ", does it exist?" << endl;
+            return -1;
+        }
     #else
         if (index < 0)
             return 0;
@@ -242,7 +269,15 @@ int MySQLResult::get_int_field(int index)
 string MySQLResult::get_string_field(string name)
 {
     #ifdef _WIN32
-        return this->result->getString(name);
+        try
+        {
+            return this->result->getString(name);
+        }
+        catch (sql::SQLException e)
+        {
+            cout << "Error getting field \"" << name << "\", does it exist?" << endl;
+            return "";
+        }
     #else
         MYSQL_FIELD *field;
         int field_index = -1;
@@ -265,7 +300,15 @@ string MySQLResult::get_string_field(string name)
 string MySQLResult::get_string_field(int index)
 {
     #ifdef _WIN32
-        return this->result->getString(index);
+        try
+        {
+            return this->result->getString(index);
+        }
+        catch (sql::SQLException e)
+        {
+            cout << "Error getting field index " << index << ", does it exist?" << endl;
+            return "";
+        }
     #else
         if (index < 0)
             return 0;
@@ -277,7 +320,15 @@ string MySQLResult::get_string_field(int index)
 bool MySQLResult::get_bool_field(string name)
 {
     #ifdef _WIN32
-        return this->result->getBoolean(name);
+        try
+        {
+            return this->result->getBoolean(name);
+        }
+        catch (sql::SQLException e)
+        {
+            cout << "Error getting field \"" << name << "\", does it exist?" << endl;
+            return false;
+        }
     #else
         MYSQL_FIELD* field;
         int field_index = -1;
@@ -306,7 +357,15 @@ bool MySQLResult::get_bool_field(string name)
 bool MySQLResult::get_bool_field(int index)
 {
     #ifdef _WIN32
-        return this->result->getBoolean(index);
+        try
+        {
+            return this->result->getBoolean(index);
+        }
+        catch (sql::SQLException e)
+        {
+            cout << "Error getting field index " << index << ", does it exist?" << endl;
+            return false;
+        }
     #else
         if (index < 0)
             return false;

@@ -42,6 +42,7 @@ namespace Juego_Hotel
             this.bCrearConv.Enabled = false;
             this.bLogin.Enabled = false;
             this.bCrearPartida.Enabled = false;
+            this.bCargarPartida.Enabled = false;
         }
 
         public String recibir_string(Socket s, int longitud, ref int bytes_recibidos)
@@ -189,6 +190,7 @@ namespace Juego_Hotel
                             this.conectado = true;
                             this.bLogin.Enabled = false;
                             this.bCrearPartida.Enabled = true;
+                            this.bCargarPartida.Enabled = true;
                             this.bCrearConv.Enabled = true;
                             this.txtLogin.Enabled = false;
                             this.bChatGlobal.Enabled = true;
@@ -1452,6 +1454,23 @@ namespace Juego_Hotel
                         c.Text = resources.GetString(c.Name + ".Text");
                 }
             }
+        }
+
+        private void bCargarPartida_Click(object sender, EventArgs e)
+        {
+            String id = this.InputBox(Mensajes.mensajeIntroduceID, Mensajes.tituloCargarPartida, "");
+            if (id == String.Empty)
+            {
+                MessageBox.Show(Mensajes.mensajeIDPartidaVacio);
+                return;
+            }
+            String password = this.InputBox(Mensajes.mensajeIntroducePassword, Mensajes.tituloCargarPartida, "");
+            if (password == String.Empty)
+            {
+                MessageBox.Show(Mensajes.mensajePasswordVacia);
+                return;
+            }
+            this.enviar_comando("load_game", id, password);
         }
     }
 }

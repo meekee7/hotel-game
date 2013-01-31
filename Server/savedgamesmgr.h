@@ -13,7 +13,7 @@ public:
     bool keeping_alive;
     void KeepAlive();
     bool SaveGame(Game* game);
-    Game* LoadGame(int id, wstring password, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code);
+    Game* LoadGame(int id, wstring password, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code);
     SavedgamesMgr(void);
     ~SavedgamesMgr(void);
 };

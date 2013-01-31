@@ -1617,7 +1617,7 @@ void handle_command(string command, Player* p)
         int len_password = receive_int(p, &bytes_received);
         wstring password = receive_wstring(p, len_password, &bytes_received);
         int error_code = 0;
-        savedgamesmgr->LoadGame(id, password, &mutex_ids, &id_count, random_gen, &error_code);
+        savedgamesmgr->LoadGame(id, password, p, &mutex_ids, &id_count, random_gen, &error_code);
     }
 }
 

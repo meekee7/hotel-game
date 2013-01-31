@@ -690,4 +690,16 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="MATirarDadoConstruccionOk" xml:space="preserve">
     <value>¡El jugador {0} ({1}) ha tirado el dado de construcción y se le permite construir!</value>
   </data>
+  <data name="mensajeIDPartidaVacio" xml:space="preserve">
+    <value>El ID no puede quedar en blanco</value>
+  </data>
+  <data name="mensajeIntroduceID" xml:space="preserve">
+    <value>Introduce el ID de la partida salvada</value>
+  </data>
+  <data name="mensajeIntroducePassword" xml:space="preserve">
+    <value>Introduce la contraseña de la partida</value>
+  </data>
+  <data name="mensajePasswordVacia" xml:space="preserve">
+    <value>La contraseña no puede quedar en blanco</value>
+  </data>
 </root>
