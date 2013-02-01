@@ -62,12 +62,22 @@ SavedgamesMgr::SavedgamesMgr(void)
         this->db = new MySQLMgr();
         if (this->db->Connect(host, port, username, password, dbname))
         {
+            this->CleanInconsistentData();
             dlib::create_new_thread(KeepAliveWrapper, (void*) this);
             this->db_loaded_ok = true;
         }
         else
             this->db_loaded_ok = false;
     }
+}
+
+void SavedgamesMgr::CleanInconsistentData()
+{
+    wcout << "Inconsistent data cleanup in progress" << endl;
+    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_hotel WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " hotel statuses" << endl;
+    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_jugador WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " player statuses" << endl;
+    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM partida WHERE estado_Fujiyama IS NULL OR estado_Boomerang IS NULL OR estado_Letoile IS NULL OR estado_President IS NULL OR estado_Royal IS NULL OR estado_Waikiki IS NULL OR estado_TajMahal IS NULL OR estado_Safari IS NULL OR estado_j1 IS NULL OR estado_j2 IS NULL") << " saved games with incomplete data" << endl;
+    wcout << "Cleanup completed" << endl;
 }
 
 void SavedgamesMgr::KeepAlive()
@@ -123,7 +133,7 @@ bool SavedgamesMgr::SaveGame(Game* game)
                 idx++;
             }
         }
-        string query = str(boost::format("INSERT INTO estado_jugador VALUES (NULL,\"%s\",%d,%d,%d,%d,%d,%d,%d,\"%s\");")
+        string query = str(boost::format("INSERT INTO estado_jugador VALUES (NULL,NULL,\"%s\",%d,%d,%d,%d,%d,%d,%d,\"%s\");")
             % utf16_to_utf8(p->name) % p->position->number % p->paid_last_turn % p->n_50 % p->n_100 % p->n_500
             % p->n_1000 % p->n_5000 % utf16_to_utf8(hotel_list));
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
@@ -178,7 +188,7 @@ bool SavedgamesMgr::SaveGame(Game* game)
                 idx++;
             }
         }
-        string query = str(boost::format("INSERT INTO estado_hotel VALUES (NULL,\"%s\",%d,%d,%d,\"%s\");")
+        string query = str(boost::format("INSERT INTO estado_hotel VALUES (NULL,NULL,\"%s\",%d,%d,%d,\"%s\");")
             % utf16_to_utf8(h->name_txt) % h->n_built_phases % h->entrance_bought_last_turn % h->ground_bought % entrance_list);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
@@ -319,6 +329,145 @@ bool SavedgamesMgr::SaveGame(Game* game)
         else
         {
             wcout << "Error getting last insert id" << endl;
+            return false;
+        }
+    }
+    // Associate all statuses with game ID
+    query = str(boost::format("UPDATE estado_hotel SET id_partida = %d WHERE id IN (%d, %d, %d, %d, %d, %d, %d, %d);") % bd_id % bd_hotel_id_list[0] % bd_hotel_id_list[1]
+        % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]);
+    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+    {
+        wcout << "Error associating hotels with game data, reconnecting to try again..." << endl;
+        if (this->db->ReConnectWithLastUsedValues())
+        {
+            if (this->db->ExecuteQueryWithoutData(query) <= 0)
+            {
+                wcout << "Error associating hotels with game data, rolling back..." << endl;
+                // Rollback
+                vector<int>::iterator a;
+                for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting player data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted player data with id " << (*a) << endl;
+                }
+                for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting hotel data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted hotel data with id " << (*a) << endl;
+                }
+                query = str(boost::format("DELETE FROM partida WHERE id = %d;") % bd_id);
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                    wcout << "Error deleting game data with id " << bd_id << endl;
+                else
+                    wcout << "Deleted game data with id " << bd_id << endl;
+                return false;
+            }
+        }
+        else
+        {
+            // Rollback
+            vector<int>::iterator a;
+            for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+            {
+                query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                    wcout << "Error deleting player data with id " << (*a) << endl;
+                else
+                    wcout << "Deleted player data with id " << (*a) << endl;
+            }
+            for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+            {
+                query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                    wcout << "Error deleting hotel data with id " << (*a) << endl;
+                else
+                    wcout << "Deleted hotel data with id " << (*a) << endl;
+            }
+            query = str(boost::format("DELETE FROM partida WHERE id = %d;") % bd_id);
+            if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                wcout << "Error deleting game data with id " << bd_id << endl;
+            else
+                wcout << "Deleted game data with id " << bd_id << endl;
+            return false;
+        }
+    }
+    if (bd_player_id_list.size() == 2)
+        query = str(boost::format("UPDATE estado_jugador SET id_partida = %d WHERE id IN (%d, %d);") % bd_id % bd_player_id_list[0] % bd_player_id_list[1]);
+    else if (bd_player_id_list.size() == 3)
+    {
+        query = str(boost::format("UPDATE estado_jugador SET id_partida = %d WHERE id IN (%d, %d, %d);") % bd_id % bd_player_id_list[0] % bd_player_id_list[1]
+        % bd_player_id_list[2]);
+    }
+    else
+    {
+        query = str(boost::format("UPDATE estado_jugador SET id_partida = %d WHERE id IN (%d, %d, %d, %d);") % bd_id % bd_player_id_list[0] % bd_player_id_list[1]
+        % bd_player_id_list[2] % bd_player_id_list[3]);
+    }
+    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+    {
+        wcout << "Error associating players with game data, reconnecting to try again..." << endl;
+        if (this->db->ReConnectWithLastUsedValues())
+        {
+            if (this->db->ExecuteQueryWithoutData(query) <= 0)
+            {
+                wcout << "Error associating players with game data, rolling back..." << endl;
+                // Rollback
+                vector<int>::iterator a;
+                for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting player data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted player data with id " << (*a) << endl;
+                }
+                for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+                {
+                    query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                    if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                        wcout << "Error deleting hotel data with id " << (*a) << endl;
+                    else
+                        wcout << "Deleted hotel data with id " << (*a) << endl;
+                }
+                query = str(boost::format("DELETE FROM partida WHERE id = %d;") % bd_id);
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                    wcout << "Error deleting game data with id " << bd_id << endl;
+                else
+                    wcout << "Deleted game data with id " << bd_id << endl;
+                return false;
+            }
+        }
+        else
+        {
+            // Rollback
+            vector<int>::iterator a;
+            for (a = bd_player_id_list.begin() ; a != bd_player_id_list.end() ; a++)
+            {
+                query = str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % (*a));
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                    wcout << "Error deleting player data with id " << (*a) << endl;
+                else
+                    wcout << "Deleted player data with id " << (*a) << endl;
+            }
+            for (a = bd_hotel_id_list.begin() ; a != bd_hotel_id_list.end() ; a++)
+            {
+                query = str(boost::format("DELETE FROM estado_hotel WHERE id = %d;") % (*a));
+                if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                    wcout << "Error deleting hotel data with id " << (*a) << endl;
+                else
+                    wcout << "Deleted hotel data with id " << (*a) << endl;
+            }
+            query = str(boost::format("DELETE FROM partida WHERE id = %d;") % bd_id);
+            if (this->db->ExecuteQueryWithoutData(query) <= 0)
+                wcout << "Error deleting game data with id " << bd_id << endl;
+            else
+                wcout << "Deleted game data with id " << bd_id << endl;
             return false;
         }
     }
