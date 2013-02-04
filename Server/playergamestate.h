@@ -1,11 +1,11 @@
 #pragma once
 #include <list>
-#include "position.h"
 
 using namespace std;
 
 class Hotel;
 class Player;
+class Position;
 
 class PlayerGameState
 {

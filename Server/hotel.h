@@ -1,9 +1,13 @@
 #pragma once
 #include <vector>
+#include <list>
 #include <algorithm>
-#include "player.h"
 #include "types.h"
 #include "position.h"
+
+using namespace std;
+
+class Player;
 
 class Hotel
 {
