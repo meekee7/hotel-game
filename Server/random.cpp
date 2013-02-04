@@ -2,16 +2,16 @@
 
 CRandomMT::CRandomMT() : left(-1)
 {
-	SeedMT(DEFAULT_SEED);
+    SeedMT(DEFAULT_SEED);
 }
 
 CRandomMT::CRandomMT(ULONG _seed) : left(-1), seedValue(_seed)
 {
-	SeedMT(seedValue);
+    SeedMT(seedValue);
 }
 
 void CRandomMT::SeedMT(ULONG seed)
- {
+{
     //
     // We initialize state[0..(N-1)] via the generator
     //
@@ -63,12 +63,12 @@ void CRandomMT::SeedMT(ULONG seed)
 
     for(left=0, *s++=x, j=N; --j;
         *s++ = (x*=69069U) & 0xFFFFFFFFU);
-	seedValue = seed;	// Save the seed value used - DHL
- }
+        seedValue = seed;	// Save the seed value used - DHL
+}
 
 
 ULONG CRandomMT::ReloadMT(void)
- {
+{
     register ULONG *p0=state, *p2=state+2, *pM=state+M, s0, s1;
     register int    j;
 
@@ -88,7 +88,7 @@ ULONG CRandomMT::ReloadMT(void)
     s1 ^= (s1 <<  7) & 0x9D2C5680U;
     s1 ^= (s1 << 15) & 0xEFC60000U;
     return(s1 ^ (s1 >> 18));
- }
+}
 
 
 

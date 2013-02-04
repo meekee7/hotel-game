@@ -188,6 +188,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Config.xml" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
@@ -198,6 +199,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hotel.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playergamestate.cpp" />
     <ClCompile Include="portable_socket.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="random.cpp" />
@@ -215,6 +217,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
     <ClInclude Include="game.h" />
     <ClInclude Include="hotel.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playergamestate.h" />
     <ClInclude Include="portable_socket.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="random.h" />
