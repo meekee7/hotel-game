@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <string>
 #include "types.h"
 #include "position.h"
 
