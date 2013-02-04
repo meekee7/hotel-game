@@ -6,10 +6,9 @@
 #include "types.h"
 #include "position.h"
 #include "playergamestate.h"
+#include "hotel.h"
 
 using namespace std;
-
-class Hotel;
 
 class Player
 {
