@@ -2,6 +2,15 @@
 
 PlayerGameState::PlayerGameState(void)
 {
+    this->rolled_last_turn = false;
+    this->charged_bank_last_turn = false;
+    this->bought_last_turn = false;
+    this->built_last_turn = false;
+    this->paid_last_turn = false;
+    this->free_entrance_used = false;
+    this->debt_last_turn = 0;
+    this->debt_nights_to_last_turn = NULL;
+    this->position = new Position(0);
 }
 
 void PlayerGameState::Calculate_total_money()
