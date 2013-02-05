@@ -497,8 +497,6 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         game->eliminate_player(player, NULL);
-        //if (!game->leave(player)) // Possible hack
-        //return kick_hacker(2, player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -773,8 +771,7 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(9, player);
-                return;
+            return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
             return;
@@ -808,8 +805,7 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(13, player);
-                return;
+            return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
             return;
@@ -844,7 +840,6 @@ void handle_command(string command, Player* player)
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
             return;
-        //return kick_hacker(16, player);
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
             return;
@@ -875,8 +870,7 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(20, player);
-                return;
+            return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
             return;
@@ -920,7 +914,6 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(22, player);
             return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
@@ -994,7 +987,6 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(29, player);
             return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
@@ -1084,7 +1076,6 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(36, player);
             return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
@@ -1092,8 +1083,6 @@ void handle_command(string command, Player* player)
         if (game->current_player != player) // Hack, retire player
             return kick_hacker(37, player);
         // You can also buy the ground in any type of position
-        //if ((state->position->type != build) && (state->position->type != free_phase)) // Hack, retire player
-        //return kick_hacker(38, player);
         if (state->built_last_turn) // Hack, retire player
             return kick_hacker(39, player);
         Hotel* hotel = get_hotel_from_name(hotel_name, game);
@@ -1194,7 +1183,6 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(49, player);
             return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
@@ -1275,7 +1263,6 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(59, player);
             return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
@@ -1348,14 +1335,12 @@ void handle_command(string command, Player* player)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(62, player);
             return;
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
             return;
         if (game->current_player == player) // The client does not allow this
             return;
-        //return kick_hacker(62, player);
         int amount = 0, nights = 0;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
         {
@@ -1412,7 +1397,6 @@ void handle_command(string command, Player* player)
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
             return;
-        //return kick_hacker(64, player);
         PlayerGameState* state = player->GetState(game->id);
         if (state == NULL)
             return;
