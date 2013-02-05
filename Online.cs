@@ -1066,8 +1066,8 @@ namespace Juego_Hotel
         {
             String linea = this.listaPartidas.SelectedItem.ToString();
             this.enviar_comando("join_game", linea.Substring(0, linea.IndexOf(" (")));
-            this.bUnirse.Enabled = false;
-            this.bCrearPartida.Enabled = false;
+            //this.bUnirse.Enabled = false;
+            //this.bCrearPartida.Enabled = false;
         }
 
         private void listaPartidas_SelectedIndexChanged(object sender, EventArgs e)
