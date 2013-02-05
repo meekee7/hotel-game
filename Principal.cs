@@ -1293,6 +1293,16 @@ namespace Juego_Hotel
             entrada.BringToFront();
         }
 
+        public void Añadir_Entrada(Jugador jugador, int casilla, String hotel)
+        {
+            this.actividad.Añadir_Entrada(jugador, casilla, hotel);
+        }
+
+        public void Añadir_Fase(Jugador jugador, int fase, String hotel)
+        {
+            this.actividad.Añadir_Fase(jugador, fase, hotel);
+        }
+
         private void bNormas_Click(object sender, EventArgs e)
         {
             Reglas frm_reglas = new Reglas();

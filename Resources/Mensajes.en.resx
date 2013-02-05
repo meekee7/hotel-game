@@ -690,6 +690,12 @@ No permission is needed to build them. Continue?</value>
   <data name="MATirarDadoConstruccionOk" xml:space="preserve">
     <value>Player {0} ({1}) has rolled the dice and he can build!</value>
   </data>
+  <data name="MAEntradaAñadida" xml:space="preserve">
+    <value>Player {0} ({1}) has added an entrance (in possition {2}) at hotel {3}.</value>
+  </data>
+  <data name="MAFaseAñadida" xml:space="preserve">
+    <value>Player {0} ({1}) has added a phase (number {2}) at hotel {3}.</value>
+  </data>
   <data name="mensajeIDPartidaVacio" xml:space="preserve">
     <value>The ID cannot be blank</value>
   </data>

@@ -142,6 +142,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha añadido una entrada (en la posición {2}) al hotel {3}..
+        /// </summary>
+        internal static string MAEntradaAñadida {
+            get {
+                return ResourceManager.GetString("MAEntradaAñadida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha expropiado el hotel al jugador {2} ({3}) el hotel {4}..
         /// </summary>
         internal static string MAExpropiarHotel {
@@ -156,6 +165,15 @@ namespace Juego_Hotel.Resources {
         internal static string MAExpropiarHotelIntento {
             get {
                 return ResourceManager.GetString("MAExpropiarHotelIntento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha añadido una fase (la número {2}) al hotel {3}..
+        /// </summary>
+        internal static string MAFaseAñadida {
+            get {
+                return ResourceManager.GetString("MAFaseAñadida", resourceCulture);
             }
         }
         

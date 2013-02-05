@@ -1212,6 +1212,7 @@ namespace Juego_Hotel
         }
 
         delegate void Dibujar_Fase_Callback(Hotel hotel, int n_50);
+        delegate void Añadir_Fase_Callback(Jugador jugador, int fase, String hotel);
 
         private void Fase_construida()
         {
@@ -1223,9 +1224,12 @@ namespace Juego_Hotel
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             hotel.Ampliar();
             partida.interfaz.BeginInvoke(new Dibujar_Fase_Callback(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
+            partida.interfaz.BeginInvoke(new Añadir_Fase_Callback(partida.interfaz.Añadir_Fase), hotel.dueño, hotel.n_fases_construidas, hotel.nombre_txt); 
+
         }
 
         delegate void Dibujar_Entrada_Callback(Casilla casilla, Boolean en_la_derecha);
+        delegate void Añadir_Entrada_Callback(Jugador jugador, int entrada, String hotel);
 
         private void Entrada_añadida()
         {
@@ -1248,6 +1252,7 @@ namespace Juego_Hotel
             }
             hotel.n_entradas++;
             hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
+            partida.interfaz.BeginInvoke(new Añadir_Entrada_Callback(partida.interfaz.Añadir_Entrada), hotel.dueño, casilla, hotel.nombre_txt);
         }
 
         delegate void Marcar_Jugador_Eliminado_Callback(int jugador);

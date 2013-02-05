@@ -690,6 +690,12 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="MATirarDadoConstruccionOk" xml:space="preserve">
     <value>¡El jugador {0} ({1}) ha tirado el dado de construcción y se le permite construir!</value>
   </data>
+  <data name="MAEntradaAñadida" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha añadido una entrada (en la posición {2}) al hotel {3}.</value>
+  </data>
+  <data name="MAFaseAñadida" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha añadido una fase (la número {2}) al hotel {3}.</value>
+  </data>
   <data name="mensajeIDPartidaVacio" xml:space="preserve">
     <value>El ID no puede quedar en blanco</value>
   </data>
