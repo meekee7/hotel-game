@@ -120,22 +120,23 @@ bool SavedgamesMgr::SaveGame(Game* game)
     {
         p = (*i);
         wstring hotel_list = L"";
-        if (p->hotels.size() > 0)
+        PlayerGameState* player_state = p->GetState(game->id);
+        if (player_state->hotels.size() > 0)
         {
             list<Hotel*>::iterator j;
             int idx = 1;
             hotel_list += L"";
-            for (j = p->hotels.begin() ; j != p->hotels.end() ; j++)
+            for (j = player_state->hotels.begin() ; j != player_state->hotels.end() ; j++)
             {
                 hotel_list += (*j)->name_txt;
-                if (idx < (int)p->hotels.size())
+                if (idx < (int)player_state->hotels.size())
                     hotel_list += L"@";
                 idx++;
             }
         }
         string query = str(boost::format("INSERT INTO estado_jugador VALUES (NULL,NULL,\"%s\",%d,%d,%d,%d,%d,%d,%d,\"%s\");")
-            % utf16_to_utf8(p->name) % p->position->number % p->paid_last_turn % p->n_50 % p->n_100 % p->n_500
-            % p->n_1000 % p->n_5000 % utf16_to_utf8(hotel_list));
+            % utf16_to_utf8(p->name) % player_state->position->number % player_state->paid_last_turn % player_state->n_50 % player_state->n_100 % player_state->n_500
+            % player_state->n_1000 % player_state->n_5000 % utf16_to_utf8(hotel_list));
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
             wcout << "Error inserting player data, reconnecting to try again..." << endl;
@@ -262,7 +263,7 @@ bool SavedgamesMgr::SaveGame(Game* game)
     // Game data
     string query = str(boost::format("INSERT INTO partida VALUES (NULL,\"%s\",\"%s\",NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
         % utf16_to_utf8(game->password) % utf16_to_utf8(game->name) % game->turn_count % game->n_players % game->active_plist.size() % game->starting_player
-        % game->current_player->num % game->last_dice_res % game->last_auto_advance
+        % game->current_player->GetState(game->id)->num % game->last_dice_res % game->last_auto_advance
         % bd_hotel_id_list[0] % bd_hotel_id_list[1] % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]
         % bd_player_id_list[0] % bd_player_id_list[1] % (bd_player_id_list.size() > 2 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL")
         % (bd_player_id_list.size() > 3 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL"));

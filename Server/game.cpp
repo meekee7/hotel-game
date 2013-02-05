@@ -14,6 +14,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
     this->chat = new Chat(this->creator, false, mutex_ids, id_count);
     this->chat->join(this->creator);
     this->id = this->chat->id;
+    creator->Join_Game(this->id);
     this->started = false;
     this->ended = false;
     this->turn_count = 1;
@@ -41,24 +42,24 @@ void Game::set_players_money(config configuration)
     {
         for (i = this->plist.begin(); i != this->plist.end() ; ++i)
         {
-            (*i)->n_50 = configuration.three_or_four_players.n_50;
-            (*i)->n_100 = configuration.three_or_four_players.n_100;
-            (*i)->n_500 = configuration.three_or_four_players.n_500;
-            (*i)->n_1000 = configuration.three_or_four_players.n_1000;
-            (*i)->n_5000 = configuration.three_or_four_players.n_5000;
-            (*i)->Calculate_total_money();
+            (*i)->GetState(this->id)->n_50 = configuration.three_or_four_players.n_50;
+            (*i)->GetState(this->id)->n_100 = configuration.three_or_four_players.n_100;
+            (*i)->GetState(this->id)->n_500 = configuration.three_or_four_players.n_500;
+            (*i)->GetState(this->id)->n_1000 = configuration.three_or_four_players.n_1000;
+            (*i)->GetState(this->id)->n_5000 = configuration.three_or_four_players.n_5000;
+            (*i)->Calculate_total_money(this->id);
         }
     }
     else
     {
         for (i = this->plist.begin(); i != this->plist.end() ; ++i)
         {
-            (*i)->n_50 = configuration.two_players.n_50;
-            (*i)->n_100 = configuration.two_players.n_100;
-            (*i)->n_500 = configuration.two_players.n_500;
-            (*i)->n_1000 = configuration.two_players.n_1000;
-            (*i)->n_5000 = configuration.two_players.n_5000;
-            (*i)->Calculate_total_money();
+            (*i)->GetState(this->id)->n_50 = configuration.two_players.n_50;
+            (*i)->GetState(this->id)->n_100 = configuration.two_players.n_100;
+            (*i)->GetState(this->id)->n_500 = configuration.two_players.n_500;
+            (*i)->GetState(this->id)->n_1000 = configuration.two_players.n_1000;
+            (*i)->GetState(this->id)->n_5000 = configuration.two_players.n_5000;
+            (*i)->Calculate_total_money(this->id);
         }
     }
 }
@@ -77,7 +78,8 @@ bool Game::join(Player* p)
             wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
             return false;
         }
-        p->num = this->plist.size();
+        p->Join_Game(this->id);
+        p->GetState(this->id)->num = this->plist.size();
         this->plist.push_back(p);
         this->active_plist.push_back(p);
         this->chat->join(p);
@@ -182,49 +184,52 @@ TBuild_dice_res Game::roll_construction_dice()
 void Game::move_player(Player* p, dlib::mutex* debt_mutex)
 {
     // Uses last dice result
-    p->position->occupied = false; // Free the position
-    if ((p->position->number + this->last_dice_res) <= 31) // No new lap yet
-        p->position = this->positions[p->position->number + this->last_dice_res];
+    PlayerGameState* player_state = p->GetState(this->id);
+    player_state->position->occupied = false; // Free the position
+    if ((player_state->position->number + this->last_dice_res) <= 31) // No new lap yet
+        player_state->position = this->positions[player_state->position->number + this->last_dice_res];
     else
-        p->position = this->positions[p->position->number + this->last_dice_res - 31];
+        player_state->position = this->positions[player_state->position->number + this->last_dice_res - 31];
     this->last_auto_advance = 0;
-    while (p->position->occupied) // We need to advance because it's occupied
+    while (player_state->position->occupied) // We need to advance because it's occupied
     {
-        if (p->position->number < 31) // No new lap yet
-            p->position = this->positions[p->position->number + 1];
+        if (player_state->position->number < 31) // No new lap yet
+            player_state->position = this->positions[player_state->position->number + 1];
         else
-            p->position = this->positions[1];
+            player_state->position = this->positions[1];
         this->last_auto_advance++;
     }
-    p->position->occupied = true; // Occupy the position
-    this->current_player->bought_last_turn = false;
-    this->current_player->built_last_turn = false;
-    this->current_player->charged_bank_last_turn = false;
-    this->current_player->paid_last_turn = false;
-    this->current_player->free_entrance_used = false;
+    player_state->position->occupied = true; // Occupy the position
+    PlayerGameState* current_player_state = this->current_player->GetState(this->id);
+    current_player_state->bought_last_turn = false;
+    current_player_state->built_last_turn = false;
+    current_player_state->charged_bank_last_turn = false;
+    current_player_state->paid_last_turn = false;
+    current_player_state->free_entrance_used = false;
     this->rolled_construction_dice = false;
-    if (this->current_player->debt_last_turn > 0)
+    if (current_player_state->debt_last_turn > 0)
     {
         debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
-        this->current_player->debt_last_turn = 0;
-        this->current_player->debt_nights_to_last_turn = NULL;
+        current_player_state->debt_last_turn = 0;
+        current_player_state->debt_nights_to_last_turn = NULL;
         debt_mutex->unlock();
     }
     list<Hotel*>::iterator i2;
     // Allow new entrances in all player hotels
-    for (i2 = this->current_player->hotels.begin() ; i2 != this->current_player->hotels.end() ; ++i2)
+    for (i2 = current_player_state->hotels.begin() ; i2 != current_player_state->hotels.end() ; ++i2)
         (*i2)->entrance_bought_last_turn = false;
 }
 
 Player* Game::turn_pass(dlib::mutex* debt_mutex)
 {
-    this->current_player->rolled_last_turn = false;
+    PlayerGameState* current_player_state = this->current_player->GetState(this->id);
+    current_player_state->rolled_last_turn = false;
     // There is no need to reset more variables because the player always must roll before doing anything, and the function move_player does the reset
-    if (this->current_player->debt_last_turn > 0)
+    if (current_player_state->debt_last_turn > 0)
     {
         debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is somehow asynchronous
-        this->current_player->debt_last_turn = 0;
-        this->current_player->debt_nights_to_last_turn = NULL;
+        current_player_state->debt_last_turn = 0;
+        current_player_state->debt_nights_to_last_turn = NULL;
         debt_mutex->unlock();
     }
 
@@ -277,14 +282,15 @@ void Game::eliminate_player(Player* player, Player* reiciving_player)
     }
     // Return all hotels to bank
     list<Hotel*>::iterator i2;
-    for (i2 = player->hotels.begin() ; i2 != player->hotels.end() ; ++i2)
+    PlayerGameState* player_state = player->GetState(this->id);
+    for (i2 = player_state->hotels.begin() ; i2 != player_state->hotels.end() ; ++i2)
     {
         (*i2)->Return_to_bank();
     }
-    player->hotels.clear();
+    player_state->hotels.clear();
     if (reiciving_player != NULL)
     {
-        player->Pay_nights(reiciving_player, player->n_5000, player->n_1000, player->n_500, player->n_100, player->n_50);
+        player->Pay_nights(this->id, reiciving_player->GetState(this->id), player_state->n_5000, player_state->n_1000, player_state->n_500, player_state->n_100, player_state->n_50);
     }
 }
 
@@ -293,10 +299,12 @@ int Game::get_money_for_nights(Player* owner, Player* player, int* nights, wstri
     list<Hotel*>::iterator i;
     int amount = 0, dice_res = 0;
     list<int>::iterator pos;
-    for (i = owner->hotels.begin() ; i != owner->hotels.end() ; ++i)
+    PlayerGameState* owner_state = owner->GetState(this->id);
+    PlayerGameState* player_state = player->GetState(this->id);
+    for (i = owner_state->hotels.begin() ; i != owner_state->hotels.end() ; ++i)
     {
-        pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player->position->number);
-        if ((pos != (*i)->entrances.end()) && (!player->paid_last_turn)) // Player is in an entrance of this hotel, (it can't be in any other entrance). Enters only if player hasn't already paid this turn
+        pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player_state->position->number);
+        if ((pos != (*i)->entrances.end()) && (!player_state->paid_last_turn)) // Player is in an entrance of this hotel, (it can't be in any other entrance). Enters only if player hasn't already paid this turn
         {
             dice_res = this->random->RollDice(6, 1);
             amount = (*i)->prices_matrix[(*i)->n_built_phases-1][dice_res-1];
@@ -313,7 +321,7 @@ bool Game::can_charge_bank(Player* p)
 {
     if ((this->n_players == 2) || ((this->get_active_players_count() > 2) && (this->n_players > 2)))
     {
-        if ((p->position->number >= 8) && ((p->position->number - this->last_dice_res - this->last_auto_advance) < 8))
+        if ((p->GetState(this->id)->position->number >= 8) && ((p->GetState(this->id)->position->number - this->last_dice_res - this->last_auto_advance) < 8))
             return true;
         else
             return false;
@@ -324,7 +332,7 @@ bool Game::can_charge_bank(Player* p)
 
 bool Game::can_buy_entrances(Player* p)
 {
-    int pos = p->position->number;
+    int pos = p->GetState(this->id)->position->number;
     if (pos - this->last_dice_res - this->last_auto_advance < 1) // In case of doing a lap in same roll
         pos += 31;
     if ((pos >= 27) && ((pos - this->last_dice_res - this->last_auto_advance) < 27))
@@ -371,7 +379,7 @@ void Game::calculate_return (int quantity, int* n_5000, int* n_1000, int* n_500,
     }
 }
 
-void Game::calculate_return(Player* player, int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
+void Game::calculate_return(PlayerGameState* player, int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
 {
     // Al restar la devolución a un jugador, hay que haber ingresado los fondos previamente por si acaso el jugador
     // no tiene fondos suficientes para devolver antes de haber recibido el cobro

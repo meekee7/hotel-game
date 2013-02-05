@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include "portable_socket.h"
 #include "player.h"
+#include "playergamestate.h"
 #include "game.h"
 #include "chat.h"
 #include "aux_functions.h"
@@ -316,12 +317,12 @@ void kick_hacker(int reason, Player* p) // Retire from all games and disconnect 
     disconnect_client(p, true);
 }
 
-void handle_command(string command, Player* p)
+void handle_command(string command, Player* player)
 {
     if (command == "#disconnect#")
     {
-        disconnect_client(p, false);
-        send_command("#disconnect#", p);
+        disconnect_client(player, false);
+        send_command("#disconnect#", player);
         // Send player list to all players, so they are notified about the diconnected user
         // Send as much strings as connected players, with a count first
         list<Player*>::iterator i, j;
@@ -356,53 +357,53 @@ void handle_command(string command, Player* p)
     else if (command == "get_players")
     {
         list<Player*>::iterator i;
-        send_command("player_list", p);
-        send_int(p, plist.size()); // Number of players
+        send_command("player_list", player);
+        send_int(player, plist.size()); // Number of players
         for (i = plist.begin() ; i != plist.end() ; ++i)
         {
-            send_int(p, get_utf8_length((*i)->name));
-            send_wstring(p, (*i)->name);
+            send_int(player, get_utf8_length((*i)->name));
+            send_wstring(player, (*i)->name);
         }
     }
     else if (command == "get_games")
     {
         list<Game*>::iterator i;
-        send_command("game_list", p);
-        send_int(p, glist.size());
+        send_command("game_list", player);
+        send_int(player, glist.size());
         if (glist.size() != 0)
         {
             for (i = glist.begin() ; i != glist.end() ; ++i)
             {
-                send_int(p, get_utf8_length((*i)->name));
-                send_wstring(p, (*i)->name);
-                send_int(p, (*i)->n_players);
-                send_int(p, (*i)->plist.size());
-                send_int(p, ((*i)->started ? 1 : 0));
-                send_int(p, ((*i)->ended ? 1 : 0));
+                send_int(player, get_utf8_length((*i)->name));
+                send_wstring(player, (*i)->name);
+                send_int(player, (*i)->n_players);
+                send_int(player, (*i)->plist.size());
+                send_int(player, ((*i)->started ? 1 : 0));
+                send_int(player, ((*i)->ended ? 1 : 0));
             }
         }
     }
     else if (command == "create_game")
     {
         int bytes_received;
-        int len_name = receive_int(p, &bytes_received);
-        wstring name = receive_wstring(p, len_name, &bytes_received);
-        int long_n_players = receive_int(p, &bytes_received);
-        int n_players = atoi(receive_string(p, long_n_players, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring name = receive_wstring(player, len_name, &bytes_received);
+        int long_n_players = receive_int(player, &bytes_received);
+        int n_players = atoi(receive_string(player, long_n_players, &bytes_received).c_str());
         if (name.empty()) // Hack, kick player
-            return kick_hacker(1, p);
+            return kick_hacker(1, player);
         if (get_game_from_name(name, &glist) != NULL) // Repeated name
             return;
-        Game* new_game = new Game(name, n_players, p, &mutex_ids, &id_count, random_gen);
+        Game* new_game = new Game(name, n_players, player, &mutex_ids, &id_count, random_gen);
         wcout << currentDateTime() << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
         glist.push_back(new_game);
-        send_command("joined_game", p);
-        send_int(p, get_utf8_length(name));
-        send_wstring(p, name);
-        send_int(p, new_game->chat->id);
-        send_int(p, get_utf8_length(new_game->creator->name));
-        send_wstring(p, new_game->creator->name);
-        send_int(p, new_game->n_players);
+        send_command("joined_game", player);
+        send_int(player, get_utf8_length(name));
+        send_wstring(player, name);
+        send_int(player, new_game->chat->id);
+        send_int(player, get_utf8_length(new_game->creator->name));
+        send_wstring(player, new_game->creator->name);
+        send_int(player, new_game->n_players);
         list<Game*>::iterator i;
         list<Player*>::iterator i2;
         Player* dest;
@@ -428,26 +429,26 @@ void handle_command(string command, Player* p)
     else if (command == "join_game")
     {
         int bytes_received;
-        int len_name = receive_int(p, &bytes_received);
-        wstring name = receive_wstring(p, len_name, &bytes_received);
+        int len_name = receive_int(player, &bytes_received);
+        wstring name = receive_wstring(player, len_name, &bytes_received);
         Game* game = get_game_from_name(name, &glist);
         if (game == NULL) // To avoid commands sent when chat does not exist anymore
             return;
-        if (game->check_already_joined(p))
+        if (game->check_already_joined(player))
         {
-            send_command("cant_join_already_joined", p);
-            send_int(p, get_utf8_length(name));
-            send_wstring(p, name);
+            send_command("cant_join_already_joined", player);
+            send_int(player, get_utf8_length(name));
+            send_wstring(player, name);
         }
-        else if (game->join(p))
+        else if (game->join(player))
         {
-            send_command("joined_game", p);
-            send_int(p, get_utf8_length(name));
-            send_wstring(p, name);
-            send_int(p, game->chat->id);
-            send_int(p, get_utf8_length(game->creator->name));
-            send_wstring(p, game->creator->name);
-            send_int(p, game->n_players);
+            send_command("joined_game", player);
+            send_int(player, get_utf8_length(name));
+            send_wstring(player, name);
+            send_int(player, game->chat->id);
+            send_int(player, get_utf8_length(game->creator->name));
+            send_wstring(player, game->creator->name);
+            send_int(player, game->n_players);
             list<Player*>::iterator i, j;
             Player* dest;
             for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -455,7 +456,7 @@ void handle_command(string command, Player* p)
                 // We exclude joined player because the command is sent too quickly.
                 // He will ask for player list just after joining
                 dest = *i;
-                if (dest != p)
+                if (dest != player)
                 {
                     send_command("chat_userlist", dest);
                     send_int(dest, game->id);
@@ -470,34 +471,34 @@ void handle_command(string command, Player* p)
         }
         else if (game->started)
         {
-            send_command("cant_join_game_started", p);
-            send_int(p, get_utf8_length(name));
-            send_wstring(p, name);
+            send_command("cant_join_game_started", player);
+            send_int(player, get_utf8_length(name));
+            send_wstring(player, name);
         }
         else if (game->ended)
         {
-            send_command("cant_join_game_ended", p);
-            send_int(p, get_utf8_length(name));
-            send_wstring(p, name);
+            send_command("cant_join_game_ended", player);
+            send_int(player, get_utf8_length(name));
+            send_wstring(player, name);
         }
         else
         {
-            send_command("cant_join_game_full", p);
-            send_int(p, get_utf8_length(name));
-            send_wstring(p, name);
+            send_command("cant_join_game_full", player);
+            send_int(player, get_utf8_length(name));
+            send_wstring(player, name);
         }
     }
     else if (command == "leave_game")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        game->eliminate_player(p, NULL);
-        //if (!game->leave(p)) // Possible hack
-        //return kick_hacker(2, p);
+        game->eliminate_player(player, NULL);
+        //if (!game->leave(player)) // Possible hack
+        //return kick_hacker(2, player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -538,19 +539,19 @@ void handle_command(string command, Player* p)
     else if (command == "create_chat")
     {
         int bytes_received;
-        int len_quantity = receive_int(p, &bytes_received);
-        int quantity = atoi(receive_string(p, len_quantity, &bytes_received).c_str());
+        int len_quantity = receive_int(player, &bytes_received);
+        int quantity = atoi(receive_string(player, len_quantity, &bytes_received).c_str());
         vector<wstring> player_list = vector<wstring>(quantity+1);
         vector<wstring>::iterator i;
         // Receive every player and add the player who sends the command
         int len_name;
         for (i = player_list.begin() ; i != --player_list.end() ; ++i)
         {
-            len_name = receive_int(p, &bytes_received);
-            (*i) = receive_wstring(p, len_name, &bytes_received);
+            len_name = receive_int(player, &bytes_received);
+            (*i) = receive_wstring(player, len_name, &bytes_received);
         }
-        (*i) = p->name;
-        Chat* new_chat = new Chat(p, true, &mutex_ids, &id_count);
+        (*i) = player->name;
+        Chat* new_chat = new Chat(player, true, &mutex_ids, &id_count);
         chat_list.push_back(new_chat);
         wcout << currentDateTime() << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
         // Send commands to selected players to ask them to join the chat
@@ -563,13 +564,13 @@ void handle_command(string command, Player* p)
                 continue;
             send_command("ask_join_chat", dest);
             send_int(dest, new_chat->id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
         }
     }
     else if (command == "join_global_chat")
     {
-        global_chat_list.push_back(p);
+        global_chat_list.push_back(player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
@@ -587,14 +588,14 @@ void handle_command(string command, Player* p)
     else if (command == "join_chat")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         Chat* chat = get_chat_from_id(id, &chat_list, &glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
-        if (chat->check_already_joined(p)) // Don't allow join a chat twice (hack)
-            return kick_hacker(3, p);
-        chat->join(p);
+        if (chat->check_already_joined(player)) // Don't allow join a chat twice (hack)
+            return kick_hacker(3, player);
+        chat->join(player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
@@ -612,7 +613,7 @@ void handle_command(string command, Player* p)
     }
     else if (command == "leave_global_chat")
     {
-        global_chat_list.remove(p);
+        global_chat_list.remove(player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
@@ -630,13 +631,13 @@ void handle_command(string command, Player* p)
     else if (command == "leave_chat")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         Chat* chat = get_chat_from_id(id, &chat_list, &glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
-        if (!chat->leave(p)) // Possible hack
-            return kick_hacker(4, p);
+        if (!chat->leave(player)) // Possible hack
+            return kick_hacker(4, player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
@@ -656,45 +657,45 @@ void handle_command(string command, Player* p)
     else if (command == "get_global_chat_users")
     {
         list<Player*>::iterator i, j;
-        send_command("global_chat_userlist", p);
-        send_int(p, global_chat_list.size()); // Number of players
+        send_command("global_chat_userlist", player);
+        send_int(player, global_chat_list.size()); // Number of players
         for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
         {
-            send_int(p, get_utf8_length((*j)->name));
-            send_wstring(p, (*j)->name);
+            send_int(player, get_utf8_length((*j)->name));
+            send_wstring(player, (*j)->name);
         }
     }
     else if (command == "get_chat_users")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         Chat* chat = get_chat_from_id(id, &chat_list, &glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
         list<Player*>::iterator i; 
-        send_command("chat_userlist", p);
-        send_int(p, id);
-        send_int(p, chat->players.size()); // Number of players
+        send_command("chat_userlist", player);
+        send_int(player, id);
+        send_int(player, chat->players.size()); // Number of players
         for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
         {
-            send_int(p, get_utf8_length((*i)->name));
-            send_wstring(p, (*i)->name);
+            send_int(player, get_utf8_length((*i)->name));
+            send_wstring(player, (*i)->name);
         }
     }
     else if (command == "send_global_chat_msg")
     {
         int bytes_received;
-        int long_msg = receive_int(p, &bytes_received);
-        wstring msg = receive_wstring(p, long_msg, &bytes_received);
+        int long_msg = receive_int(player, &bytes_received);
+        wstring msg = receive_wstring(player, long_msg, &bytes_received);
         list<Player*>::iterator i;
         Player* dest;
         for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
         {
             dest = *i;
             send_command("new_global_chat_msg", dest);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(msg));
             send_wstring(dest, msg);
         }
@@ -702,17 +703,17 @@ void handle_command(string command, Player* p)
     else if (command == "send_chat_msg")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
-        int long_msg = receive_int(p, &bytes_received);
-        wstring msg = receive_wstring(p, long_msg, &bytes_received);
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
+        int long_msg = receive_int(player, &bytes_received);
+        wstring msg = receive_wstring(player, long_msg, &bytes_received);
         Chat* chat = get_chat_from_id(id, &chat_list, &glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
-        if (!chat->check_already_joined(p)) // hack, send messages to a chat the player hasn't joined: kick player
-            return kick_hacker(5, p);
+        if (!chat->check_already_joined(player)) // hack, send messages to a chat the player hasn't joined: kick player
+            return kick_hacker(5, player);
         if ((msg.length() > 1024) || (dlib::trim(msg).length() == 0)) // hack, send messages longer or shorter than limits
-            return kick_hacker(6, p);
+            return kick_hacker(6, player);
         list<Player*>::iterator i;
         Player* dest;
         for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
@@ -720,8 +721,8 @@ void handle_command(string command, Player* p)
             dest = *i;
             send_command("new_chat_msg", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(msg));
             send_wstring(dest, msg);
         }
@@ -729,15 +730,15 @@ void handle_command(string command, Player* p)
     else if (command == "start_game")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        if (game->creator != p) // Hack, trying to start a game not created by the player
-            return kick_hacker(7, p);
+        if (game->creator != player) // Hack, trying to start a game not created by the player
+            return kick_hacker(7, player);
         if (game->started || game->ended) // Hack, start a already started game or an ended game
-            return kick_hacker(8, p);
+            return kick_hacker(8, player);
         game->set_players_money(configuration);
         game->start();
         list<Player*>::iterator i, j;
@@ -764,25 +765,28 @@ void handle_command(string command, Player* p)
     else if (command == "roll_dice")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(9, p);
+            //return kick_hacker(9, player);
                 return;
-        if (game->current_player != p) // Hack, retire player
-            return kick_hacker(10, p); 
-        if ((p->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
-            return kick_hacker(11, p);
-        if (p->debt_last_turn > 0) // Hack, retire player
-            return kick_hacker(12, p);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
+        if (game->current_player != player) // Hack, retire player
+            return kick_hacker(10, player); 
+        if ((state->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
+            return kick_hacker(11, player);
+        if (state->debt_last_turn > 0) // Hack, retire player
+            return kick_hacker(12, player);
         game->roll_dice();
-        game->move_player(p, &debt_mutex);
-        p->rolled_last_turn = true;
+        game->move_player(player, &debt_mutex);
+        state->rolled_last_turn = true;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
         {
             dest = (*i);
@@ -790,26 +794,29 @@ void handle_command(string command, Player* p)
             send_int(dest, id);
             send_int(dest, game->last_dice_res);
             send_int(dest, game->last_auto_advance);
-            send_int(dest, p->position->number);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, state->position->number);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
         }
     }
     else if (command == "roll_construction_dice")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(13, p);
+            //return kick_hacker(13, player);
                 return;
-        if (game->current_player != p) // Hack, retire player
-            return kick_hacker(14, p);
-        if (p->position->type != build) // Hack, retire player
-            return kick_hacker(15, p);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
+        if (game->current_player != player) // Hack, retire player
+            return kick_hacker(14, player);
+        if (state->position->type != build) // Hack, retire player
+            return kick_hacker(15, player);
         TBuild_dice_res construction_dice_res = game->roll_construction_dice();
         Player* dest;
         list<Player*>::iterator i;
@@ -819,17 +826,17 @@ void handle_command(string command, Player* p)
             send_command("rolled_construction_dice", dest);
             send_int(dest, id);
             send_int(dest, (int)construction_dice_res);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
         }
         if (construction_dice_res == Deny)
-            p->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
+            state->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
     }
     else if (command == "turn_pass")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
         Game* game = get_game_from_id(id, &glist);
@@ -837,13 +844,16 @@ void handle_command(string command, Player* p)
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
             return;
-        //return kick_hacker(16, p);
-        if (game->current_player != p) // Hack, retire player
-            return kick_hacker(17, p);
-        if ((!p->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
-            return kick_hacker(18, p);
-        if (p->debt_last_turn > 0) // Hack, retire player
-            return kick_hacker(19, p);
+        //return kick_hacker(16, player);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
+        if (game->current_player != player) // Hack, retire player
+            return kick_hacker(17, player);
+        if ((!state->rolled_last_turn) && ((game->last_dice_res) < 6)) // Hack, retire player
+            return kick_hacker(18, player);
+        if (state->debt_last_turn > 0) // Hack, retire player
+            return kick_hacker(19, player);
         Player* next_player = game->turn_pass(&debt_mutex);
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
         {
@@ -857,82 +867,87 @@ void handle_command(string command, Player* p)
     else if (command == "charge_bank")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(20, p);
+            //return kick_hacker(20, player);
                 return;
-        if ((game->current_player != p) || (game->can_charge_bank(p) == false) || (p->charged_bank_last_turn)) // Hack, retire player
-            return kick_hacker(21, p);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
+        if ((game->current_player != player) || (game->can_charge_bank(player) == false) || (state->charged_bank_last_turn)) // Hack, retire player
+            return kick_hacker(21, player);
         else
-            p->Charge_bank();
+            player->Charge_bank(game->id);
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
         {
             dest = (*i);
             send_command("update_player_money", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
-            send_int(dest, p->n_50);
-            send_int(dest, p->n_100);
-            send_int(dest, p->n_500);
-            send_int(dest, p->n_1000);
-            send_int(dest, p->n_5000);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
+            send_int(dest, state->n_50);
+            send_int(dest, state->n_100);
+            send_int(dest, state->n_500);
+            send_int(dest, state->n_1000);
+            send_int(dest, state->n_5000);
         }
     }
     else if (command == "buy_hotel")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_name = receive_int(p, &bytes_received);
-        wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
-        len_int = receive_int(p, &bytes_received);
-        int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
+        len_int = receive_int(player, &bytes_received);
+        int n_5000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_1000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_500 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         // We have selected money by player, change needs to be calculated
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(22, p);
-                return;
-        Player* player = get_player_from_game(p->name, game);
+            //return kick_hacker(22, player);
+            return;
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (game->current_player != player) // Hack, retire player
-            return kick_hacker(23, p);
-        if (player->position->type != buy)  // Hack, retire player
-            return kick_hacker(24, p);
-        if (player->bought_last_turn) // Hack, retire player
-            return kick_hacker(25, p);
+            return kick_hacker(23, player);
+        if (state->position->type != buy)  // Hack, retire player
+            return kick_hacker(24, player);
+        if (state->bought_last_turn) // Hack, retire player
+            return kick_hacker(25, player);
         Hotel* hotel = get_hotel_from_name(hotel_name, game);
         if (hotel->owner != NULL) // Hack, retire player
-            return kick_hacker(26, p);
-        if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
-            return kick_hacker(27, p);
+            return kick_hacker(26, player);
+        if ((state->position->hotel_left != hotel->name) && (state->position->hotel_right != hotel->name)) // Hack, retire player
+            return kick_hacker(27, player);
         int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
         if (total_selected < (hotel->price)) // Hack, retire player
-            return kick_hacker(28, p);
+            return kick_hacker(28, player);
         hotel->owner = player;
-        player->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
+        player->Buy_hotel(game->id, hotel, n_5000, n_1000, n_500, n_100, n_50);
         // Calculate change
         if (total_selected > (hotel->price))
         {
             game->calculate_return(total_selected - hotel->price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-            player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+            player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
         }
-        player->bought_last_turn = true;
+        state->bought_last_turn = true;
         list<Player*>::iterator i;
         Player* dest;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -940,38 +955,38 @@ void handle_command(string command, Player* p)
             dest = (*i);
             send_command("hotel_purchased", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(hotel_name));
             send_wstring(dest, hotel_name);
             send_command("update_player_money", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
-            send_int(dest, player->n_50);
-            send_int(dest, player->n_100);
-            send_int(dest, player->n_500);
-            send_int(dest, player->n_1000);
-            send_int(dest, player->n_5000);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
+            send_int(dest, state->n_50);
+            send_int(dest, state->n_100);
+            send_int(dest, state->n_500);
+            send_int(dest, state->n_1000);
+            send_int(dest, state->n_5000);
         }
     }
     else if (command == "expropriate_hotel")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_name = receive_int(p, &bytes_received);
-        wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
-        len_int = receive_int(p, &bytes_received);
-        int n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
+        len_int = receive_int(player, &bytes_received);
+        int n_5000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_1000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_500 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         // We have selected money by player, change needs to be calculated
         // Needs checking: hotel has owner and is different than player, hotel can be expropriated (player position is next to the hotel, no phases built),
         // player total money is previous total - hotel expropriation price, previous owner total money is previous total + hotel_expropriation price
@@ -979,34 +994,36 @@ void handle_command(string command, Player* p)
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(29, p);
-                return;
-        Player* player = get_player_from_game(p->name, game);
+            //return kick_hacker(29, player);
+            return;
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (game->current_player != player) // Hack, retire player
-            return kick_hacker(30, p);
-        if (player->position->type != buy)  // Hack, retire player
-            return kick_hacker(31, p);
-        if (player->bought_last_turn) // Hack, retire player
-            return kick_hacker(32, p);
+            return kick_hacker(30, player);
+        if (state->position->type != buy)  // Hack, retire player
+            return kick_hacker(31, player);
+        if (state->bought_last_turn) // Hack, retire player
+            return kick_hacker(32, player);
         Hotel* hotel = get_hotel_from_name(hotel_name, game);
         if ((hotel->owner == NULL) || (hotel->owner == player) || ((hotel->n_built_phases) > 0)) // Hack, retire player
-            return kick_hacker(33, p);
-        if ((player->position->hotel_left != hotel->name) && (player->position->hotel_right != hotel->name)) // Hack, retire player
-            return kick_hacker(34, p);
+            return kick_hacker(33, player);
+        if ((state->position->hotel_left != hotel->name) && (state->position->hotel_right != hotel->name)) // Hack, retire player
+            return kick_hacker(34, player);
         int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
         if (total_selected < (hotel->expropriation_price)) // Hack, retire player
-            return kick_hacker(35, p);
+            return kick_hacker(35, player);
         Player* previous_owner = hotel->owner;
         hotel->owner = player;
-        previous_owner->Expropriate_hotel(hotel);
-        player->Buy_hotel(hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
+        previous_owner->Expropriate_hotel(game->id, hotel);
+        player->Buy_hotel(game->id, hotel, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
         // Calculate change
         if (total_selected > (hotel->expropriation_price))
         {
-            game->calculate_return(previous_owner, total_selected - hotel->expropriation_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-            player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+            game->calculate_return(previous_owner->GetState(game->id), total_selected - hotel->expropriation_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+            player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
         }
-        player->bought_last_turn = true;
+        state->bought_last_turn = true;
         list<Player*>::iterator i;
         Player* dest;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1014,86 +1031,89 @@ void handle_command(string command, Player* p)
             dest = (*i);
             send_command("hotel_expropriated", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(hotel_name));
             send_wstring(dest, hotel_name);
             send_command("update_player_money", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
-            send_int(dest, player->n_50);
-            send_int(dest, player->n_100);
-            send_int(dest, player->n_500);
-            send_int(dest, player->n_1000);
-            send_int(dest, player->n_5000);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
+            send_int(dest, state->n_50);
+            send_int(dest, state->n_100);
+            send_int(dest, state->n_500);
+            send_int(dest, state->n_1000);
+            send_int(dest, state->n_5000);
             send_command("update_player_money", dest);
             send_int(dest, id);
             send_int(dest, get_utf8_length(previous_owner->name));
             send_wstring(dest, previous_owner->name);
-            send_int(dest, previous_owner->n_50);
-            send_int(dest, previous_owner->n_100);
-            send_int(dest, previous_owner->n_500);
-            send_int(dest, previous_owner->n_1000);
-            send_int(dest, previous_owner->n_5000);
+            PlayerGameState* previous_owner_state = previous_owner->GetState(game->id);
+            send_int(dest, previous_owner_state->n_50);
+            send_int(dest, previous_owner_state->n_100);
+            send_int(dest, previous_owner_state->n_500);
+            send_int(dest, previous_owner_state->n_1000);
+            send_int(dest, previous_owner_state->n_5000);
         }
     }
     else if (command == "build_phase")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_name = receive_int(p, &bytes_received);
-        wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
         int n_5000, n_1000, n_500, n_100, n_50;
-        len_int = receive_int(p, &bytes_received);
-        int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int type = atoi(receive_string(player, len_int, &bytes_received).c_str());
         if (type == 2)
         {
-            len_int = receive_int(p, &bytes_received);
-            n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_5000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_1000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_500 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         }
         // We have selected money by player, change needs to be calculated
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(36, p);
-                return;
-        Player* player = get_player_from_game(p->name, game);
+            //return kick_hacker(36, player);
+            return;
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (game->current_player != player) // Hack, retire player
-            return kick_hacker(37, p);
+            return kick_hacker(37, player);
         // You can also buy the ground in any type of position
-        //if ((player->position->type != build) && (player->position->type != free_phase)) // Hack, retire player
-        //return kick_hacker(38, p);
-        if (player->built_last_turn) // Hack, retire player
-            return kick_hacker(39, p);
+        //if ((state->position->type != build) && (state->position->type != free_phase)) // Hack, retire player
+        //return kick_hacker(38, player);
+        if (state->built_last_turn) // Hack, retire player
+            return kick_hacker(39, player);
         Hotel* hotel = get_hotel_from_name(hotel_name, game);
         if (hotel->owner != player) // Hack, retire player
-            return kick_hacker(40, p);
-        if ((type == 0) && (player->position->type != free_phase)) // Hack, retire player
-            return kick_hacker(41, p);
+            return kick_hacker(40, player);
+        if ((type == 0) && (state->position->type != free_phase)) // Hack, retire player
+            return kick_hacker(41, player);
         if (hotel->next_expansion_is_ground)
             game->rolled_construction_dice = true; // As it is not really rolled, simplify checks
         if ((type == 1) && (hotel->next_expansion_is_ground)) // Hack, retire player, ground can't be free (only in free phases positions) because construction dice is not rolled
-            return kick_hacker(42, p);
+            return kick_hacker(42, player);
         if ((type == 1) && (!game->rolled_construction_dice)) // Hack, retire player, he didn't ask for permission when building anything different than ground
-            return kick_hacker(43, p);
+            return kick_hacker(43, player);
         if ((type == 1) && (game->last_construction_dice_res != Free)) // Hack, retire player
-            return kick_hacker(44, p);
+            return kick_hacker(44, player);
         if ((type == 2) && (!game->rolled_construction_dice)) // Hack, retire player, didn't ask for permission when building anything different than ground
-            return kick_hacker(45, p);
+            return kick_hacker(45, player);
         int total_selected = 0;
         if (!hotel->Can_extend()) // Hack, retire player
-            return kick_hacker(46, p);
+            return kick_hacker(46, player);
         int total_price;
         switch (type)
         {
@@ -1105,22 +1125,22 @@ void handle_command(string command, Player* p)
             if (game->last_construction_dice_res == Double)
                 total_price = hotel->Price_next_expansion() * 2;
             if (total_selected < hotel->Price_next_expansion()) // Hack, retire player
-                return kick_hacker(47, p);
+                return kick_hacker(47, player);
             break;
-        default: return kick_hacker(48, p); // Hack, retire player
+        default: return kick_hacker(48, player); // Hack, retire player
         }
         hotel->Extend();
         if (type == 2)
         {
-            player->Pay_phase_or_entrance(n_5000, n_1000, n_500, n_100, n_50);
+            player->Pay_phase_or_entrance(game->id, n_5000, n_1000, n_500, n_100, n_50);
             // Calculate change
             if (total_selected > total_price)
             {
                 game->calculate_return(total_selected - total_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-                player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+                player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
             }
         }
-        player->built_last_turn = true;
+        state->built_last_turn = true;
         list<Player*>::iterator i;
         Player* dest;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1134,83 +1154,85 @@ void handle_command(string command, Player* p)
             {
                 send_command("update_player_money", dest);
                 send_int(dest, id);
-                send_int(dest, get_utf8_length(p->name));
-                send_wstring(dest, p->name);
-                send_int(dest, player->n_50);
-                send_int(dest, player->n_100);
-                send_int(dest, player->n_500);
-                send_int(dest, player->n_1000);
-                send_int(dest, player->n_5000);
+                send_int(dest, get_utf8_length(player->name));
+                send_wstring(dest, player->name);
+                send_int(dest, state->n_50);
+                send_int(dest, state->n_100);
+                send_int(dest, state->n_500);
+                send_int(dest, state->n_1000);
+                send_int(dest, state->n_5000);
             }
         }
     }
     else if (command == "buy_entrance")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_name = receive_int(p, &bytes_received);
-        wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
-        len_int = receive_int(p, &bytes_received);
-        int position = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
+        len_int = receive_int(player, &bytes_received);
+        int position = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int n_5000, n_1000, n_500, n_100, n_50;
-        len_int = receive_int(p, &bytes_received);
-        int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int type = atoi(receive_string(player, len_int, &bytes_received).c_str());
         if (type == 1)
         {
-            len_int = receive_int(p, &bytes_received);
-            n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-            len_int = receive_int(p, &bytes_received);
-            n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_5000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_1000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_500 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+            len_int = receive_int(player, &bytes_received);
+            n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         }
         // We have selected money by player, change needs to be calculated
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(49, p);
-                return;
-        Player* player = get_player_from_game(p->name, game);
+            //return kick_hacker(49, player);
+            return;
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (game->current_player != player) // Hack, retire player
-            return kick_hacker(50, p);
-        if ((player->position->type != free_entrance) && (!game->can_buy_entrances(player))) // Hack, retire player
-            return kick_hacker(51, p);
+            return kick_hacker(50, player);
+        if ((state->position->type != free_entrance) && (!game->can_buy_entrances(player))) // Hack, retire player
+            return kick_hacker(51, player);
         Hotel* hotel = get_hotel_from_name(hotel_name, game);
         if (hotel->owner != player) // Hack, retire player
-            return kick_hacker(52, p);
+            return kick_hacker(52, player);
         if (hotel->n_built_phases == 0) // Hack, retire player
-            return kick_hacker(53, p);
+            return kick_hacker(53, player);
         if (hotel->entrance_bought_last_turn) // Hack, retire player
-            return kick_hacker(54, p);
-        if ((type == 0) && (player->position->type != free_entrance)) // Hack, retire player
-            return kick_hacker(55, p);
-        if ((type == 0) && player->free_entrance_used) // Hack, retire player
-            return kick_hacker(56, p);
+            return kick_hacker(54, player);
+        if ((type == 0) && (state->position->type != free_entrance)) // Hack, retire player
+            return kick_hacker(55, player);
+        if ((type == 0) && state->free_entrance_used) // Hack, retire player
+            return kick_hacker(56, player);
         if (hotel->Has_entrance_in_position(position)) // Hack, retire player
-            return kick_hacker(57, p);
+            return kick_hacker(57, player);
         if (!hotel->Is_a_valid_entrance_position(game->positions[position])) // Hack, retire player
-            return kick_hacker(58, p);
+            return kick_hacker(58, player);
         hotel->Add_entrance(position);
         if (type == 1)
         {
             int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-            player->Pay_phase_or_entrance(n_5000, n_1000, n_500, n_100, n_50);
+            player->Pay_phase_or_entrance(game->id, n_5000, n_1000, n_500, n_100, n_50);
             // Calculate change
             if (total_selected > (hotel->entrance_price))
             {
                 game->calculate_return(total_selected - hotel->entrance_price, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-                player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+                player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
             }
             hotel->entrance_bought_last_turn = true; // Only if it is not free
         }
         else if (type == 0)
-            player->free_entrance_used = true;
+            state->free_entrance_used = true;
         list<Player*>::iterator i;
         Player* dest;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1225,41 +1247,43 @@ void handle_command(string command, Player* p)
             {
                 send_command("update_player_money", dest);
                 send_int(dest, id);
-                send_int(dest, get_utf8_length(p->name));
-                send_wstring(dest, p->name);
-                send_int(dest, player->n_50);
-                send_int(dest, player->n_100);
-                send_int(dest, player->n_500);
-                send_int(dest, player->n_1000);
-                send_int(dest, player->n_5000);
+                send_int(dest, get_utf8_length(player->name));
+                send_wstring(dest, player->name);
+                send_int(dest, state->n_50);
+                send_int(dest, state->n_100);
+                send_int(dest, state->n_500);
+                send_int(dest, state->n_1000);
+                send_int(dest, state->n_5000);
             }
         }
     }
     else if (command == "retire")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int type = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int type = atoi(receive_string(player, len_int, &bytes_received).c_str());
         Player* receiving_player = NULL;
         if (type == 1) // Player is automatically retired because he tried to create an auction and he doesn't have any hotel or enough money to pay
         {
-            int len_name = receive_int(p, &bytes_received);
-            wstring receiver_name = receive_wstring(p, len_name, &bytes_received);
+            int len_name = receive_int(player, &bytes_received);
+            wstring receiver_name = receive_wstring(player, len_name, &bytes_received);
             receiving_player = get_player_from_name(receiver_name, &plist);
         }
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(59, p);
-                return;
-        Player* player = get_player_from_game(p->name, game);
+            //return kick_hacker(59, player);
+            return;
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (player == NULL) // Hack, retire player
-            return kick_hacker(60, p);
+            return kick_hacker(60, player);
         if (!game->is_active(player)) // Hack, already retired
-            return kick_hacker(61, p);
+            return kick_hacker(61, player);
         Player* next_player;
         if (game->get_active_players_count() > 2)
             next_player = game->turn_pass(&debt_mutex);
@@ -1271,28 +1295,29 @@ void handle_command(string command, Player* p)
             dest = (*i);
             send_command("player_retired", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             if (type == 1) // Update affected players money
             {
                 send_command("update_player_money", dest);
                 send_int(dest, id);
                 send_int(dest, get_utf8_length(receiving_player->name));
                 send_wstring(dest, receiving_player->name);
-                send_int(dest, receiving_player->n_50);
-                send_int(dest, receiving_player->n_100);
-                send_int(dest, receiving_player->n_500);
-                send_int(dest, receiving_player->n_1000);
-                send_int(dest, receiving_player->n_5000);
+                PlayerGameState* receiving_player_state = receiving_player->GetState(game->id);
+                send_int(dest, receiving_player_state->n_50);
+                send_int(dest, receiving_player_state->n_100);
+                send_int(dest, receiving_player_state->n_500);
+                send_int(dest, receiving_player_state->n_1000);
+                send_int(dest, receiving_player_state->n_5000);
                 send_command("update_player_money", dest);
                 send_int(dest, id);
-                send_int(dest, get_utf8_length(p->name));
-                send_wstring(dest, p->name);
-                send_int(dest, p->n_50);
-                send_int(dest, p->n_100);
-                send_int(dest, p->n_500);
-                send_int(dest, p->n_1000);
-                send_int(dest, p->n_5000);
+                send_int(dest, get_utf8_length(player->name));
+                send_wstring(dest, player->name);
+                send_int(dest, state->n_50);
+                send_int(dest, state->n_100);
+                send_int(dest, state->n_500);
+                send_int(dest, state->n_1000);
+                send_int(dest, state->n_5000);
             }
             if (game->get_active_players_count() == 1)
             {
@@ -1315,41 +1340,45 @@ void handle_command(string command, Player* p)
     else if (command == "ask_nights")
     {
         int bytes_received;
-        int len_id = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_id, &bytes_received).c_str());
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
-            //return kick_hacker(62, p);
-                return;
-        if (game->current_player == p) // The client does not allow this
+            //return kick_hacker(62, player);
             return;
-        //return kick_hacker(62, p);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
+        if (game->current_player == player) // The client does not allow this
+            return;
+        //return kick_hacker(62, player);
         int amount = 0, nights = 0;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
         {
             dest = (*i);
-            if (dest != p) // Player doesn't have to pay himself :D
+            if (dest != player) // Player doesn't have to pay himself :D
             {
                 wstring hotel_name;
-                amount = game->get_money_for_nights(p, dest, &nights, &hotel_name);
+                amount = game->get_money_for_nights(player, dest, &nights, &hotel_name);
                 if (amount > 0) // The player is in a entrance and hasn't paid this turn
                 {
                     debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
-                    dest->debt_last_turn = amount;
-                    dest->debt_nights_to_last_turn = p;
-                    dest->paid_last_turn = false;
+                    PlayerGameState* dest_state = dest->GetState(game->id);
+                    dest_state->debt_last_turn = amount;
+                    dest_state->debt_nights_to_last_turn = player->GetState(game->id);
+                    dest_state->paid_last_turn = false;
                     debt_mutex.unlock();
                     for (list<Player*>::iterator j = game->active_plist.begin() ; j != game->active_plist.end() ; ++j)
                     {
                         Player* destj = (*j);
                         send_command("ask_pay_nights", destj); // Will force the player to pay nights, if he hacks the game, in next turn pass he will be retired
                         send_int(destj, id);
-                        send_int(destj, get_utf8_length(p->name));
-                        send_wstring(destj, p->name);
+                        send_int(destj, get_utf8_length(player->name));
+                        send_wstring(destj, player->name);
                         send_int(destj, get_utf8_length(dest->name));
                         send_wstring(destj, dest->name);
                         send_int(destj, amount);
@@ -1364,41 +1393,43 @@ void handle_command(string command, Player* p)
     else if (command == "pay_nights")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int n_5000, n_1000, n_500, n_100, n_50;
-        len_int = receive_int(p, &bytes_received);
-        n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_5000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_1000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_500 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         // We have selected money by player, change needs to be calculated
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
             return;
-        //return kick_hacker(64, p);
-        Player* player = get_player_from_game(p->name, game);
+        //return kick_hacker(64, player);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (player == NULL) // Hack, retire player
-            return kick_hacker(65, p);
+            return kick_hacker(65, player);
         int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
         if (total_selected <= 0) // Hack, retire player, the command is only sent if player has something to pay
-            return kick_hacker(66, p);
-        if ((player->debt_last_turn == 0) || (player->debt_nights_to_last_turn == NULL)) // Hack, retire player
-            return kick_hacker(67, p);
-        player->Pay_nights(player->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
-        player->paid_last_turn = true;
+            return kick_hacker(66, player);
+        if ((state->debt_last_turn == 0) || (state->debt_nights_to_last_turn == NULL)) // Hack, retire player
+            return kick_hacker(67, player);
+        player->Pay_nights(game->id, state->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
+        state->paid_last_turn = true;
         // Calculate change
-        if (total_selected > (player->debt_last_turn))
+        if (total_selected > (state->debt_last_turn))
         {
-            game->calculate_return(player->debt_nights_to_last_turn, total_selected - player->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-            player->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+            game->calculate_return(state->debt_nights_to_last_turn, total_selected - state->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+            player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
         }
         list<Player*>::iterator i;
         Player* dest;
@@ -1409,43 +1440,43 @@ void handle_command(string command, Player* p)
             send_int(dest, id);
             send_int(dest, get_utf8_length(player->name));
             send_wstring(dest, player->name);
-            send_int(dest, player->n_50);
-            send_int(dest, player->n_100);
-            send_int(dest, player->n_500);
-            send_int(dest, player->n_1000);
-            send_int(dest, player->n_5000);
+            send_int(dest, state->n_50);
+            send_int(dest, state->n_100);
+            send_int(dest, state->n_500);
+            send_int(dest, state->n_1000);
+            send_int(dest, state->n_5000);
             send_command("update_player_money", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(player->debt_nights_to_last_turn->name));
-            send_wstring(dest, player->debt_nights_to_last_turn->name);
-            send_int(dest, player->debt_nights_to_last_turn->n_50);
-            send_int(dest, player->debt_nights_to_last_turn->n_100);
-            send_int(dest, player->debt_nights_to_last_turn->n_500);
-            send_int(dest, player->debt_nights_to_last_turn->n_1000);
-            send_int(dest, player->debt_nights_to_last_turn->n_5000);
+            send_int(dest, get_utf8_length(state->debt_nights_to_last_turn->player->name));
+            send_wstring(dest, state->debt_nights_to_last_turn->player->name);
+            send_int(dest, state->debt_nights_to_last_turn->n_50);
+            send_int(dest, state->debt_nights_to_last_turn->n_100);
+            send_int(dest, state->debt_nights_to_last_turn->n_500);
+            send_int(dest, state->debt_nights_to_last_turn->n_1000);
+            send_int(dest, state->debt_nights_to_last_turn->n_5000);
         }
         debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
-        player->debt_last_turn = 0;
-        player->debt_nights_to_last_turn = NULL;
+        state->debt_last_turn = 0;
+        state->debt_nights_to_last_turn = NULL;
         debt_mutex.unlock();
     }
     else if (command == "auction_start")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_name = receive_int(p, &bytes_received);
-        wstring hotel_name = receive_wstring(p, len_name, &bytes_received);
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-            return kick_hacker(68, p);
+        if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
+            return kick_hacker(68, player);
         Hotel* hotel = get_hotel_from_name(hotel_name, game);
-        if (hotel->owner != p) // Hack, retire player
-            return kick_hacker(69, p);
+        if (hotel->owner != player) // Hack, retire player
+            return kick_hacker(69, player);
         if (game->hotel_at_auction != NULL) // Hack, auction already in progress
-            return kick_hacker(70, p);
+            return kick_hacker(70, player);
         game->hotel_at_auction = hotel;
         game->best_bid = 0;
         list<Player*>::iterator i;
@@ -1462,23 +1493,26 @@ void handle_command(string command, Player* p)
     else if (command == "auction_bid")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        int amount = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int amount = atoi(receive_string(player, len_int, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-            return kick_hacker(71, p);
+        if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
+            return kick_hacker(71, player);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
-            return kick_hacker(72, p);
-        if (p == game->hotel_at_auction->owner) // Hack, retire player, he is trying to bid in his own auction
-            return kick_hacker(73, p);
-        if ((amount <= 0) || (amount < (game->best_bid)) || amount > (p->total_money) || ((amount % 50) != 0)) // Hack, retire player, invalid values
-            return kick_hacker(74, p);
+            return kick_hacker(72, player);
+        if (player == game->hotel_at_auction->owner) // Hack, retire player, he is trying to bid in his own auction
+            return kick_hacker(73, player);
+        if ((amount <= 0) || (amount < (game->best_bid)) || amount > (state->total_money) || ((amount % 50) != 0)) // Hack, retire player, invalid values
+            return kick_hacker(74, player);
         game->best_bid = amount;
-        game->best_bidder = p;
+        game->best_bidder = player;
         list<Player*>::iterator i;
         Player* dest;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1486,27 +1520,27 @@ void handle_command(string command, Player* p)
             dest = (*i);
             send_command("auction_bid_placed", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             send_int(dest, amount);
         }
     }
     else if (command == "auction_sell")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-            return kick_hacker(75, p);
+        if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
+            return kick_hacker(75, player);
         if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
-            return kick_hacker(76, p);
-        if (p != game->hotel_at_auction->owner) // Hack, retire player, he is trying to end the auction without being the owner
-            return kick_hacker(77, p);
+            return kick_hacker(76, player);
+        if (player != game->hotel_at_auction->owner) // Hack, retire player, he is trying to end the auction without being the owner
+            return kick_hacker(77, player);
         if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
-            return kick_hacker(78, p);
+            return kick_hacker(78, player);
         list<Player*>::iterator i;
         Player* dest;
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1520,42 +1554,45 @@ void handle_command(string command, Player* p)
     else if (command == "auction_pay")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int n_5000, n_1000, n_500, n_100, n_50;
-        len_int = receive_int(p, &bytes_received);
-        n_5000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_1000 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_500 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_100 = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        len_int = receive_int(p, &bytes_received);
-        n_50 = atoi(receive_string(p, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_5000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_1000 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_500 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        if (!game->check_already_joined(p)) // Hack, retire player, he is not part of the game
-            return kick_hacker(79, p);
+        if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
+            return kick_hacker(79, player);
+        PlayerGameState* state = player->GetState(game->id);
+        if (state == NULL)
+            return;
         if (game->hotel_at_auction == NULL) // Hack, retire player, no auction in progress
-            return kick_hacker(80, p);
+            return kick_hacker(80, player);
         if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
-            return kick_hacker(81, p);
-        if (p != game->best_bidder) // Hack, retire player, the player who pays must be the best bidder
-            return kick_hacker(82, p);
+            return kick_hacker(81, player);
+        if (player != game->best_bidder) // Hack, retire player, the player who pays must be the best bidder
+            return kick_hacker(82, player);
         int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
         if ((total_selected <= 0) || (total_selected < (game->best_bid))) // Hack, retire player, the command is only sent if player has something to pay and >= than best bid
-            return kick_hacker(83, p);
+            return kick_hacker(83, player);
         Player* previous_owner = game->hotel_at_auction->owner;
-        previous_owner->Expropriate_hotel(game->hotel_at_auction);
-        p->Buy_hotel(game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
-        game->hotel_at_auction->owner = p;
+        previous_owner->Expropriate_hotel(game->id, game->hotel_at_auction);
+        player->Buy_hotel(game->id, game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
+        game->hotel_at_auction->owner = player;
         // Calculate change
         if (total_selected > (game->best_bid))
         {
-            game->calculate_return(previous_owner, total_selected - game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-            p->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+            game->calculate_return(previous_owner->GetState(game->id), total_selected - game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+            player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
         }
         list<Player*>::iterator i;
         Player* dest;
@@ -1564,28 +1601,28 @@ void handle_command(string command, Player* p)
             dest = (*i);
             send_command("hotel_expropriated", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(game->hotel_at_auction->name_txt));
             send_wstring(dest, game->hotel_at_auction->name_txt);
             send_command("update_player_money", dest);
             send_int(dest, id);
-            send_int(dest, get_utf8_length(p->name));
-            send_wstring(dest, p->name);
-            send_int(dest, p->n_50);
-            send_int(dest, p->n_100);
-            send_int(dest, p->n_500);
-            send_int(dest, p->n_1000);
-            send_int(dest, p->n_5000);
+            send_int(dest, get_utf8_length(player->name));
+            send_wstring(dest, player->name);
+            send_int(dest, state->n_50);
+            send_int(dest, state->n_100);
+            send_int(dest, state->n_500);
+            send_int(dest, state->n_1000);
+            send_int(dest, state->n_5000);
             send_command("update_player_money", dest);
             send_int(dest, id);
             send_int(dest, get_utf8_length(previous_owner->name));
             send_wstring(dest, previous_owner->name);
-            send_int(dest, previous_owner->n_50);
-            send_int(dest, previous_owner->n_100);
-            send_int(dest, previous_owner->n_500);
-            send_int(dest, previous_owner->n_1000);
-            send_int(dest, previous_owner->n_5000);
+            send_int(dest, previous_owner->GetState(game->id)->n_50);
+            send_int(dest, previous_owner->GetState(game->id)->n_100);
+            send_int(dest, previous_owner->GetState(game->id)->n_500);
+            send_int(dest, previous_owner->GetState(game->id)->n_1000);
+            send_int(dest, previous_owner->GetState(game->id)->n_5000);
         }
         // If this command is sent before updating hotels and money to everyone, the client doesn't know who owns the hotels
         for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
@@ -1601,10 +1638,10 @@ void handle_command(string command, Player* p)
     else if (command == "save_game")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_password = receive_int(p, &bytes_received);
-        wstring password = receive_wstring(p, len_password, &bytes_received);
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_password = receive_int(player, &bytes_received);
+        wstring password = receive_wstring(player, len_password, &bytes_received);
         Game* game = get_game_from_id(id, &glist);
         game->password = password;
         savedgamesmgr->SaveGame(game);
@@ -1612,12 +1649,12 @@ void handle_command(string command, Player* p)
     else if (command == "load_game")
     {
         int bytes_received;
-        int len_int = receive_int(p, &bytes_received);
-        int id = atoi(receive_string(p, len_int, &bytes_received).c_str());
-        int len_password = receive_int(p, &bytes_received);
-        wstring password = receive_wstring(p, len_password, &bytes_received);
+        int len_int = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_password = receive_int(player, &bytes_received);
+        wstring password = receive_wstring(player, len_password, &bytes_received);
         int error_code = 0;
-        savedgamesmgr->LoadGame(id, password, p, &mutex_ids, &id_count, random_gen, &error_code);
+        savedgamesmgr->LoadGame(id, password, player, &mutex_ids, &id_count, random_gen, &error_code);
     }
 }
 

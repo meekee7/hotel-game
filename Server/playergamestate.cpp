@@ -1,7 +1,8 @@
 #include "playergamestate.h"
 
-PlayerGameState::PlayerGameState(void)
+PlayerGameState::PlayerGameState(Player* player)
 {
+    this->player = player;
     this->rolled_last_turn = false;
     this->charged_bank_last_turn = false;
     this->bought_last_turn = false;
@@ -10,22 +11,17 @@ PlayerGameState::PlayerGameState(void)
     this->free_entrance_used = false;
     this->debt_last_turn = 0;
     this->debt_nights_to_last_turn = NULL;
+    this->n_5000 = 0;
+    this->n_1000 = 0;
+    this->n_500 = 0;
+    this->n_100 = 0;
+    this->n_50 = 0;
     this->position = new Position(0);
 }
 
 void PlayerGameState::Calculate_total_money()
 {
     this->total_money = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-}
-
-void PlayerGameState::AddPlayerMoney(PlayerGameState* player_state, int n_5000, int n_1000, int n_500, int n_100, int n_50)
-{
-    player_state->n_5000 += n_5000;
-    player_state->n_1000 += n_1000;
-    player_state->n_500 += n_500;
-    player_state->n_100 += n_100;
-    player_state->n_50 += n_50;
-    player_state->Calculate_total_money();
 }
 
 void PlayerGameState::Charge_bank()
@@ -57,13 +53,12 @@ void PlayerGameState::Buy_hotel(Hotel* hotel, PlayerGameState* previous_owner, i
     this->n_100 -= n_100;
     this->n_50 -= n_50;
     this->Calculate_total_money();
-    AddPlayerMoney(previous_owner, n_5000, n_1000, n_500, n_100, n_50);
-    /*previous_owner->n_5000 += n_5000;
+    previous_owner->n_5000 += n_5000;
     previous_owner->n_1000 += n_1000;
     previous_owner->n_500 += n_500;
     previous_owner->n_100 += n_100;
     previous_owner->n_50 += n_50;
-    previous_owner->Calculate_total_money();*/
+    previous_owner->Calculate_total_money();
 }
 
 void PlayerGameState::Expropriate_hotel(Hotel* hotel)
@@ -91,13 +86,12 @@ void PlayerGameState::Pay_nights (PlayerGameState* to_player, int n5000, int n10
     this->n_100 -= n100;
     this->n_50 -= n50;
     this->Calculate_total_money();
-    AddPlayerMoney(to_player, n_5000, n_1000, n_500, n_100, n_50);
-    /*to_player->n_5000 += n5000;
+    to_player->n_5000 += n5000;
     to_player->n_1000 += n1000;
     to_player->n_500 += n500;
     to_player->n_100 += n100;
     to_player->n_50 += n50;
-    to_player->Calculate_total_money();*/
+    to_player->Calculate_total_money();
 }
 
 void PlayerGameState::Return_change(int n_5000, int n_1000, int n_500, int n_100, int n_50)
@@ -344,4 +338,5 @@ void PlayerGameState::Take_50_without_having_b50(int* n_50)
 
 PlayerGameState::~PlayerGameState(void)
 {
+    delete this->position;
 }

@@ -49,7 +49,7 @@ public:
     bool can_charge_bank(Player* p);
     bool can_buy_entrances(Player* p);
     void calculate_return (int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50);
-    void calculate_return(Player* player, int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50);
+    void calculate_return(PlayerGameState* player, int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50);
 
     Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random);
     ~Game(void);
