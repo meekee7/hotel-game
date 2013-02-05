@@ -31,3 +31,5 @@ int receive_int (Player* p, int* bytes_received);
 int send_string (Player* p, string data);
 int send_wstring (Player* p, wstring data);
 int send_int (Player* p, int data);
+void send_command(string command, Player* p);
+void SendGameList(Player* p, list<Game*>* glist);

@@ -78,6 +78,14 @@ namespace Juego_Hotel
             }
         }
 
+        public void Cambiar_Creador(String creador)
+        {
+            this.creador = creador;
+            this.txtCreador.Text = this.resources.GetString("txtCreador.Text") + this.creador;
+            if (this.creador == this.frm_online.txtLogin.Text)
+                this.bIniciar.Enabled = true;
+        }
+
         private void bEnviar_Click(object sender, EventArgs e)
         {
             if (this.mensaje.Text.Trim().Length == 0)

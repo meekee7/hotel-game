@@ -250,3 +250,31 @@ int send_int (Player* p, int data)
     else
         return -1;
 }
+
+void send_command(string command, Player* p)
+{
+    wstring w_command;
+    w_command.assign(command.begin(), command.end());
+    wcout << currentDateTime() << L"Sending command to player " << p->name << L": " << w_command << endl;
+    send_int(p, command.length());
+    send_string(p, command);
+}
+
+void SendGameList(Player* p, list<Game*>* glist)
+{
+    list<Game*>::iterator i;
+    send_command("game_list", p);
+    send_int(p, glist->size());
+    if (glist->size() != 0)
+    {
+        for (i = glist->begin() ; i != glist->end() ; ++i)
+        {
+            send_int(p, get_utf8_length((*i)->name));
+            send_wstring(p, (*i)->name);
+            send_int(p, (*i)->n_players);
+            send_int(p, (*i)->plist.size());
+            send_int(p, ((*i)->started ? 1 : 0));
+            send_int(p, ((*i)->ended ? 1 : 0));
+        }
+    }
+}

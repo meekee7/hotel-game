@@ -195,15 +195,6 @@ bool delete_game_if_empty(Game* game)
     }
 }
 
-void send_command(string command, Player* p)
-{
-    wstring w_command;
-    w_command.assign(command.begin(), command.end());
-    wcout << currentDateTime() << L"Sending command to player " << p->name << L": " << w_command << endl;
-    send_int(p, command.length());
-    send_string(p, command);
-}
-
 void disconnect_client(Player* p, bool kicking)
 {
     if (!p->connected)
@@ -326,7 +317,6 @@ void handle_command(string command, Player* player)
         // Send player list to all players, so they are notified about the diconnected user
         // Send as much strings as connected players, with a count first
         list<Player*>::iterator i, j;
-        list<Game*>::iterator i2;
         Player* dest;
         for (i = plist.begin() ; i != plist.end() ; ++i)
         {
@@ -338,20 +328,7 @@ void handle_command(string command, Player* player)
                 send_int(dest, get_utf8_length((*j)->name));
                 send_wstring(dest, (*j)->name);
             }
-            send_command("game_list", dest);
-            send_int(dest, glist.size());
-            if (glist.size() != 0)
-            {
-                for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
-                {
-                    send_int(dest, get_utf8_length((*i2)->name));
-                    send_wstring(dest, (*i2)->name);
-                    send_int(dest, (*i2)->n_players);
-                    send_int(dest, (*i2)->plist.size());
-                    send_int(dest, ((*i2)->started ? 1 : 0));
-                    send_int(dest, ((*i2)->ended ? 1 : 0));
-                }
-            }
+            SendGameList(dest, &glist);
         }
     }
     else if (command == "get_players")
@@ -367,21 +344,7 @@ void handle_command(string command, Player* player)
     }
     else if (command == "get_games")
     {
-        list<Game*>::iterator i;
-        send_command("game_list", player);
-        send_int(player, glist.size());
-        if (glist.size() != 0)
-        {
-            for (i = glist.begin() ; i != glist.end() ; ++i)
-            {
-                send_int(player, get_utf8_length((*i)->name));
-                send_wstring(player, (*i)->name);
-                send_int(player, (*i)->n_players);
-                send_int(player, (*i)->plist.size());
-                send_int(player, ((*i)->started ? 1 : 0));
-                send_int(player, ((*i)->ended ? 1 : 0));
-            }
-        }
+        SendGameList(player, &glist);
     }
     else if (command == "create_game")
     {
@@ -404,27 +367,10 @@ void handle_command(string command, Player* player)
         send_int(player, get_utf8_length(new_game->creator->name));
         send_wstring(player, new_game->creator->name);
         send_int(player, new_game->n_players);
-        list<Game*>::iterator i;
-        list<Player*>::iterator i2;
+        list<Player*>::iterator i;
         Player* dest;
-        for (i2 = plist.begin() ; i2 != plist.end() ; ++i2)
-        {
-            dest = *i2;
-            send_command("game_list", dest);
-            send_int(dest, glist.size());
-            if (glist.size() != 0)
-            {
-                for (i = glist.begin() ; i != glist.end() ; ++i)
-                {
-                    send_int(dest, get_utf8_length((*i)->name));
-                    send_wstring(dest, (*i)->name);
-                    send_int(dest, (*i)->n_players);
-                    send_int(dest, (*i)->plist.size());
-                    send_int(dest, ((*i)->started ? 1 : 0));
-                    send_int(dest, ((*i)->ended ? 1 : 0));
-                }
-            }	
-        }
+        for (i = plist.begin() ; i != plist.end() ; ++i)
+            SendGameList((*i), &glist);
     }
     else if (command == "join_game")
     {
@@ -468,6 +414,8 @@ void handle_command(string command, Player* player)
                     }
                 }
             }
+            for (i = plist.begin() ; i != plist.end() ; i++)
+                SendGameList((*i), &glist);
         }
         else if (game->started)
         {
@@ -496,7 +444,8 @@ void handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        game->eliminate_player(player, NULL);
+        Player* old_creator = game->creator;
+        game->leave(player);
         list<Player*>::iterator i, j;
         Player* dest;
         for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
@@ -510,29 +459,25 @@ void handle_command(string command, Player* player)
                 send_int(dest, get_utf8_length((*j)->name));
                 send_wstring(dest, (*j)->name);
             }
+            // If the creator is who left, send the new creator so he can start the game
+            if (game->creator != old_creator)
+            {
+                send_command("game_creator_changed", dest);
+                send_int(dest, game->id);
+                send_int(dest, get_utf8_length(game->creator->name));
+                send_wstring(dest, game->creator->name);
+            }
         }
         if (delete_game_if_empty(game))
         {
-            list<Game*>::iterator i2;
             for (i = plist.begin() ; i != plist.end() ; ++i)
             {
                 dest = *i;
-                send_command("game_list", dest);
-                send_int(dest, glist.size());
-                if (glist.size() != 0)
-                {
-                    for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
-                    {
-                        send_int(dest, get_utf8_length((*i2)->name));
-                        send_wstring(dest, (*i2)->name);
-                        send_int(dest, (*i2)->n_players);
-                        send_int(dest, (*i2)->plist.size());
-                        send_int(dest, ((*i2)->started ? 1 : 0));
-                        send_int(dest, ((*i2)->ended ? 1 : 0));
-                    }
-                }
+                SendGameList(dest, &glist);
             }
         }
+        for (i = plist.begin() ; i != plist.end() ; i++)
+            SendGameList((*i), &glist);
     }
     else if (command == "create_chat")
     {
@@ -759,6 +704,8 @@ void handle_command(string command, Player* player)
                 send_wstring(dest, (*j)->name);
             }
         }
+        for (i = plist.begin() ; i != plist.end() ; i++)
+            SendGameList((*i), &glist);
     }
     else if (command == "roll_dice")
     {

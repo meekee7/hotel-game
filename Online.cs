@@ -611,8 +611,8 @@ namespace Juego_Hotel
                     return;
                 }
                 this.enviar_comando("create_game", nombre, n_jugadores.ToString());
-                this.bUnirse.Enabled = false;
-                this.bCrearPartida.Enabled = false;
+                //this.bUnirse.Enabled = false;
+                //this.bCrearPartida.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -880,6 +880,8 @@ namespace Juego_Hotel
                     this.Partida_empezada_o_terminada(false);
                 else if (msg == "cant_join_already_joined")
                     this.No_unirse_a_partida();
+                else if (msg == "game_creator_changed")
+                    this.Nuevo_creador_partida();
                 else if (msg == "rolled_dice")
                     this.Dado_tirado();
                 else if (msg == "rolled_construction_dice")
@@ -1100,6 +1102,16 @@ namespace Juego_Hotel
             jugador.posicion = partida.interfaz.juego.casillas[pos];
             jugador.posicion.ocupada = true;
             partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Tirar_dado), new object[] { jugador });
+        }
+
+        private void Nuevo_creador_partida()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.BeginInvoke(new Action<String>(partida.Cambiar_Creador), new object[] { nombre_jugador });
         }
 
         delegate void Tirar_Dado_Construccion_Callback(Jugador jugador, Tipos.Resultado_dado_cons resultado);

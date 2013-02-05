@@ -104,17 +104,20 @@ bool Game::check_already_joined(Player* p)
 
 bool Game::leave(Player* p)
 {
-    bool found = false;
-    list<Player*>::iterator i = this->plist.begin();
-    while (!found && i != this->plist.end())
+    //bool found = false;
+    list<Player*>::iterator i = find(this->plist.begin(), this->plist.end(), p);
+    /*while (!found && i != this->plist.end())
     {
         if ((*i)->name == p->name)
             found = true;
         else
             ++i;
-    }
-    if (!found)
+    }*/
+    if (i == this->plist.end())
+    {
         wcout << currentDateTime() << L"Player " << p->name << L" not found in game " << this->name << " (WARNING: Possible hack)" << endl;
+        return false;
+    }
     else
     {
         if (this->is_active(p))
@@ -124,8 +127,8 @@ bool Game::leave(Player* p)
         if ((this->plist.size()) > 0 && (this->creator == p))
             this->creator = this->plist.front(); // New creator
         wcout << currentDateTime() << L"Player "<< p->name << L" left game " << this->name << endl;
+        return true;
     }
-    return found;
 }
 
 void Game::start()
@@ -270,16 +273,12 @@ bool Game::is_active(Player* player)
         return true;
 }
 
-void Game::eliminate_player(Player* player, Player* reiciving_player)
+void Game::eliminate_player(Player* player, Player* reiceiving_player)
 {
     // Find the player
-    list<Player*>::iterator i;
-    if (this->active_plist.size() > 0)
-    {
-        i = find(this->active_plist.begin(), this->active_plist.end(), player);
-        if (i != this->active_plist.end())
-            this->active_plist.erase(i);
-    }
+    list<Player*>::iterator i = find(this->active_plist.begin(), this->active_plist.end(), player);
+    if (i != this->active_plist.end())
+        this->active_plist.erase(i);
     // Return all hotels to bank
     list<Hotel*>::iterator i2;
     PlayerGameState* player_state = player->GetState(this->id);
@@ -288,9 +287,9 @@ void Game::eliminate_player(Player* player, Player* reiciving_player)
         (*i2)->Return_to_bank();
     }
     player_state->hotels.clear();
-    if (reiciving_player != NULL)
+    if (reiceiving_player != NULL)
     {
-        player->Pay_nights(this->id, reiciving_player->GetState(this->id), player_state->n_5000, player_state->n_1000, player_state->n_500, player_state->n_100, player_state->n_50);
+        player->Pay_nights(this->id, reiceiving_player->GetState(this->id), player_state->n_5000, player_state->n_1000, player_state->n_500, player_state->n_100, player_state->n_50);
     }
 }
 
