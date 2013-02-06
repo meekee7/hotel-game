@@ -968,6 +968,7 @@ void handle_command(string command, Player* player)
             dest = (*i);
             send_command("hotel_expropriated", dest);
             send_int(dest, id);
+            send_int(dest, 0);// 0 = expropriation, 1 = auction
             send_int(dest, get_utf8_length(player->name));
             send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(hotel_name));
@@ -1530,6 +1531,7 @@ void handle_command(string command, Player* player)
             dest = (*i);
             send_command("hotel_expropriated", dest);
             send_int(dest, id);
+            send_int(dest, 1);// 0 = expropriation, 1 = auction
             send_int(dest, get_utf8_length(player->name));
             send_wstring(dest, player->name);
             send_int(dest, get_utf8_length(game->hotel_at_auction->name_txt));

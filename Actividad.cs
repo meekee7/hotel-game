@@ -19,7 +19,7 @@ namespace Juego_Hotel
 
         public void DadoTirado(Jugador jugador, int resultado)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MADadoTirado, jugador.nombre_online, jugador.color.ToString(), resultado.ToString()) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format(Mensajes.MADadoTirado, jugador.nombre_online, jugador.Nombre_color(), resultado.ToString()) + Environment.NewLine);
         }
 
         public void PasarTurno(String jugador, String color)
@@ -37,38 +37,53 @@ namespace Juego_Hotel
             switch (resultado)
             {
                 case (Tipos.Resultado_dado_cons.Permitido):
-                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionOk, jugador.nombre_online, jugador.color) + Environment.NewLine);
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionOk, jugador.nombre_online, jugador.Nombre_color()) + Environment.NewLine);
                     break;
-                case (Tipos.Resultado_dado_cons.Gratis): 
-                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionGratis , jugador.nombre_online, jugador.color) + Environment.NewLine);
+                case (Tipos.Resultado_dado_cons.Gratis):
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionGratis, jugador.nombre_online, jugador.Nombre_color()) + Environment.NewLine);
                     break;
                 case (Tipos.Resultado_dado_cons.Doble):
-                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionDobleCoste, jugador.nombre_online, jugador.color) + Environment.NewLine);
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionDobleCoste, jugador.nombre_online, jugador.Nombre_color()) + Environment.NewLine);
                     break;
-                case (Tipos.Resultado_dado_cons.Denegado): 
-                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionKo, jugador.nombre_online, jugador.color) + Environment.NewLine);
+                case (Tipos.Resultado_dado_cons.Denegado):
+                    this.mensajes.AppendText(String.Format(Mensajes.MATirarDadoConstruccionKo, jugador.nombre_online, jugador.Nombre_color()) + Environment.NewLine);
                     break;
             }
         }
 
         public void Pedir_Noches_Online(Jugador jugador, Jugador jugadorD, int cantidad, int noches, String hotel)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MAPedirNochesOnline, jugador.nombre_online, jugador.color, jugadorD.nombre_online, jugadorD.color, cantidad, noches, hotel) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format(Mensajes.MAPedirNochesOnline, jugador.nombre_online, jugador.Nombre_color(), jugadorD.nombre_online, jugadorD.Nombre_color(), cantidad, noches, hotel) + Environment.NewLine);
         }
 
         public void Expropiar_Hotel(Jugador expropiador, Jugador expropiado, String hotel)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MAExpropiarHotel, expropiador.nombre_online, expropiador.color, expropiado.nombre_online, expropiado.color, hotel) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format(Mensajes.MAExpropiarHotel, expropiador.nombre_online, expropiador.Nombre_color(), expropiado.nombre_online, expropiado.Nombre_color(), hotel) + Environment.NewLine);
         }
 
         public void Añadir_Entrada(Jugador jugador, int entrada, String hotel)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MAEntradaAñadida, jugador.nombre_online, jugador.color, entrada, hotel) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format(Mensajes.MAEntradaAñadida, jugador.nombre_online, jugador.Nombre_color(), entrada, hotel) + Environment.NewLine);
         }
 
         public void Añadir_Fase(Jugador jugador, int fase, String hotel)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MAFaseAñadida, jugador.nombre_online, jugador.color, fase, hotel) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format(Mensajes.MAFaseAñadida, jugador.nombre_online, jugador.Nombre_color(), fase, hotel) + Environment.NewLine);
+        }
+
+        public void Iniciar_Subasta(Jugador jugador, String hotel)
+        {
+            this.mensajes.AppendText(String.Format(Mensajes.MAIniciarSubasta, jugador.nombre_online, jugador.Nombre_color(), hotel) + Environment.NewLine);
+        }
+
+        public void Realizar_Puja(Jugador jugador, int cantidad, String hotel)
+        {
+            this.mensajes.AppendText(String.Format(Mensajes.MANuevaPuja, jugador.nombre_online, jugador.Nombre_color(), cantidad, hotel) + Environment.NewLine);
+        }
+
+        public void Subasta_Terminada(Jugador vendedor, Jugador comprador, String hotel, int cantidad)
+        {
+            this.mensajes.AppendText(String.Format(Mensajes.MASubastaTerminada, vendedor.nombre_online, vendedor.Nombre_color(), hotel, comprador.nombre_online, comprador.Nombre_color(), cantidad) + Environment.NewLine);
         }
 
     }

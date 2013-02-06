@@ -437,7 +437,7 @@ namespace Juego_Hotel
                 this.dado_tirado = false;
                 System.Media.SystemSounds.Beep.Play();
                 if (this.online)
-                    this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.color.ToString());//Actualizando datos de la actividad
+                    this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.Nombre_color());//Actualizando datos de la actividad
             }
         }
 
@@ -889,7 +889,7 @@ namespace Juego_Hotel
 
         public void Hotel_Comprado(Hotel hotel, Jugador jugador)
         {
-            this.actividad.ComprarHotel(jugador.nombre_online, jugador.color.ToString(), hotel.nombre_txt); //Actualizando datos de la actividad
+            this.actividad.ComprarHotel(jugador.nombre_online, jugador.Nombre_color(), hotel.nombre_txt); //Actualizando datos de la actividad
         }
 
         public void Hotel_Expropiado(Jugador jugador,Jugador expropiado, String hotel)
@@ -1301,6 +1301,21 @@ namespace Juego_Hotel
         public void Añadir_Fase(Jugador jugador, int fase, String hotel)
         {
             this.actividad.Añadir_Fase(jugador, fase, hotel);
+        }
+
+        public void Subasta_Iniciada(Jugador jugador, String hotel)
+        {
+            this.actividad.Iniciar_Subasta(jugador, hotel);
+        }
+
+        public void Nueva_Puja(Jugador jugador, int cantidad, String hotel)
+        {
+            this.actividad.Realizar_Puja(jugador, cantidad, hotel);
+        }
+
+        public void Subasta_Terminada(Jugador vendedor, int cantidad, Jugador comprador, String hotel)
+        {
+            this.actividad.Subasta_Terminada(vendedor, comprador, hotel, cantidad);
         }
 
         private void bNormas_Click(object sender, EventArgs e)

@@ -708,4 +708,13 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajePasswordVacia" xml:space="preserve">
     <value>The passowrd cannot be blank</value>
   </data>
+  <data name="MAIniciarSubasta" xml:space="preserve">
+    <value>Player {0} ({1}) has begun the auction for the hotel {2}.</value>
+  </data>
+  <data name="MANuevaPuja" xml:space="preserve">
+    <value>Player {0} ({1}) offers {2} for the hotel {3}.</value>
+  </data>
+  <data name="MASubastaTerminada" xml:space="preserve">
+    <value>Player {0} ({1}) has sold the hotel {2} to player {3}({4})  for {5}.</value>
+  </data>
 </root>

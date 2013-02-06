@@ -1209,6 +1209,7 @@ namespace Juego_Hotel
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            Boolean subastado = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
@@ -1220,7 +1221,8 @@ namespace Juego_Hotel
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
-            partida.interfaz.BeginInvoke(new Hotel_expropiado_Callback(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
+            if (!subastado)
+                partida.interfaz.BeginInvoke(new Hotel_expropiado_Callback(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
         }
 
         delegate void Dibujar_Fase_Callback(Hotel hotel, int n_50);
@@ -1343,6 +1345,8 @@ namespace Juego_Hotel
                     partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
         }
 
+        delegate void Subasta_Iniciada_Callback(Jugador jugador, String hotel);
+
         private void Subasta_iniciada()
         {
             int bytes_recibidos = 0;
@@ -1357,6 +1361,7 @@ namespace Juego_Hotel
                 thread_manejar_subasta.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                 thread_manejar_subasta.Start(partida);
             }
+            partida.interfaz.BeginInvoke(new Subasta_Iniciada_Callback(partida.interfaz.Subasta_Iniciada), partida.interfaz.juego.jugador_actual, nombre_hotel);
         }
 
         private void Manejar_subasta(object parametro)
@@ -1369,6 +1374,7 @@ namespace Juego_Hotel
         }
 
         delegate void Nueva_puja_Callback(Jugador jugador, int cantidad);
+        delegate void Nueva_Puja_MA_Callback(Jugador jugador, int cantidad, String hotel);
 
         private void Nueva_puja()
         {
@@ -1380,9 +1386,11 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Nueva_puja_Callback(partida.interfaz.frm_subasta_en_curso.Nueva_puja), jugador, cantidad);
+            partida.interfaz.BeginInvoke(new Nueva_Puja_MA_Callback(partida.interfaz.Nueva_Puja), jugador, cantidad, partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
         }
 
         delegate void Subasta_vendida_Callback();
+        delegate void Subasta_vendida_MA_Callback(Jugador vendedor, int cantidad, Jugador comprador, String hotel);
 
         private void Subasta_vendida()
         {
@@ -1407,6 +1415,7 @@ namespace Juego_Hotel
                 MessageBox.Show(String.Format(Mensajes.mensajeHotelVendido, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].Nombre_color(), 
                     partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online, cantidad));
             }
+            partida.interfaz.BeginInvoke(new Subasta_vendida_MA_Callback(partida.interfaz.Subasta_Terminada), partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.dueño, cantidad, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor], partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
         }
 
         delegate void Subasta_terminada_Callback();

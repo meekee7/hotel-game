@@ -673,7 +673,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
     <value>Especifica una contraseña para evitar que cualquiera la cargue</value>
   </data>
   <data name="MAExpropiarHotel" xml:space="preserve">
-    <value>El jugador {0} ({1}) ha expropiado el hotel al jugador {2} ({3}) el hotel {4}.</value>
+    <value>El jugador {0} ({1}) ha expropiado al jugador {2} ({3}) el hotel {4}.</value>
   </data>
   <data name="MAExpropiarHotelIntento" xml:space="preserve">
     <value>El jugador {0} ({1}) ha intentado expropiar al jugador {2} ({3}) el hotel {4}, pero no ha podido.</value>
@@ -707,5 +707,14 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   </data>
   <data name="mensajePasswordVacia" xml:space="preserve">
     <value>La contraseña no puede quedar en blanco</value>
+  </data>
+  <data name="MAIniciarSubasta" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha iniciado la subasta por el hotel {2}.</value>
+  </data>
+  <data name="MANuevaPuja" xml:space="preserve">
+    <value>El jugador {0} ({1}) ofrece {2} por el hotel {3}.</value>
+  </data>
+  <data name="MASubastaTerminada" xml:space="preserve">
+    <value>El jugador {0} ({1}) ha vendido el hotel {2} al jugador {3} ({4}) por una cantidad de {5}.</value>
   </data>
 </root>
