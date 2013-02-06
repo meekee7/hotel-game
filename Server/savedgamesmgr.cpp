@@ -74,9 +74,9 @@ SavedgamesMgr::SavedgamesMgr(void)
 void SavedgamesMgr::CleanInconsistentData()
 {
     wcout << "Inconsistent data cleanup in progress" << endl;
+    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM partida WHERE estado_Fujiyama IS NULL OR estado_Boomerang IS NULL OR estado_Letoile IS NULL OR estado_President IS NULL OR estado_Royal IS NULL OR estado_Waikiki IS NULL OR estado_TajMahal IS NULL OR estado_Safari IS NULL OR estado_j1 IS NULL OR estado_j2 IS NULL;") << " saved games with incomplete data" << endl;
     wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_hotel WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " hotel statuses" << endl;
     wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_jugador WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " player statuses" << endl;
-    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM partida WHERE estado_Fujiyama IS NULL OR estado_Boomerang IS NULL OR estado_Letoile IS NULL OR estado_President IS NULL OR estado_Royal IS NULL OR estado_Waikiki IS NULL OR estado_TajMahal IS NULL OR estado_Safari IS NULL OR estado_j1 IS NULL OR estado_j2 IS NULL") << " saved games with incomplete data" << endl;
     wcout << "Cleanup completed" << endl;
 }
 
@@ -111,12 +111,16 @@ bool SavedgamesMgr::SaveGame(Game* game)
         wcout << "Cannot save game because DB was not loaded ok" << endl;
         return false;
     }
+    bool overwriting;
+    if (game->bd_id > -1)
+        overwriting = true;
+    else
+        overwriting = false;
     // Player status
-    list<Player*>::iterator i;
     vector<int> bd_player_id_list;
     vector<int> bd_hotel_id_list;
     Player* p;
-    for (i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
+    for (list<Player*>::iterator i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
     {
         p = (*i);
         wstring hotel_list = L"";
@@ -134,7 +138,8 @@ bool SavedgamesMgr::SaveGame(Game* game)
                 idx++;
             }
         }
-        string query = str(boost::format("INSERT INTO estado_jugador VALUES (NULL,NULL,\"%s\",%d,%d,%d,%d,%d,%d,%d,\"%s\");")
+        string query = str(boost::format("REPLACE INTO estado_jugador VALUES (%s,NULL,\"%s\",%d,%d,%d,%d,%d,%d,%d,\"%s\");")
+            % (overwriting == true ? str(boost::format("%d") % p->GetState(game->id)->bd_id) : "NULL")
             % utf16_to_utf8(p->name) % player_state->position->number % player_state->paid_last_turn % player_state->n_50 % player_state->n_100 % player_state->n_500
             % player_state->n_1000 % player_state->n_5000 % utf16_to_utf8(hotel_list));
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
@@ -154,26 +159,35 @@ bool SavedgamesMgr::SaveGame(Game* game)
                 return false;
             }
         }
-        int bd_id = this->db->GetLastInsertId();
-        if (bd_id < 0)
+        int bd_id;
+        if (overwriting == false)
         {
-            if (this->db->ReConnectWithLastUsedValues())
+            bd_id = this->db->GetLastInsertId();
+            if (bd_id < 0)
             {
-                bd_id = this->db->GetLastInsertId();
+                if (this->db->ReConnectWithLastUsedValues())
+                {
+                    bd_id = this->db->GetLastInsertId();
+                }
+                else
+                {
+                    wcout << "Error getting last insert id" << endl;
+                    return false;
+                }
             }
-            else
-            {
-                wcout << "Error getting last insert id" << endl;
-                return false;
-            }
+            wcout << "Player data inserted successfully with id " << bd_id << endl;
+            p->GetState(game->id)->bd_id = bd_id;
         }
-        wcout << "Player data inserted successfully with id " << bd_id << endl;
+        else
+        {
+            bd_id = p->GetState(game->id)->bd_id;
+            wcout << "Player data with id " << bd_id << " updated successfully" << endl;
+        }
         bd_player_id_list.push_back(bd_id);
     }
     // Hotel status
-    list<Hotel*>::iterator k;
     Hotel* h;
-    for (k = game->hlist.begin() ; k != game->hlist.end() ; k++)
+    for (list<Hotel*>::iterator k = game->hlist.begin() ; k != game->hlist.end() ; k++)
     {
         h = (*k);
         string entrance_list = "";
@@ -189,7 +203,8 @@ bool SavedgamesMgr::SaveGame(Game* game)
                 idx++;
             }
         }
-        string query = str(boost::format("INSERT INTO estado_hotel VALUES (NULL,NULL,\"%s\",%d,%d,%d,\"%s\");")
+        string query = str(boost::format("REPLACE INTO estado_hotel VALUES (%d,NULL,\"%s\",%d,%d,%d,\"%s\");")
+            % (overwriting == true ? str(boost::format("%d") % h->bd_id) : "NULL")
             % utf16_to_utf8(h->name_txt) % h->n_built_phases % h->entrance_bought_last_turn % h->ground_bought % entrance_list);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
@@ -244,24 +259,35 @@ bool SavedgamesMgr::SaveGame(Game* game)
                 return false;
             }
         }
-        int bd_id = this->db->GetLastInsertId();
-        if (bd_id < 0)
+        int bd_id;
+        if (overwriting == false)
         {
-            if (this->db->ReConnectWithLastUsedValues())
+            bd_id = this->db->GetLastInsertId();
+            if (bd_id < 0)
             {
-                bd_id = this->db->GetLastInsertId();
+                if (this->db->ReConnectWithLastUsedValues())
+                {
+                    bd_id = this->db->GetLastInsertId();
+                }
+                else
+                {
+                    wcout << "Error getting last insert id" << endl;
+                    return false;
+                }
             }
-            else
-            {
-                wcout << "Error getting last insert id" << endl;
-                return false;
-            }
+            wcout << "Hotel data inserted successfully with id " << bd_id << endl;
+            h->bd_id = bd_id;
         }
-        wcout << "Hotel data inserted successfully with id " << bd_id << endl;
+        else
+        {
+            bd_id = h->bd_id;
+            wcout << "Hotel data with id " << bd_id << " updated successfully" << endl;
+        }
         bd_hotel_id_list.push_back(bd_id);
     }
     // Game data
-    string query = str(boost::format("INSERT INTO partida VALUES (NULL,\"%s\",\"%s\",NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
+    string query = str(boost::format("REPLACE INTO partida VALUES (%d,\"%s\",\"%s\",NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
+        % (overwriting == true ? str(boost::format("%d") % game->bd_id) : "NULL")
         % utf16_to_utf8(game->password) % utf16_to_utf8(game->name) % game->turn_count % game->n_players % game->active_plist.size() % game->starting_player
         % game->current_player->GetState(game->id)->num % game->last_dice_res % game->last_auto_advance
         % bd_hotel_id_list[0] % bd_hotel_id_list[1] % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]
@@ -320,19 +346,25 @@ bool SavedgamesMgr::SaveGame(Game* game)
             return false;
         }
     }
-    int bd_id = this->db->GetLastInsertId();
-    if (bd_id < 0)
+    int bd_id;
+    if (overwriting == false)
     {
-        if (this->db->ReConnectWithLastUsedValues())
+        bd_id = this->db->GetLastInsertId();
+        if (bd_id < 0)
         {
-            bd_id = this->db->GetLastInsertId();
-        }
-        else
-        {
-            wcout << "Error getting last insert id" << endl;
-            return false;
+            if (this->db->ReConnectWithLastUsedValues())
+            {
+                bd_id = this->db->GetLastInsertId();
+            }
+            else
+            {
+                wcout << "Error getting last insert id" << endl;
+                return false;
+            }
         }
     }
+    else
+        bd_id = game->bd_id;
     // Associate all statuses with game ID
     query = str(boost::format("UPDATE estado_hotel SET id_partida = %d WHERE id IN (%d, %d, %d, %d, %d, %d, %d, %d);") % bd_id % bd_hotel_id_list[0] % bd_hotel_id_list[1]
         % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]);
@@ -472,7 +504,13 @@ bool SavedgamesMgr::SaveGame(Game* game)
             return false;
         }
     }
-    wcout << "Game data inserted successfully with id " << bd_id << endl;
+    if (overwriting)
+        wcout << "Game data with id " << bd_id << " updated successfully " << endl;
+    else
+    {
+        wcout << "Game data inserted successfully with id " << bd_id << endl;
+        game->bd_id = bd_id;
+    }
     return true;
 }
 

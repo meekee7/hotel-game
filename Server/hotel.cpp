@@ -2,6 +2,7 @@
 
 Hotel::Hotel(THotel_name name)
 {
+    this->bd_id = -1; // Will be overwritten when saved
     this->name = name;
     this->owner = NULL;
     this->entrances = list<int>();

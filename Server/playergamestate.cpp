@@ -3,6 +3,7 @@
 PlayerGameState::PlayerGameState(Player* player)
 {
     this->player = player;
+    this->bd_id = -1; // Will be overwritten when saved
     this->rolled_last_turn = false;
     this->charged_bank_last_turn = false;
     this->bought_last_turn = false;

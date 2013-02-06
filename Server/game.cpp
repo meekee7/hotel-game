@@ -5,6 +5,7 @@
 
 Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random)
 {
+    this->bd_id = -1; // It will be overwritten when saved
     this->random = random;
     this->name = name;
     this->n_players = n_players;

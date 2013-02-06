@@ -11,7 +11,7 @@
 class Game
 {
 public:
-    int id;
+    int id, bd_id;
     wstring name, password;
     Player* creator;
     int n_players;

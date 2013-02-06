@@ -13,6 +13,7 @@ class Player;
 class Hotel
 {
 public:
+    int bd_id;
     THotel_name name;
     wstring name_txt;
     int price, expropriation_price;

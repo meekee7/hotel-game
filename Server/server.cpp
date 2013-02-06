@@ -393,9 +393,8 @@ void handle_command(string command, Player* player)
             send_int(player, get_utf8_length(game->creator->name));
             send_wstring(player, game->creator->name);
             send_int(player, game->n_players);
-            list<Player*>::iterator i, j;
             Player* dest;
-            for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+            for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
             {
                 // We exclude joined player because the command is sent too quickly.
                 // He will ask for player list just after joining
@@ -405,14 +404,14 @@ void handle_command(string command, Player* player)
                     send_command("chat_userlist", dest);
                     send_int(dest, game->id);
                     send_int(dest, game->plist.size()); // Number of players
-                    for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+                    for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
                     {
                         send_int(dest, get_utf8_length((*j)->name));
                         send_wstring(dest, (*j)->name);
                     }
                 }
             }
-            for (i = plist.begin() ; i != plist.end() ; i++)
+            for (list<Player*>::iterator i = plist.begin() ; i != plist.end() ; i++)
                 SendGameList((*i), &glist);
         }
         else if (game->started)
