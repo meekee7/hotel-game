@@ -367,9 +367,7 @@ void handle_command(string command, Player* player)
         send_int(player, get_utf8_length(new_game->creator->name));
         send_wstring(player, new_game->creator->name);
         send_int(player, new_game->n_players);
-        list<Player*>::iterator i;
-        Player* dest;
-        for (i = plist.begin() ; i != plist.end() ; ++i)
+        for (list<Player*>::iterator i = plist.begin() ; i != plist.end() ; ++i)
             SendGameList((*i), &glist);
     }
     else if (command == "join_game")
