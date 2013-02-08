@@ -1,5 +1,5 @@
-#include "chat.h"
-#include "aux_functions.h"
+#include "Chat.h"
+#include "Aux_Functions.h"
 
 Chat::Chat(Player* creator, bool normal_chat, dlib::mutex* mutex_ids, int* id_count)
 {

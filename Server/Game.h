@@ -1,11 +1,11 @@
 #pragma once
 #include <list>
 #include <string>
-#include "player.h"
-#include "chat.h"
-#include "types.h"
-#include "hotel.h"
-#include "random.h"
+#include "Player.h"
+#include "Chat.h"
+#include "Types.h"
+#include "Hotel.h"
+#include "Random.h"
 #include "dlib/threads.h"
 
 class Game

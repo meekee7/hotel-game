@@ -1,4 +1,4 @@
-#include "playergamestate.h"
+#include "PlayerGameState.h"
 
 PlayerGameState::PlayerGameState(Player* player)
 {

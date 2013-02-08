@@ -1,4 +1,4 @@
-#include "player.h"
+#include "Player.h"
 
 Player::Player(string ip, Portable_socket* socket_client)
 {

@@ -2,7 +2,7 @@
 #include <string>
 #include <list>
 #include <iostream>
-#include "player.h"
+#include "Player.h"
 #include "dlib/threads.h"
 using namespace std;
 

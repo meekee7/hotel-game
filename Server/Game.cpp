@@ -1,6 +1,6 @@
-#include "game.h"
-#include "position.h"
-#include "aux_functions.h"
+#include "Game.h"
+#include "Position.h"
+#include "Aux_Functions.h"
 #include <iostream>
 
 Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random)

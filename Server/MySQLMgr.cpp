@@ -1,4 +1,4 @@
-#include "mysqlmgr.h"
+#include "MySQLMgr.h"
 
 // Class MySQLMgr
 bool MySQLMgr::Connect (string host, int port, string username, string password, string database)

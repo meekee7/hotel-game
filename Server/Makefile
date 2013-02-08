@@ -2,59 +2,59 @@ CC=g++
 FLAGS=-g -Wall
 LDOPT= -lpthread -lnsl -lmysqlclient
 
-all: server
+all: Server
 
 clean:
 	rm -rf *.o
 	rm -rf hotel_server
 
-aux_functions.o: aux_functions.cpp aux_functions.h
-	$(CC) -c $(FLAGS) -o aux_functions.o aux_functions.cpp
+Aux_Functions.o: Aux_Functions.cpp Aux_Functions.h
+	$(CC) -c $(FLAGS) -o Aux_Functions.o Aux_Functions.cpp
 
-random.o: random.cpp random.h
-	$(CC) -c $(FLAGS) -o random.o random.cpp
+Random.o: Random.cpp Random.h
+	$(CC) -c $(FLAGS) -o Random.o Random.cpp
 
-chat.o: chat.cpp chat.h
-	$(CC) -c $(FLAGS) -o chat.o chat.cpp
+Chat.o: Chat.cpp Chat.h
+	$(CC) -c $(FLAGS) -o Chat.o Chat.cpp
 
-player.o: player.cpp player.h
-	$(CC) -c $(FLAGS) -o player.o player.cpp
+Player.o: Player.cpp Player.h
+	$(CC) -c $(FLAGS) -o Player.o Player.cpp
 
-playergamestate.o: playergamestate.cpp playergamestate.h
-	$(CC) -c $(FLAGS) -o playergamestate.o playergamestate.cpp
+PlayerGameState.o: PlayerGameState.cpp PlayerGameState.h
+	$(CC) -c $(FLAGS) -o PlayerGameState.o PlayerGameState.cpp
 
-game.o: game.cpp game.h
-	$(CC) -c $(FLAGS) -o game.o game.cpp
+Game.o: Game.cpp Game.h
+	$(CC) -c $(FLAGS) -o Game.o Game.cpp
 
-position.o: position.cpp position.h
-	$(CC) -c $(FLAGS) -o position.o position.cpp
+Position.o: Position.cpp Position.h
+	$(CC) -c $(FLAGS) -o Position.o Position.cpp
 
-hotel.o: hotel.cpp hotel.h
-	$(CC) -c $(FLAGS) -o hotel.o hotel.cpp
+Hotel.o: Hotel.cpp Hotel.h
+	$(CC) -c $(FLAGS) -o Hotel.o Hotel.cpp
 
-portable_socket.o: portable_socket.cpp portable_socket.h
-	$(CC) -c $(FLAGS) -o portable_socket.o portable_socket.cpp
+Portable_Socket.o: Portable_Socket.cpp Portable_Socket.h
+	$(CC) -c $(FLAGS) -o Portable_Socket.o Portable_Socket.cpp
 
-tinyxml.o: tinyxml.cpp tinyxml.h
-	$(CC) -c $(FLAGS) -o tinyxml.o tinyxml.cpp
+TinyXML.o: TinyXML.cpp TinyXML.h
+	$(CC) -c $(FLAGS) -o TinyXML.o TinyXML.cpp
 
-tinystr.o: tinystr.cpp tinystr.h
-	$(CC) -c $(FLAGS) -o tinystr.o tinystr.cpp
+TinyStr.o: TinyStr.cpp TinyStr.h
+	$(CC) -c $(FLAGS) -o TinyStr.o TinyStr.cpp
 
-tinyxmlerror.o: tinyxmlerror.cpp
-	$(CC) -c $(FLAGS) -o tinyxmlerror.o tinyxmlerror.cpp
+TinyXMLError.o: TinyXMLError.cpp
+	$(CC) -c $(FLAGS) -o TinyXMLError.o TinyXMLError.cpp
 
-tinyxmlparser.o: tinyxmlparser.cpp
-	$(CC) -c $(FLAGS) -o tinyxmlparser.o tinyxmlparser.cpp
+TinyXMLParser.o: TinyXMLParser.cpp
+	$(CC) -c $(FLAGS) -o TinyXMLParser.o TinyXMLParser.cpp
 
-server.o: server.cpp
-	$(CC) -c $(FLAGS) -o server.o server.cpp
+Server.o: Server.cpp
+	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 	
-mysqlmgr.o: mysqlmgr.cpp mysqlmgr.h
-	$(CC) -c $(FLAGS) -o mysqlmgr.o mysqlmgr.cpp
+MySQLMgr.o: MySQLMgr.cpp MySQLMgr.h
+	$(CC) -c $(FLAGS) -o MySQLMgr.o MySQLMgr.cpp
 
-savedgamesmgr.o: savedgamesmgr.cpp savedgamesmgr.h
-	$(CC) -c $(FLAGS) -o savedgamesmgr.o savedgamesmgr.cpp
+SavedgamesMgr.o: SavedgamesMgr.cpp SavedgamesMgr.h
+	$(CC) -c $(FLAGS) -o SavedgamesMgr.o SavedgamesMgr.cpp
 
-server: portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o position.o hotel.o player.o playergamestate.o server.o random.o aux_functions.o mysqlmgr.o savedgamesmgr.o
-	$(CC) -o hotel_server portable_socket.o tinyxmlerror.o tinyxmlparser.o tinystr.o tinyxml.o chat.o game.o hotel.o player.o playergamestate.o position.o random.o aux_functions.o mysqlmgr.o savedgamesmgr.o server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+Server: Portable_Socket.o TinyXMLError.o TinyXMLParser.o TinyStr.o TinyXML.o Chat.o Game.o Position.o Hotel.o Player.o PlayerGameState.o Server.o Random.o Aux_Functions.o MySQLMgr.o SavedgamesMgr.o
+	$(CC) -o hotel_server Portable_Socket.o TinyXMLError.o TinyXMLParser.o TinyStr.o TinyXML.o Chat.o Game.o Hotel.o Player.o PlayerGameState.o Position.o Random.o Aux_Functions.o MySQLMgr.o SavedgamesMgr.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT

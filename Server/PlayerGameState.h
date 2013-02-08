@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
-#include "hotel.h"
-#include "position.h"
+#include "Hotel.h"
+#include "Position.h"
 
 using namespace std;
 

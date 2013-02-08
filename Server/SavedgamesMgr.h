@@ -1,8 +1,8 @@
 #pragma once
-#include "mysqlmgr.h"
-#include "game.h"
-#include "player.h"
-#include "random.h"
+#include "MySQLMgr.h"
+#include "Game.h"
+#include "Player.h"
+#include "Random.h"
 
 class SavedgamesMgr
 {

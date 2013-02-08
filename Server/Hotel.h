@@ -3,8 +3,8 @@
 #include <list>
 #include <algorithm>
 #include <string>
-#include "types.h"
-#include "position.h"
+#include "Types.h"
+#include "Position.h"
 
 using namespace std;
 

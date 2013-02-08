@@ -1,6 +1,6 @@
-#include "savedgamesmgr.h"
-#include "hotel.h"
-#include "aux_functions.h"
+#include "SavedgamesMgr.h"
+#include "Hotel.h"
+#include "Aux_Functions.h"
 #include <sstream>
 #include <vector>
 #include "dlib/string.h"

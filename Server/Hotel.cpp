@@ -1,4 +1,4 @@
-#include "hotel.h"
+#include "Hotel.h"
 
 Hotel::Hotel(THotel_name name)
 {

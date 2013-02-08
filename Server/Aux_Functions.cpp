@@ -1,4 +1,4 @@
-#include "aux_functions.h"
+#include "Aux_Functions.h"
 
 int get_utf8_length(wstring data)
 {

@@ -5,19 +5,19 @@
 #include <signal.h>
 #include <ctime>
 #include <cstdlib>
-#include "portable_socket.h"
-#include "player.h"
-#include "playergamestate.h"
-#include "game.h"
-#include "chat.h"
-#include "aux_functions.h"
-#include "tinyxml.h"
-#include "hotel.h"
-#include "types.h"
-#include "random.h"
+#include "Portable_Socket.h"
+#include "Player.h"
+#include "PlayerGameState.h"
+#include "Game.h"
+#include "Chat.h"
+#include "Aux_Functions.h"
+#include "TinyXML.h"
+#include "Hotel.h"
+#include "Types.h"
+#include "Random.h"
+#include "SavedgamesMgr.h"
 #include "dlib/threads.h"
 #include "dlib/string.h"
-#include "savedgamesmgr.h"
 
 #define MAXCONN 100
 

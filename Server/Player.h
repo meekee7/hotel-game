@@ -2,11 +2,11 @@
 #include <string>
 #include <list>
 #include <map>
-#include "portable_socket.h"
-#include "types.h"
-#include "position.h"
-#include "playergamestate.h"
-#include "hotel.h"
+#include "Portable_Socket.h"
+#include "Types.h"
+#include "Position.h"
+#include "PlayerGameState.h"
+#include "Hotel.h"
 
 using namespace std;
 

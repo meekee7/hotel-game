@@ -7,11 +7,11 @@
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
-#include "portable_socket.h"
-#include "player.h"
-#include "game.h"
-#include "hotel.h"
-#include "chat.h"
+#include "Portable_Socket.h"
+#include "Player.h"
+#include "Game.h"
+#include "Hotel.h"
+#include "Chat.h"
 
 using namespace std;
 

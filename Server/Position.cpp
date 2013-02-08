@@ -1,5 +1,4 @@
-#include "position.h"
-
+#include "Position.h"
 
 Position::Position(int number)
 {
