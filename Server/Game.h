@@ -14,7 +14,8 @@ public:
     int id, bd_id;
     wstring name, password;
     Player* creator;
-    int n_players;
+    time_t creation_date;
+    int n_players, n_players_last_save;
     list<Player*> plist, active_plist;
     list<Hotel*> hlist;
     Chat* chat;

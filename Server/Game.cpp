@@ -9,6 +9,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
     this->random = random;
     this->name = name;
     this->n_players = n_players;
+    this->creation_date = time(0);
     this->creator = creator;
     this->plist.push_back(creator);
     this->active_plist.push_back(creator);
@@ -16,6 +17,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
     this->chat->join(this->creator);
     this->id = this->chat->id;
     creator->Join_Game(this->id);
+    creator->GetState(this->id)->num = this->plist.size();
     this->started = false;
     this->ended = false;
     this->turn_count = 1;
@@ -80,8 +82,8 @@ bool Game::join(Player* p)
             return false;
         }
         p->Join_Game(this->id);
-        p->GetState(this->id)->num = this->plist.size();
         this->plist.push_back(p);
+        p->GetState(this->id)->num = this->plist.size();
         this->active_plist.push_back(p);
         this->chat->join(p);
         wcout << currentDateTime() << L"Player " << p->name << L" joined game " << this->name << endl;
