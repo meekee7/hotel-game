@@ -49,7 +49,7 @@ distribution.
 	#include <sstream>
 	#define TIXML_STRING		std::string
 #else
-	#include "TinySTR.h"
+	#include "TinyStr.h"
 	#define TIXML_STRING		TiXmlString
 #endif
 
