@@ -9,6 +9,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
     this->random = random;
     this->name = name;
     this->n_players = n_players;
+    this->n_players_last_save = -1;
     this->creation_date = time(0);
     this->creator = creator;
     this->plist.push_back(creator);
@@ -239,8 +240,7 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
         debt_mutex->unlock();
     }
 
-    list<Player*>::iterator i;
-    i = find(this->active_plist.begin(), this->active_plist.end(), this->current_player);
+    list<Player*>::iterator i = find(this->active_plist.begin(), this->active_plist.end(), this->current_player);
     if (i == --this->active_plist.end())
     {
         i = active_plist.begin();

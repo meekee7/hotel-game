@@ -92,7 +92,7 @@ void empty_plist()
 void close_server (int signum)
 {
     closing = 1;
-    wcout << currentDateTime() << endl << L"Closing server" << endl;
+    wcout << currentDateTime() << endl << L"Closing server due to signal " << signum << endl;
     unhook_signals();
     delete socket_server;
 }
@@ -1000,7 +1000,7 @@ void handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int len_name = receive_int(player, &bytes_received);
         wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
-        int n_5000, n_1000, n_500, n_100, n_50;
+        int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
         len_int = receive_int(player, &bytes_received);
         int type = atoi(receive_string(player, len_int, &bytes_received).c_str());
         if (type == 2)
@@ -1107,7 +1107,7 @@ void handle_command(string command, Player* player)
         wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
         len_int = receive_int(player, &bytes_received);
         int position = atoi(receive_string(player, len_int, &bytes_received).c_str());
-        int n_5000, n_1000, n_500, n_100, n_50;
+        int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
         len_int = receive_int(player, &bytes_received);
         int type = atoi(receive_string(player, len_int, &bytes_received).c_str());
         if (type == 1)
@@ -1216,9 +1216,12 @@ void handle_command(string command, Player* player)
             return kick_hacker(60, player);
         if (!game->is_active(player)) // Hack, already retired
             return kick_hacker(61, player);
-        Player* next_player;
-        if (game->get_active_players_count() > 2)
-            next_player = game->turn_pass(&debt_mutex);
+        Player* next_player = NULL;
+        if (game->get_active_players_count() > 2) // Game not finished yet
+        {
+            if (game->current_player == player)
+                next_player = game->turn_pass(&debt_mutex);
+        }
         game->eliminate_player(player, receiving_player);
         list<Player*>::iterator i;
         Player* dest, * winner;
@@ -1262,10 +1265,13 @@ void handle_command(string command, Player* player)
             }
             else
             {
-                send_command("turn_passed", dest);
-                send_int(dest, id);
-                send_int(dest, get_utf8_length(next_player->name));
-                send_wstring(dest, next_player->name);
+                if (next_player != NULL) // Turn was passed
+                {
+                    send_command("turn_passed", dest);
+                    send_int(dest, id);
+                    send_int(dest, get_utf8_length(next_player->name));
+                    send_wstring(dest, next_player->name);
+                }
             }
         }
     }

@@ -1,0 +1,6 @@
+delete from partida;
+delete from estado_hotel;
+delete from estado_jugador;
+alter table partida AUTO_INCREMENT=1;
+alter table estado_jugador AUTO_INCREMENT=1;
+alter table estado_hotel AUTO_INCREMENT=1;

@@ -1451,21 +1451,23 @@ namespace Juego_Hotel
                 case 3: this.controlJ4.Enabled = false;
                     break;
             }
-            if (this.online)
+            this.bTurno.Enabled = true;
+            this.bTurno.PerformClick();
+            this.bTurno.Enabled = false;
+        }
+
+        public void Desactivar_Controles()
+        {
+            this.controlJ1.Enabled = false;
+            this.controlJ2.Enabled = false;
+            this.controlJ3.Enabled = false;
+            this.controlJ4.Enabled = false;
+            foreach (Control control in this.Controls)
             {
-                foreach (Control control in this.Controls)
-                {
-                    if (control is Button) control.Enabled = false;
-                }
-                this.bSalir.Enabled = true;
-                return;
+                if (control is Button) control.Enabled = false;
             }
-            if (n_jugador + 1 == this.juego.jug_actual)
-            {
-                this.bTurno.Enabled = true;
-                this.bTurno.PerformClick();
-                this.bTurno.Enabled = false;
-            }
+            this.bSalir.Enabled = true;
+            return;
         }
 
         private Boolean Retirarse(int num_jugador)
@@ -1475,13 +1477,16 @@ namespace Juego_Hotel
             if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 if (!this.online)
+                {
                     this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
+                    this.Marcar_Jugador_Eliminado(num_jugador);
+                }
                 else
                 {
                     this.frm_online.enviar_comando("retire", this.game_id.ToString(), "0");
                     this.partida_activa = false;
+                    this.Desactivar_Controles();
                 }
-                this.Marcar_Jugador_Eliminado(num_jugador);
                 return true;
             }
             else

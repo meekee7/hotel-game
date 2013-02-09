@@ -1225,7 +1225,7 @@ namespace Juego_Hotel
                 partida.interfaz.BeginInvoke(new Hotel_expropiado_Callback(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
         }
 
-        delegate void Dibujar_Fase_Callback(Hotel hotel, int n_50);
+        delegate void Dibujar_Fase_Callback(Hotel hotel, int num_fase);
         delegate void Añadir_Fase_Callback(Jugador jugador, int fase, String hotel);
 
         private void Fase_construida()
@@ -1269,8 +1269,6 @@ namespace Juego_Hotel
             partida.interfaz.BeginInvoke(new Añadir_Entrada_Callback(partida.interfaz.Añadir_Entrada), hotel.dueño, casilla, hotel.nombre_txt);
         }
 
-        delegate void Marcar_Jugador_Eliminado_Callback(int jugador);
-
         private void Jugador_retirado(Boolean expulsado)
         {
             int bytes_recibidos = 0;
@@ -1292,7 +1290,6 @@ namespace Juego_Hotel
                 else
                     MessageBox.Show(String.Format(Mensajes.mensajeJugadorRetirado, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online));
             }
-            partida.interfaz.BeginInvoke(new Marcar_Jugador_Eliminado_Callback(partida.interfaz.Marcar_Jugador_Eliminado), jugador.n_jugador);
         }
 
         delegate void Finalizar_Partida_Callback(Jugador jugador);
