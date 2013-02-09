@@ -111,21 +111,12 @@ bool SavedgamesMgr::SaveGame(Game* game)
         wcout << "Cannot save game because DB was not loaded ok" << endl;
         return false;
     }
+    this->saving_mutex.lock();
     bool overwriting;
     if (game->bd_id > -1)
         overwriting = true;
     else
         overwriting = false;
-    // When saved last time if the game had more users than now, extra data must be deleted
-    if (game->n_players_last_save > (int)game->active_plist.size())
-    {
-        MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT estado_j3, estado_j4 FROM partida WHERE id = %d;") % game->bd_id));
-        res->fetch_row();
-        if (game->active_plist.size() < 4)
-            this->db->ExecuteQueryWithoutData(str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % res->get_int_field("estado_j4")));
-        if (game->active_plist.size() < 3)
-            this->db->ExecuteQueryWithoutData(str(boost::format("DELETE FROM estado_jugador WHERE id = %d;") % res->get_int_field("estado_j3")));
-    }
     // Player statuses
     vector<int> bd_player_id_list;
     vector<int> bd_hotel_id_list;
@@ -519,9 +510,13 @@ bool SavedgamesMgr::SaveGame(Game* game)
         game->bd_id = bd_id;
     }
     else
+    {
+        // Delete player statuses no longer associated with the game
+        this->db->ExecuteQueryWithoutData("DELETE FROM estado_jugador WHERE id_partida IS NULL;");
         wcout << "Game data with id " << game->bd_id << " updated successfully " << endl;
-
+    }
     game->n_players_last_save = game->active_plist.size();
+    this->saving_mutex.unlock();
     return true;
 }
 

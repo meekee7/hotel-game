@@ -7,6 +7,7 @@
 class SavedgamesMgr
 {
 public:
+    dlib::mutex saving_mutex;
     MySQLMgr* db;
     bool db_loaded_ok;
     int keep_alive_interval;

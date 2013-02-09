@@ -258,23 +258,15 @@ namespace Juego_Hotel
             {
                 this.interfaz.frm_subasta_en_curso = new Subastas(ref this.juego, this.interfaz, this.interfaz.online);
                 this.interfaz.frm_subasta_en_curso.ShowDialog();
-
-                if (this.interfaz.frm_subasta_en_curso.DialogResult == DialogResult.Cancel)
+                this.interfaz.frm_subasta_en_curso.Close();
+                // Refrescar valores después de la subasta, y anular la construcción si se ha vendido el hotel (si ya no está entre los hoteles del jugador)
+                if ((this.hotel_en_construccion != null) && (!this.juego.jugador_actual.hoteles.Contains(this.hotel_en_construccion)))
                 {
-                    this.interfaz.frm_subasta_en_curso.Close();
-                    return;
-                }
-                // Refrescar valores después de la subasta
-                // Entra si se estaba construyendo, no comprando
-                if ((this.hotel_en_construccion != null) && (this.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre == this.hotel_en_construccion.nombre))
-                {
-                    this.interfaz.frm_subasta_en_curso.Close();
                     MessageBox.Show(Mensajes.mensajeIntentarConstruirHotelVendido, Mensajes.tituloConstruccionCancelada);
                     this.cancelado = true;
                     this.Hide();
                     return;
                 }
-                this.interfaz.frm_subasta_en_curso.Close();
                 this.pagador.calcular_dinero_total();
                 this.n50j.Text   = Mensajes.textoTienes + this.pagador.n_billetes_50.ToString();
                 this.n100j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_100.ToString();
