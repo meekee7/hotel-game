@@ -104,7 +104,7 @@ void SavedgamesMgr::KeepAlive()
     }
 }
 
-bool SavedgamesMgr::SaveGame(Game* game)
+bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
 {
     if (!this->db_loaded_ok)
     {
@@ -188,7 +188,7 @@ bool SavedgamesMgr::SaveGame(Game* game)
     }
     // Hotel status
     Hotel* h;
-    for (list<Hotel*>::iterator k = game->hlist.begin() ; k != game->hlist.end() ; k++)
+    for (vector<Hotel*>::iterator k = game->hlist.begin() ; k != game->hlist.end() ; k++)
     {
         h = (*k);
         string entrance_list = "";
@@ -288,10 +288,10 @@ bool SavedgamesMgr::SaveGame(Game* game)
         bd_hotel_id_list.push_back(bd_id);
     }
     // Game data
-    string query = str(boost::format("REPLACE INTO partida VALUES (%d,\"%s\",\"%s\",FROM_UNIXTIME(%d),NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
+    string query = str(boost::format("REPLACE INTO partida VALUES (%d,\"%s\",\"%s\",\"%s\",FROM_UNIXTIME(%d),NOW(),%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s);")
         % (overwriting == true ? str(boost::format("%d") % game->bd_id) : "NULL")
-        % utf16_to_utf8(game->password) % utf16_to_utf8(game->name) % game->creation_date % game->turn_count % game->n_players % game->active_plist.size() % game->starting_player
-        % game->current_player->GetState(game->id)->num % game->last_dice_res % game->last_auto_advance
+        % utf16_to_utf8(game->password) % utf16_to_utf8(game->name) % utf16_to_utf8(creator->name) % game->creation_date % (game->ended ? 1 : 0) % game->turn_count % game->n_players % game->active_plist.size()
+        % game->starting_player % game->current_player->GetState(game->id)->num % game->last_dice_res % game->last_auto_advance
         % bd_hotel_id_list[0] % bd_hotel_id_list[1] % bd_hotel_id_list[2] % bd_hotel_id_list[3] % bd_hotel_id_list[4] % bd_hotel_id_list[5] % bd_hotel_id_list[6] % bd_hotel_id_list[7]
         % bd_player_id_list[0] % bd_player_id_list[1] % (bd_player_id_list.size() > 2 ? str(boost::format("%d") % bd_player_id_list[2]) : "NULL")
         % (bd_player_id_list.size() > 3 ? str(boost::format("%d") % bd_player_id_list[3]) : "NULL"));
@@ -528,21 +528,32 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         (*error_code) = 1;
         return NULL;
     }
-    /*list<Player*>::iterator i;
-    vector<int> bd_player_id_list;
-    vector<int> bd_hotel_id_list;*/
-    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM partida WHERE id = %d;") % id));
+    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT *,UNIX_TIMESTAMP(fecha_creacion) as fc FROM partida WHERE id = %d;") % id));
     if (res->fetch_row())
     {
         if (res->get_string_field("password") != utf16_to_utf8(password))
         {
             (*error_code) = 2;
+            delete res;
+            return NULL;
+        }
+        if (res->get_bool_field("finalizada"))
+        {
+            (*error_code) = 3;
+            delete res;
+            return NULL;
+        }
+        if (creator->name != utf8_to_utf16(res->get_string_field("nombre_creador")))
+        {
+            (*error_code) = 4;
+            delete res;
             return NULL;
         }
         wstring name = utf8_to_utf16(res->get_string_field("nombre"));
+        int creation_date = res->get_int_field("fc");
         int n_players = res->get_int_field("num_jugadores");
         int n_active_players = res->get_int_field("num_jugadores_activos");
-        int n_turns = res->get_int_field("num_turnos");
+        int turn_count = res->get_int_field("num_turnos");
         int starting_player = res->get_int_field("jugador_inicial");
         int current_player = res->get_int_field("jugador_actual");
         int last_dice_res = res->get_int_field("ultimo_res_dado");
@@ -557,27 +568,57 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         int Safari_status_id = res->get_int_field("estado_Safari");
         MySQLResult* res_hotel_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_hotel WHERE id IN (%d, %d, %d, %d, %d, %d, %d, %d) ORDER BY id ASC;")
             % Fujiyama_status_id % Boomerang_status_id % Letoile_status_id % President_status_id % Royal_status_id % Waikiki_status_id % TajMahal_status_id % Safari_status_id));
-        int p1_status_id = res->get_int_field("estado_j1");
-        int p2_status_id = res->get_int_field("estado_j2");
-        MySQLResult* res_player_statuses;
-        if (n_players == 2)
-            res_player_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id IN (%d, %d) ORDER BY id ASC;") % p1_status_id % p2_status_id));
-        else
+        MySQLResult* res_creator_status = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id = %d;") % res->get_int_field("estado_j1")));
+        Game* game = new Game(name, n_active_players, creator, mutex_ids, id_count, random_gen);
+        game->bd_id = id;
+        game->creation_date = creation_date;
+        game->last_auto_advance = last_auto_advance;
+        game->last_dice_res = last_dice_res;
+        game->n_players = n_active_players;
+        game->n_players_last_save = n_active_players;
+        game->password = password;
+        game->starting_player = starting_player;
+        game->turn_count = turn_count;
+        // Fill hotel statuses
+        int i = 0;
+        while (res_hotel_statuses->fetch_row())
         {
-            if (n_players > 2)
-            {
-                int p3_status_id = res->get_int_field("estado_j3");
-                res_player_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id IN (%d, %d, %d) ORDER BY id ASC;")
-                    % p1_status_id % p2_status_id % p3_status_id));
-                if (n_players > 3)
-                {
-                    int p4_status_id = res->get_int_field("estado_j4");
-                    res_player_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id IN (%d, %d, %d, %d) ORDER BY id ASC;")
-                        % p1_status_id % p2_status_id % p3_status_id));
-                }
-            }
+            // Hotels are selected in the same order than they are created in a game
+            game->hlist[i]->bd_id = res_hotel_statuses->get_int_field("id");
+            game->hlist[i]->n_built_phases = res_hotel_statuses->get_int_field("num_fases_construidas");
+            game->hlist[i]->entrance_bought_last_turn = res_hotel_statuses->get_bool_field("entrada_comprada_ultimo_turno");
+            game->hlist[i]->ground_bought = res_hotel_statuses->get_bool_field("suelo_comprado");
+            vector<string> entrances = dlib::split(res_hotel_statuses->get_string_field("posiciones_de_entradas"), "@");
+            for (int j = 0 ; j < (int)entrances.size() ; j++)
+                game->hlist[i]->entrances.push_back(atoi(entrances[j].c_str()));
+            game->hlist[i]->n_entrances = (int)entrances.size();
+            i++;
         }
-        Game* game = new Game(name, n_players, creator, mutex_ids, id_count, random_gen);
+        if (!res_creator_status->fetch_row())
+        {
+            (*error_code) = 5;
+            delete res_hotel_statuses;
+            delete res_creator_status;
+            delete res;
+            return NULL;
+        }
+        PlayerGameState* creator_status = creator->GetState(game->id);
+        creator_status->bd_id = res_creator_status->get_int_field("id");
+        creator_status->position = game->positions[res_creator_status->get_int_field("posicion")];
+        creator_status->paid_last_turn = res_creator_status->get_bool_field("pago_ultimo_turno");
+        creator_status->n_5000 = res_creator_status->get_int_field("n_billetes_5000");
+        creator_status->n_1000 = res_creator_status->get_int_field("n_billetes_1000");
+        creator_status->n_500 = res_creator_status->get_int_field("n_billetes_500");
+        creator_status->n_100 = res_creator_status->get_int_field("n_billetes_100");
+        creator_status->n_50 = res_creator_status->get_int_field("n_billetes_50");
+        vector<string> hotels = dlib::split(res_creator_status->get_string_field("hoteles_poseidos"), "@");
+        for (int i = 0 ; i < (int)hotels.size() ; i++)
+        {
+            creator_status->hotels.push_back(get_hotel_from_name(utf8_to_utf16(hotels[i]), game));
+        }
+        delete res_hotel_statuses;
+        delete res_creator_status;
+        delete res;
         return game;
     }
     else
@@ -586,16 +627,6 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         return NULL;
     }
 }
-
-    /*MySQLResult* res = mgr->ExecuteQueryWithData("SELECT * FROM partida");
-    if (res->fetch_row())
-    {
-        int id = res->get_int_field("id");
-        string nombre = res->get_string_field("nombre");
-        wcout << id << " " << nombre.c_str() << endl;
-    }
-    else
-        wcout << "No data" << endl;*/
 
 SavedgamesMgr::~SavedgamesMgr(void)
 {

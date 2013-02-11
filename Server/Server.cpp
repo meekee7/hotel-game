@@ -1580,7 +1580,7 @@ void handle_command(string command, Player* player)
         wstring password = receive_wstring(player, len_password, &bytes_received);
         Game* game = get_game_from_id(id, &glist);
         game->password = password;
-        savedgamesmgr->SaveGame(game);
+        savedgamesmgr->SaveGame(game, player);
     }
     else if (command == "load_game")
     {

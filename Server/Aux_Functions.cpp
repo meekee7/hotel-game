@@ -105,7 +105,7 @@ Player* get_player_from_game(wstring name, Game* game)
 Hotel* get_hotel_from_name(wstring name_txt, Game* game)
 {
     bool found = false;
-    list<Hotel*>::iterator i = game->hlist.begin();
+    vector<Hotel*>::iterator i = game->hlist.begin();
     while (!found && i != game->hlist.end())
     {
         if (((*i)->name_txt).compare(wstring(name_txt.data())) == 0)
