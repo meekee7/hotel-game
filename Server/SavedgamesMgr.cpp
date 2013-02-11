@@ -551,7 +551,6 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         }
         wstring name = utf8_to_utf16(res->get_string_field("nombre"));
         int creation_date = res->get_int_field("fc");
-        int n_players = res->get_int_field("num_jugadores");
         int n_active_players = res->get_int_field("num_jugadores_activos");
         int turn_count = res->get_int_field("num_turnos");
         int starting_player = res->get_int_field("jugador_inicial");
