@@ -357,7 +357,7 @@ void handle_command(string command, Player* player)
             return kick_hacker(1, player);
         if (get_game_from_name(name, &glist) != NULL) // Repeated name
             return;
-        Game* new_game = new Game(name, n_players, player, &mutex_ids, &id_count, random_gen);
+        Game* new_game = new Game(name, n_players, player, &mutex_ids, &id_count, random_gen, false);
         wcout << currentDateTime() << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
         glist.push_back(new_game);
         send_command("joined_game", player);

@@ -3,9 +3,10 @@
 #include "Aux_Functions.h"
 #include <iostream>
 
-Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random)
+Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random, bool loaded)
 {
     this->bd_id = -1; // It will be overwritten when saved
+    this->loaded = loaded;
     this->random = random;
     this->name = name;
     this->n_players = n_players;

@@ -516,6 +516,7 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
         wcout << "Game data with id " << game->bd_id << " updated successfully " << endl;
     }
     game->n_players_last_save = game->active_plist.size();
+    game->saved_current_player = game->current_player->GetState(game->id)->num;
     this->saving_mutex.unlock();
     return true;
 }
@@ -568,7 +569,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         MySQLResult* res_hotel_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_hotel WHERE id IN (%d, %d, %d, %d, %d, %d, %d, %d) ORDER BY id ASC;")
             % Fujiyama_status_id % Boomerang_status_id % Letoile_status_id % President_status_id % Royal_status_id % Waikiki_status_id % TajMahal_status_id % Safari_status_id));
         MySQLResult* res_creator_status = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id = %d;") % res->get_int_field("estado_j1")));
-        Game* game = new Game(name, n_active_players, creator, mutex_ids, id_count, random_gen);
+        Game* game = new Game(name, n_active_players, creator, mutex_ids, id_count, random_gen, true);
         game->bd_id = id;
         game->creation_date = creation_date;
         game->last_auto_advance = last_auto_advance;
@@ -577,6 +578,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         game->n_players_last_save = n_active_players;
         game->password = password;
         game->starting_player = starting_player;
+        game->saved_current_player = current_player; // When the loaded game is started, it will be used to determine the current player
         game->turn_count = turn_count;
         // Fill hotel statuses
         int i = 0;
