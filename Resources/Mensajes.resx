@@ -717,4 +717,10 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="MASubastaTerminada" xml:space="preserve">
     <value>El jugador {0} ({1}) ha vendido el hotel {2} al jugador {3} ({4}) por una cantidad de {5}.</value>
   </data>
+  <data name="mensajeJuegoNoSalvado" xml:space="preserve">
+    <value>Error salvando el juego. Si el problema persiste, contacta con ifilgud@gmail.com por favor</value>
+  </data>
+  <data name="mensajeJuegoSalvado" xml:space="preserve">
+    <value>Juego salvado correctamente por el usuario {0} con id {1} y contraseña "{2}". Anota el id y la contraseña para poder cargarla en el futuro. Solo el creador podrá cargar la partida y solo los jugadores activos podrán unirse.</value>
+  </data>
 </root>

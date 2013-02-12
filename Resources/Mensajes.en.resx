@@ -717,4 +717,10 @@ No permission is needed to build them. Continue?</value>
   <data name="MASubastaTerminada" xml:space="preserve">
     <value>Player {0} ({1}) has sold the hotel {2} to player {3}({4})  for {5}.</value>
   </data>
+  <data name="mensajeJuegoNoSalvado" xml:space="preserve">
+    <value>Error saving the game. If the problem persists, please contact ifilgud@gmail.com</value>
+  </data>
+  <data name="mensajeJuegoSalvado" xml:space="preserve">
+    <value>Game saved succesfully by the user {0} with id {1} and password "{2}". Write down the id and the password to resume it later. Only the creator can load this game and only the current active players will be able to join the game when loaded</value>
+  </data>
 </root>

@@ -33,23 +33,13 @@ namespace Juego_Hotel
             this.conectado = false;
         }
 
-        delegate void Actualizar_lista_jugadores_Callback(String[] lista);
-
         private void Actualizar_lista_jugadores(String[] lista)
         {
-            if (this.listaJugadores.InvokeRequired)
-            {
-                Actualizar_lista_jugadores_Callback d = new Actualizar_lista_jugadores_Callback(Actualizar_lista_jugadores);
-                this.Invoke(d, new object[] { lista });
-            }
-            else
-            {
-                this.listaJugadores.BeginUpdate();
-                this.listaJugadores.Items.Clear();
-                foreach (String nombre in lista)
-                    this.listaJugadores.Items.Add(nombre);
-                this.listaJugadores.EndUpdate();
-            }
+            this.listaJugadores.BeginUpdate();
+            this.listaJugadores.Items.Clear();
+            foreach (String nombre in lista)
+                this.listaJugadores.Items.Add(nombre);
+            this.listaJugadores.EndUpdate();
         }
 
         public void rellenar_lista()
@@ -69,7 +59,7 @@ namespace Juego_Hotel
                     long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                     lista_jugadores[i] = frm_online.recibir_string(frm_online.socket, long_nombre, ref bytes_recibidos);
                 }
-                this.Actualizar_lista_jugadores(lista_jugadores);
+                this.BeginInvoke(new Action<String[]>(Actualizar_lista_jugadores) , new object[] { lista_jugadores });
             }
             catch (Exception ex)
             {
@@ -93,24 +83,14 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void Nuevo_mensaje_Callback(String msg);
-
         private void Nuevo_mensaje(String msg)
         {
-            if (this.mensajes.InvokeRequired)
-            {
-                Nuevo_mensaje_Callback d = new Nuevo_mensaje_Callback(Nuevo_mensaje);
-                this.Invoke(d, new object[] { msg });
-            }
-            else
-            {
-                this.mensajes.AppendText(msg);
-            }
+            this.mensajes.AppendText(msg);
         }
 
         public void nuevo_mensaje(String remitente, String msg)
         {
-            this.Nuevo_mensaje(remitente + ": " + msg + Environment.NewLine);
+            this.BeginInvoke(new Action<String>(Nuevo_mensaje), new object[] { remitente + ": " + msg + Environment.NewLine });
         }
 
         private void bEnviar_Click(object sender, EventArgs e)

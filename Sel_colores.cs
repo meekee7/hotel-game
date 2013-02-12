@@ -323,12 +323,10 @@ namespace Juego_Hotel
                 this.Hide();
         }
 
-        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
-
         public void ReLocalize(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture)
         {
             if (this.InvokeRequired)
-                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
+                this.BeginInvoke(new Action<System.Globalization.CultureInfo, System.Globalization.CultureInfo>(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;

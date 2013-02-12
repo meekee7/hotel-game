@@ -33,27 +33,17 @@ namespace Juego_Hotel
             this.bEnviar.Enabled = false;
         }
 
-        delegate void Actualizar_lista_jugadores_Callback(String[] lista);
-
         private void Actualizar_lista_jugadores(String[] lista)
         {
-            if (this.listaJugadores.InvokeRequired)
-            {
-                Actualizar_lista_jugadores_Callback d = new Actualizar_lista_jugadores_Callback(Actualizar_lista_jugadores);
-                this.BeginInvoke(d, new object[] { lista });
-            }
+            this.listaJugadores.BeginUpdate();
+            this.listaJugadores.Items.Clear();
+            foreach (String nombre in lista)
+                this.listaJugadores.Items.Add(nombre);
+            this.listaJugadores.EndUpdate();
+            if ((this.listaJugadores.Items.Count == this.num_jugadores) && (this.creador == this.frm_online.txtLogin.Text))
+                this.bIniciar.Enabled = true;
             else
-            {
-                this.listaJugadores.BeginUpdate();
-                this.listaJugadores.Items.Clear();
-                foreach (String nombre in lista)
-                    this.listaJugadores.Items.Add(nombre);
-                this.listaJugadores.EndUpdate();
-                if ((this.listaJugadores.Items.Count == this.num_jugadores) && (this.creador == this.frm_online.txtLogin.Text))
-                    this.bIniciar.Enabled = true;
-                else
-                    this.bIniciar.Enabled = false;
-            }
+                this.bIniciar.Enabled = false;
         }
 
         public void rellenar_lista()
@@ -70,7 +60,7 @@ namespace Juego_Hotel
                     long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                     lista_jugadores[i] = frm_online.recibir_string(frm_online.socket, long_nombre, ref bytes_recibidos);
                 }
-                this.Actualizar_lista_jugadores(lista_jugadores);
+                this.BeginInvoke(new Action<String[]>(Actualizar_lista_jugadores), new object[] { lista_jugadores });
             }
             catch (Exception ex)
             {
@@ -102,8 +92,6 @@ namespace Juego_Hotel
             this.mensaje.Text = "";
         }
 
-        delegate void Cerrar_partida_Callback();
-
         private void PartidaOnline_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!this.cerrando_por_desconexion)
@@ -117,27 +105,17 @@ namespace Juego_Hotel
             if (this.interfaz == null)
                 return;
             if (!this.interfaz.IsDisposed)
-                this.interfaz.BeginInvoke(new Cerrar_partida_Callback(this.interfaz.Close));
+                this.interfaz.BeginInvoke(new Action(this.interfaz.Close));
         }
-
-        delegate void Nuevo_mensaje_Callback(String msg);
 
         private void Nuevo_mensaje(String msg)
         {
-            if (this.mensajes.InvokeRequired)
-            {
-                Nuevo_mensaje_Callback d = new Nuevo_mensaje_Callback(Nuevo_mensaje);
-                this.BeginInvoke(d, new object[] { msg });
-            }
-            else
-            {
-                this.mensajes.AppendText(msg);
-            }
+            this.mensajes.AppendText(msg);
         }
 
         public void nuevo_mensaje(String remitente, String msg)
         {
-            this.Nuevo_mensaje(remitente + ": " + msg + Environment.NewLine);
+            this.BeginInvoke(new Action<String>(Nuevo_mensaje), new object[] { remitente + ": " + msg + Environment.NewLine });
         }
 
         private void PartidaOnline_Shown(object sender, EventArgs e)
@@ -217,12 +195,10 @@ namespace Juego_Hotel
                 this.bEnviar.PerformClick();
         }
 
-        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
-
         public void ReLocalize(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture)
         {
             if (this.InvokeRequired)
-                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
+                this.BeginInvoke(new Action<System.Globalization.CultureInfo, System.Globalization.CultureInfo>(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;

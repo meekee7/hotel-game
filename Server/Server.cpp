@@ -1580,7 +1580,24 @@ void handle_command(string command, Player* player)
         wstring password = receive_wstring(player, len_password, &bytes_received);
         Game* game = get_game_from_id(id, &glist);
         game->password = password;
-        savedgamesmgr->SaveGame(game, player);
+        if (savedgamesmgr->SaveGame(game, player))
+        {
+            for (list<Player*>::iterator i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
+            {
+                send_command("game_saved", (*i));
+                send_int((*i), id);
+                send_int((*i), game->bd_id);
+                send_int((*i), get_utf8_length(player->name));
+                send_wstring((*i), player->name);
+                send_int((*i), get_utf8_length(game->password));
+                send_wstring((*i), game->password);
+            }
+        }
+        else
+        {
+            send_command("error_saving_game", player);
+            send_int(player, id);
+        }
     }
     else if (command == "load_game")
     {

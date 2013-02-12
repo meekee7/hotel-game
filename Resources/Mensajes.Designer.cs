@@ -862,6 +862,24 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error salvando el juego. Si el problema persiste, contacta con ifilgud@gmail.com por favor.
+        /// </summary>
+        internal static string mensajeJuegoNoSalvado {
+            get {
+                return ResourceManager.GetString("mensajeJuegoNoSalvado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Juego salvado correctamente por el usuario {0} con id {1} y contraseña &quot;{2}&quot;. Anota el id y la contraseña para poder cargarla en el futuro. Solo el creador podrá cargar la partida y solo los jugadores activos podrán unirse..
+        /// </summary>
+        internal static string mensajeJuegoSalvado {
+            get {
+                return ResourceManager.GetString("mensajeJuegoSalvado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Jugador {0}.
         /// </summary>
         internal static string mensajeJugador {

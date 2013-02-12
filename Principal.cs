@@ -1822,12 +1822,10 @@ namespace Juego_Hotel
             this.Guardar_idioma(System.Threading.Thread.CurrentThread.CurrentUICulture);
         }
 
-        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
-
         public void ReLocalize(CultureInfo nuevoCulture, CultureInfo antiguoCulture)
         {
             if (this.InvokeRequired)
-                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
+                this.BeginInvoke(new Action<System.Globalization.CultureInfo, System.Globalization.CultureInfo>(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
@@ -1915,6 +1913,16 @@ namespace Juego_Hotel
         public void PermitirPasarTurno()
         {
             this.bTurno.Enabled = true;
+        }
+
+        public void Juego_salvado(int id, String quien, String password)
+        {
+            MessageBox.Show(String.Format(Mensajes.mensajeJuegoSalvado, quien, id, password), Mensajes.tituloHotel);
+        }
+
+        public void Juego_no_salvado()
+        {
+            MessageBox.Show(Mensajes.mensajeJuegoNoSalvado, Mensajes.tituloHotel, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

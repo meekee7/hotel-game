@@ -282,23 +282,13 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void Actualizar_lista_usuarios_Callback(String[] lista);
-
         private void Actualizar_lista_usuarios(String[] lista)
         {
-            if (this.listaUsuarios.InvokeRequired)
-            {
-                Actualizar_lista_usuarios_Callback d = new Actualizar_lista_usuarios_Callback(Actualizar_lista_usuarios);
-                this.Invoke(d, new object[] { lista });
-            }
-            else
-            {
-                this.listaUsuarios.BeginUpdate();
-                this.listaUsuarios.Items.Clear();
-                foreach (String nombre in lista)
-                    this.listaUsuarios.Items.Add(nombre);
-                this.listaUsuarios.EndUpdate();
-            }
+            this.listaUsuarios.BeginUpdate();
+            this.listaUsuarios.Items.Clear();
+            foreach (String nombre in lista)
+                this.listaUsuarios.Items.Add(nombre);
+            this.listaUsuarios.EndUpdate();
         }
 
         private void Rellenar_lista_usuarios()
@@ -318,7 +308,7 @@ namespace Juego_Hotel
                     long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
                     lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
                 }
-                this.Actualizar_lista_usuarios(lista_jugadores);
+                this.BeginInvoke(new Action<String[]>(Actualizar_lista_usuarios), new object[] { lista_jugadores });
                 lista_jugadores = null;
             }
             catch (Exception ex)
@@ -328,40 +318,20 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void Actualizar_lista_partidas_Callback(String[] lista);
-
         private void Actualizar_lista_partidas(String[] lista)
         {
-            if (this.listaPartidas.InvokeRequired)
-            {
-                Actualizar_lista_partidas_Callback d = new Actualizar_lista_partidas_Callback(Actualizar_lista_partidas);
-                this.Invoke(d, new object[] { lista });
-            }
-            else
-            {
-                this.listaPartidas.BeginUpdate();
-                this.listaPartidas.Items.Clear();
-                foreach (String nombre in lista)
-                    this.listaPartidas.Items.Add(nombre);
-                this.listaPartidas.EndUpdate();
-                this.bUnirse.Enabled = false;
-            }
+            this.listaPartidas.BeginUpdate();
+            this.listaPartidas.Items.Clear();
+            foreach (String nombre in lista)
+                this.listaPartidas.Items.Add(nombre);
+            this.listaPartidas.EndUpdate();
+            this.bUnirse.Enabled = false;
         }
-
-        delegate void Borrar_lista_partidas_Callback();
 
         private void Borrar_lista_partidas()
         {
-            if (this.listaPartidas.InvokeRequired)
-            {
-                Borrar_lista_partidas_Callback d = new Borrar_lista_partidas_Callback(Borrar_lista_partidas);
-                this.Invoke(d);
-            }
-            else
-            {
-                this.listaPartidas.Items.Clear();
-                this.bUnirse.Enabled = false;
-            }
+            this.listaPartidas.Items.Clear();
+            this.bUnirse.Enabled = false;
         }
 
         private void Rellenar_lista_partidas()
@@ -375,7 +345,7 @@ namespace Juego_Hotel
                 int cuantas = this.recibir_int(this.socket, ref bytes_recibidos);
                 if (cuantas == 0)
                 {
-                    this.Borrar_lista_partidas();
+                    this.BeginInvoke(new Action(Borrar_lista_partidas));
                     return;
                 }
                 int i, long_nombre, capacidad, n_jugadores_dentro;
@@ -406,7 +376,7 @@ namespace Juego_Hotel
                     else
                         lista_partidas[i] = String.Format(Mensajes.textoPartidaPlural, nombre, n_jugadores_dentro, capacidad, estado);
                 }
-                this.Actualizar_lista_partidas(lista_partidas);
+                this.BeginInvoke(new Action<String[]>(Actualizar_lista_partidas), new object[] { lista_partidas });
             }
             catch (Exception ex)
             {
@@ -415,35 +385,15 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void Cerrar_Chat_Callback(Chat chat);
-
         private void Cerrar_Chat(Chat chat)
         {
-            if (chat.InvokeRequired)
-            {
-                Cerrar_Chat_Callback d = new Cerrar_Chat_Callback(Cerrar_Chat);
-                chat.Invoke(d, new object[] {chat});
-            }
-            else
-            {
-                chat.Close();
-            }
+            chat.Close();
         }
-
-        delegate void Cerrar_Partida_Callback(PartidaOnline partida);
 
         private void Cerrar_Partida(PartidaOnline partida)
         {
-            if (partida.InvokeRequired)
-            {
-                Cerrar_Partida_Callback d = new Cerrar_Partida_Callback(Cerrar_Partida);
-                partida.Invoke(d, new object[] { partida });
-            }
-            else
-            {
-                partida.cerrando_por_desconexion = true;
-                partida.Close();
-            }
+            partida.cerrando_por_desconexion = true;
+            partida.Close();
         }
 
         private void Online_FormClosing(object sender, FormClosingEventArgs e)
@@ -463,7 +413,7 @@ namespace Juego_Hotel
                 for (i = this.chats_abiertos.Count - 1; i >= 0; i--)
                 {
                     this.chats_abiertos.ToArray()[i].conectado = false;
-                    this.Cerrar_Chat(this.chats_abiertos.ToArray()[i]);
+                    this.BeginInvoke(new Action<Chat>(Cerrar_Chat), new object[] { this.chats_abiertos.ToArray()[i] } );
                 }
                 this.chats_abiertos.Clear();
             }
@@ -478,7 +428,7 @@ namespace Juego_Hotel
                 (MessageBox.Show(Mensajes.mensajeCerrarPartidasAbiertas, Mensajes.tituloConfirmacionDesconectar, MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 for (i = this.lista_partidas.Count - 1; i >= 0; i--)
-                    this.Cerrar_Partida(this.lista_partidas.ToArray()[i]);
+                    this.BeginInvoke(new Action<PartidaOnline>(Cerrar_Partida) , new object[] { this.lista_partidas.ToArray()[i] });
                 this.lista_partidas.Clear();
             }
             else
@@ -490,8 +440,6 @@ namespace Juego_Hotel
             }
             this.bDesconectar.PerformClick();
         }
-
-        delegate void desactivar_envio_Callback();
 
         private void bDesconectar_Click(object sender, EventArgs e)
         {
@@ -524,12 +472,12 @@ namespace Juego_Hotel
             if (this.frm_chat_global != null)
                 this.frm_chat_global.desactivar_envio();
             foreach (Chat chat in this.chats_abiertos)
-                chat.BeginInvoke(new desactivar_envio_Callback(chat.desactivar_envio));
+                chat.BeginInvoke(new Action(chat.desactivar_envio));
                 //chat.desactivar_envio();
             foreach (PartidaOnline partida in this.lista_partidas)
             {
                 if (partida.interfaz != null)
-                    partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
+                    partida.interfaz.BeginInvoke(new Action(partida.interfaz.Conexion_perdida));
             }
         }
 
@@ -676,24 +624,15 @@ namespace Juego_Hotel
             this.frm_chat_global = null;
         }
 
-        delegate void Reactivar_crear_Callback();
 
         private void Reactivar_crear()
         {
-            if (this.bCrearPartida.InvokeRequired)
-            {
-                Reactivar_crear_Callback d = new Reactivar_crear_Callback(Reactivar_crear);
-                this.Invoke(d);
-            }
-            else
-            {
-                this.bCrearPartida.Enabled = true;
-            }
+            this.bCrearPartida.Enabled = true;
         }
 
         public void salir_de_partida()
         {
-            this.Reactivar_crear();
+            this.BeginInvoke(new Action(this.Reactivar_crear));
         }
 
         private void Unirse_a_chat()
@@ -750,8 +689,8 @@ namespace Juego_Hotel
             else
             {
                 MessageBox.Show(String.Format(Mensajes.mensajePartidaLlena, nombre));
-                this.Activar_bUnirse();
-                this.Activar_bCrearPartida();
+                this.BeginInvoke(new Action(Activar_bUnirse));
+                this.BeginInvoke(new Action(Activar_bCrearPartida));
             }
         }
 
@@ -763,14 +702,14 @@ namespace Juego_Hotel
             if (empezada)
             {
                 MessageBox.Show(String.Format(Mensajes.mensajePartidaYaEmpezada, nombre));
-                this.Activar_bUnirse();
-                this.Activar_bCrearPartida();
+                this.BeginInvoke(new Action(Activar_bUnirse));
+                this.BeginInvoke(new Action(Activar_bCrearPartida));
             }
             else
             {
                 MessageBox.Show(String.Format(Mensajes.mensajePartidaYaTerminada, nombre));
-                this.Activar_bUnirse();
-                this.Activar_bCrearPartida();
+                this.BeginInvoke(new Action(Activar_bUnirse));
+                this.BeginInvoke(new Action(Activar_bCrearPartida));
             }
         }
 
@@ -780,8 +719,8 @@ namespace Juego_Hotel
             int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
             String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             MessageBox.Show(Mensajes.mensajeYaDentroPartida + nombre);
-            this.Activar_bUnirse();
-            this.Activar_bCrearPartida();
+            this.BeginInvoke(new Action(Activar_bUnirse));
+            this.BeginInvoke(new Action(Activar_bCrearPartida));
         }
 
         private void Manejar_nuevo_chat(object parametros)
@@ -791,7 +730,6 @@ namespace Juego_Hotel
             chat.id = Convert.ToInt32(lista_params[0]);
             chat.creador = lista_params[1];
             this.chats_abiertos.AddFirst(chat);
-            //chat.ShowDialog();
             Application.Run(chat);
         }
 
@@ -804,7 +742,6 @@ namespace Juego_Hotel
             partida.nombre = lista_params[2];
             partida.num_jugadores = Convert.ToInt32(lista_params[3]);
             this.lista_partidas.AddFirst(partida);
-            //partida.ShowDialog();
             Application.Run(partida);
         }
 
@@ -916,6 +853,10 @@ namespace Juego_Hotel
                     this.Subasta_vendida();
                 else if (msg == "auction_ended")
                     this.Subasta_terminada();
+                else if (msg == "game_saved")
+                    this.Juego_salvado();
+                else if (msg == "error_saving_game")
+                    this.Juego_no_salvado();
                 else
                 {
                     if (msg == "")
@@ -1019,49 +960,20 @@ namespace Juego_Hotel
                 this.Pulsar_Desconectar();
             }
         }
-
-        delegate void Pulsar_Desconectar_Callback();
-
+        
         private void Pulsar_Desconectar()
         {
-            if (this.bDesconectar.InvokeRequired)
-            {
-                this.BeginInvoke(new Pulsar_Desconectar_Callback(Pulsar_Desconectar));
-            }
-            else
-            {
-                this.bDesconectar.PerformClick();
-            }
+            this.BeginInvoke(new Action(this.bDesconectar.PerformClick));
         }
-
-        delegate void Activar_bUnirse_Callback();
 
         private void Activar_bUnirse()
         {
-            if (this.bUnirse.InvokeRequired)
-            {
-                Activar_bUnirse_Callback d = new Activar_bUnirse_Callback(Activar_bUnirse);
-                this.Invoke(d);
-            }
-            else
-            {
-                this.bUnirse.Enabled = true;
-            }
+            this.bUnirse.Enabled = true;
         }
-
-        delegate void Activar_bCrearPartida_Callback();
 
         private void Activar_bCrearPartida()
         {
-            if (this.bUnirse.InvokeRequired)
-            {
-                Activar_bCrearPartida_Callback d = new Activar_bCrearPartida_Callback(Activar_bCrearPartida);
-                this.Invoke(d);
-            }
-            else
-            {
-                this.bCrearPartida.Enabled = true;
-            }
+            this.bCrearPartida.Enabled = true;
         }
 
         private void bUnirse_Click(object sender, EventArgs e)
@@ -1114,8 +1026,6 @@ namespace Juego_Hotel
             partida.BeginInvoke(new Action<String>(partida.Cambiar_Creador), new object[] { nombre_jugador });
         }
 
-        delegate void Tirar_Dado_Construccion_Callback(Jugador jugador, Tipos.Resultado_dado_cons resultado);
-
         private void Dado_construccion_tirado()
         {
             int bytes_recibidos = 0;
@@ -1132,7 +1042,7 @@ namespace Juego_Hotel
                 partida.interfaz.juego.sem_dado_cons.Close();
                 partida.interfaz.juego.sem_dado_cons = new Semaphore(0, 1);
             }
-            partida.interfaz.BeginInvoke(new Tirar_Dado_Construccion_Callback(partida.interfaz.Tirar_Dado_Construccion), new object[] { jugador, ultimo_res_dado_cons });
+            partida.interfaz.BeginInvoke(new Action<Jugador, Tipos.Resultado_dado_cons>(partida.interfaz.Tirar_Dado_Construccion), new object[] { jugador, ultimo_res_dado_cons });
         }
 
         private void Iniciar_partida()
@@ -1155,8 +1065,6 @@ namespace Juego_Hotel
             this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_jugadores);
         }
 
-        delegate void Pasar_Turno_Callback(String jugador);
-
         private void Pasar_Turno()
         {
             int bytes_recibidos = 0;
@@ -1164,10 +1072,8 @@ namespace Juego_Hotel
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String sig_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.BeginInvoke(new Pasar_Turno_Callback(partida.interfaz.Pasar_turno), new object[] { sig_jugador });
+            partida.interfaz.BeginInvoke(new Action<String>(partida.interfaz.Pasar_turno), new object[] { sig_jugador });
         }
-
-        delegate void Actualizar_Dinero_Jugador_Callback(String jugador, int n_50, int n_100, int n_500, int n_1000, int n_5000);
 
         private void Actualizar_dinero_jugador()
         {
@@ -1181,10 +1087,8 @@ namespace Juego_Hotel
             int n_1000 = this.recibir_int(this.socket, ref bytes_recibidos);
             int n_5000 = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.BeginInvoke(new Actualizar_Dinero_Jugador_Callback(partida.interfaz.Actualizar_Dinero_Jugador), jugador, n_50, n_100, n_500, n_1000, n_5000);
+            partida.interfaz.BeginInvoke(new Action<String, int, int, int, int, int>(partida.interfaz.Actualizar_Dinero_Jugador), jugador, n_50, n_100, n_500, n_1000, n_5000);
         }
-
-        delegate void Hotel_comprado_Callback(Hotel hotel, Jugador jugador);
 
         private void Hotel_comprado()
         {
@@ -1200,10 +1104,8 @@ namespace Juego_Hotel
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
-            partida.interfaz.BeginInvoke(new Hotel_comprado_Callback(partida.interfaz.Hotel_Comprado), hotel, jugador);
+            partida.interfaz.BeginInvoke(new Action<Hotel, Jugador>(partida.interfaz.Hotel_Comprado), hotel, jugador);
         }
-
-        delegate void Hotel_expropiado_Callback(Jugador jugador, Jugador expropiado, String hotel);
 
         private void Hotel_expropiado()
         {
@@ -1222,11 +1124,8 @@ namespace Juego_Hotel
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
             if (!subastado)
-                partida.interfaz.BeginInvoke(new Hotel_expropiado_Callback(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
+                partida.interfaz.BeginInvoke(new Action<Jugador, Jugador, String>(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
         }
-
-        delegate void Dibujar_Fase_Callback(Hotel hotel, int num_fase);
-        delegate void Añadir_Fase_Callback(Jugador jugador, int fase, String hotel);
 
         private void Fase_construida()
         {
@@ -1237,13 +1136,10 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             hotel.Ampliar();
-            partida.interfaz.BeginInvoke(new Dibujar_Fase_Callback(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
-            partida.interfaz.BeginInvoke(new Añadir_Fase_Callback(partida.interfaz.Añadir_Fase), hotel.dueño, hotel.n_fases_construidas, hotel.nombre_txt); 
+            partida.interfaz.BeginInvoke(new Action<Hotel, int>(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
+            partida.interfaz.BeginInvoke(new Action<Jugador, int, String>(partida.interfaz.Añadir_Fase), hotel.dueño, hotel.n_fases_construidas, hotel.nombre_txt); 
 
         }
-
-        delegate void Dibujar_Entrada_Callback(Casilla casilla, Boolean en_la_derecha);
-        delegate void Añadir_Entrada_Callback(Jugador jugador, int entrada, String hotel);
 
         private void Entrada_añadida()
         {
@@ -1257,16 +1153,16 @@ namespace Juego_Hotel
             if (partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
             {
                 partida.interfaz.juego.casillas[casilla].entrada_en_der = true;
-                partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
+                partida.interfaz.BeginInvoke(new Action<Casilla, Boolean>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
             }
             else
             {
                 partida.interfaz.juego.casillas[casilla].entrada_en_izq = true;
-                partida.interfaz.BeginInvoke(new Dibujar_Entrada_Callback(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
+                partida.interfaz.BeginInvoke(new Action<Casilla, Boolean>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
             }
             hotel.n_entradas++;
             hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
-            partida.interfaz.BeginInvoke(new Añadir_Entrada_Callback(partida.interfaz.Añadir_Entrada), hotel.dueño, casilla, hotel.nombre_txt);
+            partida.interfaz.BeginInvoke(new Action<Jugador, int, String>(partida.interfaz.Añadir_Entrada), hotel.dueño, casilla, hotel.nombre_txt);
         }
 
         private void Jugador_retirado(Boolean expulsado)
@@ -1292,8 +1188,6 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void Finalizar_Partida_Callback(Jugador jugador);
-
         private void Juego_terminado()
         {
             int bytes_recibidos = 0;
@@ -1303,11 +1197,8 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             if (!jugador.Eliminado())
-                partida.interfaz.BeginInvoke(new Finalizar_Partida_Callback(partida.interfaz.Finalizar_Partida), jugador);
+                partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Finalizar_Partida), jugador);
         }
-
-        delegate void Pedir_Noches_Online_Callback(Jugador jugador, int cantidad, int noches, String hotel);
-        delegate void Registrar_Pagar_Noches_Online_Callback(Jugador jugador_dueño, Jugador jugador_pagador, int cantidad, int noches, String hotel);
 
         private void Pedir_noches()
         {
@@ -1327,22 +1218,18 @@ namespace Juego_Hotel
             if (jugador_pagador.nombre_online == partida.interfaz.nombre_online)
             {
                 MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, cantidad, noches, nombre_hotel, jugador_dueño.nombre_online, jugador_dueño.Nombre_color()));
-                partida.interfaz.BeginInvoke(new Pedir_Noches_Online_Callback(partida.interfaz.Pedir_Noches_Online), jugador_dueño, cantidad, noches, nombre_hotel);
+                partida.interfaz.BeginInvoke(new Action<Jugador, int, int, String>(partida.interfaz.Pedir_Noches_Online), jugador_dueño, cantidad, noches, nombre_hotel);
             }
             else
-                partida.interfaz.BeginInvoke(new Registrar_Pagar_Noches_Online_Callback(partida.interfaz.Registrar_Pagar_Noches_Online), jugador_dueño, jugador_pagador, cantidad, noches, nombre_hotel);
+                partida.interfaz.BeginInvoke(new Action<Jugador, Jugador, int, int, String>(partida.interfaz.Registrar_Pagar_Noches_Online), jugador_dueño, jugador_pagador, cantidad, noches, nombre_hotel);
         }
-
-        delegate void Conexion_perdida_Callback();
 
         private void Finalizar_todas_las_partidas()
         {
             foreach (PartidaOnline partida in this.lista_partidas)
                 if (partida.interfaz != null)
-                    partida.interfaz.BeginInvoke(new Conexion_perdida_Callback(partida.interfaz.Conexion_perdida));
+                    partida.interfaz.BeginInvoke(new Action(partida.interfaz.Conexion_perdida));
         }
-
-        delegate void Subasta_Iniciada_Callback(Jugador jugador, String hotel);
 
         private void Subasta_iniciada()
         {
@@ -1358,7 +1245,7 @@ namespace Juego_Hotel
                 thread_manejar_subasta.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                 thread_manejar_subasta.Start(partida);
             }
-            partida.interfaz.BeginInvoke(new Subasta_Iniciada_Callback(partida.interfaz.Subasta_Iniciada), partida.interfaz.juego.jugador_actual, nombre_hotel);
+            partida.interfaz.BeginInvoke(new Action<Jugador, String>(partida.interfaz.Subasta_Iniciada), partida.interfaz.juego.jugador_actual, nombre_hotel);
         }
 
         private void Manejar_subasta(object parametro)
@@ -1366,12 +1253,8 @@ namespace Juego_Hotel
             PartidaOnline partida = (PartidaOnline)parametro;
             Juego juego = partida.interfaz.juego;
             partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
-            //partida.interfaz.frm_subasta_en_curso.ShowDialog();
             Application.Run(partida.interfaz.frm_subasta_en_curso);
         }
-
-        delegate void Nueva_puja_Callback(Jugador jugador, int cantidad);
-        delegate void Nueva_Puja_MA_Callback(Jugador jugador, int cantidad, String hotel);
 
         private void Nueva_puja()
         {
@@ -1382,12 +1265,9 @@ namespace Juego_Hotel
             int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Nueva_puja_Callback(partida.interfaz.frm_subasta_en_curso.Nueva_puja), jugador, cantidad);
-            partida.interfaz.BeginInvoke(new Nueva_Puja_MA_Callback(partida.interfaz.Nueva_Puja), jugador, cantidad, partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
+            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Action<Jugador, int>(partida.interfaz.frm_subasta_en_curso.Nueva_puja), jugador, cantidad);
+            partida.interfaz.BeginInvoke(new Action<Jugador, int, String>(partida.interfaz.Nueva_Puja), jugador, cantidad, partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
         }
-
-        delegate void Subasta_vendida_Callback();
-        delegate void Subasta_vendida_MA_Callback(Jugador vendedor, int cantidad, Jugador comprador, String hotel);
 
         private void Subasta_vendida()
         {
@@ -1408,22 +1288,40 @@ namespace Juego_Hotel
             }
             else
             {
-                partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_vendida_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_vendida));
+                partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Action(partida.interfaz.frm_subasta_en_curso.Subasta_vendida));
                 MessageBox.Show(String.Format(Mensajes.mensajeHotelVendido, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].Nombre_color(), 
                     partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online, cantidad));
             }
-            partida.interfaz.BeginInvoke(new Subasta_vendida_MA_Callback(partida.interfaz.Subasta_Terminada), partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.dueño, cantidad, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor], partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
+            partida.interfaz.BeginInvoke(new Action<Jugador, int, Jugador, String>(partida.interfaz.Subasta_Terminada), partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.dueño, cantidad, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor], partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
         }
-
-        delegate void Subasta_terminada_Callback();
 
         private void Subasta_terminada()
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
-            //MessageBox.Show("");
-            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Subasta_terminada_Callback(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
+            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Action(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
+        }
+
+        private void Juego_salvado()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int bd_id = this.recibir_int(this.socket, ref bytes_recibidos);
+            int lon = this.recibir_int(this.socket, ref bytes_recibidos);
+            String nombre = this.recibir_string(this.socket, lon, ref bytes_recibidos);
+            lon = this.recibir_int(this.socket, ref bytes_recibidos);
+            String password = this.recibir_string(this.socket, lon, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.BeginInvoke(new Action<int, String, String>(partida.interfaz.Juego_salvado), new object[] { bd_id, nombre, password });
+        }
+
+        private void Juego_no_salvado()
+        {
+            int bytes_recibidos = 0;
+            int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            PartidaOnline partida = this.Buscar_partida(id);
+            partida.interfaz.BeginInvoke(new Action(partida.interfaz.Juego_no_salvado));
         }
 
         private void checkSrvOficial_CheckedChanged(object sender, EventArgs e)
@@ -1440,12 +1338,27 @@ namespace Juego_Hotel
             }
         }
 
-        delegate void ReLocalize_Callback(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture);
+        private void bCargarPartida_Click(object sender, EventArgs e)
+        {
+            String id = this.InputBox(Mensajes.mensajeIntroduceID, Mensajes.tituloCargarPartida, "");
+            if (id == String.Empty)
+            {
+                MessageBox.Show(Mensajes.mensajeIDPartidaVacio);
+                return;
+            }
+            String password = this.InputBox(Mensajes.mensajeIntroducePassword, Mensajes.tituloCargarPartida, "");
+            if (password == String.Empty)
+            {
+                MessageBox.Show(Mensajes.mensajePasswordVacia);
+                return;
+            }
+            this.enviar_comando("load_game", id, password);
+        }
 
         public void ReLocalize(System.Globalization.CultureInfo nuevoCulture, System.Globalization.CultureInfo antiguoCulture)
         {
             if (this.InvokeRequired)
-                this.BeginInvoke(new ReLocalize_Callback(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
+                this.BeginInvoke(new Action<System.Globalization.CultureInfo, System.Globalization.CultureInfo>(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
@@ -1477,23 +1390,6 @@ namespace Juego_Hotel
                         c.Text = resources.GetString(c.Name + ".Text");
                 }
             }
-        }
-
-        private void bCargarPartida_Click(object sender, EventArgs e)
-        {
-            String id = this.InputBox(Mensajes.mensajeIntroduceID, Mensajes.tituloCargarPartida, "");
-            if (id == String.Empty)
-            {
-                MessageBox.Show(Mensajes.mensajeIDPartidaVacio);
-                return;
-            }
-            String password = this.InputBox(Mensajes.mensajeIntroducePassword, Mensajes.tituloCargarPartida, "");
-            if (password == String.Empty)
-            {
-                MessageBox.Show(Mensajes.mensajePasswordVacia);
-                return;
-            }
-            this.enviar_comando("load_game", id, password);
         }
     }
 }
