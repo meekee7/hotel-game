@@ -148,6 +148,7 @@ namespace Juego_Hotel
             parametros.AddLast(jug_inicial.ToString());
             parametros.AddLast(config);
             parametros.AddLast(lista_nombres.Length.ToString());
+            parametros.AddLast(this.creador);
             foreach (String nombre in lista_nombres)
                 parametros.AddLast(nombre);
             thread_partida.Start(parametros);
@@ -168,6 +169,8 @@ namespace Juego_Hotel
             int cuantos = Convert.ToInt32(l_parametros.First.Value);
             l_parametros.RemoveFirst();
             String[] lista_jugadores = new String[cuantos];
+            l_parametros.RemoveFirst();
+            this.interfaz.creador_online = l_parametros.First.Value;
             int i;
             for (i = 0; i < cuantos; i++)
             {

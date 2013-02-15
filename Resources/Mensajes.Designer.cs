@@ -1069,6 +1069,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El juego con ID {0} ya ha sido cargado por {1}.
+        /// </summary>
+        internal static string mensajeNoSePuedeCargarYaCargado {
+            get {
+                return ResourceManager.GetString("mensajeNoSePuedeCargarYaCargado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Existe una versión diferente ({0}) que la que estás usando ({1}). ¿Quieres acceder a la página del proyecto en SourceForge? El juego se cerrará..
         /// </summary>
         internal static string mensajeNuevaVersion {

@@ -156,6 +156,23 @@ Game* get_game_from_id(int id, list<Game*>* glist)
         return (*i);
 }
 
+Game* get_game_from_bd_id(int bd_id, list<Game*>* glist)
+{
+    bool found = false;
+    list<Game*>::iterator i = glist->begin();
+    while (!found && i != glist->end())
+    {
+        if (((*i)->bd_id != -1) && ((*i)->bd_id == bd_id))
+            found = true;
+        else
+            ++i;
+    }
+    if (!found)
+        return NULL;
+    else
+        return (*i);
+}
+
 Chat* get_chat_from_id(int id, list<Chat*>* chat_list, list<Game*>* glist)
 {
     bool found = false;

@@ -24,6 +24,7 @@ Player* get_player_from_game(wstring name, Game* game);
 Hotel* get_hotel_from_name(wstring name_txt, Game* game);
 Game* get_game_from_name(wstring name, list<Game*>* glist);
 Game* get_game_from_id(int id, list<Game*>* glist);
+Game* get_game_from_bd_id(int bd_id, list<Game*>* glist);
 Chat* get_chat_from_id(int id, list<Chat*>* chat_list, list<Game*>* glist);
 string receive_string (Player* p, int length, int* bytes_received);
 wstring receive_wstring (Player* p, int length, int* bytes_received);

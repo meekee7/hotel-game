@@ -1606,8 +1606,30 @@ void handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int len_password = receive_int(player, &bytes_received);
         wstring password = receive_wstring(player, len_password, &bytes_received);
-        int error_code = 0;
-        savedgamesmgr->LoadGame(id, password, player, &mutex_ids, &id_count, random_gen, &error_code);
+        Game* game = get_game_from_bd_id(id, &glist);
+        if (game != NULL) // Game already loaded
+        {
+            send_command("cannot_load_game", player);
+            send_int(player, 1); // Error code = 1
+            send_int(player, id);
+            send_int(player, get_utf8_length(game->creator->name));
+            send_wstring(player, game->creator->name);
+        }
+        else
+        {
+            int error_code = 0;
+            game = savedgamesmgr->LoadGame(id, password, player, &mutex_ids, &id_count, random_gen, &error_code);
+            if (game != NULL)
+            {
+                glist.push_back(game);
+                send_command("game_loaded", player);
+            }
+            else
+            {
+                send_command("cannot_load_game", player);
+                send_int(player, error_code);
+            }
+        }
     }
 }
 

@@ -526,7 +526,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     if (!this->db_loaded_ok)
     {
         wcout << "Cannot load game because DB was not loaded ok" << endl;
-        (*error_code) = 1;
+        (*error_code) = 3;
         return NULL;
     }
     MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT *,UNIX_TIMESTAMP(fecha_creacion) as fc FROM partida WHERE id = %d;") % id));
@@ -534,19 +534,19 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     {
         if (res->get_string_field("password") != utf16_to_utf8(password))
         {
-            (*error_code) = 2;
+            (*error_code) = 4;
             delete res;
             return NULL;
         }
         if (res->get_bool_field("finalizada"))
         {
-            (*error_code) = 3;
+            (*error_code) = 5;
             delete res;
             return NULL;
         }
         if (creator->name != utf8_to_utf16(res->get_string_field("nombre_creador")))
         {
-            (*error_code) = 4;
+            (*error_code) = 6;
             delete res;
             return NULL;
         }
@@ -597,7 +597,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         }
         if (!res_creator_status->fetch_row())
         {
-            (*error_code) = 5;
+            (*error_code) = 6;
             delete res_hotel_statuses;
             delete res_creator_status;
             delete res;
@@ -625,6 +625,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     else
     {
         wcout << "Error retrieving game from DB" << endl;
+        (*error_code) = 2;
         return NULL;
     }
 }

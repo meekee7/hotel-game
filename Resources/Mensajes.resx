@@ -723,4 +723,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeJuegoSalvado" xml:space="preserve">
     <value>Juego salvado correctamente por el usuario {0} con id {1} y contraseña "{2}". Anota el id y la contraseña para poder cargarla en el futuro. Solo el creador podrá cargar la partida y solo los jugadores activos podrán unirse.</value>
   </data>
+  <data name="mensajeNoSePuedeCargarYaCargado" xml:space="preserve">
+    <value>El juego con ID {0} ya ha sido cargado por {1}</value>
+  </data>
 </root>

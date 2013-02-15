@@ -40,6 +40,7 @@ namespace Juego_Hotel
         public Hotel hotel_a_subastar_online;
         XmlDocument configuracion;
         public Actividad actividad;
+        public String creador_online;
         // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online, XmlDocument configuracion)
@@ -227,6 +228,8 @@ namespace Juego_Hotel
                         case 3: this.controlJ4.Enabled = true;
                             break;
                     }
+                    if (yo.nombre_online != this.creador_online)
+                        this.bSalvar.Enabled = false;
                 }
                 if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial - 1].nombre_online)))
                     this.bDado.Enabled = true;

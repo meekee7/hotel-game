@@ -857,6 +857,10 @@ namespace Juego_Hotel
                     this.Juego_salvado();
                 else if (msg == "error_saving_game")
                     this.Juego_no_salvado();
+                else if (msg == "game_loaded")
+                    this.Cargar_Juego(true);
+                else if (msg == "cannot_load_game")
+                    this.Cargar_Juego(false);
                 else
                 {
                     if (msg == "")
@@ -1054,10 +1058,9 @@ namespace Juego_Hotel
             String config = this.recibir_string(this.socket, long_config, ref bytes_recibidos);
             int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
             int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
-            int i;
             int long_nombre;
             String[] lista_jugadores = new String[cuantos];
-            for (i = 0; i < cuantos; i++)
+            for (int i = 0; i < cuantos; i++)
             {
                 long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
                 lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
@@ -1322,6 +1325,25 @@ namespace Juego_Hotel
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             partida.interfaz.BeginInvoke(new Action(partida.interfaz.Juego_no_salvado));
+        }
+
+        private void Cargar_Juego(Boolean ok)
+        {
+            int bytes_recibidos = 0;
+            if (!ok)
+            {
+                int error = this.recibir_int(this.socket, ref bytes_recibidos);
+                switch (error)
+                {
+                    case 1: int id = this.recibir_int(this.socket, ref bytes_recibidos);
+                            int lon = this.recibir_int(this.socket, ref bytes_recibidos);
+                            String nombre = this.recibir_string(this.socket, lon, ref bytes_recibidos);
+                            MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarYaCargado, id, nombre), Mensajes.tituloCargarPartida);
+                            break;
+                    case 2: break;
+                }
+                
+            }
         }
 
         private void checkSrvOficial_CheckedChanged(object sender, EventArgs e)
