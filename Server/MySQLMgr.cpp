@@ -41,6 +41,7 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
 
 bool MySQLMgr::ReConnectWithLastUsedValues()
 {
+    wcout << "Reconnecting to database..." << endl;
     return this->Connect(this->host, this->port, this->username, this->password, this->dbname);
 }
 
@@ -48,7 +49,11 @@ void MySQLMgr::KeepAlive()
 {
     if (this->connection != NULL)
     {
-        this->connection->ExecuteQueryWithoutData("DO 1;");
+        if (this->connection->ExecuteQueryWithoutData("DO 1;") == -1)
+        {
+            if (this->ReConnectWithLastUsedValues())
+                this->connection->ExecuteQueryWithoutData("DO 1;");
+        }
         wcout << L"MySQL keep alive" << endl;
     }
 }
@@ -147,6 +152,7 @@ int MySQLConnection::ExecuteQueryWithoutData(string query)
         catch (sql::SQLException e)
         {
             wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            num_rows_modified = -1;
         }
     #else
         if (mysql_query(this->conn, query.c_str()) > 0)
@@ -204,6 +210,8 @@ MySQLConnection::~MySQLConnection(void)
 //Class MySQLResult
 bool MySQLResult::fetch_row()
 {
+    if (this->result == NULL)
+        return false;
     #ifdef _WIN32
         return this->result->next();
     #else

@@ -1522,6 +1522,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cargada.
+        /// </summary>
+        internal static string textoEstadoCargada {
+            get {
+                return ResourceManager.GetString("textoEstadoCargada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Disponible.
         /// </summary>
         internal static string textoEstadoDisponible {

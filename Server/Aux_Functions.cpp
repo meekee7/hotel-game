@@ -292,6 +292,7 @@ void SendGameList(Player* p, list<Game*>* glist)
             send_int(p, (*i)->plist.size());
             send_int(p, ((*i)->started ? 1 : 0));
             send_int(p, ((*i)->ended ? 1 : 0));
+            send_int(p, ((*i)->bd_id > -1 ? 1 : 0));
         }
     }
 }

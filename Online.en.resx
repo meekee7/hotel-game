@@ -161,7 +161,7 @@
     <value>Official server</value>
   </data>
   <data name="bCargarPartida.Location" type="System.Drawing.Point, System.Drawing">
-    <value>264, 315</value>
+    <value>291, 315</value>
   </data>
   <data name="bCargarPartida.Text" xml:space="preserve">
     <value>Load game</value>

@@ -744,4 +744,7 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeNoSePuedeCargarYaFinalizada" xml:space="preserve">
     <value>The game with ID {0} already ended</value>
   </data>
+  <data name="textoEstadoCargada" xml:space="preserve">
+    <value>Loaded</value>
+  </data>
 </root>

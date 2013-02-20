@@ -349,7 +349,7 @@ namespace Juego_Hotel
                     return;
                 }
                 int i, long_nombre, capacidad, n_jugadores_dentro;
-                Boolean empezada, finalizada;
+                Boolean empezada, finalizada, cargada;
                 String nombre, estado;
                 String[] lista_partidas = new String[cuantas];
                 for (i = 0; i < cuantas; i++)
@@ -360,6 +360,7 @@ namespace Juego_Hotel
                     n_jugadores_dentro = this.recibir_int(this.socket, ref bytes_recibidos);
                     empezada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
                     finalizada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    cargada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
                     if (!empezada && !finalizada)
                     {
                         if (n_jugadores_dentro == capacidad)
@@ -371,6 +372,8 @@ namespace Juego_Hotel
                         estado = Mensajes.textoEstadoEmpezada;
                     else
                         estado = Mensajes.textoEstadoFinalizada;
+                    if (cargada)
+                        estado += " (" + Mensajes.textoEstadoCargada + ")";
                     if (n_jugadores_dentro == 1)
                         lista_partidas[i] = String.Format(Mensajes.textoPartidaSingular, nombre, capacidad, estado);
                     else
