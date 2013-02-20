@@ -723,4 +723,25 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeJuegoSalvado" xml:space="preserve">
     <value>Game saved succesfully by the user {0} with id {1} and password "{2}". Write down the id and the password to resume it later. Only the creator can load this game and only the current active players will be able to join the game when loaded</value>
   </data>
+  <data name="mensajeCargarPartidaOK" xml:space="preserve">
+    <value>Game loaded successfully</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarErrorCargar" xml:space="preserve">
+    <value>The game with ID {0} was not loaded due to an error in the server. Contact ifilgud@gmail.com.</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarNoCreador" xml:space="preserve">
+    <value>The game with ID {0} was not created by you</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarNoExiste" xml:space="preserve">
+    <value>The game with ID {0} was not found</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarPasswordIncorrecta" xml:space="preserve">
+    <value>Wrong password for the game with ID {0}</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarYaCargado" xml:space="preserve">
+    <value>The game with ID {0} has already been loaded by {1}</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarYaFinalizada" xml:space="preserve">
+    <value>The game with ID {0} already ended</value>
+  </data>
 </root>

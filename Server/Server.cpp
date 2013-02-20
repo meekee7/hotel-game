@@ -1623,11 +1623,14 @@ void handle_command(string command, Player* player)
             {
                 glist.push_back(game);
                 send_command("game_loaded", player);
+                for (list<Player*>::iterator i = plist.begin() ; i != plist.end() ; i++)
+                    SendGameList((*i), &glist);
             }
             else
             {
                 send_command("cannot_load_game", player);
                 send_int(player, error_code);
+                send_int(player, id);
             }
         }
     }

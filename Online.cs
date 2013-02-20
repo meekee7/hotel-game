@@ -1333,17 +1333,27 @@ namespace Juego_Hotel
             if (!ok)
             {
                 int error = this.recibir_int(this.socket, ref bytes_recibidos);
+                int id = this.recibir_int(this.socket, ref bytes_recibidos);
                 switch (error)
                 {
-                    case 1: int id = this.recibir_int(this.socket, ref bytes_recibidos);
-                            int lon = this.recibir_int(this.socket, ref bytes_recibidos);
+                    case 1: int lon = this.recibir_int(this.socket, ref bytes_recibidos);
                             String nombre = this.recibir_string(this.socket, lon, ref bytes_recibidos);
                             MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarYaCargado, id, nombre), Mensajes.tituloCargarPartida);
                             break;
-                    case 2: break;
+                    case 2: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarNoExiste, id), Mensajes.tituloCargarPartida);
+                            break;
+                    case 3: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarErrorCargar, id), Mensajes.tituloCargarPartida);
+                            break;
+                    case 4: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarPasswordIncorrecta, id), Mensajes.tituloCargarPartida);
+                            break;
+                    case 5: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarYaFinalizada, id), Mensajes.tituloCargarPartida);
+                            break;
+                    case 6: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarNoCreador, id), Mensajes.tituloCargarPartida);
+                            break;
                 }
-                
             }
+            else
+                MessageBox.Show(Mensajes.mensajeCargarPartidaOK, Mensajes.tituloCargarPartida);
         }
 
         private void checkSrvOficial_CheckedChanged(object sender, EventArgs e)

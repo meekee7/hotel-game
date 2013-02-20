@@ -313,6 +313,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Partida cargada correctamente.
+        /// </summary>
+        internal static string mensajeCargarPartidaOK {
+            get {
+                return ResourceManager.GetString("mensajeCargarPartidaOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Has caído en una casilla de tipo Entrada Gratis, ¡aprovecha!.
         /// </summary>
         internal static string mensajeCasillaEntradaGratis {
@@ -1069,11 +1078,56 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El juego con ID {0} no ha podido cargarse por un error en el servidor. Contacte con ifilgud@gmail.com.
+        /// </summary>
+        internal static string mensajeNoSePuedeCargarErrorCargar {
+            get {
+                return ResourceManager.GetString("mensajeNoSePuedeCargarErrorCargar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El juego con ID {0} no fue creado por ti.
+        /// </summary>
+        internal static string mensajeNoSePuedeCargarNoCreador {
+            get {
+                return ResourceManager.GetString("mensajeNoSePuedeCargarNoCreador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El juego con ID {0} no ha sido encontrado.
+        /// </summary>
+        internal static string mensajeNoSePuedeCargarNoExiste {
+            get {
+                return ResourceManager.GetString("mensajeNoSePuedeCargarNoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contraseña incorrecta para el juego con ID {0}.
+        /// </summary>
+        internal static string mensajeNoSePuedeCargarPasswordIncorrecta {
+            get {
+                return ResourceManager.GetString("mensajeNoSePuedeCargarPasswordIncorrecta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El juego con ID {0} ya ha sido cargado por {1}.
         /// </summary>
         internal static string mensajeNoSePuedeCargarYaCargado {
             get {
                 return ResourceManager.GetString("mensajeNoSePuedeCargarYaCargado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El juego con ID {0} ya finalizó.
+        /// </summary>
+        internal static string mensajeNoSePuedeCargarYaFinalizada {
+            get {
+                return ResourceManager.GetString("mensajeNoSePuedeCargarYaFinalizada", resourceCulture);
             }
         }
         

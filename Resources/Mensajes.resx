@@ -726,4 +726,22 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeNoSePuedeCargarYaCargado" xml:space="preserve">
     <value>El juego con ID {0} ya ha sido cargado por {1}</value>
   </data>
+  <data name="mensajeCargarPartidaOK" xml:space="preserve">
+    <value>Partida cargada correctamente</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarErrorCargar" xml:space="preserve">
+    <value>El juego con ID {0} no ha podido cargarse por un error en el servidor. Contacte con ifilgud@gmail.com</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarNoCreador" xml:space="preserve">
+    <value>El juego con ID {0} no fue creado por ti</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarNoExiste" xml:space="preserve">
+    <value>El juego con ID {0} no ha sido encontrado</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarPasswordIncorrecta" xml:space="preserve">
+    <value>Contraseña incorrecta para el juego con ID {0}</value>
+  </data>
+  <data name="mensajeNoSePuedeCargarYaFinalizada" xml:space="preserve">
+    <value>El juego con ID {0} ya finalizó</value>
+  </data>
 </root>
