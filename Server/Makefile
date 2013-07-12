@@ -47,7 +47,7 @@ TinyXMLError.o: TinyXMLError.cpp
 TinyXMLParser.o: TinyXMLParser.cpp
 	$(CC) -c $(FLAGS) -o TinyXMLParser.o TinyXMLParser.cpp
 
-Server.o: Server.cpp
+Server.o: Server.cpp Server.h
 	$(CC) -c $(FLAGS) -o Server.o Server.cpp
 	
 MySQLMgr.o: MySQLMgr.cpp MySQLMgr.h
@@ -56,5 +56,8 @@ MySQLMgr.o: MySQLMgr.cpp MySQLMgr.h
 SavedgamesMgr.o: SavedgamesMgr.cpp SavedgamesMgr.h
 	$(CC) -c $(FLAGS) -o SavedgamesMgr.o SavedgamesMgr.cpp
 
-Server: Portable_Socket.o TinyXMLError.o TinyXMLParser.o TinyStr.o TinyXML.o Chat.o Game.o Position.o Hotel.o Player.o PlayerGameState.o Server.o Random.o Aux_Functions.o MySQLMgr.o SavedgamesMgr.o
-	$(CC) -o hotel_server Portable_Socket.o TinyXMLError.o TinyXMLParser.o TinyStr.o TinyXML.o Chat.o Game.o Hotel.o Player.o PlayerGameState.o Position.o Random.o Aux_Functions.o MySQLMgr.o SavedgamesMgr.o Server.o dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT
+CommandHandler.o: CommandHandler.cpp CommandHandler.h
+	$(CC) -c $(FLAGS) -o CommandHandler.o CommandHandler.cpp
+
+Server: Portable_Socket.o TinyXMLError.o TinyXMLParser.o TinyStr.o TinyXML.o Chat.o Game.o Position.o Hotel.o Player.o PlayerGameState.o Server.o Random.o Aux_Functions.o MySQLMgr.o SavedgamesMgr.o CommandHandler.o HotelServer.cpp
+	$(CC) -o hotel_server Portable_Socket.o TinyXMLError.o TinyXMLParser.o TinyStr.o TinyXML.o Chat.o Game.o Hotel.o Player.o PlayerGameState.o Position.o Random.o Aux_Functions.o MySQLMgr.o SavedgamesMgr.o CommandHandler.o Server.o HotelServer.cpp dlib/all/source.cpp $(LDOPT) -DDLIB_NO_GUI_SUPPORT

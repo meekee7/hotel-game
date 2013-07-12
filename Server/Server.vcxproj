@@ -193,6 +193,8 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="CommandHandler.cpp" />
+    <ClCompile Include="HotelServer.cpp" />
     <ClCompile Include="MySQLMgr.cpp" />
     <ClCompile Include="dlib\all\source.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -212,6 +214,8 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chat.h" />
+    <ClInclude Include="CommandHandler.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="MySQLMgr.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Hotel.h" />

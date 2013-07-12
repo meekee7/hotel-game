@@ -296,3 +296,206 @@ void SendGameList(Player* p, list<Game*>* glist)
         }
     }
 }
+
+bool add_player_to_player_list (Player* p, dlib::mutex* mutex_lists, list<Player*>* plist)
+{
+    mutex_lists->lock();
+    bool found = false;
+    list<Player*>::iterator i = plist->begin();
+    while (!found && i != plist->end())
+    {
+        if ((*i)->name == p->name)
+            found = true;
+        else
+            ++i;
+    }
+    if (found)
+    {
+        wcout << currentDateTime() << L"Player already connected" << endl;
+        mutex_lists->unlock();
+        return false;
+    }
+    else
+    {
+        wcout << currentDateTime() << L"Player accepted" << endl;
+        plist->push_back(p);
+        mutex_lists->unlock();
+        return true;
+    }
+}
+
+bool delete_player_from_player_list(Player* p, dlib::mutex* mutex_lists, list<Player*>* plist)
+{
+    mutex_lists->lock();
+    bool found = false;
+    list<Player*>::iterator i = plist->begin();
+    while (!found && i != plist->end())
+    {
+        if ((*i)->name == p->name)
+            found = true;
+        else
+            ++i;
+    }
+    if (!found)
+    {
+        wcout << currentDateTime() << L"Player not found in player list" << endl;
+        mutex_lists->unlock();
+        return false;
+    }
+    else
+    {
+        wcout << currentDateTime() << L"Player deleted from player list" << endl;
+        plist->erase(i);
+        mutex_lists->unlock();
+        return true;
+    }
+}
+
+bool delete_chat_if_empty(Chat* chat, dlib::mutex* mutex_lists, list<Chat*>* chat_list)
+{
+    if (chat == NULL)
+        return true;
+    mutex_lists->lock();
+    if (chat->players.empty())
+    {
+        wcout << currentDateTime() << L"Chat " << chat->id << L" deleted because it's empty" << endl;
+        chat_list->remove(chat);
+        delete chat;
+        mutex_lists->unlock();
+        return true;
+    }
+    mutex_lists->unlock();
+    return false;
+}
+
+bool delete_game_if_empty(Game* game, dlib::mutex* mutex_lists, list<Game*>* glist)
+{
+    mutex_lists->lock();
+    if (game->plist.empty())
+    {
+        wcout << currentDateTime() << L"Game " << game->name << L" deleted because it's empty" << endl;
+        glist->remove(game);
+        delete game;
+        mutex_lists->unlock();
+        return true;
+    }
+    else
+    {
+        mutex_lists->unlock();
+        return false;
+    }
+}
+
+void disconnect_client(Player* p, bool kicking, dlib::mutex* mutex_disconnects, dlib::mutex* mutex_lists, list<Chat*>* chat_list, list<Game*>* glist, list<Player*>* global_chat_list, list<Player*>* plist)
+{
+    if (!p->connected)
+        return;
+    mutex_disconnects->lock();
+    // Leave all normal chats and global chat
+    list<Chat*>::iterator i;
+    for (i = chat_list->begin() ; i != chat_list->end() ; ++i)
+    {
+        if ((*i)->check_already_joined(p))
+        {
+            (*i)->leave(p);
+            if (delete_chat_if_empty(get_chat_from_id((*i)->id, chat_list, glist), mutex_lists, chat_list))
+            {
+                if (chat_list->size() > 0)
+                    i = chat_list->begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults->
+                else
+                    break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
+            }
+            else
+            {
+                // Notify all chat users of the player disconnexion
+                list<Player*>::iterator i4, j;
+                Player* dest;
+                for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
+                {
+                    dest = *i4;
+                    send_command("chat_userlist", dest);
+                    send_int(dest, (*i)->id);
+                    send_int(dest, (*i)->players.size()); // Number of players
+                    for (j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
+                    {
+                        send_int(dest, get_utf8_length((*j)->name));
+                        send_wstring(dest, (*j)->name);
+                    }
+                }
+            }
+        }
+    }
+    global_chat_list->remove(p);
+    // Leave games
+    list<Game*>::iterator i2;
+    for (i2 = glist->begin() ; i2 != glist->end() ; ++i2)
+    {
+        if ((*i2)->check_already_joined(p))
+        {
+            (*i2)->leave(p);
+            if (delete_game_if_empty(*i2, mutex_lists, glist))
+            {
+                if (glist->size() > 0)
+                    i2 = glist->begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
+                else
+                    break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
+            }
+            else
+            {
+                // Notify the rest of players that the player left the game
+                list<Player*>::iterator i3, j;
+                Player* dest, * winner;
+                for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
+                {
+                    dest = (*i3);
+                    if (kicking)
+                    {
+                        send_command("player_kicked", dest);
+                        send_int(dest, (*i2)->id);
+                        send_int(dest, get_utf8_length(p->name));
+                        send_wstring(dest, p->name);
+                    }
+                    else
+                    {
+                        send_command("player_retired", dest);
+                        send_int(dest, (*i2)->id);
+                        send_int(dest, get_utf8_length(p->name));
+                        send_wstring(dest, p->name);
+                    }
+                    send_command("chat_userlist", dest);
+                    send_int(dest, (*i2)->id);
+                    send_int(dest, (*i2)->plist.size()); // Number of players
+                    for (j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
+                    {
+                        send_int(dest, get_utf8_length((*j)->name));
+                        send_wstring(dest, (*j)->name);
+                    }
+                    if ((*i2)->get_active_players_count() == 1)
+                    {
+                        (*i2)->ended = true;
+                        send_command("game_ended", dest);
+                        send_int(dest, (*i2)->id);
+                        winner = (*i2)->get_winner();
+                        send_int(dest, get_utf8_length(winner->name));
+                        send_wstring(dest, winner->name);
+                    }
+                }
+            }
+        }
+    }
+    delete_player_from_player_list(p, mutex_lists, plist);
+    p->connected = false;
+    mutex_disconnects->unlock();
+}
+
+// Retire from all games and disconnect him using existing function
+void kick_hacker_real(int reason, Player* p, dlib::mutex* mutex_disconnects, dlib::mutex* mutex_lists, list<Chat*>* chat_list, list<Game*>* glist, list<Player*>* global_chat_list, list<Player*>* plist)
+{
+    wcout << currentDateTime() << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
+    wofstream kick_log;
+    kick_log.open("kick_log.log", wofstream::app);
+    kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << currentDateTime() << endl;
+    kick_log.close();
+    send_command("#disconnect#", p);
+    disconnect_client(p, true, mutex_disconnects, mutex_lists, chat_list, glist, global_chat_list, plist);
+}

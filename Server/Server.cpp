@@ -1,3 +1,4 @@
+#include "Server.h"
 #include <iostream>
 #include <list>
 #include <string>
@@ -5,17 +6,7 @@
 #include <signal.h>
 #include <ctime>
 #include <cstdlib>
-#include "Portable_Socket.h"
-#include "Player.h"
-#include "PlayerGameState.h"
-#include "Game.h"
-#include "Chat.h"
-#include "Aux_Functions.h"
-#include "TinyXML.h"
-#include "Hotel.h"
-#include "Types.h"
-#include "Random.h"
-#include "SavedgamesMgr.h"
+
 #include "dlib/threads.h"
 #include "dlib/string.h"
 
@@ -23,25 +14,18 @@
 
 using namespace std;
 
-string compatible_version = "2.1.6";
-volatile int closing = 0;
-Portable_socket* socket_server;
-Portable_socket* socket_client;
-list<Player*> plist; // Player list
-list<Game*> glist; // Game list
-list<Player*> global_chat_list; // Players in global chat
-list<Chat*> chat_list;
-dlib::mutex mutex_ids;
-dlib::mutex mutex_lists;
-dlib::mutex mutex_disconnects;
-dlib::mutex debt_mutex;
-int id_count = 0;
-string config_content;
-struct config configuration;
-CRandomMT* random_gen;
-SavedgamesMgr* savedgamesmgr;
+Server::Server()
+{
+    this->compatible_version = "2.1.6";
+    this->closing = 0;
+    this->id_count = 0;
+}
 
-void unhook_signals()
+Server::~Server()
+{
+}
+
+void Server::unhook_signals()
 {
     signal(SIGINT, 0);
     signal(SIGTERM, 0);
@@ -50,7 +34,7 @@ void unhook_signals()
 #endif
 }
 
-void empty_global_chat_list()
+void Server::empty_global_chat_list()
 {
     list<Player*>::iterator i;
     for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
@@ -59,7 +43,7 @@ void empty_global_chat_list()
     }
 }
 
-void empty_chat_list()
+void Server::empty_chat_list()
 {
     list<Chat*>::iterator i;
     for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
@@ -69,7 +53,7 @@ void empty_chat_list()
     }
 }
 
-void empty_glist()
+void Server::empty_glist()
 {
     list<Game*>::iterator i;
     for (i = glist.begin() ; i != glist.end() ; ++i)
@@ -79,7 +63,7 @@ void empty_glist()
     }
 }
 
-void empty_plist()
+void Server::empty_plist()
 {
     list<Player*>::iterator i;
     for (i = plist.begin() ; i != plist.end() ; ++i)
@@ -89,15 +73,15 @@ void empty_plist()
     }
 }
 
-void close_server (int signum)
+void close_server (int signum, Server* server)
 {
-    closing = 1;
+    server->closing = 1;
     wcout << currentDateTime() << endl << L"Closing server due to signal " << signum << endl;
-    unhook_signals();
-    delete socket_server;
+    server->unhook_signals();
+    delete server->socket_server;
 }
 
-void hook_signals()
+void Server::hook_signals()
 {
     signal(SIGINT, close_server);
     signal(SIGTERM, close_server);
@@ -106,230 +90,17 @@ void hook_signals()
 #endif
 }
 
-bool add_player_to_player_list (Player* p)
+void Server::kick_hacker(int reason, Player* p)
 {
-    mutex_lists.lock();
-    bool found = false;
-    list<Player*>::iterator i = plist.begin();
-    while (!found && i != plist.end())
-    {
-        if ((*i)->name == p->name)
-            found = true;
-        else
-            ++i;
-    }
-    if (found)
-    {
-        wcout << currentDateTime() << L"Player already connected" << endl;
-        mutex_lists.unlock();
-        return false;
-    }
-    else
-    {
-        wcout << currentDateTime() << L"Player accepted" << endl;
-        plist.push_back(p);
-        mutex_lists.unlock();
-        return true;
-    }
+	kick_hacker_real(reason, p, &mutex_disconnects, &mutex_lists, &chat_list, &glist, &global_chat_list, &plist);
 }
 
-bool delete_player_from_player_list(Player* p)
-{
-    mutex_lists.lock();
-    bool found = false;
-    list<Player*>::iterator i = plist.begin();
-    while (!found && i != plist.end())
-    {
-        if ((*i)->name == p->name)
-            found = true;
-        else
-            ++i;
-    }
-    if (!found)
-    {
-        wcout << currentDateTime() << L"Player not found in player list" << endl;
-        mutex_lists.unlock();
-        return false;
-    }
-    else
-    {
-        wcout << currentDateTime() << L"Player deleted from player list" << endl;
-        plist.erase(i);
-        mutex_lists.unlock();
-        return true;
-    }
-}
-
-bool delete_chat_if_empty(Chat* chat)
-{
-    if (chat == NULL)
-        return true;
-    mutex_lists.lock();
-    if (chat->players.empty())
-    {
-        wcout << currentDateTime() << L"Chat " << chat->id << L" deleted because it's empty" << endl;
-        chat_list.remove(chat);
-        delete chat;
-        mutex_lists.unlock();
-        return true;
-    }
-    mutex_lists.unlock();
-    return false;
-}
-
-bool delete_game_if_empty(Game* game)
-{
-    mutex_lists.lock();
-    if (game->plist.empty())
-    {
-        wcout << currentDateTime() << L"Game " << game->name << L" deleted because it's empty" << endl;
-        glist.remove(game);
-        delete game;
-        mutex_lists.unlock();
-        return true;
-    }
-    else
-    {
-        mutex_lists.unlock();
-        return false;
-    }
-}
-
-void disconnect_client(Player* p, bool kicking)
-{
-    if (!p->connected)
-        return;
-    mutex_disconnects.lock();
-    // Leave all normal chats and global chat
-    list<Chat*>::iterator i;
-    for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
-    {
-        if ((*i)->check_already_joined(p))
-        {
-            (*i)->leave(p);
-            if (delete_chat_if_empty(get_chat_from_id((*i)->id, &chat_list, &glist)))
-            {
-                if (chat_list.size() > 0)
-                    i = chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults
-                else
-                    break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
-            }
-            else
-            {
-                // Notify all chat users of the player disconnexion
-                list<Player*>::iterator i4, j;
-                Player* dest;
-                for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
-                {
-                    dest = *i4;
-                    send_command("chat_userlist", dest);
-                    send_int(dest, (*i)->id);
-                    send_int(dest, (*i)->players.size()); // Number of players
-                    for (j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
-                    {
-                        send_int(dest, get_utf8_length((*j)->name));
-                        send_wstring(dest, (*j)->name);
-                    }
-                }
-            }
-        }
-    }
-    global_chat_list.remove(p);
-    // Leave games
-    list<Game*>::iterator i2;
-    for (i2 = glist.begin() ; i2 != glist.end() ; ++i2)
-    {
-        if ((*i2)->check_already_joined(p))
-        {
-            (*i2)->leave(p);
-            if (delete_game_if_empty(*i2))
-            {
-                if (glist.size() > 0)
-                    i2 = glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
-                else
-                    break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
-            }
-            else
-            {
-                // Notify the rest of players that the player left the game
-                list<Player*>::iterator i3, j;
-                Player* dest, * winner;
-                for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
-                {
-                    dest = (*i3);
-                    if (kicking)
-                    {
-                        send_command("player_kicked", dest);
-                        send_int(dest, (*i2)->id);
-                        send_int(dest, get_utf8_length(p->name));
-                        send_wstring(dest, p->name);
-                    }
-                    else
-                    {
-                        send_command("player_retired", dest);
-                        send_int(dest, (*i2)->id);
-                        send_int(dest, get_utf8_length(p->name));
-                        send_wstring(dest, p->name);
-                    }
-                    send_command("chat_userlist", dest);
-                    send_int(dest, (*i2)->id);
-                    send_int(dest, (*i2)->plist.size()); // Number of players
-                    for (j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
-                    {
-                        send_int(dest, get_utf8_length((*j)->name));
-                        send_wstring(dest, (*j)->name);
-                    }
-                    if ((*i2)->get_active_players_count() == 1)
-                    {
-                        (*i2)->ended = true;
-                        send_command("game_ended", dest);
-                        send_int(dest, (*i2)->id);
-                        winner = (*i2)->get_winner();
-                        send_int(dest, get_utf8_length(winner->name));
-                        send_wstring(dest, winner->name);
-                    }
-                }
-            }
-        }
-    }
-    delete_player_from_player_list(p);
-    p->connected = false;
-    mutex_disconnects.unlock();
-}
-
-void kick_hacker(int reason, Player* p) // Retire from all games and disconnect him using existing function
-{
-    wcout << currentDateTime() << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
-    wofstream kick_log;
-    kick_log.open("kick_log.log", wofstream::app);
-    kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << currentDateTime() << endl;
-    kick_log.close();
-    send_command("#disconnect#", p);
-    disconnect_client(p, true);
-}
-
-void handle_command(string command, Player* player)
+void Server::handle_command(string command, Player* player)
 {
     if (command == "#disconnect#")
     {
-        disconnect_client(player, false);
-        send_command("#disconnect#", player);
-        // Send player list to all players, so they are notified about the diconnected user
-        // Send as much strings as connected players, with a count first
-        list<Player*>::iterator i, j;
-        Player* dest;
-        for (i = plist.begin() ; i != plist.end() ; ++i)
-        {
-            dest = *i;
-            send_command("player_list", dest);
-            send_int(dest, plist.size()); // Number of players
-            for (j = plist.begin() ; j != plist.end() ; ++j)
-            {
-                send_int(dest, get_utf8_length((*j)->name));
-                send_wstring(dest, (*j)->name);
-            }
-            SendGameList(dest, &glist);
-        }
+		disconnect_client(player, false, &mutex_disconnects, &mutex_lists, &chat_list, &glist, &global_chat_list, &plist);
+		ch->Disconnect(player, &plist, &glist);
     }
     else if (command == "get_players")
     {
@@ -465,7 +236,7 @@ void handle_command(string command, Player* player)
                 send_wstring(dest, game->creator->name);
             }
         }
-        if (delete_game_if_empty(game))
+        if (delete_game_if_empty(game, &mutex_lists, &glist))
         {
             for (i = plist.begin() ; i != plist.end() ; ++i)
             {
@@ -592,7 +363,7 @@ void handle_command(string command, Player* player)
                 send_wstring(dest, (*j)->name);
             }
         }
-        delete_chat_if_empty(chat);
+        delete_chat_if_empty(chat, &mutex_lists, &chat_list);
     }
     else if (command == "get_global_chat_users")
     {
@@ -1636,7 +1407,7 @@ void handle_command(string command, Player* player)
     }
 }
 
-void handle_client(void* arg)
+void Server::handle_client(void* arg)
 {
     Player* p = (Player*) arg;
     int bytes_received;
@@ -1666,7 +1437,7 @@ void handle_client(void* arg)
         delete p;
         wcout << currentDateTime() << L"Disconnecting client" << endl;
     }
-    else if (add_player_to_player_list(p) == false)
+    else if (add_player_to_player_list(p, &mutex_lists, &plist) == false)
     {
         p->socket->psend("login ko", 8, 0);
         delete p;
@@ -1706,7 +1477,7 @@ void handle_client(void* arg)
             else
             {
                 online = false;
-                disconnect_client(p, false);
+                disconnect_client(p, false, &mutex_disconnects, &mutex_lists, &chat_list, &glist, &global_chat_list, &plist);
                 delete p;
                 wcout << currentDateTime() << L"Client disconnected" << endl;
             }
@@ -1714,7 +1485,7 @@ void handle_client(void* arg)
     }
 }
 
-void read_config(TiXmlDocument* config_xml)
+void Server::read_config(TiXmlDocument* config_xml)
 {
     // For two players
     TiXmlNode* node = config_xml->LastChild()->FirstChild()->FirstChild()->FirstChild();
@@ -1740,7 +1511,7 @@ void read_config(TiXmlDocument* config_xml)
     configuration.three_or_four_players.n_50 = atoi(node->FirstChild()->Value());
 }
 
-void run_server(int port)
+void Server::Run(int port)
 {
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
@@ -1769,11 +1540,11 @@ void run_server(int port)
         else
         {
             bind_retries++;
-#ifdef _WIN32
-            Sleep(5000);
-#else
-            sleep(5000);
-#endif
+            #ifdef _WIN32
+                Sleep(5000);
+            #else
+                sleep(5000);
+            #endif
             wcout << currentDateTime() << L"bind retries: " << bind_retries << endl;
         }
     }
@@ -1805,6 +1576,7 @@ void run_server(int port)
     }
     // Load Config.xml to have configuration loaded for future checks
     read_config(&config_xml);
+	ch = new CommandHandler();
     while (closing == 0)
     {
         addrlen = sizeof(client_info);
@@ -1819,6 +1591,7 @@ void run_server(int port)
             {
                 // The server is closing
                 delete savedgamesmgr;
+				delete ch;
                 empty_global_chat_list();
                 wcout << currentDateTime() << L"Global Chat cleaned" << endl;
                 empty_chat_list();
@@ -1833,14 +1606,4 @@ void run_server(int port)
         p = new Player(inet_ntoa(client_info.sin_addr), socket_client);
         dlib::create_new_thread(handle_client, (void*) p);
     }
-}
-
-int main(int argc, char* argv[])
-{
-    int port;
-    if (argc == 2) // Port specified
-        port = atoi(argv[1]);
-    else
-        port = 12345;
-    run_server(port);
 }
