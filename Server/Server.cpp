@@ -13,12 +13,14 @@
 #define MAXCONN 100
 
 using namespace std;
+Server* s; // Needed for function pointer wrappers
 
 Server::Server()
 {
     this->compatible_version = "2.1.6";
     this->closing = 0;
     this->id_count = 0;
+    s = this;
 }
 
 Server::~Server()
@@ -73,12 +75,12 @@ void Server::empty_plist()
     }
 }
 
-void close_server (int signum, Server* server)
+void close_server (int signum)
 {
-    server->closing = 1;
+    s->closing = 1;
     wcout << currentDateTime() << endl << L"Closing server due to signal " << signum << endl;
-    server->unhook_signals();
-    delete server->socket_server;
+    s->unhook_signals();
+    delete s->socket_server;
 }
 
 void Server::hook_signals()
@@ -1407,6 +1409,11 @@ void Server::handle_command(string command, Player* player)
     }
 }
 
+void handle_client_wrapper(void* arg)
+{
+    s->handle_client(arg);
+}
+
 void Server::handle_client(void* arg)
 {
     Player* p = (Player*) arg;
@@ -1590,8 +1597,8 @@ void Server::Run(int port)
             else
             {
                 // The server is closing
-                delete savedgamesmgr;
-				delete ch;
+                delete this->savedgamesmgr;
+				delete this->ch;
                 empty_global_chat_list();
                 wcout << currentDateTime() << L"Global Chat cleaned" << endl;
                 empty_chat_list();
@@ -1604,6 +1611,6 @@ void Server::Run(int port)
             }
         }
         p = new Player(inet_ntoa(client_info.sin_addr), socket_client);
-        dlib::create_new_thread(handle_client, (void*) p);
+        dlib::create_new_thread(handle_client_wrapper, (void*) p);
     }
 }

@@ -38,9 +38,9 @@ public:
     ~Server();
     void Run(int port);
     void unhook_signals();
+    void handle_client(void* arg);
 private:
     void handle_command(string command, Player* player);
-    void handle_client(void* arg);
     void read_config(TiXmlDocument* config_xml);
     void kick_hacker(int reason, Player* p);
     void hook_signals();

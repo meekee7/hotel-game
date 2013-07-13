@@ -56,7 +56,11 @@ SavedgamesMgr::SavedgamesMgr(void)
     }
     config_file.close();
     if (host == "" || port == 0 || username == "" || password == "" || dbname == "" || this->keep_alive_interval == -1)
+    {
+        this->db_loaded_ok = false;
+        this->db = NULL;
         wcout << "Error reading connection data, check DBdata.txt" << endl;
+    }
     else
     {
         this->db = new MySQLMgr();
@@ -638,6 +642,10 @@ SavedgamesMgr::~SavedgamesMgr(void)
     #else
         usleep(1000 * 1000);
     #endif
-    this->db->Disconnect();
-    delete this->db;
+    if (this->db != NULL)
+    {
+        if (this->db_loaded_ok)
+            this->db->Disconnect();
+        delete this->db;
+    }
 }

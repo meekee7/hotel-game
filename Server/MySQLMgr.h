@@ -46,9 +46,11 @@ public:
     #else
         MYSQL* conn;
     #endif
+    void Disconnect();
     MySQLResult* ExecuteQueryWithData(string query);
     int ExecuteQueryWithoutData(string query);
     int GetLastInsertId();
+    MySQLConnection(void);
     ~MySQLConnection(void);
 };
 

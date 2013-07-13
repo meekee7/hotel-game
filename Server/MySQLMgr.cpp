@@ -13,6 +13,7 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
         catch (sql::SQLException e)
         {
             wcout << "Error connecting to database. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            this->connection->conn = NULL;
             return false;
         }
         wcout << "Database connection succesful!" << endl;
@@ -26,9 +27,10 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
     #else
         this->connection->conn = mysql_init(NULL);
         mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), port, NULL, 0);
-        if (this->connection == NULL)
+        if (this->connection->conn == NULL)
         {
             wcout << "Error connecting to database" << endl;
+            this->connection->conn = NULL;
             return false;
         }
         else
@@ -60,11 +62,7 @@ void MySQLMgr::KeepAlive()
 
 void MySQLMgr::Disconnect()
 {
-    if (this->connection != NULL)
-    {
-        delete this->connection;
-        this->connection = NULL;
-    }
+    this->connection->Disconnect();
 }
 
 #ifdef _WIN32
@@ -116,6 +114,16 @@ MySQLMgr::~MySQLMgr(void)
 }
 
 // Class MySQLConnection
+void MySQLConnection::Disconnect()
+{
+    #ifdef _WIN32
+        if(!this->conn->isClosed())
+            this->conn->close();
+    #else
+        mysql_close(this->conn);
+    #endif
+}
+
 MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
 {
     MySQLResult* result = new MySQLResult();
@@ -195,10 +203,17 @@ bool MySQLConnection::IsClosed()
 }
 #endif
 
+MySQLConnection::MySQLConnection(void)
+{
+}
+
 MySQLConnection::~MySQLConnection(void)
 {
+    if (this->conn == NULL)
+        return;
     #ifdef _WIN32
-        this->conn->close();
+        if (!this->conn->isClosed())
+            this->conn->close();
         delete this->conn;
     #else
         // This function deletes the object
