@@ -116,11 +116,14 @@ MySQLMgr::~MySQLMgr(void)
 // Class MySQLConnection
 void MySQLConnection::Disconnect()
 {
+    if (this->conn == NULL)
+        return;
     #ifdef _WIN32
         if(!this->conn->isClosed())
             this->conn->close();
     #else
         mysql_close(this->conn);
+        this->conn = NULL;
     #endif
 }
 
