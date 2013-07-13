@@ -16,6 +16,9 @@ public:
     dlib::mutex mutex_disconnects;
     dlib::mutex debt_mutex;
 
+    CRandomMT* random_gen;
+    int id_count;
+
     ServerState(void);
     ~ServerState(void);
 };

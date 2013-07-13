@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 struct config_bills
 {
     int n_5000;
@@ -12,6 +14,7 @@ struct config
 {
     struct config_bills two_players;
     struct config_bills three_or_four_players;
+    std::string config_content;
 };
 
 enum TColor { red, blue, yellow, green, bank };

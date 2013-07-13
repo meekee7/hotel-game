@@ -20,10 +20,8 @@ public:
     volatile int closing;
     Portable_socket* socket_server;
     Portable_socket* socket_client;
-    int id_count;
-    string config_content;
     struct config configuration;
-    CRandomMT* random_gen;
+    
     SavedgamesMgr* savedgamesmgr;
     CommandHandler* ch;
     ServerState* serverState;

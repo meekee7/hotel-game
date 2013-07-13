@@ -19,7 +19,7 @@ Server::Server()
 {
     this->compatible_version = "2.1.6";
     this->closing = 0;
-    this->id_count = 0;
+    this->serverState->id_count = 0;
     s = this;
 }
 
@@ -104,9 +104,7 @@ void Server::handle_command(string command, Player* player)
     else if (command == "get_players")
         ch->GetPlayers(player);
     else if (command == "get_games")
-    {
-        SendGameList(player, &this->serverState->glist);
-    }
+        ch->GetGames(player);
     else if (command == "create_game")
     {
         int bytes_received;
@@ -114,22 +112,7 @@ void Server::handle_command(string command, Player* player)
         wstring name = receive_wstring(player, len_name, &bytes_received);
         int long_n_players = receive_int(player, &bytes_received);
         int n_players = atoi(receive_string(player, long_n_players, &bytes_received).c_str());
-        if (name.empty()) // Hack, kick player
-            return kick_hacker(1, player);
-        if (get_game_from_name(name, &this->serverState->glist) != NULL) // Repeated name
-            return;
-        Game* new_game = new Game(name, n_players, player, &this->serverState->mutex_ids, &id_count, random_gen, false);
-        wcout << currentDateTime() << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
-        this->serverState->glist.push_back(new_game);
-        send_command("joined_game", player);
-        send_int(player, get_utf8_length(name));
-        send_wstring(player, name);
-        send_int(player, new_game->chat->id);
-        send_int(player, get_utf8_length(new_game->creator->name));
-        send_wstring(player, new_game->creator->name);
-        send_int(player, new_game->n_players);
-        for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
-            SendGameList((*i), &this->serverState->glist);
+        ch->CreateGame(player, name, n_players);
     }
     else if (command == "join_game")
     {
@@ -139,60 +122,17 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_name(name, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when chat does not exist anymore
             return;
-        if (game->check_already_joined(player))
-        {
-            send_command("cant_join_already_joined", player);
-            send_int(player, get_utf8_length(name));
-            send_wstring(player, name);
-        }
-        else if (game->join(player))
-        {
-            send_command("joined_game", player);
-            send_int(player, get_utf8_length(name));
-            send_wstring(player, name);
-            send_int(player, game->chat->id);
-            send_int(player, get_utf8_length(game->creator->name));
-            send_wstring(player, game->creator->name);
-            send_int(player, game->n_players);
-            Player* dest;
-            for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
-            {
-                // We exclude joined player because the command is sent too quickly.
-                // He will ask for player list just after joining
-                dest = *i;
-                if (dest != player)
-                {
-                    send_command("chat_userlist", dest);
-                    send_int(dest, game->id);
-                    send_int(dest, game->plist.size()); // Number of players
-                    for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
-                    {
-                        send_int(dest, get_utf8_length((*j)->name));
-                        send_wstring(dest, (*j)->name);
-                    }
-                }
-            }
-            for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
-                SendGameList((*i), &this->serverState->glist);
-        }
-        else if (game->started)
-        {
-            send_command("cant_join_game_started", player);
-            send_int(player, get_utf8_length(name));
-            send_wstring(player, name);
-        }
-        else if (game->ended)
-        {
-            send_command("cant_join_game_ended", player);
-            send_int(player, get_utf8_length(name));
-            send_wstring(player, name);
-        }
-        else
-        {
-            send_command("cant_join_game_full", player);
-            send_int(player, get_utf8_length(name));
-            send_wstring(player, name);
-        }
+        ch->JoinGame(player, game);        
+    }
+    else if (command == "start_game")
+    {
+        int bytes_received;
+        int len_id = receive_int(player, &bytes_received);
+        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
+        Game* game = get_game_from_id(id, &this->serverState->glist);
+        if (game == NULL) // To avoid commands sent when game does not exist anymore
+            return;
+        ch->StartGame(player, game, this->configuration);
     }
     else if (command == "leave_game")
     {
@@ -202,40 +142,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        Player* old_creator = game->creator;
-        game->leave(player);
-        list<Player*>::iterator i, j;
-        Player* dest;
-        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
-        {
-            dest = *i;
-            send_command("chat_userlist", dest);
-            send_int(dest, game->id);
-            send_int(dest, game->plist.size()); // Number of players
-            for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
-            {
-                send_int(dest, get_utf8_length((*j)->name));
-                send_wstring(dest, (*j)->name);
-            }
-            // If the creator is who left, send the new creator so he can start the game
-            if (game->creator != old_creator)
-            {
-                send_command("game_creator_changed", dest);
-                send_int(dest, game->id);
-                send_int(dest, get_utf8_length(game->creator->name));
-                send_wstring(dest, game->creator->name);
-            }
-        }
-        if (delete_game_if_empty(game, &this->serverState->mutex_lists, &this->serverState->glist))
-        {
-            for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
-            {
-                dest = *i;
-                SendGameList(dest, &this->serverState->glist);
-            }
-        }
-        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
-            SendGameList((*i), &this->serverState->glist);
+        ch->LeaveGame(player, game);
     }
     else if (command == "create_chat")
     {
@@ -252,39 +159,11 @@ void Server::handle_command(string command, Player* player)
             (*i) = receive_wstring(player, len_name, &bytes_received);
         }
         (*i) = player->name;
-        Chat* new_chat = new Chat(player, true, &this->serverState->mutex_ids, &id_count);
-        this->serverState->chat_list.push_back(new_chat);
-        wcout << currentDateTime() << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
-        // Send commands to selected players to ask them to join the chat
-        Player* dest;
-        for (i = player_list.begin() ; i != player_list.end() ; ++i)
-        {
-            dest = get_player_from_name(*i, &this->serverState->plist);
-            // The requested player can disconnect while processing this command
-            if (dest == NULL)
-                continue;
-            send_command("ask_join_chat", dest);
-            send_int(dest, new_chat->id);
-            send_int(dest, get_utf8_length(player->name));
-            send_wstring(dest, player->name);
-        }
+        ch->CreateChat(player, quantity, player_list);
     }
     else if (command == "join_global_chat")
     {
-        this->serverState->global_chat_list.push_back(player);
-        list<Player*>::iterator i, j;
-        Player* dest;
-        for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
-        {
-            dest = *i;
-            send_command("global_chat_userlist", dest);
-            send_int(dest, this->serverState->global_chat_list.size()); // Number of players
-            for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
-            {
-                send_int(dest, get_utf8_length((*j)->name));
-                send_wstring(dest, (*j)->name);
-            }
-        }
+        ch->JoinGlobalChat(player);
     }
     else if (command == "join_chat")
     {
@@ -294,23 +173,7 @@ void Server::handle_command(string command, Player* player)
         Chat* chat = get_chat_from_id(id, &this->serverState->chat_list, &this->serverState->glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
-        if (chat->check_already_joined(player)) // Don't allow join a chat twice (hack)
-            return kick_hacker(3, player);
-        chat->join(player);
-        list<Player*>::iterator i, j;
-        Player* dest;
-        for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
-        {
-            dest = *i;
-            send_command("chat_userlist", dest);
-            send_int(dest, chat->id);
-            send_int(dest, chat->players.size()); // Number of players
-            for (j = chat->players.begin() ; j != chat->players.end() ; ++j)
-            {
-                send_int(dest, get_utf8_length((*j)->name));
-                send_wstring(dest, (*j)->name);
-            }
-        }
+        ch->JoinChat(player, chat);
     }
     else if (command == "leave_global_chat")
     {
@@ -427,43 +290,6 @@ void Server::handle_command(string command, Player* player)
             send_int(dest, get_utf8_length(msg));
             send_wstring(dest, msg);
         }
-    }
-    else if (command == "start_game")
-    {
-        int bytes_received;
-        int len_id = receive_int(player, &bytes_received);
-        int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &this->serverState->glist);
-        if (game == NULL) // To avoid commands sent when game does not exist anymore
-            return;
-        if (game->creator != player) // Hack, trying to start a game not created by the player
-            return kick_hacker(7, player);
-        if (game->started || game->ended) // Hack, start a already started game or an ended game
-            return kick_hacker(8, player);
-        game->set_players_money(configuration);
-        game->start();
-        list<Player*>::iterator i, j;
-        Player* dest;
-        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
-        {
-            dest = *i;
-            send_command("game_started", dest);
-            send_int(dest, id);
-            send_int(dest, game->n_players);
-            // Send configuration
-            send_int(dest, config_content.size());
-            send_string(dest, config_content);
-            send_int(dest, game->starting_player);
-            // Send player list
-            send_int(dest, game->plist.size());
-            for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
-            {
-                send_int(dest, get_utf8_length((*j)->name));
-                send_wstring(dest, (*j)->name);
-            }
-        }
-        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
-            SendGameList((*i), &this->serverState->glist);
     }
     else if (command == "roll_dice")
     {
@@ -1379,7 +1205,7 @@ void Server::handle_command(string command, Player* player)
         else
         {
             int error_code = 0;
-            game = savedgamesmgr->LoadGame(id, password, player, &this->serverState->mutex_ids, &id_count, random_gen, &error_code);
+            game = savedgamesmgr->LoadGame(id, password, player, &this->serverState->mutex_ids, &this->serverState->id_count, this->serverState->random_gen, &error_code);
             if (game != NULL)
             {
                 this->serverState->glist.push_back(game);
@@ -1553,14 +1379,14 @@ void Server::Run(int port)
     this->savedgamesmgr = new SavedgamesMgr();
     hook_signals();
     Player* p;
-    random_gen = new CRandomMT();
+    this->serverState->random_gen = new CRandomMT();
     // Read Config.xml as string to send it to players
     ifstream config_file ("Config.xml");
     string line;
-    config_content = "";
+    configuration.config_content = "";
     while (getline(config_file, line))
     {
-        config_content += line + '\n';
+        configuration.config_content += line + '\n';
     }
     config_file.close();
     TiXmlDocument config_xml("Config.xml");

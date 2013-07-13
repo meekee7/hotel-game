@@ -19,18 +19,18 @@ public:
     void GetPlayers(Player* player);
     void GetGames(Player* player);
     void CreateGame(Player* player, wstring name, int n_players);
-    void JoinGame(Player* player, wstring name);
-    void StartGame(Player* player, int id);
-    void LeaveGame(Player* player, int id);
+    void JoinGame(Player* player, Game* game);
+    void StartGame(Player* player, Game* game, struct config configuration);
+    void LeaveGame(Player* player, Game* game);
     void JoinGlobalChat(Player* player);
     void LeaveGlobalChat(Player* player);
     void GetGlobalChatUsers(Player* player);
     void SendGlobalChatMsg(Player* player);
-    void CreateChat(Player* player, int quantity);
-    void JoinChat(Player* player, int id);
-    void LeaveChat(Player* player, int id);
-    void GetChatUsers(Player* player, int id);
-    void SendChatMsg(Player* player, int id, wstring msg);
+    void CreateChat(Player* player, int quantity, vector<wstring> player_list);
+    void JoinChat(Player* player, Chat* chat);
+    void LeaveChat(Player* player, Chat* chat);
+    void GetChatUsers(Player* player, Chat* chat);
+    void SendChatMsg(Player* player, Chat* chat, wstring msg);
     void Retire(Player* player, Game game, int type, wstring receiver_name);
 
     void RollDice(Player* player, Game game);
