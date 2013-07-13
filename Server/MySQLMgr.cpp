@@ -26,10 +26,9 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
         return true;
     #else
         this->connection->conn = mysql_init(NULL);
-        mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), port, NULL, 0);
-        if (this->connection->conn == NULL)
+        if (mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), port, NULL, 0) == NULL)
         {
-            wcout << "Error connecting to database" << endl;
+            wcout << "Error connecting to database: " << mysql_error(this->connection->conn) << endl;
             this->connection->conn = NULL;
             return false;
         }
