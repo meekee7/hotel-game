@@ -1,42 +1,54 @@
 #include "CommandHandler.h"
 #include "Aux_Functions.h"
 
-void CommandHandler::Disconnect(Player* player, list<Player*>* plist, list<Game*>* glist)
+// Retire from all games and disconnect him using existing function
+void CommandHandler::kick_hacker(int reason, Player* p)
+{
+    wcout << currentDateTime() << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
+    wofstream kick_log;
+    kick_log.open("kick_log.log", wofstream::app);
+    kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << currentDateTime() << endl;
+    kick_log.close();
+    send_command("#disconnect#", p);
+    disconnect_client(p, true, this->serverState);
+}
+
+void CommandHandler::Disconnect(Player* player)
 {
     send_command("#disconnect#", player);
     // Send player list to all players, so they are notified about the diconnected user
     // Send as much strings as connected players, with a count first
     list<Player*>::iterator i, j;
     Player* dest;
-    for (i = plist->begin() ; i != plist->end() ; ++i)
+    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
     {
         dest = *i;
         send_command("player_list", dest);
-        send_int(dest, plist->size()); // Number of players
-        for (j = plist->begin() ; j != plist->end() ; ++j)
+        send_int(dest, this->serverState->plist.size()); // Number of players
+        for (j = this->serverState->plist.begin() ; j != this->serverState->plist.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
         }
-        SendGameList(dest, glist);
+        SendGameList(dest, &this->serverState->glist);
     }
 }
 
-void CommandHandler::GetPlayers(Player* player, list<Player*>* plist){}
-void CommandHandler::GetGames(Player* player, list<Game*>* glist){}
-void CommandHandler::CreateGame(Player* player, list<Player*>* plist, list<Game*>* glist, wstring name, int n_players){}
-void CommandHandler::JoinGame(Player* player, list<Player*>* plist, list<Game*>* glist, wstring name){}
-void CommandHandler::StartGame(Player* player, list<Player*>* plist, list<Game*>* glist, int id){}
-void CommandHandler::LeaveGame(Player* player, list<Player*>* plist, list<Game*>* glist, int id){}
-void CommandHandler::JoinGlobalChat(Player* player, list<Player*>* global_chat_list){}
-void CommandHandler::LeaveGlobalChat(Player* player, list<Player*>* global_chat_list){}
-void CommandHandler::GetGlobalChatUsers(Player* player, list<Player*>* global_chat_list){}
-void CommandHandler::SendGlobalChatMsg(Player* player, list<Player*>* global_chat_list){}
-void CommandHandler::CreateChat(Player* player, list<Player*>* plist, list<Chat*>* clist, int quantity){}
-void CommandHandler::JoinChat(Player* player, list<Game*>* glist, list<Chat*>* clist, int id){}
-void CommandHandler::LeaveChat(Player* player, list<Game*>* glist, list<Chat*>* clist, int id){}
-void CommandHandler::GetChatUsers(Player* player, list<Game*>* glist, list<Chat*>* clist, int id){}
-void CommandHandler::SendChatMsg(Player* player, list<Game*>* glist, list<Chat*>* clist, int id, wstring msg){}
+void CommandHandler::GetPlayers(Player* player){}
+void CommandHandler::GetGames(Player* player){}
+void CommandHandler::CreateGame(Player* player, wstring name, int n_players){}
+void CommandHandler::JoinGame(Player* player, wstring name){}
+void CommandHandler::StartGame(Player* player, int id){}
+void CommandHandler::LeaveGame(Player* player, int id){}
+void CommandHandler::JoinGlobalChat(Player* player){}
+void CommandHandler::LeaveGlobalChat(Player* player){}
+void CommandHandler::GetGlobalChatUsers(Player* player){}
+void CommandHandler::SendGlobalChatMsg(Player* player){}
+void CommandHandler::CreateChat(Player* player, int quantity){}
+void CommandHandler::JoinChat(Player* player, int id){}
+void CommandHandler::LeaveChat(Player* player, int id){}
+void CommandHandler::GetChatUsers(Player* player, int id){}
+void CommandHandler::SendChatMsg(Player* player, int id, wstring msg){}
 void CommandHandler::Retire(Player* player, Game game, int type, wstring receiver_name){}
 
 void CommandHandler::RollDice(Player* player, Game game){}

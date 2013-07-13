@@ -4,29 +4,33 @@
 #include "Chat.h"
 #include "PlayerGameState.h"
 #include "Types.h"
+#include "ServerState.h"
+#include "Aux_Functions.h"
 
 class CommandHandler
 {
 public:
     CommandHandler(void);
     ~CommandHandler(void);
+    ServerState* serverState;
 
-    void Disconnect(Player* player, list<Player*>* plist, list<Game*>* glist);
-    void GetPlayers(Player* player, list<Player*>* plist);
-    void GetGames(Player* player, list<Game*>* glist);
-    void CreateGame(Player* player, list<Player*>* plist, list<Game*>* glist, wstring name, int n_players);
-    void JoinGame(Player* player, list<Player*>* plist, list<Game*>* glist, wstring name);
-    void StartGame(Player* player, list<Player*>* plist, list<Game*>* glist, int id);
-    void LeaveGame(Player* player, list<Player*>* plist, list<Game*>* glist, int id);
-    void JoinGlobalChat(Player* player, list<Player*>* global_chat_list);
-    void LeaveGlobalChat(Player* player, list<Player*>* global_chat_list);
-    void GetGlobalChatUsers(Player* player, list<Player*>* global_chat_list);
-    void SendGlobalChatMsg(Player* player, list<Player*>* global_chat_list);
-    void CreateChat(Player* player, list<Player*>* plist, list<Chat*>* clist, int quantity);
-    void JoinChat(Player* player, list<Game*>* glist, list<Chat*>* clist, int id);
-    void LeaveChat(Player* player, list<Game*>* glist, list<Chat*>* clist, int id);
-    void GetChatUsers(Player* player, list<Game*>* glist, list<Chat*>* clist, int id);
-    void SendChatMsg(Player* player, list<Game*>* glist, list<Chat*>* clist, int id, wstring msg);
+    void kick_hacker(int reason, Player* p);
+    void Disconnect(Player* player);
+    void GetPlayers(Player* player);
+    void GetGames(Player* player);
+    void CreateGame(Player* player, wstring name, int n_players);
+    void JoinGame(Player* player, wstring name);
+    void StartGame(Player* player, int id);
+    void LeaveGame(Player* player, int id);
+    void JoinGlobalChat(Player* player);
+    void LeaveGlobalChat(Player* player);
+    void GetGlobalChatUsers(Player* player);
+    void SendGlobalChatMsg(Player* player);
+    void CreateChat(Player* player, int quantity);
+    void JoinChat(Player* player, int id);
+    void LeaveChat(Player* player, int id);
+    void GetChatUsers(Player* player, int id);
+    void SendChatMsg(Player* player, int id, wstring msg);
     void Retire(Player* player, Game game, int type, wstring receiver_name);
 
     void RollDice(Player* player, Game game);

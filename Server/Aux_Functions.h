@@ -12,6 +12,7 @@
 #include "Game.h"
 #include "Hotel.h"
 #include "Chat.h"
+#include "ServerState.h"
 
 using namespace std;
 
@@ -38,5 +39,4 @@ bool add_player_to_player_list (Player* p, dlib::mutex* mutex_lists, list<Player
 bool delete_player_from_player_list(Player* p, dlib::mutex* mutex_lists, list<Player*>* plist);
 bool delete_chat_if_empty(Chat* chat, dlib::mutex* mutex_lists, list<Chat*>* chat_list);
 bool delete_game_if_empty(Game* game, dlib::mutex* mutex_lists, list<Game*>* glist);
-void disconnect_client(Player* p, bool kicking, dlib::mutex* mutex_disconnects, dlib::mutex* mutex_lists, list<Chat*>* chat_list, list<Game*>* glist, list<Player*>* global_chat_list, list<Player*>* plist);
-void kick_hacker_real(int reason, Player* p, dlib::mutex* mutex_disconnects, dlib::mutex* mutex_lists, list<Chat*>* chat_list, list<Game*>* glist, list<Player*>* global_chat_list, list<Player*>* plist);
+void disconnect_client(Player* p, bool kicking, ServerState* serverState);

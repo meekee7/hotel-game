@@ -386,22 +386,22 @@ bool delete_game_if_empty(Game* game, dlib::mutex* mutex_lists, list<Game*>* gli
     }
 }
 
-void disconnect_client(Player* p, bool kicking, dlib::mutex* mutex_disconnects, dlib::mutex* mutex_lists, list<Chat*>* chat_list, list<Game*>* glist, list<Player*>* global_chat_list, list<Player*>* plist)
+void disconnect_client(Player* p, bool kicking, ServerState* serverState)
 {
     if (!p->connected)
         return;
-    mutex_disconnects->lock();
+    serverState->mutex_disconnects.lock();
     // Leave all normal chats and global chat
     list<Chat*>::iterator i;
-    for (i = chat_list->begin() ; i != chat_list->end() ; ++i)
+    for (i = serverState->chat_list.begin() ; i != serverState->chat_list.end() ; ++i)
     {
         if ((*i)->check_already_joined(p))
         {
             (*i)->leave(p);
-            if (delete_chat_if_empty(get_chat_from_id((*i)->id, chat_list, glist), mutex_lists, chat_list))
+            if (delete_chat_if_empty(get_chat_from_id((*i)->id, &serverState->chat_list, &serverState->glist), &serverState->mutex_lists, &serverState->chat_list))
             {
-                if (chat_list->size() > 0)
-                    i = chat_list->begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults->
+                if (serverState->chat_list.size() > 0)
+                    i = serverState->chat_list.begin(); // When deleting a chat, I prefer starting again to avoid segmentation faults->
                 else
                     break; // If it was the last chat, chat_list.begin() returns an invalid pointer, so the loop must end
             }
@@ -425,18 +425,18 @@ void disconnect_client(Player* p, bool kicking, dlib::mutex* mutex_disconnects, 
             }
         }
     }
-    global_chat_list->remove(p);
+    serverState->global_chat_list.remove(p);
     // Leave games
     list<Game*>::iterator i2;
-    for (i2 = glist->begin() ; i2 != glist->end() ; ++i2)
+    for (i2 = serverState->glist.begin() ; i2 != serverState->glist.end() ; ++i2)
     {
         if ((*i2)->check_already_joined(p))
         {
             (*i2)->leave(p);
-            if (delete_game_if_empty(*i2, mutex_lists, glist))
+            if (delete_game_if_empty(*i2, &serverState->mutex_lists, &serverState->glist))
             {
-                if (glist->size() > 0)
-                    i2 = glist->begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
+                if (serverState->glist.size() > 0)
+                    i2 = serverState->glist.begin(); // When deleting a game, I prefer starting again to avoid segmentation faults
                 else
                     break; // If it was the last game, glist.begin() returns an invalid pointer, so the loop must end
             }
@@ -483,19 +483,8 @@ void disconnect_client(Player* p, bool kicking, dlib::mutex* mutex_disconnects, 
             }
         }
     }
-    delete_player_from_player_list(p, mutex_lists, plist);
+    delete_player_from_player_list(p, &serverState->mutex_lists, &serverState->plist);
     p->connected = false;
-    mutex_disconnects->unlock();
+    serverState->mutex_disconnects.unlock();
 }
 
-// Retire from all games and disconnect him using existing function
-void kick_hacker_real(int reason, Player* p, dlib::mutex* mutex_disconnects, dlib::mutex* mutex_lists, list<Chat*>* chat_list, list<Game*>* glist, list<Player*>* global_chat_list, list<Player*>* plist)
-{
-    wcout << currentDateTime() << "Kicking player " << p->name << " for cheating. Reason code: " << reason << " (See source code for code correspondence)" << endl;
-    wofstream kick_log;
-    kick_log.open("kick_log.log", wofstream::app);
-    kick_log << L"Player " << p->name << L" kicked. Reason: " << reason << L". Date and time: " << currentDateTime() << endl;
-    kick_log.close();
-    send_command("#disconnect#", p);
-    disconnect_client(p, true, mutex_disconnects, mutex_lists, chat_list, glist, global_chat_list, plist);
-}

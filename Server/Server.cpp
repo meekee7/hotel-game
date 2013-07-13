@@ -39,7 +39,7 @@ void Server::unhook_signals()
 void Server::empty_global_chat_list()
 {
     list<Player*>::iterator i;
-    for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+    for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
     {
         *i = NULL;
     }
@@ -48,7 +48,7 @@ void Server::empty_global_chat_list()
 void Server::empty_chat_list()
 {
     list<Chat*>::iterator i;
-    for (i = chat_list.begin() ; i != chat_list.end() ; ++i)
+    for (i = this->serverState->chat_list.begin() ; i != this->serverState->chat_list.end() ; ++i)
     {
         Chat* c = *i;
         delete c;
@@ -58,7 +58,7 @@ void Server::empty_chat_list()
 void Server::empty_glist()
 {
     list<Game*>::iterator i;
-    for (i = glist.begin() ; i != glist.end() ; ++i)
+    for (i = this->serverState->glist.begin() ; i != this->serverState->glist.end() ; ++i)
     {
         Game* g = *i;
         delete g;
@@ -68,7 +68,7 @@ void Server::empty_glist()
 void Server::empty_plist()
 {
     list<Player*>::iterator i;
-    for (i = plist.begin() ; i != plist.end() ; ++i)
+    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
     {
         Player* p = *i;
         delete p;
@@ -92,24 +92,24 @@ void Server::hook_signals()
 #endif
 }
 
-void Server::kick_hacker(int reason, Player* p)
+void kick_hacker(int reason, Player* p)
 {
-	kick_hacker_real(reason, p, &mutex_disconnects, &mutex_lists, &chat_list, &glist, &global_chat_list, &plist);
+    s->ch->kick_hacker(reason, p);
 }
 
 void Server::handle_command(string command, Player* player)
 {
     if (command == "#disconnect#")
     {
-		disconnect_client(player, false, &mutex_disconnects, &mutex_lists, &chat_list, &glist, &global_chat_list, &plist);
-		ch->Disconnect(player, &plist, &glist);
+		disconnect_client(player, false, this->serverState);
+		ch->Disconnect(player);
     }
     else if (command == "get_players")
     {
         list<Player*>::iterator i;
         send_command("player_list", player);
-        send_int(player, plist.size()); // Number of players
-        for (i = plist.begin() ; i != plist.end() ; ++i)
+        send_int(player, this->serverState->plist.size()); // Number of players
+        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
         {
             send_int(player, get_utf8_length((*i)->name));
             send_wstring(player, (*i)->name);
@@ -117,7 +117,7 @@ void Server::handle_command(string command, Player* player)
     }
     else if (command == "get_games")
     {
-        SendGameList(player, &glist);
+        SendGameList(player, &this->serverState->glist);
     }
     else if (command == "create_game")
     {
@@ -128,11 +128,11 @@ void Server::handle_command(string command, Player* player)
         int n_players = atoi(receive_string(player, long_n_players, &bytes_received).c_str());
         if (name.empty()) // Hack, kick player
             return kick_hacker(1, player);
-        if (get_game_from_name(name, &glist) != NULL) // Repeated name
+        if (get_game_from_name(name, &this->serverState->glist) != NULL) // Repeated name
             return;
-        Game* new_game = new Game(name, n_players, player, &mutex_ids, &id_count, random_gen, false);
+        Game* new_game = new Game(name, n_players, player, &this->serverState->mutex_ids, &id_count, random_gen, false);
         wcout << currentDateTime() << L"New game! Name: " << name << " (ID " << new_game->id << ") | Number of players: " << n_players << endl;
-        glist.push_back(new_game);
+        this->serverState->glist.push_back(new_game);
         send_command("joined_game", player);
         send_int(player, get_utf8_length(name));
         send_wstring(player, name);
@@ -140,15 +140,15 @@ void Server::handle_command(string command, Player* player)
         send_int(player, get_utf8_length(new_game->creator->name));
         send_wstring(player, new_game->creator->name);
         send_int(player, new_game->n_players);
-        for (list<Player*>::iterator i = plist.begin() ; i != plist.end() ; ++i)
-            SendGameList((*i), &glist);
+        for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
+            SendGameList((*i), &this->serverState->glist);
     }
     else if (command == "join_game")
     {
         int bytes_received;
         int len_name = receive_int(player, &bytes_received);
         wstring name = receive_wstring(player, len_name, &bytes_received);
-        Game* game = get_game_from_name(name, &glist);
+        Game* game = get_game_from_name(name, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when chat does not exist anymore
             return;
         if (game->check_already_joined(player))
@@ -184,8 +184,8 @@ void Server::handle_command(string command, Player* player)
                     }
                 }
             }
-            for (list<Player*>::iterator i = plist.begin() ; i != plist.end() ; i++)
-                SendGameList((*i), &glist);
+            for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+                SendGameList((*i), &this->serverState->glist);
         }
         else if (game->started)
         {
@@ -211,7 +211,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_id = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         Player* old_creator = game->creator;
@@ -238,16 +238,16 @@ void Server::handle_command(string command, Player* player)
                 send_wstring(dest, game->creator->name);
             }
         }
-        if (delete_game_if_empty(game, &mutex_lists, &glist))
+        if (delete_game_if_empty(game, &this->serverState->mutex_lists, &this->serverState->glist))
         {
-            for (i = plist.begin() ; i != plist.end() ; ++i)
+            for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
             {
                 dest = *i;
-                SendGameList(dest, &glist);
+                SendGameList(dest, &this->serverState->glist);
             }
         }
-        for (i = plist.begin() ; i != plist.end() ; i++)
-            SendGameList((*i), &glist);
+        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+            SendGameList((*i), &this->serverState->glist);
     }
     else if (command == "create_chat")
     {
@@ -264,14 +264,14 @@ void Server::handle_command(string command, Player* player)
             (*i) = receive_wstring(player, len_name, &bytes_received);
         }
         (*i) = player->name;
-        Chat* new_chat = new Chat(player, true, &mutex_ids, &id_count);
-        chat_list.push_back(new_chat);
+        Chat* new_chat = new Chat(player, true, &this->serverState->mutex_ids, &id_count);
+        this->serverState->chat_list.push_back(new_chat);
         wcout << currentDateTime() << L"New chat with ID " << new_chat->id << ". Number of players: " << player_list.size() << endl;
         // Send commands to selected players to ask them to join the chat
         Player* dest;
         for (i = player_list.begin() ; i != player_list.end() ; ++i)
         {
-            dest = get_player_from_name(*i, &plist);
+            dest = get_player_from_name(*i, &this->serverState->plist);
             // The requested player can disconnect while processing this command
             if (dest == NULL)
                 continue;
@@ -283,15 +283,15 @@ void Server::handle_command(string command, Player* player)
     }
     else if (command == "join_global_chat")
     {
-        global_chat_list.push_back(player);
+        this->serverState->global_chat_list.push_back(player);
         list<Player*>::iterator i, j;
         Player* dest;
-        for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+        for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
         {
             dest = *i;
             send_command("global_chat_userlist", dest);
-            send_int(dest, global_chat_list.size()); // Number of players
-            for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
+            send_int(dest, this->serverState->global_chat_list.size()); // Number of players
+            for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
             {
                 send_int(dest, get_utf8_length((*j)->name));
                 send_wstring(dest, (*j)->name);
@@ -303,7 +303,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_id = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        Chat* chat = get_chat_from_id(id, &chat_list, &glist);
+        Chat* chat = get_chat_from_id(id, &this->serverState->chat_list, &this->serverState->glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
         if (chat->check_already_joined(player)) // Don't allow join a chat twice (hack)
@@ -326,15 +326,15 @@ void Server::handle_command(string command, Player* player)
     }
     else if (command == "leave_global_chat")
     {
-        global_chat_list.remove(player);
+        this->serverState->global_chat_list.remove(player);
         list<Player*>::iterator i, j;
         Player* dest;
-        for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+        for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
         {
             dest = *i;
             send_command("global_chat_userlist", dest);
-            send_int(dest, global_chat_list.size()); // Number of players
-            for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
+            send_int(dest, this->serverState->global_chat_list.size()); // Number of players
+            for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
             {
                 send_int(dest, get_utf8_length((*j)->name));
                 send_wstring(dest, (*j)->name);
@@ -346,7 +346,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_id = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        Chat* chat = get_chat_from_id(id, &chat_list, &glist);
+        Chat* chat = get_chat_from_id(id, &this->serverState->chat_list, &this->serverState->glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
         if (!chat->leave(player)) // Possible hack
@@ -365,14 +365,14 @@ void Server::handle_command(string command, Player* player)
                 send_wstring(dest, (*j)->name);
             }
         }
-        delete_chat_if_empty(chat, &mutex_lists, &chat_list);
+        delete_chat_if_empty(chat, &this->serverState->mutex_lists, &this->serverState->chat_list);
     }
     else if (command == "get_global_chat_users")
     {
         list<Player*>::iterator i, j;
         send_command("global_chat_userlist", player);
-        send_int(player, global_chat_list.size()); // Number of players
-        for (j = global_chat_list.begin() ; j != global_chat_list.end() ; ++j)
+        send_int(player, this->serverState->global_chat_list.size()); // Number of players
+        for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
         {
             send_int(player, get_utf8_length((*j)->name));
             send_wstring(player, (*j)->name);
@@ -383,7 +383,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_id = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        Chat* chat = get_chat_from_id(id, &chat_list, &glist);
+        Chat* chat = get_chat_from_id(id, &this->serverState->chat_list, &this->serverState->glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
         list<Player*>::iterator i; 
@@ -403,7 +403,7 @@ void Server::handle_command(string command, Player* player)
         wstring msg = receive_wstring(player, long_msg, &bytes_received);
         list<Player*>::iterator i;
         Player* dest;
-        for (i = global_chat_list.begin() ; i != global_chat_list.end() ; ++i)
+        for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
         {
             dest = *i;
             send_command("new_global_chat_msg", dest);
@@ -420,7 +420,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         int long_msg = receive_int(player, &bytes_received);
         wstring msg = receive_wstring(player, long_msg, &bytes_received);
-        Chat* chat = get_chat_from_id(id, &chat_list, &glist);
+        Chat* chat = get_chat_from_id(id, &this->serverState->chat_list, &this->serverState->glist);
         if (chat == NULL) // To avoid commands sent when chat does not exist anymore
             return;
         if (!chat->check_already_joined(player)) // hack, send messages to a chat the player hasn't joined: kick player
@@ -445,7 +445,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_id = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if (game->creator != player) // Hack, trying to start a game not created by the player
@@ -474,8 +474,8 @@ void Server::handle_command(string command, Player* player)
                 send_wstring(dest, (*j)->name);
             }
         }
-        for (i = plist.begin() ; i != plist.end() ; i++)
-            SendGameList((*i), &glist);
+        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+            SendGameList((*i), &this->serverState->glist);
     }
     else if (command == "roll_dice")
     {
@@ -484,7 +484,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -499,9 +499,9 @@ void Server::handle_command(string command, Player* player)
         if (state->debt_last_turn > 0) // Hack, retire player
             return kick_hacker(12, player);
         game->roll_dice();
-        game->move_player(player, &debt_mutex);
+        game->move_player(player, &this->serverState->debt_mutex);
         state->rolled_last_turn = true;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("rolled_dice", dest);
@@ -518,7 +518,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_int = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -533,7 +533,7 @@ void Server::handle_command(string command, Player* player)
         TBuild_dice_res construction_dice_res = game->roll_construction_dice();
         Player* dest;
         list<Player*>::iterator i;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
+        for (i = game->plist.begin() ; i != game->plist.end() ; i++)
         {
             dest = (*i);
             send_command("rolled_construction_dice", dest);
@@ -552,7 +552,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -566,8 +566,8 @@ void Server::handle_command(string command, Player* player)
             return kick_hacker(18, player);
         if (state->debt_last_turn > 0) // Hack, retire player
             return kick_hacker(19, player);
-        Player* next_player = game->turn_pass(&debt_mutex);
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        Player* next_player = game->turn_pass(&this->serverState->debt_mutex);
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("turn_passed", dest);
@@ -583,7 +583,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -595,7 +595,7 @@ void Server::handle_command(string command, Player* player)
             return kick_hacker(21, player);
         else
             player->Charge_bank(game->id);
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("update_player_money", dest);
@@ -627,7 +627,7 @@ void Server::handle_command(string command, Player* player)
         len_int = receive_int(player, &bytes_received);
         int n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         // We have selected money by player, change needs to be calculated
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -660,7 +660,7 @@ void Server::handle_command(string command, Player* player)
         state->bought_last_turn = true;
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("hotel_purchased", dest);
@@ -700,7 +700,7 @@ void Server::handle_command(string command, Player* player)
         // We have selected money by player, change needs to be calculated
         // Needs checking: hotel has owner and is different than player, hotel can be expropriated (player position is next to the hotel, no phases built),
         // player total money is previous total - hotel expropriation price, previous owner total money is previous total + hotel_expropriation price
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -735,7 +735,7 @@ void Server::handle_command(string command, Player* player)
         state->bought_last_turn = true;
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("hotel_expropriated", dest);
@@ -790,7 +790,7 @@ void Server::handle_command(string command, Player* player)
             n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         }
         // We have selected money by player, change needs to be calculated
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -850,7 +850,7 @@ void Server::handle_command(string command, Player* player)
         state->built_last_turn = true;
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("phase_built", dest);
@@ -897,7 +897,7 @@ void Server::handle_command(string command, Player* player)
             n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         }
         // We have selected money by player, change needs to be calculated
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -941,7 +941,7 @@ void Server::handle_command(string command, Player* player)
             state->free_entrance_used = true;
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("entrance_added", dest);
@@ -975,9 +975,9 @@ void Server::handle_command(string command, Player* player)
         {
             int len_name = receive_int(player, &bytes_received);
             wstring receiver_name = receive_wstring(player, len_name, &bytes_received);
-            receiving_player = get_player_from_name(receiver_name, &plist);
+            receiving_player = get_player_from_name(receiver_name, &this->serverState->plist);
         }
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -993,12 +993,12 @@ void Server::handle_command(string command, Player* player)
         if (game->get_active_players_count() > 2) // Game not finished yet
         {
             if (game->current_player == player)
-                next_player = game->turn_pass(&debt_mutex);
+                next_player = game->turn_pass(&this->serverState->debt_mutex);
         }
         game->eliminate_player(player, receiving_player);
         list<Player*>::iterator i;
         Player* dest, * winner;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Avoid sending commands to retired players, because their forms can be already closed and could lead to a client crash
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i) // Avoid sending commands to retired players, because their forms can be already closed and could lead to a client crash
         {
             dest = (*i);
             send_command("player_retired", dest);
@@ -1055,7 +1055,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
         list<Player*>::iterator i;
         Player* dest;
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1066,7 +1066,7 @@ void Server::handle_command(string command, Player* player)
         if (game->current_player == player) // The client does not allow this
             return;
         int amount = 0, nights = 0;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i) // Check if players are in entrances of hotels of the asking player
         {
             dest = (*i);
             if (dest != player) // Player doesn't have to pay himself :D
@@ -1075,13 +1075,13 @@ void Server::handle_command(string command, Player* player)
                 amount = game->get_money_for_nights(player, dest, &nights, &hotel_name);
                 if (amount > 0) // The player is in a entrance and hasn't paid this turn
                 {
-                    debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
+                    this->serverState->debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
                     PlayerGameState* dest_state = dest->GetState(game->id);
                     dest_state->debt_last_turn = amount;
                     dest_state->debt_nights_to_last_turn = player->GetState(game->id);
                     dest_state->paid_last_turn = false;
-                    debt_mutex.unlock();
-                    for (list<Player*>::iterator j = game->active_plist.begin() ; j != game->active_plist.end() ; ++j)
+                    this->serverState->debt_mutex.unlock();
+                    for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
                     {
                         Player* destj = (*j);
                         send_command("ask_pay_nights", destj); // Will force the player to pay nights, if he hacks the game, in next turn pass he will be retired
@@ -1116,7 +1116,7 @@ void Server::handle_command(string command, Player* player)
         len_int = receive_int(player, &bytes_received);
         n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         // We have selected money by player, change needs to be calculated
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if ((!game->started) || game->ended) // Hack, game not started yet or already ended
@@ -1141,7 +1141,7 @@ void Server::handle_command(string command, Player* player)
         }
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("update_player_money", dest);
@@ -1163,10 +1163,10 @@ void Server::handle_command(string command, Player* player)
             send_int(dest, state->debt_nights_to_last_turn->n_1000);
             send_int(dest, state->debt_nights_to_last_turn->n_5000);
         }
-        debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
+        this->serverState->debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
         state->debt_last_turn = 0;
         state->debt_nights_to_last_turn = NULL;
-        debt_mutex.unlock();
+        this->serverState->debt_mutex.unlock();
     }
     else if (command == "auction_start")
     {
@@ -1175,7 +1175,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int len_name = receive_int(player, &bytes_received);
         wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
@@ -1189,7 +1189,7 @@ void Server::handle_command(string command, Player* player)
         game->best_bid = 0;
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("auction_started", dest);
@@ -1205,7 +1205,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         len_int = receive_int(player, &bytes_received);
         int amount = atoi(receive_string(player, len_int, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
@@ -1223,7 +1223,7 @@ void Server::handle_command(string command, Player* player)
         game->best_bidder = player;
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("auction_bid_placed", dest);
@@ -1238,7 +1238,7 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_int = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
@@ -1251,7 +1251,7 @@ void Server::handle_command(string command, Player* player)
             return kick_hacker(78, player);
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("auction_sold", dest);
@@ -1275,7 +1275,7 @@ void Server::handle_command(string command, Player* player)
         n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         len_int = receive_int(player, &bytes_received);
         n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
@@ -1304,7 +1304,7 @@ void Server::handle_command(string command, Player* player)
         }
         list<Player*>::iterator i;
         Player* dest;
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("hotel_expropriated", dest);
@@ -1334,7 +1334,7 @@ void Server::handle_command(string command, Player* player)
             send_int(dest, previous_owner->GetState(game->id)->n_5000);
         }
         // If this command is sent before updating hotels and money to everyone, the client doesn't know who owns the hotels
-        for (i = game->active_plist.begin() ; i != game->active_plist.end() ; ++i)
+        for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
         {
             dest = (*i);
             send_command("auction_ended", dest);
@@ -1351,11 +1351,11 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int len_password = receive_int(player, &bytes_received);
         wstring password = receive_wstring(player, len_password, &bytes_received);
-        Game* game = get_game_from_id(id, &glist);
+        Game* game = get_game_from_id(id, &this->serverState->glist);
         game->password = password;
         if (savedgamesmgr->SaveGame(game, player))
         {
-            for (list<Player*>::iterator i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
+            for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; i++)
             {
                 send_command("game_saved", (*i));
                 send_int((*i), id);
@@ -1379,7 +1379,7 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int len_password = receive_int(player, &bytes_received);
         wstring password = receive_wstring(player, len_password, &bytes_received);
-        Game* game = get_game_from_bd_id(id, &glist);
+        Game* game = get_game_from_bd_id(id, &this->serverState->glist);
         if (game != NULL) // Game already loaded
         {
             send_command("cannot_load_game", player);
@@ -1391,13 +1391,13 @@ void Server::handle_command(string command, Player* player)
         else
         {
             int error_code = 0;
-            game = savedgamesmgr->LoadGame(id, password, player, &mutex_ids, &id_count, random_gen, &error_code);
+            game = savedgamesmgr->LoadGame(id, password, player, &this->serverState->mutex_ids, &id_count, random_gen, &error_code);
             if (game != NULL)
             {
-                glist.push_back(game);
+                this->serverState->glist.push_back(game);
                 send_command("game_loaded", player);
-                for (list<Player*>::iterator i = plist.begin() ; i != plist.end() ; i++)
-                    SendGameList((*i), &glist);
+                for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+                    SendGameList((*i), &this->serverState->glist);
             }
             else
             {
@@ -1444,7 +1444,7 @@ void Server::handle_client(void* arg)
         delete p;
         wcout << currentDateTime() << L"Disconnecting client" << endl;
     }
-    else if (add_player_to_player_list(p, &mutex_lists, &plist) == false)
+    else if (add_player_to_player_list(p, &this->serverState->mutex_lists, &this->serverState->plist) == false)
     {
         p->socket->psend("login ko", 8, 0);
         delete p;
@@ -1458,12 +1458,12 @@ void Server::handle_client(void* arg)
         // Send as much strings as connected players, with a count first
         list<Player*>::iterator i, j;
         Player* dest;
-        for (i = plist.begin() ; i != plist.end() ; ++i)
+        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
         {
             dest = *i;
             send_command("player_list", dest);
-            send_int(dest, plist.size()); // Number of players
-            for (j = plist.begin() ; j != plist.end() ; ++j)
+            send_int(dest, this->serverState->plist.size()); // Number of players
+            for (j = this->serverState->plist.begin() ; j != this->serverState->plist.end() ; ++j)
             {
                 send_int(dest, get_utf8_length((*j)->name));
                 send_wstring(dest, (*j)->name);
@@ -1484,7 +1484,7 @@ void Server::handle_client(void* arg)
             else
             {
                 online = false;
-                disconnect_client(p, false, &mutex_disconnects, &mutex_lists, &chat_list, &glist, &global_chat_list, &plist);
+                disconnect_client(p, false, this->serverState);
                 delete p;
                 wcout << currentDateTime() << L"Client disconnected" << endl;
             }
@@ -1562,7 +1562,7 @@ void Server::Run(int port)
         return;
     }
     wcout << currentDateTime() << L"Listening for connections" << endl;
-    savedgamesmgr = new SavedgamesMgr();
+    this->savedgamesmgr = new SavedgamesMgr();
     hook_signals();
     Player* p;
     random_gen = new CRandomMT();
@@ -1583,7 +1583,9 @@ void Server::Run(int port)
     }
     // Load Config.xml to have configuration loaded for future checks
     read_config(&config_xml);
-	ch = new CommandHandler();
+	this->ch = new CommandHandler();
+    this->serverState = new ServerState();
+    this->ch->serverState = this->serverState;
     while (closing == 0)
     {
         addrlen = sizeof(client_info);
