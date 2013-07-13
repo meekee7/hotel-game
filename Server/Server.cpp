@@ -100,21 +100,9 @@ void kick_hacker(int reason, Player* p)
 void Server::handle_command(string command, Player* player)
 {
     if (command == "#disconnect#")
-    {
-		disconnect_client(player, false, this->serverState);
 		ch->Disconnect(player);
-    }
     else if (command == "get_players")
-    {
-        list<Player*>::iterator i;
-        send_command("player_list", player);
-        send_int(player, this->serverState->plist.size()); // Number of players
-        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
-        {
-            send_int(player, get_utf8_length((*i)->name));
-            send_wstring(player, (*i)->name);
-        }
-    }
+        ch->GetPlayers(player);
     else if (command == "get_games")
     {
         SendGameList(player, &this->serverState->glist);

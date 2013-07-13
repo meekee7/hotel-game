@@ -15,6 +15,7 @@ void CommandHandler::kick_hacker(int reason, Player* p)
 
 void CommandHandler::Disconnect(Player* player)
 {
+    disconnect_client(player, false, this->serverState);
     send_command("#disconnect#", player);
     // Send player list to all players, so they are notified about the diconnected user
     // Send as much strings as connected players, with a count first
@@ -34,42 +35,146 @@ void CommandHandler::Disconnect(Player* player)
     }
 }
 
-void CommandHandler::GetPlayers(Player* player){}
-void CommandHandler::GetGames(Player* player){}
-void CommandHandler::CreateGame(Player* player, wstring name, int n_players){}
-void CommandHandler::JoinGame(Player* player, wstring name){}
-void CommandHandler::StartGame(Player* player, int id){}
-void CommandHandler::LeaveGame(Player* player, int id){}
-void CommandHandler::JoinGlobalChat(Player* player){}
-void CommandHandler::LeaveGlobalChat(Player* player){}
-void CommandHandler::GetGlobalChatUsers(Player* player){}
-void CommandHandler::SendGlobalChatMsg(Player* player){}
-void CommandHandler::CreateChat(Player* player, int quantity){}
-void CommandHandler::JoinChat(Player* player, int id){}
-void CommandHandler::LeaveChat(Player* player, int id){}
-void CommandHandler::GetChatUsers(Player* player, int id){}
-void CommandHandler::SendChatMsg(Player* player, int id, wstring msg){}
-void CommandHandler::Retire(Player* player, Game game, int type, wstring receiver_name){}
+void CommandHandler::GetPlayers(Player* player)
+{
+    list<Player*>::iterator i;
+    send_command("player_list", player);
+    send_int(player, this->serverState->plist.size()); // Number of players
+    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
+    {
+        send_int(player, get_utf8_length((*i)->name));
+        send_wstring(player, (*i)->name);
+    }
+}
+void CommandHandler::GetGames(Player* player)
+{
+}
 
-void CommandHandler::RollDice(Player* player, Game game){}
-void CommandHandler::RollConstructionDice(Player* player, Game game){}
-void CommandHandler::PassTurn(Player* player, Game game){}
-void CommandHandler::ChargeBank(Player* player, Game* game){}
-void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50){}
-void CommandHandler::ExpropriateHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50){}
-void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50){}
-void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, int position, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50){}
-void CommandHandler::AskNights(Player* player, Game* game){}
-void CommandHandler::PayNights(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50){}
-void CommandHandler::AuctionStart(Player* player, Game* game, wstring hotel_name){}
-void CommandHandler::AuctionBid(Player* player, Game* game, int amount){}
-void CommandHandler::AuctionSell(Player* player, Game* game){}
-void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50){}
+void CommandHandler::CreateGame(Player* player, wstring name, int n_players)
+{
+}
 
-void CommandHandler::SaveGame(Player* player, Game* game, wstring password){}
-void CommandHandler::LoadGame(Player* player, Game* game, wstring password){}
+void CommandHandler::JoinGame(Player* player, wstring name)
+{
+}
+
+void CommandHandler::StartGame(Player* player, int id)
+{
+}
+
+void CommandHandler::LeaveGame(Player* player, int id)
+{
+}
+
+void CommandHandler::JoinGlobalChat(Player* player)
+{
+}
+
+void CommandHandler::LeaveGlobalChat(Player* player)
+{
+}
+
+void CommandHandler::GetGlobalChatUsers(Player* player)
+{
+}
+
+void CommandHandler::SendGlobalChatMsg(Player* player)
+{
+}
+
+void CommandHandler::CreateChat(Player* player, int quantity)
+{
+}
+
+void CommandHandler::JoinChat(Player* player, int id)
+{
+}
+
+void CommandHandler::LeaveChat(Player* player, int id)
+{
+}
+
+void CommandHandler::GetChatUsers(Player* player, int id)
+{
+}
+
+void CommandHandler::SendChatMsg(Player* player, int id, wstring msg)
+{
+}
+
+void CommandHandler::Retire(Player* player, Game game, int type, wstring receiver_name)
+{
+}
+
+void CommandHandler::RollDice(Player* player, Game game)
+{
+}
+
+void CommandHandler::RollConstructionDice(Player* player, Game game)
+{
+}
+
+void CommandHandler::PassTurn(Player* player, Game game)
+{
+}
+
+void CommandHandler::ChargeBank(Player* player, Game* game)
+{
+}
+
+void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+}
+
+void CommandHandler::ExpropriateHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+}
+
+void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+}
+
+void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, int position, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+}
+
+void CommandHandler::AskNights(Player* player, Game* game)
+{
+}
+
+void CommandHandler::PayNights(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+}
+
+void CommandHandler::AuctionStart(Player* player, Game* game, wstring hotel_name)
+{
+}
+
+void CommandHandler::AuctionBid(Player* player, Game* game, int amount)
+{
+}
+
+void CommandHandler::AuctionSell(Player* player, Game* game)
+{
+}
+
+void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+{
+}
 
 
-CommandHandler::CommandHandler(void){}
+void CommandHandler::SaveGame(Player* player, Game* game, wstring password)
+{
+}
 
-CommandHandler::~CommandHandler(void){}
+void CommandHandler::LoadGame(Player* player, Game* game, wstring password)
+{
+}
+
+CommandHandler::CommandHandler(void)
+{
+}
+
+CommandHandler::~CommandHandler(void)
+{
+}
