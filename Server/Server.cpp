@@ -13,7 +13,7 @@
 #define MAXCONN 100
 
 using namespace std;
-Server* s; // Needed for function pointer wrappers
+Server* s; // Needed for function pointer wrappers, although it is very very ugly
 
 Server::Server()
 {
@@ -26,6 +26,7 @@ Server::Server()
 
 Server::~Server()
 {
+    delete this->ch;
 }
 
 void Server::unhook_signals()
@@ -649,8 +650,6 @@ void Server::Run(int port)
     }
     wcout << currentDateTime() << L"Listening for connections" << endl;
     hook_signals();
-    Player* p;
-    this->ch->serverState->random_gen = new CRandomMT();
     // Read Config.xml as string to send it to players
     ifstream config_file ("Config.xml");
     string line;
@@ -689,11 +688,10 @@ void Server::Run(int port)
                 wcout << currentDateTime() << L"Game list cleaned" << endl;
                 empty_plist();
                 wcout << currentDateTime() << L"Player list cleaned" << endl;
-                delete this->ch;
                 return;
             }
         }
-        p = new Player(inet_ntoa(client_info.sin_addr), socket_client);
+        Player* p = new Player(inet_ntoa(client_info.sin_addr), socket_client);
         dlib::create_new_thread(handle_client_wrapper, (void*) p);
     }
 }
