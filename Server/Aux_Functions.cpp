@@ -487,4 +487,3 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
     p->connected = false;
     serverState->mutex_disconnects.unlock();
 }
-

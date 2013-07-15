@@ -18,8 +18,4 @@ public:
 
     CRandomMT* random_gen;
     int id_count;
-
-    ServerState(void);
-    ~ServerState(void);
 };
-

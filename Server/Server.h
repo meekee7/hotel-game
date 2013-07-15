@@ -9,7 +9,6 @@
 #include "Hotel.h"
 #include "Types.h"
 #include "Random.h"
-#include "SavedgamesMgr.h"
 #include "CommandHandler.h"
 #include "ServerState.h"
 
@@ -21,10 +20,7 @@ public:
     Portable_socket* socket_server;
     Portable_socket* socket_client;
     struct config configuration;
-    
-    SavedgamesMgr* savedgamesmgr;
     CommandHandler* ch;
-    ServerState* serverState;
 
     Server();
     ~Server();

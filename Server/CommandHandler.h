@@ -6,6 +6,7 @@
 #include "Types.h"
 #include "ServerState.h"
 #include "Aux_Functions.h"
+#include "SavedgamesMgr.h"
 
 class CommandHandler
 {
@@ -13,6 +14,7 @@ public:
     CommandHandler(void);
     ~CommandHandler(void);
     ServerState* serverState;
+    SavedgamesMgr* savedgamesmgr;
 
     void kick_hacker(int reason, Player* p);
     void Disconnect(Player* player);
@@ -25,22 +27,22 @@ public:
     void JoinGlobalChat(Player* player);
     void LeaveGlobalChat(Player* player);
     void GetGlobalChatUsers(Player* player);
-    void SendGlobalChatMsg(Player* player);
+    void SendGlobalChatMsg(Player* player, wstring msg);
     void CreateChat(Player* player, int quantity, vector<wstring> player_list);
     void JoinChat(Player* player, Chat* chat);
     void LeaveChat(Player* player, Chat* chat);
     void GetChatUsers(Player* player, Chat* chat);
     void SendChatMsg(Player* player, Chat* chat, wstring msg);
-    void Retire(Player* player, Game game, int type, wstring receiver_name);
+    void Retire(Player* player, Game* game, int type, Player* receiving_player);
 
-    void RollDice(Player* player, Game game);
-    void RollConstructionDice(Player* player, Game game);
-    void PassTurn(Player* player, Game game);
+    void RollDice(Player* player, Game* game);
+    void RollConstructionDice(Player* player, Game* game);
+    void PassTurn(Player* player, Game* game);
     void ChargeBank(Player* player, Game* game);
     void BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void ExpropriateHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void BuildPhase(Player* player, Game* game, wstring hotel_name, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50);
-    void BuildPhase(Player* player, Game* game, wstring hotel_name, int position, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50);
+    void BuyEntrance(Player* player, Game* game, wstring hotel_name, int position, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void AskNights(Player* player, Game* game);
     void PayNights(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void AuctionStart(Player* player, Game* game, wstring hotel_name);
