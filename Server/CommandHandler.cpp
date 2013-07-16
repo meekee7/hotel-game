@@ -1099,12 +1099,10 @@ CommandHandler::CommandHandler(void)
 {
     this->savedgamesmgr = new SavedgamesMgr();
     this->serverState = new ServerState();
-    this->serverState->random_gen = new CRandomMT();
 }
 
 CommandHandler::~CommandHandler(void)
 {
     delete this->savedgamesmgr;
-    delete this->serverState->random_gen;
     delete this->serverState;
 }

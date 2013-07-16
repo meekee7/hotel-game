@@ -17,6 +17,15 @@ struct config
     std::string config_content;
 };
 
+class Server;
+class Player;
+
+struct thread_param
+{
+    Server* server;
+    Player* player;
+};
+
 enum TColor { red, blue, yellow, green, bank };
 enum TPosition { start, buy, build, free_entrance, free_phase };
 enum THotel_name { Fujiyama, Boomerang, Letoile, President, Royal, Waikiki, Taj_Mahal, Safari, None };

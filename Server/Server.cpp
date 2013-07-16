@@ -2,8 +2,6 @@
 #include <iostream>
 #include <list>
 #include <string>
-#include <stdio.h>
-#include <signal.h>
 #include <ctime>
 #include <cstdlib>
 
@@ -13,29 +11,17 @@
 #define MAXCONN 100
 
 using namespace std;
-Server* s; // Needed for function pointer wrappers, although it is very very ugly
 
 Server::Server()
 {
     this->ch = new CommandHandler();
     this->compatible_version = "2.1.6";
     this->closing = 0;
-    this->ch->serverState->id_count = 0;
-    s = this;
 }
 
 Server::~Server()
 {
     delete this->ch;
-}
-
-void Server::unhook_signals()
-{
-    signal(SIGINT, 0);
-    signal(SIGTERM, 0);
-#ifdef _WIN32
-    signal(SIGBREAK, 0);
-#endif
 }
 
 void Server::empty_global_chat_list()
@@ -75,23 +61,6 @@ void Server::empty_plist()
         Player* p = *i;
         delete p;
     }
-}
-
-void close_server (int signum)
-{
-    s->closing = 1;
-    wcout << currentDateTime() << endl << L"Closing server due to signal " << signum << endl;
-    s->unhook_signals();
-    delete s->socket_server;
-}
-
-void Server::hook_signals()
-{
-    signal(SIGINT, close_server);
-    signal(SIGTERM, close_server);
-#ifdef _WIN32
-    signal(SIGBREAK, close_server);
-#endif
 }
 
 void Server::handle_command(string command, Player* player)
@@ -498,7 +467,8 @@ void Server::handle_command(string command, Player* player)
 
 void handle_client_wrapper(void* arg)
 {
-    s->handle_client(arg);
+    struct thread_param* tp = (struct thread_param*)arg;
+    tp->server->handle_client(tp->player);
 }
 
 void Server::handle_client(void* arg)
@@ -649,7 +619,6 @@ void Server::Run(int port)
         return;
     }
     wcout << currentDateTime() << L"Listening for connections" << endl;
-    hook_signals();
     // Read Config.xml as string to send it to players
     ifstream config_file ("Config.xml");
     string line;
@@ -692,6 +661,16 @@ void Server::Run(int port)
             }
         }
         Player* p = new Player(inet_ntoa(client_info.sin_addr), socket_client);
-        dlib::create_new_thread(handle_client_wrapper, (void*) p);
+        struct thread_param tp;
+        tp.player = p;
+        tp.server = this;
+        dlib::create_new_thread(handle_client_wrapper, (void*) &tp);
     }
+}
+
+void Server::Stop(int signum)
+{
+    wcout << currentDateTime() << endl << L"Closing server due to signal " << signum << endl;
+    this->closing = 1;
+    delete this->socket_server;
 }

@@ -25,12 +25,11 @@ public:
     Server();
     ~Server();
     void Run(int port);
-    void unhook_signals();
+    void Stop(int signum);
     void handle_client(void* arg);
 private:
     void handle_command(string command, Player* player);
     void read_config(TiXmlDocument* config_xml);
-    void hook_signals();
     void empty_plist();
     void empty_glist();
     void empty_chat_list();
