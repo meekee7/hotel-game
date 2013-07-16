@@ -24,43 +24,32 @@ Server::~Server()
     delete this->ch;
 }
 
-void Server::empty_global_chat_list()
+void Server::empty_lists()
 {
     list<Player*>::iterator i;
     for (i = this->ch->serverState->global_chat_list.begin() ; i != this->ch->serverState->global_chat_list.end() ; ++i)
     {
         *i = NULL;
     }
-}
-
-void Server::empty_chat_list()
-{
-    list<Chat*>::iterator i;
-    for (i = this->ch->serverState->chat_list.begin() ; i != this->ch->serverState->chat_list.end() ; ++i)
+    wcout << currentDateTime() << L"Global Chat list cleaned" << endl;
+    for (list<Chat*>::iterator j = this->ch->serverState->chat_list.begin() ; j != this->ch->serverState->chat_list.end() ; ++j)
     {
-        Chat* c = *i;
+        Chat* c = *j;
         delete c;
     }
-}
-
-void Server::empty_glist()
-{
-    list<Game*>::iterator i;
-    for (i = this->ch->serverState->glist.begin() ; i != this->ch->serverState->glist.end() ; ++i)
+    wcout << currentDateTime() << L"Chat list cleaned" << endl;
+    for (list<Game*>::iterator k = this->ch->serverState->glist.begin() ; k != this->ch->serverState->glist.end() ; ++k)
     {
-        Game* g = *i;
+        Game* g = *k;
         delete g;
     }
-}
-
-void Server::empty_plist()
-{
-    list<Player*>::iterator i;
+    wcout << currentDateTime() << L"Game list cleaned" << endl;
     for (i = this->ch->serverState->plist.begin() ; i != this->ch->serverState->plist.end() ; ++i)
     {
         Player* p = *i;
         delete p;
     }
+    wcout << currentDateTime() << L"Player list cleaned" << endl;
 }
 
 void Server::handle_command(string command, Player* player)
@@ -649,14 +638,7 @@ void Server::Run(int port)
             else
             {
                 // The server is closing
-                empty_global_chat_list();
-                wcout << currentDateTime() << L"Global Chat cleaned" << endl;
-                empty_chat_list();
-                wcout << currentDateTime() << L"Chat list cleaned" << endl;
-                empty_glist();
-                wcout << currentDateTime() << L"Game list cleaned" << endl;
-                empty_plist();
-                wcout << currentDateTime() << L"Player list cleaned" << endl;
+                empty_lists();                
                 return;
             }
         }

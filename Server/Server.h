@@ -30,8 +30,5 @@ public:
 private:
     void handle_command(string command, Player* player);
     void read_config(TiXmlDocument* config_xml);
-    void empty_plist();
-    void empty_glist();
-    void empty_chat_list();
-    void empty_global_chat_list();
+    void empty_lists();
 };
