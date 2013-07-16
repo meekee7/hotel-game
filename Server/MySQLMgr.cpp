@@ -22,7 +22,7 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
         this->port = port;
         this->username = username;
         this->password = password;
-        this->dbname = dbname;
+        this->dbname = database;
         return true;
     #else
         this->connection->conn = mysql_init(NULL);

@@ -16,6 +16,7 @@ public:
     bool SaveGame(Game* game, Player* creator);
     Game* LoadGame(int id, wstring password, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code);
     void CleanInconsistentData();
+    void RollBack(Game* game);
     SavedgamesMgr(void);
     ~SavedgamesMgr(void);
 };
