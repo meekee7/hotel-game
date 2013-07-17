@@ -747,4 +747,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="textoEstadoCargada" xml:space="preserve">
     <value>Cargada</value>
   </data>
+  <data name="mensajeNoSePuedeCargarErrorDatos" xml:space="preserve">
+    <value>El juego con ID {0} no ha sido cargado correctamente por un error en los datos salvados. Contacte con ifilgud@gmail.com</value>
+  </data>
 </root>

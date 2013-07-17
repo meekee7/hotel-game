@@ -747,4 +747,7 @@ No permission is needed to build them. Continue?</value>
   <data name="textoEstadoCargada" xml:space="preserve">
     <value>Loaded</value>
   </data>
+  <data name="mensajeNoSePuedeCargarErrorDatos" xml:space="preserve">
+    <value>The game with ID {0} was not loaded due to an error in saved data. Contact ifilgud@gmail.com.</value>
+  </data>
 </root>

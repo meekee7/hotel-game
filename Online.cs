@@ -1353,6 +1353,8 @@ namespace Juego_Hotel
                             break;
                     case 6: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarNoCreador, id), Mensajes.tituloCargarPartida);
                             break;
+                    case 7: MessageBox.Show(String.Format(Mensajes.mensajeNoSePuedeCargarErrorDatos, id), Mensajes.tituloCargarPartida);
+                            break;
                 }
             }
             else

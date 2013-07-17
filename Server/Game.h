@@ -17,7 +17,6 @@ public:
     time_t creation_date;
     int n_players, n_players_last_save;
     list<Player*> plist, active_plist;
-    //list<Hotel*> hlist;
     vector<Hotel*> hlist;
     Chat* chat;
     bool started, ended, rolled_construction_dice, loaded;
