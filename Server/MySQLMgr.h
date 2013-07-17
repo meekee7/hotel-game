@@ -34,6 +34,7 @@ public:
     string get_string_field(int index);
     bool get_bool_field(string name);
     bool get_bool_field(int index);
+    MySQLResult(void);
     ~MySQLResult(void);
 };
 

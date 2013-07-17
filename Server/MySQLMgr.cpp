@@ -140,11 +140,19 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
         catch (sql::SQLException e)
         {
             wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            return NULL;
         }
     #else
-        mysql_query(this->conn, query.c_str());
-        result->result = mysql_store_result(this->conn);
-        result->row_count = mysql_num_rows(result->result);
+        if (mysql_query(this->conn, query.c_str()) == 0)
+        {
+            result->result = mysql_store_result(this->conn);
+            result->row_count = mysql_num_rows(result->result);
+        }
+        else
+        {
+            wcout << "Error executing query '" << query.c_str() << "'. Error: " << mysql_error(this->conn) << endl;
+            return NULL;
+        }
     #endif
     return result;
 }
@@ -403,6 +411,11 @@ bool MySQLResult::get_bool_field(int index)
                 return false;
         }
     #endif
+}
+
+MySQLResult::MySQLResult(void)
+{
+    this->result = NULL;
 }
 
 MySQLResult::~MySQLResult(void)

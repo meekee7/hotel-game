@@ -339,7 +339,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     if (!this->db_loaded_ok)
     {
         wcout << "Cannot load game because DB was not loaded ok" << endl;
-        (*error_code) = 3;
+        (*error_code) = 3; // DB not loaded ok
         return NULL;
     }
     MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT *,UNIX_TIMESTAMP(fecha_creacion) as fc FROM partida WHERE id = %d;") % id));
@@ -347,19 +347,19 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     {
         if (res->get_string_field("password") != utf16_to_utf8(password))
         {
-            (*error_code) = 4;
+            (*error_code) = 4; // Invalid password
             delete res;
             return NULL;
         }
         if (res->get_bool_field("finalizada"))
         {
-            (*error_code) = 5;
+            (*error_code) = 5; // Game already ended
             delete res;
             return NULL;
         }
         if (creator->name != utf8_to_utf16(res->get_string_field("nombre_creador")))
         {
-            (*error_code) = 6;
+            (*error_code) = 6; // The player who tries to load the game is not the creator
             delete res;
             return NULL;
         }
@@ -371,17 +371,18 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         int current_player = res->get_int_field("jugador_actual");
         int last_dice_res = res->get_int_field("ultimo_res_dado");
         int last_auto_advance = res->get_int_field("ultimo_avance_auto");
-        int Fujiyama_status_id = res->get_int_field("estado_Fujiyama");
-        int Boomerang_status_id = res->get_int_field("estado_Boomerang");
-        int Letoile_status_id = res->get_int_field("estado_Letoile");
-        int President_status_id = res->get_int_field("estado_President");
-        int Royal_status_id = res->get_int_field("estado_Royal");
-        int Waikiki_status_id = res->get_int_field("estado_Waikiki");
-        int TajMahal_status_id = res->get_int_field("estado_TajMahal");
-        int Safari_status_id = res->get_int_field("estado_Safari");
-        MySQLResult* res_hotel_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_hotel WHERE id IN (%d, %d, %d, %d, %d, %d, %d, %d) ORDER BY id ASC;")
-            % Fujiyama_status_id % Boomerang_status_id % Letoile_status_id % President_status_id % Royal_status_id % Waikiki_status_id % TajMahal_status_id % Safari_status_id));
-        MySQLResult* res_creator_status = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id = %d;") % res->get_int_field("estado_j1")));
+        MySQLResult* res_hotel_statuses = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_hotel WHERE id_partida = %d ORDER BY id ASC;") % id));
+        MySQLResult* res_creator_status = this->db->ExecuteQueryWithData(str(
+            boost::format("SELECT ej.* FROM estado_jugador as ej, partida as p WHERE ej.id_partida = %d AND p.id = ej.id_partida AND p.nombre_creador = \"%s\" AND ej.nombre = p.nombre_creador;")
+            % id % utf16_to_utf8(creator->name)));
+        if (res_creator_status == NULL || !res_creator_status->fetch_row())
+        {
+            (*error_code) = 6; // The player who tries to load the game is not the creator
+            delete res_hotel_statuses;
+            delete res_creator_status;
+            delete res;
+            return NULL;
+        }
         Game* game = new Game(name, n_active_players, creator, mutex_ids, id_count, random_gen, true);
         game->bd_id = id;
         game->creation_date = creation_date;
@@ -408,12 +409,13 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
             game->hlist[i]->n_entrances = (int)entrances.size();
             i++;
         }
-        if (!res_creator_status->fetch_row())
+        if (game->hlist.size() < 8)
         {
-            (*error_code) = 6;
+            (*error_code) = 7; // Errors in game data
             delete res_hotel_statuses;
             delete res_creator_status;
             delete res;
+            delete game;
             return NULL;
         }
         PlayerGameState* creator_status = creator->GetState(game->id);
@@ -438,7 +440,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     else
     {
         wcout << "Error retrieving game from DB" << endl;
-        (*error_code) = 2;
+        (*error_code) = 2; // Game does not exists
         return NULL;
     }
 }

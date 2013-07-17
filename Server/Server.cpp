@@ -450,7 +450,7 @@ void Server::handle_command(string command, Player* player)
         int len_password = receive_int(player, &bytes_received);
         wstring password = receive_wstring(player, len_password, &bytes_received);
         Game* game = get_game_from_bd_id(id, &this->ch->serverState->glist);
-        ch->LoadGame(player, game, password);
+        ch->LoadGame(player, id, game, password);
     }
 }
 

@@ -51,5 +51,5 @@ public:
     void AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50);
 
     void SaveGame(Player* player, Game* game, wstring password);
-    void LoadGame(Player* player, Game* game, wstring password);
+    void LoadGame(Player* player, int id, Game* game, wstring password);
 };

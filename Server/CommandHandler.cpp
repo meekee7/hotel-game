@@ -1065,7 +1065,7 @@ void CommandHandler::SaveGame(Player* player, Game* game, wstring password)
     }
 }
 
-void CommandHandler::LoadGame(Player* player, Game* game, wstring password)
+void CommandHandler::LoadGame(Player* player, int id, Game* game, wstring password)
 {
     if (game != NULL) // Game already loaded
     {
@@ -1078,7 +1078,7 @@ void CommandHandler::LoadGame(Player* player, Game* game, wstring password)
     else
     {
         int error_code = 0;
-        game = savedgamesmgr->LoadGame(game->id, password, player, &this->serverState->mutex_ids, &this->serverState->id_count, this->serverState->random_gen, &error_code);
+        game = savedgamesmgr->LoadGame(id, password, player, &this->serverState->mutex_ids, &this->serverState->id_count, this->serverState->random_gen, &error_code);
         if (game != NULL)
         {
             this->serverState->glist.push_back(game);
@@ -1090,7 +1090,7 @@ void CommandHandler::LoadGame(Player* player, Game* game, wstring password)
         {
             send_command("cannot_load_game", player);
             send_int(player, error_code);
-            send_int(player, game->id);
+            send_int(player, id);
         }
     }
 }
