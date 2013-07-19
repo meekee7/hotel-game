@@ -10,7 +10,10 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
     this->random = random;
     this->name = name;
     this->n_players = n_players;
-    this->n_players_last_save = -1;
+    if (loaded)
+        this->n_players_last_save = n_players;
+    else
+        this->n_players_last_save = -1;
     this->creation_date = time(0);
     this->creator = creator;
     this->plist.push_back(creator);

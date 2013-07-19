@@ -15,6 +15,7 @@ public:
     void KeepAlive();
     bool SaveGame(Game* game, Player* creator);
     Game* LoadGame(int id, wstring password, Player* creator, dlib::mutex* mutex_ids, int* id_count, CRandomMT* random_gen, int* error_code);
+    int LoadPlayerData(Game* game, Player* player);
     void CleanInconsistentData();
     void RollBack(Game* game);
     SavedgamesMgr(void);

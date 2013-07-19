@@ -83,6 +83,8 @@ void CommandHandler::JoinGame(Player* player, Game* game)
     }
     else if (game->join(player))
     {
+        if (savedgamesmgr->LoadPlayerData(game, player) > 0)
+            return;
         send_command("joined_game", player);
         send_int(player, get_utf8_length(game->name));
         send_wstring(player, game->name);
