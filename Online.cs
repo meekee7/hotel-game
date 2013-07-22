@@ -726,6 +726,17 @@ namespace Juego_Hotel
             this.BeginInvoke(new Action(Activar_bCrearPartida));
         }
 
+        private void No_unirse_a_partida_cargada()
+        {
+            int bytes_recibidos = 0;
+            int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
+            String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int codigo_error = recibir_int(this.socket, ref bytes_recibidos);
+            MessageBox.Show(Mensajes.mensajeYaDentroPartida + nombre + codigo_error);
+            this.BeginInvoke(new Action(Activar_bUnirse));
+            this.BeginInvoke(new Action(Activar_bCrearPartida));
+        }
+
         private void Manejar_nuevo_chat(object parametros)
         {
             List<String> lista_params = (List<String>) parametros;
@@ -820,6 +831,8 @@ namespace Juego_Hotel
                     this.Partida_empezada_o_terminada(false);
                 else if (msg == "cant_join_already_joined")
                     this.No_unirse_a_partida();
+                else if (msg == "cant_join_not_part_of_saved_game")
+                    this.No_unirse_a_partida_cargada();
                 else if (msg == "game_creator_changed")
                     this.Nuevo_creador_partida();
                 else if (msg == "rolled_dice")

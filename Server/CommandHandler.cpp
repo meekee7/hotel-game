@@ -83,35 +83,45 @@ void CommandHandler::JoinGame(Player* player, Game* game)
     }
     else if (game->join(player))
     {
-        if (savedgamesmgr->LoadPlayerData(game, player) > 0)
-            return;
-        send_command("joined_game", player);
-        send_int(player, get_utf8_length(game->name));
-        send_wstring(player, game->name);
-        send_int(player, game->chat->id);
-        send_int(player, get_utf8_length(game->creator->name));
-        send_wstring(player, game->creator->name);
-        send_int(player, game->n_players);
-        Player* dest;
-        for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
+        int error_code = savedgamesmgr->LoadPlayerData(game, player);
+        if (error_code > 0)
         {
-            // We exclude joined player because the command is sent too quickly.
-            // He will ask for player list just after joining
-            dest = *i;
-            if (dest != player)
+            game->leave(player);
+            send_command("cant_join_not_part_of_saved_game", player);
+            send_int(player, get_utf8_length(game->name));
+            send_wstring(player, game->name);
+            send_int(player, error_code);
+        }
+        else
+        {
+            send_command("joined_game", player);
+            send_int(player, get_utf8_length(game->name));
+            send_wstring(player, game->name);
+            send_int(player, game->chat->id);
+            send_int(player, get_utf8_length(game->creator->name));
+            send_wstring(player, game->creator->name);
+            send_int(player, game->n_players);
+            Player* dest;
+            for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
             {
-                send_command("chat_userlist", dest);
-                send_int(dest, game->id);
-                send_int(dest, game->plist.size()); // Number of players
-                for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
+                // We exclude joined player because the command is sent too quickly.
+                // He will ask for player list just after joining
+                dest = *i;
+                if (dest != player)
                 {
-                    send_int(dest, get_utf8_length((*j)->name));
-                    send_wstring(dest, (*j)->name);
+                    send_command("chat_userlist", dest);
+                    send_int(dest, game->id);
+                    send_int(dest, game->plist.size()); // Number of players
+                    for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
+                    {
+                        send_int(dest, get_utf8_length((*j)->name));
+                        send_wstring(dest, (*j)->name);
+                    }
                 }
             }
+            for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+                SendGameList((*i), &this->serverState->glist);
         }
-        for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
-            SendGameList((*i), &this->serverState->glist);
     }
     else if (game->started)
     {
