@@ -69,6 +69,7 @@ void CommandHandler::CreateGame(Player* player, wstring name, int n_players)
     send_int(player, get_utf8_length(new_game->creator->name));
     send_wstring(player, new_game->creator->name);
     send_int(player, new_game->n_players);
+    send_int(player, (new_game->loaded ? 1 : 0));
     for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
         SendGameList((*i), &this->serverState->glist);
 }
@@ -83,7 +84,7 @@ void CommandHandler::JoinGame(Player* player, Game* game)
     }
     else if (game->join(player))
     {
-        int error_code = savedgamesmgr->LoadPlayerData(game, player);
+        int error_code = (game->loaded ? savedgamesmgr->LoadPlayerData(game, player) : 0);
         if (error_code > 0)
         {
             game->leave(player);
@@ -101,6 +102,7 @@ void CommandHandler::JoinGame(Player* player, Game* game)
             send_int(player, get_utf8_length(game->creator->name));
             send_wstring(player, game->creator->name);
             send_int(player, game->n_players);
+            send_int(player, (game->loaded ? 1 : 0));
             Player* dest;
             for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
             {

@@ -339,5 +339,6 @@ void PlayerGameState::Take_50_without_having_b50(int* n_50)
 
 PlayerGameState::~PlayerGameState(void)
 {
-    delete this->position;
+    if (position != NULL)
+        delete this->position;
 }

@@ -21,6 +21,7 @@ namespace Juego_Hotel
         public String nombre;
         public int num_jugadores;
         public Boolean cerrando_por_desconexion = false;
+        public Boolean cargada = false;
 
         public PartidaOnline(Online frm_online)
         {

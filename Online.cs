@@ -680,11 +680,13 @@ namespace Juego_Hotel
                 int long_creador = recibir_int(this.socket, ref bytes_recibidos);
                 String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
                 int num_jugadores = recibir_int(this.socket, ref bytes_recibidos);
-                List<String> lista_params = new List<String>(3);
-                lista_params.Add(id_chat.ToString());
+                Boolean cargada = (recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
+                List<Object> lista_params = new List<Object>(5);
+                lista_params.Add(id_chat);
                 lista_params.Add(creador);
                 lista_params.Add(nombre);
-                lista_params.Add(num_jugadores.ToString());
+                lista_params.Add(num_jugadores);
+                lista_params.Add(cargada);
                 Thread thread_partida = new Thread(Manejar_nueva_partida);
                 thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                 thread_partida.Start(lista_params);
@@ -749,12 +751,14 @@ namespace Juego_Hotel
 
         private void Manejar_nueva_partida(object parametros)
         {
-            List<String> lista_params = (List<String>)parametros;
+            List<Object> lista_params = (List<Object>)parametros;
             PartidaOnline partida = new PartidaOnline(this);
-            partida.id = Convert.ToInt32(lista_params[0]);
-            partida.creador = lista_params[1];
-            partida.nombre = lista_params[2];
-            partida.num_jugadores = Convert.ToInt32(lista_params[3]);
+            partida.id = (int)lista_params[0];
+            partida.creador = lista_params[1].ToString();
+            partida.nombre = lista_params[2].ToString();
+            partida.num_jugadores = (int)lista_params[3];
+            partida.cargada = (Boolean)lista_params[4];
+            
             this.lista_partidas.AddFirst(partida);
             Application.Run(partida);
         }
