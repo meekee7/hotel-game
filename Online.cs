@@ -195,7 +195,7 @@ namespace Juego_Hotel
                             this.txtLogin.Enabled = false;
                             this.bChatGlobal.Enabled = true;
                             this.sem_en_comunicacion = new Semaphore(1, 1);
-                            thread_recepcion = new Thread(esperar_comandos);
+                            thread_recepcion = new Thread(Esperar_comandos);
                             this.continuar_thread = true;
                             thread_recepcion.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
                             thread_recepcion.Start();
@@ -799,7 +799,7 @@ namespace Juego_Hotel
             }
         }
 
-        private void esperar_comandos()
+        private void Esperar_comandos()
         {
             String msg = null;
             int bytes_recibidos = 0;

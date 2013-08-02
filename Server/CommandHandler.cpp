@@ -1099,6 +1099,14 @@ void CommandHandler::LoadGame(Player* player, int id, Game* game, wstring passwo
             send_command("game_loaded", player);
             for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
                 SendGameList((*i), &this->serverState->glist);
+            send_command("joined_game", player);
+            send_int(player, get_utf8_length(game->name));
+            send_wstring(player, game->name);
+            send_int(player, game->chat->id);
+            send_int(player, get_utf8_length(game->creator->name));
+            send_wstring(player, game->creator->name);
+            send_int(player, game->n_players);
+            send_int(player, (game->loaded ? 1 : 0));
         }
         else
         {
