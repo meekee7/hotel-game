@@ -25,21 +25,25 @@ namespace Juego_Hotel
             if (hotel_izq != null)
             {
                 this.nombreIzq.Text = hotel_izq.nombre_txt;
+                this.precioIzq.Text = hotel_izq.precio.ToString();
                 this.bIzq.Enabled = true;
             }
             else
             {
                 this.nombreIzq.Text = "";
+                this.precioIzq.Text = "";
                 this.bIzq.Enabled = false;
             }
             if (hotel_der != null)
             {
                 this.nombreDer.Text = hotel_der.nombre_txt;
+                this.precioDer.Text = hotel_der.precio.ToString();
                 this.bDer.Enabled = true;
             }
             else
             {
                 this.nombreDer.Text = "";
+                this.precioDer.Text = "";
                 this.bDer.Enabled = false;
             }
         }

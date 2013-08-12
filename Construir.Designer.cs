@@ -41,6 +41,12 @@
             this.listaHoteles = new System.Windows.Forms.ComboBox();
             this.HotelSeleccionado = new System.Windows.Forms.Label();
             this.bVerHoteles = new System.Windows.Forms.Button();
+            this.PrecioPpal = new System.Windows.Forms.Label();
+            this.PrecioAmp1 = new System.Windows.Forms.Label();
+            this.PrecioAmp2 = new System.Windows.Forms.Label();
+            this.PrecioSuelo = new System.Windows.Forms.Label();
+            this.PrecioAmp3 = new System.Windows.Forms.Label();
+            this.PrecioAmp4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // bCancelar
@@ -125,12 +131,48 @@
             this.bVerHoteles.UseVisualStyleBackColor = true;
             this.bVerHoteles.Click += new System.EventHandler(this.bVerHoteles_Click);
             // 
+            // PrecioPpal
+            // 
+            resources.ApplyResources(this.PrecioPpal, "PrecioPpal");
+            this.PrecioPpal.Name = "PrecioPpal";
+            // 
+            // PrecioAmp1
+            // 
+            resources.ApplyResources(this.PrecioAmp1, "PrecioAmp1");
+            this.PrecioAmp1.Name = "PrecioAmp1";
+            // 
+            // PrecioAmp2
+            // 
+            resources.ApplyResources(this.PrecioAmp2, "PrecioAmp2");
+            this.PrecioAmp2.Name = "PrecioAmp2";
+            // 
+            // PrecioSuelo
+            // 
+            resources.ApplyResources(this.PrecioSuelo, "PrecioSuelo");
+            this.PrecioSuelo.Name = "PrecioSuelo";
+            // 
+            // PrecioAmp3
+            // 
+            resources.ApplyResources(this.PrecioAmp3, "PrecioAmp3");
+            this.PrecioAmp3.Name = "PrecioAmp3";
+            // 
+            // PrecioAmp4
+            // 
+            resources.ApplyResources(this.PrecioAmp4, "PrecioAmp4");
+            this.PrecioAmp4.Name = "PrecioAmp4";
+            // 
             // Construir
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancelar;
             this.ControlBox = false;
+            this.Controls.Add(this.PrecioAmp4);
+            this.Controls.Add(this.PrecioAmp3);
+            this.Controls.Add(this.PrecioSuelo);
+            this.Controls.Add(this.PrecioAmp2);
+            this.Controls.Add(this.PrecioAmp1);
+            this.Controls.Add(this.PrecioPpal);
             this.Controls.Add(this.bVerHoteles);
             this.Controls.Add(this.HotelSeleccionado);
             this.Controls.Add(this.listaHoteles);
@@ -165,5 +207,11 @@
         private System.Windows.Forms.ComboBox listaHoteles;
         private System.Windows.Forms.Label HotelSeleccionado;
         private System.Windows.Forms.Button bVerHoteles;
+        private System.Windows.Forms.Label PrecioPpal;
+        private System.Windows.Forms.Label PrecioAmp1;
+        private System.Windows.Forms.Label PrecioAmp2;
+        private System.Windows.Forms.Label PrecioSuelo;
+        private System.Windows.Forms.Label PrecioAmp3;
+        private System.Windows.Forms.Label PrecioAmp4;
     }
 }

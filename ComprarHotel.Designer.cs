@@ -32,9 +32,11 @@
             this.bIzq = new System.Windows.Forms.Button();
             this.bCancelar = new System.Windows.Forms.Button();
             this.cajaIzquierda = new System.Windows.Forms.GroupBox();
+            this.precioIzq = new System.Windows.Forms.Label();
             this.nombreIzq = new System.Windows.Forms.Label();
             this.bDer = new System.Windows.Forms.Button();
             this.cajaDerecha = new System.Windows.Forms.GroupBox();
+            this.precioDer = new System.Windows.Forms.Label();
             this.nombreDer = new System.Windows.Forms.Label();
             this.cajaIzquierda.SuspendLayout();
             this.cajaDerecha.SuspendLayout();
@@ -58,10 +60,16 @@
             // cajaIzquierda
             // 
             resources.ApplyResources(this.cajaIzquierda, "cajaIzquierda");
+            this.cajaIzquierda.Controls.Add(this.precioIzq);
             this.cajaIzquierda.Controls.Add(this.bIzq);
             this.cajaIzquierda.Controls.Add(this.nombreIzq);
             this.cajaIzquierda.Name = "cajaIzquierda";
             this.cajaIzquierda.TabStop = false;
+            // 
+            // precioIzq
+            // 
+            resources.ApplyResources(this.precioIzq, "precioIzq");
+            this.precioIzq.Name = "precioIzq";
             // 
             // nombreIzq
             // 
@@ -78,10 +86,16 @@
             // cajaDerecha
             // 
             resources.ApplyResources(this.cajaDerecha, "cajaDerecha");
+            this.cajaDerecha.Controls.Add(this.precioDer);
             this.cajaDerecha.Controls.Add(this.bDer);
             this.cajaDerecha.Controls.Add(this.nombreDer);
             this.cajaDerecha.Name = "cajaDerecha";
             this.cajaDerecha.TabStop = false;
+            // 
+            // precioDer
+            // 
+            resources.ApplyResources(this.precioDer, "precioDer");
+            this.precioDer.Name = "precioDer";
             // 
             // nombreDer
             // 
@@ -116,5 +130,7 @@
         private System.Windows.Forms.Button bDer;
         private System.Windows.Forms.GroupBox cajaDerecha;
         private System.Windows.Forms.Label nombreDer;
+        private System.Windows.Forms.Label precioIzq;
+        private System.Windows.Forms.Label precioDer;
     }
 }

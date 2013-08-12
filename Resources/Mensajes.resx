@@ -211,7 +211,7 @@
     <value>Expropriación posible</value>
   </data>
   <data name="tituloHotel" xml:space="preserve">
-    <value>Hotels</value>
+    <value>Hotel</value>
   </data>
   <data name="tituloImposibleComprarHotelTuyo" xml:space="preserve">
     <value>No es posible realizar la compra</value>

@@ -279,24 +279,37 @@ namespace Juego_Hotel
                 if (this.pagador.dinero_total < this.dinero_necesario)
                 {
                     MessageBox.Show(Mensajes.mensajeSinPropiedadesNiFondos, Mensajes.tituloJugadorEliminado);
-                    // Queda pagar todo lo que tiene al cobrador y desactivar el jugador
-                    if (this.interfaz.online)
-                    {
-                        int game_id = this.interfaz.game_id;
-                        this.interfaz.frm_online.enviar_comando("retire", game_id.ToString(), "1", this.receptor.nombre_online.ToString());
-                    }
-                    else
-                    {
-                        this.juego.Eliminar_Jugador(this.pagador, this.receptor);
-                        this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
-                        this.interfaz.Actualizar_Dinero_Jugadores();
-                    }
-                    this.cancelado = true;
-                    this.Hide();
+                    // No preguntar y retirar directamente
+                    this.bRetirarse.Tag = (Boolean)false;
+                    this.bRetirarse.PerformClick();
+                    this.bRetirarse.Tag = null;
                 }
                 else
                     MessageBox.Show(Mensajes.mensajeSinPropiedadesParaSubastar, Mensajes.tituloSubastas);
             }
+        }
+
+        private void bRetirarse_Click(object sender, EventArgs e)
+        {
+            // No preguntar si viene del botón Subastar
+            if ((sender as Button).Tag == null)
+            {
+                if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+            }
+            if (this.interfaz.online)
+            {
+                int game_id = this.interfaz.game_id;
+                this.interfaz.frm_online.enviar_comando("retire", game_id.ToString(), "1", this.receptor.nombre_online.ToString());
+            }
+            else
+            {
+                this.juego.Eliminar_Jugador(this.pagador, this.receptor);
+                this.interfaz.Marcar_Jugador_Eliminado(this.pagador.n_jugador);
+                this.interfaz.Actualizar_Dinero_Jugadores();
+            }
+            this.cancelado = true;
+            this.Hide();
         }
     }
 }

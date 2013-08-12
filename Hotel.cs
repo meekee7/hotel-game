@@ -278,6 +278,16 @@ namespace Juego_Hotel
             return this.precios_ampliaciones[this.n_fases_construidas];
         }
 
+        public int Precio_Ampliacion(int num)
+        {
+            return this.precios_ampliaciones[num];
+        }
+
+        public int Precio_Suelo()
+        {
+            return this.precios_ampliaciones[this.n_fases_max - 1];
+        }
+
         public bool Ampliable()
         {
             return !this.suelo_comprado;

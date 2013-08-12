@@ -76,6 +76,12 @@ namespace Juego_Hotel
             this.bAmpli3.Enabled = false;
             this.bAmpli4.Enabled = false;
             this.bSuelo.Enabled = false;
+            this.PrecioPpal.Text = String.Empty;
+            this.PrecioAmp1.Text = String.Empty;
+            this.PrecioAmp2.Text = String.Empty;
+            this.PrecioAmp3.Text = String.Empty;
+            this.PrecioAmp4.Text = String.Empty;
+            this.PrecioSuelo.Text = String.Empty;
             this.listaHoteles.BringToFront();
             if (!this.hotel_seleccionado.Ampliable())
                 MessageBox.Show (String.Format(Mensajes.mensajeHotelContruidoEntero,this.hotel_seleccionado.nombre_txt), Mensajes.tituloNoEsPosibleConstruir);
@@ -90,29 +96,61 @@ namespace Juego_Hotel
             {
                 switch (this.hotel_seleccionado.n_fases_construidas)
                 {
-                    case (0): this.bPrincipal.Enabled = true;
+                    case (0):
+                        this.bPrincipal.Enabled = true;
+                        this.PrecioPpal.Text = this.hotel_seleccionado.Precio_Ampliacion(0).ToString();
                         break;
-                    case (1): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                    case (1):
+                        if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                        {
                             this.bAmpli1.Enabled = true;
+                            this.PrecioAmp1.Text = this.hotel_seleccionado.Precio_Ampliacion(1).ToString();
+                        }
                         else
+                        {
                             this.bSuelo.Enabled = true;
+                            this.PrecioSuelo.Text = this.hotel_seleccionado.Precio_Suelo().ToString();
+                        }
                         break;
-                    case (2): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                    case (2):
+                        if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                        {
                             this.bAmpli2.Enabled = true;
+                            this.PrecioAmp2.Text = this.hotel_seleccionado.Precio_Ampliacion(2).ToString();
+                        }
                         else
+                        {
                             this.bSuelo.Enabled = true;
+                            this.PrecioSuelo.Text = this.hotel_seleccionado.Precio_Suelo().ToString();
+                        }
                         break;
-                    case (3): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                    case (3):
+                        if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                        {
                             this.bAmpli3.Enabled = true;
+                            this.PrecioAmp3.Text = this.hotel_seleccionado.Precio_Ampliacion(3).ToString();
+                        }
                         else
+                        {
                             this.bSuelo.Enabled = true;
+                            this.PrecioSuelo.Text = this.hotel_seleccionado.Precio_Suelo().ToString();
+                        }
                         break;
-                    case (4): if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                    case (4):
+                        if (this.hotel_seleccionado.n_fases_construidas < (this.hotel_seleccionado.n_fases_max - 1))
+                        {
                             this.bAmpli4.Enabled = true;
+                            this.PrecioAmp4.Text = this.hotel_seleccionado.Precio_Ampliacion(4).ToString();
+                        }
                         else
+                        {
                             this.bSuelo.Enabled = true;
+                            this.PrecioSuelo.Text = this.hotel_seleccionado.Precio_Suelo().ToString();
+                        }
                         break;
-                    case (5): this.bSuelo.Enabled = true;
+                    case (5):
+                        this.bSuelo.Enabled = true;
+                        this.PrecioSuelo.Text = this.hotel_seleccionado.Precio_Suelo().ToString();
                         break;
                 }
             }

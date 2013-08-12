@@ -50,6 +50,7 @@
             this.bReset = new System.Windows.Forms.Button();
             this.necesario = new System.Windows.Forms.Label();
             this.bSubastar = new System.Windows.Forms.Button();
+            this.bRetirarse = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.img100)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img50)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img500)).BeginInit();
@@ -201,6 +202,13 @@
             this.bSubastar.UseVisualStyleBackColor = true;
             this.bSubastar.Click += new System.EventHandler(this.bSubastar_Click);
             // 
+            // bRetirarse
+            // 
+            resources.ApplyResources(this.bRetirarse, "bRetirarse");
+            this.bRetirarse.Name = "bRetirarse";
+            this.bRetirarse.UseVisualStyleBackColor = true;
+            this.bRetirarse.Click += new System.EventHandler(this.bRetirarse_Click);
+            // 
             // PedirPago
             // 
             this.AcceptButton = this.bOk;
@@ -208,6 +216,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancelar;
             this.ControlBox = false;
+            this.Controls.Add(this.bRetirarse);
             this.Controls.Add(this.bSubastar);
             this.Controls.Add(this.necesario);
             this.Controls.Add(this.bReset);
@@ -264,6 +273,7 @@
         private System.Windows.Forms.Button bReset;
         private System.Windows.Forms.Label necesario;
         private System.Windows.Forms.Button bSubastar;
+        private System.Windows.Forms.Button bRetirarse;
 
     }
 }
