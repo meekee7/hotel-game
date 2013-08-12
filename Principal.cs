@@ -161,6 +161,7 @@ namespace Juego_Hotel
                 this.bComprarSuelo.Enabled = false;
                 this.grupoNJugadores.Enabled = false;
                 this.bCobrarBanca.Enabled = false;
+                this.bSalvar.Enabled = true;
                 this.posRojo.Visible = true;
                 this.posAzul.Visible = true;
                 this.posVerde.Visible = true;
@@ -691,6 +692,9 @@ namespace Juego_Hotel
             this.controlJ3.Enabled = false;
             this.controlJ4.Enabled = false;
             this.bCobrarBanca.Enabled = false;
+            this.bVerHoteles.Enabled = true;
+            this.bNormas.Enabled = true;
+            this.bReportarBug.Enabled = true;
             this.jug_ini.Text = resources.GetString("jug_ini.Text");
             this.colorJugIni.Text = "";
             this.posJ1.Text = resources.GetString("posJ1.Text");
