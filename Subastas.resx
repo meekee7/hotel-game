@@ -112,9 +112,489 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="grupoEstado.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;txt_mayor_postor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtCantidad.Name" xml:space="preserve">
+    <value>txtCantidad</value>
+  </data>
+  <data name="&gt;&gt;bJ1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bJ3.Name" xml:space="preserve">
+    <value>bJ3</value>
+  </data>
+  <data name="bJ1.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="txt_precio_mayor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 117</value>
+  </data>
+  <data name="&gt;&gt;grupoHotel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;mayor_postor.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="&gt;&gt;txtCantidad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bSubastar.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;txt_precio_mayor.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="&gt;&gt;cantidad.Name" xml:space="preserve">
+    <value>cantidad</value>
+  </data>
+  <data name="&gt;&gt;bJ4.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="bSubastar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 71</value>
+  </data>
+  <data name="&gt;&gt;bVender.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txt_mayor_postor.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Subastas</value>
+  </data>
+  <data name="&gt;&gt;grupoEstado.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;grupoEstado.Name" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="&gt;&gt;bJ1.Name" xml:space="preserve">
+    <value>bJ1</value>
+  </data>
+  <data name="bCerrar.Text" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="precio_mayor.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="precio_mayor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 117</value>
+  </data>
+  <data name="&gt;&gt;bJ3.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;mayor_postor.Name" xml:space="preserve">
+    <value>mayor_postor</value>
+  </data>
+  <data name="listaHoteles.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="bJ3.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;txt_precio_mayor.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="etiHotel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="etiHotel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="bJ2.Text" xml:space="preserve">
+    <value>Pujar J2</value>
+  </data>
+  <data name="bVerHoteles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>170, 188</value>
+  </data>
+  <data name="txt_mayor_postor.Text" xml:space="preserve">
+    <value>Mayor postor:</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txtCantidad.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;bJ2.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="txt_precio_mayor.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="bVerHoteles.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;cantidad.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="listaHoteles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 39</value>
+  </data>
+  <data name="bJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="txt_precio_mayor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
+  </data>
+  <data name="&gt;&gt;bJ1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="grupoEstado.Text" xml:space="preserve">
+    <value>Estado de la subasta</value>
+  </data>
+  <data name="etiHotel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 13</value>
+  </data>
+  <data name="&gt;&gt;etiHotel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bCerrar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>Subastas</value>
+  </data>
+  <data name="&gt;&gt;bJ2.Name" xml:space="preserve">
+    <value>bJ2</value>
+  </data>
+  <data name="&gt;&gt;bSubastar.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txt_mayor_postor.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="bJ2.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="bVender.Text" xml:space="preserve">
+    <value>Vender</value>
+  </data>
+  <data name="etiHotel.Text" xml:space="preserve">
+    <value>Selecciona Hotel:</value>
+  </data>
+  <data name="&gt;&gt;cantidad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txt_precio_mayor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="bJ4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;grupoEstado.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Parent" xml:space="preserve">
+    <value>grupoHotel</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;precio_mayor.Name" xml:space="preserve">
+    <value>precio_mayor</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Name" xml:space="preserve">
+    <value>listaHoteles</value>
+  </data>
+  <data name="bJ4.Text" xml:space="preserve">
+    <value>Pujar J4</value>
+  </data>
+  <data name="mayor_postor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cantidad.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="grupoHotel.Text" xml:space="preserve">
+    <value>Subastar Hotel</value>
+  </data>
+  <data name="bSubastar.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="bJ4.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="txt_mayor_postor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 13</value>
+  </data>
+  <data name="precio_mayor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="cantidad.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="&gt;&gt;grupoHotel.Name" xml:space="preserve">
+    <value>grupoHotel</value>
+  </data>
+  <data name="&gt;&gt;bVender.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="grupoEstado.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 201</value>
+  </data>
+  <data name="&gt;&gt;precio_mayor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bVender.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bJ3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 83</value>
+  </data>
+  <data name="&gt;&gt;precio_mayor.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="precio_mayor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="bSubastar.Text" xml:space="preserve">
+    <value>Subastar</value>
+  </data>
+  <data name="&gt;&gt;bSubastar.Parent" xml:space="preserve">
+    <value>grupoHotel</value>
+  </data>
+  <data name="txt_precio_mayor.Text" xml:space="preserve">
+    <value>Máximo ofrecido:</value>
+  </data>
+  <data name="bVender.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="mayor_postor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 141</value>
+  </data>
+  <data name="bSubastar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="grupoHotel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="bVerHoteles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 23</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.Name" xml:space="preserve">
+    <value>bVerHoteles</value>
+  </data>
+  <data name="bCerrar.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="bJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bCerrar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 23</value>
+  </data>
+  <data name="bJ1.Text" xml:space="preserve">
+    <value>Pujar J1</value>
+  </data>
+  <data name="&gt;&gt;txt_precio_mayor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bSubastar.Name" xml:space="preserve">
+    <value>bSubastar</value>
+  </data>
+  <data name="txtCantidad.Text" xml:space="preserve">
+    <value>Cantidad a ofrecer:</value>
+  </data>
+  <data name="&gt;&gt;bSubastar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bJ3.Text" xml:space="preserve">
+    <value>Pujar J3</value>
+  </data>
+  <data name="&gt;&gt;etiHotel.Name" xml:space="preserve">
+    <value>etiHotel</value>
+  </data>
+  <data name="&gt;&gt;bJ4.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="bJ4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 83</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtCantidad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 30</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_precio_mayor.Name" xml:space="preserve">
+    <value>txt_precio_mayor</value>
+  </data>
+  <data name="&gt;&gt;grupoHotel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mayor_postor.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;bVerHoteles.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="bJ4.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="grupoEstado.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 22</value>
+  </data>
+  <data name="&gt;&gt;txtCantidad.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="txt_mayor_postor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;txt_mayor_postor.Name" xml:space="preserve">
+    <value>txt_mayor_postor</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;bJ3.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="&gt;&gt;etiHotel.Parent" xml:space="preserve">
+    <value>grupoHotel</value>
+  </data>
+  <data name="txt_mayor_postor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 141</value>
+  </data>
+  <data name="cantidad.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="etiHotel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 42</value>
+  </data>
+  <data name="bCerrar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 188</value>
+  </data>
+  <data name="txtCantidad.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 13</value>
+  </data>
+  <data name="grupoHotel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 22</value>
+  </data>
+  <data name="bJ2.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;etiHotel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;grupoHotel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;bJ4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bJ2.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>530, 240</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mayor_postor.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cantidad.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="bVender.Location" type="System.Drawing.Point, System.Drawing">
+    <value>79, 166</value>
+  </data>
+  <data name="bJ2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 54</value>
+  </data>
+  <data name="&gt;&gt;bCerrar.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;bJ3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bJ3.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="bJ1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 54</value>
+  </data>
+  <data name="bVerHoteles.Text" xml:space="preserve">
+    <value>Ver Hoteles</value>
+  </data>
+  <data name="&gt;&gt;bJ1.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
+  </data>
+  <data name="&gt;&gt;grupoEstado.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;precio_mayor.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txtCantidad.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;bCerrar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="mayor_postor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="&gt;&gt;txt_mayor_postor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="bJ1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;bJ2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bJ4.Name" xml:space="preserve">
+    <value>bJ4</value>
+  </data>
+  <data name="grupoHotel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 100</value>
+  </data>
+  <data name="&gt;&gt;txtCantidad.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;mayor_postor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bVender.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="listaHoteles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="&gt;&gt;bVender.Name" xml:space="preserve">
+    <value>bVender</value>
+  </data>
+  <data name="cantidad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 28</value>
+  </data>
+  <data name="&gt;&gt;bCerrar.Name" xml:space="preserve">
+    <value>bCerrar</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

@@ -750,4 +750,48 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeNoSePuedeCargarErrorDatos" xml:space="preserve">
     <value>El juego con ID {0} no ha sido cargado correctamente por un error en los datos salvados. Contacte con ifilgud@gmail.com</value>
   </data>
+  <data name="mensajeConfirmacionSubasta" xml:space="preserve">
+    <value>¿Estás seguro de que quieres subastar el hotel?
+Esta operación no se puede cancelar</value>
+  </data>
+  <data name="mensajeConfirmarPuja" xml:space="preserve">
+    <value>¿Estás seguro de que quieres realizar la puja? No puede deshacerse</value>
+  </data>
+  <data name="mensajeConfirmarVentaSubasta" xml:space="preserve">
+    <value>¿Estás seguro de que quieres realizar la venta final? No puede deshacerse
+El jugador {0} deberá abonar {1}</value>
+  </data>
+  <data name="mensajeErrorPujaCantidadInvalida" xml:space="preserve">
+    <value>No se ha introducido una cantidad válida</value>
+  </data>
+  <data name="mensajeErrorPujaMenorMax" xml:space="preserve">
+    <value>La cantidad es menor o igual que la puja máxima</value>
+  </data>
+  <data name="mensajeErrorPujaNoMultiplo50" xml:space="preserve">
+    <value>La cantidad no es múltiplo de 50</value>
+  </data>
+  <data name="mensajeErrorPujaNoNegativo" xml:space="preserve">
+    <value>No se pueden introducir cantidades negativas</value>
+  </data>
+  <data name="mensajeErrorPujaNoNumEntero" xml:space="preserve">
+    <value>No se ha introducido un número entero</value>
+  </data>
+  <data name="mensajeErrorPujaNoSuficienteDinero" xml:space="preserve">
+    <value>La cantidad es mayor que el dinero total del jugador </value>
+  </data>
+  <data name="mensajeNoPujadoTodavia" xml:space="preserve">
+    <value>No se ha pujado todavía</value>
+  </data>
+  <data name="textoAbreviaturaJugador" xml:space="preserve">
+    <value>J</value>
+  </data>
+  <data name="tituloConfirmacionSubasta" xml:space="preserve">
+    <value>Confirmación de inicio de subasta</value>
+  </data>
+  <data name="tituloConfirmarPuja" xml:space="preserve">
+    <value>Confirmación de puja</value>
+  </data>
+  <data name="tituloConfirmarVentaSubasta" xml:space="preserve">
+    <value>Confirmación de venta</value>
+  </data>
 </root>

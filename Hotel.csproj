@@ -280,6 +280,9 @@
       <DependentUpon>Sel_colores.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subastas.en.resx">
+      <DependentUpon>Subastas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subastas.resx">
       <DependentUpon>Subastas.cs</DependentUpon>
     </EmbeddedResource>

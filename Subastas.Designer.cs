@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Subastas));
             this.bCerrar = new System.Windows.Forms.Button();
             this.etiHotel = new System.Windows.Forms.Label();
             this.listaHoteles = new System.Windows.Forms.ComboBox();
@@ -52,147 +53,99 @@
             // 
             // bCerrar
             // 
+            resources.ApplyResources(this.bCerrar, "bCerrar");
             this.bCerrar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCerrar.Location = new System.Drawing.Point(34, 188);
             this.bCerrar.Name = "bCerrar";
-            this.bCerrar.Size = new System.Drawing.Size(79, 23);
-            this.bCerrar.TabIndex = 0;
-            this.bCerrar.Text = "Cerrar";
             this.bCerrar.UseVisualStyleBackColor = true;
             this.bCerrar.Click += new System.EventHandler(this.bCerrar_Click);
             // 
             // etiHotel
             // 
-            this.etiHotel.AutoSize = true;
-            this.etiHotel.Location = new System.Drawing.Point(10, 42);
+            resources.ApplyResources(this.etiHotel, "etiHotel");
             this.etiHotel.Name = "etiHotel";
-            this.etiHotel.Size = new System.Drawing.Size(91, 13);
-            this.etiHotel.TabIndex = 1;
-            this.etiHotel.Text = "Selecciona Hotel:";
             // 
             // listaHoteles
             // 
+            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
-            this.listaHoteles.Location = new System.Drawing.Point(107, 39);
             this.listaHoteles.Name = "listaHoteles";
-            this.listaHoteles.Size = new System.Drawing.Size(121, 21);
-            this.listaHoteles.TabIndex = 2;
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
             // bSubastar
             // 
-            this.bSubastar.Enabled = false;
-            this.bSubastar.Location = new System.Drawing.Point(107, 71);
+            resources.ApplyResources(this.bSubastar, "bSubastar");
             this.bSubastar.Name = "bSubastar";
-            this.bSubastar.Size = new System.Drawing.Size(75, 23);
-            this.bSubastar.TabIndex = 3;
-            this.bSubastar.Text = "Subastar";
             this.bSubastar.UseVisualStyleBackColor = true;
             this.bSubastar.Click += new System.EventHandler(this.bSubastar_Click);
             // 
             // grupoHotel
             // 
+            resources.ApplyResources(this.grupoHotel, "grupoHotel");
             this.grupoHotel.Controls.Add(this.bSubastar);
             this.grupoHotel.Controls.Add(this.etiHotel);
             this.grupoHotel.Controls.Add(this.listaHoteles);
-            this.grupoHotel.Location = new System.Drawing.Point(21, 22);
             this.grupoHotel.Name = "grupoHotel";
-            this.grupoHotel.Size = new System.Drawing.Size(248, 100);
-            this.grupoHotel.TabIndex = 4;
             this.grupoHotel.TabStop = false;
-            this.grupoHotel.Text = "Subastar Hotel";
             // 
             // bVerHoteles
             // 
-            this.bVerHoteles.Location = new System.Drawing.Point(170, 188);
+            resources.ApplyResources(this.bVerHoteles, "bVerHoteles");
             this.bVerHoteles.Name = "bVerHoteles";
-            this.bVerHoteles.Size = new System.Drawing.Size(79, 23);
-            this.bVerHoteles.TabIndex = 4;
-            this.bVerHoteles.Text = "Ver Hoteles";
             this.bVerHoteles.UseVisualStyleBackColor = true;
             this.bVerHoteles.Click += new System.EventHandler(this.bVerHoteles_Click);
             // 
             // txtCantidad
             // 
-            this.txtCantidad.AutoSize = true;
-            this.txtCantidad.Location = new System.Drawing.Point(21, 30);
+            resources.ApplyResources(this.txtCantidad, "txtCantidad");
             this.txtCantidad.Name = "txtCantidad";
-            this.txtCantidad.Size = new System.Drawing.Size(97, 13);
-            this.txtCantidad.TabIndex = 5;
-            this.txtCantidad.Text = "Cantidad a ofrecer:";
             // 
             // bJ1
             // 
-            this.bJ1.Enabled = false;
-            this.bJ1.Location = new System.Drawing.Point(43, 54);
+            resources.ApplyResources(this.bJ1, "bJ1");
             this.bJ1.Name = "bJ1";
-            this.bJ1.Size = new System.Drawing.Size(75, 23);
-            this.bJ1.TabIndex = 6;
-            this.bJ1.Text = "Pujar J1";
             this.bJ1.UseVisualStyleBackColor = true;
             this.bJ1.Click += new System.EventHandler(this.bJ1_Click);
             // 
             // bJ3
             // 
-            this.bJ3.Enabled = false;
-            this.bJ3.Location = new System.Drawing.Point(43, 83);
+            resources.ApplyResources(this.bJ3, "bJ3");
             this.bJ3.Name = "bJ3";
-            this.bJ3.Size = new System.Drawing.Size(75, 23);
-            this.bJ3.TabIndex = 7;
-            this.bJ3.Text = "Pujar J3";
             this.bJ3.UseVisualStyleBackColor = true;
             this.bJ3.Click += new System.EventHandler(this.bJ3_Click);
             // 
             // bJ2
             // 
-            this.bJ2.Enabled = false;
-            this.bJ2.Location = new System.Drawing.Point(124, 54);
+            resources.ApplyResources(this.bJ2, "bJ2");
             this.bJ2.Name = "bJ2";
-            this.bJ2.Size = new System.Drawing.Size(75, 23);
-            this.bJ2.TabIndex = 8;
-            this.bJ2.Text = "Pujar J2";
             this.bJ2.UseVisualStyleBackColor = true;
             this.bJ2.Click += new System.EventHandler(this.bJ2_Click);
             // 
             // bJ4
             // 
-            this.bJ4.Enabled = false;
-            this.bJ4.Location = new System.Drawing.Point(124, 83);
+            resources.ApplyResources(this.bJ4, "bJ4");
             this.bJ4.Name = "bJ4";
-            this.bJ4.Size = new System.Drawing.Size(75, 23);
-            this.bJ4.TabIndex = 9;
-            this.bJ4.Text = "Pujar J4";
             this.bJ4.UseVisualStyleBackColor = true;
             this.bJ4.Click += new System.EventHandler(this.bJ4_Click);
             // 
             // cantidad
             // 
-            this.cantidad.Enabled = false;
-            this.cantidad.Location = new System.Drawing.Point(124, 28);
+            resources.ApplyResources(this.cantidad, "cantidad");
             this.cantidad.Name = "cantidad";
-            this.cantidad.Size = new System.Drawing.Size(75, 20);
-            this.cantidad.TabIndex = 10;
             // 
             // txt_precio_mayor
             // 
-            this.txt_precio_mayor.AutoSize = true;
-            this.txt_precio_mayor.Location = new System.Drawing.Point(31, 117);
+            resources.ApplyResources(this.txt_precio_mayor, "txt_precio_mayor");
             this.txt_precio_mayor.Name = "txt_precio_mayor";
-            this.txt_precio_mayor.Size = new System.Drawing.Size(87, 13);
-            this.txt_precio_mayor.TabIndex = 11;
-            this.txt_precio_mayor.Text = "Máximo ofrecido:";
             // 
             // precio_mayor
             // 
-            this.precio_mayor.AutoSize = true;
-            this.precio_mayor.Location = new System.Drawing.Point(121, 117);
+            resources.ApplyResources(this.precio_mayor, "precio_mayor");
             this.precio_mayor.Name = "precio_mayor";
-            this.precio_mayor.Size = new System.Drawing.Size(0, 13);
-            this.precio_mayor.TabIndex = 12;
             // 
             // grupoEstado
             // 
+            resources.ApplyResources(this.grupoEstado, "grupoEstado");
             this.grupoEstado.Controls.Add(this.bVender);
             this.grupoEstado.Controls.Add(this.mayor_postor);
             this.grupoEstado.Controls.Add(this.txt_mayor_postor);
@@ -204,47 +157,32 @@
             this.grupoEstado.Controls.Add(this.cantidad);
             this.grupoEstado.Controls.Add(this.bJ2);
             this.grupoEstado.Controls.Add(this.bJ4);
-            this.grupoEstado.Location = new System.Drawing.Point(285, 22);
             this.grupoEstado.Name = "grupoEstado";
-            this.grupoEstado.Size = new System.Drawing.Size(226, 201);
-            this.grupoEstado.TabIndex = 13;
             this.grupoEstado.TabStop = false;
-            this.grupoEstado.Text = "Estado de la subasta";
             // 
             // bVender
             // 
-            this.bVender.Location = new System.Drawing.Point(79, 166);
+            resources.ApplyResources(this.bVender, "bVender");
             this.bVender.Name = "bVender";
-            this.bVender.Size = new System.Drawing.Size(75, 23);
-            this.bVender.TabIndex = 14;
-            this.bVender.Text = "Vender";
             this.bVender.UseVisualStyleBackColor = true;
             this.bVender.Click += new System.EventHandler(this.bVender_Click);
             // 
             // mayor_postor
             // 
-            this.mayor_postor.AutoSize = true;
-            this.mayor_postor.Location = new System.Drawing.Point(121, 141);
+            resources.ApplyResources(this.mayor_postor, "mayor_postor");
             this.mayor_postor.Name = "mayor_postor";
-            this.mayor_postor.Size = new System.Drawing.Size(0, 13);
-            this.mayor_postor.TabIndex = 15;
             // 
             // txt_mayor_postor
             // 
-            this.txt_mayor_postor.AutoSize = true;
-            this.txt_mayor_postor.Location = new System.Drawing.Point(47, 141);
+            resources.ApplyResources(this.txt_mayor_postor, "txt_mayor_postor");
             this.txt_mayor_postor.Name = "txt_mayor_postor";
-            this.txt_mayor_postor.Size = new System.Drawing.Size(71, 13);
-            this.txt_mayor_postor.TabIndex = 14;
-            this.txt_mayor_postor.Text = "Mayor postor:";
             // 
             // Subastas
             // 
             this.AcceptButton = this.bCerrar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCerrar;
-            this.ClientSize = new System.Drawing.Size(530, 240);
             this.ControlBox = false;
             this.Controls.Add(this.grupoEstado);
             this.Controls.Add(this.bVerHoteles);
@@ -252,8 +190,6 @@
             this.Controls.Add(this.bCerrar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Subastas";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Subastas";
             this.grupoHotel.ResumeLayout(false);
             this.grupoHotel.PerformLayout();
             this.grupoEstado.ResumeLayout(false);

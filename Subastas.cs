@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
@@ -96,9 +97,7 @@ namespace Juego_Hotel
 
         private void bSubastar_Click(object sender, EventArgs e)
         {
-            DialogResult res = MessageBox.Show("¿Estás seguro de que quieres subastar el hotel?\nEsta operación no se puede cancelar",
-                                               "Confirmación de inicio de subasta", MessageBoxButtons.YesNo);
-            if (res == DialogResult.Yes)
+            if (MessageBox.Show(Mensajes.mensajeConfirmacionSubasta, Mensajes.tituloConfirmacionSubasta, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 this.cantidad.Enabled = true;
                 this.bVender.Enabled = true;
@@ -158,12 +157,11 @@ namespace Juego_Hotel
         {
             int game_id;
             if (this.precio_mayor.Text.ToString().Trim() == "")
-                MessageBox.Show("No se ha pujado todavía");
+                    MessageBox.Show(Mensajes.mensajeNoPujadoTodavia);
             else
             {
-                if (MessageBox.Show("¿Estás seguro de que quieres realizar la venta final? No puede deshacerse\n" +
-                                    "El jugador " + this.mayor_postor.Text + " deberá abonar " + this.precio_mayor.Text,
-                                    "Confirmación de venta", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(String.Format(Mensajes.mensajeConfirmarVentaSubasta, this.mayor_postor.Text, this.precio_mayor.Text),
+                    Mensajes.tituloConfirmarVentaSubasta, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     
                     if (!this.interfaz.online)
@@ -205,21 +203,20 @@ namespace Juego_Hotel
             String cantidad = this.cantidad.Text.ToString().Trim();
             int cantidad_num;
             if (cantidad == "" || cantidad == "0")
-                MessageBox.Show("No se ha introducido una cantidad válida");
+                MessageBox.Show(Mensajes.mensajeErrorPujaCantidadInvalida);
             else if (int.TryParse(cantidad, out cantidad_num) == false)
-                MessageBox.Show("No se ha introducido un número entero");
+                MessageBox.Show(Mensajes.mensajeErrorPujaNoNumEntero);
             else if (cantidad_num < 0)
-                MessageBox.Show("No se pueden introducir cantidades negativas");
+                MessageBox.Show(Mensajes.mensajeErrorPujaNoNegativo);
             else if (cantidad_num <= n_precio_mayor)
-                MessageBox.Show("La cantidad es menor o igual que la puja máxima");
+                MessageBox.Show(Mensajes.mensajeErrorPujaMenorMax);
             else if (cantidad_num > this.juego.jugadores[n_jugador].dinero_total)
-                MessageBox.Show("La cantidad es mayor que el dinero total del jugador " + this.juego.jugadores[n_jugador].Nombre_color());
+                MessageBox.Show(Mensajes.mensajeErrorPujaNoSuficienteDinero + this.juego.jugadores[n_jugador].Nombre_color());
             else if (cantidad_num % 50 != 0)
-                MessageBox.Show("La cantidad no es múltiplo de 50");
+                MessageBox.Show(Mensajes.mensajeErrorPujaNoMultiplo50);
             else
             {
-                if (MessageBox.Show("¿Estás seguro de que quieres realizar la puja? No puede deshacerse",
-                                    "Confirmación de puja", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(Mensajes.mensajeConfirmarPuja, Mensajes.tituloConfirmarPuja, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     if (this.interfaz.online)
                     {
@@ -267,7 +264,7 @@ namespace Juego_Hotel
         {
             this.n_precio_mayor = cantidad;
             this.precio_mayor.Text = cantidad.ToString();
-            this.mayor_postor.Text = "J" + (jugador.n_jugador + 1) + " - " + jugador.Nombre_color();
+            this.mayor_postor.Text = Mensajes.textoAbreviaturaJugador + (jugador.n_jugador + 1) + " - " + jugador.Nombre_color();
             this.n_mayor_postor = jugador.n_jugador;
         }
 

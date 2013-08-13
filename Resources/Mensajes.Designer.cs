@@ -403,6 +403,35 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Estás seguro de que quieres subastar el hotel?
+        ///Esta operación no se puede cancelar.
+        /// </summary>
+        internal static string mensajeConfirmacionSubasta {
+            get {
+                return ResourceManager.GetString("mensajeConfirmacionSubasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Estás seguro de que quieres realizar la puja? No puede deshacerse.
+        /// </summary>
+        internal static string mensajeConfirmarPuja {
+            get {
+                return ResourceManager.GetString("mensajeConfirmarPuja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Estás seguro de que quieres realizar la venta final? No puede deshacerse
+        ///El jugador {0} deberá abonar {1}.
+        /// </summary>
+        internal static string mensajeConfirmarVentaSubasta {
+            get {
+                return ResourceManager.GetString("mensajeConfirmarVentaSubasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Construcción denegada.
         /// </summary>
         internal static string mensajeConstruccionDenegada {
@@ -660,6 +689,60 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeErrorPuertoNoNumerico {
             get {
                 return ResourceManager.GetString("mensajeErrorPuertoNoNumerico", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se ha introducido una cantidad válida.
+        /// </summary>
+        internal static string mensajeErrorPujaCantidadInvalida {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaCantidadInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La cantidad es menor o igual que la puja máxima.
+        /// </summary>
+        internal static string mensajeErrorPujaMenorMax {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaMenorMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La cantidad no es múltiplo de 50.
+        /// </summary>
+        internal static string mensajeErrorPujaNoMultiplo50 {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaNoMultiplo50", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pueden introducir cantidades negativas.
+        /// </summary>
+        internal static string mensajeErrorPujaNoNegativo {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaNoNegativo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se ha introducido un número entero.
+        /// </summary>
+        internal static string mensajeErrorPujaNoNumEntero {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaNoNumEntero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La cantidad es mayor que el dinero total del jugador .
+        /// </summary>
+        internal static string mensajeErrorPujaNoSuficienteDinero {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaNoSuficienteDinero", resourceCulture);
             }
         }
         
@@ -1074,6 +1157,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeNoPoseesHoteles {
             get {
                 return ResourceManager.GetString("mensajeNoPoseesHoteles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se ha pujado todavía.
+        /// </summary>
+        internal static string mensajeNoPujadoTodavia {
+            get {
+                return ResourceManager.GetString("mensajeNoPujadoTodavia", resourceCulture);
             }
         }
         
@@ -1504,6 +1596,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a J.
+        /// </summary>
+        internal static string textoAbreviaturaJugador {
+            get {
+                return ResourceManager.GetString("textoAbreviaturaJugador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a los complejos recreativos.
         /// </summary>
         internal static string textoComplejosRecreativos {
@@ -1752,6 +1853,33 @@ namespace Juego_Hotel.Resources {
         internal static string tituloConfirmacionDesconectar {
             get {
                 return ResourceManager.GetString("tituloConfirmacionDesconectar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Confirmación de inicio de subasta.
+        /// </summary>
+        internal static string tituloConfirmacionSubasta {
+            get {
+                return ResourceManager.GetString("tituloConfirmacionSubasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Confirmación de puja.
+        /// </summary>
+        internal static string tituloConfirmarPuja {
+            get {
+                return ResourceManager.GetString("tituloConfirmarPuja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Confirmación de venta.
+        /// </summary>
+        internal static string tituloConfirmarVentaSubasta {
+            get {
+                return ResourceManager.GetString("tituloConfirmarVentaSubasta", resourceCulture);
             }
         }
         
