@@ -38,6 +38,7 @@ namespace Juego_Hotel
         int alto_fase = 18;
         public Subastas frm_subasta_en_curso;
         public Hotel hotel_a_subastar_online;
+        public int precio_minimo_subasta_online;
         XmlDocument configuracion;
         public Actividad actividad;
         public String creador_online;

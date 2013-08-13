@@ -738,6 +738,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La cantidad no supera el precio mínimo ({0}).
+        /// </summary>
+        internal static string mensajeErrorPujaNoPrecioMinimo {
+            get {
+                return ResourceManager.GetString("mensajeErrorPujaNoPrecioMinimo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La cantidad es mayor que el dinero total del jugador .
         /// </summary>
         internal static string mensajeErrorPujaNoSuficienteDinero {
@@ -1337,6 +1346,16 @@ namespace Juego_Hotel.Resources {
         internal static string mensajePasswordVacia {
             get {
                 return ResourceManager.GetString("mensajePasswordVacia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Quieres que haya precio mínimo en la subasta?
+        ///Se establecerá a un tercio del valor de compra del suelo más las ampliaciones construidas.
+        /// </summary>
+        internal static string mensajePrecioMinimoEnSubasta {
+            get {
+                return ResourceManager.GetString("mensajePrecioMinimoEnSubasta", resourceCulture);
             }
         }
         

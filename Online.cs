@@ -1260,8 +1260,10 @@ namespace Juego_Hotel
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            int precio_minimo = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             partida.interfaz.hotel_a_subastar_online = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
+            partida.interfaz.precio_minimo_subasta_online = precio_minimo;
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
                 Thread thread_manejar_subasta = new Thread(Manejar_subasta);
@@ -1276,6 +1278,7 @@ namespace Juego_Hotel
             PartidaOnline partida = (PartidaOnline)parametro;
             Juego juego = partida.interfaz.juego;
             partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
+            partida.interfaz.frm_subasta_en_curso.Establecer_Precio_Minimo(partida.interfaz.precio_minimo_subasta_online);
             Application.Run(partida.interfaz.frm_subasta_en_curso);
         }
 

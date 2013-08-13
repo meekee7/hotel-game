@@ -23,6 +23,7 @@ namespace Juego_Hotel
         public Hotel hotel_seleccionado;
         private Principal interfaz;
         Boolean online;
+        int precio_minimo;
 
         public Subastas(ref Juego juego, Principal interfaz, Boolean online)
         {
@@ -58,6 +59,12 @@ namespace Juego_Hotel
                     }
                 }
             }
+        }
+
+        public void Establecer_Precio_Minimo(int precio)
+        {
+            this.precio_minimo = precio;
+            this.precioMinimo.Text = precio.ToString();
         }
 
         private void Rellenar_Lista_Hoteles(Boolean online)
@@ -99,6 +106,10 @@ namespace Juego_Hotel
         {
             if (MessageBox.Show(Mensajes.mensajeConfirmacionSubasta, Mensajes.tituloConfirmacionSubasta, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                if (MessageBox.Show(Mensajes.mensajePrecioMinimoEnSubasta, Mensajes.tituloSubastas, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    this.Establecer_Precio_Minimo(this.hotel_seleccionado.Calcular_precio_minimo());
+                else
+                    this.Establecer_Precio_Minimo(50);
                 this.cantidad.Enabled = true;
                 this.bVender.Enabled = true;
                 this.bCerrar.Enabled = false;
@@ -141,7 +152,8 @@ namespace Juego_Hotel
                     this.bJ4.Enabled = false;
                     this.cantidad.Enabled = false;
                     int id = this.interfaz.game_id;
-                    this.interfaz.frm_online.enviar_comando("auction_start", id.ToString(), this.hotel_seleccionado.nombre_txt.ToString());
+                    this.interfaz.frm_online.enviar_comando("auction_start", id.ToString(),
+                        this.hotel_seleccionado.nombre_txt.ToString(), this.precio_minimo.ToString());
                 }
                 this.bSubastar.Enabled = false;
             }
@@ -214,6 +226,8 @@ namespace Juego_Hotel
                 MessageBox.Show(Mensajes.mensajeErrorPujaNoSuficienteDinero + this.juego.jugadores[n_jugador].Nombre_color());
             else if (cantidad_num % 50 != 0)
                 MessageBox.Show(Mensajes.mensajeErrorPujaNoMultiplo50);
+            else if (cantidad_num < this.precio_minimo)
+                MessageBox.Show(String.Format(Mensajes.mensajeErrorPujaNoPrecioMinimo, this.precio_minimo));
             else
             {
                 if (MessageBox.Show(Mensajes.mensajeConfirmarPuja, Mensajes.tituloConfirmarPuja, MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -227,7 +241,7 @@ namespace Juego_Hotel
                     {
                         this.n_precio_mayor = cantidad_num;
                         this.precio_mayor.Text = cantidad_num.ToString();
-                        this.mayor_postor.Text = "J" + (n_jugador + 1) + " - " + this.juego.jugadores[n_jugador].Nombre_color();
+                        this.mayor_postor.Text = Mensajes.textoAbreviaturaJugador + (n_jugador + 1) + " - " + this.juego.jugadores[n_jugador].Nombre_color();
                         this.n_mayor_postor = n_jugador;
                     }
                 }

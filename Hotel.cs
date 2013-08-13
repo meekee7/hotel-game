@@ -298,6 +298,20 @@ namespace Juego_Hotel
             return this.matriz_precios[this.n_fases_construidas-1, cuantas-1]; // Restamos para acceder correctamente a la matriz de precios
         }
 
+        public int Calcular_precio_minimo()
+        {
+            // Calcula el precio total de todo lo que hay construido y lo divide entre 3, devolviendo un valor múltiplo de 50 por abajo
+            int res = this.precio / 3;
+            for (int i = 0; i < n_fases_construidas; i++)
+            {
+                res += (this.precios_ampliaciones[i] / 3);
+            }
+            int resto = res % 50;
+            if (resto != 0)
+                res -= resto;
+            return res;
+        }
+
         public void Devolver_a_banca()
         {
             // El hotel de queda con las entradas que tenía, solo hay que desasignarlo del dueño

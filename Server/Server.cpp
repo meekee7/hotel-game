@@ -384,10 +384,12 @@ void Server::handle_command(string command, Player* player)
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
         int len_name = receive_int(player, &bytes_received);
         wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
+        len_int = receive_int(player, &bytes_received);
+        int minimum_price = atoi(receive_string(player, len_int, &bytes_received).c_str());
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        ch->AuctionStart(player, game, hotel_name);
+        ch->AuctionStart(player, game, hotel_name, minimum_price);
     }
     else if (command == "auction_bid")
     {

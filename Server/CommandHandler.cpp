@@ -916,7 +916,7 @@ void CommandHandler::PayNights(Player* player, Game* game, int n_5000, int n_100
     this->serverState->debt_mutex.unlock();
 }
 
-void CommandHandler::AuctionStart(Player* player, Game* game, wstring hotel_name)
+void CommandHandler::AuctionStart(Player* player, Game* game, wstring hotel_name, int minimum_price)
 {
     if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
         return kick_hacker(68, player);
@@ -927,6 +927,7 @@ void CommandHandler::AuctionStart(Player* player, Game* game, wstring hotel_name
         return kick_hacker(70, player);
     game->hotel_at_auction = hotel;
     game->best_bid = 0;
+    game->auction_min_price = minimum_price;
     Player* dest;
     for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
@@ -935,6 +936,7 @@ void CommandHandler::AuctionStart(Player* player, Game* game, wstring hotel_name
         send_int(dest, game->id);
         send_int(dest, get_utf8_length(hotel->name_txt));
         send_wstring(dest, hotel->name_txt);
+        send_int(dest, game->auction_min_price);
     }
 }
 
@@ -949,7 +951,8 @@ void CommandHandler::AuctionBid(Player* player, Game* game, int amount)
         return kick_hacker(72, player);
     if (player == game->hotel_at_auction->owner) // Hack, retire player, he is trying to bid in his own auction
         return kick_hacker(73, player);
-    if ((amount <= 0) || (amount < (game->best_bid)) || amount > (state->total_money) || ((amount % 50) != 0)) // Hack, retire player, invalid values
+    if ((amount <= 0) || (amount < (game->best_bid)) || amount > (state->total_money)
+       || ((amount % 50) != 0) || (amount < game->auction_min_price)) // Hack, retire player, invalid values
         return kick_hacker(74, player);
     game->best_bid = amount;
     game->best_bidder = player;

@@ -124,21 +124,39 @@
   <data name="&gt;&gt;txt_mayor_postor.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="etiPrecioMinimo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 64</value>
+  </data>
   <data name="&gt;&gt;txtCantidad.Name" xml:space="preserve">
     <value>txtCantidad</value>
   </data>
-  <data name="&gt;&gt;bJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;etiPrecioMinimo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bJ3.Name" xml:space="preserve">
     <value>bJ3</value>
   </data>
+  <data name="etiPrecioMinimo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="precioMinimo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="bJ1.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="&gt;&gt;bJ1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;precioMinimo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="txt_precio_mayor.Location" type="System.Drawing.Point, System.Drawing">
     <value>31, 117</value>
+  </data>
+  <data name="&gt;&gt;etiPrecioMinimo.Parent" xml:space="preserve">
+    <value>grupoHotel</value>
   </data>
   <data name="&gt;&gt;grupoHotel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -162,7 +180,7 @@
     <value>10</value>
   </data>
   <data name="bSubastar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 71</value>
+    <value>107, 92</value>
   </data>
   <data name="&gt;&gt;bVender.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -194,9 +212,6 @@
   <data name="&gt;&gt;bJ3.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;mayor_postor.Name" xml:space="preserve">
-    <value>mayor_postor</value>
-  </data>
   <data name="listaHoteles.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -215,14 +230,17 @@
   <data name="etiHotel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="bJ2.Text" xml:space="preserve">
-    <value>Pujar J2</value>
+  <data name="&gt;&gt;bJ4.Name" xml:space="preserve">
+    <value>bJ4</value>
   </data>
   <data name="bVerHoteles.Location" type="System.Drawing.Point, System.Drawing">
     <value>170, 188</value>
   </data>
   <data name="txt_mayor_postor.Text" xml:space="preserve">
     <value>Mayor postor:</value>
+  </data>
+  <data name="&gt;&gt;precioMinimo.Parent" xml:space="preserve">
+    <value>grupoHotel</value>
   </data>
   <data name="&gt;&gt;bVerHoteles.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -243,10 +261,16 @@
     <value>8</value>
   </data>
   <data name="listaHoteles.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 39</value>
+    <value>107, 28</value>
+  </data>
+  <data name="&gt;&gt;precioMinimo.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="bJ2.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;etiPrecioMinimo.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="txt_precio_mayor.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 13</value>
@@ -273,13 +297,13 @@
     <value>bJ2</value>
   </data>
   <data name="&gt;&gt;bSubastar.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;txt_mayor_postor.Parent" xml:space="preserve">
     <value>grupoEstado</value>
   </data>
-  <data name="bJ2.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+  <data name="cantidad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 28</value>
   </data>
   <data name="bVender.Text" xml:space="preserve">
     <value>Vender</value>
@@ -290,14 +314,20 @@
   <data name="&gt;&gt;cantidad.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="txt_precio_mayor.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="etiPrecioMinimo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 13</value>
   </data>
   <data name="bJ4.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
+  <data name="precioMinimo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 64</value>
+  </data>
   <data name="&gt;&gt;grupoEstado.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="bJ2.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
   <data name="&gt;&gt;listaHoteles.Parent" xml:space="preserve">
     <value>grupoHotel</value>
@@ -309,8 +339,8 @@
   <data name="&gt;&gt;precio_mayor.Name" xml:space="preserve">
     <value>precio_mayor</value>
   </data>
-  <data name="&gt;&gt;listaHoteles.Name" xml:space="preserve">
-    <value>listaHoteles</value>
+  <data name="etiPrecioMinimo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="bJ4.Text" xml:space="preserve">
     <value>Pujar J4</value>
@@ -321,6 +351,9 @@
   <data name="cantidad.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
+  <data name="txt_precio_mayor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="grupoHotel.Text" xml:space="preserve">
     <value>Subastar Hotel</value>
   </data>
@@ -330,8 +363,17 @@
   <data name="bJ4.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
+  <data name="bJ2.Text" xml:space="preserve">
+    <value>Pujar J2</value>
+  </data>
+  <data name="etiPrecioMinimo.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
   <data name="txt_mayor_postor.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 13</value>
+  </data>
+  <data name="&gt;&gt;etiPrecioMinimo.Name" xml:space="preserve">
+    <value>etiPrecioMinimo</value>
   </data>
   <data name="precio_mayor.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 13</value>
@@ -378,11 +420,11 @@
   <data name="mayor_postor.Location" type="System.Drawing.Point, System.Drawing">
     <value>121, 141</value>
   </data>
-  <data name="bSubastar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
   <data name="bJ1.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
+  </data>
+  <data name="precioMinimo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="grupoHotel.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -450,14 +492,17 @@
   <data name="&gt;&gt;bVerHoteles.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="bJ4.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;precioMinimo.Name" xml:space="preserve">
+    <value>precioMinimo</value>
   </data>
   <data name="grupoEstado.Location" type="System.Drawing.Point, System.Drawing">
     <value>285, 22</value>
   </data>
   <data name="&gt;&gt;txtCantidad.Parent" xml:space="preserve">
     <value>grupoEstado</value>
+  </data>
+  <data name="etiPrecioMinimo.Text" xml:space="preserve">
+    <value>Precio mínimo:</value>
   </data>
   <data name="txt_mayor_postor.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -466,7 +511,7 @@
     <value>txt_mayor_postor</value>
   </data>
   <data name="&gt;&gt;listaHoteles.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;bJ3.Parent" xml:space="preserve">
     <value>grupoEstado</value>
@@ -474,14 +519,14 @@
   <data name="&gt;&gt;etiHotel.Parent" xml:space="preserve">
     <value>grupoHotel</value>
   </data>
-  <data name="txt_mayor_postor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>47, 141</value>
+  <data name="precioMinimo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
   </data>
   <data name="cantidad.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="etiHotel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 42</value>
+    <value>10, 31</value>
   </data>
   <data name="bCerrar.Location" type="System.Drawing.Point, System.Drawing">
     <value>34, 188</value>
@@ -496,19 +541,25 @@
     <value>False</value>
   </data>
   <data name="&gt;&gt;etiHotel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;listaHoteles.Name" xml:space="preserve">
+    <value>listaHoteles</value>
   </data>
   <data name="&gt;&gt;grupoHotel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="txt_mayor_postor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 141</value>
+  </data>
   <data name="&gt;&gt;bJ4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="precioMinimo.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
   <data name="&gt;&gt;bJ2.Parent" xml:space="preserve">
     <value>grupoEstado</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>530, 240</value>
   </data>
   <data name="&gt;&gt;listaHoteles.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -516,8 +567,8 @@
   <data name="&gt;&gt;mayor_postor.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;cantidad.Parent" xml:space="preserve">
-    <value>grupoEstado</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>530, 240</value>
   </data>
   <data name="bVender.Location" type="System.Drawing.Point, System.Drawing">
     <value>79, 166</value>
@@ -528,14 +579,20 @@
   <data name="&gt;&gt;bCerrar.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;bJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="bSubastar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="bJ4.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="bJ3.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="bJ1.Location" type="System.Drawing.Point, System.Drawing">
     <value>43, 54</value>
+  </data>
+  <data name="&gt;&gt;bJ3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="bVerHoteles.Text" xml:space="preserve">
     <value>Ver Hoteles</value>
@@ -567,14 +624,17 @@
   <data name="&gt;&gt;bJ2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;bJ4.Name" xml:space="preserve">
-    <value>bJ4</value>
+  <data name="&gt;&gt;mayor_postor.Name" xml:space="preserve">
+    <value>mayor_postor</value>
   </data>
   <data name="grupoHotel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 100</value>
+    <value>248, 130</value>
   </data>
   <data name="&gt;&gt;txtCantidad.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="listaHoteles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
   </data>
   <data name="&gt;&gt;mayor_postor.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -582,14 +642,11 @@
   <data name="bVender.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="listaHoteles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
+  <data name="&gt;&gt;cantidad.Parent" xml:space="preserve">
+    <value>grupoEstado</value>
   </data>
   <data name="&gt;&gt;bVender.Name" xml:space="preserve">
     <value>bVender</value>
-  </data>
-  <data name="cantidad.Location" type="System.Drawing.Point, System.Drawing">
-    <value>124, 28</value>
   </data>
   <data name="&gt;&gt;bCerrar.Name" xml:space="preserve">
     <value>bCerrar</value>

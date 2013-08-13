@@ -776,11 +776,18 @@ Player {0} must pay {1}</value>
   <data name="mensajeErrorPujaNoNumEntero" xml:space="preserve">
     <value>You have not entered a integer value</value>
   </data>
+  <data name="mensajeErrorPujaNoPrecioMinimo" xml:space="preserve">
+    <value>The quantity is lower than the minimum price ({0})</value>
+  </data>
   <data name="mensajeErrorPujaNoSuficienteDinero" xml:space="preserve">
     <value>The quantity is lower than the total money of player </value>
   </data>
   <data name="mensajeNoPujadoTodavia" xml:space="preserve">
     <value>No bids yet</value>
+  </data>
+  <data name="mensajePrecioMinimoEnSubasta" xml:space="preserve">
+    <value>Do you want a minimum price in the auction?
+It will be a third of the buy value of hotel plus built phases</value>
   </data>
   <data name="textoAbreviaturaJugador" xml:space="preserve">
     <value>P</value>

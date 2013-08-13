@@ -776,11 +776,18 @@ El jugador {0} deberá abonar {1}</value>
   <data name="mensajeErrorPujaNoNumEntero" xml:space="preserve">
     <value>No se ha introducido un número entero</value>
   </data>
+  <data name="mensajeErrorPujaNoPrecioMinimo" xml:space="preserve">
+    <value>La cantidad no supera el precio mínimo ({0})</value>
+  </data>
   <data name="mensajeErrorPujaNoSuficienteDinero" xml:space="preserve">
     <value>La cantidad es mayor que el dinero total del jugador </value>
   </data>
   <data name="mensajeNoPujadoTodavia" xml:space="preserve">
     <value>No se ha pujado todavía</value>
+  </data>
+  <data name="mensajePrecioMinimoEnSubasta" xml:space="preserve">
+    <value>¿Quieres que haya precio mínimo en la subasta?
+Se establecerá a un tercio del valor de compra del suelo más las ampliaciones construidas</value>
   </data>
   <data name="textoAbreviaturaJugador" xml:space="preserve">
     <value>J</value>

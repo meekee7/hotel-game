@@ -121,6 +121,9 @@
     <value>Close</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="etiHotel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 30</value>
+  </data>
   <data name="etiHotel.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 13</value>
   </data>
@@ -132,6 +135,9 @@
   </data>
   <data name="grupoHotel.Text" xml:space="preserve">
     <value>Auction Hotel</value>
+  </data>
+  <data name="etiPrecioMinimo.Text" xml:space="preserve">
+    <value>Minimum price:</value>
   </data>
   <data name="bVerHoteles.Text" xml:space="preserve">
     <value>View hotels</value>

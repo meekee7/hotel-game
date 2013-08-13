@@ -34,6 +34,8 @@
             this.listaHoteles = new System.Windows.Forms.ComboBox();
             this.bSubastar = new System.Windows.Forms.Button();
             this.grupoHotel = new System.Windows.Forms.GroupBox();
+            this.precioMinimo = new System.Windows.Forms.Label();
+            this.etiPrecioMinimo = new System.Windows.Forms.Label();
             this.bVerHoteles = new System.Windows.Forms.Button();
             this.txtCantidad = new System.Windows.Forms.Label();
             this.bJ1 = new System.Windows.Forms.Button();
@@ -82,11 +84,23 @@
             // grupoHotel
             // 
             resources.ApplyResources(this.grupoHotel, "grupoHotel");
+            this.grupoHotel.Controls.Add(this.precioMinimo);
+            this.grupoHotel.Controls.Add(this.etiPrecioMinimo);
             this.grupoHotel.Controls.Add(this.bSubastar);
             this.grupoHotel.Controls.Add(this.etiHotel);
             this.grupoHotel.Controls.Add(this.listaHoteles);
             this.grupoHotel.Name = "grupoHotel";
             this.grupoHotel.TabStop = false;
+            // 
+            // precioMinimo
+            // 
+            resources.ApplyResources(this.precioMinimo, "precioMinimo");
+            this.precioMinimo.Name = "precioMinimo";
+            // 
+            // etiPrecioMinimo
+            // 
+            resources.ApplyResources(this.etiPrecioMinimo, "etiPrecioMinimo");
+            this.etiPrecioMinimo.Name = "etiPrecioMinimo";
             // 
             // bVerHoteles
             // 
@@ -218,5 +232,7 @@
         private System.Windows.Forms.Label mayor_postor;
         private System.Windows.Forms.Label txt_mayor_postor;
         private System.Windows.Forms.Button bVender;
+        private System.Windows.Forms.Label etiPrecioMinimo;
+        private System.Windows.Forms.Label precioMinimo;
     }
 }
