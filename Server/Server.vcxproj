@@ -96,7 +96,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Tani\Documents\boost\boost_1_51\lib;D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProgramFiles)\boost\lib;D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -149,7 +149,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
       <OptimizeReferences>true</OptimizeReferences>
       <ForceSymbolReferences>
       </ForceSymbolReferences>
-      <AdditionalLibraryDirectories>D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProgramFiles)\boost\lib;D:\Descargas\Programas\boost\boost_1_51\lib;$(ProjectDir)libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
