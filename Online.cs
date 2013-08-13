@@ -1219,8 +1219,15 @@ namespace Juego_Hotel
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            if (!jugador.Eliminado())
-                partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Finalizar_Partida), jugador);
+            try
+            {
+                if (!jugador.Eliminado())
+                    partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Finalizar_Partida), jugador);
+            }
+            catch (Exception)
+            {
+                // Do nothing, the exception was thrown because the window is no longer opened: the command arrived late
+            }
         }
 
         private void Pedir_noches()
