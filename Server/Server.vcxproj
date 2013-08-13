@@ -139,7 +139,7 @@ xcopy /D /Y "$(ProjectDir)libs\libmysql.dll" "$(ProjectDir)bin\$(Configuration)"
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>D:\Descargas\Programas\boost\boost_1_51;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProgramFiles)\boost;D:\Descargas\Programas\boost\boost_1_51;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
