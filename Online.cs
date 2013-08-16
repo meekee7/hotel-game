@@ -1085,7 +1085,17 @@ namespace Juego_Hotel
                 long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
                 lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             }
-            this.Buscar_partida(id).Iniciar(num_jugadores, config, jug_inicial, lista_jugadores);
+            PartidaOnline partida = this.Buscar_partida(id);
+            if (partida.cargada)
+            {
+                int long_jug_act = this.recibir_int(this.socket, ref bytes_recibidos);
+                string jugador_actual = this.recibir_string(this.socket, long_jug_act, ref bytes_recibidos);
+                int ultimo_avance_auto = this.recibir_int(this.socket, ref bytes_recibidos);
+                int ultimo_res_dado = this.recibir_int(this.socket, ref bytes_recibidos);
+                partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado);
+            }
+            else
+                partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores);
         }
 
         private void Pasar_Turno()

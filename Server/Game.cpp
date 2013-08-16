@@ -86,10 +86,13 @@ bool Game::join(Player* p)
             wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
             return false;
         }
-        p->Join_Game(this->id);
-        this->plist.push_back(p);
-        p->GetState(this->id)->num = this->plist.size();
-        this->active_plist.push_back(p);
+        if (!this->loaded) // If loaded, the data will be filled in SavedgamesMgr::LoadPlayerData
+        {
+            p->Join_Game(this->id);
+            p->GetState(this->id)->num = this->plist.size();
+            this->plist.push_back(p);
+            this->active_plist.push_back(p);
+        }
         this->chat->join(p);
         wcout << currentDateTime() << L"Player " << p->name << L" joined game " << this->name << endl;
         return true;
@@ -141,16 +144,21 @@ bool Game::leave(Player* p)
 
 void Game::start()
 {
-    // Roll dice to get first player
-    int res = (this->random->RollDice(6, 1) - 1) % this->n_players;
-    list<Player*>::iterator i = this->plist.begin();
-    advance(i, res);
-    this->current_player = (*i);
-    this->starting_player = res;
+    if (!this->loaded)
+    {
+        // Roll dice to get first player
+        int res = (this->random->RollDice(6, 1) - 1) % this->n_players;
+        list<Player*>::iterator i = this->plist.begin();
+        advance(i, res);
+        this->current_player = (*i);
+        this->starting_player = res;
+        this->last_dice_res = 0;
+        this->last_auto_advance = 0;
+        wcout << currentDateTime() << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")." << endl;
+    }
     this->started = true;
-    this->last_dice_res = 0;
-    this->last_auto_advance = 0;
-    wcout << currentDateTime() << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")" << endl;
+    wcout << currentDateTime() << "Game " << this->name << " started (loaded). It's player " << this->current_player->name <<
+        " turn (number " << this->turn_count << ")." << endl;
 }
 
 int Game::roll_dice()

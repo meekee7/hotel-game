@@ -448,6 +448,7 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
         wcout << utf8_to_utf16(str(boost::format("Player '%s' does not belong the game %d") % utf16_to_utf8(player->name) % game->id)) << endl;
         return 2; // Player does not exists
     }
+    player->Join_Game(game->id);
     PlayerGameState* state = player->GetState(game->id);
     state->bd_id = res->get_int_field("id");
     state->num = res->get_int_field("numero");
@@ -462,6 +463,22 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
     for (int i = 0 ; i < (int)hotels.size() ; i++)
     {
         state->hotels.push_back(get_hotel_from_name(utf8_to_utf16(hotels[i]), game));
+    }
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; i++)
+    {
+        if (state->num < (*i)->GetState(game->id)->num)
+        {
+            game->plist.insert(i, player);
+            break;
+        }
+    }
+    for (list<Player*>::iterator i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
+    {
+        if (state->num < (*i)->GetState(game->id)->num)
+        {
+            game->active_plist.insert(i, player);
+            break;
+        }
     }
     return 0;
 }

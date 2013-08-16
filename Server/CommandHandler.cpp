@@ -151,7 +151,8 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
         return kick_hacker(7, player);
     if (game->started || game->ended) // Hack, start a already started game or an ended game
         return kick_hacker(8, player);
-    game->set_players_money(configuration);
+    if (!game->loaded)
+      game->set_players_money(configuration);
     game->start();
     list<Player*>::iterator i, j;
     Player* dest;
@@ -171,6 +172,13 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
+        }
+        if (game->loaded)
+        {
+            send_int(dest, get_utf8_length(game->current_player->name));
+            send_wstring(dest, game->current_player->name);
+            send_int(dest, game->last_auto_advance);
+            send_int(dest, game->last_dice_res);
         }
     }
     for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
