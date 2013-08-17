@@ -487,3 +487,15 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
     p->connected = false;
     serverState->mutex_disconnects.unlock();
 }
+
+void insert_and_sort(list<Player*>* plist, Player* player, int game_id)
+{
+    for (list<Player*>::iterator i = plist->begin() ; i != plist->end() ; i++)
+    {
+        if (player->GetState(game_id)->num < (*i)->GetState(game_id)->num)
+        {
+            plist->insert(i, player);
+            break;
+        }
+    }
+}

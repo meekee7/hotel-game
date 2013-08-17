@@ -987,7 +987,14 @@ namespace Juego_Hotel
         
         private void Pulsar_Desconectar()
         {
-            this.BeginInvoke(new Action(this.bDesconectar.PerformClick));
+            try
+            {
+                this.BeginInvoke(new Action(this.bDesconectar.PerformClick));
+            }
+            catch (Exception)
+            {
+                // The window is already closed
+            }
         }
 
         private void Activar_bUnirse()

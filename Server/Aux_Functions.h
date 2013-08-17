@@ -40,3 +40,4 @@ bool delete_player_from_player_list(Player* p, dlib::mutex* mutex_lists, list<Pl
 bool delete_chat_if_empty(Chat* chat, dlib::mutex* mutex_lists, list<Chat*>* chat_list);
 bool delete_game_if_empty(Game* game, dlib::mutex* mutex_lists, list<Game*>* glist);
 void disconnect_client(Player* p, bool kicking, ServerState* serverState);
+void insert_and_sort(list<Player*>* plist, Player* player, int game_id);

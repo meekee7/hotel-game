@@ -464,22 +464,8 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
     {
         state->hotels.push_back(get_hotel_from_name(utf8_to_utf16(hotels[i]), game));
     }
-    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; i++)
-    {
-        if (state->num < (*i)->GetState(game->id)->num)
-        {
-            game->plist.insert(i, player);
-            break;
-        }
-    }
-    for (list<Player*>::iterator i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
-    {
-        if (state->num < (*i)->GetState(game->id)->num)
-        {
-            game->active_plist.insert(i, player);
-            break;
-        }
-    }
+    insert_and_sort(&game->plist, player, game->id);
+    insert_and_sort(&game->active_plist, player, game->id);
     return 0;
 }
 
