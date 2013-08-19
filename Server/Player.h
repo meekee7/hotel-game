@@ -21,6 +21,7 @@ public:
 
     Player(string ip, Portable_socket* socket_client);
     void Join_Game(int game_id);
+    void Leave_Game(int game_id);
     PlayerGameState* GetState(int game_id);
     void Calculate_total_money(int game_id);
     void Charge_bank(int game_id);

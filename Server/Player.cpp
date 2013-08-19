@@ -14,6 +14,13 @@ void Player::Join_Game(int game_id)
         this->games_states->insert(pair<int, PlayerGameState*>(game_id, new PlayerGameState(this)));
 }
 
+void Player::Leave_Game(int game_id)
+{
+    // Delete the game state
+    map<int, PlayerGameState*>::iterator i = this->games_states->find(game_id);
+    this->games_states->erase(i);
+}
+
 PlayerGameState* Player::GetState(int game_id)
 {
     map<int, PlayerGameState*>::iterator i = this->games_states->find(game_id);

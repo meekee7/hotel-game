@@ -81,13 +81,31 @@ void CommandHandler::JoinGame(Player* player, Game* game)
         send_command("cant_join_already_joined", player);
         send_int(player, get_utf8_length(game->name));
         send_wstring(player, game->name);
+    }    
+    else if (game->started)
+    {
+        send_command("cant_join_game_started", player);
+        send_int(player, get_utf8_length(game->name));
+        send_wstring(player, game->name);
     }
-    else if (game->join(player))
+    else if (game->ended)
+    {
+        send_command("cant_join_game_ended", player);
+        send_int(player, get_utf8_length(game->name));
+        send_wstring(player, game->name);
+    }
+    else if ((int) game->plist.size() == game->n_players)
+    {
+        wcout << currentDateTime() << L"Player " << player->name << L" cant join game " << game->name << L" because is full" << endl;
+        send_command("cant_join_game_full", player);
+        send_int(player, get_utf8_length(game->name));
+        send_wstring(player, game->name);
+    }
+    else
     {
         int error_code = (game->loaded ? savedgamesmgr->LoadPlayerData(game, player) : 0);
         if (error_code > 0)
         {
-            game->leave(player);
             send_command("cant_join_not_part_of_saved_game", player);
             send_int(player, get_utf8_length(game->name));
             send_wstring(player, game->name);
@@ -95,6 +113,7 @@ void CommandHandler::JoinGame(Player* player, Game* game)
         }
         else
         {
+            game->join(player);
             send_command("joined_game", player);
             send_int(player, get_utf8_length(game->name));
             send_wstring(player, game->name);
@@ -124,24 +143,6 @@ void CommandHandler::JoinGame(Player* player, Game* game)
             for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
                 SendGameList((*i), &this->serverState->glist);
         }
-    }
-    else if (game->started)
-    {
-        send_command("cant_join_game_started", player);
-        send_int(player, get_utf8_length(game->name));
-        send_wstring(player, game->name);
-    }
-    else if (game->ended)
-    {
-        send_command("cant_join_game_ended", player);
-        send_int(player, get_utf8_length(game->name));
-        send_wstring(player, game->name);
-    }
-    else
-    {
-        send_command("cant_join_game_full", player);
-        send_int(player, get_utf8_length(game->name));
-        send_wstring(player, game->name);
     }
 }
 

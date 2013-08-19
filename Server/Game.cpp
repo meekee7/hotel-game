@@ -74,34 +74,26 @@ void Game::set_players_money(config configuration)
 
 bool Game::join(Player* p)
 {
-    if (((int) this->plist.size() < this->n_players))
+    if (this->started)
     {
-        if (this->started)
-        {
-            wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already started" << endl;
-            return false;
-        }
-        if (this->ended)
-        {
-            wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
-            return false;
-        }
-        if (!this->loaded) // If loaded, the data will be filled in SavedgamesMgr::LoadPlayerData
-        {
-            p->Join_Game(this->id);
-            p->GetState(this->id)->num = this->plist.size();
-            this->plist.push_back(p);
-            this->active_plist.push_back(p);
-        }
-        this->chat->join(p);
-        wcout << currentDateTime() << L"Player " << p->name << L" joined game " << this->name << endl;
-        return true;
-    }
-    else
-    {
-        wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is full" << endl;
+        wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already started" << endl;
         return false;
     }
+    if (this->ended)
+    {
+        wcout << currentDateTime() << L"Player " << p->name << L" cant join game " << this->name << L" because is already finished" << endl;
+        return false;
+    }
+    if (!this->loaded) // If loaded, the data will be filled in SavedgamesMgr::LoadPlayerData
+    {
+        p->Join_Game(this->id);
+        p->GetState(this->id)->num = this->plist.size();
+        this->plist.push_back(p);
+        this->active_plist.push_back(p);
+    }
+    this->chat->join(p);
+    wcout << currentDateTime() << L"Player " << p->name << L" joined game " << this->name << endl;
+    return true;
 }
 
 bool Game::check_already_joined(Player* p)
@@ -115,15 +107,7 @@ bool Game::check_already_joined(Player* p)
 
 bool Game::leave(Player* p)
 {
-    //bool found = false;
     list<Player*>::iterator i = find(this->plist.begin(), this->plist.end(), p);
-    /*while (!found && i != this->plist.end())
-    {
-        if ((*i)->name == p->name)
-            found = true;
-        else
-            ++i;
-    }*/
     if (i == this->plist.end())
     {
         wcout << currentDateTime() << L"Player " << p->name << L" not found in game " << this->name << " (WARNING: Possible hack)" << endl;
@@ -135,6 +119,7 @@ bool Game::leave(Player* p)
             this->eliminate_player(p, NULL);
         this->chat->leave(p);
         this->plist.erase(i);
+        p->Leave_Game(this->id);
         if ((this->plist.size()) > 0 && (this->creator == p))
             this->creator = this->plist.front(); // New creator
         wcout << currentDateTime() << L"Player "<< p->name << L" left game " << this->name << endl;

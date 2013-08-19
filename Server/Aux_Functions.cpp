@@ -490,12 +490,16 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
 
 void insert_and_sort(list<Player*>* plist, Player* player, int game_id)
 {
+    bool inserted = false;
     for (list<Player*>::iterator i = plist->begin() ; i != plist->end() ; i++)
     {
         if (player->GetState(game_id)->num < (*i)->GetState(game_id)->num)
         {
             plist->insert(i, player);
+            inserted = true;
             break;
         }
     }
+    if (!inserted)
+        plist->push_back(player);
 }
