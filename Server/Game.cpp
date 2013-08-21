@@ -16,6 +16,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
         this->n_players_last_save = -1;
     this->creation_date = time(0);
     this->creator = creator;
+    this->current_player = NULL;
     this->plist.push_back(creator);
     this->active_plist.push_back(creator);
     this->chat = new Chat(this->creator, false, mutex_ids, id_count);
@@ -129,6 +130,7 @@ bool Game::leave(Player* p)
 
 void Game::start()
 {
+    this->started = true;
     if (!this->loaded)
     {
         // Roll dice to get first player
@@ -141,9 +143,19 @@ void Game::start()
         this->last_auto_advance = 0;
         wcout << currentDateTime() << "Game " << this->name << " started. Player " << (*i)->name << " is the first (" << res << ")." << endl;
     }
-    this->started = true;
-    wcout << currentDateTime() << "Game " << this->name << " started (loaded). It's player " << this->current_player->name <<
-        " turn (number " << this->turn_count << ")." << endl;
+    else
+    {
+        list<Player*>::iterator i = this->plist.begin();
+        while (this->current_player == NULL)
+        {
+            if ((*i)->GetState(this->id)->num == this->saved_current_player)
+                this->current_player = (*i);
+            else
+                i++;
+        }
+        wcout << currentDateTime() << "Game " << this->name << " started (loaded). It's player " << this->current_player->name <<
+            " turn (number " << this->turn_count << ")." << endl;
+    }
 }
 
 int Game::roll_dice()

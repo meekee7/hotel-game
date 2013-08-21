@@ -26,7 +26,7 @@ namespace Juego_Hotel
         public int game_id;
         public String nombre_online;
         public String online_config;
-        public Boolean partida_cargada, dado_tirado, partida_activa;
+        public Boolean partida_cargada_offline, partida_cargada_online, dado_tirado, partida_activa;
         int ancho_ini;
         int alto_ini;
         Point pos_rojo_orig, pos_azul_orig, pos_verde_orig, pos_amarillo_orig, pos_banco_orig, pos_ayto_orig;
@@ -50,7 +50,7 @@ namespace Juego_Hotel
             this.juego = new Juego();
             this.alto_ini = this.imgTablero.Height;
             this.ancho_ini = this.imgTablero.Width;
-            this.partida_cargada = false;
+            this.partida_cargada_offline = false;
             this.dado_tirado = false;
             this.posRojo.Parent = this.imgTablero;
             this.pos_rojo_orig = this.posRojo.Location;
@@ -127,7 +127,7 @@ namespace Juego_Hotel
                 {
                     return; //Se trata en la función Crear_Jugadores
                 }
-                if ((!this.online) && (!this.partida_cargada)) // Nos viene dado del servidor o por la partida cargada
+                if ((!this.online) && (!this.partida_cargada_offline)) // Nos viene dado del servidor o por la partida cargada
                 {
                     // Decidir quien empieza
                     this.tiradas_ini = new int[this.juego.n_jugadores];
@@ -235,7 +235,7 @@ namespace Juego_Hotel
                 }
                 if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial - 1].nombre_online)))
                     this.bDado.Enabled = true;
-                if (this.partida_cargada) // Reajustar posiciones de los jugadores y rellenar datos
+                if (this.partida_cargada_offline) // Reajustar posiciones de los jugadores y rellenar datos
                 {
                     this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado;
                     foreach (Jugador jugador in this.juego.jugadores)
@@ -448,7 +448,7 @@ namespace Juego_Hotel
 
         public void Crear_Jugadores()
         {
-            if (!this.partida_cargada)
+            if (!this.partida_cargada_offline)
             {
                 this.juego.jugadores = new Jugador[this.juego.n_jugadores];
                 this.juego.n_jugadores_activos = this.juego.n_jugadores;
@@ -736,7 +736,8 @@ namespace Juego_Hotel
             int num_jugadores = this.juego.n_jugadores;
             this.juego = new Juego();
             this.juego.n_jugadores = num_jugadores;
-            this.partida_cargada = false;
+            this.partida_cargada_offline = false;
+            this.partida_cargada_online = false;
         }
 
         private void bTurno_Click(object sender, EventArgs e)
@@ -1624,7 +1625,7 @@ namespace Juego_Hotel
                     }
                     else
                     {
-                        this.partida_cargada = true;
+                        this.partida_cargada_offline = true;
                         this.bIniciar.PerformClick();
                     }
                 }

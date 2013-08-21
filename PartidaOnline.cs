@@ -182,9 +182,9 @@ namespace Juego_Hotel
                 lista_jugadores[i] = l_parametros.First.Value as String;
                 l_parametros.RemoveFirst();
             }
-            this.interfaz.partida_cargada = (Boolean)l_parametros.First.Value;
+            this.interfaz.partida_cargada_online = (Boolean)l_parametros.First.Value;
             l_parametros.RemoveFirst();
-            if (this.interfaz.partida_cargada)
+            if (this.interfaz.partida_cargada_online)
             {
                 this.interfaz.juego.ultimo_avance_auto = (int)(l_parametros.First.Value);
                 l_parametros.RemoveFirst();
