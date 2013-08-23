@@ -1,6 +1,7 @@
 #include "CommandHandler.h"
 #include "Aux_Functions.h"
 #include "dlib/string.h"
+#include <boost/format.hpp>
 
 // Retire from all games and disconnect him using existing function
 void CommandHandler::kick_hacker(int reason, Player* p)
@@ -180,6 +181,8 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
             send_wstring(dest, game->current_player->name);
             send_int(dest, game->last_auto_advance);
             send_int(dest, game->last_dice_res);
+
+            string player_data = str(boost::format(""));
         }
     }
     for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
