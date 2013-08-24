@@ -1081,24 +1081,25 @@ namespace Juego_Hotel
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int num_jugadores = this.recibir_int(this.socket, ref bytes_recibidos);
-            int long_config = this.recibir_int(this.socket, ref bytes_recibidos);
-            String config = this.recibir_string(this.socket, long_config, ref bytes_recibidos);
+            String config = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
             int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
             int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
-            int long_nombre;
-            String[] lista_jugadores = new String[cuantos];
+            // First field for the name and second for the status in case the game is loaded
+            Dictionary<String, String> lista_jugadores = new Dictionary<String, String>(cuantos);
             for (int i = 0; i < cuantos; i++)
             {
-                long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
-                lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                lista_jugadores.Add(this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos), String.Empty);
             }
             PartidaOnline partida = this.Buscar_partida(id);
             if (partida.cargada)
             {
-                int long_jug_act = this.recibir_int(this.socket, ref bytes_recibidos);
-                string jugador_actual = this.recibir_string(this.socket, long_jug_act, ref bytes_recibidos);
+                string jugador_actual = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
                 int ultimo_avance_auto = this.recibir_int(this.socket, ref bytes_recibidos);
                 int ultimo_res_dado = this.recibir_int(this.socket, ref bytes_recibidos);
+                for (int i = 0; i < lista_jugadores.Count; i++ )
+                {
+                    lista_jugadores[lista_jugadores.Keys.ElementAt(i)] = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
+                }
                 partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado);
             }
             else

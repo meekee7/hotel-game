@@ -140,69 +140,60 @@ namespace Juego_Hotel
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 
-        public void Iniciar(int num_jugadores, String config, int jug_inicial, String[] lista_nombres, Boolean cargada = false,
+        public void Iniciar(int num_jugadores, String config, int jug_inicial, Dictionary<String, String> lista_jugadores, Boolean cargada = false,
             int ultimo_avance_auto = 0, int ultimo_res_dado = 0)
         {
             Thread thread_partida = new Thread(manejar_partida);
             thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
-            LinkedList<Object> parametros = new LinkedList<Object>();
-            parametros.AddLast(num_jugadores);
-            parametros.AddLast(jug_inicial);
-            parametros.AddLast(config);
-            parametros.AddLast(lista_nombres.Length);
-            parametros.AddLast(this.creador);
-            foreach (String nombre in lista_nombres)
-                parametros.AddLast(nombre);
-            parametros.AddLast(cargada);
-            parametros.AddLast(ultimo_avance_auto);
-            parametros.AddLast(ultimo_res_dado);
+            List<Object> parametros = new List<Object>();
+            parametros.Add(num_jugadores);
+            parametros.Add(jug_inicial);
+            parametros.Add(config);
+            parametros.Add(this.creador);
+            parametros.Add(lista_jugadores);
+            parametros.Add(cargada);
+            parametros.Add(ultimo_avance_auto);
+            parametros.Add(ultimo_res_dado);
             thread_partida.Start(parametros);
         }
 
         void manejar_partida(object parametros)
         {
-            LinkedList<Object> l_parametros = (LinkedList<Object>)parametros;
+            List<Object> l_parametros = parametros as List<Object>;
             this.interfaz = new Principal(true, this.frm_online, this.frm_online.configuracion_local);
-            int num_jugadores = (int)(l_parametros.First.Value);
-            l_parametros.RemoveFirst();
-            this.interfaz.juego.jug_inicial = (int)(l_parametros.First.Value) + 1;
-            l_parametros.RemoveFirst();
+            int num_jugadores = (int)l_parametros.First();
+            l_parametros.RemoveAt(0);
+            this.interfaz.juego.jug_inicial = (int)l_parametros.First() + 1;
+            l_parametros.RemoveAt(0);
             this.interfaz.juego.n_jugadores = num_jugadores;
             this.interfaz.game_id = this.id;
-            this.interfaz.online_config = l_parametros.First.Value as String;
-            l_parametros.RemoveFirst();
-            int cuantos = (int)l_parametros.First.Value;
-            l_parametros.RemoveFirst();
-            String[] lista_jugadores = new String[cuantos];
-            l_parametros.RemoveFirst();
-            this.interfaz.creador_online = l_parametros.First.Value as String;
-            int i;
-            for (i = 0; i < cuantos; i++)
-            {
-                lista_jugadores[i] = l_parametros.First.Value as String;
-                l_parametros.RemoveFirst();
-            }
-            this.interfaz.partida_cargada_online = (Boolean)l_parametros.First.Value;
-            l_parametros.RemoveFirst();
+            this.interfaz.online_config = l_parametros.First() as String;
+            l_parametros.RemoveAt(0);
+            this.interfaz.creador_online = l_parametros.First() as String;
+            l_parametros.RemoveAt(0);
+            Dictionary<String, String> lista_jugadores = l_parametros.First() as Dictionary<String, String>;
+            l_parametros.RemoveAt(0);
+            this.interfaz.partida_cargada_online = (Boolean)l_parametros.First();
+            l_parametros.RemoveAt(0);
             if (this.interfaz.partida_cargada_online)
             {
-                this.interfaz.juego.ultimo_avance_auto = (int)(l_parametros.First.Value);
-                l_parametros.RemoveFirst();
-                this.interfaz.juego.ultimo_res_dado = (int)(l_parametros.First.Value);
-                l_parametros.RemoveFirst();
+                this.interfaz.juego.ultimo_avance_auto = (int)l_parametros.First();
+                l_parametros.RemoveAt(0);
+                this.interfaz.juego.ultimo_res_dado = (int)l_parametros.First();
+                l_parametros.RemoveAt(0);
             }
             else
                 l_parametros.Clear();
-            this.interfaz.juego.lista_jugadores_online = lista_jugadores;
+            this.interfaz.juego.lista_jugadores_online = lista_jugadores.Keys.ToList();
             this.interfaz.nombre_online = this.frm_online.txtLogin.Text;
             switch (num_jugadores)
             {
-                case 4: this.interfaz.nombreJ4.Text = this.interfaz.resources.GetString("nombreJ4.Text") + lista_jugadores[3];
+                case 4: this.interfaz.nombreJ4.Text = this.interfaz.resources.GetString("nombreJ4.Text") + this.interfaz.juego.lista_jugadores_online[3];
                         goto case 3;
-                case 3: this.interfaz.nombreJ3.Text = this.interfaz.resources.GetString("nombreJ3.Text") + lista_jugadores[2];
+                case 3: this.interfaz.nombreJ3.Text = this.interfaz.resources.GetString("nombreJ3.Text") + this.interfaz.juego.lista_jugadores_online[2];
                         goto case 2;
-                case 2: this.interfaz.nombreJ2.Text = this.interfaz.resources.GetString("nombreJ2.Text") + lista_jugadores[1];
-                        this.interfaz.nombreJ1.Text = this.interfaz.resources.GetString("nombreJ1.Text") + lista_jugadores[0];
+                case 2: this.interfaz.nombreJ2.Text = this.interfaz.resources.GetString("nombreJ2.Text") + this.interfaz.juego.lista_jugadores_online[1];
+                        this.interfaz.nombreJ1.Text = this.interfaz.resources.GetString("nombreJ1.Text") + this.interfaz.juego.lista_jugadores_online[0];
                         break;
             }
             Application.Run(this.interfaz);

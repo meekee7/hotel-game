@@ -181,8 +181,15 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
             send_wstring(dest, game->current_player->name);
             send_int(dest, game->last_auto_advance);
             send_int(dest, game->last_dice_res);
-
-            string player_data = str(boost::format(""));
+            PlayerGameState* state;
+            for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+            {
+                state = (*j)->GetState(game->id);
+                string player_data = str(boost::format("%d;%d;%d;%d;%d;%d;%d;%d") % state->num % state->position->number % (state->paid_last_turn ? 1 : 0)
+                    % state->n_5000 % state->n_1000 % state->n_500 % state->n_100 % state->n_50);
+                send_int(dest, player_data.length());
+                send_string(dest, player_data);
+            }
         }
     }
     for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)

@@ -20,7 +20,7 @@ namespace Juego_Hotel
         public int ultimo_res_dado;
         public int ultimo_avance_auto;
         public Casilla[] casillas;
-        public String[] lista_jugadores_online;
+        public List<String> lista_jugadores_online;
         public System.Threading.Semaphore sem_dado_cons;
 
         public Juego()
