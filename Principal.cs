@@ -492,22 +492,40 @@ namespace Juego_Hotel
                 n_50 = Convert.ToInt16(nodo_cantidades.ChildNodes[4].FirstChild.Value);
                 switch (this.juego.n_jugadores)
                 {
-                    case 4: this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
-                            if (this.online)
-                                this.juego.jugadores[3].nombre_online = this.juego.lista_jugadores_online[3];
+                    case 4: if (this.partida_cargada_online)
+                                this.juego.jugadores[3] = new Jugador(this.juego.lista_jugadores_online[3].Item1, this.frm_colores.color_j4, this.juego.lista_jugadores_online[3].Item2);
+                            else
+                            {
+                                this.juego.jugadores[3] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j4, 3);
+                                if (this.online)
+                                    this.juego.jugadores[3].nombre_online = this.juego.lista_jugadores_online[3].Item1;
+                            }
                             this.controlJ4.Enabled = true;
                             goto case 3;
-                    case 3: this.juego.jugadores[2] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j3, 2);
-                            if (this.online)
-                                this.juego.jugadores[2].nombre_online = this.juego.lista_jugadores_online[2];
+                    case 3: if (this.partida_cargada_online)
+                                this.juego.jugadores[2] = new Jugador(this.juego.lista_jugadores_online[2].Item1, this.frm_colores.color_j3, this.juego.lista_jugadores_online[2].Item2);
+                            else
+                            {
+                                this.juego.jugadores[2] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j3, 2);
+                                if (this.online)
+                                    this.juego.jugadores[2].nombre_online = this.juego.lista_jugadores_online[2].Item1;
+                            }
                             this.controlJ3.Enabled = true;
                             goto case 2;
-                    case 2: this.juego.jugadores[1] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j2, 1);
-                            this.juego.jugadores[0] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j1, 0);
-                            if (this.online)
+                    case 2: if (this.partida_cargada_online)
                             {
-                                this.juego.jugadores[1].nombre_online = this.juego.lista_jugadores_online[1];
-                                this.juego.jugadores[0].nombre_online = this.juego.lista_jugadores_online[0];
+                                this.juego.jugadores[1] = new Jugador(this.juego.lista_jugadores_online[1].Item1, this.frm_colores.color_j2, this.juego.lista_jugadores_online[1].Item2);
+                                this.juego.jugadores[0] = new Jugador(this.juego.lista_jugadores_online[0].Item1, this.frm_colores.color_j1, this.juego.lista_jugadores_online[0].Item2);
+                            }
+                            else
+                            {
+                                this.juego.jugadores[1] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j2, 1);
+                                this.juego.jugadores[0] = new Jugador(n_5000, n_1000, n_500, n_100, n_50, this.frm_colores.color_j1, 0);
+                                if (this.online)
+                                {
+                                    this.juego.jugadores[1].nombre_online = this.juego.lista_jugadores_online[1].Item1;
+                                    this.juego.jugadores[0].nombre_online = this.juego.lista_jugadores_online[0].Item1;
+                                }
                             }
                             this.controlJ2.Enabled = true;
                             this.controlJ1.Enabled = true;

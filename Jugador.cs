@@ -40,6 +40,26 @@ namespace Juego_Hotel
             this.entrada_gratis_usada = false;
         }
 
+        public Jugador(String nombre_online, Tipos.Tcolor color, String online_status)
+        {
+            List<String> status = online_status.Split(';').ToList();
+            this.n_billetes_5000 = Convert.ToInt32(status[3]);
+            this.n_billetes_1000 = Convert.ToInt32(status[4]);
+            this.n_billetes_500 = Convert.ToInt32(status[5]);
+            this.n_billetes_100 = Convert.ToInt32(status[6]);
+            this.n_billetes_50 = Convert.ToInt32(status[7]);
+            this.color = color;
+            this.hoteles = new LinkedList<Hotel>();
+            this.n_hoteles = 0;
+            this.posicion = new Casilla(Convert.ToInt32(status[1]));
+            this.calcular_dinero_total();
+            this.pago_ultimo_turno = (Convert.ToInt32(status[2]) == 1 ? true : false);
+            this.eliminado = false;
+            this.n_jugador = Convert.ToInt32(status[0]) - 1;
+            this.entrada_gratis_usada = false;
+            this.nombre_online = nombre_online;
+        }
+
         public void calcular_dinero_total()
         {
             this.dinero_total = (5000 * this.n_billetes_5000) + (1000 * this.n_billetes_1000) +

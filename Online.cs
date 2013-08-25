@@ -1085,10 +1085,10 @@ namespace Juego_Hotel
             int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
             int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
             // First field for the name and second for the status in case the game is loaded
-            Dictionary<String, String> lista_jugadores = new Dictionary<String, String>(cuantos);
+            List<String> nombres_jugadores = new List<String>(cuantos);
             for (int i = 0; i < cuantos; i++)
             {
-                lista_jugadores.Add(this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos), String.Empty);
+                nombres_jugadores.Add(this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos));
             }
             PartidaOnline partida = this.Buscar_partida(id);
             if (partida.cargada)
@@ -1096,14 +1096,22 @@ namespace Juego_Hotel
                 string jugador_actual = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
                 int ultimo_avance_auto = this.recibir_int(this.socket, ref bytes_recibidos);
                 int ultimo_res_dado = this.recibir_int(this.socket, ref bytes_recibidos);
-                for (int i = 0; i < lista_jugadores.Count; i++ )
+                List<Tuple<String, String>> lista_jugadores = new List<Tuple<String, String>>(cuantos);
+                for (int i = 0 ; i < cuantos ; i++ )
                 {
-                    lista_jugadores[lista_jugadores.Keys.ElementAt(i)] = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
+                    lista_jugadores.Add(new Tuple<String, String>(nombres_jugadores[i], recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos)));
                 }
                 partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado);
             }
             else
+            {
+                List<Tuple<String, String>> lista_jugadores = new List<Tuple<String, String>>(cuantos);
+                for (int i = 0 ; i < cuantos ; i++ )
+                {
+                    lista_jugadores.Add(new Tuple<String, String>(nombres_jugadores[i], String.Empty));
+                }
                 partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores);
+            }
         }
 
         private void Pasar_Turno()
