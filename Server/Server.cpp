@@ -598,7 +598,7 @@ void Server::Run(int port)
             #ifdef _WIN32
                 Sleep(5000);
             #else
-                sleep(5000);
+                sleep(5);
             #endif
             wcout << currentDateTime() << L"bind retries: " << bind_retries << endl;
         }
