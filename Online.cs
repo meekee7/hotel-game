@@ -1093,7 +1093,7 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             if (partida.cargada)
             {
-                string jugador_actual = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
+                String jugador_actual = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
                 int ultimo_avance_auto = this.recibir_int(this.socket, ref bytes_recibidos);
                 int ultimo_res_dado = this.recibir_int(this.socket, ref bytes_recibidos);
                 List<Tuple<String, String>> lista_jugadores = new List<Tuple<String, String>>(cuantos);
@@ -1101,7 +1101,12 @@ namespace Juego_Hotel
                 {
                     lista_jugadores.Add(new Tuple<String, String>(nombres_jugadores[i], recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos)));
                 }
-                partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado);
+                List<String> estado_hoteles = new List<String>(Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1); // Menos 1 porque el tipo tiene uno extra llamado Ninguno
+                for (int i = 0 ; i < Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1 ; i++)
+                {
+                    estado_hoteles.Add(this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos));
+                }                
+                partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado, estado_hoteles);
             }
             else
             {

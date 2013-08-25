@@ -197,24 +197,11 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
     for (list<Player*>::iterator i = game->active_plist.begin() ; i != game->active_plist.end() ; i++)
     {
         p = (*i);
-        wstring hotel_list = L"";
         PlayerGameState* player_state = p->GetState(game->id);
-        if (player_state->hotels.size() > 0)
-        {
-            int idx = 1;
-            hotel_list += L"";
-            for (list<Hotel*>::iterator j = player_state->hotels.begin() ; j != player_state->hotels.end() ; j++)
-            {
-                hotel_list += (*j)->name_txt;
-                if (idx < (int)player_state->hotels.size())
-                    hotel_list += L"@";
-                idx++;
-            }
-        }
-        query = str(boost::format("REPLACE INTO estado_jugador VALUES (%s,%s,\"%s\",%d,%d,%d,%d,%d,%d,%d,%d,\"%s\");")
+        query = str(boost::format("REPLACE INTO estado_jugador VALUES (%s,%s,\"%s\",%d,%d,%d,%d,%d,%d,%d,%d);")
             % (overwriting == true ? str(boost::format("%d") % p->GetState(game->id)->bd_id) : "NULL") % game->bd_id % utf16_to_utf8(p->name) % player_state->num
             % player_state->position->number % player_state->paid_last_turn % player_state->n_50 % player_state->n_100 % player_state->n_500
-            % player_state->n_1000 % player_state->n_5000 % utf16_to_utf8(hotel_list));
+            % player_state->n_1000 % player_state->n_5000);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
             wcout << "Error inserting player data, reconnecting to try again..." << endl;
@@ -274,9 +261,9 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
                 idx++;
             }
         }
-        string query = str(boost::format("REPLACE INTO estado_hotel VALUES (%d,%s,\"%s\",%d,%d,%d,\"%s\");")
-            % (overwriting == true ? str(boost::format("%d") % h->bd_id) : "NULL") % game->bd_id % utf16_to_utf8(h->name_txt)
-            % h->n_built_phases % h->entrance_bought_last_turn % h->ground_bought % entrance_list);
+        string query = str(boost::format("REPLACE INTO estado_hotel VALUES (%d,%s,%s,\"%s\",%d,%d,%d,\"%s\");")
+            % (overwriting == true ? str(boost::format("%d") % h->bd_id) : "NULL") % game->bd_id % (h->owner != NULL ? str(boost::format("%d") % h->owner->GetState(game->id)->bd_id) : "NULL")
+            % utf16_to_utf8(h->name_txt) % h->n_built_phases % h->entrance_bought_last_turn % h->ground_bought % entrance_list);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
             wcout << "Error inserting hotel data, reconnecting to try again..." << endl;
@@ -417,10 +404,10 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         creator_status->n_500 = res_creator_status->get_int_field("n_billetes_500");
         creator_status->n_100 = res_creator_status->get_int_field("n_billetes_100");
         creator_status->n_50 = res_creator_status->get_int_field("n_billetes_50");
-        vector<string> hotels = dlib::split(res_creator_status->get_string_field("hoteles_poseidos"), "@");
-        for (int i = 0 ; i < (int)hotels.size() ; i++)
+        res = this->db->ExecuteQueryWithData(str(boost::format("SELECT nombre FROM estado_hotel WHERE id_partida = %d AND dueno = %d;") % game->bd_id % creator_status->bd_id));
+        while (res->fetch_row())
         {
-            creator_status->hotels.push_back(get_hotel_from_name(utf8_to_utf16(hotels[i]), game));
+            creator_status->hotels.push_back(get_hotel_from_name(utf8_to_utf16(res->get_string_field("nombre")), game));
         }
         delete res_hotel_statuses;
         delete res_creator_status;
@@ -459,10 +446,10 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
     state->n_500 = res->get_int_field("n_billetes_500");
     state->n_100 = res->get_int_field("n_billetes_100");
     state->n_50 = res->get_int_field("n_billetes_50");
-    vector<string> hotels = dlib::split(res->get_string_field("hoteles_poseidos"), "@");
-    for (int i = 0 ; i < (int)hotels.size() ; i++)
+    res = this->db->ExecuteQueryWithData(str(boost::format("SELECT nombre FROM estado_hotel WHERE id_partida = %d AND dueno = %d;") % game->bd_id % state->bd_id));
+    while (res->fetch_row())
     {
-        state->hotels.push_back(get_hotel_from_name(utf8_to_utf16(hotels[i]), game));
+        state->hotels.push_back(get_hotel_from_name(utf8_to_utf16(res->get_string_field("nombre")), game));
     }
     insert_and_sort(&game->plist, player, game->id);
     insert_and_sort(&game->active_plist, player, game->id);

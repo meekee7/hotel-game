@@ -141,7 +141,7 @@ namespace Juego_Hotel
         }
 
         public void Iniciar(int num_jugadores, String config, int jug_inicial, List<Tuple<String, String>> lista_jugadores, Boolean cargada = false,
-            int ultimo_avance_auto = 0, int ultimo_res_dado = 0)
+            int ultimo_avance_auto = 0, int ultimo_res_dado = 0, List<String> estado_hoteles = null)
         {
             Thread thread_partida = new Thread(Manejar_partida);
             thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
@@ -154,6 +154,7 @@ namespace Juego_Hotel
             parametros.Add(cargada);
             parametros.Add(ultimo_avance_auto);
             parametros.Add(ultimo_res_dado);
+            parametros.Add(estado_hoteles);
             thread_partida.Start(parametros);
         }
 
@@ -180,6 +181,8 @@ namespace Juego_Hotel
                 this.interfaz.juego.ultimo_avance_auto = (int)l_parametros.First();
                 l_parametros.RemoveAt(0);
                 this.interfaz.juego.ultimo_res_dado = (int)l_parametros.First();
+                l_parametros.RemoveAt(0);
+                this.interfaz.juego.estado_hoteles_online = l_parametros.First() as List<String>;
                 l_parametros.RemoveAt(0);
             }
             else

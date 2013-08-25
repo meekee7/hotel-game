@@ -395,6 +395,23 @@ void Hotel::Return_to_bank()
     this->owner = NULL;
 }
 
+string Hotel::Create_entrance_list()
+{
+    string entrance_list = "";
+    if (this->entrances.size() > 0)
+    {
+        int idx = 1;
+        for (list<int>::iterator i = this->entrances.begin() ; i != this->entrances.end() ; i++)
+        {
+            entrance_list += (*i);
+            if (idx < (int)this->entrances.size())
+                entrance_list += "@";
+            idx++;
+        }
+    }
+    return entrance_list;
+}
+
 Hotel::~Hotel(void)
 {
 }

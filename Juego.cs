@@ -21,6 +21,7 @@ namespace Juego_Hotel
         public int ultimo_avance_auto;
         public Casilla[] casillas;
         public List<Tuple<String, String>> lista_jugadores_online;
+        public List<String> estado_hoteles_online;
         public System.Threading.Semaphore sem_dado_cons;
 
         public Juego()

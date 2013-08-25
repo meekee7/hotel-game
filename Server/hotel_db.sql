@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.3deb1
+-- version 4.0.5deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-07-2013 a las 13:23:19
+-- Tiempo de generación: 25-08-2013 a las 14:18:07
 -- Versión del servidor: 5.5.31-1
--- Versión de PHP: 5.4.4-15.1
+-- Versión de PHP: 5.5.1-2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -32,13 +32,15 @@ DROP TABLE IF EXISTS `estado_hotel`;
 CREATE TABLE IF NOT EXISTS `estado_hotel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_partida` int(11) DEFAULT NULL,
+  `dueno` int(11) DEFAULT NULL,
   `nombre` varchar(9) NOT NULL,
   `num_fases_construidas` int(11) NOT NULL,
   `entrada_comprada_ultimo_turno` tinyint(1) NOT NULL,
   `suelo_comprado` tinyint(1) NOT NULL,
   `posiciones_de_entradas` varchar(40) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_partida` (`id_partida`)
+  KEY `id_partida` (`id_partida`),
+  KEY `dueno` (`dueno`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
@@ -60,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `estado_jugador` (
   `n_billetes_500` int(11) NOT NULL,
   `n_billetes_1000` int(11) NOT NULL,
   `n_billetes_5000` int(11) NOT NULL,
-  `hoteles_poseidos` varchar(70) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_partida` (`id_partida`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
@@ -98,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `partida` (
 -- Filtros para la tabla `estado_hotel`
 --
 ALTER TABLE `estado_hotel`
+  ADD CONSTRAINT `dueno_hotel_ibfk_1` FOREIGN KEY (`dueno`) REFERENCES `estado_jugador` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `estado_hotel_ibfk_1` FOREIGN KEY (`id_partida`) REFERENCES `partida` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
