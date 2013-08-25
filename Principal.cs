@@ -235,7 +235,7 @@ namespace Juego_Hotel
                 }
                 if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial - 1].nombre_online)))
                     this.bDado.Enabled = true;
-                if (this.partida_cargada_offline) // Reajustar posiciones de los jugadores y rellenar datos
+                if (this.partida_cargada_offline || this.partida_cargada_online) // Reajustar posiciones de los jugadores y rellenar datos
                 {
                     this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado;
                     foreach (Jugador jugador in this.juego.jugadores)
@@ -276,6 +276,43 @@ namespace Juego_Hotel
                                 break;
                     }
                     this.Actualizar_Dinero_Jugadores();
+                    // Cargar el estado de los hoteles si es partida online
+                    if (this.partida_cargada_online)
+                    {
+                        foreach (String estado_hotel in this.juego.estado_hoteles_online)
+                        {
+                            String[] estado = estado_hotel.Split(';');
+                            Hotel hotel = this.juego.hoteles.First(x => x.nombre_txt == estado[0]);
+                            if (estado[1] != "0")
+                            {
+                                hotel.dueño = this.juego.jugadores.FirstOrDefault(x => x.n_jugador == Convert.ToInt16(estado[1]) - 1);
+                                hotel.dueño.hoteles.AddLast(hotel);
+                            }
+                            hotel.n_fases_construidas = Convert.ToInt16(estado[2]);
+                            hotel.entrada_comprada_ultimo_turno = (estado[3] == "1" ? true : false);
+                            hotel.entrada_comprada_ultimo_turno = (estado[4] == "1" ? true : false);
+                            if (estado[5] != "")
+                            {
+                                String[] lista_entradas = estado[5].Split('@');
+                                hotel.n_entradas = lista_entradas.Length;
+                                foreach (String s_num_casilla in lista_entradas)
+                                {
+                                    int num_casilla = Convert.ToInt16(s_num_casilla);
+                                    if (this.juego.casillas[num_casilla].hotel_der == hotel.nombre)
+                                    {
+                                        this.juego.casillas[num_casilla].entrada_en_der = true;
+                                        this.Dibujar_Entrada(this.juego.casillas[num_casilla], true);
+                                    }
+                                    else if (this.juego.casillas[num_casilla].hotel_izq == hotel.nombre)
+                                    {
+                                        this.juego.casillas[num_casilla].entrada_en_izq = true;
+                                        this.Dibujar_Entrada(this.juego.casillas[num_casilla], false);
+                                    }
+                                    hotel.entradas.AddLast(this.juego.casillas[num_casilla]);
+                                }
+                            }
+                        }
+                    }
                     // Dibujar todas las fases ya hechas
                     int pos_fase_hotel;
                     foreach (Hotel hotel in this.juego.hoteles)

@@ -192,8 +192,8 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
             }
             for (vector<Hotel*>::iterator k = game->hlist.begin() ; k != game->hlist.end() ; ++k)
             {
-                string hotel_data = str(boost::format("%s;%d;%d;%d;%s") % utf16_to_utf8((*k)->name_txt) % (*k)->n_built_phases % ((*k)->entrance_bought_last_turn ? 1 : 0)
-                    % ((*k)->ground_bought ? 1 : 0) % (*k)->Create_entrance_list());
+                string hotel_data = str(boost::format("%s;%d;%d;%d;%d;%s") % utf16_to_utf8((*k)->name_txt) % ((*k)->owner != NULL ? (*k)->owner->GetState(game->id)->num : 0)
+                    % (*k)->n_built_phases % ((*k)->entrance_bought_last_turn ? 1 : 0) % ((*k)->ground_bought ? 1 : 0) % (*k)->Create_entrance_list());
                 send_int(dest, hotel_data.length());
                 send_string(dest, hotel_data);
             }

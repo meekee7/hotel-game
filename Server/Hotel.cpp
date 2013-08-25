@@ -1,4 +1,5 @@
 #include "Hotel.h"
+#include <boost/lexical_cast.hpp>
 
 Hotel::Hotel(THotel_name name)
 {
@@ -403,7 +404,7 @@ string Hotel::Create_entrance_list()
         int idx = 1;
         for (list<int>::iterator i = this->entrances.begin() ; i != this->entrances.end() ; i++)
         {
-            entrance_list += (*i);
+            entrance_list += boost::lexical_cast<std::string>((*i));
             if (idx < (int)this->entrances.size())
                 entrance_list += "@";
             idx++;

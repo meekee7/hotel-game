@@ -407,7 +407,9 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         res = this->db->ExecuteQueryWithData(str(boost::format("SELECT nombre FROM estado_hotel WHERE id_partida = %d AND dueno = %d;") % game->bd_id % creator_status->bd_id));
         while (res->fetch_row())
         {
-            creator_status->hotels.push_back(get_hotel_from_name(utf8_to_utf16(res->get_string_field("nombre")), game));
+            Hotel* hotel = get_hotel_from_name(utf8_to_utf16(res->get_string_field("nombre")), game);
+            creator_status->hotels.push_back(hotel);
+            hotel->owner = creator;
         }
         delete res_hotel_statuses;
         delete res_creator_status;
@@ -449,7 +451,9 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
     res = this->db->ExecuteQueryWithData(str(boost::format("SELECT nombre FROM estado_hotel WHERE id_partida = %d AND dueno = %d;") % game->bd_id % state->bd_id));
     while (res->fetch_row())
     {
-        state->hotels.push_back(get_hotel_from_name(utf8_to_utf16(res->get_string_field("nombre")), game));
+        Hotel* hotel = get_hotel_from_name(utf8_to_utf16(res->get_string_field("nombre")), game);
+        state->hotels.push_back(hotel);
+        hotel->owner = player;
     }
     insert_and_sort(&game->plist, player, game->id);
     insert_and_sort(&game->active_plist, player, game->id);
