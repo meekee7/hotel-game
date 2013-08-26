@@ -20,7 +20,8 @@ namespace Juego_Hotel
         public Juego juego;
         int[] tiradas_ini;
         Sel_colores frm_colores = new Sel_colores();
-        Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada, img_tick;
+        Image posRojo_orig, posAzul_orig, posVerde_orig, posAmarillo_orig, img_entrada;
+        Image img_tick_Amarillo, img_tick_Azul, img_tick_Rojo, img_tick_Verde;
         public Boolean online;
         public Online frm_online;
         public int game_id;
@@ -69,7 +70,10 @@ namespace Juego_Hotel
             this.posAmarillo.Location = Calcular_Posicion(this.posAmarillo.Location.X, this.posAmarillo.Location.Y);
             this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
             this.img_entrada = (Image) global::Juego_Hotel.Properties.Resources.Entrada.Clone();
-            this.img_tick = (Image) global::Juego_Hotel.Properties.Resources.green_tick.Clone();
+            this.img_tick_Amarillo = (Image)global::Juego_Hotel.Properties.Resources.TickAmarillo.Clone();
+            this.img_tick_Azul = (Image)global::Juego_Hotel.Properties.Resources.TickAzul.Clone();
+            this.img_tick_Rojo = (Image)global::Juego_Hotel.Properties.Resources.TickRojo.Clone();
+            this.img_tick_Verde = (Image)global::Juego_Hotel.Properties.Resources.TickVerde.Clone();
             this.img_Banco.Parent = this.imgTablero;
             this.pos_banco_orig = this.img_Banco.Location;
             this.img_Banco.Location = Calcular_Posicion(this.img_Banco.Location.X, this.img_Banco.Location.Y);
@@ -1704,7 +1708,17 @@ namespace Juego_Hotel
                 PictureBox fase = new PictureBox();
                 ((ISupportInitialize)(fase)).BeginInit();
                 Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
-                fase.Image = RotarImagen(this.img_tick, pos.grados);
+                switch (this.juego.jugador_actual.color)
+                {
+                    case Tipos.Tcolor.amarillo: fase.Image = RotarImagen(this.img_tick_Amarillo, pos.grados);
+                        break;
+                    case Tipos.Tcolor.azul: fase.Image = RotarImagen(this.img_tick_Azul, pos.grados);
+                        break;
+                    case Tipos.Tcolor.rojo: fase.Image = RotarImagen(this.img_tick_Rojo, pos.grados);
+                        break;
+                    case Tipos.Tcolor.verde: fase.Image = RotarImagen(this.img_tick_Verde, pos.grados);
+                        break;
+                }
                 fase.Location = new Point(pos.X, pos.Y);
                 fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
                 fase.SizeMode = PictureBoxSizeMode.StretchImage;

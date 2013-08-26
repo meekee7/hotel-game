@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Tablero" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -184,13 +184,9 @@
   <data name="Billete_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_100.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="green_tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\green_tick.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Suelo_Royal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Suelo_Royal.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Suelo_Boomerang" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Suelo_Boomerang.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -211,5 +207,32 @@
   </data>
   <data name="Suelo_Waikiki" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Suelo_Waikiki.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="green_tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\green_tick.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TickAmarillo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TickAmarillo.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TickAzul" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TickAzul.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TickRojo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TickRojo.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TickVerde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TickVerde.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TurnoAmarillo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnoAmarillo.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TurnoAzul" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnoAzul.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TurnoRojo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnoRojo.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TurnoVerde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnoVerde.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

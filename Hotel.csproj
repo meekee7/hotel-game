@@ -388,6 +388,14 @@
     <None Include="Images\Suelo_Safari.tif" />
     <None Include="Images\Suelo_TajMahal.tif" />
     <None Include="Images\Suelo_Waikiki.tif" />
+    <None Include="Images\TickAmarillo.tif" />
+    <None Include="Images\TickAzul.tif" />
+    <None Include="Images\TickRojo.tif" />
+    <None Include="Images\TickVerde.tif" />
+    <None Include="Images\TurnoAmarillo.tif" />
+    <None Include="Images\TurnoAzul.tif" />
+    <None Include="Images\TurnoRojo.tif" />
+    <None Include="Images\TurnoVerde.tif" />
     <Content Include="Images\Waikiki_tarjeta.png" />
   </ItemGroup>
   <ItemGroup>
