@@ -637,7 +637,7 @@ No permission is needed to build them. Continue?</value>
     <value>A game with that name already exists</value>
   </data>
   <data name="MADadoTirado" xml:space="preserve">
-    <value>Player {0} ({1}) has rolled the diced and the result is {2}.</value>
+    <value>Player {0} ({1}) has rolled the dice and the result is {2}.</value>
   </data>
   <data name="MAPasarTurno" xml:space="preserve">
     <value>Player {0} ({1}) has passed the turn.</value>
@@ -800,5 +800,11 @@ It will be a third of the buy value of hotel plus built phases</value>
   </data>
   <data name="tituloConfirmarVentaSubasta" xml:space="preserve">
     <value>Confirmation of selling</value>
+  </data>
+  <data name="MADadoTiradoAuto" xml:space="preserve">
+    <value>Player {0} ({1}) is away and the dice has been rolled automatically.The result is {2}.</value>
+  </data>
+  <data name="MAPasarTurnoAuto" xml:space="preserve">
+    <value>Player {0} ({1}) is away and the turn has been passed automatically.</value>
   </data>
 </root>

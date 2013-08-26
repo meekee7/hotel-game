@@ -17,14 +17,15 @@ namespace Juego_Hotel
             InitializeComponent();
         }
 
-        public void DadoTirado(Jugador jugador, int resultado)
+        public void DadoTirado(Jugador jugador, int resultado, Boolean automaticamente)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MADadoTirado, jugador.nombre_online, jugador.Nombre_color(), resultado.ToString()) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format((automaticamente ? Mensajes.MADadoTiradoAuto: Mensajes.MADadoTirado),
+                jugador.nombre_online, jugador.Nombre_color(), resultado.ToString()) + Environment.NewLine);
         }
 
-        public void PasarTurno(String jugador, String color)
+        public void PasarTurno(String jugador, String color, Boolean automaticamente)
         {
-            this.mensajes.AppendText(String.Format(Mensajes.MAPasarTurno, jugador, color) + Environment.NewLine);
+            this.mensajes.AppendText(String.Format((automaticamente ? Mensajes.MAPasarTurnoAuto : Mensajes.MAPasarTurno), jugador, color) + Environment.NewLine);
         }
 
         public void ComprarHotel(String jugador, String color, String hotel)

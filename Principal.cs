@@ -54,18 +54,22 @@ namespace Juego_Hotel
             this.partida_cargada_offline = false;
             this.dado_tirado = false;
             this.posRojo.Parent = this.imgTablero;
+            this.posRojo.BackColor = Color.Transparent;
             this.pos_rojo_orig = this.posRojo.Location;
             this.posRojo.Location = Calcular_Posicion(this.posRojo.Location.X, this.posRojo.Location.Y);
             this.posRojo_orig = (Image)posRojo.Image.Clone();
             this.posAzul.Parent = this.imgTablero;
+            this.posAzul.BackColor = Color.Transparent;
             this.pos_azul_orig = this.posAzul.Location;
             this.posAzul.Location = Calcular_Posicion(this.posAzul.Location.X, this.posAzul.Location.Y);
             this.posAzul_orig = (Image)posAzul.Image.Clone();
             this.posVerde.Parent = this.imgTablero;
+            this.posVerde.BackColor = Color.Transparent;
             this.pos_verde_orig = this.posVerde.Location;
             this.posVerde.Location = Calcular_Posicion(this.posVerde.Location.X, this.posVerde.Location.Y);
             this.posVerde_orig = (Image)posVerde.Image.Clone();
             this.posAmarillo.Parent = this.imgTablero;
+            this.posAmarillo.BackColor = Color.Transparent;
             this.pos_amarillo_orig = this.posAmarillo.Location;
             this.posAmarillo.Location = Calcular_Posicion(this.posAmarillo.Location.X, this.posAmarillo.Location.Y);
             this.posAmarillo_orig = (Image)posAmarillo.Image.Clone();
@@ -103,6 +107,7 @@ namespace Juego_Hotel
                 this.online = false;
                 this.frm_online = null;
                 this.partida_activa = false;
+                this.bCargar.Enabled = true;
             }
             // Rellenar combobox de idiomas
             this.comboBoxIdiomas.Items.Add(new ComboItemImagen(Mensajes.comboBoxIdiomas1, 0));
@@ -211,10 +216,7 @@ namespace Juego_Hotel
                     this.colorJ4.Text = resources.GetString("colorJ4.Text") + this.juego.jugadores[3].Nombre_color();
                 }
                 if (!this.online)
-                {
-                    this.bCargar.Enabled = true;
                     this.bDado.Enabled = true;
-                }
                 else
                 {
                     this.bDado.Enabled = false;
@@ -483,7 +485,7 @@ namespace Juego_Hotel
                 this.dado_tirado = false;
                 System.Media.SystemSounds.Beep.Play();
                 if (this.online)
-                    this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.Nombre_color());//Actualizando datos de la actividad
+                    this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.Nombre_color(), automaticamente);//Actualizando datos de la actividad
                 if (automaticamente)
                     this.bTurno.Enabled = false;
             }
@@ -612,7 +614,7 @@ namespace Juego_Hotel
                 jugador.posicion.ocupada = true; // Ocupamos la casilla
             }
             if (this.online)
-                this.actividad.DadoTirado(jugador, this.juego.ultimo_res_dado);//Actualizando datos de la actividad
+                this.actividad.DadoTirado(jugador, this.juego.ultimo_res_dado, automaticamente);//Actualizando datos de la actividad
             this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado.ToString();
             // Pintamos el coche en su lugar
             Point posicion = Calcular_Posicion(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X, this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
@@ -1708,7 +1710,7 @@ namespace Juego_Hotel
                 PictureBox fase = new PictureBox();
                 ((ISupportInitialize)(fase)).BeginInit();
                 Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
-                switch (this.juego.jugador_actual.color)
+                switch (hotel.dueño.color)
                 {
                     case Tipos.Tcolor.amarillo: fase.Image = RotarImagen(this.img_tick_Amarillo, pos.grados);
                         break;
@@ -1719,6 +1721,7 @@ namespace Juego_Hotel
                     case Tipos.Tcolor.verde: fase.Image = RotarImagen(this.img_tick_Verde, pos.grados);
                         break;
                 }
+                fase.BackColor = Color.Transparent;
                 fase.Location = new Point(pos.X, pos.Y);
                 fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
                 fase.SizeMode = PictureBoxSizeMode.StretchImage;

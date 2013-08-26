@@ -801,4 +801,10 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   <data name="tituloConfirmarVentaSubasta" xml:space="preserve">
     <value>Confirmación de venta</value>
   </data>
+  <data name="MADadoTiradoAuto" xml:space="preserve">
+    <value>El jugador {0} ({1}) está ausente. Dado tirado automáticamente con resultado: {2}</value>
+  </data>
+  <data name="MAPasarTurnoAuto" xml:space="preserve">
+    <value>El jugador {0} ({1}) está ausente y se le ha pasado el turno automáticamente.</value>
+  </data>
 </root>
