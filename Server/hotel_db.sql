@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-08-2013 a las 14:18:07
+-- Tiempo de generación: 26-08-2013 a las 16:28:00
 -- Versión del servidor: 5.5.31-1
 -- Versión de PHP: 5.5.1-2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `hotel`
@@ -39,11 +33,9 @@ CREATE TABLE IF NOT EXISTS `estado_hotel` (
   `suelo_comprado` tinyint(1) NOT NULL,
   `posiciones_de_entradas` varchar(40) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_partida` (`id_partida`),
-  KEY `dueno` (`dueno`)
+  KEY `id_partida_idx` (`id_partida`),
+  KEY `dueno_idx` (`dueno`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `estado_jugador`
@@ -63,10 +55,8 @@ CREATE TABLE IF NOT EXISTS `estado_jugador` (
   `n_billetes_1000` int(11) NOT NULL,
   `n_billetes_5000` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_partida` (`id_partida`)
+  KEY `id_partida_idx` (`id_partida`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `partida`
@@ -99,15 +89,11 @@ CREATE TABLE IF NOT EXISTS `partida` (
 -- Filtros para la tabla `estado_hotel`
 --
 ALTER TABLE `estado_hotel`
-  ADD CONSTRAINT `dueno_hotel_ibfk_1` FOREIGN KEY (`dueno`) REFERENCES `estado_jugador` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `estado_hotel_ibfk_1` FOREIGN KEY (`id_partida`) REFERENCES `partida` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT FOREIGN KEY (`dueno`) REFERENCES `estado_jugador` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT FOREIGN KEY (`id_partida`) REFERENCES `partida` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Filtros para la tabla `estado_jugador`
 --
 ALTER TABLE `estado_jugador`
-  ADD CONSTRAINT `estado_jugador_ibfk_1` FOREIGN KEY (`id_partida`) REFERENCES `partida` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  ADD CONSTRAINT FOREIGN KEY (`id_partida`) REFERENCES `partida` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
