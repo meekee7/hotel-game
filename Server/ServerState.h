@@ -18,15 +18,20 @@ public:
 
     CRandomMT* random_gen;
     int id_count;
+    bool running;
 
     ServerState()
     {
         this->random_gen = new CRandomMT();
         this->id_count = 0;
+        this->running = true;
     }
+
+    
 
     ~ServerState()
     {
+        this->running = false;
         delete this->random_gen;
     }
 };

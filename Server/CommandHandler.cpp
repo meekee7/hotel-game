@@ -470,7 +470,7 @@ void CommandHandler::Retire(Player* player, Game* game, int type, Player* receiv
     }
 }
 
-void CommandHandler::RollDice(Player* player, Game* game)
+void CommandHandler::RollDice(Player* player, Game* game, bool automatically)
 {
     if ((!game->started) || game->ended) // Hack, game not started yet or already ended
         return;
@@ -497,7 +497,9 @@ void CommandHandler::RollDice(Player* player, Game* game)
         send_int(dest, state->position->number);
         send_int(dest, get_utf8_length(player->name));
         send_wstring(dest, player->name);
+        send_int(dest, (automatically ? 1 : 0));
     }
+    game->seconds_elapsed_last_command = 0;
 }
 
 void CommandHandler::RollConstructionDice(Player* player, Game* game)
@@ -527,7 +529,7 @@ void CommandHandler::RollConstructionDice(Player* player, Game* game)
         state->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
 }
 
-void CommandHandler::PassTurn(Player* player, Game* game)
+void CommandHandler::PassTurn(Player* player, Game* game, bool automatically)
 {
     if ((!game->started) || game->ended) // Hack, game not started yet or already ended
         return;
@@ -549,7 +551,9 @@ void CommandHandler::PassTurn(Player* player, Game* game)
         send_int(dest, game->id);
         send_int(dest, get_utf8_length(next_player->name));
         send_wstring(dest, next_player->name);
+        send_int(dest, (automatically ? 1 : 0));
     }
+    game->seconds_elapsed_last_command = 0;
 }
 
 void CommandHandler::ChargeBank(Player* player, Game* game)
@@ -1146,10 +1150,40 @@ void CommandHandler::LoadGame(Player* player, int id, Game* game, wstring passwo
     }
 }
 
+void CommandHandler::CheckForTurnExpirations()
+{
+    while (this->serverState->running)
+    {
+        this->serverState->mutex_lists.lock();
+        for (list<Game*>::iterator i = this->serverState->glist.begin() ; i != this->serverState->glist.end() ; i++)
+        {
+            // Start a timer for this turn. It will be passed automatically in case the player is AFK
+            if ((*i)->started)
+            {
+                (*i)->seconds_elapsed_last_command++;
+                if ((*i)->seconds_elapsed_last_command > 300)
+                {
+                    wcout << L"Player " << (*i)->current_player->name << " is AFK. Passing the turn automatically for game " << (*i)->id << endl;
+                    if (!(*i)->current_player->GetState((*i)->id)->rolled_last_turn)
+                        this->RollDice((*i)->current_player, (*i), true);
+                    this->PassTurn((*i)->current_player, (*i), true);
+                }
+            }
+        }
+        this->serverState->mutex_lists.unlock();
+        #ifdef _WIN32
+            Sleep(1000);
+        #else
+            sleep(1);
+        #endif
+    }
+}
+
 CommandHandler::CommandHandler(void)
 {
     this->savedgamesmgr = new SavedgamesMgr();
     this->serverState = new ServerState();
+    dlib::create_new_thread(CheckForTurnExpirationsWrapper, (void*) this);
 }
 
 CommandHandler::~CommandHandler(void)

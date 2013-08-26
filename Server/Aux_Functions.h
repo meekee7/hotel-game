@@ -13,6 +13,7 @@
 #include "Hotel.h"
 #include "Chat.h"
 #include "ServerState.h"
+#include "CommandHandler.h"
 
 using namespace std;
 
@@ -41,3 +42,4 @@ bool delete_chat_if_empty(Chat* chat, dlib::mutex* mutex_lists, list<Chat*>* cha
 bool delete_game_if_empty(Game* game, dlib::mutex* mutex_lists, list<Game*>* glist);
 void disconnect_client(Player* p, bool kicking, ServerState* serverState);
 void insert_and_sort(list<Player*>* plist, Player* player, int game_id);
+void CheckForTurnExpirationsWrapper(void* ch);

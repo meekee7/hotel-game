@@ -438,7 +438,7 @@ namespace Juego_Hotel
             return sig_jugador;
         }
 
-        public void Pasar_turno(String sig_jugador)
+        public void Pasar_Turno(String sig_jugador, Boolean automaticamente = false)
         {
             if (Todos_Eliminados())
                 Finalizar_Partida(this.juego.jugadores[Sig_jugador_Activo()-1]);
@@ -480,6 +480,8 @@ namespace Juego_Hotel
                 System.Media.SystemSounds.Beep.Play();
                 if (this.online)
                     this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.Nombre_color());//Actualizando datos de la actividad
+                if (automaticamente)
+                    this.bTurno.Enabled = false;
             }
         }
 
@@ -584,7 +586,7 @@ namespace Juego_Hotel
             }
         }
 
-        public void Tirar_dado(Jugador jugador)
+        public void Tirar_Dado(Jugador jugador, Boolean automaticamente = false)
         {
             if (!this.online)
             {
@@ -677,12 +679,14 @@ namespace Juego_Hotel
                         break;
                     case Tipos.Tcasilla.fase_gratis: this.bConstruir.Enabled = true;
                         this.bComprar.Enabled = false;
-                        MessageBox.Show(Mensajes.mensajeCasillaFaseGratis);
+                        if (!automaticamente)
+                            MessageBox.Show(Mensajes.mensajeCasillaFaseGratis);
                         break;
                     case Tipos.Tcasilla.entrada_gratis: this.bConstruir.Enabled = false;
                         this.bComprar.Enabled = false;
                         this.Activar_Poner_Entradas(this.juego.jug_actual);
-                        MessageBox.Show(Mensajes.mensajeCasillaEntradaGratis);
+                        if (!automaticamente)
+                            MessageBox.Show(Mensajes.mensajeCasillaEntradaGratis);
                         break;
                     default: this.bConstruir.Enabled = false;
                         this.bComprar.Enabled = false;
@@ -690,7 +694,8 @@ namespace Juego_Hotel
                 }
                 if (this.juego.ultimo_res_dado == 6)
                 {
-                    MessageBox.Show(Mensajes.mensajeSacadoUnSeis);
+                    if (!automaticamente)
+                        MessageBox.Show(Mensajes.mensajeSacadoUnSeis);
                     this.bDado.Enabled = true;
                 }
                 this.bTurno.Enabled = true;
@@ -704,7 +709,7 @@ namespace Juego_Hotel
             if (this.online)
                 this.frm_online.enviar_comando("roll_dice", this.game_id.ToString());
             else
-                this.Tirar_dado(this.juego.jugador_actual);
+                this.Tirar_Dado(this.juego.jugador_actual);
         }
 
         private void Activar_Poner_Entradas(int num_jugador)
@@ -801,7 +806,7 @@ namespace Juego_Hotel
             if (this.online)
                 this.frm_online.enviar_comando("turn_pass", this.game_id.ToString());
             else
-                this.Pasar_turno(null);
+                this.Pasar_Turno(null);
         }
 
         private void bColores_Click(object sender, EventArgs e)

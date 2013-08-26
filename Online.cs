@@ -1037,6 +1037,7 @@ namespace Juego_Hotel
             int pos = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             partida.interfaz.juego.ultimo_res_dado = res_dado;
@@ -1044,7 +1045,7 @@ namespace Juego_Hotel
             jugador.posicion.ocupada = false;
             jugador.posicion = partida.interfaz.juego.casillas[pos];
             jugador.posicion.ocupada = true;
-            partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Tirar_dado), new object[] { jugador });
+            partida.interfaz.BeginInvoke(new Action<Jugador, Boolean>(partida.interfaz.Tirar_Dado), new object[] { jugador, automaticamente });
         }
 
         private void Nuevo_creador_partida()
@@ -1125,8 +1126,9 @@ namespace Juego_Hotel
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String sig_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
             PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.BeginInvoke(new Action<String>(partida.interfaz.Pasar_turno), new object[] { sig_jugador });
+            partida.interfaz.BeginInvoke(new Action<String, Boolean>(partida.interfaz.Pasar_Turno), new object[] { sig_jugador, automaticamente });
         }
 
         private void Actualizar_dinero_jugador()

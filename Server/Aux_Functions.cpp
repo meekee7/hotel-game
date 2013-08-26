@@ -503,3 +503,8 @@ void insert_and_sort(list<Player*>* plist, Player* player, int game_id)
     if (!inserted)
         plist->push_back(player);
 }
+
+void CheckForTurnExpirationsWrapper(void* ch)
+{
+    ((CommandHandler*) ch)->CheckForTurnExpirations();
+}

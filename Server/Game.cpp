@@ -22,6 +22,7 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
     this->chat = new Chat(this->creator, false, mutex_ids, id_count);
     this->chat->join(this->creator);
     this->id = this->chat->id;
+    this->seconds_elapsed_last_command = 0;
     creator->Join_Game(this->id);
     creator->GetState(this->id)->num = this->plist.size();
     this->started = false;

@@ -34,6 +34,7 @@ public:
     int best_bid;
     Hotel* hotel_at_auction;
     int auction_min_price;
+    int seconds_elapsed_last_command;
 
     void set_players_money(config configuration);
     bool join(Player* p);
