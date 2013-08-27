@@ -47,10 +47,9 @@ Game::Game(wstring name, int n_players, Player* creator, dlib::mutex* mutex_ids,
 
 void Game::set_players_money(config configuration)
 {
-    list<Player*>::iterator i;
     if (this->n_players > 2)
     {
-        for (i = this->plist.begin(); i != this->plist.end() ; ++i)
+        for (list<Player*>::iterator i = this->plist.begin(); i != this->plist.end() ; ++i)
         {
             (*i)->GetState(this->id)->n_50 = configuration.three_or_four_players.n_50;
             (*i)->GetState(this->id)->n_100 = configuration.three_or_four_players.n_100;
@@ -62,7 +61,7 @@ void Game::set_players_money(config configuration)
     }
     else
     {
-        for (i = this->plist.begin(); i != this->plist.end() ; ++i)
+        for (list<Player*>::iterator i = this->plist.begin(); i != this->plist.end() ; ++i)
         {
             (*i)->GetState(this->id)->n_50 = configuration.two_players.n_50;
             (*i)->GetState(this->id)->n_100 = configuration.two_players.n_100;
@@ -228,13 +227,12 @@ void Game::move_player(Player* p, dlib::mutex* debt_mutex)
     {
         debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is asynchronous
         current_player_state->debt_last_turn = 0;
-        current_player_state->debt_nights_to_last_turn = NULL;
+        current_player_state->debt_to_last_turn = NULL;
         debt_mutex->unlock();
     }
-    list<Hotel*>::iterator i2;
     // Allow new entrances in all player hotels
-    for (i2 = current_player_state->hotels.begin() ; i2 != current_player_state->hotels.end() ; ++i2)
-        (*i2)->entrance_bought_last_turn = false;
+    for (list<Hotel*>::iterator i = current_player_state->hotels.begin() ; i != current_player_state->hotels.end() ; ++i)
+        (*i)->entrance_bought_last_turn = false;
 }
 
 Player* Game::turn_pass(dlib::mutex* debt_mutex)
@@ -246,7 +244,7 @@ Player* Game::turn_pass(dlib::mutex* debt_mutex)
     {
         debt_mutex->lock(); // To avoid skipping a debt just when player is passing turn, because ask_nights command is somehow asynchronous
         current_player_state->debt_last_turn = 0;
-        current_player_state->debt_nights_to_last_turn = NULL;
+        current_player_state->debt_to_last_turn = NULL;
         debt_mutex->unlock();
     }
 
@@ -278,8 +276,7 @@ Player* Game::get_winner() // Only called when active players count is 1, so it 
 
 bool Game::is_active(Player* player)
 {
-    list<Player*>::iterator i;
-    i = find(this->active_plist.begin(), this->active_plist.end(), player);
+    list<Player*>::iterator i = find(this->active_plist.begin(), this->active_plist.end(), player);
     if (i == this->active_plist.end())
         return false;
     else
@@ -293,9 +290,8 @@ void Game::eliminate_player(Player* player, Player* reiceiving_player)
     if (i != this->active_plist.end())
         this->active_plist.erase(i);
     // Return all hotels to bank
-    list<Hotel*>::iterator i2;
     PlayerGameState* player_state = player->GetState(this->id);
-    for (i2 = player_state->hotels.begin() ; i2 != player_state->hotels.end() ; ++i2)
+    for (list<Hotel*>::iterator i2 = player_state->hotels.begin() ; i2 != player_state->hotels.end() ; ++i2)
     {
         (*i2)->Return_to_bank();
     }
@@ -308,14 +304,12 @@ void Game::eliminate_player(Player* player, Player* reiceiving_player)
 
 int Game::get_money_for_nights(Player* owner, Player* player, int* nights, wstring* hotel) // Checks 'player' position in 'owner' hotels, rolls a dice and returns total amount (0 if not in any entrance or already paid)
 {
-    list<Hotel*>::iterator i;
     int amount = 0, dice_res = 0;
-    list<int>::iterator pos;
     PlayerGameState* owner_state = owner->GetState(this->id);
     PlayerGameState* player_state = player->GetState(this->id);
-    for (i = owner_state->hotels.begin() ; i != owner_state->hotels.end() ; ++i)
+    for (list<Hotel*>::iterator i = owner_state->hotels.begin() ; i != owner_state->hotels.end() ; ++i)
     {
-        pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player_state->position->number);
+        list<int>::iterator pos = find((*i)->entrances.begin(), (*i)->entrances.end(), player_state->position->number);
         if ((pos != (*i)->entrances.end()) && (!player_state->paid_last_turn)) // Player is in an entrance of this hotel, (it can't be in any other entrance). Enters only if player hasn't already paid this turn
         {
             dice_res = this->random->RollDice(6, 1);

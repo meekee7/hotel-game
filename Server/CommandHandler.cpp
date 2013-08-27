@@ -21,14 +21,13 @@ void CommandHandler::Disconnect(Player* player)
     send_command("#disconnect#", player);
     // Send player list to all players, so they are notified about the diconnected user
     // Send as much strings as connected players, with a count first
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
+    for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
     {
         dest = *i;
         send_command("player_list", dest);
         send_int(dest, this->serverState->plist.size()); // Number of players
-        for (j = this->serverState->plist.begin() ; j != this->serverState->plist.end() ; ++j)
+        for (list<Player*>::iterator j = this->serverState->plist.begin() ; j != this->serverState->plist.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -39,10 +38,9 @@ void CommandHandler::Disconnect(Player* player)
 
 void CommandHandler::GetPlayers(Player* player)
 {
-    list<Player*>::iterator i;
     send_command("player_list", player);
     send_int(player, this->serverState->plist.size()); // Number of players
-    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
+    for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
     {
         send_int(player, get_utf8_length((*i)->name));
         send_wstring(player, (*i)->name);
@@ -156,9 +154,8 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
     if (!game->loaded)
       game->set_players_money(configuration);
     game->start();
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = *i;
         send_command("game_started", dest);
@@ -170,7 +167,7 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
         send_int(dest, game->starting_player);
         // Send player list
         send_int(dest, game->plist.size());
-        for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+        for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -182,7 +179,7 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
             send_int(dest, game->last_auto_advance);
             send_int(dest, game->last_dice_res);
             PlayerGameState* state;
-            for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+            for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
             {
                 state = (*j)->GetState(game->id);
                 string player_data = str(boost::format("%d;%d;%d;%d;%d;%d;%d;%d") % state->num % state->position->number % (state->paid_last_turn ? 1 : 0)
@@ -199,7 +196,7 @@ void CommandHandler::StartGame(Player* player, Game* game, struct config configu
             }
         }
     }
-    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+    for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
         SendGameList((*i), &this->serverState->glist);
 }
 
@@ -207,15 +204,14 @@ void CommandHandler::LeaveGame(Player* player, Game* game)
 {
     Player* old_creator = game->creator;
     game->leave(player);
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = *i;
         send_command("chat_userlist", dest);
         send_int(dest, game->id);
         send_int(dest, game->plist.size()); // Number of players
-        for (j = game->plist.begin() ; j != game->plist.end() ; ++j)
+        for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -231,27 +227,26 @@ void CommandHandler::LeaveGame(Player* player, Game* game)
     }
     if (delete_game_if_empty(game, &this->serverState->mutex_lists, &this->serverState->glist))
     {
-        for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
+        for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; ++i)
         {
             dest = *i;
             SendGameList(dest, &this->serverState->glist);
         }
     }
-    for (i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
+    for (list<Player*>::iterator i = this->serverState->plist.begin() ; i != this->serverState->plist.end() ; i++)
         SendGameList((*i), &this->serverState->glist);
 }
 
 void CommandHandler::JoinGlobalChat(Player* player)
 {
     this->serverState->global_chat_list.push_back(player);
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
+    for (list<Player*>::iterator i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
     {
         dest = *i;
         send_command("global_chat_userlist", dest);
         send_int(dest, this->serverState->global_chat_list.size()); // Number of players
-        for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
+        for (list<Player*>::iterator j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -262,14 +257,13 @@ void CommandHandler::JoinGlobalChat(Player* player)
 void CommandHandler::LeaveGlobalChat(Player* player)
 {
     this->serverState->global_chat_list.remove(player);
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
+    for (list<Player*>::iterator i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
     {
         dest = *i;
         send_command("global_chat_userlist", dest);
         send_int(dest, this->serverState->global_chat_list.size()); // Number of players
-        for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
+        for (list<Player*>::iterator j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -279,21 +273,19 @@ void CommandHandler::LeaveGlobalChat(Player* player)
 
 void CommandHandler::GetGlobalChatUsers(Player* player)
 {
-    list<Player*>::iterator i, j;
     send_command("global_chat_userlist", player);
     send_int(player, this->serverState->global_chat_list.size()); // Number of players
-    for (j = this->serverState->global_chat_list.begin() ; j != this->serverState->global_chat_list.end() ; ++j)
+    for (list<Player*>::iterator i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
     {
-        send_int(player, get_utf8_length((*j)->name));
-        send_wstring(player, (*j)->name);
+        send_int(player, get_utf8_length((*i)->name));
+        send_wstring(player, (*i)->name);
     }
 }
 
 void CommandHandler::SendGlobalChatMsg(Player* player, wstring msg)
 {
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
+    for (list<Player*>::iterator i = this->serverState->global_chat_list.begin() ; i != this->serverState->global_chat_list.end() ; ++i)
     {
         dest = *i;
         send_command("new_global_chat_msg", dest);
@@ -329,15 +321,14 @@ void CommandHandler::JoinChat(Player* player, Chat* chat)
     if (chat->check_already_joined(player)) // Don't allow join a chat twice (hack)
         return kick_hacker(3, player);
     chat->join(player);
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+    for (list<Player*>::iterator i = chat->players.begin() ; i != chat->players.end() ; ++i)
     {
         dest = *i;
         send_command("chat_userlist", dest);
         send_int(dest, chat->id);
         send_int(dest, chat->players.size()); // Number of players
-        for (j = chat->players.begin() ; j != chat->players.end() ; ++j)
+        for (list<Player*>::iterator j = chat->players.begin() ; j != chat->players.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -349,15 +340,14 @@ void CommandHandler::LeaveChat(Player* player, Chat* chat)
 {
     if (!chat->leave(player)) // Possible hack
         return kick_hacker(4, player);
-    list<Player*>::iterator i, j;
     Player* dest;
-    for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+    for (list<Player*>::iterator i = chat->players.begin() ; i != chat->players.end() ; ++i)
     {
         dest = *i;
         send_command("chat_userlist", dest);
         send_int(dest, chat->id);
         send_int(dest, chat->players.size()); // Number of players
-        for (j = chat->players.begin() ; j != chat->players.end() ; ++j)
+        for (list<Player*>::iterator j = chat->players.begin() ; j != chat->players.end() ; ++j)
         {
             send_int(dest, get_utf8_length((*j)->name));
             send_wstring(dest, (*j)->name);
@@ -368,11 +358,10 @@ void CommandHandler::LeaveChat(Player* player, Chat* chat)
 
 void CommandHandler::GetChatUsers(Player* player, Chat* chat)
 {
-    list<Player*>::iterator i; 
     send_command("chat_userlist", player);
     send_int(player, chat->id);
     send_int(player, chat->players.size()); // Number of players
-    for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+    for (list<Player*>::iterator i = chat->players.begin() ; i != chat->players.end() ; ++i)
     {
         send_int(player, get_utf8_length((*i)->name));
         send_wstring(player, (*i)->name);
@@ -385,9 +374,8 @@ void CommandHandler::SendChatMsg(Player* player, Chat* chat, wstring msg)
         return kick_hacker(5, player);
     if ((msg.length() > 1024) || (dlib::trim(msg).length() == 0)) // hack, send messages longer or shorter than limits
         return kick_hacker(6, player);
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = chat->players.begin() ; i != chat->players.end() ; ++i)
+    for (list<Player*>::iterator i = chat->players.begin() ; i != chat->players.end() ; ++i)
     {
         dest = *i;
         send_command("new_chat_msg", dest);
@@ -417,9 +405,8 @@ void CommandHandler::Retire(Player* player, Game* game, int type, Player* receiv
             next_player = game->turn_pass(&this->serverState->debt_mutex);
     }
     game->eliminate_player(player, receiving_player);
-    list<Player*>::iterator i;
     Player* dest, * winner;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i) // Avoid sending commands to retired players, because their forms can be already closed and could lead to a client crash
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i) // Avoid sending commands to retired players, because their forms can be already closed and could lead to a client crash
     {
         dest = (*i);
         send_command("player_retired", dest);
@@ -515,8 +502,7 @@ void CommandHandler::RollConstructionDice(Player* player, Game* game)
         return kick_hacker(15, player);
     TBuild_dice_res construction_dice_res = game->roll_construction_dice();
     Player* dest;
-    list<Player*>::iterator i;
-    for (i = game->plist.begin() ; i != game->plist.end() ; i++)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; i++)
     {
         dest = (*i);
         send_command("rolled_construction_dice", dest);
@@ -613,9 +599,8 @@ void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, in
         player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
     }
     state->bought_last_turn = true;
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("hotel_purchased", dest);
@@ -668,9 +653,8 @@ void CommandHandler::ExpropriateHotel(Player* player, Game* game, wstring hotel_
         player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
     }
     state->bought_last_turn = true;
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("hotel_expropriated", dest);
@@ -759,9 +743,8 @@ void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, 
         }
     }
     state->built_last_turn = true;
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("phase_built", dest);
@@ -824,9 +807,8 @@ void CommandHandler::BuyEntrance(Player* player, Game* game, wstring hotel_name,
     }
     else if (type == 0)
         state->free_entrance_used = true;
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("entrance_added", dest);
@@ -872,7 +854,7 @@ void CommandHandler::AskNights(Player* player, Game* game)
                 this->serverState->debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
                 PlayerGameState* dest_state = dest->GetState(game->id);
                 dest_state->debt_last_turn = amount;
-                dest_state->debt_nights_to_last_turn = player->GetState(game->id);
+                dest_state->debt_to_last_turn = player->GetState(game->id);
                 dest_state->paid_last_turn = false;
                 this->serverState->debt_mutex.unlock();
                 for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
@@ -906,19 +888,18 @@ void CommandHandler::PayNights(Player* player, Game* game, int n_5000, int n_100
     int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
     if (total_selected <= 0) // Hack, retire player, the command is only sent if player has something to pay
         return kick_hacker(66, player);
-    if ((state->debt_last_turn == 0) || (state->debt_nights_to_last_turn == NULL)) // Hack, retire player
+    if ((state->debt_last_turn == 0) || (state->debt_to_last_turn == NULL)) // Hack, retire player
         return kick_hacker(67, player);
-    player->Pay_nights(game->id, state->debt_nights_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
+    player->Pay_nights(game->id, state->debt_to_last_turn, n_5000, n_1000, n_500, n_100, n_50);
     state->paid_last_turn = true;
     // Calculate change
     if (total_selected > (state->debt_last_turn))
     {
-        game->calculate_return(state->debt_nights_to_last_turn, total_selected - state->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+        game->calculate_return(state->debt_to_last_turn, total_selected - state->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
         player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
     }
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("update_player_money", dest);
@@ -932,17 +913,17 @@ void CommandHandler::PayNights(Player* player, Game* game, int n_5000, int n_100
         send_int(dest, state->n_5000);
         send_command("update_player_money", dest);
         send_int(dest, game->id);
-        send_int(dest, get_utf8_length(state->debt_nights_to_last_turn->player->name));
-        send_wstring(dest, state->debt_nights_to_last_turn->player->name);
-        send_int(dest, state->debt_nights_to_last_turn->n_50);
-        send_int(dest, state->debt_nights_to_last_turn->n_100);
-        send_int(dest, state->debt_nights_to_last_turn->n_500);
-        send_int(dest, state->debt_nights_to_last_turn->n_1000);
-        send_int(dest, state->debt_nights_to_last_turn->n_5000);
+        send_int(dest, get_utf8_length(state->debt_to_last_turn->player->name));
+        send_wstring(dest, state->debt_to_last_turn->player->name);
+        send_int(dest, state->debt_to_last_turn->n_50);
+        send_int(dest, state->debt_to_last_turn->n_100);
+        send_int(dest, state->debt_to_last_turn->n_500);
+        send_int(dest, state->debt_to_last_turn->n_1000);
+        send_int(dest, state->debt_to_last_turn->n_5000);
     }
     this->serverState->debt_mutex.lock(); // To avoid creating a debt just when player is passing turn, because this command is asynchronous
     state->debt_last_turn = 0;
-    state->debt_nights_to_last_turn = NULL;
+    state->debt_to_last_turn = NULL;
     this->serverState->debt_mutex.unlock();
 }
 
@@ -986,9 +967,8 @@ void CommandHandler::AuctionBid(Player* player, Game* game, int amount)
         return kick_hacker(74, player);
     game->best_bid = amount;
     game->best_bidder = player;
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("auction_bid_placed", dest);
@@ -1009,9 +989,8 @@ void CommandHandler::AuctionSell(Player* player, Game* game)
         return kick_hacker(77, player);
     if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
         return kick_hacker(78, player);
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("auction_sold", dest);
@@ -1046,9 +1025,8 @@ void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_10
         game->calculate_return(previous_owner->GetState(game->id), total_selected - game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
         player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
     }
-    list<Player*>::iterator i;
     Player* dest;
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("hotel_expropriated", dest);
@@ -1078,7 +1056,7 @@ void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_10
         send_int(dest, previous_owner->GetState(game->id)->n_5000);
     }
     // If this command is sent before updating hotels and money to everyone, the client doesn't know who owns the hotels
-    for (i = game->plist.begin() ; i != game->plist.end() ; ++i)
+    for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
         dest = (*i);
         send_command("auction_ended", dest);

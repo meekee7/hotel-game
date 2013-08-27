@@ -251,9 +251,8 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
         string entrance_list = "";
         if (h->entrances.size() > 0)
         {
-            list<int>::iterator l;
             int idx = 1;
-            for (l = h->entrances.begin() ; l != h->entrances.end() ; l++)
+            for (list<int>::iterator l = h->entrances.begin() ; l != h->entrances.end() ; l++)
             {
                 entrance_list += (*l);
                 if (idx < (int)h->entrances.size())

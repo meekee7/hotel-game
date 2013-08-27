@@ -11,7 +11,7 @@ PlayerGameState::PlayerGameState(Player* player)
     this->paid_last_turn = false;
     this->free_entrance_used = false;
     this->debt_last_turn = 0;
-    this->debt_nights_to_last_turn = NULL;
+    this->debt_to_last_turn = NULL;
     this->n_5000 = 0;
     this->n_1000 = 0;
     this->n_500 = 0;

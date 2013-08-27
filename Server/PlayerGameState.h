@@ -14,7 +14,7 @@ public:
     int bd_id;
     bool active, rolled_last_turn, bought_last_turn, built_last_turn, charged_bank_last_turn, paid_last_turn, free_entrance_used;
     int debt_last_turn;
-    PlayerGameState* debt_nights_to_last_turn;
+    PlayerGameState* debt_to_last_turn;
     int n_5000, n_1000, n_500, n_100, n_50;
     int total_money;
     int num;

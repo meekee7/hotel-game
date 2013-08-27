@@ -26,8 +26,7 @@ Server::~Server()
 
 void Server::empty_lists()
 {
-    list<Player*>::iterator i;
-    for (i = this->ch->serverState->global_chat_list.begin() ; i != this->ch->serverState->global_chat_list.end() ; ++i)
+    for (list<Player*>::iterator i = this->ch->serverState->global_chat_list.begin() ; i != this->ch->serverState->global_chat_list.end() ; ++i)
     {
         *i = NULL;
     }
@@ -44,7 +43,7 @@ void Server::empty_lists()
         delete g;
     }
     wcout << currentDateTime() << L"Game list cleaned" << endl;
-    for (i = this->ch->serverState->plist.begin() ; i != this->ch->serverState->plist.end() ; ++i)
+    for (list<Player*>::iterator i = this->ch->serverState->plist.begin() ; i != this->ch->serverState->plist.end() ; ++i)
     {
         Player* p = *i;
         delete p;
@@ -504,14 +503,13 @@ void Server::handle_client(void* arg)
         bool online = true;
         // Send player list to all players, so they are notified about the new user
         // Send as much strings as connected players, with a count first
-        list<Player*>::iterator i, j;
         Player* dest;
-        for (i = this->ch->serverState->plist.begin() ; i != this->ch->serverState->plist.end() ; ++i)
+        for (list<Player*>::iterator i = this->ch->serverState->plist.begin() ; i != this->ch->serverState->plist.end() ; ++i)
         {
             dest = *i;
             send_command("player_list", dest);
             send_int(dest, this->ch->serverState->plist.size()); // Number of players
-            for (j = this->ch->serverState->plist.begin() ; j != this->ch->serverState->plist.end() ; ++j)
+            for (list<Player*>::iterator j = this->ch->serverState->plist.begin() ; j != this->ch->serverState->plist.end() ; ++j)
             {
                 send_int(dest, get_utf8_length((*j)->name));
                 send_wstring(dest, (*j)->name);

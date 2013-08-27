@@ -279,12 +279,11 @@ void send_command(string command, Player* p)
 
 void SendGameList(Player* p, list<Game*>* glist)
 {
-    list<Game*>::iterator i;
     send_command("game_list", p);
     send_int(p, glist->size());
     if (glist->size() != 0)
     {
-        for (i = glist->begin() ; i != glist->end() ; ++i)
+        for (list<Game*>::iterator i = glist->begin() ; i != glist->end() ; ++i)
         {
             send_int(p, get_utf8_length((*i)->name));
             send_wstring(p, (*i)->name);
@@ -392,8 +391,7 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
         return;
     serverState->mutex_disconnects.lock();
     // Leave all normal chats and global chat
-    list<Chat*>::iterator i;
-    for (i = serverState->chat_list.begin() ; i != serverState->chat_list.end() ; ++i)
+    for (list<Chat*>::iterator i = serverState->chat_list.begin() ; i != serverState->chat_list.end() ; ++i)
     {
         if ((*i)->check_already_joined(p))
         {
@@ -408,15 +406,14 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
             else
             {
                 // Notify all chat users of the player disconnexion
-                list<Player*>::iterator i4, j;
                 Player* dest;
-                for (i4 = (*i)->players.begin() ; i4 != (*i)->players.end() ; ++i4)
+                for (list<Player*>::iterator i2 = (*i)->players.begin() ; i2 != (*i)->players.end() ; ++i2)
                 {
-                    dest = *i4;
+                    dest = *i2;
                     send_command("chat_userlist", dest);
                     send_int(dest, (*i)->id);
                     send_int(dest, (*i)->players.size()); // Number of players
-                    for (j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
+                    for (list<Player*>::iterator j = (*i)->players.begin() ; j != (*i)->players.end() ; ++j)
                     {
                         send_int(dest, get_utf8_length((*j)->name));
                         send_wstring(dest, (*j)->name);
@@ -427,8 +424,7 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
     }
     serverState->global_chat_list.remove(p);
     // Leave games
-    list<Game*>::iterator i2;
-    for (i2 = serverState->glist.begin() ; i2 != serverState->glist.end() ; ++i2)
+    for (list<Game*>::iterator i2 = serverState->glist.begin() ; i2 != serverState->glist.end() ; ++i2)
     {
         if ((*i2)->check_already_joined(p))
         {
@@ -443,9 +439,8 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
             else
             {
                 // Notify the rest of players that the player left the game
-                list<Player*>::iterator i3, j;
                 Player* dest, * winner;
-                for (i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
+                for (list<Player*>::iterator i3 = (*i2)->plist.begin() ; i3 != (*i2)->plist.end() ; ++i3)
                 {
                     dest = (*i3);
                     if (kicking)
@@ -465,7 +460,7 @@ void disconnect_client(Player* p, bool kicking, ServerState* serverState)
                     send_command("chat_userlist", dest);
                     send_int(dest, (*i2)->id);
                     send_int(dest, (*i2)->plist.size()); // Number of players
-                    for (j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
+                    for (list<Player*>::iterator j = (*i2)->plist.begin() ; j != (*i2)->plist.end() ; ++j)
                     {
                         send_int(dest, get_utf8_length((*j)->name));
                         send_wstring(dest, (*j)->name);
