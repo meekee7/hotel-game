@@ -1142,9 +1142,27 @@ void CommandHandler::CheckForTurnExpirations()
                 if ((*i)->seconds_elapsed_last_command > 300)
                 {
                     wcout << L"Player " << (*i)->current_player->name << " is AFK. Passing the turn automatically for game " << (*i)->id << endl;
-                    if (!(*i)->current_player->GetState((*i)->id)->rolled_last_turn)
+                    PlayerGameState* curr_p_state = (*i)->current_player->GetState((*i)->id);
+                    if (!curr_p_state->rolled_last_turn)
                         this->RollDice((*i)->current_player, (*i), true);
-                    this->PassTurn((*i)->current_player, (*i), true);
+                    if (curr_p_state->debt_to_last_turn != NULL)
+                    {
+                        wcout << L"Player " << (*i)->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to "
+                            << curr_p_state->debt_to_last_turn->player->name << " automatically" << endl;
+                        if (curr_p_state->total_money < curr_p_state->debt_last_turn)
+                        {
+                            // Retire player, he cannot pay the debt. The turn is automatically passed when the current player retires
+                            this->Retire(curr_p_state->player, (*i), 1, curr_p_state->debt_to_last_turn->player);
+                        }
+                        else
+                        {
+                            this->PassTurn((*i)->current_player, (*i), true);
+                        }
+                    }
+                    else
+                    {
+                        this->PassTurn((*i)->current_player, (*i), true);
+                    }
                 }
             }
         }

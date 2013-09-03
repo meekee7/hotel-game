@@ -347,6 +347,7 @@ bool Game::can_buy_entrances(Player* p)
         return false;
 }
 
+// Calculation against the bank
 void Game::calculate_return (int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
 {
     (*n_5000) = 0;
@@ -385,6 +386,7 @@ void Game::calculate_return (int quantity, int* n_5000, int* n_1000, int* n_500,
     }
 }
 
+// Calculation against a player
 void Game::calculate_return(PlayerGameState* player, int quantity, int* n_5000, int* n_1000, int* n_500, int* n_100, int* n_50)
 {
     // Al restar la devolución a un jugador, hay que haber ingresado los fondos previamente por si acaso el jugador

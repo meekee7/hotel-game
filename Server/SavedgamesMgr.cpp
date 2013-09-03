@@ -398,11 +398,8 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
         creator_status->bd_id = res_creator_status->get_int_field("id");
         creator_status->position = game->positions[res_creator_status->get_int_field("posicion")];
         creator_status->paid_last_turn = res_creator_status->get_bool_field("pago_ultimo_turno");
-        creator_status->n_5000 = res_creator_status->get_int_field("n_billetes_5000");
-        creator_status->n_1000 = res_creator_status->get_int_field("n_billetes_1000");
-        creator_status->n_500 = res_creator_status->get_int_field("n_billetes_500");
-        creator_status->n_100 = res_creator_status->get_int_field("n_billetes_100");
-        creator_status->n_50 = res_creator_status->get_int_field("n_billetes_50");
+        creator_status->Set_money(res_creator_status->get_int_field("n_billetes_5000"), res_creator_status->get_int_field("n_billetes_1000"), res_creator_status->get_int_field("n_billetes_500"),
+            res_creator_status->get_int_field("n_billetes_100"), res_creator_status->get_int_field("n_billetes_50"));
         res = this->db->ExecuteQueryWithData(str(boost::format("SELECT nombre FROM estado_hotel WHERE id_partida = %d AND dueno = %d;") % game->bd_id % creator_status->bd_id));
         while (res->fetch_row())
         {
@@ -442,11 +439,7 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
     state->num = res->get_int_field("numero");
     state->position = game->positions[res->get_int_field("posicion")];
     state->paid_last_turn = res->get_bool_field("pago_ultimo_turno");
-    state->n_5000 = res->get_int_field("n_billetes_5000");
-    state->n_1000 = res->get_int_field("n_billetes_1000");
-    state->n_500 = res->get_int_field("n_billetes_500");
-    state->n_100 = res->get_int_field("n_billetes_100");
-    state->n_50 = res->get_int_field("n_billetes_50");
+    state->Set_money(res->get_int_field("n_billetes_5000"), res->get_int_field("n_billetes_1000"), res->get_int_field("n_billetes_500"), res->get_int_field("n_billetes_100"), res->get_int_field("n_billetes_50"));
     res = this->db->ExecuteQueryWithData(str(boost::format("SELECT nombre FROM estado_hotel WHERE id_partida = %d AND dueno = %d;") % game->bd_id % state->bd_id));
     while (res->fetch_row())
     {
