@@ -391,7 +391,7 @@ void Game::calculate_return(PlayerGameState* player, int quantity, int* n_5000, 
 {
     // Al restar la devolución a un jugador, hay que haber ingresado los fondos previamente por si acaso el jugador
     // no tiene fondos suficientes para devolver antes de haber recibido el cobro
-    // En el caso de que no tenga cambio justo, el sistema automáticamente obtendrá los billetes necesarios para que así sea, cambiando billetes con la banca
+    // En el caso de que no tenga cambio justo, el algoritmo automáticamente obtendrá los billetes necesarios para que así sea, cambiando billetes con la banca
     (*n_5000) = 0;
     (*n_1000) = 0;
     (*n_500) = 0;

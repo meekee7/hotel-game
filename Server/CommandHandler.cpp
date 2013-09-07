@@ -1133,35 +1133,67 @@ void CommandHandler::CheckForTurnExpirations()
     while (this->serverState->running)
     {
         this->serverState->mutex_lists.lock();
+        Game* game;
         for (list<Game*>::iterator i = this->serverState->glist.begin() ; i != this->serverState->glist.end() ; i++)
         {
             // Start a timer for this turn. It will be passed automatically in case the player is AFK
-            if ((*i)->started)
+            game = (*i);
+            if (game->started && !game->ended)
             {
-                (*i)->seconds_elapsed_last_command++;
-                if ((*i)->seconds_elapsed_last_command > 300)
+                game->seconds_elapsed_last_command++;
+                if (game->seconds_elapsed_last_command > 10)
                 {
-                    wcout << L"Player " << (*i)->current_player->name << " is AFK. Passing the turn automatically for game " << (*i)->id << endl;
-                    PlayerGameState* curr_p_state = (*i)->current_player->GetState((*i)->id);
+                    wcout << L"Player " << game->current_player->name << " is AFK. Passing the turn automatically for game " << game->id << endl;
+                    PlayerGameState* curr_p_state = game->current_player->GetState(game->id);
                     if (!curr_p_state->rolled_last_turn)
-                        this->RollDice((*i)->current_player, (*i), true);
+                        this->RollDice(game->current_player, game, true);
                     if (curr_p_state->debt_to_last_turn != NULL)
                     {
-                        wcout << L"Player " << (*i)->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to "
+                        wcout << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to "
                             << curr_p_state->debt_to_last_turn->player->name << " automatically" << endl;
                         if (curr_p_state->total_money < curr_p_state->debt_last_turn)
                         {
                             // Retire player, he cannot pay the debt. The turn is automatically passed when the current player retires
-                            this->Retire(curr_p_state->player, (*i), 1, curr_p_state->debt_to_last_turn->player);
+                            this->Retire(curr_p_state->player, game, 1, curr_p_state->debt_to_last_turn->player);
                         }
                         else
                         {
-                            this->PassTurn((*i)->current_player, (*i), true);
+                            int n_5000, n_1000, n_500, n_100, n_50;
+                            game->calculate_return(curr_p_state, curr_p_state->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+                            curr_p_state->debt_to_last_turn->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+                            Player* dest;
+                            for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
+                            {
+                                dest = (*j);
+                                // Update the money of current player
+                                send_command("update_player_money", dest);
+                                send_int(dest, game->id);
+                                send_int(dest, get_utf8_length(curr_p_state->player->name));
+                                send_wstring(dest, curr_p_state->player->name);
+                                send_int(dest, curr_p_state->n_50);
+                                send_int(dest, curr_p_state->n_100);
+                                send_int(dest, curr_p_state->n_500);
+                                send_int(dest, curr_p_state->n_1000);
+                                send_int(dest, curr_p_state->n_5000);
+                                // Update the money of the player that received the debt quantity
+                                send_command("update_player_money", dest);
+                                send_int(dest, game->id);
+                                send_int(dest, get_utf8_length(curr_p_state->debt_to_last_turn->player->name));
+                                send_wstring(dest, curr_p_state->debt_to_last_turn->player->name);
+                                send_int(dest, curr_p_state->debt_to_last_turn->n_50);
+                                send_int(dest, curr_p_state->debt_to_last_turn->n_100);
+                                send_int(dest, curr_p_state->debt_to_last_turn->n_500);
+                                send_int(dest, curr_p_state->debt_to_last_turn->n_1000);
+                                send_int(dest, curr_p_state->debt_to_last_turn->n_5000);
+                            }
+                            curr_p_state->debt_to_last_turn = NULL;
+                            curr_p_state->debt_last_turn = 0;
+                            this->PassTurn(game->current_player, game, true);
                         }
                     }
                     else
                     {
-                        this->PassTurn((*i)->current_player, (*i), true);
+                        this->PassTurn(game->current_player, game, true);
                     }
                 }
             }
