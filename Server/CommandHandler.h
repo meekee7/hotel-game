@@ -36,7 +36,7 @@ public:
     void Retire(Player* player, Game* game, int type, Player* receiving_player);
 
     void RollDice(Player* player, Game* game, bool automatically = false);
-    void RollConstructionDice(Player* player, Game* game);
+    void RollConstructionDice(Player* player, Game* game, Hotel* selected_hotel);
     void PassTurn(Player* player, Game* game, bool automatically = false);
     void ChargeBank(Player* player, Game* game);
     void BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50);

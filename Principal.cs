@@ -489,6 +489,21 @@ namespace Juego_Hotel
                 if (automaticamente)
                     this.bTurno.Enabled = false;
             }
+            // Cerrar las ventanas que se pudieran quedar abiertas al ser un paso automático
+            if (automaticamente)
+            {
+                foreach (Form form in Application.OpenForms)
+                {
+                    if ((form is Principal) || (form is Online) || (form is Chat) || (form is PartidaOnline) || (form is Actividad) || (form is Reglas) || (form is ReporteBug) || (form is VerHoteles))
+                        continue;
+                    else
+                    {
+                        if (form is Construir)
+                            (form as Construir).cancelado = true;
+                        form.Close();
+                    }
+                }
+            }
         }
 
         public void Crear_Jugadores()

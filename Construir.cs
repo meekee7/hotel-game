@@ -227,7 +227,7 @@ namespace Juego_Hotel
                     {
                         if ((num_fase != 6) && (!this.comprando_suelo))
                         {
-                            Dado_construccion dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id);
+                            Dado_construccion dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id, hotel_seleccionado);
                             dado_cons.ShowDialog(); // El resultado será comprobado por el servidor
                             if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
                                 this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();

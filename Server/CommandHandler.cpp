@@ -489,7 +489,7 @@ void CommandHandler::RollDice(Player* player, Game* game, bool automatically)
     game->seconds_elapsed_last_command = 0;
 }
 
-void CommandHandler::RollConstructionDice(Player* player, Game* game)
+void CommandHandler::RollConstructionDice(Player* player, Game* game, Hotel* selected_hotel)
 {
     if ((!game->started) || game->ended) // Hack, game not started yet or already ended
         return;
@@ -513,6 +513,8 @@ void CommandHandler::RollConstructionDice(Player* player, Game* game)
     }
     if (construction_dice_res == Deny)
         state->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
+    else
+        state->debt_last_turn = selected_hotel->Price_next_expansion(); // Create a debt for turn auto-passing
 }
 
 void CommandHandler::PassTurn(Player* player, Game* game, bool automatically)
@@ -743,6 +745,7 @@ void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, 
         }
     }
     state->built_last_turn = true;
+    state->debt_last_turn = 0;
     Player* dest;
     for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
@@ -1133,6 +1136,7 @@ void CommandHandler::CheckForTurnExpirations()
     while (this->serverState->running)
     {
         this->serverState->mutex_lists.lock();
+        this->serverState->debt_mutex.lock();
         Game* game;
         for (list<Game*>::iterator i = this->serverState->glist.begin() ; i != this->serverState->glist.end() ; i++)
         {
@@ -1147,10 +1151,12 @@ void CommandHandler::CheckForTurnExpirations()
                     PlayerGameState* curr_p_state = game->current_player->GetState(game->id);
                     if (!curr_p_state->rolled_last_turn)
                         this->RollDice(game->current_player, game, true);
-                    if (curr_p_state->debt_to_last_turn != NULL)
+                    if (curr_p_state->debt_last_turn > 0)
                     {
-                        wcout << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to "
-                            << curr_p_state->debt_to_last_turn->player->name << " automatically" << endl;
+                        if (curr_p_state->debt_to_last_turn != NULL)
+                            wcout << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to " << curr_p_state->debt_to_last_turn->player->name << " automatically" << endl;
+                        else
+                            wcout << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " automatically because of pending debt to the bank" << endl;
                         if (curr_p_state->total_money < curr_p_state->debt_last_turn)
                         {
                             // Retire player, he cannot pay the debt. The turn is automatically passed when the current player retires
@@ -1160,7 +1166,8 @@ void CommandHandler::CheckForTurnExpirations()
                         {
                             int n_5000, n_1000, n_500, n_100, n_50;
                             game->calculate_return(curr_p_state, curr_p_state->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
-                            curr_p_state->debt_to_last_turn->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+                            if (curr_p_state->debt_to_last_turn != NULL)
+                                curr_p_state->debt_to_last_turn->Return_change(n_5000, n_1000, n_500, n_100, n_50);
                             Player* dest;
                             for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
                             {
@@ -1175,16 +1182,19 @@ void CommandHandler::CheckForTurnExpirations()
                                 send_int(dest, curr_p_state->n_500);
                                 send_int(dest, curr_p_state->n_1000);
                                 send_int(dest, curr_p_state->n_5000);
-                                // Update the money of the player that received the debt quantity
-                                send_command("update_player_money", dest);
-                                send_int(dest, game->id);
-                                send_int(dest, get_utf8_length(curr_p_state->debt_to_last_turn->player->name));
-                                send_wstring(dest, curr_p_state->debt_to_last_turn->player->name);
-                                send_int(dest, curr_p_state->debt_to_last_turn->n_50);
-                                send_int(dest, curr_p_state->debt_to_last_turn->n_100);
-                                send_int(dest, curr_p_state->debt_to_last_turn->n_500);
-                                send_int(dest, curr_p_state->debt_to_last_turn->n_1000);
-                                send_int(dest, curr_p_state->debt_to_last_turn->n_5000);
+                                if (curr_p_state->debt_to_last_turn != NULL)
+                                {
+                                    // Update the money of the player that received the debt quantity
+                                    send_command("update_player_money", dest);
+                                    send_int(dest, game->id);
+                                    send_int(dest, get_utf8_length(curr_p_state->debt_to_last_turn->player->name));
+                                    send_wstring(dest, curr_p_state->debt_to_last_turn->player->name);
+                                    send_int(dest, curr_p_state->debt_to_last_turn->n_50);
+                                    send_int(dest, curr_p_state->debt_to_last_turn->n_100);
+                                    send_int(dest, curr_p_state->debt_to_last_turn->n_500);
+                                    send_int(dest, curr_p_state->debt_to_last_turn->n_1000);
+                                    send_int(dest, curr_p_state->debt_to_last_turn->n_5000);
+                                }
                             }
                             curr_p_state->debt_to_last_turn = NULL;
                             curr_p_state->debt_last_turn = 0;
@@ -1199,6 +1209,7 @@ void CommandHandler::CheckForTurnExpirations()
             }
         }
         this->serverState->mutex_lists.unlock();
+        this->serverState->debt_mutex.unlock();
         #ifdef _WIN32
             Sleep(1000);
         #else

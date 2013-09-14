@@ -29,13 +29,15 @@ namespace Juego_Hotel
         public Tipos.Resultado_dado_cons resultado;
         Online frm_online;
         int game_id;
+        Hotel hotel_seleccionado;
 
-        public Dado_construccion(Online frm_online, int game_id)
+        public Dado_construccion(Online frm_online, int game_id, Hotel hotel_seleccionado)
         {
             InitializeComponent();
             this.rand = new Random();
             this.frm_online = frm_online;
             this.game_id = game_id;
+            this.hotel_seleccionado = hotel_seleccionado;
         }
 
         private void Dado_construccion_Load(object sender, EventArgs e)
@@ -69,7 +71,7 @@ namespace Juego_Hotel
             Tipos.Resultado_dado_cons res_online;
             if (this.frm_online != null)
             {
-                this.frm_online.enviar_comando("roll_construction_dice", this.game_id.ToString());
+                this.frm_online.enviar_comando("roll_construction_dice", this.game_id.ToString(), this.hotel_seleccionado.nombre_txt);
                 this.frm_online.Buscar_partida(game_id).interfaz.juego.sem_dado_cons.WaitOne(10000); // Esperamos a que llegue el comando con el resultado del dado
                 res_online = this.frm_online.ultimo_res_dado_cons;
 

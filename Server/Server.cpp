@@ -191,17 +191,19 @@ void Server::handle_command(string command, Player* player)
         int bytes_received;
         int len_int = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        int len_name = receive_int(player, &bytes_received);
+        wstring hotel_name = receive_wstring(player, len_name, &bytes_received);
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        ch->RollConstructionDice(player, game);
+        Hotel* selected_hotel = get_hotel_from_name(hotel_name, game);
+        ch->RollConstructionDice(player, game, selected_hotel);
     }
     else if (command == "turn_pass")
     {
         int bytes_received;
         int len_id = receive_int(player, &bytes_received);
         int id = atoi(receive_string(player, len_id, &bytes_received).c_str());
-        
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
