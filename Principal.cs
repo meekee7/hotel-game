@@ -492,15 +492,32 @@ namespace Juego_Hotel
             // Cerrar las ventanas que se pudieran quedar abiertas al ser un paso automático
             if (automaticamente)
             {
-                foreach (Form form in Application.OpenForms)
+                Form form;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
                 {
-                    if ((form is Principal) || (form is Online) || (form is Chat) || (form is PartidaOnline) || (form is Actividad) || (form is Reglas) || (form is ReporteBug) || (form is VerHoteles))
+                    form = Application.OpenForms[i];
+                    if ((form is Principal) || (form is Online) || (form is Chat) || (form is PartidaOnline) || (form is Actividad)
+                        || (form is Reglas) || (form is ReporteBug) || (form is VerHoteles))
                         continue;
                     else
                     {
-                        if (form is Construir)
+                        if (form is PedirPago)
+                        {
+                            (form as PedirPago).cancelado = true;
+                            form.Hide();
+                            // Dar margen al formulario para que se cierre
+                            Thread.Sleep(200);
+                        }
+                        else if (form is Construir)
+                        {
                             (form as Construir).cancelado = true;
-                        form.Close();
+                            form.Close();
+                        }
+                        else
+                            form.Close();
+
+                        // Para evitar problemas al recorrer la lista de forms, se vuelve a empezar
+                        i = 0;
                     }
                 }
             }
@@ -923,52 +940,55 @@ namespace Juego_Hotel
 
             PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, this.juego.jugador_actual, this, null);
             frm_pago.ShowDialog();
-            if (expropiando)
+            if (!frm_pago.cancelado)
             {
-                if (!this.online)
+                if (expropiando)
                 {
-                    Jugador dueño_ant = hotel.dueño;
-                    dueño_ant.Hotel_Expropiado(ref hotel);
-                    jugador.Comprar_Hotel(ref hotel, ref dueño_ant, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                    // Hay que calcular el dinero a devolver y restarlo de la llamada a Comprar_Hotel
-                    if (frm_pago.total_seleccionado > dinero_necesario)
+                    if (!this.online)
                     {
-                        Principal.Calcular_Devolucion(ref dueño_ant, (frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                        jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        Jugador dueño_ant = hotel.dueño;
+                        dueño_ant.Hotel_Expropiado(ref hotel);
+                        jugador.Comprar_Hotel(ref hotel, ref dueño_ant, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                        // Hay que calcular el dinero a devolver y restarlo de la llamada a Comprar_Hotel
+                        if (frm_pago.total_seleccionado > dinero_necesario)
+                        {
+                            Principal.Calcular_Devolucion(ref dueño_ant, (frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                            jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        }
+                    }
+                    else
+                    {
+                        n_5000 = frm_pago.n_5000;
+                        n_1000 = frm_pago.n_1000;
+                        n_500 = frm_pago.n_500;
+                        n_100 = frm_pago.n_100;
+                        n_50 = frm_pago.n_50;
+                        this.frm_online.enviar_comando("expropriate_hotel", this.game_id.ToString(), hotel.nombre_txt, n_5000.ToString(),
+                             n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
                     }
                 }
                 else
                 {
-                    n_5000 = frm_pago.n_5000;
-                    n_1000 = frm_pago.n_1000;
-                    n_500 = frm_pago.n_500;
-                    n_100 = frm_pago.n_100;
-                    n_50 = frm_pago.n_50;
-                    this.frm_online.enviar_comando("expropriate_hotel", this.game_id.ToString(), hotel.nombre_txt, n_5000.ToString(),
-                         n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
-                }
-            }
-            else
-            {
-                if (!this.online)
-                {
-                    jugador.Comprar_Hotel(ref hotel, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
-                    // Hay que calcular el dinero a devolver y restarlo de la llamada a Comprar_Hotel
-                    if (frm_pago.total_seleccionado > dinero_necesario)
+                    if (!this.online)
                     {
-                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                        jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        jugador.Comprar_Hotel(ref hotel, frm_pago.n_5000, frm_pago.n_1000, frm_pago.n_500, frm_pago.n_100, frm_pago.n_50);
+                        // Hay que calcular el dinero a devolver y restarlo de la llamada a Comprar_Hotel
+                        if (frm_pago.total_seleccionado > dinero_necesario)
+                        {
+                            Principal.Calcular_Devolucion((frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                            jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
+                        }
                     }
-                }
-                else // Todo se hace en el lado del servidor, devolución incluída
-                {
-                    n_5000 = frm_pago.n_5000;
-                    n_1000 = frm_pago.n_1000;
-                    n_500 = frm_pago.n_500;
-                    n_100 = frm_pago.n_100;
-                    n_50 = frm_pago.n_50;
-                    this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), hotel.nombre_txt, n_5000.ToString(),
-                         n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
+                    else // Todo se hace en el lado del servidor, devolución incluída
+                    {
+                        n_5000 = frm_pago.n_5000;
+                        n_1000 = frm_pago.n_1000;
+                        n_500 = frm_pago.n_500;
+                        n_100 = frm_pago.n_100;
+                        n_50 = frm_pago.n_50;
+                        this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), hotel.nombre_txt, n_5000.ToString(),
+                             n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
+                    }
                 }
             }
             frm_pago.Close();
@@ -1485,9 +1505,9 @@ namespace Juego_Hotel
                 int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_500, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
                 this.frm_online.enviar_comando("pay_nights", this.game_id.ToString(), n_5000.ToString(), n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
                 this.bTurno.Enabled = true;
+                this.Registrar_Pagar_Noches_Online(jugador, this.juego.jugador_actual, cantidad, noches, hotel);
             }
             frm_pago.Close();
-            this.Registrar_Pagar_Noches_Online(jugador, this.juego.jugador_actual, cantidad, noches, hotel);
         }
 
         private void bPedirNochesJ1_Click(object sender, EventArgs e)

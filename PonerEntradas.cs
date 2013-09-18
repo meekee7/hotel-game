@@ -141,6 +141,11 @@ namespace Juego_Hotel
                 int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
                 PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);
                 frm_pago.ShowDialog();
+                if (frm_pago.cancelado)
+                {
+                    frm_pago.Close();
+                    return;
+                }
                 sel_n_5000 = frm_pago.n_5000;
                 sel_n_1000 = frm_pago.n_1000;
                 sel_n_500 = frm_pago.n_500;
