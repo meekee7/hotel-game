@@ -513,8 +513,15 @@ void CommandHandler::RollConstructionDice(Player* player, Game* game, Hotel* sel
     }
     if (construction_dice_res == Deny)
         state->built_last_turn = true; // Avoid hacking, because if construction is denied, the player can't try again in the same turn
-    else
-        state->debt_last_turn = selected_hotel->Price_next_expansion(); // Create a debt for turn auto-passing
+    else if (construction_dice_res != Free)
+    {
+        // Create a debt for turn auto-passing
+        if (construction_dice_res == Double)
+            state->debt_last_turn = selected_hotel->Price_next_expansion() * 2;
+        else
+            state->debt_last_turn = selected_hotel->Price_next_expansion();
+        state->hotel_to_be_extended = selected_hotel;
+    }
 }
 
 void CommandHandler::PassTurn(Player* player, Game* game, bool automatically)
@@ -721,17 +728,17 @@ void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, 
     int total_price;
     switch (type)
     {
-    case 0:
-    case 1:  total_price = 0;
-        break;
-    case 2:  total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-        total_price = hotel->Price_next_expansion();
-        if (game->last_construction_dice_res == Double)
-            total_price = hotel->Price_next_expansion() * 2;
-        if (total_selected < hotel->Price_next_expansion()) // Hack, retire player
-            return kick_hacker(47, player);
-        break;
-    default: return kick_hacker(48, player); // Hack, retire player
+        case 0:
+        case 1:  total_price = 0;
+            break;
+        case 2:  total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
+            total_price = hotel->Price_next_expansion();
+            if (game->last_construction_dice_res == Double)
+                total_price = hotel->Price_next_expansion() * 2;
+            if (total_selected < hotel->Price_next_expansion()) // Hack, retire player
+                return kick_hacker(47, player);
+            break;
+        default: return kick_hacker(48, player); // Hack, retire player
     }
     hotel->Extend();
     if (type == 2)
@@ -744,6 +751,7 @@ void CommandHandler::BuildPhase(Player* player, Game* game, wstring hotel_name, 
             player->Return_change(game->id, n_5000, n_1000, n_500, n_100, n_50);
         }
     }
+    state->hotel_to_be_extended = NULL;
     state->built_last_turn = true;
     state->debt_last_turn = 0;
     Player* dest;
@@ -1145,7 +1153,7 @@ void CommandHandler::CheckForTurnExpirations()
             if (game->started && !game->ended)
             {
                 game->seconds_elapsed_last_command++;
-                if (game->seconds_elapsed_last_command > 10)
+                if (game->seconds_elapsed_last_command > 20)
                 {
                     wcout << L"Player " << game->current_player->name << " is AFK. Passing the turn automatically for game " << game->id << endl;
                     PlayerGameState* curr_p_state = game->current_player->GetState(game->id);
@@ -1168,10 +1176,24 @@ void CommandHandler::CheckForTurnExpirations()
                             game->calculate_return(curr_p_state, curr_p_state->debt_last_turn, &n_5000, &n_1000, &n_500, &n_100, &n_50);
                             if (curr_p_state->debt_to_last_turn != NULL)
                                 curr_p_state->debt_to_last_turn->Return_change(n_5000, n_1000, n_500, n_100, n_50);
+                            // Check if an hotel is about to be extended and extend it
+                            if (curr_p_state->hotel_to_be_extended != NULL)
+                            {
+                                if (curr_p_state->hotel_to_be_extended->Can_extend())
+                                    curr_p_state->hotel_to_be_extended->Extend();
+                            }
                             Player* dest;
                             for (list<Player*>::iterator j = game->plist.begin() ; j != game->plist.end() ; ++j)
                             {
                                 dest = (*j);
+                                if (curr_p_state->hotel_to_be_extended != NULL)
+                                {
+                                    wcout << L"Phase of hotel " << curr_p_state->hotel_to_be_extended->name_txt << " built automatically because of pending debt to the bank" << endl;
+                                    send_command("phase_built", dest);
+                                    send_int(dest, game->id);
+                                    send_int(dest, get_utf8_length(curr_p_state->hotel_to_be_extended->name_txt));
+                                    send_wstring(dest, curr_p_state->hotel_to_be_extended->name_txt);
+                                }
                                 // Update the money of current player
                                 send_command("update_player_money", dest);
                                 send_int(dest, game->id);
@@ -1196,6 +1218,7 @@ void CommandHandler::CheckForTurnExpirations()
                                     send_int(dest, curr_p_state->debt_to_last_turn->n_5000);
                                 }
                             }
+                            curr_p_state->hotel_to_be_extended = NULL;
                             curr_p_state->debt_to_last_turn = NULL;
                             curr_p_state->debt_last_turn = 0;
                             this->PassTurn(game->current_player, game, true);

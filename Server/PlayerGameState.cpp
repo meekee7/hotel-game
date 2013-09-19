@@ -12,6 +12,7 @@ PlayerGameState::PlayerGameState(Player* player)
     this->free_entrance_used = false;
     this->debt_last_turn = 0;
     this->debt_to_last_turn = NULL;
+    this->hotel_to_be_extended = NULL;
     this->n_5000 = 0;
     this->n_1000 = 0;
     this->n_500 = 0;

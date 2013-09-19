@@ -492,10 +492,8 @@ namespace Juego_Hotel
             // Cerrar las ventanas que se pudieran quedar abiertas al ser un paso automático
             if (automaticamente)
             {
-                Form form;
-                for (int i = 0; i < Application.OpenForms.Count; i++)
+                foreach (Form form in Application.OpenForms.Cast<Form>().ToList())
                 {
-                    form = Application.OpenForms[i];
                     if ((form is Principal) || (form is Online) || (form is Chat) || (form is PartidaOnline) || (form is Actividad)
                         || (form is Reglas) || (form is ReporteBug) || (form is VerHoteles))
                         continue;
@@ -505,8 +503,6 @@ namespace Juego_Hotel
                         {
                             (form as PedirPago).cancelado = true;
                             form.Hide();
-                            // Dar margen al formulario para que se cierre
-                            Thread.Sleep(200);
                         }
                         else if (form is Construir)
                         {
@@ -515,9 +511,6 @@ namespace Juego_Hotel
                         }
                         else
                             form.Close();
-
-                        // Para evitar problemas al recorrer la lista de forms, se vuelve a empezar
-                        i = 0;
                     }
                 }
             }
