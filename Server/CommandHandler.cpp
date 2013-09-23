@@ -1000,6 +1000,11 @@ void CommandHandler::AuctionSell(Player* player, Game* game)
         return kick_hacker(77, player);
     if (game->best_bid == 0) // Hack, retire player, no one has placed a bid yet
         return kick_hacker(78, player);
+    // Create a debt
+    this->serverState->debt_mutex.lock();
+    game->best_bidder->GetState(game->id)->debt_last_turn = game->best_bid;
+    game->best_bidder->GetState(game->id)->debt_to_last_turn = game->hotel_at_auction->owner->GetState(game->id);
+    this->serverState->debt_mutex.unlock();
     Player* dest;
     for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
     {
@@ -1073,6 +1078,11 @@ void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_10
         send_command("auction_ended", dest);
         send_int(dest, game->id);
     }
+    // Clear debt of player
+    this->serverState->debt_mutex.lock();
+    game->best_bidder->GetState(game->id)->debt_last_turn = 0;
+    game->best_bidder->GetState(game->id)->debt_to_last_turn = NULL;
+    this->serverState->debt_mutex.unlock();
     game->best_bidder = NULL;
     game->best_bid = 0;
     game->hotel_at_auction = NULL;
