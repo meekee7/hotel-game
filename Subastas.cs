@@ -19,7 +19,7 @@ namespace Juego_Hotel
         public int n_50;
         Juego juego;
         public int n_mayor_postor; // nº de jugador
-        int n_precio_mayor = 0;
+        public int n_precio_mayor = 0;
         public Hotel hotel_seleccionado;
         private Principal interfaz;
         Boolean online;
@@ -312,6 +312,16 @@ namespace Juego_Hotel
                 this.listaHoteles.Enabled = false;
                 this.listaHoteles.EndUpdate();
             }
+        }
+
+        public void Subasta_anulada()
+        {
+            this.DialogResult = DialogResult.Abort;
+            // Ocultar la ventana si somos el jugador actual, puesto que fue abierta desde el diálogo PedirPago, pero si no lo soy, cerrar directamente para que no se quede en memoria
+            if (this.juego.jugador_actual.nombre_online == this.interfaz.nombre_online)
+                this.Hide();
+            else
+                this.Close();
         }
     }
 }

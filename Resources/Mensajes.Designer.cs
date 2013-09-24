@@ -241,6 +241,15 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha vendido de forma automatica por inactividad el hotel {2} al jugador {3} ({4}) por una cantidad de {5}..
+        /// </summary>
+        internal static string MASubastaTerminadaAuto {
+            get {
+                return ResourceManager.GetString("MASubastaTerminadaAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador {0} ({1}) ha tirado el dado de construcción y ha sacado un {2}..
         /// </summary>
         internal static string MATirarDadoConstruccion {

@@ -1015,7 +1015,7 @@ void CommandHandler::AuctionSell(Player* player, Game* game)
     }
 }
 
-void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50, bool automatically)
 {
     if (!game->check_already_joined(player)) // Hack, retire player, he is not part of the game
         return kick_hacker(79, player);
@@ -1077,6 +1077,7 @@ void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_10
         dest = (*i);
         send_command("auction_ended", dest);
         send_int(dest, game->id);
+        send_int(dest, (automatically ? 1 : 0));
     }
     // Clear debt of player
     this->serverState->debt_mutex.lock();
@@ -1173,7 +1174,26 @@ void CommandHandler::CheckForTurnExpirations()
                     if (game->hotel_at_auction != NULL)
                     {
                         wcout << L"Player " << game->current_player->name << " has an auction in progress, ending it." << endl;
-
+                        // If there is a best bidder, make him pay before ending the auction
+                        if (game->best_bidder != NULL)
+                        {
+                            wcout << L"Player " << game->best_bidder->name << " will pay " << game->best_bid << " to player " << game->current_player->name << " automatically for the auction" << endl;
+                            int n_5000, n_1000, n_500, n_100, n_50;
+                            game->calculate_return(game->best_bidder->GetState(game->id), game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
+                            this->AuctionPay(game->best_bidder, game, n_5000, n_1000, n_500, n_100, n_50, true);
+                        }
+                        else
+                        {
+                            // If there is no best bidder, the auction can be cancelled directly
+                            for (list<Player*>::iterator i = game->plist.begin() ; i != game->plist.end() ; ++i)
+                            {
+                                send_command("auction_ended", (*i));
+                                send_int((*i), game->id);
+                                // Ended automatically
+                                send_int((*i), 1);
+                            }
+                            game->hotel_at_auction = NULL;
+                        }
                     }
                     if (curr_p_state->debt_last_turn > 0)
                     {

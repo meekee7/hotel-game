@@ -48,7 +48,7 @@ public:
     void AuctionStart(Player* player, Game* game, wstring hotel_name, int minimum_price);
     void AuctionBid(Player* player, Game* game, int amount);
     void AuctionSell(Player* player, Game* game);
-    void AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50);
+    void AuctionPay(Player* player, Game* game, int n_5000, int n_1000, int n_500, int n_100, int n_50, bool automatically = false);
 
     void SaveGame(Player* player, Game* game, wstring password);
     void LoadGame(Player* player, int id, Game* game, wstring password);

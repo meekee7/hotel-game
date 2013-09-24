@@ -1358,15 +1358,25 @@ namespace Juego_Hotel
                 MessageBox.Show(String.Format(Mensajes.mensajeHotelVendido, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].Nombre_color(), 
                     partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor].nombre_online, cantidad));
             }
-            partida.interfaz.BeginInvoke(new Action<Jugador, int, Jugador, String>(partida.interfaz.Subasta_Terminada), partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.dueño, cantidad, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor], partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt);
+            partida.interfaz.BeginInvoke(new Action<Jugador, int, Jugador, String, Boolean>(partida.interfaz.Subasta_Terminada), partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.dueño,
+                cantidad, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor], partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt, false);
         }
 
         private void Subasta_terminada()
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
+            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
             PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Action(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
+            if (automaticamente)
+            {
+                partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Action(partida.interfaz.frm_subasta_en_curso.Subasta_anulada));
+                partida.interfaz.BeginInvoke(new Action<Jugador, int, Jugador, String, Boolean>(partida.interfaz.Subasta_Terminada), partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.dueño,
+                    partida.interfaz.frm_subasta_en_curso.n_precio_mayor, partida.interfaz.juego.jugadores[partida.interfaz.frm_subasta_en_curso.n_mayor_postor],
+                    partida.interfaz.frm_subasta_en_curso.hotel_seleccionado.nombre_txt, true);
+            }
+            else
+                partida.interfaz.frm_subasta_en_curso.BeginInvoke(new Action(partida.interfaz.frm_subasta_en_curso.Subasta_terminada));
         }
 
         private void Juego_salvado()

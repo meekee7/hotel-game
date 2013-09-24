@@ -495,7 +495,7 @@ namespace Juego_Hotel
                 foreach (Form form in Application.OpenForms.Cast<Form>().ToList())
                 {
                     if ((form is Principal) || (form is Online) || (form is Chat) || (form is PartidaOnline) || (form is Actividad)
-                        || (form is Reglas) || (form is ReporteBug) || (form is VerHoteles))
+                        || (form is Reglas) || (form is ReporteBug) || (form is VerHoteles) || (form is Subastas))
                         continue;
                     else
                     {
@@ -1416,9 +1416,9 @@ namespace Juego_Hotel
             this.actividad.Realizar_Puja(jugador, cantidad, hotel);
         }
 
-        public void Subasta_Terminada(Jugador vendedor, int cantidad, Jugador comprador, String hotel)
+        public void Subasta_Terminada(Jugador vendedor, int cantidad, Jugador comprador, String hotel, Boolean automaticamente)
         {
-            this.actividad.Subasta_Terminada(vendedor, comprador, hotel, cantidad);
+            this.actividad.Subasta_Terminada(vendedor, comprador, hotel, cantidad, automaticamente);
         }
 
         private void bNormas_Click(object sender, EventArgs e)

@@ -258,7 +258,15 @@ namespace Juego_Hotel
             {
                 this.interfaz.frm_subasta_en_curso = new Subastas(ref this.juego, this.interfaz, this.interfaz.online);
                 this.interfaz.frm_subasta_en_curso.ShowDialog();
+                DialogResult dr = this.interfaz.frm_subasta_en_curso.DialogResult;
                 this.interfaz.frm_subasta_en_curso.Close();
+                if (dr == DialogResult.Abort)
+                {
+                    // La subasta ha sido cancelada por paso de turno automático
+                    this.cancelado = true;
+                    this.Hide();
+                    return;
+                }
                 // Refrescar valores después de la subasta, y anular la construcción si se ha vendido el hotel (si ya no está entre los hoteles del jugador)
                 if ((this.hotel_en_construccion != null) && (!this.juego.jugador_actual.hoteles.Contains(this.hotel_en_construccion)))
                 {

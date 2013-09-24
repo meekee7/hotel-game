@@ -807,4 +807,7 @@ It will be a third of the buy value of hotel plus built phases</value>
   <data name="MAPasarTurnoAuto" xml:space="preserve">
     <value>Player {0} ({1}) is away and the turn has been passed automatically.</value>
   </data>
+  <data name="MASubastaTerminadaAuto" xml:space="preserve">
+    <value>Player {0} ({1}) has sold the hotel {2} automatically due to inactivity to player {3}({4}) for {5}.</value>
+  </data>
 </root>
