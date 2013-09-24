@@ -1169,6 +1169,12 @@ void CommandHandler::CheckForTurnExpirations()
                     PlayerGameState* curr_p_state = game->current_player->GetState(game->id);
                     if (!curr_p_state->rolled_last_turn)
                         this->RollDice(game->current_player, game, true);
+                    // Check for auctions
+                    if (game->hotel_at_auction != NULL)
+                    {
+                        wcout << L"Player " << game->current_player->name << " has an auction in progress, ending it." << endl;
+
+                    }
                     if (curr_p_state->debt_last_turn > 0)
                     {
                         if (curr_p_state->debt_to_last_turn != NULL)
