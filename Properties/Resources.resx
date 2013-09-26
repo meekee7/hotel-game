@@ -125,7 +125,7 @@
     <value>..\Images\Boomerang_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Flecha_verde" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_verde.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Images\Flecha_verde.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fujiyama_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Fujiyama_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -137,13 +137,13 @@
     <value>..\Images\Safari_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Flecha_azul" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_azul.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Images\Flecha_azul.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Waikiki_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Waikiki_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Flecha_amarilla" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_amarilla.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Images\Flecha_amarilla.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Royal_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Royal_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -158,7 +158,7 @@
     <value>..\Images\Taj_Mahal_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Flecha_roja" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Flecha_roja.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Images\Flecha_roja.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Letoile_tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Letoile_tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

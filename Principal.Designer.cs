@@ -103,6 +103,10 @@
             this.comboBoxIdiomas = new System.Windows.Forms.ComboBox();
             this.imageListIdiomas = new System.Windows.Forms.ImageList(this.components);
             this.bReportarBug = new System.Windows.Forms.Button();
+            this.ImagenTurnoJ1 = new System.Windows.Forms.PictureBox();
+            this.ImagenTurnoJ2 = new System.Windows.Forms.PictureBox();
+            this.ImagenTurnoJ3 = new System.Windows.Forms.PictureBox();
+            this.ImagenTurnoJ4 = new System.Windows.Forms.PictureBox();
             this.grupoNJugadores.SuspendLayout();
             this.controlJ1.SuspendLayout();
             this.controlJ2.SuspendLayout();
@@ -115,6 +119,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgTablero)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_Banco)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_ayto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ4)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTablero
@@ -209,6 +217,7 @@
             // controlJ1
             // 
             resources.ApplyResources(this.controlJ1, "controlJ1");
+            this.controlJ1.Controls.Add(this.ImagenTurnoJ1);
             this.controlJ1.Controls.Add(this.nombreJ1);
             this.controlJ1.Controls.Add(this.bRetirarseJ1);
             this.controlJ1.Controls.Add(this.colorJ1);
@@ -284,6 +293,7 @@
             // controlJ2
             // 
             resources.ApplyResources(this.controlJ2, "controlJ2");
+            this.controlJ2.Controls.Add(this.ImagenTurnoJ2);
             this.controlJ2.Controls.Add(this.nombreJ2);
             this.controlJ2.Controls.Add(this.bRetirarseJ2);
             this.controlJ2.Controls.Add(this.colorJ2);
@@ -352,6 +362,7 @@
             // controlJ3
             // 
             resources.ApplyResources(this.controlJ3, "controlJ3");
+            this.controlJ3.Controls.Add(this.ImagenTurnoJ3);
             this.controlJ3.Controls.Add(this.nombreJ3);
             this.controlJ3.Controls.Add(this.bRetirarseJ3);
             this.controlJ3.Controls.Add(this.colorJ3);
@@ -420,6 +431,7 @@
             // controlJ4
             // 
             resources.ApplyResources(this.controlJ4, "controlJ4");
+            this.controlJ4.Controls.Add(this.ImagenTurnoJ4);
             this.controlJ4.Controls.Add(this.nombreJ4);
             this.controlJ4.Controls.Add(this.bRetirarseJ4);
             this.controlJ4.Controls.Add(this.colorJ4);
@@ -530,6 +542,7 @@
             // 
             // posVerde
             // 
+            this.posVerde.BackColor = System.Drawing.Color.Transparent;
             this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
             resources.ApplyResources(this.posVerde, "posVerde");
             this.posVerde.Name = "posVerde";
@@ -537,6 +550,7 @@
             // 
             // posAmarillo
             // 
+            this.posAmarillo.BackColor = System.Drawing.Color.Transparent;
             this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
             resources.ApplyResources(this.posAmarillo, "posAmarillo");
             this.posAmarillo.Name = "posAmarillo";
@@ -544,6 +558,7 @@
             // 
             // posAzul
             // 
+            this.posAzul.BackColor = System.Drawing.Color.Transparent;
             this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
             resources.ApplyResources(this.posAzul, "posAzul");
             this.posAzul.Name = "posAzul";
@@ -551,6 +566,7 @@
             // 
             // posRojo
             // 
+            this.posRojo.BackColor = System.Drawing.Color.Transparent;
             this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
             resources.ApplyResources(this.posRojo, "posRojo");
             this.posRojo.Name = "posRojo";
@@ -623,6 +639,34 @@
             this.bReportarBug.UseVisualStyleBackColor = true;
             this.bReportarBug.Click += new System.EventHandler(this.bReportarBug_Click);
             // 
+            // ImagenTurnoJ1
+            // 
+            this.ImagenTurnoJ1.Image = global::Juego_Hotel.Properties.Resources.TurnoRojo;
+            resources.ApplyResources(this.ImagenTurnoJ1, "ImagenTurnoJ1");
+            this.ImagenTurnoJ1.Name = "ImagenTurnoJ1";
+            this.ImagenTurnoJ1.TabStop = false;
+            // 
+            // ImagenTurnoJ2
+            // 
+            this.ImagenTurnoJ2.Image = global::Juego_Hotel.Properties.Resources.TurnoAzul;
+            resources.ApplyResources(this.ImagenTurnoJ2, "ImagenTurnoJ2");
+            this.ImagenTurnoJ2.Name = "ImagenTurnoJ2";
+            this.ImagenTurnoJ2.TabStop = false;
+            // 
+            // ImagenTurnoJ3
+            // 
+            this.ImagenTurnoJ3.Image = global::Juego_Hotel.Properties.Resources.TurnoVerde;
+            resources.ApplyResources(this.ImagenTurnoJ3, "ImagenTurnoJ3");
+            this.ImagenTurnoJ3.Name = "ImagenTurnoJ3";
+            this.ImagenTurnoJ3.TabStop = false;
+            // 
+            // ImagenTurnoJ4
+            // 
+            this.ImagenTurnoJ4.Image = global::Juego_Hotel.Properties.Resources.TurnoAmarillo;
+            resources.ApplyResources(this.ImagenTurnoJ4, "ImagenTurnoJ4");
+            this.ImagenTurnoJ4.Name = "ImagenTurnoJ4";
+            this.ImagenTurnoJ4.TabStop = false;
+            // 
             // Principal
             // 
             this.AcceptButton = this.bIniciar;
@@ -683,6 +727,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgTablero)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_Banco)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_ayto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagenTurnoJ4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -763,6 +811,10 @@
         private System.Windows.Forms.ComboBox comboBoxIdiomas;
         private System.Windows.Forms.ImageList imageListIdiomas;
         private System.Windows.Forms.Button bReportarBug;
+        private System.Windows.Forms.PictureBox ImagenTurnoJ1;
+        private System.Windows.Forms.PictureBox ImagenTurnoJ2;
+        private System.Windows.Forms.PictureBox ImagenTurnoJ3;
+        private System.Windows.Forms.PictureBox ImagenTurnoJ4;
 
     }
 }
