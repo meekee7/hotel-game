@@ -486,7 +486,6 @@ void CommandHandler::RollDice(Player* player, Game* game, bool automatically)
         send_wstring(dest, player->name);
         send_int(dest, (automatically ? 1 : 0));
     }
-    game->seconds_elapsed_last_command = 0;
 }
 
 void CommandHandler::RollConstructionDice(Player* player, Game* game, Hotel* selected_hotel)
@@ -548,7 +547,6 @@ void CommandHandler::PassTurn(Player* player, Game* game, bool automatically)
         send_wstring(dest, next_player->name);
         send_int(dest, (automatically ? 1 : 0));
     }
-    game->seconds_elapsed_last_command = 0;
 }
 
 void CommandHandler::ChargeBank(Player* player, Game* game)
@@ -1033,7 +1031,7 @@ void CommandHandler::AuctionPay(Player* player, Game* game, int n_5000, int n_10
         return kick_hacker(83, player);
     Player* previous_owner = game->hotel_at_auction->owner;
     previous_owner->Expropriate_hotel(game->id, game->hotel_at_auction);
-    player->Buy_hotel(game->id, game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50);
+    player->Buy_hotel(game->id, game->hotel_at_auction, previous_owner, n_5000, n_1000, n_500, n_100, n_50, automatically);
     game->hotel_at_auction->owner = player;
     // Calculate change
     if (total_selected > (game->best_bid))
@@ -1166,6 +1164,7 @@ void CommandHandler::CheckForTurnExpirations()
                 game->seconds_elapsed_last_command++;
                 if (game->seconds_elapsed_last_command > 20)
                 {
+                    game->seconds_elapsed_last_command = 0;
                     wcout << L"Player " << game->current_player->name << " is AFK. Passing the turn automatically for game " << game->id << endl;
                     PlayerGameState* curr_p_state = game->current_player->GetState(game->id);
                     if (!curr_p_state->rolled_last_turn)

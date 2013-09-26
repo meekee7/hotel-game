@@ -45,9 +45,9 @@ void Player::Buy_hotel(int game_id, Hotel* hotel, int n_5000, int n_1000, int n_
     this->GetState(game_id)->Buy_hotel(hotel, n_5000, n_1000, n_500, n_100, n_50);
 }
 
-void Player::Buy_hotel(int game_id, Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+void Player::Buy_hotel(int game_id, Hotel* hotel, Player* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, bool automatically)
 {
-    this->GetState(game_id)->Buy_hotel(hotel, previous_owner->GetState(game_id), n_5000, n_1000, n_500, n_100, n_50);
+    this->GetState(game_id)->Buy_hotel(hotel, previous_owner->GetState(game_id), n_5000, n_1000, n_500, n_100, n_50, automatically);
 }
 
 void Player::Expropriate_hotel(int game_id, Hotel* hotel)

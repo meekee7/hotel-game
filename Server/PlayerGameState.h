@@ -26,7 +26,7 @@ public:
     void Calculate_total_money();
     void Charge_bank();
     void Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500, int n_100, int n_50);
-    void Buy_hotel(Hotel* hotel, PlayerGameState* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50);
+    void Buy_hotel(Hotel* hotel, PlayerGameState* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, bool automatically = false);
     void Expropriate_hotel(Hotel* hotel);
     void Set_money(int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void Pay_nights(PlayerGameState* to_player, int n5000, int n1000, int n500, int n100, int n50);

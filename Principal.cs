@@ -484,7 +484,7 @@ namespace Juego_Hotel
                 this.juego.jugador_actual.pago_ultimo_turno = false;
                 this.dado_tirado = false;
                 System.Media.SystemSounds.Beep.Play();
-                if (this.online)
+                if (this.online && Application.OpenForms.Cast<Form>().Contains(this.actividad))
                     this.actividad.PasarTurno(this.juego.jugador_actual.nombre_online, this.juego.jugador_actual.Nombre_color(), automaticamente);//Actualizando datos de la actividad
                 if (automaticamente)
                     this.bTurno.Enabled = false;
@@ -638,7 +638,7 @@ namespace Juego_Hotel
                 }
                 jugador.posicion.ocupada = true; // Ocupamos la casilla
             }
-            if (this.online)
+            if (this.online && Application.OpenForms.Cast<Form>().Contains(this.actividad))
                 this.actividad.DadoTirado(jugador, this.juego.ultimo_res_dado, automaticamente);//Actualizando datos de la actividad
             this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado.ToString();
             // Pintamos el coche en su lugar
@@ -992,17 +992,20 @@ namespace Juego_Hotel
 
         public void Hotel_Comprado(Hotel hotel, Jugador jugador)
         {
-            this.actividad.ComprarHotel(jugador.nombre_online, jugador.Nombre_color(), hotel.nombre_txt); //Actualizando datos de la actividad
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.ComprarHotel(jugador.nombre_online, jugador.Nombre_color(), hotel.nombre_txt); //Actualizando datos de la actividad
         }
 
         public void Hotel_Expropiado(Jugador jugador,Jugador expropiado, String hotel)
         {
-            this.actividad.Expropiar_Hotel(jugador, expropiado, hotel);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Expropiar_Hotel(jugador, expropiado, hotel);
         }
 
         public void Tirar_Dado_Construccion(Jugador jugador, Tipos.Resultado_dado_cons resultado)
         {
-            this.actividad.Tirar_Dado_Construccion(jugador, resultado);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Tirar_Dado_Construccion(jugador, resultado);
         }
 
         public static void Calcular_Devolucion (int cantidad, out int n_5000, out int n_1000, out int n_500, out int n_100, out int n_50)
@@ -1398,27 +1401,32 @@ namespace Juego_Hotel
 
         public void Añadir_Entrada(Jugador jugador, int casilla, String hotel)
         {
-            this.actividad.Añadir_Entrada(jugador, casilla, hotel);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Añadir_Entrada(jugador, casilla, hotel);
         }
 
         public void Añadir_Fase(Jugador jugador, int fase, String hotel)
         {
-            this.actividad.Añadir_Fase(jugador, fase, hotel);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Añadir_Fase(jugador, fase, hotel);
         }
 
         public void Subasta_Iniciada(Jugador jugador, String hotel)
         {
-            this.actividad.Iniciar_Subasta(jugador, hotel);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Iniciar_Subasta(jugador, hotel);
         }
 
         public void Nueva_Puja(Jugador jugador, int cantidad, String hotel)
         {
-            this.actividad.Realizar_Puja(jugador, cantidad, hotel);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Realizar_Puja(jugador, cantidad, hotel);
         }
 
         public void Subasta_Terminada(Jugador vendedor, int cantidad, Jugador comprador, String hotel, Boolean automaticamente)
         {
-            this.actividad.Subasta_Terminada(vendedor, comprador, hotel, cantidad, automaticamente);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Subasta_Terminada(vendedor, comprador, hotel, cantidad, automaticamente);
         }
 
         private void bNormas_Click(object sender, EventArgs e)
@@ -1484,7 +1492,8 @@ namespace Juego_Hotel
 
         public void Registrar_Pagar_Noches_Online(Jugador jugador_dueño, Jugador jugador_pagador, int cantidad, int noches, String hotel)
         {
-            this.actividad.Pedir_Noches_Online(jugador_dueño, jugador_pagador, cantidad, noches, hotel);
+            if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
+                this.actividad.Pedir_Noches_Online(jugador_dueño, jugador_pagador, cantidad, noches, hotel);
         }
 
         public void Pedir_Noches_Online(Jugador jugador, int cantidad, int noches, String hotel)

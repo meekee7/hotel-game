@@ -184,7 +184,8 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
-        ch->RollDice(player, game);
+        game->seconds_elapsed_last_command = 0;
+        ch->RollDice(player, game);        
     }
     else if (command == "roll_construction_dice")
     {
@@ -196,6 +197,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         Hotel* selected_hotel = get_hotel_from_name(hotel_name, game);
         ch->RollConstructionDice(player, game, selected_hotel);
     }
@@ -207,6 +209,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->PassTurn(player, game);
     }
     else if (command == "charge_bank")
@@ -217,6 +220,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->ChargeBank(player, game);        
     }
     else if (command == "buy_hotel")
@@ -240,6 +244,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->BuyHotel(player, game, hotel_name, n_5000, n_1000, n_500, n_100, n_50);
     }
     else if (command == "expropriate_hotel")
@@ -265,6 +270,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->ExpropriateHotel(player, game, hotel_name, n_5000, n_1000, n_500, n_100, n_50);
     }
     else if (command == "build_phase")
@@ -294,6 +300,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->BuildPhase(player, game, hotel_name, type, n_5000, n_1000, n_500, n_100, n_50);
     }
     else if (command == "buy_entrance")
@@ -325,6 +332,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->BuyEntrance(player, game, hotel_name, position, type, n_5000, n_1000, n_500, n_100, n_50);
     }
     else if (command == "retire")
@@ -344,6 +352,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->Retire(player, game, type, receiving_player);
     }
     else if (command == "ask_nights")
@@ -354,6 +363,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->AskNights(player, game);
     }
     else if (command == "pay_nights")
@@ -376,6 +386,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->PayNights(player, game, n_5000, n_1000, n_500, n_100, n_50);
     }
     else if (command == "auction_start")
@@ -390,6 +401,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->AuctionStart(player, game, hotel_name, minimum_price);
     }
     else if (command == "auction_bid")
@@ -402,6 +414,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->AuctionBid(player, game, amount);
     }
     else if (command == "auction_sell")
@@ -412,6 +425,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->AuctionSell(player, game);
     }
     else if (command == "auction_pay")
@@ -433,6 +447,7 @@ void Server::handle_command(string command, Player* player)
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
+        game->seconds_elapsed_last_command = 0;
         ch->AuctionPay(player, game, n_5000, n_1000, n_500, n_100, n_50);
     }
     else if (command == "save_game")

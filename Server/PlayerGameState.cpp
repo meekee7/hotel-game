@@ -45,16 +45,21 @@ void PlayerGameState::Buy_hotel(Hotel* hotel, int n_5000, int n_1000, int n_500,
     this->Calculate_total_money();
 }
 
-void PlayerGameState::Buy_hotel(Hotel* hotel, PlayerGameState* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+void PlayerGameState::Buy_hotel(Hotel* hotel, PlayerGameState* previous_owner, int n_5000, int n_1000, int n_500, int n_100, int n_50, bool automatically)
 {
     // Owner is set by caller thread because incomplete class Hotel
-    this->hotels.push_back(hotel);
-    this->n_5000 -= n_5000;
-    this->n_1000 -= n_1000;
-    this->n_500 -= n_500;
-    this->n_100 -= n_100;
-    this->n_50 -= n_50;
-    this->Calculate_total_money();
+    // When passing the turn automatically, the function that takes the bills from the player, substracts them from current money
+    // So when ending an auction automatically, the money cannot be substracted here, because it will be substracte twice
+    if (automatically == false)
+    {
+        this->hotels.push_back(hotel);
+        this->n_5000 -= n_5000;
+        this->n_1000 -= n_1000;
+        this->n_500 -= n_500;
+        this->n_100 -= n_100;
+        this->n_50 -= n_50;
+        this->Calculate_total_money();
+    }
     previous_owner->n_5000 += n_5000;
     previous_owner->n_1000 += n_1000;
     previous_owner->n_500 += n_500;
