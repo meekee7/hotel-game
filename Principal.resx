@@ -486,6 +486,21 @@
   <data name="controlJ1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
+  <data name="ImagenTurnoJ1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ImagenTurnoJ1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 33</value>
+  </data>
+  <data name="ImagenTurnoJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="ImagenTurnoJ1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="ImagenTurnoJ1.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
   <data name="&gt;&gt;ImagenTurnoJ1.Name" xml:space="preserve">
     <value>ImagenTurnoJ1</value>
   </data>
@@ -497,141 +512,6 @@
   </data>
   <data name="&gt;&gt;ImagenTurnoJ1.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Name" xml:space="preserve">
-    <value>nombreJ1</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;nombreJ1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Name" xml:space="preserve">
-    <value>bRetirarseJ1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Name" xml:space="preserve">
-    <value>colorJ1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;colorJ1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Name" xml:space="preserve">
-    <value>bPedirNochesJ1</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Name" xml:space="preserve">
-    <value>bEntradasJ1</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Name" xml:space="preserve">
-    <value>dineroJ1</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;dineroJ1.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Name" xml:space="preserve">
-    <value>bVerHotelesJ1</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;bVerHotelesJ1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Name" xml:space="preserve">
-    <value>posJ1</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;posJ1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.Name" xml:space="preserve">
-    <value>turnoJ1</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;turnoJ1.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="controlJ1.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 516</value>
-  </data>
-  <data name="controlJ1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ1.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="controlJ1.Text" xml:space="preserve">
-    <value>Jugador 1</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Name" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
-    <value>22</value>
   </data>
   <data name="nombreJ1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -840,38 +720,32 @@
   <data name="&gt;&gt;posJ1.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="turnoJ1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="turnoJ1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="turnoJ1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 70</value>
-  </data>
-  <data name="turnoJ1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="turnoJ1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="turnoJ1.Text" xml:space="preserve">
-    <value>Te toca</value>
-  </data>
-  <data name="turnoJ1.Visible" type="System.Boolean, mscorlib">
+  <data name="controlJ1.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;turnoJ1.Name" xml:space="preserve">
-    <value>turnoJ1</value>
+  <data name="controlJ1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 516</value>
   </data>
-  <data name="&gt;&gt;turnoJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="controlJ1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
   </data>
-  <data name="&gt;&gt;turnoJ1.Parent" xml:space="preserve">
+  <data name="controlJ1.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="controlJ1.Text" xml:space="preserve">
+    <value>Jugador 1</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.Name" xml:space="preserve">
     <value>controlJ1</value>
   </data>
-  <data name="&gt;&gt;turnoJ1.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="&gt;&gt;controlJ1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
+    <value>22</value>
   </data>
   <data name="bVerHotelesJ2.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 120</value>
@@ -900,6 +774,21 @@
   <data name="controlJ2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
+  <data name="ImagenTurnoJ2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ImagenTurnoJ2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 33</value>
+  </data>
+  <data name="ImagenTurnoJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="ImagenTurnoJ2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="ImagenTurnoJ2.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
   <data name="&gt;&gt;ImagenTurnoJ2.Name" xml:space="preserve">
     <value>ImagenTurnoJ2</value>
   </data>
@@ -911,129 +800,6 @@
   </data>
   <data name="&gt;&gt;ImagenTurnoJ2.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Name" xml:space="preserve">
-    <value>nombreJ2</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;nombreJ2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Name" xml:space="preserve">
-    <value>bRetirarseJ2</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Name" xml:space="preserve">
-    <value>colorJ2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;colorJ2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Name" xml:space="preserve">
-    <value>bPedirNochesJ2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Name" xml:space="preserve">
-    <value>bEntradasJ2</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ2.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Name" xml:space="preserve">
-    <value>dineroJ2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;dineroJ2.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Name" xml:space="preserve">
-    <value>posJ2</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;posJ2.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.Name" xml:space="preserve">
-    <value>turnoJ2</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;turnoJ2.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="controlJ2.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 516</value>
-  </data>
-  <data name="controlJ2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ2.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="controlJ2.Text" xml:space="preserve">
-    <value>Jugador 2</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Name" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
-    <value>21</value>
   </data>
   <data name="nombreJ2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1218,38 +984,32 @@
   <data name="&gt;&gt;posJ2.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="turnoJ2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="turnoJ2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="turnoJ2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 70</value>
-  </data>
-  <data name="turnoJ2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="turnoJ2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="turnoJ2.Text" xml:space="preserve">
-    <value>Te toca</value>
-  </data>
-  <data name="turnoJ2.Visible" type="System.Boolean, mscorlib">
+  <data name="controlJ2.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;turnoJ2.Name" xml:space="preserve">
-    <value>turnoJ2</value>
+  <data name="controlJ2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 516</value>
   </data>
-  <data name="&gt;&gt;turnoJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="controlJ2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
   </data>
-  <data name="&gt;&gt;turnoJ2.Parent" xml:space="preserve">
+  <data name="controlJ2.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="controlJ2.Text" xml:space="preserve">
+    <value>Jugador 2</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.Name" xml:space="preserve">
     <value>controlJ2</value>
   </data>
-  <data name="&gt;&gt;turnoJ2.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="&gt;&gt;controlJ2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
+    <value>21</value>
   </data>
   <data name="bVerHotelesJ3.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 120</value>
@@ -1278,6 +1038,21 @@
   <data name="controlJ3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
+  <data name="ImagenTurnoJ3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ImagenTurnoJ3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 33</value>
+  </data>
+  <data name="ImagenTurnoJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="ImagenTurnoJ3.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="ImagenTurnoJ3.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
   <data name="&gt;&gt;ImagenTurnoJ3.Name" xml:space="preserve">
     <value>ImagenTurnoJ3</value>
   </data>
@@ -1289,129 +1064,6 @@
   </data>
   <data name="&gt;&gt;ImagenTurnoJ3.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Name" xml:space="preserve">
-    <value>nombreJ3</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;nombreJ3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Name" xml:space="preserve">
-    <value>bRetirarseJ3</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bRetirarseJ3.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Name" xml:space="preserve">
-    <value>colorJ3</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;colorJ3.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Name" xml:space="preserve">
-    <value>bPedirNochesJ3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bPedirNochesJ3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Name" xml:space="preserve">
-    <value>bEntradasJ3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;bEntradasJ3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Name" xml:space="preserve">
-    <value>dineroJ3</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;dineroJ3.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Name" xml:space="preserve">
-    <value>posJ3</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;posJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;posJ3.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.Name" xml:space="preserve">
-    <value>turnoJ3</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;turnoJ3.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="controlJ3.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="controlJ3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>354, 516</value>
-  </data>
-  <data name="controlJ3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 179</value>
-  </data>
-  <data name="controlJ3.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="controlJ3.Text" xml:space="preserve">
-    <value>Jugador 3</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Name" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
-    <value>20</value>
   </data>
   <data name="nombreJ3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1596,38 +1248,32 @@
   <data name="&gt;&gt;posJ3.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="turnoJ3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="turnoJ3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="turnoJ3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 70</value>
-  </data>
-  <data name="turnoJ3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="turnoJ3.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="turnoJ3.Text" xml:space="preserve">
-    <value>Te toca</value>
-  </data>
-  <data name="turnoJ3.Visible" type="System.Boolean, mscorlib">
+  <data name="controlJ3.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;turnoJ3.Name" xml:space="preserve">
-    <value>turnoJ3</value>
+  <data name="controlJ3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>354, 516</value>
   </data>
-  <data name="&gt;&gt;turnoJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="controlJ3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 179</value>
   </data>
-  <data name="&gt;&gt;turnoJ3.Parent" xml:space="preserve">
+  <data name="controlJ3.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="controlJ3.Text" xml:space="preserve">
+    <value>Jugador 3</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.Name" xml:space="preserve">
     <value>controlJ3</value>
   </data>
-  <data name="&gt;&gt;turnoJ3.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="&gt;&gt;controlJ3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
+    <value>20</value>
   </data>
   <data name="bVerHotelesJ4.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 120</value>
@@ -1660,7 +1306,7 @@
     <value>NoControl</value>
   </data>
   <data name="ImagenTurnoJ4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 18</value>
+    <value>107, 33</value>
   </data>
   <data name="ImagenTurnoJ4.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -1865,39 +1511,6 @@
   </data>
   <data name="&gt;&gt;posJ4.ZOrder" xml:space="preserve">
     <value>8</value>
-  </data>
-  <data name="turnoJ4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="turnoJ4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="turnoJ4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 70</value>
-  </data>
-  <data name="turnoJ4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="turnoJ4.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="turnoJ4.Text" xml:space="preserve">
-    <value>Te toca</value>
-  </data>
-  <data name="turnoJ4.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.Name" xml:space="preserve">
-    <value>turnoJ4</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.Parent" xml:space="preserve">
-    <value>controlJ4</value>
-  </data>
-  <data name="&gt;&gt;turnoJ4.ZOrder" xml:space="preserve">
-    <value>9</value>
   </data>
   <data name="controlJ4.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -2411,7 +2024,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADy
-        DAAAAk1TRnQBSQFMAgEBAgEAAQwBAQEMAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        DAAAAk1TRnQBSQFMAgEBAgEAARQBAQEUAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEgBgABEFIAA/sB/wP7Af8D+wH/A/sB/wP7Af8D+wH/A/sB/wP8Af8D/AH/A/sB/wP7
         Af8D+wH/Af0C+wH/Af0C+wH/A/sB/wP7Af+AAAMCAQMDBwQJAQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMJ
         AQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMHAQkDAgEDAfoB+QH7Af8B+gH5AfsB/wH6AfkB+wH/AfkB+AH6
@@ -2424,42 +2037,42 @@
         AckB/wGrAawBwQH/AaEBowG7Af8BmAGZAbMB/wGoAakBwwH/AasBrAHGAf8BqgGrAcUB/wHAAb8B2QH/
         AcgBxwHhAf8BuQG7AdMB/wGnAagBvQH/AbQBtQHJAf8C2wHtAf+AAAMZASMCAAG1Af8CAAHfAf8CAAHf
         Af8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHf
-        Af8CAAG1Af8DGQEjAasBrgHhAf8BlAGXAcoB/wGbAZwBzwH/AY4BkQHEAf8BYgFlAbAB/wFgAWIBsAH/
-        AVQBVQGlAf8BWgFcAa4B/wFmAWcBuwH/AWIBZgG5Af8BkgGTAdAB/wGiAaMB3wH/AY8BkAHKAf8BWwFe
+        Af8CAAG1Af8DGQEjAasBrgHhAf8BlAGXAcoB/wGbAZwBzwH/AY4BkQHEAf8BYQFkAbAB/wFfAWEBsAH/
+        AVMBVAGlAf8BWQFbAa4B/wFlAWYBuwH/AWEBZQG5Af8BkgGTAdAB/wGiAaMB3wH/AY8BkAHKAf8BWgFd
         AakB/wKFAbMB/wGxAbIB3gH/gAADGQEjAgABvAH/AgAB4AH/AgAB3wH/AgAB3wH/AgAB3wH/AgAB3wH/
         AgAB3wH/AgAB3wH/AgAB3wH/AgAB3wH/AgAB3wH/AgAB3wH/AgAB4AH/AgABvAH/AxkBIwGTAZgB1wH/
-        AYIBhAHEAf8CkAHQAf8CjgHOAf8BWwFdAbYB/wFaAV0BuQH/AVsBXAG+Af8BVAFXAboB/wFZAVsBwQH/
-        AU8BUwG6Af8BYgFjAcsB/wGGAYgB1gH/AmIBxgH/AVYBWQG1Af8BXgFfAbMB/wGiAaMB2wH/gAADGQEj
-        AQAB0gHfAf8BAQHvAv8BIAHmAeEB/wEMAdEB7AH/ARMBowHjAf8BDgG+Ad8B/wEVAe4B6wH/AQAB7wL/
-        AQAB7wL/AQAB7wL/AQAB7wL/AQAB7wL/AQIB7wL/AQAB0gHfAf8DGQEjAZ8BogHfAf8BhgGHAcMB/wJk
-        AbgB/wKLAccB/wKCAcIB/wFRAVIBrgH/AVgBWQG7Af8BXgFgAcYB/wFjAWUBywH/AVoBXgHFAf8BYwFm
-        Ac8B/wGQAZQB4wH/AYABggHQAf8BUgFUAbIB/wFfAWABtQH/AaQBpgHgAf+AAAMZASMBBQHaAecB/wEF
-        AfEC/wEuAcQB8wH/AQYBhAHYAf8BGgElAagB/wEzAYQB3gH/ARkB0wH1Af8BAAHwAv8BAAHxAv8BAAHw
-        Av8BAAHwAv8BAAHwAv8BBQHyAv8BBQHaAecB/wMZASMBuAGvAdoB/wGyAagB0gH/AawBngHHAf8BnwGR
-        AbsB/wGVAYgBtAH/AYQBZAGxAf8BggFnAcQB/wKGAdIB/wGRAZMB4QH/AYYBigHZAf8BgQGEAdUB/wGU
-        AZgB5wH/AYUBhwHVAf8BWQFbAboB/wFiAWUBugH/AaMBpQHfAf+AAAMZASMBDgHiAe8B/wEKAfEC/wEg
-        AccB8QH/AQIBSAHKAf8BiwFdAckB/wGJAbcB5wH/AQkB1gHzAf8BAAHwAv8BAAHwAv8BAAHwAv8BAAHw
-        Av8BAAHwAv8BCgHxAv8BDgHiAe8B/wMZASMBmAFhAYIB/wGCAUkBUAH/AV4BOQFBAf8BYAE5AUEB/wFY
-        ATMBPQH/ATgBHgE2Af8BVQFKAZoB/wFnAWQBxAH/AooB1gH/AZYBmAHmAf8BgwGEAdQB/wGJAYsB2QH/
-        AYABhQHQAf8BTQFRAbAB/wFQAVIBqgH/AZwBnQHZAf+AAAMZASMBFwHqAfYB/wEtAfMC/wEeAeUB9QH/
-        ASEBpAHkAf8BMgGDAdkB/wEqAcYB5wH/ARwB6wH2Af8BHQHyAv8BHQHzAv8BHQHzAv8BHQHzAv8BHQHz
-        Av8BLQH0Av8BFwHrAfYB/wMZASMBqgFkAV0B/wGVAU8BRwH/AZgBTwFHAf8BkQFIAUAB/wGDAToBMgH/
-        AUEBHAEmAf8BYgFVAZsB/wGjAaAB5QH/AZUBlAHeAf8CoAHsAf8CpwHzAf8BowGmAfAB/wGbAZ4B6AH/
-        AYUBiAHMAf8BXAFdAbEB/wGeAZ8B1wH/gAADGQEjASAB7wH8Af8BPwH0Av8BLQHzAv8BMgHsAfgB/wEz
-        AdwB7gH/AS8B8gH7Af8BLQHzAv8BLQHzAv8BLQHzAv8BLQHzAv8BLQHzAv8BLQHzAv8BPwH0Av8BIAHv
-        AfwB/wMZASMBsgGCAWYB/wGYAVABSgH/AaMBWwFVAf8BoAFWAVAB/wGSAUgBQgH/AVIBKgE1Af8BVQFE
+        AYIBhAHEAf8CkAHQAf8CjgHOAf8BWgFcAbYB/wFZAVwBuQH/AVoBWwG+Af8BUwFWAboB/wFYAVoBwQH/
+        AU4BUgG6Af8BYQFiAcsB/wGGAYgB1gH/AmEBxgH/AVUBWAG1Af8BXQFeAbMB/wGiAaMB2wH/gAADGQEj
+        AQAB0gHfAf8BAAHvAv8BHwHmAeEB/wELAdEB7AH/ARIBowHjAf8BDQG+Ad8B/wEUAe4B6wH/AQAB7wL/
+        AQAB7wL/AQAB7wL/AQAB7wL/AQAB7wL/AQEB7wL/AQAB0gHfAf8DGQEjAZ8BogHfAf8BhgGHAcMB/wJj
+        AbgB/wKLAccB/wKCAcIB/wFQAVEBrgH/AVcBWAG7Af8BXQFfAcYB/wFiAWQBywH/AVkBXQHFAf8BYgFl
+        Ac8B/wGQAZQB4wH/AYABggHQAf8BUQFTAbIB/wFeAV8BtQH/AaQBpgHgAf+AAAMZASMBBAHaAecB/wEE
+        AfEC/wEtAcQB8wH/AQUBhAHYAf8BGQEkAagB/wEyAYQB3gH/ARgB0wH1Af8BAAHwAv8BAAHxAv8BAAHw
+        Av8BAAHwAv8BAAHwAv8BBAHyAv8BBAHaAecB/wMZASMBuAGvAdoB/wGyAagB0gH/AawBngHHAf8BnwGR
+        AbsB/wGVAYgBtAH/AYQBYwGxAf8BggFmAcQB/wKGAdIB/wGRAZMB4QH/AYYBigHZAf8BgQGEAdUB/wGU
+        AZgB5wH/AYUBhwHVAf8BWAFaAboB/wFhAWQBugH/AaMBpQHfAf+AAAMZASMBDQHiAe8B/wEJAfEC/wEf
+        AccB8QH/AQEBRwHKAf8BiwFcAckB/wGJAbcB5wH/AQgB1gHzAf8BAAHwAv8BAAHwAv8BAAHwAv8BAAHw
+        Av8BAAHwAv8BCQHxAv8BDQHiAe8B/wMZASMBmAFgAYIB/wGCAUgBTwH/AV0BOAFAAf8BXwE4AUAB/wFX
+        ATIBPAH/ATcBHQE1Af8BVAFJAZoB/wFmAWMBxAH/AooB1gH/AZYBmAHmAf8BgwGEAdQB/wGJAYsB2QH/
+        AYABhQHQAf8BTAFQAbAB/wFPAVEBqgH/AZwBnQHZAf+AAAMZASMBFgHqAfYB/wEsAfMC/wEdAeUB9QH/
+        ASABpAHkAf8BMQGDAdkB/wEpAcYB5wH/ARsB6wH2Af8BHAHyAv8BHAHzAv8BHAHzAv8BHAHzAv8BHAHz
+        Av8BLAH0Av8BFgHrAfYB/wMZASMBqgFjAVwB/wGVAU4BRgH/AZgBTgFGAf8BkQFHAT8B/wGDATkBMQH/
+        AUABGwElAf8BYQFUAZsB/wGjAaAB5QH/AZUBlAHeAf8CoAHsAf8CpwHzAf8BowGmAfAB/wGbAZ4B6AH/
+        AYUBiAHMAf8BWwFcAbEB/wGeAZ8B1wH/gAADGQEjAR8B7wH8Af8BPgH0Av8BLAHzAv8BMQHsAfgB/wEy
+        AdwB7gH/AS4B8gH7Af8BLAHzAv8BLAHzAv8BLAHzAv8BLAHzAv8BLAHzAv8BLAHzAv8BPgH0Av8BHwHv
+        AfwB/wMZASMBsgGCAWUB/wGYAU8BSQH/AaMBWgFUAf8BoAFVAU8B/wGSAUcBQQH/AVEBKQE0Af8BVAFD
         AYcB/wGLAYgBxgH/AZcBmAHcAf8BmgGcAeMB/wGlAacB7QH/Aa4BsQH1Af8BqgGtAfEB/wGUAZcB1AH/
-        AYsBjgHBAf8BogGkAdQB/4AAAxkBIwEmASAB5QH/AVABSwHrAf8BPQE4AegB/wE9ATgB6AH/AT0BOAHo
-        Af8BPQE4AegB/wE8ATcB6AH/ATwBNwHoAf8BPQE4AegB/wE9ATgB6AH/AT0BOAHoAf8BPQE4AegB/wFQ
-        AUsB6wH/ASYBIAHlAf8DGQEjAbMBigGHAf8BjQFMAUkB/wGpAYEBZAH/AaYBZgFhAf8BnAFaAVUB/wFi
-        AUEBSAH/AWYBWQGRAf8BhQGCAbMB/wKQAcYB/wGUAZUBzQH/AZYBmAHOAf8BrAGvAeIB/wGtAa4B4QH/
-        AY4BkQG+Af8CgQGpAf8BowGkAcYB/4AAAxcBIAErASYB5gH/AV0BWQHtAf8BXQFZAe0B/wFdAVkB7QH/
-        AV0BWQHtAf8BXQFZAe0B/wFdAVkB7QH/AV0BWQHtAf8BXQFZAe0B/wFdAVkB7QH/AV0BWQHtAf8BXgFa
-        Ae0B/wFdAVkB7QH/ASsBJgHmAf8DFwEgAc4BuAGzAf8BqwGVAZAB/wG7AaUBoAH/AcgBsgGtAf8ByAGv
+        AYsBjgHBAf8BogGkAdQB/4AAAxkBIwElAR8B5QH/AU8BSgHrAf8BPAE3AegB/wE8ATcB6AH/ATwBNwHo
+        Af8BPAE3AegB/wE7ATYB6AH/ATsBNgHoAf8BPAE3AegB/wE8ATcB6AH/ATwBNwHoAf8BPAE3AegB/wFP
+        AUoB6wH/ASUBHwHlAf8DGQEjAbMBigGHAf8BjQFLAUgB/wGpAYEBYwH/AaYBZQFgAf8BnAFZAVQB/wFh
+        AUABRwH/AWUBWAGRAf8BhQGCAbMB/wKQAcYB/wGUAZUBzQH/AZYBmAHOAf8BrAGvAeIB/wGtAa4B4QH/
+        AY4BkQG+Af8CgQGpAf8BowGkAcYB/4AAAxcBIAEqASUB5gH/AVwBWAHtAf8BXAFYAe0B/wFcAVgB7QH/
+        AVwBWAHtAf8BXAFYAe0B/wFcAVgB7QH/AVwBWAHtAf8BXAFYAe0B/wFcAVgB7QH/AVwBWAHtAf8BXQFZ
+        Ae0B/wFcAVgB7QH/ASoBJQHmAf8DFwEgAc4BuAGzAf8BqwGVAZAB/wG7AaUBoAH/AcgBsgGtAf8ByAGv
         AasB/wG2AaMBpgH/Ab4BtgHHAf8BtwG0Ac0B/wG7AbwB1gH/Ac0BzgHqAf8BzgHPAesB/wHWAdcB8QH/
-        Ad4B3QH3Af8BzAHNAeIB/wHDAcIB1gH/AswB3AH/gAADEAEVAS8BKQHmAf8BLAEpAeUB/wEvASkB5gH/
-        AS8BKQHmAf8BLwEpAeYB/wEvASkB5gH/AS8BKQHmAf8BLwEpAeYB/wEvASkB5gH/AS8BKQHmAf8BLwEp
-        AeYB/wEvASkB5gH/AS8BKQHmAf8BLwEpAeYB/wMQARUB/wH9AfoC/wH7AfgC/wH4AfYC/wH8AfoC/wH+
+        Ad4B3QH3Af8BzAHNAeIB/wHDAcIB1gH/AswB3AH/gAADEAEVAS4BKAHmAf8BKwEoAeUB/wEuASgB5gH/
+        AS4BKAHmAf8BLgEoAeYB/wEuASgB5gH/AS4BKAHmAf8BLgEoAeYB/wEuASgB5gH/AS4BKAHmAf8BLgEo
+        AeYB/wEuASgB5gH/AS4BKAHmAf8BLgEoAeYB/wMQARUB/wH9AfoC/wH7AfgC/wH4AfYC/wH8AfoC/wH+
         AfwC/wL+Af8B/QH5Av8B+wH6Av8B+QH6Av8B9gH3Av8B9AH1Av8B9gH1Av8B9wH2Av8B9wH2Av8C+QL/
         AvoC/4AAAwQBBgMNBBIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEY
         Aw0BEgMEAQYB/wH7AfoC/wH7AfoC/wH8AfsC/wH7AfoB/wH+AfoB+QH/AfwC+gH/AfsB+gH8Af8B+wH6
@@ -2499,92 +2112,11 @@
   <data name="&gt;&gt;bReportarBug.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="ImagenTurnoJ1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="ImagenTurnoJ1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 18</value>
-  </data>
-  <data name="ImagenTurnoJ1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="ImagenTurnoJ1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="ImagenTurnoJ1.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ1.Name" xml:space="preserve">
-    <value>ImagenTurnoJ1</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ1.Parent" xml:space="preserve">
-    <value>controlJ1</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ImagenTurnoJ2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="ImagenTurnoJ2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 18</value>
-  </data>
-  <data name="ImagenTurnoJ2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="ImagenTurnoJ2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="ImagenTurnoJ2.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ2.Name" xml:space="preserve">
-    <value>ImagenTurnoJ2</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ2.Parent" xml:space="preserve">
-    <value>controlJ2</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ImagenTurnoJ3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="ImagenTurnoJ3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>106, 18</value>
-  </data>
-  <data name="ImagenTurnoJ3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="ImagenTurnoJ3.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="ImagenTurnoJ3.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ3.Name" xml:space="preserve">
-    <value>ImagenTurnoJ3</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ3.Parent" xml:space="preserve">
-    <value>controlJ3</value>
-  </data>
-  <data name="&gt;&gt;ImagenTurnoJ3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>71</value>
+    <value>293</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>

@@ -12,7 +12,6 @@ namespace Juego_Hotel
         public int n_jugadores;
         public int n_jugadores_activos;
         public Jugador[] jugadores;
-        public Jugador banca;
         public Dado dado = new Dado(6);
         public int jug_inicial;
         public int jug_actual;
@@ -31,7 +30,6 @@ namespace Juego_Hotel
             this.n_hoteles = Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1;
             this.hoteles = new Hotel[this.n_hoteles];
             Crear_Hoteles(ref this.hoteles);
-            this.banca = new Jugador(5, 5, 5, 5, 5, Tipos.Tcolor.banca, -1);
             this.sem_dado_cons = new System.Threading.Semaphore(0, 1);
             // Creando casillas
             this.casillas = new Casilla[32];

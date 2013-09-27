@@ -158,10 +158,6 @@ namespace Juego_Hotel
                 this.juego.jug_actual = this.juego.jug_inicial;
                 this.juego.Cambiar_jugador_actual();
                 this.Establecer_Turno();
-                this.turnoJ1.Visible = true;
-                this.turnoJ2.Visible = true;
-                this.turnoJ3.Visible = true;
-                this.turnoJ4.Visible = true;
                 this.bIniciar.Enabled = false;
                 this.bColores.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
@@ -361,23 +357,23 @@ namespace Juego_Hotel
 
         public void Establecer_Turno()
         {
-            this.turnoJ1.Text = "";
-            this.turnoJ2.Text = "";
-            this.turnoJ3.Text = "";
-            this.turnoJ4.Text = "";
+            this.ImagenTurnoJ1.Visible = false;
+            this.ImagenTurnoJ2.Visible = false;
+            this.ImagenTurnoJ3.Visible = false;
+            this.ImagenTurnoJ4.Visible = false;
             this.bEntradasJ1.Enabled = false;
             this.bEntradasJ2.Enabled = false;
             this.bEntradasJ3.Enabled = false;
             this.bEntradasJ4.Enabled = false;
             switch (this.juego.jug_actual)
             {
-                case 1: this.turnoJ1.Text = resources.GetString("turnoJ1.Text");
+                case 1: this.ImagenTurnoJ1.Visible = true;
                         break;
-                case 2: this.turnoJ2.Text = resources.GetString("turnoJ2.Text");
+                case 2: this.ImagenTurnoJ2.Visible = true;
                         break;
-                case 3: this.turnoJ3.Text = resources.GetString("turnoJ3.Text");
+                case 3: this.ImagenTurnoJ3.Visible = true;
                         break;
-                case 4: this.turnoJ4.Text = resources.GetString("turnoJ4.Text");
+                case 4: this.ImagenTurnoJ4.Visible = true;
                         break;
             }
         }
@@ -512,6 +508,18 @@ namespace Juego_Hotel
             }
         }
 
+        private Image ObtenerImagenDesdeColor(Tipos.Tcolor color)
+        {
+            switch (color)
+            {
+                case Tipos.Tcolor.amarillo: return (Image)global::Juego_Hotel.Properties.Resources.TurnoAmarillo.Clone();
+                case Tipos.Tcolor.azul: return (Image)global::Juego_Hotel.Properties.Resources.TurnoAzul.Clone();
+                case Tipos.Tcolor.rojo: return (Image)global::Juego_Hotel.Properties.Resources.TurnoRojo.Clone();
+                case Tipos.Tcolor.verde: return (Image)global::Juego_Hotel.Properties.Resources.TurnoVerde.Clone();
+                default: return null;
+            }
+        }
+
         public void Crear_Jugadores()
         {
             if (!this.partida_cargada_offline)
@@ -567,6 +575,7 @@ namespace Juego_Hotel
                                     this.juego.jugadores[3].nombre_online = this.juego.lista_jugadores_online[3].Item1;
                             }
                             this.controlJ4.Enabled = true;
+                            this.ImagenTurnoJ4.Image = ObtenerImagenDesdeColor(this.juego.jugadores[3].color);
                             goto case 3;
                     case 3: if (this.partida_cargada_online)
                                 this.juego.jugadores[2] = new Jugador(this.juego.lista_jugadores_online[2].Item1, this.frm_colores.color_j3, this.juego.lista_jugadores_online[2].Item2);
@@ -577,6 +586,7 @@ namespace Juego_Hotel
                                     this.juego.jugadores[2].nombre_online = this.juego.lista_jugadores_online[2].Item1;
                             }
                             this.controlJ3.Enabled = true;
+                            this.ImagenTurnoJ3.Image = ObtenerImagenDesdeColor(this.juego.jugadores[2].color);
                             goto case 2;
                     case 2: if (this.partida_cargada_online)
                             {
@@ -595,6 +605,8 @@ namespace Juego_Hotel
                             }
                             this.controlJ2.Enabled = true;
                             this.controlJ1.Enabled = true;
+                            this.ImagenTurnoJ2.Image = ObtenerImagenDesdeColor(this.juego.jugadores[1].color);
+                            this.ImagenTurnoJ1.Image = ObtenerImagenDesdeColor(this.juego.jugadores[0].color);
                             break;
                 }
             }
@@ -768,10 +780,6 @@ namespace Juego_Hotel
             this.bIniciar.Enabled = true;
             this.bColores.Enabled = true;
             this.grupoNJugadores.Enabled = true;
-            this.turnoJ1.Text = "";
-            this.turnoJ2.Text = "";
-            this.turnoJ3.Text = "";
-            this.turnoJ4.Text = "";
             this.bComprar.Enabled = false;
             this.bConstruir.Enabled = false;
             this.bComprarSuelo.Enabled = false;
