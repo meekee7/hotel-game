@@ -336,7 +336,7 @@
   <data name="mensajeComprarEntradas" xml:space="preserve">
     <value>If you agree to buy the entrance, you are obliged to pay. Do you want to purchase it?</value>
   </data>
-  <data name="mensajeEstasEnCasillaTipoEntrada" xml:space="preserve">
+  <data name="mensajeEstasEnCasillaTipoEntradaGratis" xml:space="preserve">
     <value>You're in a Free Entrance type position. Enjoy it!</value>
   </data>
   <data name="mensajeNohayFasesConstruidasParaPonerEntradas" xml:space="preserve">

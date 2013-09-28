@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -33,8 +35,8 @@ namespace Juego_Hotel
         Point pos_rojo_orig, pos_azul_orig, pos_verde_orig, pos_amarillo_orig, pos_banco_orig, pos_ayto_orig;
         int ancho_coche = 20;
         int alto_coche = 20;
-        int ancho_entrada = 15;
-        int alto_entrada = 15;
+        int ancho_entrada = 60;
+        int alto_entrada = 60;
         int ancho_fase = 18;
         int alto_fase = 18;
         public Subastas frm_subasta_en_curso;
@@ -243,19 +245,19 @@ namespace Juego_Hotel
                             Point pos = Calcular_Posicion(this.juego.casillas[jugador.posicion.numero].pos_coche.X, this.juego.casillas[jugador.posicion.numero].pos_coche.Y);
                             switch (jugador.color)
                             {
-                                case Tipos.Tcolor.rojo:     this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
+                                case Tipos.Tcolor.rojo:     this.posRojo.Image = RotateImage(posRojo_orig, jugador.posicion.pos_coche.grados);
                                                             this.posRojo.Location = pos;
                                                             this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
-                                case Tipos.Tcolor.azul:     this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
+                                case Tipos.Tcolor.azul:     this.posAzul.Image = RotateImage(posAzul_orig, jugador.posicion.pos_coche.grados);
                                                             this.posAzul.Location = pos;
                                                             this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
-                                case Tipos.Tcolor.verde:    this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
+                                case Tipos.Tcolor.verde:    this.posVerde.Image = RotateImage(posVerde_orig, jugador.posicion.pos_coche.grados);
                                                             this.posVerde.Location = pos;
                                                             this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
-                                case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
+                                case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotateImage(posAmarillo_orig, jugador.posicion.pos_coche.grados);
                                                             this.posAmarillo.Location = pos;
                                                             this.posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                                                             break;
@@ -324,35 +326,83 @@ namespace Juego_Hotel
             }
         }
 
-        public Bitmap RotarImagen(Image imagen, float angulo)
+        /// <summary>
+        /// Method to rotate an Image object. The result can be one of three cases:
+        /// - upsizeOk = true: output image will be larger than the input, and no clipping occurs 
+        /// - upsizeOk = false & clipOk = true: output same size as input, clipping occurs
+        /// - upsizeOk = false & clipOk = false: output same size as input, image reduced, no clipping
+        /// 
+        /// The background color will be transparent, so the output image will be 32-bit.
+        /// 
+        /// Note that this method always returns a new Bitmap object, even if rotation is zero - in 
+        /// which case the returned object is a clone of the input object. 
+        /// </summary>
+        /// <param name="inputImage">input Image object, is not modified</param>
+        /// <param name="angleDegrees">angle of rotation, in degrees</param>
+        /// <param name="upsizeOk">see comments above</param>
+        /// <param name="clipOk">see comments above, not used if upsizeOk = true</param>
+        /// <returns>new Bitmap object, may be larger than input image</returns>
+        public static Bitmap RotateImage(Image inputImage, float angleDegrees, bool upsizeOk = true, bool clipOk = false)
         {
-            if (angulo == 0)
-                return (Bitmap) imagen;
-            PointF offset = new PointF((float)imagen.Width / 2, (float)imagen.Height / 2); // El centro de la imagen
-            if (imagen == null)
-                throw new ArgumentNullException("image");
+            // Test for zero rotation and return a clone of the input image
+            if (angleDegrees == 0f)
+                return (Bitmap)inputImage.Clone();
 
-            //create a new empty bitmap to hold rotated image
-            Bitmap rotatedBmp = new Bitmap(imagen.Width, imagen.Height);
-            rotatedBmp.SetResolution(imagen.HorizontalResolution, imagen.VerticalResolution);
+            // Set up old and new image dimensions, assuming upsizing not wanted and clipping OK
+            int oldWidth = inputImage.Width;
+            int oldHeight = inputImage.Height;
+            int newWidth = oldWidth;
+            int newHeight = oldHeight;
+            float scaleFactor = 1f;
 
-            //make a graphics object from the empty bitmap
-            Graphics g = Graphics.FromImage(rotatedBmp);
+            // If upsizing wanted or clipping not OK calculate the size of the resulting bitmap
+            if (upsizeOk || !clipOk)
+            {
+                double angleRadians = angleDegrees * Math.PI / 180d;
 
-            //Put the rotation point in the center of the image
-            g.TranslateTransform(offset.X, offset.Y);
+                double cos = Math.Abs(Math.Cos(angleRadians));
+                double sin = Math.Abs(Math.Sin(angleRadians));
+                newWidth = (int)Math.Round(oldWidth * cos + oldHeight * sin);
+                newHeight = (int)Math.Round(oldWidth * sin + oldHeight * cos);
+            }
 
-            //rotate the image
-            g.RotateTransform(angulo);
+            // If upsizing not wanted and clipping not OK need a scaling factor
+            if (!upsizeOk && !clipOk)
+            {
+                scaleFactor = Math.Min((float)oldWidth / newWidth, (float)oldHeight / newHeight);
+                newWidth = oldWidth;
+                newHeight = oldHeight;
+            }
 
-            //move the image back
-            g.TranslateTransform(-offset.X, -offset.Y);
+            // Create the new bitmap object. If background color is transparent it must be 32-bit, 
+            //  otherwise 24-bit is good enough.
+            Bitmap newBitmap = new Bitmap(newWidth, newHeight, PixelFormat.Format32bppArgb);
+            newBitmap.SetResolution(inputImage.HorizontalResolution, inputImage.VerticalResolution);
 
-            //draw passed in image onto graphics object
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            g.DrawImage(imagen, new PointF(0, 0));
+            // Create the Graphics object that does the work
+            using (Graphics graphicsObject = Graphics.FromImage(newBitmap))
+            {
+                graphicsObject.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphicsObject.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphicsObject.SmoothingMode = SmoothingMode.HighQuality;
 
-            return rotatedBmp;
+                // Fill in the specified background color if necessary
+                graphicsObject.Clear(Color.Transparent);
+
+                // Set up the built-in transformation matrix to do the rotation and maybe scaling
+                graphicsObject.TranslateTransform(newWidth / 2f, newHeight / 2f);
+
+                if (scaleFactor != 1f)
+                    graphicsObject.ScaleTransform(scaleFactor, scaleFactor);
+
+                graphicsObject.RotateTransform(angleDegrees);
+                graphicsObject.TranslateTransform(-oldWidth / 2f, -oldHeight / 2f);
+
+                // Draw the result 
+                graphicsObject.DrawImage(inputImage, 0, 0);
+            }
+
+            return newBitmap;
         }
 
         public void Establecer_Turno()
@@ -499,6 +549,11 @@ namespace Juego_Hotel
                         else if (form is Construir)
                         {
                             (form as Construir).cancelado = true;
+                            form.Close();
+                        }
+                        else if (form is ComprarHotel)
+                        {
+                            (form as ComprarHotel).cancelado = true;
                             form.Close();
                         }
                         else
@@ -653,16 +708,16 @@ namespace Juego_Hotel
             Point posicion = Calcular_Posicion(this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.X, this.juego.casillas[this.juego.jugador_actual.posicion.numero].pos_coche.Y);
             switch (jugador.color)
             {
-                case Tipos.Tcolor.rojo:     this.posRojo.Image = RotarImagen(posRojo_orig, jugador.posicion.pos_coche.grados);
+                case Tipos.Tcolor.rojo:     this.posRojo.Image = RotateImage(posRojo_orig, jugador.posicion.pos_coche.grados);
                                             this.posRojo.Location = posicion;
                                             break;
-                case Tipos.Tcolor.azul:     this.posAzul.Image = RotarImagen(posAzul_orig, jugador.posicion.pos_coche.grados);
+                case Tipos.Tcolor.azul:     this.posAzul.Image = RotateImage(posAzul_orig, jugador.posicion.pos_coche.grados);
                                             this.posAzul.Location = posicion;
                                             break;
-                case Tipos.Tcolor.verde:    this.posVerde.Image = RotarImagen(posVerde_orig, jugador.posicion.pos_coche.grados);
+                case Tipos.Tcolor.verde:    this.posVerde.Image = RotateImage(posVerde_orig, jugador.posicion.pos_coche.grados);
                                             this.posVerde.Location = posicion;
                                             break;
-                case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotarImagen(posAmarillo_orig, jugador.posicion.pos_coche.grados);
+                case Tipos.Tcolor.amarillo: this.posAmarillo.Image = RotateImage(posAmarillo_orig, jugador.posicion.pos_coche.grados);
                                             this.posAmarillo.Location = posicion;
                                             break;
             }
@@ -927,6 +982,9 @@ namespace Juego_Hotel
 
         void Comprar_hotel (ref Hotel hotel, ref Jugador jugador, Boolean expropiando)
         {
+            // En caso de que el turno se pase automáticamente y quede algun messagebox abierto, no hacer nada
+            if (juego.jugador_actual != jugador)
+                return;
             int dinero_necesario;
             int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
 
@@ -1349,7 +1407,7 @@ namespace Juego_Hotel
         {
             if (this.juego.jugadores[num_jugador].hoteles.Count != 0)
             {
-                PonerEntradas frm_poner_entradas = new PonerEntradas(this.juego, num_jugador, this);
+                PonerEntradas frm_poner_entradas = new PonerEntradas(num_jugador, this);
                 frm_poner_entradas.ShowDialog();
             }
             else
@@ -1383,21 +1441,23 @@ namespace Juego_Hotel
             ((ISupportInitialize)(entrada)).BeginInit();
             if (en_la_derecha)
             {
-                entrada.Image = RotarImagen(this.img_entrada, casilla.pos_entrada_der.grados);
+                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_der.grados);
                 entrada.Location = new Point(casilla.pos_entrada_der.X, casilla.pos_entrada_der.Y);
             }
             else
             {
-                entrada.Image = RotarImagen(this.img_entrada, casilla.pos_entrada_izq.grados);
+                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_izq.grados);
                 entrada.Location = new Point(casilla.pos_entrada_izq.X, casilla.pos_entrada_izq.Y);
             }
             entrada.Size = Calcular_Tamaño(ancho_entrada, alto_entrada);
-            entrada.SizeMode = PictureBoxSizeMode.StretchImage;
+            entrada.SizeMode = PictureBoxSizeMode.AutoSize;
             entrada.TabStop = false;
             entrada.Name = "entrada";
             entrada.Tag = entrada.Location.X.ToString() + "@" + entrada.Location.Y.ToString();
             entrada.Location = Calcular_Posicion(entrada.Location.X, entrada.Location.Y);
+            entrada.BackColor = Color.Transparent;
             this.Controls.Add(entrada);
+            // Establecer el padre después de añadir a los controles, porque el padre es establecido al control al que se añade
             entrada.Parent = this.imgTablero;
             ((ISupportInitialize)(entrada)).EndInit();
             entrada.BringToFront();
@@ -1687,7 +1747,7 @@ namespace Juego_Hotel
                 dialogo.CheckPathExists = true;
                 dialogo.DefaultExt = "xml";
                 dialogo.SupportMultiDottedExtensions = true;
-                dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                dialogo.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
                 dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
                 dialogo.Title = Mensajes.tituloDialogoGuardarPartida;
                 dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
@@ -1715,7 +1775,7 @@ namespace Juego_Hotel
             dialogo.DefaultExt = "xml";
             dialogo.SupportMultiDottedExtensions = true;
             String dir_trabajo = System.IO.Directory.GetCurrentDirectory(); // Después de cargar el fichero, el directorio actual se pierde
-            dialogo.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            dialogo.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
             dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
             dialogo.Title = Mensajes.tituloDialogoCargarPartida;
             dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
@@ -1753,13 +1813,13 @@ namespace Juego_Hotel
                 Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
                 switch (hotel.dueño.color)
                 {
-                    case Tipos.Tcolor.amarillo: fase.Image = RotarImagen(this.img_tick_Amarillo, pos.grados);
+                    case Tipos.Tcolor.amarillo: fase.Image = RotateImage(this.img_tick_Amarillo, pos.grados);
                         break;
-                    case Tipos.Tcolor.azul: fase.Image = RotarImagen(this.img_tick_Azul, pos.grados);
+                    case Tipos.Tcolor.azul: fase.Image = RotateImage(this.img_tick_Azul, pos.grados);
                         break;
-                    case Tipos.Tcolor.rojo: fase.Image = RotarImagen(this.img_tick_Rojo, pos.grados);
+                    case Tipos.Tcolor.rojo: fase.Image = RotateImage(this.img_tick_Rojo, pos.grados);
                         break;
-                    case Tipos.Tcolor.verde: fase.Image = RotarImagen(this.img_tick_Verde, pos.grados);
+                    case Tipos.Tcolor.verde: fase.Image = RotateImage(this.img_tick_Verde, pos.grados);
                         break;
                 }
                 fase.BackColor = Color.Transparent;
@@ -1858,25 +1918,25 @@ namespace Juego_Hotel
                     this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
                 else
                     this.posRojo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
+                this.posRojo.Size = Calcular_Tamaño(posRojo.Width, posRojo.Height);
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "azul");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
                 else
                     this.posAzul.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
+                this.posAzul.Size = Calcular_Tamaño(posAzul.Width, posAzul.Height);
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "verde");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
                 else
                     this.posVerde.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
+                this.posVerde.Size = Calcular_Tamaño(posVerde.Width, posVerde.Height);
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "amarillo");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
                 else
                     this.posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
+                this.posAmarillo.Size = Calcular_Tamaño(posAmarillo.Width, posAmarillo.Height);
             }
             // Banco y Ayuntamiento
             this.img_Banco.Location = Calcular_Posicion(this.pos_banco_orig.X, this.pos_banco_orig.Y);

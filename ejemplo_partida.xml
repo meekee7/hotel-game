@@ -17,7 +17,7 @@
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>1</num_entradas>
       <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>2</posiciones_de_entradas>
+      <posiciones_de_entradas>2@4@7</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>Boomerang</nombre>
@@ -25,7 +25,7 @@
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
       <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas />
+      <posiciones_de_entradas>3@5@6</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>L'etoile</nombre>

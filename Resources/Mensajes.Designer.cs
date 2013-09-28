@@ -821,9 +821,9 @@ namespace Juego_Hotel.Resources {
         /// <summary>
         ///   Busca una cadena traducida similar a Estás en una casilla de tipo Entrada Gratis. ¡Disfrútala!.
         /// </summary>
-        internal static string mensajeEstasEnCasillaTipoEntrada {
+        internal static string mensajeEstasEnCasillaTipoEntradaGratis {
             get {
-                return ResourceManager.GetString("mensajeEstasEnCasillaTipoEntrada", resourceCulture);
+                return ResourceManager.GetString("mensajeEstasEnCasillaTipoEntradaGratis", resourceCulture);
             }
         }
         

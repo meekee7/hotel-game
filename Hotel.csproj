@@ -352,22 +352,7 @@
     <None Include="Images\Fujiyama_tarjeta.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\Entrada.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Images\Reglas.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Flecha_amarilla.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Flecha_azul.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Flecha_roja.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Flecha_verde.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.xml">
@@ -376,7 +361,13 @@
     </Content>
     <Content Include="Icono.ico" />
     <None Include="Images\Icono.ico" />
-    <None Include="Images\green_tick.jpg" />
+    <None Include="Images\Entrada.tif" />
+    <Content Include="Images\Billete_1000.png" />
+    <Content Include="Images\Billete_5000.png" />
+    <Content Include="Images\Flecha_amarilla.tif" />
+    <Content Include="Images\Flecha_azul.tif" />
+    <Content Include="Images\Flecha_roja.tif" />
+    <Content Include="Images\Flecha_verde.tif" />
     <Content Include="Images\Letoile_tarjeta.png" />
     <Content Include="Images\Royal_tarjeta.png" />
     <Content Include="Images\Safari_tarjeta.png" />

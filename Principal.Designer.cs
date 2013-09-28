@@ -595,16 +595,16 @@
             // 
             // img_Banco
             // 
-            this.img_Banco.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.img_Banco.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.img_Banco.BackColor = System.Drawing.Color.Transparent;
+            this.img_Banco.Image = global::Juego_Hotel.Properties.Resources.TickVerde;
             resources.ApplyResources(this.img_Banco, "img_Banco");
             this.img_Banco.Name = "img_Banco";
             this.img_Banco.TabStop = false;
             // 
             // img_ayto
             // 
-            this.img_ayto.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.img_ayto.Image = global::Juego_Hotel.Properties.Resources.green_tick;
+            this.img_ayto.BackColor = System.Drawing.Color.Transparent;
+            this.img_ayto.Image = global::Juego_Hotel.Properties.Resources.TickVerde;
             resources.ApplyResources(this.img_ayto, "img_ayto");
             this.img_ayto.Name = "img_ayto";
             this.img_ayto.TabStop = false;

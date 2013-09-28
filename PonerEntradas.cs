@@ -14,10 +14,10 @@ namespace Juego_Hotel
         Jugador jugador;
         Boolean entrada_gratis;
 
-        public PonerEntradas(Juego juego, int jugador, Principal interfaz)
+        public PonerEntradas(int jugador, Principal interfaz)
         {
             InitializeComponent();
-            this.juego = juego;
+            this.juego = interfaz.juego;
             this.jugador = this.juego.jugadores[jugador];
             this.Rellenar_lista();
             this.interfaz = interfaz;
@@ -126,7 +126,7 @@ namespace Juego_Hotel
             int sel_n_5000 = 0, sel_n_1000 = 0, sel_n_500 = 0, sel_n_100 = 0, sel_n_50 = 0;
             if (this.entrada_gratis)
             {
-                MessageBox.Show(Mensajes.mensajeEstasEnCasillaTipoEntrada);
+                MessageBox.Show(Mensajes.mensajeEstasEnCasillaTipoEntradaGratis);
                 this.jugador.entrada_gratis_usada = true;
                 if (this.interfaz.Puede_poner_entradas(jugador))
                     this.bUnaMas.Enabled = true;
@@ -137,6 +137,9 @@ namespace Juego_Hotel
             else
             {
                 if (MessageBox.Show(Mensajes.mensajeComprarEntradas, Mensajes.tituloComprarEntrada, MessageBoxButtons.YesNo) == DialogResult.No)
+                    return;
+                // En caso de que el turno se pase automáticamente, no hacer nada
+                if (this.juego.jugador_actual != this.jugador)
                     return;
                 int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
                 PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);

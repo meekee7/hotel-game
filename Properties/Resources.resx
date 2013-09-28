@@ -166,9 +166,6 @@
   <data name="Billete_500" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_500.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Entrada" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Entrada.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Billete_50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_50.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -208,9 +205,6 @@
   <data name="Suelo_Waikiki" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Suelo_Waikiki.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="green_tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\green_tick.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="TickAmarillo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TickAmarillo.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -234,5 +228,8 @@
   </data>
   <data name="TurnoVerde" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TurnoVerde.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Entrada" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Entrada.tif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
