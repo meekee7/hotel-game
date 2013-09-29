@@ -1744,7 +1744,7 @@ namespace Juego_Hotel
             dialogo.DefaultExt = "xml";
             dialogo.SupportMultiDottedExtensions = true;
             String dir_trabajo = System.IO.Directory.GetCurrentDirectory(); // Después de cargar el fichero, el directorio actual se pierde
-            dialogo.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            dialogo.InitialDirectory = System.IO.Directory.GetCurrentDirectory() + "\\..\\..";
             dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
             dialogo.Title = Mensajes.tituloDialogoCargarPartida;
             dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
