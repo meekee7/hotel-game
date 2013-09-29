@@ -221,8 +221,8 @@ namespace Juego_Hotel
                         else
                         {
                             this.pos_coche.Establecer(200, 294, 347);
-                            this.pos_entrada_der.Establecer(200, 364, 510);
-                            this.pos_entrada_izq.Establecer(200, 408, 532);
+                            this.pos_entrada_der.Establecer(200, 414, 520);
+                            this.pos_entrada_izq.Establecer(32, 475, 558);
                         }
                         break;
                 case 23:
@@ -230,23 +230,23 @@ namespace Juego_Hotel
                         this.hotel_izq = Tipos.Tnombre_hotel.Taj_Mahal;
                         this.tipo = Tipos.Tcasilla.construir;
                         this.pos_coche.Establecer(250, 336, 318);
-                        this.pos_entrada_der.Establecer(250, 432, 454);
-                        this.pos_entrada_izq.Establecer(250, 440, 505);
+                        this.pos_entrada_der.Establecer(250, 476, 483);
+                        this.pos_entrada_izq.Establecer(70, 496, 535);
                         break;
                 case 25:
                         this.hotel_der = Tipos.Tnombre_hotel.Letoile;
                         this.hotel_izq = Tipos.Tnombre_hotel.Taj_Mahal;
                         this.tipo = Tipos.Tcasilla.fase_gratis;
                         this.pos_coche.Establecer(180, 287, 391);
-                        this.pos_entrada_der.Establecer(180, 353, 589);
-                        this.pos_entrada_izq.Establecer(180, 403, 595);
+                        this.pos_entrada_der.Establecer(180, 403, 619);
+                        this.pos_entrada_izq.Establecer(180, 460, 619);
                         break;
                 case 26:
                         this.hotel_der = Tipos.Tnombre_hotel.Ninguno;
                         this.hotel_izq = Tipos.Tnombre_hotel.Taj_Mahal;
                         this.tipo = Tipos.Tcasilla.construir;
                         this.pos_coche.Establecer(225, 270, 439);
-                        this.pos_entrada_izq.Establecer(225, 369, 684);
+                        this.pos_entrada_izq.Establecer(45, 413, 724);
                         break;
                 case 27:
                 case 28:
@@ -257,17 +257,17 @@ namespace Juego_Hotel
                         if (this.numero == 27)
                         {
                             this.pos_coche.Establecer(285, 211, 453);
-                            this.pos_entrada_izq.Establecer(285, 270, 706);
+                            this.pos_entrada_izq.Establecer(105, 300, 761);
                         }
                         else if (this.numero == 28)
                         {
                             this.pos_coche.Establecer(350, 172, 418);
-                            this.pos_entrada_izq.Establecer(350, 206, 645);
+                            this.pos_entrada_izq.Establecer(160, 222, 683);
                         }
                         else
                         {
                             this.pos_coche.Establecer(300, 140, 288);
-                            this.pos_entrada_izq.Establecer(300, 248, 460);
+                            this.pos_entrada_izq.Establecer(120, 177, 475);
                         }
                         break;
                 case 29:
@@ -275,16 +275,16 @@ namespace Juego_Hotel
                         this.hotel_izq = Tipos.Tnombre_hotel.Safari;
                         this.tipo = Tipos.Tcasilla.comprar;
                         this.pos_coche.Establecer(0, 169, 367);
-                        this.pos_entrada_der.Establecer(0, 248, 553);
-                        this.pos_entrada_izq.Establecer(0, 197, 553);
+                        this.pos_entrada_der.Establecer(0, 278, 583);
+                        this.pos_entrada_izq.Establecer(180, 217, 583);
                         break;                
                 case 30:
                         this.hotel_der = Tipos.Tnombre_hotel.Letoile;
                         this.hotel_izq = Tipos.Tnombre_hotel.Safari;
                         this.tipo = Tipos.Tcasilla.entrada_gratis;
                         this.pos_coche.Establecer(345, 168, 321);
-                        this.pos_entrada_der.Establecer(345, 246, 475);
-                        this.pos_entrada_izq.Establecer(345, 196, 490);
+                        this.pos_entrada_der.Establecer(345, 269, 490);
+                        this.pos_entrada_izq.Establecer(170, 214, 510);
                         break;
             }
         }
