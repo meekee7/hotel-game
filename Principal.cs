@@ -1957,25 +1957,25 @@ namespace Juego_Hotel
                     this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
                 else
                     this.posRojo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posRojo.Size = Calcular_Tamaño(posRojo.Width, posRojo.Height);
+                this.posRojo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "azul");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAzul.Location = Calcular_Posicion(this.pos_azul_orig.X, this.pos_azul_orig.Y);
                 else
                     this.posAzul.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posAzul.Size = Calcular_Tamaño(posAzul.Width, posAzul.Height);
+                this.posAzul.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "verde");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posVerde.Location = Calcular_Posicion(this.pos_verde_orig.X, this.pos_verde_orig.Y);
                 else
                     this.posVerde.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posVerde.Size = Calcular_Tamaño(posVerde.Width, posVerde.Height);
+                this.posVerde.Size = Calcular_Tamaño(ancho_coche, alto_coche);
                 jugador = this.juego.jugadores.FirstOrDefault(Jugador => Jugador.Nombre_color() == "amarillo");
                 if ((jugador == null) || (jugador.posicion.tipo == Tipos.Tcasilla.salida))
                     this.posAmarillo.Location = Calcular_Posicion(this.pos_amarillo_orig.X, this.pos_amarillo_orig.Y);
                 else
                     this.posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
-                this.posAmarillo.Size = Calcular_Tamaño(posAmarillo.Width, posAmarillo.Height);
+                this.posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
             }            
         }
 
