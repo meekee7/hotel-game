@@ -35,8 +35,6 @@ namespace Juego_Hotel
         Point pos_rojo_orig, pos_azul_orig, pos_verde_orig, pos_amarillo_orig, pos_banco_orig, pos_ayto_orig;
         int ancho_coche = 20;
         int alto_coche = 20;
-        int ancho_entrada = 60;
-        int alto_entrada = 60;
         int ancho_fase = 18;
         int alto_fase = 18;
         public Subastas frm_subasta_en_curso;
@@ -1434,35 +1432,6 @@ namespace Juego_Hotel
             this.Poner_entradas(3);
         }
 
-        public void Dibujar_Entrada(Casilla casilla, Boolean en_la_derecha)
-        {
-            // Creando nuevo PictureBox para meter la imagen de la entrada
-            PictureBox entrada = new PictureBox();
-            ((ISupportInitialize)(entrada)).BeginInit();
-            if (en_la_derecha)
-            {
-                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_der.grados);
-                entrada.Location = new Point(casilla.pos_entrada_der.X, casilla.pos_entrada_der.Y);
-            }
-            else
-            {
-                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_izq.grados);
-                entrada.Location = new Point(casilla.pos_entrada_izq.X, casilla.pos_entrada_izq.Y);
-            }
-            entrada.Size = Calcular_Tamaño(ancho_entrada, alto_entrada);
-            entrada.SizeMode = PictureBoxSizeMode.AutoSize;
-            entrada.TabStop = false;
-            entrada.Name = "entrada";
-            entrada.Tag = entrada.Location.X.ToString() + "@" + entrada.Location.Y.ToString();
-            entrada.Location = Calcular_Posicion(entrada.Location.X, entrada.Location.Y);
-            entrada.BackColor = Color.Transparent;
-            this.Controls.Add(entrada);
-            // Establecer el padre después de añadir a los controles, porque el padre es establecido al control al que se añade
-            entrada.Parent = this.imgTablero;
-            ((ISupportInitialize)(entrada)).EndInit();
-            entrada.BringToFront();
-        }
-
         public void Añadir_Entrada(Jugador jugador, int casilla, String hotel)
         {
             if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
@@ -1837,6 +1806,59 @@ namespace Juego_Hotel
             }
         }
 
+        public void Dibujar_Entrada(Casilla casilla, Boolean en_la_derecha)
+        {
+            // Se repinta el tablero con la nueva imagen encima
+            Image tablero = this.imgTablero.Image;
+            Graphics g = Graphics.FromImage(tablero);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            Image entrada;
+            Tipos.Posicion pos;
+            if (en_la_derecha)
+            {
+                entrada = RotateImage(this.img_entrada, casilla.pos_entrada_der.grados);
+                pos = casilla.pos_entrada_der;
+            }
+            else
+            {
+                entrada = RotateImage(this.img_entrada, casilla.pos_entrada_izq.grados);
+                pos = casilla.pos_entrada_izq;
+            }
+            if (entrada != null)
+                g.DrawImage(entrada, pos.X, pos.Y);
+            else
+                return;
+            // Sustitur imagen actual
+            this.imgTablero.Image = tablero;
+
+            /*// Creando nuevo PictureBox para meter la imagen de la entrada
+            PictureBox entrada = new PictureBox();
+            ((ISupportInitialize)(entrada)).BeginInit();
+            if (en_la_derecha)
+            {
+                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_der.grados);
+                entrada.Location = new Point(casilla.pos_entrada_der.X, casilla.pos_entrada_der.Y);
+            }
+            else
+            {
+                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_izq.grados);
+                entrada.Location = new Point(casilla.pos_entrada_izq.X, casilla.pos_entrada_izq.Y);
+            }
+            entrada.Width = entrada.Image.Width;
+            entrada.Height = entrada.Image.Height;
+            entrada.SizeMode = PictureBoxSizeMode.StretchImage;
+            entrada.TabStop = false;
+            entrada.Name = "entrada";
+            entrada.Tag = entrada.Location.X.ToString() + "@" + entrada.Location.Y.ToString() + "@" + entrada.Width + "@" + entrada.Height;
+            entrada.Location = Calcular_Posicion(entrada.Location.X, entrada.Location.Y);
+            entrada.BackColor = Color.Transparent;
+            this.Controls.Add(entrada);
+            // Establecer el padre después de añadir a los controles, porque el padre es establecido al control al que se añade
+            entrada.Parent = this.imgTablero;
+            ((ISupportInitialize)(entrada)).EndInit();
+            entrada.BringToFront();*/
+        }
+
         public void Dibujar_Suelo(Hotel hotel)
         {
             // Se repinta el tablero con la nueva imagen encima
@@ -1900,6 +1922,23 @@ namespace Juego_Hotel
             // Obtener nuevo tamaño y recolocar todos los picturebox
             if (this.juego == null)
                return; // No se ha inicializado la ventana aun, el constructor no se ha ejecutado
+            // Banco y Ayuntamiento
+            this.img_Banco.Location = Calcular_Posicion(this.pos_banco_orig.X, this.pos_banco_orig.Y);
+            this.img_Banco.Size = Calcular_Tamaño(ancho_fase, alto_fase);
+            this.img_ayto.Location = Calcular_Posicion(this.pos_ayto_orig.X, this.pos_ayto_orig.Y);
+            this.img_ayto.Size = Calcular_Tamaño(ancho_fase, alto_fase);
+            // Fases construidas
+            Control[] lista_fases = this.Controls.Find("fase", true);
+            String pos;
+            int x, y;
+            foreach (Control fase in lista_fases)
+            {
+                pos = fase.Tag.ToString(); // Uso la propiedad Tag para almacenar la posición original
+                x = Convert.ToInt32(pos.Split('@')[0]);
+                y = Convert.ToInt32(pos.Split('@')[1]);
+                fase.Location = Calcular_Posicion(x, y);
+                fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
+            }
             if (this.juego.jugadores == null) // Partida no empezada
             {
                 this.posRojo.Location = Calcular_Posicion(this.pos_rojo_orig.X, this.pos_rojo_orig.Y);
@@ -1937,33 +1976,7 @@ namespace Juego_Hotel
                 else
                     this.posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 this.posAmarillo.Size = Calcular_Tamaño(posAmarillo.Width, posAmarillo.Height);
-            }
-            // Banco y Ayuntamiento
-            this.img_Banco.Location = Calcular_Posicion(this.pos_banco_orig.X, this.pos_banco_orig.Y);
-            this.img_Banco.Size = Calcular_Tamaño(ancho_fase, alto_fase);
-            this.img_ayto.Location = Calcular_Posicion(this.pos_ayto_orig.X, this.pos_ayto_orig.Y);
-            this.img_ayto.Size = Calcular_Tamaño(ancho_fase, alto_fase);
-            // Fases construidas
-            Control[] lista_fases = this.Controls.Find("fase", true);
-            String pos;
-            int x, y;
-            foreach (Control fase in lista_fases)
-            {
-                pos = fase.Tag.ToString(); // Uso la propiedad Tag para almacenar la posición original
-                x = Convert.ToInt32(pos.Split('@')[0]);
-                y = Convert.ToInt32(pos.Split('@')[1]);
-                fase.Location = Calcular_Posicion(x, y);
-                fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
-            }
-            Control[] lista_entradas = this.Controls.Find("entrada", true);
-            foreach (Control entrada in lista_entradas)
-            {
-                pos = entrada.Tag.ToString(); // Uso la propiedad Tag para almacenar la posición original
-                x = Convert.ToInt32(pos.Split('@')[0]);
-                y = Convert.ToInt32(pos.Split('@')[1]);
-                entrada.Location = Calcular_Posicion(x, y);
-                entrada.Size = Calcular_Tamaño(ancho_entrada, alto_entrada);
-            }
+            }            
         }
 
         private void Guardar_idioma(CultureInfo culture)
