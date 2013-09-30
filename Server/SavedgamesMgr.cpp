@@ -427,7 +427,7 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
         wcout << "Cannot load player data because DB was not loaded ok" << endl;
         return 1; // DB not loaded ok
     }
-    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id_partida = %d AND nombre = \"%s\";") % game->bd_id % utf16_to_utf8(player->name)));
+    MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id_partida = %d AND BINARY nombre = \"%s\";") % game->bd_id % utf16_to_utf8(player->name)));
     if (!res->fetch_row())
     {
         wcout << utf8_to_utf16(str(boost::format("Player '%s' does not belong the game %d") % utf16_to_utf8(player->name) % game->id)) << endl;

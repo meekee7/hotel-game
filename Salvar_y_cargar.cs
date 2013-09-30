@@ -222,7 +222,7 @@ namespace Juego_Hotel
                             }
                             else // Nº de casilla incorrecta, fichero modificado
                             {
-                                this.error = String.Format(Mensajes.mensajeErrorCarcarHotelConEntradasErroneas,hotel.nombre_txt);
+                                this.error = String.Format(Mensajes.mensajeErrorCargarHotelConEntradasErroneas,hotel.nombre_txt);
                                 return false;
                             }
                             hotel.entradas.AddLast(this.juego.casillas[num_casilla]);

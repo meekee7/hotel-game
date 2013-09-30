@@ -73,7 +73,7 @@ namespace Juego_Hotel
         {
             this.creador = creador;
             this.txtCreador.Text = this.resources.GetString("txtCreador.Text") + this.creador;
-            if (this.creador == this.frm_online.txtLogin.Text)
+            if ((this.listaJugadores.Items.Count == this.num_jugadores) && (this.creador == this.frm_online.txtLogin.Text))
                 this.bIniciar.Enabled = true;
         }
 

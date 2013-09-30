@@ -441,7 +441,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
   <data name="mensajeErrorAlComprobarVersion" xml:space="preserve">
     <value>Se produjo un error comprobando la versión. Ve a {0} para comprobar la versión manualmente.</value>
   </data>
-  <data name="mensajeErrorCarcarHotelConEntradasErroneas" xml:space="preserve">
+  <data name="mensajeErrorCargarHotelConEntradasErroneas" xml:space="preserve">
     <value>El fichero de la partida ha sido modificado incorrectamente: El hotel {0} tiene unas entradas asignadas que no pertenecen al hotel</value>
   </data>
   <data name="mensajeErrorCargarHotelConMasFases" xml:space="preserve">
@@ -809,5 +809,8 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   </data>
   <data name="MASubastaTerminadaAuto" xml:space="preserve">
     <value>El jugador {0} ({1}) ha vendido de forma automatica por inactividad el hotel {2} al jugador {3} ({4}) por una cantidad de {5}.</value>
+  </data>
+  <data name="mensajeErrorUnirsePartidaCargada" xml:space="preserve">
+    <value>Imposible unirse a la partida cargada {0}. Código de error: {1}</value>
   </data>
 </root>

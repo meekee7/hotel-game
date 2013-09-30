@@ -441,7 +441,7 @@ No permission is needed to build them. Continue?</value>
   <data name="mensajeErrorAlComprobarVersion" xml:space="preserve">
     <value>An error occurred checking the version. Go to {0} to check the version manually.</value>
   </data>
-  <data name="mensajeErrorCarcarHotelConEntradasErroneas" xml:space="preserve">
+  <data name="mensajeErrorCargarHotelConEntradasErroneas" xml:space="preserve">
     <value>The the game file has been modified incorrectly: The {0} hotel has entries assigned to non hotel</value>
   </data>
   <data name="mensajeErrorCargarHotelConMasFases" xml:space="preserve">
@@ -809,5 +809,8 @@ It will be a third of the buy value of hotel plus built phases</value>
   </data>
   <data name="MASubastaTerminadaAuto" xml:space="preserve">
     <value>Player {0} ({1}) has sold the hotel {2} automatically due to inactivity to player {3}({4}) for {5}.</value>
+  </data>
+  <data name="mensajeErrorUnirsePartidaCargada" xml:space="preserve">
+    <value>Unable to join the saved game {0}. Error code: {1}</value>
   </data>
 </root>

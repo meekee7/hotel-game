@@ -1162,7 +1162,7 @@ void CommandHandler::CheckForTurnExpirations()
             if (game->started && !game->ended)
             {
                 game->seconds_elapsed_last_command++;
-                if (game->seconds_elapsed_last_command > 20)
+                if (game->seconds_elapsed_last_command > 300)
                 {
                     game->seconds_elapsed_last_command = 0;
                     wcout << L"Player " << game->current_player->name << " is AFK. Passing the turn automatically for game " << game->id << endl;

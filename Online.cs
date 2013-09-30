@@ -470,6 +470,10 @@ namespace Juego_Hotel
             this.txtLogin.Enabled = true;
             this.txtServidor.Enabled = true;
             this.txtPuerto.Enabled = true;
+            this.bUnirse.Enabled = false;
+            this.bCargarPartida.Enabled = false;
+            this.listaUsuarios.Items.Clear();
+            this.listaPartidas.Items.Clear();
             this.Text = "Online";
             // Desactivar el botón Enviar de cada chat
             if (this.frm_chat_global != null)
@@ -734,7 +738,7 @@ namespace Juego_Hotel
             int long_nombre = recibir_int(this.socket, ref bytes_recibidos);
             String nombre = recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             int codigo_error = recibir_int(this.socket, ref bytes_recibidos);
-            MessageBox.Show(Mensajes.mensajeYaDentroPartida + nombre + codigo_error);
+            MessageBox.Show(String.Format(Mensajes.mensajeErrorUnirsePartidaCargada, nombre, codigo_error));
             this.BeginInvoke(new Action(Activar_bUnirse));
             this.BeginInvoke(new Action(Activar_bCrearPartida));
         }

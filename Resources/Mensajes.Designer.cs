@@ -594,15 +594,6 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El fichero de la partida ha sido modificado incorrectamente: El hotel {0} tiene unas entradas asignadas que no pertenecen al hotel.
-        /// </summary>
-        internal static string mensajeErrorCarcarHotelConEntradasErroneas {
-            get {
-                return ResourceManager.GetString("mensajeErrorCarcarHotelConEntradasErroneas", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a No se puede cargar el fichero de configuración Config.xml.
         /// </summary>
         internal static string mensajeErrorCargarConfig {
@@ -617,6 +608,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeErrorCargarConfigServidor {
             get {
                 return ResourceManager.GetString("mensajeErrorCargarConfigServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El fichero de la partida ha sido modificado incorrectamente: El hotel {0} tiene unas entradas asignadas que no pertenecen al hotel.
+        /// </summary>
+        internal static string mensajeErrorCargarHotelConEntradasErroneas {
+            get {
+                return ResourceManager.GetString("mensajeErrorCargarHotelConEntradasErroneas", resourceCulture);
             }
         }
         
@@ -815,6 +815,15 @@ namespace Juego_Hotel.Resources {
         internal static string mensajeErrorTamañoApodo {
             get {
                 return ResourceManager.GetString("mensajeErrorTamañoApodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Imposible unirse a la partida cargada {0}. Código de error: {1}.
+        /// </summary>
+        internal static string mensajeErrorUnirsePartidaCargada {
+            get {
+                return ResourceManager.GetString("mensajeErrorUnirsePartidaCargada", resourceCulture);
             }
         }
         

@@ -761,6 +761,8 @@ namespace Juego_Hotel
                     this.Activar_Poner_Entradas(this.juego.jug_actual);
                 if (this.Puede_Cobrar_Banca(this.juego.jug_actual))
                     this.bCobrarBanca.Enabled = true;
+                else
+                    this.bCobrarBanca.Enabled = false;
                 switch (jugador.posicion.tipo)
                 {
                     case Tipos.Tcasilla.comprar: this.bComprar.Enabled = true;
@@ -1744,7 +1746,7 @@ namespace Juego_Hotel
             dialogo.DefaultExt = "xml";
             dialogo.SupportMultiDottedExtensions = true;
             String dir_trabajo = System.IO.Directory.GetCurrentDirectory(); // Después de cargar el fichero, el directorio actual se pierde
-            dialogo.InitialDirectory = System.IO.Directory.GetCurrentDirectory() + "\\..\\..";
+            dialogo.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
             dialogo.Filter = Mensajes.filtroDialogoCargarGuardarPartida;
             dialogo.Title = Mensajes.tituloDialogoCargarPartida;
             dialogo.FileName = "Partida Hotel " + System.DateTime.Today.ToShortDateString().Replace('/', '-') + ".xml";
@@ -1830,33 +1832,6 @@ namespace Juego_Hotel
                 return;
             // Sustitur imagen actual
             this.imgTablero.Image = tablero;
-
-            /*// Creando nuevo PictureBox para meter la imagen de la entrada
-            PictureBox entrada = new PictureBox();
-            ((ISupportInitialize)(entrada)).BeginInit();
-            if (en_la_derecha)
-            {
-                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_der.grados);
-                entrada.Location = new Point(casilla.pos_entrada_der.X, casilla.pos_entrada_der.Y);
-            }
-            else
-            {
-                entrada.Image = RotateImage(this.img_entrada, casilla.pos_entrada_izq.grados);
-                entrada.Location = new Point(casilla.pos_entrada_izq.X, casilla.pos_entrada_izq.Y);
-            }
-            entrada.Width = entrada.Image.Width;
-            entrada.Height = entrada.Image.Height;
-            entrada.SizeMode = PictureBoxSizeMode.StretchImage;
-            entrada.TabStop = false;
-            entrada.Name = "entrada";
-            entrada.Tag = entrada.Location.X.ToString() + "@" + entrada.Location.Y.ToString() + "@" + entrada.Width + "@" + entrada.Height;
-            entrada.Location = Calcular_Posicion(entrada.Location.X, entrada.Location.Y);
-            entrada.BackColor = Color.Transparent;
-            this.Controls.Add(entrada);
-            // Establecer el padre después de añadir a los controles, porque el padre es establecido al control al que se añade
-            entrada.Parent = this.imgTablero;
-            ((ISupportInitialize)(entrada)).EndInit();
-            entrada.BringToFront();*/
         }
 
         public void Dibujar_Suelo(Hotel hotel)
