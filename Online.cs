@@ -814,7 +814,10 @@ namespace Juego_Hotel
                 this.sem_en_comunicacion.WaitOne(10000);
                 msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
                 if (msg == "#disconnect#")
+                {
                     this.continuar_thread = false;
+                    this.Pulsar_Desconectar();
+                }
                 else if (msg == "player_list")
                     this.Rellenar_lista_usuarios();
                 else if (msg == "game_list")
