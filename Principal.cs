@@ -1348,6 +1348,7 @@ namespace Juego_Hotel
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, false);
                 frm_ver_hoteles.Show(this);
+                this.bVerHotelesJ1.Enabled = false;
             }
             else
                 MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, resources.GetString("tituloNoEsPosibleMostrarTusHoteles"));
@@ -1359,6 +1360,7 @@ namespace Juego_Hotel
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 1, false);
                 frm_ver_hoteles.Show(this);
+                this.bVerHotelesJ2.Enabled = false;
             }
             else
                 MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleMostrarTusHoteles);
@@ -1370,6 +1372,7 @@ namespace Juego_Hotel
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 2, false);
                 frm_ver_hoteles.Show(this);
+                this.bVerHotelesJ3.Enabled = false;
             }
             else
                 MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleMostrarTusHoteles);
@@ -1381,6 +1384,7 @@ namespace Juego_Hotel
             {
                 VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 3, false);
                 frm_ver_hoteles.Show(this);
+                this.bVerHotelesJ4.Enabled = false;
             }
             else
                 MessageBox.Show(Mensajes.mensajeNoPoseesHoteles, Mensajes.tituloNoEsPosibleMostrarTusHoteles);
@@ -1390,6 +1394,20 @@ namespace Juego_Hotel
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
             frm_ver_hoteles.Show(this);
+            this.bVerHoteles.Enabled = false;
+        }
+
+        public void ReactivarVerHoteles()
+        {
+            this.bVerHoteles.Enabled = true;
+            if (this.controlJ1.Enabled)
+                this.bVerHotelesJ1.Enabled = true;
+            if (this.controlJ2.Enabled)
+                this.bVerHotelesJ2.Enabled = true;
+            if (this.controlJ3.Enabled)
+                this.bVerHotelesJ3.Enabled = true;
+            if (this.controlJ4.Enabled)
+                this.bVerHotelesJ4.Enabled = true;
         }
 
         public Boolean Puede_poner_entradas(Jugador jugador)

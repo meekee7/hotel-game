@@ -55,8 +55,8 @@
             // 
             // bCerrar
             // 
-            resources.ApplyResources(this.bCerrar, "bCerrar");
             this.bCerrar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.bCerrar, "bCerrar");
             this.bCerrar.Name = "bCerrar";
             this.bCerrar.UseVisualStyleBackColor = true;
             this.bCerrar.Click += new System.EventHandler(this.bCerrar_Click);
@@ -68,9 +68,9 @@
             // 
             // listaHoteles
             // 
-            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
+            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.Name = "listaHoteles";
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
@@ -83,12 +83,12 @@
             // 
             // grupoHotel
             // 
-            resources.ApplyResources(this.grupoHotel, "grupoHotel");
             this.grupoHotel.Controls.Add(this.precioMinimo);
             this.grupoHotel.Controls.Add(this.etiPrecioMinimo);
             this.grupoHotel.Controls.Add(this.bSubastar);
             this.grupoHotel.Controls.Add(this.etiHotel);
             this.grupoHotel.Controls.Add(this.listaHoteles);
+            resources.ApplyResources(this.grupoHotel, "grupoHotel");
             this.grupoHotel.Name = "grupoHotel";
             this.grupoHotel.TabStop = false;
             // 
@@ -159,7 +159,6 @@
             // 
             // grupoEstado
             // 
-            resources.ApplyResources(this.grupoEstado, "grupoEstado");
             this.grupoEstado.Controls.Add(this.bVender);
             this.grupoEstado.Controls.Add(this.mayor_postor);
             this.grupoEstado.Controls.Add(this.txt_mayor_postor);
@@ -171,6 +170,7 @@
             this.grupoEstado.Controls.Add(this.cantidad);
             this.grupoEstado.Controls.Add(this.bJ2);
             this.grupoEstado.Controls.Add(this.bJ4);
+            resources.ApplyResources(this.grupoEstado, "grupoEstado");
             this.grupoEstado.Name = "grupoEstado";
             this.grupoEstado.TabStop = false;
             // 
@@ -219,7 +219,6 @@
         private System.Windows.Forms.ComboBox listaHoteles;
         private System.Windows.Forms.Button bSubastar;
         private System.Windows.Forms.GroupBox grupoHotel;
-        private System.Windows.Forms.Button bVerHoteles;
         private System.Windows.Forms.Label txtCantidad;
         private System.Windows.Forms.Button bJ1;
         private System.Windows.Forms.Button bJ3;
@@ -234,5 +233,6 @@
         private System.Windows.Forms.Button bVender;
         private System.Windows.Forms.Label etiPrecioMinimo;
         private System.Windows.Forms.Label precioMinimo;
+        public System.Windows.Forms.Button bVerHoteles;
     }
 }

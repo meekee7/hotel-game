@@ -162,7 +162,8 @@ namespace Juego_Hotel
         private void bVerHoteles_Click(object sender, EventArgs e)
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, 0, true);
-            frm_ver_hoteles.Show();
+            frm_ver_hoteles.Show(this);
+            this.bVerHoteles.Enabled = false;
         }
 
         private void bVender_Click(object sender, EventArgs e)

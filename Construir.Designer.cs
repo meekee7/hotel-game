@@ -51,8 +51,8 @@
             // 
             // bCancelar
             // 
-            resources.ApplyResources(this.bCancelar, "bCancelar");
             this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.bCancelar, "bCancelar");
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.UseVisualStyleBackColor = true;
             this.bCancelar.Click += new System.EventHandler(this.bCancelar_Click);
@@ -113,9 +113,9 @@
             // 
             // listaHoteles
             // 
-            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHoteles.FormattingEnabled = true;
+            resources.ApplyResources(this.listaHoteles, "listaHoteles");
             this.listaHoteles.Name = "listaHoteles";
             this.listaHoteles.SelectedIndexChanged += new System.EventHandler(this.listaHoteles_SelectedIndexChanged);
             // 
@@ -206,12 +206,12 @@
         private System.Windows.Forms.Label nombreHotel;
         private System.Windows.Forms.ComboBox listaHoteles;
         private System.Windows.Forms.Label HotelSeleccionado;
-        private System.Windows.Forms.Button bVerHoteles;
         private System.Windows.Forms.Label PrecioPpal;
         private System.Windows.Forms.Label PrecioAmp1;
         private System.Windows.Forms.Label PrecioAmp2;
         private System.Windows.Forms.Label PrecioSuelo;
         private System.Windows.Forms.Label PrecioAmp3;
         private System.Windows.Forms.Label PrecioAmp4;
+        public System.Windows.Forms.Button bVerHoteles;
     }
 }

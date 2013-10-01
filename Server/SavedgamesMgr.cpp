@@ -6,6 +6,7 @@
 #include "dlib/string.h"
 #include "dlib/threads.h"
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 
 void KeepAliveWrapper(void* sgm)
 {
@@ -254,7 +255,7 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
             int idx = 1;
             for (list<int>::iterator l = h->entrances.begin() ; l != h->entrances.end() ; l++)
             {
-                entrance_list += (*l);
+                entrance_list += boost::lexical_cast<string>(*l);
                 if (idx < (int)h->entrances.size())
                     entrance_list += "@";
                 idx++;
@@ -379,6 +380,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
             game->hlist[i]->n_built_phases = res_hotel_statuses->get_int_field("num_fases_construidas");
             game->hlist[i]->entrance_bought_last_turn = res_hotel_statuses->get_bool_field("entrada_comprada_ultimo_turno");
             game->hlist[i]->ground_bought = res_hotel_statuses->get_bool_field("suelo_comprado");
+            game->hlist[i]->next_expansion_is_ground = (game->hlist[i]->n_built_phases + 1 == game->hlist[i]->n_max_phases ? true : false);
             vector<string> entrances = dlib::split(res_hotel_statuses->get_string_field("posiciones_de_entradas"), "@");
             for (int j = 0 ; j < (int)entrances.size() ; j++)
                 game->hlist[i]->entrances.push_back(atoi(entrances[j].c_str()));

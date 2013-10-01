@@ -468,8 +468,11 @@ namespace Juego_Hotel
             this.bCrearConv.Enabled = false;
             this.bChatGlobal.Enabled = false;
             this.txtLogin.Enabled = true;
-            this.txtServidor.Enabled = true;
-            this.txtPuerto.Enabled = true;
+            if (!this.checkSrvOficial.Checked)
+            {
+                this.txtServidor.Enabled = true;
+                this.txtPuerto.Enabled = true;
+            }
             this.bUnirse.Enabled = false;
             this.bCargarPartida.Enabled = false;
             this.listaUsuarios.Items.Clear();

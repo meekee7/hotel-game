@@ -59,6 +59,15 @@ namespace Juego_Hotel
 
         private void bOK_Click(object sender, EventArgs e)
         {
+            if (this.Owner != null)
+            {
+                if (this.Owner is Principal)
+                    (this.Owner as Principal).ReactivarVerHoteles();
+                if (this.Owner is Subastas)
+                    (this.Owner as Subastas).bVerHoteles.Enabled = true;
+                if (this.Owner is Construir)
+                    (this.Owner as Construir).bVerHoteles.Enabled = true;
+            }
             this.Close();
         }
 

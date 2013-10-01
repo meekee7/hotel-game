@@ -284,7 +284,8 @@ namespace Juego_Hotel
         private void bVerHoteles_Click(object sender, EventArgs e)
         {
             VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, this.juego.jug_actual - 1, false);
-            frm_ver_hoteles.Show();
+            frm_ver_hoteles.Show(this);
+            this.bVerHoteles.Enabled = false;
         }
 
         private void Construir_FormClosing(object sender, FormClosingEventArgs e)
