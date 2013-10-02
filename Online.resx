@@ -121,6 +121,10 @@
   <data name="txtLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtLogin.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="txtLogin.Location" type="System.Drawing.Point, System.Drawing">
     <value>93, 44</value>
@@ -128,7 +132,6 @@
   <data name="txtLogin.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 20</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="txtLogin.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>

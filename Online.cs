@@ -273,6 +273,7 @@ namespace Juego_Hotel
                 this.bConectar.Enabled = false;
                 this.txtServidor.Enabled = false;
                 this.txtPuerto.Enabled = false;
+                this.txtLogin.Enabled = true;
                 this.txtLogin.Focus();
             }
             catch (Exception ex)
@@ -467,7 +468,8 @@ namespace Juego_Hotel
             this.bCrearPartida.Enabled = false;
             this.bCrearConv.Enabled = false;
             this.bChatGlobal.Enabled = false;
-            this.txtLogin.Enabled = true;
+            this.txtLogin.Enabled = false;
+            this.txtLogin.Clear();
             if (!this.checkSrvOficial.Checked)
             {
                 this.txtServidor.Enabled = true;
