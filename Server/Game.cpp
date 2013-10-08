@@ -289,16 +289,19 @@ void Game::eliminate_player(Player* player, Player* reiceiving_player)
     list<Player*>::iterator i = find(this->active_plist.begin(), this->active_plist.end(), player);
     if (i != this->active_plist.end())
         this->active_plist.erase(i);
-    // Return all hotels to bank
-    PlayerGameState* player_state = player->GetState(this->id);
-    for (list<Hotel*>::iterator i2 = player_state->hotels.begin() ; i2 != player_state->hotels.end() ; ++i2)
+    if (this->started)
     {
-        (*i2)->Return_to_bank();
-    }
-    player_state->hotels.clear();
-    if (reiceiving_player != NULL)
-    {
-        player->Pay_nights(this->id, reiceiving_player->GetState(this->id), player_state->n_5000, player_state->n_1000, player_state->n_500, player_state->n_100, player_state->n_50);
+        // Return all hotels to bank
+        PlayerGameState* player_state = player->GetState(this->id);
+        for (list<Hotel*>::iterator i2 = player_state->hotels.begin() ; i2 != player_state->hotels.end() ; ++i2)
+        {
+            (*i2)->Return_to_bank();
+        }
+        player_state->hotels.clear();
+        if (reiceiving_player != NULL)
+        {
+            player->Pay_nights(this->id, reiceiving_player->GetState(this->id), player_state->n_5000, player_state->n_1000, player_state->n_500, player_state->n_100, player_state->n_50);
+        }
     }
 }
 
