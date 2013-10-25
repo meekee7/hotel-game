@@ -204,7 +204,6 @@
             // 
             resources.ApplyResources(this.j1Azul, "j1Azul");
             this.j1Azul.Name = "j1Azul";
-            this.j1Azul.Tag = "";
             this.j1Azul.UseVisualStyleBackColor = true;
             this.j1Azul.CheckedChanged += new System.EventHandler(this.j1Azul_CheckedChanged);
             // 

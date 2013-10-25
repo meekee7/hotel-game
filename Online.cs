@@ -1191,6 +1191,7 @@ namespace Juego_Hotel
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
+
             if (!subastado)
                 partida.interfaz.BeginInvoke(new Action<Jugador, Jugador, String>(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
         }

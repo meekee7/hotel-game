@@ -1052,6 +1052,27 @@ namespace Juego_Hotel
             this.Actualizar_Dinero_Jugadores();
         }
 
+        public void Actualizar_Fases_Nuevo_Dueño_Hotel(Hotel hotel)
+        {
+            Image imagen_fase;
+            switch (hotel.dueño.color)
+            {
+                case Tipos.Tcolor.amarillo: imagen_fase = (Image)this.img_tick_Amarillo.Clone();
+                    break;
+                case Tipos.Tcolor.azul: imagen_fase = (Image)this.img_tick_Azul.Clone();
+                    break;
+                case Tipos.Tcolor.rojo: imagen_fase = (Image)this.img_tick_Rojo.Clone();
+                    break;
+                case Tipos.Tcolor.verde: imagen_fase = (Image)this.img_tick_Verde.Clone();
+                    break;
+            }
+            Control[] lista_fases = this.Controls.Find("fase", true);
+            foreach (Control fase in lista_fases)
+            {
+
+            }
+        }
+
         public void Hotel_Comprado(Hotel hotel, Jugador jugador)
         {
             if (Application.OpenForms.Cast<Form>().Contains(this.actividad))
@@ -1796,19 +1817,19 @@ namespace Juego_Hotel
                 this.Dibujar_Suelo(hotel);
             else
             {
-                // Creando nuevo PictureBox para meter la imagen de la entrada
+                // Creando nuevo PictureBox para meter la imagen de la fase
                 PictureBox fase = new PictureBox();
                 ((ISupportInitialize)(fase)).BeginInit();
                 Tipos.Posicion pos = hotel.posiciones_fases.ToList()[num_fase];
                 switch (hotel.dueño.color)
                 {
-                    case Tipos.Tcolor.amarillo: fase.Image = RotateImage(this.img_tick_Amarillo, pos.grados);
+                    case Tipos.Tcolor.amarillo: fase.Image = (Image)this.img_tick_Amarillo.Clone();
                         break;
-                    case Tipos.Tcolor.azul: fase.Image = RotateImage(this.img_tick_Azul, pos.grados);
+                    case Tipos.Tcolor.azul: fase.Image = (Image)this.img_tick_Azul.Clone();
                         break;
-                    case Tipos.Tcolor.rojo: fase.Image = RotateImage(this.img_tick_Rojo, pos.grados);
+                    case Tipos.Tcolor.rojo: fase.Image = (Image)this.img_tick_Rojo.Clone();
                         break;
-                    case Tipos.Tcolor.verde: fase.Image = RotateImage(this.img_tick_Verde, pos.grados);
+                    case Tipos.Tcolor.verde: fase.Image = (Image)this.img_tick_Verde.Clone();
                         break;
                 }
                 fase.BackColor = Color.Transparent;
@@ -1817,7 +1838,7 @@ namespace Juego_Hotel
                 fase.SizeMode = PictureBoxSizeMode.StretchImage;
                 fase.TabStop = false;
                 fase.Name = "fase";
-                fase.Tag = fase.Location.X.ToString() + "@" + fase.Location.Y.ToString();
+                fase.Tag = new Tuple<String, Hotel>(fase.Location.X.ToString() + "@" + fase.Location.Y.ToString(), hotel);
                 fase.Location = Calcular_Posicion(fase.Location.X, fase.Location.Y);
                 this.Controls.Add(fase);
                 fase.Parent = this.imgTablero;
@@ -1926,7 +1947,7 @@ namespace Juego_Hotel
             int x, y;
             foreach (Control fase in lista_fases)
             {
-                pos = fase.Tag.ToString(); // Uso la propiedad Tag para almacenar la posición original
+                pos = ((Tuple<String, Hotel>)fase.Tag).Item1.ToString(); // Uso la propiedad Tag para almacenar la posición original
                 x = Convert.ToInt32(pos.Split('@')[0]);
                 y = Convert.ToInt32(pos.Split('@')[1]);
                 fase.Location = Calcular_Posicion(x, y);
