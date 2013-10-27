@@ -318,7 +318,7 @@ int Game::get_money_for_nights(Player* owner, Player* player, int* nights, wstri
             dice_res = this->random->RollDice(6, 1);
             amount = (*i)->prices_matrix[(*i)->n_built_phases-1][dice_res-1];
             (*hotel) = (*i)->name_txt;
-            wcout << currentDateTime() << L"Player: " << player->name << " must pay " << dice_res << " nights at " << hotel << " to player " << owner->name << endl;
+            wcout << currentDateTime() << L"Player: " << player->name << " must pay " << dice_res << " nights at " << (*hotel) << " to player " << owner->name << endl;
             break;
         }
     }
