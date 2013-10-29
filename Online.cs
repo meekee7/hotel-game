@@ -1140,7 +1140,8 @@ namespace Juego_Hotel
             String sig_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
             PartidaOnline partida = this.Buscar_partida(id);
-            partida.interfaz.BeginInvoke(new Action<String, Boolean>(partida.interfaz.Pasar_Turno), new object[] { sig_jugador, automaticamente });
+            if (partida != null)
+                partida.interfaz.BeginInvoke(new Action<String, Boolean>(partida.interfaz.Pasar_Turno), new object[] { sig_jugador, automaticamente });
         }
 
         private void Actualizar_dinero_jugador()
@@ -1191,7 +1192,7 @@ namespace Juego_Hotel
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
-
+            partida.interfaz.BeginInvoke(new Action<Hotel>(partida.interfaz.Actualizar_Fases_Nuevo_Dueño_Hotel), hotel);
             if (!subastado)
                 partida.interfaz.BeginInvoke(new Action<Jugador, Jugador, String>(partida.interfaz.Hotel_Expropiado), jugador, hotel.dueño, hotel.nombre_txt);
         }
@@ -1246,6 +1247,8 @@ namespace Juego_Hotel
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             if (jugador.Eliminado())
                 return;
+            if (Application.OpenForms.Cast<Form>().Contains(partida.interfaz))
+                partida.interfaz.Invoke(new Action<Jugador>(partida.interfaz.Limpiar_Fases_y_Entradas_Hoteles_Jugador), jugador);
             partida.interfaz.juego.Eliminar_Jugador(jugador, null);
             if (jugador.nombre_online != partida.interfaz.nombre_online)
             {

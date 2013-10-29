@@ -194,6 +194,7 @@ namespace Juego_Hotel
                         this.Rellenar_Lista_Hoteles(this.online);
                         this.listaHoteles.Enabled = true;
                         this.bCerrar.Enabled = true;
+                        this.interfaz.Actualizar_Fases_Nuevo_Dueño_Hotel(hotel_seleccionado);
                     }
                     else
                     {

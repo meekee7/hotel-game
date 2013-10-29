@@ -43,7 +43,6 @@ namespace Juego_Hotel
         XmlDocument configuracion;
         public Actividad actividad;
         public String creador_online;
-        // TODO: Revisar todos los destructores para las pérdidas de memoria
 
         public Principal(Boolean autostart, Online frm_online, XmlDocument configuracion)
         {
@@ -1054,7 +1053,7 @@ namespace Juego_Hotel
 
         public void Actualizar_Fases_Nuevo_Dueño_Hotel(Hotel hotel)
         {
-            Image imagen_fase;
+            Image imagen_fase = null;
             switch (hotel.dueño.color)
             {
                 case Tipos.Tcolor.amarillo: imagen_fase = (Image)this.img_tick_Amarillo.Clone();
@@ -1066,10 +1065,10 @@ namespace Juego_Hotel
                 case Tipos.Tcolor.verde: imagen_fase = (Image)this.img_tick_Verde.Clone();
                     break;
             }
-            Control[] lista_fases = this.Controls.Find("fase", true);
+            List<Control> lista_fases = this.Controls.Find("fase", true).Where(f => (f.Tag as Tuple<int, int, Hotel>).Item3 == hotel).ToList();
             foreach (Control fase in lista_fases)
             {
-
+                (fase as PictureBox).Image = imagen_fase;
             }
         }
 
@@ -1666,6 +1665,18 @@ namespace Juego_Hotel
             return;
         }
 
+        public void Limpiar_Fases_y_Entradas_Hoteles_Jugador(Jugador jugador)
+        {
+            foreach (Hotel hotel in jugador.hoteles)
+            {
+                List<Control> lista_fases = this.Controls.Find("fase", true).Where(f => (f.Tag as Tuple<int, int, Hotel>).Item3 == hotel).ToList();
+                foreach (Control fase in lista_fases)
+                {
+                    fase.Dispose();
+                }
+            }            
+        }
+
         private Boolean Retirarse(int num_jugador)
         {
             if (this.juego.jugadores[num_jugador].Eliminado()) // Ya está eliminado
@@ -1674,6 +1685,7 @@ namespace Juego_Hotel
             {
                 if (!this.online)
                 {
+                    this.Limpiar_Fases_y_Entradas_Hoteles_Jugador(this.juego.jugadores[num_jugador]);
                     this.juego.Eliminar_Jugador(this.juego.jugadores[num_jugador], null);
                     this.Marcar_Jugador_Eliminado(num_jugador);
                 }
@@ -1838,7 +1850,7 @@ namespace Juego_Hotel
                 fase.SizeMode = PictureBoxSizeMode.StretchImage;
                 fase.TabStop = false;
                 fase.Name = "fase";
-                fase.Tag = new Tuple<String, Hotel>(fase.Location.X.ToString() + "@" + fase.Location.Y.ToString(), hotel);
+                fase.Tag = new Tuple<int, int, Hotel>(fase.Location.X, fase.Location.Y, hotel);
                 fase.Location = Calcular_Posicion(fase.Location.X, fase.Location.Y);
                 this.Controls.Add(fase);
                 fase.Parent = this.imgTablero;
@@ -1947,9 +1959,9 @@ namespace Juego_Hotel
             int x, y;
             foreach (Control fase in lista_fases)
             {
-                pos = ((Tuple<String, Hotel>)fase.Tag).Item1.ToString(); // Uso la propiedad Tag para almacenar la posición original
-                x = Convert.ToInt32(pos.Split('@')[0]);
-                y = Convert.ToInt32(pos.Split('@')[1]);
+                var fase_tag = fase.Tag as Tuple<int, int, Hotel>; // Uso la propiedad Tag para almacenar la posición original
+                x = Convert.ToInt32(fase_tag.Item1);
+                y = Convert.ToInt32(fase_tag.Item2);
                 fase.Location = Calcular_Posicion(x, y);
                 fase.Size = Calcular_Tamaño(ancho_fase, alto_fase);
             }
