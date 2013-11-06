@@ -576,7 +576,7 @@ void CommandHandler::ChargeBank(Player* player, Game* game)
     }
 }
 
-void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50)
+void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50, int mode)
 {
     if ((!game->started) || game->ended) // Hack, game not started yet or already ended
         return;

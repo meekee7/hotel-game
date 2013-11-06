@@ -286,6 +286,7 @@ namespace Juego_Hotel
                                 hotel.dueño.hoteles.AddLast(hotel);
                             }
                             hotel.n_fases_construidas = Convert.ToInt16(estado[2]);
+                            hotel.suelo_comprado = (hotel.n_fases_construidas == hotel.n_fases_max);
                             hotel.entrada_comprada_ultimo_turno = (estado[3] == "1" ? true : false);
                             hotel.entrada_comprada_ultimo_turno = (estado[4] == "1" ? true : false);
                             if (estado[5] != "")
@@ -955,7 +956,7 @@ namespace Juego_Hotel
                                 if (hotel.precio_expropiacion > this.juego.jugador_actual.dinero_total)
                                     MessageBox.Show(Mensajes.mensajeSinFondosParaExpropiacion);
                                 else
-                                    this.Comprar_hotel(ref hotel, ref jugador, true);
+                                    this.Comprar_hotel(ref hotel, ref jugador, true, false);
                             }
                         }
                         else
@@ -966,20 +967,18 @@ namespace Juego_Hotel
                 }
                 else // Es posible comprar el hotel
                 {
-                    if (hotel.precio > jugador.dinero_total)
+                    if ((frm_comprar_hotel.comprado_con_todo ? hotel.Calcular_precio_con_todo() : hotel.precio) > jugador.dinero_total)
                         MessageBox.Show(String.Format(Mensajes.mensajeFondosInsuficientesParaComprarHotel, hotel.nombre_txt));
                     else
                     {
-                        DialogResult dr = MessageBox.Show(Mensajes.mensajeComprarHotel, Mensajes.tituloComprarHotel, MessageBoxButtons.YesNo);
-                        if (dr == DialogResult.Yes)
-                            this.Comprar_hotel(ref hotel, ref jugador, false);
+                        this.Comprar_hotel(ref hotel, ref jugador, false, frm_comprar_hotel.comprado_con_todo);
                     }
                 }
             }
             frm_comprar_hotel.Close();
         }
 
-        void Comprar_hotel (ref Hotel hotel, ref Jugador jugador, Boolean expropiando)
+        void Comprar_hotel (ref Hotel hotel, ref Jugador jugador, Boolean expropiando, Boolean comprar_con_todo)
         {
             // En caso de que el turno se pase automáticamente y quede algun messagebox abierto, no hacer nada
             if (juego.jugador_actual != jugador)
@@ -990,7 +989,15 @@ namespace Juego_Hotel
             if (expropiando)
                 dinero_necesario = hotel.precio_expropiacion;
             else
-                dinero_necesario = hotel.precio;
+            {
+                if (comprar_con_todo)
+                    dinero_necesario = hotel.Calcular_precio_con_todo();
+                else
+                {
+                    hotel.Limpiar_fases_y_entradas();
+                    dinero_necesario = hotel.precio;
+                }
+            }
 
             PedirPago frm_pago = new PedirPago(dinero_necesario, ref this.juego, this.juego.jugador_actual, this, null);
             frm_pago.ShowDialog();
@@ -1032,6 +1039,18 @@ namespace Juego_Hotel
                             Principal.Calcular_Devolucion((frm_pago.total_seleccionado - dinero_necesario), out n_5000, out n_1000, out n_500, out n_100, out n_50);
                             jugador.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
                         }
+                        // Dibujar las fases y entradas que ya tuviera
+                        if (comprar_con_todo)
+                        {
+                            for (int i = 0; i < hotel.n_fases_construidas; i++)
+                            {
+                                Dibujar_Fase(hotel, i);
+                            }
+                            foreach (Casilla casilla in hotel.entradas)
+                            {
+                                Dibujar_Entrada(casilla, casilla.entrada_en_der);
+                            }
+                        }
                     }
                     else // Todo se hace en el lado del servidor, devolución incluída
                     {
@@ -1041,7 +1060,7 @@ namespace Juego_Hotel
                         n_100 = frm_pago.n_100;
                         n_50 = frm_pago.n_50;
                         this.frm_online.enviar_comando("buy_hotel", this.game_id.ToString(), hotel.nombre_txt, n_5000.ToString(),
-                             n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString());
+                            n_1000.ToString(), n_500.ToString(), n_100.ToString(), n_50.ToString(), (comprar_con_todo ? "1" : "0"));
                     }
                 }
             }
@@ -1672,9 +1691,25 @@ namespace Juego_Hotel
                 List<Control> lista_fases = this.Controls.Find("fase", true).Where(f => (f.Tag as Tuple<int, int, Hotel>).Item3 == hotel).ToList();
                 foreach (Control fase in lista_fases)
                 {
+                    this.Controls.Remove(fase);
                     fase.Dispose();
                 }
-            }            
+            }
+            this.imgTablero.Image = Properties.Resources.Tablero;
+            Image nuevo_tablero = Properties.Resources.Tablero;
+            // Las entradas no pueden ser borradas, hay que redibujar el tablero entero con las entradas que queden
+            foreach (Hotel hotel in juego.hoteles.Where(h => h.dueño != jugador))
+            {
+                foreach (Casilla casilla in hotel.entradas)
+                {
+                    if (casilla.entrada_en_der)
+                        this.Dibujar_Entrada(casilla, true, nuevo_tablero);
+                    else
+                        this.Dibujar_Entrada(casilla, false, nuevo_tablero);
+                }
+                this.Dibujar_Suelo(hotel, nuevo_tablero);
+            }
+            this.imgTablero.Image = nuevo_tablero;
         }
 
         private Boolean Retirarse(int num_jugador)
@@ -1859,10 +1894,12 @@ namespace Juego_Hotel
             }
         }
 
-        public void Dibujar_Entrada(Casilla casilla, Boolean en_la_derecha)
+        public void Dibujar_Entrada(Casilla casilla, Boolean en_la_derecha, Image img_tablero = null)
         {
             // Se repinta el tablero con la nueva imagen encima
-            Image tablero = this.imgTablero.Image;
+            // Si no se pasa un tablero por parámetro, usar el actual. Esto sirve para cuando se retira un jugador,
+            // poder reusar este método para repintar sobre un tablero sin asignarlo al formulario
+            Image tablero = (img_tablero != null ? img_tablero : this.imgTablero.Image);
             Graphics g = Graphics.FromImage(tablero);
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             Image entrada;
@@ -1882,13 +1919,18 @@ namespace Juego_Hotel
             else
                 return;
             // Sustitur imagen actual
-            this.imgTablero.Image = tablero;
+            if (img_tablero == null)
+                this.imgTablero.Image = tablero;
+            else
+                img_tablero = tablero;
         }
 
-        public void Dibujar_Suelo(Hotel hotel)
+        public void Dibujar_Suelo(Hotel hotel, Image img_tablero = null)
         {
             // Se repinta el tablero con la nueva imagen encima
-            Image tablero = this.imgTablero.Image;
+            // Si no se pasa un tablero por parámetro, usar el actual. Esto sirve para cuando se retira un jugador,
+            // poder reusar este método para repintar sobre un tablero sin asignarlo al formulario
+            Image tablero = (img_tablero != null ? img_tablero : this.imgTablero.Image);
             Graphics g = Graphics.FromImage(tablero);
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             Image suelo;
@@ -1920,7 +1962,10 @@ namespace Juego_Hotel
             else
                 return;
             // Sustitur imagen actual
-            this.imgTablero.Image = tablero;
+            if (img_tablero == null)
+                this.imgTablero.Image = tablero;
+            else
+                img_tablero = tablero;
         }
 
         Point Calcular_Posicion(int x, int y)
@@ -1955,7 +2000,6 @@ namespace Juego_Hotel
             this.img_ayto.Size = Calcular_Tamaño(ancho_fase, alto_fase);
             // Fases construidas
             Control[] lista_fases = this.Controls.Find("fase", true);
-            String pos;
             int x, y;
             foreach (Control fase in lista_fases)
             {

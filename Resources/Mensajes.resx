@@ -813,4 +813,7 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   <data name="mensajeErrorUnirsePartidaCargada" xml:space="preserve">
     <value>Imposible unirse a la partida cargada {0}. Código de error: {1}</value>
   </data>
+  <data name="mensajeComprarHotelConFasesYEntradas" xml:space="preserve">
+    <value>¿Quieres comprar el hotel con las fases y entradas que ya tenía?. El precio en este caso sería {0}</value>
+  </data>
 </root>

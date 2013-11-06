@@ -312,6 +312,26 @@ namespace Juego_Hotel
             return res;
         }
 
+        public int Calcular_precio_con_todo()
+        {
+            // Calcula el precio total de todo lo que hay construido y junto a sus fases
+            int res = this.precio;
+            for (int i = 0; i < n_fases_construidas; i++)
+            {
+                res += this.precios_ampliaciones[i];
+            }
+            res += (n_entradas * precio_entrada);
+            return res;
+        }
+
+        public void Limpiar_fases_y_entradas()
+        {
+            this.n_fases_construidas = 0;
+            this.n_entradas = 0;
+            this.suelo_comprado = false;
+            this.entradas.Clear();
+        }
+
         public void Devolver_a_banca()
         {
             // El hotel de queda con las entradas que tenía, solo hay que desasignarlo del dueño

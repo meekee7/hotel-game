@@ -39,7 +39,7 @@ public:
     void RollConstructionDice(Player* player, Game* game, Hotel* selected_hotel);
     void PassTurn(Player* player, Game* game, bool automatically = false);
     void ChargeBank(Player* player, Game* game);
-    void BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50);
+    void BuyHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50, int mode);
     void ExpropriateHotel(Player* player, Game* game, wstring hotel_name, int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void BuildPhase(Player* player, Game* game, wstring hotel_name, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50);
     void BuyEntrance(Player* player, Game* game, wstring hotel_name, int position, int type, int n_5000, int n_1000, int n_500, int n_100, int n_50);

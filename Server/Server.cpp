@@ -240,12 +240,14 @@ void Server::handle_command(string command, Player* player)
         int n_100 = atoi(receive_string(player, len_int, &bytes_received).c_str());
         len_int = receive_int(player, &bytes_received);
         int n_50 = atoi(receive_string(player, len_int, &bytes_received).c_str());
+        len_int = receive_int(player, &bytes_received);
+        int mode = atoi(receive_string(player, len_int, &bytes_received).c_str());
         // We have selected money by player, change needs to be calculated
         Game* game = get_game_from_id(id, &this->ch->serverState->glist);
         if (game == NULL) // To avoid commands sent when game does not exist anymore
             return;
         game->seconds_elapsed_last_command = 0;
-        ch->BuyHotel(player, game, hotel_name, n_5000, n_1000, n_500, n_100, n_50);
+        ch->BuyHotel(player, game, hotel_name, n_5000, n_1000, n_500, n_100, n_50, mode);
     }
     else if (command == "expropriate_hotel")
     {

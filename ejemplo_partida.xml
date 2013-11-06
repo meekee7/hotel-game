@@ -16,64 +16,64 @@
       <num_fases_construidas>4</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>1</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>2@3@4@5@6@7</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>2@4@7</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>Boomerang</nombre>
       <num_fases_construidas>2</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>3@4@5@6</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>3@5@6</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>L'etoile</nombre>
       <num_fases_construidas>6</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>9@10@11@22@23@24@25@29@30</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>9@11@23@25@29@30</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>President</nombre>
       <num_fases_construidas>5</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>10@11@12@13@14@15@16</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>10@12@14@16</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>Royal</nombre>
       <num_fases_construidas>5</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>12@13@14@15@16@17@18@19@20@21</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>13@15@18@20</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>Waikiki</nombre>
       <num_fases_construidas>6</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>17@18@19@20@21</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>17@18@19@21</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>Taj Mahal</nombre>
       <num_fases_construidas>4</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>22@23@24@25@26</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>22@24@26</posiciones_de_entradas>
     </estado_hotel>
     <estado_hotel>
       <nombre>Safari</nombre>
       <num_fases_construidas>4</num_fases_construidas>
       <entrada_comprada_ultimo_turno>no</entrada_comprada_ultimo_turno>
       <num_entradas>0</num_entradas>
-      <suelo_comprado>no</suelo_comprado>
-      <posiciones_de_entradas>27@28@29@30@31</posiciones_de_entradas>
+      <suelo_comprado>si</suelo_comprado>
+      <posiciones_de_entradas>27@28@31</posiciones_de_entradas>
     </estado_hotel>
   </estado_hoteles>
   <estado_jugadores>
@@ -100,7 +100,7 @@
       <n_billetes_100>4</n_billetes_100>
       <n_billetes_500>3</n_billetes_500>
       <n_billetes_1000>4</n_billetes_1000>
-      <n_billetes_5000>1</n_billetes_5000>
+      <n_billetes_5000>4</n_billetes_5000>
       <hoteles_poseidos>Fujiyama@Safari</hoteles_poseidos>
     </estado_jugador>
     <estado_jugador>
