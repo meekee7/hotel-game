@@ -396,6 +396,17 @@ void Hotel::Return_to_bank()
     this->owner = NULL;
 }
 
+int Hotel::Calculate_price_with_everything()
+{
+    int res = this->price;
+    for(int i = 0 ; i < this->n_built_phases ; i++)
+    {
+        res += this->phases_prices[i];
+    }
+    res += (this->entrance_price * this->n_entrances);
+    return res;
+}
+
 string Hotel::Create_entrance_list()
 {
     string entrance_list = "";
@@ -411,6 +422,14 @@ string Hotel::Create_entrance_list()
         }
     }
     return entrance_list;
+}
+
+void Hotel::Clear_phases_and_entrances()
+{
+    this->n_built_phases = 0;
+    this->entrances.clear();
+    this->n_entrances = 0;
+    this->ground_bought = 0;
 }
 
 Hotel::~Hotel(void)

@@ -595,8 +595,11 @@ void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, in
     if ((state->position->hotel_left != hotel->name) && (state->position->hotel_right != hotel->name)) // Hack, retire player
         return kick_hacker(27, player);
     int total_selected = (n_5000 * 5000) + (n_1000 * 1000) + (n_500 * 500) + (n_100 * 100) + (n_50 * 50);
-    if (total_selected < (hotel->price)) // Hack, retire player
+    int needed_money = (mode == 1 ? hotel->Calculate_price_with_everything() : hotel->price);
+    if (total_selected < needed_money) // Hack, retire player
         return kick_hacker(28, player);
+    if (mode == 0)
+        hotel->Clear_phases_and_entrances();
     hotel->owner = player;
     player->Buy_hotel(game->id, hotel, n_5000, n_1000, n_500, n_100, n_50);
     // Calculate change
@@ -616,6 +619,7 @@ void CommandHandler::BuyHotel(Player* player, Game* game, wstring hotel_name, in
         send_wstring(dest, player->name);
         send_int(dest, get_utf8_length(hotel_name));
         send_wstring(dest, hotel_name);
+        send_int(dest, mode);
         send_command("update_player_money", dest);
         send_int(dest, game->id);
         send_int(dest, get_utf8_length(player->name));

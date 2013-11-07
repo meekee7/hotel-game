@@ -38,7 +38,9 @@ public:
     bool Can_extend();
     int Calculate_nights(int number);
     void Return_to_bank();
+    int Calculate_price_with_everything();
     string Create_entrance_list();
+    void Clear_phases_and_entrances();
     ~Hotel(void);
 };
 

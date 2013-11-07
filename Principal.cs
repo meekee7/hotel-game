@@ -1042,14 +1042,7 @@ namespace Juego_Hotel
                         // Dibujar las fases y entradas que ya tuviera
                         if (comprar_con_todo)
                         {
-                            for (int i = 0; i < hotel.n_fases_construidas; i++)
-                            {
-                                Dibujar_Fase(hotel, i);
-                            }
-                            foreach (Casilla casilla in hotel.entradas)
-                            {
-                                Dibujar_Entrada(casilla, casilla.entrada_en_der);
-                            }
+                            this.Dibujar_Fases_y_Entradas(hotel);
                         }
                     }
                     else // Todo se hace en el lado del servidor, devolución incluída
@@ -1068,6 +1061,18 @@ namespace Juego_Hotel
             this.bComprar.Enabled = false;
             this.bComprarSuelo.Enabled = false;
             this.Actualizar_Dinero_Jugadores();
+        }
+
+        public void Dibujar_Fases_y_Entradas(Hotel hotel)
+        {
+            for (int i = 0; i < hotel.n_fases_construidas; i++)
+            {
+                this.Dibujar_Fase(hotel, i);
+            }
+            foreach (Casilla casilla in hotel.entradas)
+            {
+                this.Dibujar_Entrada(casilla, casilla.entrada_en_der);
+            }
         }
 
         public void Actualizar_Fases_Nuevo_Dueño_Hotel(Hotel hotel)

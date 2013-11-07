@@ -1167,12 +1167,15 @@ namespace Juego_Hotel
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+            Boolean comprado_con_todo = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             hotel.dueño = jugador;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
+            if (comprado_con_todo)
+                partida.interfaz.BeginInvoke(new Action<Hotel>(partida.interfaz.Dibujar_Fases_y_Entradas), hotel);
             partida.interfaz.BeginInvoke(new Action<Hotel, Jugador>(partida.interfaz.Hotel_Comprado), hotel, jugador);
         }
 
@@ -1247,8 +1250,16 @@ namespace Juego_Hotel
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             if (jugador.Eliminado())
                 return;
-            if (Application.OpenForms.Cast<Form>().Contains(partida.interfaz))
-                partida.interfaz.Invoke(new Action<Jugador>(partida.interfaz.Limpiar_Fases_y_Entradas_Hoteles_Jugador), jugador);
+            try
+            {
+                partida.interfaz.Invoke(new Action<Jugador>(partida.interfaz.Limpiar_Fases_y_Entradas_Hoteles_Jugador),
+                    jugador);
+            }
+            catch
+            {
+                // Catch a possible exception for already closed windows
+            }
+                
             partida.interfaz.juego.Eliminar_Jugador(jugador, null);
             if (jugador.nombre_online != partida.interfaz.nombre_online)
             {
