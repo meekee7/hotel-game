@@ -207,10 +207,14 @@ namespace Juego_Hotel
                     this.colorJ4.Text = resources.GetString("colorJ4.Text") + this.juego.jugadores[3].Nombre_color();
                 }
                 if (!this.online)
+                {
                     this.bDado.Enabled = true;
+                    this.bReiniciar.Enabled = true;
+                }
                 else
                 {
                     this.bDado.Enabled = false;
+                    this.bVerHoteles.Focus();
                     this.controlJ1.Enabled = false;
                     this.controlJ2.Enabled = false;
                     this.controlJ3.Enabled = false;
@@ -228,10 +232,16 @@ namespace Juego_Hotel
                             break;
                     }
                     if (yo.nombre_online != this.creador_online)
+                    {
                         this.bSalvar.Enabled = false;
+                        this.bReiniciar.Enabled = false;
+                    }
                 }
                 if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugadores[this.juego.jug_inicial - 1].nombre_online)))
+                {
                     this.bDado.Enabled = true;
+                    this.bDado.Focus();
+                }
                 if (this.partida_cargada_offline || this.partida_cargada_online) // Reajustar posiciones de los jugadores y rellenar datos
                 {
                     this.resDado.Text = resources.GetString("resDado.Text") + this.juego.ultimo_res_dado;
@@ -499,9 +509,15 @@ namespace Juego_Hotel
                 this.Establecer_Turno();
                 this.juego.Cambiar_jugador_actual();
                 if ((!this.online) || (this.online && (this.nombre_online == this.juego.jugador_actual.nombre_online)))
+                {
                     this.bDado.Enabled = true;
+                    this.bDado.Focus();
+                }
                 else
+                {
                     this.bDado.Enabled = false;
+                    this.bVerHoteles.Focus();
+                }
                 this.bComprar.Enabled = false;
                 this.bConstruir.Enabled = false;
                 this.bComprarSuelo.Enabled = false;
@@ -786,13 +802,15 @@ namespace Juego_Hotel
                         this.bComprar.Enabled = false;
                         break;
                 }
+                this.bTurno.Enabled = true;
+                this.bTurno.Focus();
                 if (this.juego.ultimo_res_dado == 6)
                 {
                     if (!automaticamente)
                         MessageBox.Show(Mensajes.mensajeSacadoUnSeis);
                     this.bDado.Enabled = true;
+                    this.bDado.Focus();
                 }
-                this.bTurno.Enabled = true;
                 this.dado_tirado = true;
             }
         }
@@ -1712,7 +1730,8 @@ namespace Juego_Hotel
                     else
                         this.Dibujar_Entrada(casilla, false, nuevo_tablero);
                 }
-                this.Dibujar_Suelo(hotel, nuevo_tablero);
+                if (hotel.suelo_comprado)
+                    this.Dibujar_Suelo(hotel, nuevo_tablero);
             }
             this.imgTablero.Image = nuevo_tablero;
         }

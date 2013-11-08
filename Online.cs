@@ -1176,6 +1176,8 @@ namespace Juego_Hotel
             jugador.n_hoteles++;
             if (comprado_con_todo)
                 partida.interfaz.BeginInvoke(new Action<Hotel>(partida.interfaz.Dibujar_Fases_y_Entradas), hotel);
+            else
+                hotel.Limpiar_fases_y_entradas();
             partida.interfaz.BeginInvoke(new Action<Hotel, Jugador>(partida.interfaz.Hotel_Comprado), hotel, jugador);
         }
 

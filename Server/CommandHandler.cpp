@@ -452,6 +452,7 @@ void CommandHandler::Retire(Player* player, Game* game, int type, Player* receiv
                 send_int(dest, game->id);
                 send_int(dest, get_utf8_length(next_player->name));
                 send_wstring(dest, next_player->name);
+                send_int(dest, 0);
             }
         }
     }
