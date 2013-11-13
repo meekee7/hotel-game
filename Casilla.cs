@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
@@ -126,23 +123,23 @@ namespace Juego_Hotel
                         this.hotel_der = Tipos.Tnombre_hotel.Royal;
                         this.hotel_izq = Tipos.Tnombre_hotel.President;
                         this.tipo = Tipos.Tcasilla.comprar;
-                        if (this.numero == 12)
+                        switch (this.numero)
                         {
-                            this.pos_coche.Establecer(115, 458, 188);
-                            this.pos_entrada_der.Establecer(115, 672, 302);
-                            this.pos_entrada_izq.Establecer(295, 693, 245);
-                        }
-                        else if (this.numero == 14)
-                        {
-                            this.pos_coche.Establecer(105, 561, 208);
-                            this.pos_entrada_der.Establecer(105, 830, 337);
-                            this.pos_entrada_izq.Establecer(285, 845, 281);
-                        }
-                        else
-                        {
-                            this.pos_coche.Establecer(170, 623, 271);
-                            this.pos_entrada_der.Establecer(170, 917, 418);
-                            this.pos_entrada_izq.Establecer(350, 975, 402);
+                            case 12:
+                                this.pos_coche.Establecer(115, 458, 188);
+                                this.pos_entrada_der.Establecer(115, 672, 302);
+                                this.pos_entrada_izq.Establecer(295, 693, 245);
+                                break;
+                            case 14:
+                                this.pos_coche.Establecer(105, 561, 208);
+                                this.pos_entrada_der.Establecer(105, 830, 337);
+                                this.pos_entrada_izq.Establecer(285, 845, 281);
+                                break;
+                            default:
+                                this.pos_coche.Establecer(170, 623, 271);
+                                this.pos_entrada_der.Establecer(170, 917, 418);
+                                this.pos_entrada_izq.Establecer(350, 975, 402);
+                                break;
                         }
                         break;
                 case 13:
@@ -254,20 +251,20 @@ namespace Juego_Hotel
                         this.hotel_der = Tipos.Tnombre_hotel.Ninguno;
                         this.hotel_izq = Tipos.Tnombre_hotel.Safari;
                         this.tipo = Tipos.Tcasilla.construir;
-                        if (this.numero == 27)
+                        switch (this.numero)
                         {
-                            this.pos_coche.Establecer(285, 211, 453);
-                            this.pos_entrada_izq.Establecer(105, 296, 762);
-                        }
-                        else if (this.numero == 28)
-                        {
-                            this.pos_coche.Establecer(350, 172, 418);
-                            this.pos_entrada_izq.Establecer(155, 220, 685);
-                        }
-                        else
-                        {
-                            this.pos_coche.Establecer(300, 140, 288);
-                            this.pos_entrada_izq.Establecer(120, 177, 475);
+                            case 27:
+                                this.pos_coche.Establecer(285, 211, 453);
+                                this.pos_entrada_izq.Establecer(105, 296, 762);
+                                break;
+                            case 28:
+                                this.pos_coche.Establecer(350, 172, 418);
+                                this.pos_entrada_izq.Establecer(155, 220, 685);
+                                break;
+                            default:
+                                this.pos_coche.Establecer(300, 140, 288);
+                                this.pos_entrada_izq.Establecer(120, 177, 475);
+                                break;
                         }
                         break;
                 case 29:

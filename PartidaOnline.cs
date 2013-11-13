@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
     public partial class PartidaOnline : Form, IReLocalizable
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartidaOnline));
+        readonly System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartidaOnline));
         public Online frm_online;
         public Principal interfaz;
         public int id;
@@ -38,8 +34,8 @@ namespace Juego_Hotel
         {
             this.listaJugadores.BeginUpdate();
             this.listaJugadores.Items.Clear();
-            foreach (String nombre in lista)
-                this.listaJugadores.Items.Add(nombre);
+            foreach (String nombre_jugador in lista)
+                this.listaJugadores.Items.Add(nombre_jugador);
             this.listaJugadores.EndUpdate();
             if ((this.listaJugadores.Items.Count == this.num_jugadores) && (this.creador == this.frm_online.txtLogin.Text))
                 this.bIniciar.Enabled = true;
@@ -54,11 +50,10 @@ namespace Juego_Hotel
                 int bytes_recibidos = 0;
                 int cuantos = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                 int i;
-                int long_nombre;
-                String[] lista_jugadores = new String[cuantos];
+                var lista_jugadores = new String[cuantos];
                 for (i = 0; i < cuantos; i++)
                 {
-                    long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                    int long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                     lista_jugadores[i] = frm_online.recibir_string(frm_online.socket, long_nombre, ref bytes_recibidos);
                 }
                 this.BeginInvoke(new Action<String[]>(Actualizar_lista_jugadores), new object[] { lista_jugadores });
@@ -69,9 +64,9 @@ namespace Juego_Hotel
             }
         }
 
-        public void Cambiar_Creador(String creador)
+        public void Cambiar_Creador(String nuevo_creador)
         {
-            this.creador = creador;
+            this.creador = nuevo_creador;
             this.txtCreador.Text = this.resources.GetString("txtCreador.Text") + this.creador;
             if ((this.listaJugadores.Items.Count == this.num_jugadores) && (this.creador == this.frm_online.txtLogin.Text))
                 this.bIniciar.Enabled = true;
@@ -123,7 +118,7 @@ namespace Juego_Hotel
         {
             this.txtNombre.Text = this.resources.GetString("txtNombre.Text") + this.nombre;
             this.txtCreador.Text = this.resources.GetString("txtCreador.Text") + this.creador;
-            this.txtNJugadores.Text = this.resources.GetString("txtNJugadores.Text") + this.num_jugadores.ToString();
+            this.txtNJugadores.Text = this.resources.GetString("txtNJugadores.Text") + this.num_jugadores;
             this.mensaje.Focus();
             this.frm_online.enviar_comando("get_chat_users", this.id.ToString());
         }
@@ -140,64 +135,85 @@ namespace Juego_Hotel
             this.frm_online.enviar_comando("start_game", this.id.ToString());
         }
 
-        public void Iniciar(int num_jugadores, String config, int jug_inicial, List<Tuple<String, String>> lista_jugadores, Boolean cargada = false,
-            int ultimo_avance_auto = 0, int ultimo_res_dado = 0, List<String> estado_hoteles = null)
+        public void Iniciar(int numJugadores, String config, int jug_inicial, List<Tuple<String, String>> lista_jugadores, Boolean partidaCargada = false,
+            int ultimo_avance_auto = 0, int ultimo_res_dado = 0, List<String> estado_hoteles = null, String nombre_jugador_actual = null)
         {
-            Thread thread_partida = new Thread(Manejar_partida);
-            thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
-            List<Object> parametros = new List<Object>();
-            parametros.Add(num_jugadores);
-            parametros.Add(jug_inicial);
-            parametros.Add(config);
-            parametros.Add(this.creador);
-            parametros.Add(lista_jugadores);
-            parametros.Add(cargada);
-            parametros.Add(ultimo_avance_auto);
-            parametros.Add(ultimo_res_dado);
-            parametros.Add(estado_hoteles);
+            var thread_partida = new Thread(Manejar_partida) { CurrentUICulture = Thread.CurrentThread.CurrentUICulture };
+            var parametros = new List<Object>
+            {
+                numJugadores,
+                jug_inicial,
+                config,
+                this.creador,
+                lista_jugadores,
+                partidaCargada,
+                ultimo_avance_auto,
+                ultimo_res_dado,
+                estado_hoteles,
+                nombre_jugador_actual
+            };
             thread_partida.Start(parametros);
         }
 
         void Manejar_partida(object parametros)
         {
-            List<Object> l_parametros = parametros as List<Object>;
-            this.interfaz = new Principal(true, this.frm_online, this.frm_online.configuracion_local);
-            int num_jugadores = (int)l_parametros.First();
-            l_parametros.RemoveAt(0);
-            this.interfaz.juego.jug_inicial = (int)l_parametros.First() + 1;
-            l_parametros.RemoveAt(0);
-            this.interfaz.juego.n_jugadores = num_jugadores;
-            this.interfaz.game_id = this.id;
-            this.interfaz.online_config = l_parametros.First() as String;
-            l_parametros.RemoveAt(0);
-            this.interfaz.creador_online = l_parametros.First() as String;
-            l_parametros.RemoveAt(0);
-            List<Tuple<String, String>> lista_jugadores = l_parametros.First() as List<Tuple<String, String>>;
-            l_parametros.RemoveAt(0);
-            this.interfaz.partida_cargada_online = (Boolean)l_parametros.First();
-            l_parametros.RemoveAt(0);
-            if (this.interfaz.partida_cargada_online)
+            var l_parametros = parametros as List<Object>;
+            this.interfaz = new Principal(this.frm_online, this.frm_online.configuracion_local);
+            if (l_parametros != null)
             {
-                this.interfaz.juego.ultimo_avance_auto = (int)l_parametros.First();
+                var nJugadores = (int)l_parametros.First();
                 l_parametros.RemoveAt(0);
-                this.interfaz.juego.ultimo_res_dado = (int)l_parametros.First();
+                this.interfaz.juego.jug_inicial = (int)l_parametros.First() + 1;
                 l_parametros.RemoveAt(0);
-                this.interfaz.juego.estado_hoteles_online = l_parametros.First() as List<String>;
+                this.interfaz.juego.n_jugadores = nJugadores;
+                this.interfaz.game_id = this.id;
+                this.interfaz.online_config = l_parametros.First() as String;
                 l_parametros.RemoveAt(0);
-            }
-            else
-                l_parametros.Clear();
-            this.interfaz.juego.lista_jugadores_online = lista_jugadores;
-            this.interfaz.nombre_online = this.frm_online.txtLogin.Text;
-            switch (num_jugadores)
-            {
-                case 4: this.interfaz.nombreJ4.Text = this.interfaz.resources.GetString("nombreJ4.Text") + lista_jugadores[3].Item1;
-                        goto case 3;
-                case 3: this.interfaz.nombreJ3.Text = this.interfaz.resources.GetString("nombreJ3.Text") + lista_jugadores[2].Item1;
-                        goto case 2;
-                case 2: this.interfaz.nombreJ2.Text = this.interfaz.resources.GetString("nombreJ2.Text") + lista_jugadores[1].Item1;
-                        this.interfaz.nombreJ1.Text = this.interfaz.resources.GetString("nombreJ1.Text") + lista_jugadores[0].Item1;
-                        break;
+                this.interfaz.creador_online = l_parametros.First() as String;
+                l_parametros.RemoveAt(0);
+                var lista_jugadores = l_parametros.First() as List<Tuple<String, String>>;
+                l_parametros.RemoveAt(0);
+                this.interfaz.partida_cargada_online = (Boolean)l_parametros.First();
+                l_parametros.RemoveAt(0);
+                if (this.interfaz.partida_cargada_online)
+                {
+                    this.interfaz.juego.ultimo_avance_auto = (int)l_parametros.First();
+                    l_parametros.RemoveAt(0);
+                    this.interfaz.juego.ultimo_res_dado = (int)l_parametros.First();
+                    l_parametros.RemoveAt(0);
+                    this.interfaz.juego.estado_hoteles_online = l_parametros.First() as List<String>;
+                    l_parametros.RemoveAt(0);
+                    var nombre_jugador_actual = l_parametros.First() as String;
+                    l_parametros.RemoveAt(0);
+                    this.interfaz.juego.jugador_actual = this.interfaz.juego.jugadores.FirstOrDefault(j => j.nombre_online == nombre_jugador_actual);
+                    Jugador jugadorActual = this.interfaz.juego.jugador_actual;
+                    if (jugadorActual != null)
+                        this.interfaz.juego.jug_actual = jugadorActual.n_jugador;
+                }
+                else
+                    l_parametros.Clear();
+                this.interfaz.juego.lista_jugadores_online = lista_jugadores;
+                this.interfaz.nombre_online = this.frm_online.txtLogin.Text;
+                if (lista_jugadores != null)
+                {
+                    switch (nJugadores)
+                    {
+                        case 4:
+                            this.interfaz.nombreJ4.Text = this.interfaz.resources.GetString("nombreJ4.Text") +
+                                                          lista_jugadores[3].Item1;
+                            goto case 3;
+                        case 3:
+                            this.interfaz.nombreJ3.Text = this.interfaz.resources.GetString("nombreJ3.Text") +
+                                                          lista_jugadores[2].Item1;
+                            goto case 2;
+                        case 2:
+                            this.interfaz.nombreJ2.Text = this.interfaz.resources.GetString("nombreJ2.Text") +
+                                                          lista_jugadores[1].Item1;
+                            this.interfaz.nombreJ1.Text = this.interfaz.resources.GetString("nombreJ1.Text") +
+                                                          lista_jugadores[0].Item1;
+                            break;
+                    }
+                }
             }
             // Configurar jugadores si la partida es cargada
             if (this.cargada)
@@ -219,18 +235,18 @@ namespace Juego_Hotel
                 this.BeginInvoke(new Action<System.Globalization.CultureInfo, System.Globalization.CultureInfo>(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
+                Thread.CurrentThread.CurrentUICulture = nuevoCulture;
                 resources.ApplyResources(this, "$this");
                 foreach (Control c in this.Controls)
                 {
                     if (c is GroupBox)
                     {
                         c.Text = resources.GetString(c.Name + ".Text");
-                        foreach (Control o in ((GroupBox)c).Controls)
+                        foreach (Control o in c.Controls)
                         {
                             if (o is Label)
                             {
-                                String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                                var nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
                                 if (nombreAntiguo != null)
                                     o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
                             }
@@ -240,8 +256,10 @@ namespace Juego_Hotel
                     }
                     else if (c is Label)
                     {
-                        String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
-                        if (nombreAntiguo != null)
+                        var nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                        if (nombreAntiguo == null)
+                            continue;
+                        if (c.Text != null)
                             c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
                     }
                     else

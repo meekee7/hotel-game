@@ -10,8 +10,8 @@ namespace Juego_Hotel
     {
         Juego juego;
         Hotel hotel_seleccionado;
-        Principal interfaz;
-        Jugador jugador;
+        readonly Principal interfaz;
+        readonly Jugador jugador;
         Boolean entrada_gratis;
 
         public PonerEntradas(int jugador, Principal interfaz)
@@ -44,10 +44,9 @@ namespace Juego_Hotel
             // Ya se ha comprobado que la lista tiene hoteles
             this.listaHoteles.BeginUpdate();
             this.listaHoteles.Items.Clear();
-            foreach (Hotel hotel in this.jugador.hoteles)
+            foreach (Hotel hotel in this.jugador.hoteles.Where(hotel => !hotel.entrada_comprada_ultimo_turno))
             {
-                if (!hotel.entrada_comprada_ultimo_turno)
-                    this.listaHoteles.Items.Add(hotel.nombre_txt);
+                this.listaHoteles.Items.Add(hotel.nombre_txt);
             }
             this.listaHoteles.EndUpdate();
             // No se necesita para ComboBox
@@ -73,7 +72,7 @@ namespace Juego_Hotel
                 return;
             }
             // Hay que obtener todas las casillas de un Hotel, buscando el hotel entre todas las casillas
-            LinkedList<Casilla> casillas_del_hotel = new LinkedList<Casilla>();
+            var casillas_del_hotel = new LinkedList<Casilla>();
             int i;
             for (i = 0; i < 32; i++)
             {
@@ -97,13 +96,11 @@ namespace Juego_Hotel
                 this.bComprar.Enabled = false;
                 if (this.juego.casillas[n_casilla].ocupada)
                     MessageBox.Show(Mensajes.mensajeCasillaOcupada);
-                else if (this.juego.casillas[n_casilla].entrada_en_izq == true || this.juego.casillas[n_casilla].entrada_en_der == true)
+                else if (this.juego.casillas[n_casilla].entrada_en_izq || this.juego.casillas[n_casilla].entrada_en_der)
                 {
-                    String nombre_hotel;
-                    if (this.juego.casillas[n_casilla].entrada_en_izq)
-                        nombre_hotel = this.juego.casillas[n_casilla].hotel_izq.ToString();
-                    else
-                        nombre_hotel = this.juego.casillas[n_casilla].hotel_der.ToString();
+                    string nombre_hotel = this.juego.casillas[n_casilla].entrada_en_izq
+                        ? this.juego.casillas[n_casilla].hotel_izq.ToString()
+                        : this.juego.casillas[n_casilla].hotel_der.ToString();
                     MessageBox.Show(Mensajes.mensajeCasillaYaPoseeEntrada + nombre_hotel);
                 }
                 else
@@ -128,10 +125,7 @@ namespace Juego_Hotel
             {
                 MessageBox.Show(Mensajes.mensajeEstasEnCasillaTipoEntradaGratis);
                 this.jugador.entrada_gratis_usada = true;
-                if (this.interfaz.Puede_poner_entradas(jugador))
-                    this.bUnaMas.Enabled = true;
-                else
-                    this.bUnaMas.Enabled = false; // Sólo se permite una por ser la casilla especial
+                this.bUnaMas.Enabled = this.interfaz.Puede_poner_entradas(jugador);
                 this.hotel_seleccionado.entrada_comprada_ultimo_turno = false; // No cuenta para el turno
             }
             else
@@ -142,7 +136,7 @@ namespace Juego_Hotel
                 if (this.juego.jugador_actual != this.jugador)
                     return;
                 int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                PedirPago frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);
+                var frm_pago = new PedirPago(this.hotel_seleccionado.precio_entrada, ref this.juego, this.juego.jugador_actual, this.interfaz, null);
                 frm_pago.ShowDialog();
                 if (frm_pago.cancelado)
                 {

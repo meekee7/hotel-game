@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Net;
 using System.IO;
+using System.Net;
+using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
@@ -21,19 +15,19 @@ namespace Juego_Hotel
 
         private void bEnviar_Click(object sender, EventArgs e)
         {
-            if (this.textBoxEmail.Text.ToString().Trim() == "")
+            if (this.textBoxEmail.Text.Trim() == "")
             {
                 MessageBox.Show(Mensajes.mensajeErrorBugReportEmailVacio);
                 return;
             }
-            if (this.TextoBug.Text.ToString().Trim() == "")
+            if (this.TextoBug.Text.Trim() == "")
             {
                 MessageBox.Show(Mensajes.mensajeErrorBugReportTextoVacio);
                 return;
             }
-            String direccion = "http://betovserver.no-ip.org/hotel_bug_report.php?email=" + this.textBoxEmail.Text.ToString() + "&lang=" + System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() + "&text=" + this.TextoBug.Text.ToString();
+            String direccion = "http://betovserver.no-ip.org/hotel_bug_report.php?email=" + this.textBoxEmail.Text + "&lang=" + System.Threading.Thread.CurrentThread.CurrentUICulture + "&text=" + this.TextoBug.Text;
             Stream response = WebRequest.Create(direccion).GetResponse().GetResponseStream();
-            StreamReader reader = new StreamReader(response);
+            var reader = new StreamReader(response);
             MessageBox.Show(reader.ReadToEnd());
             this.Close();
         }

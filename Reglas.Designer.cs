@@ -52,6 +52,7 @@
             this.Name = "Reglas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Reglas del juego";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Reglas_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.img_reglas)).EndInit();
             this.ResumeLayout(false);
 

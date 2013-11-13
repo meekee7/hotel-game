@@ -1,26 +1,24 @@
 using System;
-using System.Drawing;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace System
+namespace Juego_Hotel
 {
   /// <summary>
   /// Summary description for InputBox.
-  ///
-  public class InputBoxDialog : System.Windows.Forms.Form
+  /// </summary>
+  public class InputBoxDialog : Form
   {
 
     #region Windows Contols and Constructor
 
-    private System.Windows.Forms.Label lblPrompt;
-    private System.Windows.Forms.Button btnOK;
-    private System.Windows.Forms.TextBox txtInput;
+    private Label lblPrompt;
+    private Button btnOK;
+    private TextBox txtInput;
     /// <summary>
     /// Required designer variable.
-    ///
-    private System.ComponentModel.Container components = null;
+    /// </summary>
+    private readonly Container components = null;
 
     public InputBoxDialog()
     {
@@ -40,7 +38,7 @@ namespace System
 
     /// <summary>
     /// Clean up any resources being used.
-    ///
+    /// </summary>
     protected override void Dispose( bool disposing )
     {
       if( disposing )
@@ -59,7 +57,7 @@ namespace System
     /// <summary>
     /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
-    ///
+    /// </summary>
     private void InitializeComponent()
     {
             this.lblPrompt = new System.Windows.Forms.Label();
@@ -165,14 +163,14 @@ namespace System
     #endregion
 
     #region Form and Control Events
-    private void InputBox_Load(object sender, System.EventArgs e)
+    private void InputBox_Load(object sender, EventArgs e)
     {
-      this.txtInput.Text=defaultValue;
-      this.lblPrompt.Text=formPrompt;
-      this.Text=formCaption;
-      this.txtInput.SelectionStart=0;
-      this.txtInput.SelectionLength=this.txtInput.Text.Length;
-      this.txtInput.Focus();
+      txtInput.Text=defaultValue;
+      lblPrompt.Text=formPrompt;
+      Text=formCaption;
+      txtInput.SelectionStart=0;
+      txtInput.SelectionLength=txtInput.Text.Length;
+      txtInput.Focus();
     }
     #endregion
 
@@ -180,13 +178,13 @@ namespace System
     
     void BtnOKClick(object sender, EventArgs e)
     {
-    	InputResponse = this.txtInput.Text;
-    	this.Close();
+    	InputResponse = txtInput.Text;
+    	Close();
     }
     
     void BtnCancelClick(object sender, EventArgs e)
     {
-    	this.Close();
+    	Close();
     }
   }
 }

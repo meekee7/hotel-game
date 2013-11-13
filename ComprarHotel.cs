@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
@@ -23,14 +17,14 @@ namespace Juego_Hotel
             InitializeComponent();
         }
 
-        public void HabilitarControles(Hotel hotel_izq, Hotel hotel_der)
+        public void HabilitarControles(Hotel hotelIzq, Hotel hotelDer)
         {
-            this.hotel_izq = hotel_izq;
-            this.hotel_der = hotel_der;
-            if (hotel_izq != null)
+            this.hotel_izq = hotelIzq;
+            this.hotel_der = hotelDer;
+            if (hotelIzq != null)
             {
-                this.nombreIzq.Text = hotel_izq.nombre_txt;
-                this.precioIzq.Text = hotel_izq.precio.ToString();
+                this.nombreIzq.Text = hotelIzq.nombre_txt;
+                this.precioIzq.Text = hotelIzq.precio.ToString();
                 this.bIzq.Enabled = true;
             }
             else
@@ -39,10 +33,10 @@ namespace Juego_Hotel
                 this.precioIzq.Text = "";
                 this.bIzq.Enabled = false;
             }
-            if (hotel_der != null)
+            if (hotelDer != null)
             {
-                this.nombreDer.Text = hotel_der.nombre_txt;
-                this.precioDer.Text = hotel_der.precio.ToString();
+                this.nombreDer.Text = hotelDer.nombre_txt;
+                this.precioDer.Text = hotelDer.precio.ToString();
                 this.bDer.Enabled = true;
             }
             else

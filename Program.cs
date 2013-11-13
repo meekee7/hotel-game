@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
-using System.Globalization;
 using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
@@ -17,7 +16,7 @@ namespace Juego_Hotel
 
         static void Main ()
         {
-            XmlDocument configuracion = new XmlDocument();
+            var configuracion = new XmlDocument();
             configuracion.Load("Config.xml");
             XmlNode nodo_Idioma = configuracion.GetElementsByTagName("language")[0];
             if (nodo_Idioma.ChildNodes[0].FirstChild == null)
@@ -40,37 +39,31 @@ namespace Juego_Hotel
             Application.SetCompatibleTextRenderingDefault(false);
             if (MessageBox.Show(Mensajes.mensajeActualizar, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Actualizador actualizador = new Actualizador();
+                var actualizador = new Actualizador();
                 if (actualizador.comprobar_actualizacion())
                 {
                     if (MessageBox.Show(String.Format(Mensajes.mensajeNuevaVersion, actualizador.ultima_version, actualizador.version_actual),
-                        Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        System.Diagnostics.Process.Start("https://sourceforge.net/projects/hotels-game/files");
+                        Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
-                    }
+                    System.Diagnostics.Process.Start("https://sourceforge.net/projects/hotels-game/files");
+                    return;
                 }
-                else
-                {
-                    if (!actualizador.error)
-                        MessageBox.Show(Mensajes.mensajeNoNuevaVersion);
-                }
-                actualizador = null;
+                if (!actualizador.error)
+                    MessageBox.Show(Mensajes.mensajeNoNuevaVersion);
             }
             if (MessageBox.Show(Mensajes.mensajePreguntarSiOnline, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.No)
-                Application.Run(new Principal(false, null, configuracion));
+                Application.Run(new Principal(null, configuracion));
             else
                 Application.Run(new Online(configuracion));
         }
 
-        internal static void ReLocalizeAll(System.Globalization.CultureInfo nuevoCulture)
+        internal static void ReLocalizeAll(CultureInfo nuevoCulture)
         {
             CultureInfo antiguoCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
-            foreach (Form f in Application.OpenForms)
+            foreach (IReLocalizable f in Application.OpenForms.OfType<IReLocalizable>())
             {
-                if (f is IReLocalizable)
-                    ((IReLocalizable)f).ReLocalize(nuevoCulture, antiguoCulture);
+                f.ReLocalize(nuevoCulture, antiguoCulture);
             }   
         }
     }

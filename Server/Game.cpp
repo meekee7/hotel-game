@@ -88,9 +88,9 @@ bool Game::join(Player* p)
     if (!this->loaded) // If loaded, the data will be filled in SavedgamesMgr::LoadPlayerData
     {
         p->Join_Game(this->id);
-        p->GetState(this->id)->num = this->plist.size();
         this->plist.push_back(p);
         this->active_plist.push_back(p);
+        p->GetState(this->id)->num = this->plist.size();
     }
     this->chat->join(p);
     wcout << currentDateTime() << L"Player " << p->name << L" joined game " << this->name << endl;

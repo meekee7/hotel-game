@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
@@ -15,11 +9,12 @@ namespace Juego_Hotel
         public int n_50, n_100, n_500, n_1000, n_5000;
         public int dinero_necesario, total_seleccionado;
         public Boolean cancelado;
-        private Boolean subasta_deshabilitada = false;
+        private readonly Boolean subasta_deshabilitada;
         private Juego juego;
-        private Hotel hotel_en_construccion;
-        private Jugador pagador, receptor;
-        private Principal interfaz;
+        private readonly Hotel hotel_en_construccion;
+        private readonly Jugador pagador;
+        private readonly Jugador receptor;
+        private readonly Principal interfaz;
 
         public PedirPago(int dinero_necesario, ref Juego juego, Jugador pagador, Principal interfaz, Jugador receptor)
         {
@@ -63,23 +58,20 @@ namespace Juego_Hotel
             this.n_500 = 0;
             this.n_1000 = 0;
             this.n_5000 = 0;
-            this.n50j.Text = Mensajes.textoTienes + this.pagador.n_billetes_50.ToString();
-            this.n100j.Text = Mensajes.textoTienes + this.pagador.n_billetes_100.ToString();
-            this.n500j.Text = Mensajes.textoTienes + this.pagador.n_billetes_500.ToString();
-            this.n1000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_1000.ToString();
-            this.n5000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_5000.ToString();
-            this.n50.Text = Mensajes.textoUsas+"0";
-            this.n100.Text = Mensajes.textoUsas+"0";
-            this.n500.Text = Mensajes.textoUsas+"0";
-            this.n1000.Text = Mensajes.textoUsas+"0";
-            this.n5000.Text = Mensajes.textoUsas+"0";
-            this.total.Text = Mensajes.textoTotal+"0";
+            this.n50j.Text = Mensajes.textoTienes + this.pagador.n_billetes_50;
+            this.n100j.Text = Mensajes.textoTienes + this.pagador.n_billetes_100;
+            this.n500j.Text = Mensajes.textoTienes + this.pagador.n_billetes_500;
+            this.n1000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_1000;
+            this.n5000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_5000;
+            this.n50.Text = Mensajes.textoUsas + @"0";
+            this.n100.Text = Mensajes.textoUsas + @"0";
+            this.n500.Text = Mensajes.textoUsas + @"0";
+            this.n1000.Text = Mensajes.textoUsas + @"0";
+            this.n5000.Text = Mensajes.textoUsas + @"0";
+            this.total.Text = Mensajes.textoTotal + @"0";
             this.total_seleccionado = 0;
             this.necesario.Text = Mensajes.textoNecesario + this.dinero_necesario;
-            if (this.subasta_deshabilitada)
-                this.bSubastar.Enabled = false;
-            else
-                this.bSubastar.Enabled = true;
+            this.bSubastar.Enabled = !this.subasta_deshabilitada;
         }
 
         private void img50_Click(object sender, EventArgs e)
@@ -87,7 +79,7 @@ namespace Juego_Hotel
             if (this.n_50 < this.pagador.n_billetes_50)
             {
                 this.n_50++;
-                this.n50.Text = Mensajes.textoUsas + this.n_50.ToString();
+                this.n50.Text = Mensajes.textoUsas + this.n_50;
                 this.Calcular_total();
             }
             else
@@ -102,7 +94,7 @@ namespace Juego_Hotel
             if (this.n_50 < this.pagador.n_billetes_50)
             {
                 this.n_50++;
-                this.n50.Text = Mensajes.textoUsas + this.n_50.ToString();
+                this.n50.Text = Mensajes.textoUsas + this.n_50;
                 this.Calcular_total();
             }
             else
@@ -116,7 +108,7 @@ namespace Juego_Hotel
             if (this.n_100 < this.pagador.n_billetes_100)
             {
                 this.n_100++;
-                this.n100.Text = Mensajes.textoUsas + this.n_100.ToString();
+                this.n100.Text = Mensajes.textoUsas + this.n_100;
                 this.Calcular_total();
             }
             else
@@ -130,7 +122,7 @@ namespace Juego_Hotel
             if (this.n_100 < this.pagador.n_billetes_100)
             {
                 this.n_100++;
-                this.n100.Text = Mensajes.textoUsas + this.n_100.ToString();
+                this.n100.Text = Mensajes.textoUsas + this.n_100;
                 this.Calcular_total();
             }
             else
@@ -144,7 +136,7 @@ namespace Juego_Hotel
             if (this.n_500 < this.pagador.n_billetes_500)
             {
                 this.n_500++;
-                this.n500.Text = Mensajes.textoUsas + this.n_500.ToString();
+                this.n500.Text = Mensajes.textoUsas + this.n_500;
                 this.Calcular_total();
             }
             else
@@ -158,7 +150,7 @@ namespace Juego_Hotel
             if (this.n_500 < this.pagador.n_billetes_500)
             {
                 this.n_500++;
-                this.n500.Text = Mensajes.textoUsas + this.n_500.ToString();
+                this.n500.Text = Mensajes.textoUsas + this.n_500;
                 this.Calcular_total();
             }
             else
@@ -172,7 +164,7 @@ namespace Juego_Hotel
             if (this.n_1000 < this.pagador.n_billetes_1000)
             {
                 this.n_1000++;
-                this.n1000.Text = Mensajes.textoUsas + this.n_1000.ToString();
+                this.n1000.Text = Mensajes.textoUsas + this.n_1000;
                 this.Calcular_total();
             }
             else
@@ -186,7 +178,7 @@ namespace Juego_Hotel
             if (this.n_1000 < this.pagador.n_billetes_1000)
             {
                 this.n_1000++;
-                this.n1000.Text = Mensajes.textoUsas + this.n_1000.ToString();
+                this.n1000.Text = Mensajes.textoUsas + this.n_1000;
                 this.Calcular_total();
             }
             else
@@ -200,7 +192,7 @@ namespace Juego_Hotel
             if (this.n_5000 < this.pagador.n_billetes_5000)
             {
                 this.n_5000++;
-                this.n5000.Text = Mensajes.textoUsas + this.n_5000.ToString();
+                this.n5000.Text = Mensajes.textoUsas + this.n_5000;
                 this.Calcular_total();
             }
             else
@@ -214,7 +206,7 @@ namespace Juego_Hotel
             if (this.n_5000 < this.pagador.n_billetes_5000)
             {
                 this.n_5000++;
-                this.n5000.Text = Mensajes.textoUsas + this.n_5000.ToString();
+                this.n5000.Text = Mensajes.textoUsas + this.n_5000;
                 this.Calcular_total();
             }
             else
@@ -244,7 +236,7 @@ namespace Juego_Hotel
         {
             this.total_seleccionado = (this.n_50 * 50) + (this.n_100 * 100) + (this.n_500 * 500) +
                 (this.n_1000 * 1000) + (this.n_5000 * 5000);
-            this.total.Text = Mensajes.textoTotal + this.total_seleccionado.ToString();
+            this.total.Text = Mensajes.textoTotal + this.total_seleccionado;
         }
 
         private void bReset_Click(object sender, EventArgs e)
@@ -276,11 +268,11 @@ namespace Juego_Hotel
                     return;
                 }
                 this.pagador.calcular_dinero_total();
-                this.n50j.Text   = Mensajes.textoTienes + this.pagador.n_billetes_50.ToString();
-                this.n100j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_100.ToString();
-                this.n500j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_500.ToString();
-                this.n1000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_1000.ToString();
-                this.n5000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_5000.ToString();
+                this.n50j.Text   = Mensajes.textoTienes + this.pagador.n_billetes_50;
+                this.n100j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_100;
+                this.n500j.Text  = Mensajes.textoTienes + this.pagador.n_billetes_500;
+                this.n1000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_1000;
+                this.n5000j.Text = Mensajes.textoTienes + this.pagador.n_billetes_5000;
             }
             else
             {
@@ -288,7 +280,7 @@ namespace Juego_Hotel
                 {
                     MessageBox.Show(Mensajes.mensajeSinPropiedadesNiFondos, Mensajes.tituloJugadorEliminado);
                     // No preguntar y retirar directamente
-                    this.bRetirarse.Tag = (Boolean)false;
+                    this.bRetirarse.Tag = false;
                     this.bRetirarse.PerformClick();
                     this.bRetirarse.Tag = null;
                 }
@@ -300,7 +292,8 @@ namespace Juego_Hotel
         private void bRetirarse_Click(object sender, EventArgs e)
         {
             // No preguntar si viene del botón Subastar
-            if ((sender as Button).Tag == null)
+            var button = sender as Button;
+            if (button != null && button.Tag == null)
             {
                 if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return;
@@ -308,7 +301,7 @@ namespace Juego_Hotel
             if (this.interfaz.online)
             {
                 int game_id = this.interfaz.game_id;
-                this.interfaz.frm_online.enviar_comando("retire", game_id.ToString(), "1", this.receptor.nombre_online.ToString());
+                this.interfaz.frm_online.enviar_comando("retire", game_id.ToString(), "1", this.receptor.nombre_online);
             }
             else
             {

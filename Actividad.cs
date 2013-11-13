@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
@@ -20,7 +14,7 @@ namespace Juego_Hotel
         public void DadoTirado(Jugador jugador, int resultado, Boolean automaticamente)
         {
             this.mensajes.AppendText(String.Format((automaticamente ? Mensajes.MADadoTiradoAuto: Mensajes.MADadoTirado),
-                jugador.nombre_online, jugador.Nombre_color(), resultado.ToString()) + Environment.NewLine);
+                jugador.nombre_online, jugador.Nombre_color(), resultado) + Environment.NewLine);
         }
 
         public void PasarTurno(String jugador, String color, Boolean automaticamente)

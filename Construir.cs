@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Juego_Hotel.Resources;
 
@@ -12,14 +8,14 @@ namespace Juego_Hotel
 {
     public partial class Construir : Form
     {
-        Boolean comprando_suelo;
+        readonly Boolean comprando_suelo;
         Juego juego;
         Hotel hotel_seleccionado;
         public Boolean cancelado;
         public Boolean fase_gratis;
         public int total_a_pagar;
         int num_5000, num_1000, num_500, num_100, num_50;
-        Principal interfaz;
+        readonly Principal interfaz;
 
         public Construir(ref Juego juego, Boolean comprando_suelo, Principal interfaz)
         {
@@ -29,10 +25,7 @@ namespace Juego_Hotel
             this.cancelado = false;
             this.interfaz = interfaz;
             this.total_a_pagar = 0;
-            if (this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.fase_gratis)
-                this.fase_gratis = true;
-            else
-                this.fase_gratis = false;
+            this.fase_gratis = this.juego.jugador_actual.posicion.tipo == Tipos.Tcasilla.fase_gratis;
         }
 
         private void bCancelar_Click(object sender, EventArgs e)
@@ -218,63 +211,71 @@ namespace Juego_Hotel
             {
                 if (this.juego.jugador_actual.dinero_total >= this.hotel_seleccionado.Precio_Sig_Ampliacion())
                 {
-                    DialogResult res = new DialogResult();
+                    DialogResult res;
                     if ((num_fase != 6) && (!this.comprando_suelo))
                        res = MessageBox.Show(String.Format(Mensajes.mensajeSuficienteDineroParaFase,fase), Mensajes.tituloConfirmacionDeConstruccion, MessageBoxButtons.YesNo);
                     else
                        res = MessageBox.Show(Mensajes.mensajeSufucienteDineroParaComplejos, Mensajes.tituloConfirmacionDeConstruccion, MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (res != DialogResult.Yes)
+                        return;
+                    if ((num_fase != 6) && (!this.comprando_suelo))
                     {
-                        if ((num_fase != 6) && (!this.comprando_suelo))
+                        var dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id, hotel_seleccionado);
+                        dado_cons.ShowDialog(); // El resultado será comprobado por el servidor
+                        switch (dado_cons.resultado)
                         {
-                            Dado_construccion dado_cons = new Dado_construccion(this.interfaz.frm_online, this.interfaz.game_id, hotel_seleccionado);
-                            dado_cons.ShowDialog(); // El resultado será comprobado por el servidor
-                            if (dado_cons.resultado == Tipos.Resultado_dado_cons.Permitido)
+                            case Tipos.Resultado_dado_cons.Permitido:
                                 this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                            else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Doble)
+                                break;
+                            case Tipos.Resultado_dado_cons.Doble:
                                 this.total_a_pagar = (this.hotel_seleccionado.Precio_Sig_Ampliacion() * 2);
-                            else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Gratis)
+                                break;
+                            case Tipos.Resultado_dado_cons.Gratis:
                                 this.total_a_pagar = 0;
-                            else if (dado_cons.resultado == Tipos.Resultado_dado_cons.Denegado)
-                            {
+                                break;
+                            case Tipos.Resultado_dado_cons.Denegado:
                                 this.total_a_pagar = -1;
                                 this.cancelado = true;
                                 this.DialogResult = DialogResult.Abort;
-                            }
-                            dado_cons.Close();
+                                break;
                         }
-                        else
-                            this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
-                        if (this.total_a_pagar > 0)
+                        dado_cons.Close();
+                    }
+                    else
+                        this.total_a_pagar = this.hotel_seleccionado.Precio_Sig_Ampliacion();
+                    if (this.total_a_pagar > 0)
+                    {
+                        var frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
+                        frm_pago.ShowDialog();
+                        if (!frm_pago.cancelado) // Sólo se puede cancelar si el jugador ha subastado el hotel en cuestión o si ha sido eliminado
                         {
-                            PedirPago frm_pago = new PedirPago(this.total_a_pagar, ref this.juego, ref this.hotel_seleccionado, this.juego.jugador_actual, this.interfaz);
-                            frm_pago.ShowDialog();
-                            if (!frm_pago.cancelado) // Sólo se puede cancelar si el jugador ha subastado el hotel en cuestión o si ha sido eliminado
+                            this.num_5000 = frm_pago.n_5000;
+                            this.num_1000 = frm_pago.n_1000;
+                            this.num_500 = frm_pago.n_500;
+                            this.num_100 = frm_pago.n_100;
+                            this.num_50 = frm_pago.n_50;
+                            if (!this.interfaz.online)
                             {
-                                this.num_5000 = frm_pago.n_5000;
-                                this.num_1000 = frm_pago.n_1000;
-                                this.num_500 = frm_pago.n_500;
-                                this.num_100 = frm_pago.n_100;
-                                this.num_50 = frm_pago.n_50;
-                                if (!this.interfaz.online)
+                                this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(this.num_5000, this.num_1000, this.num_500, this.num_100, this.num_50);
+                                if (frm_pago.total_seleccionado > this.total_a_pagar)
                                 {
-                                    int n_5000 = 0, n_1000 = 0, n_500 = 0, n_100 = 0, n_50 = 0;
-                                    this.juego.jugador_actual.Pagar_Ampliacion_o_Entrada(this.num_5000, this.num_1000, this.num_500, this.num_100, this.num_50);
-                                    if (frm_pago.total_seleccionado > this.total_a_pagar)
-                                    {
-                                        Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
-                                        this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
-                                    }
+                                    int n_5000;
+                                    int n_1000;
+                                    int n_500;
+                                    int n_100;
+                                    int n_50;
+                                    Principal.Calcular_Devolucion((frm_pago.total_seleccionado - this.total_a_pagar), out n_5000, out n_1000, out n_500, out n_100, out n_50);
+                                    this.juego.jugador_actual.Devolver_cambio(n_5000, n_1000, n_500, n_100, n_50);
                                 }
                             }
-                            else
-                                this.cancelado = true;
-                            frm_pago.Close();
                         }
-                        if ((this.total_a_pagar != -1) && (!this.interfaz.online))
-                                this.hotel_seleccionado.Ampliar();
-                        this.Close();
+                        else
+                            this.cancelado = true;
+                        frm_pago.Close();
                     }
+                    if ((this.total_a_pagar != -1) && (!this.interfaz.online))
+                        this.hotel_seleccionado.Ampliar();
+                    this.Close();
                 }
                 else
                     MessageBox.Show(String.Format(Mensajes.mensajeSinDineroParaComprar, fase), Mensajes.tituloNoEsPosibleConstruir);
@@ -283,30 +284,29 @@ namespace Juego_Hotel
 
         private void bVerHoteles_Click(object sender, EventArgs e)
         {
-            VerHoteles frm_ver_hoteles = new VerHoteles(ref this.juego, this.juego.jug_actual - 1, false);
+            var frm_ver_hoteles = new VerHoteles(ref this.juego, this.juego.jug_actual - 1, false);
             frm_ver_hoteles.Show(this);
             this.bVerHoteles.Enabled = false;
         }
 
         private void Construir_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!this.cancelado) // Pintar la fase en el tablero y enviar el comando
+            if (this.cancelado)
+                return;
+            if (this.interfaz.online)
             {
-                if (this.interfaz.online)
-                {
-                    int game_id = this.interfaz.game_id;
-                    if (this.fase_gratis) // Se diferencian 3 tipos para detectar hacks
-                        this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "0");
-                    else if (this.total_a_pagar == 0)
-                        this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "1");
-                    else
-                        this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "2", this.num_5000.ToString(),
-                        this.num_1000.ToString(), this.num_500.ToString(), this.num_100.ToString(), this.num_50.ToString());
-                }
+                int game_id = this.interfaz.game_id;
+                if (this.fase_gratis) // Se diferencian 3 tipos para detectar hacks
+                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "0");
+                else if (this.total_a_pagar == 0)
+                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "1");
                 else
-                    this.interfaz.Dibujar_Fase(this.hotel_seleccionado, this.hotel_seleccionado.n_fases_construidas - 1);
-                this.DialogResult = DialogResult.OK;
+                    this.interfaz.frm_online.enviar_comando("build_phase", game_id.ToString(), this.hotel_seleccionado.nombre_txt, "2", this.num_5000.ToString(),
+                        this.num_1000.ToString(), this.num_500.ToString(), this.num_100.ToString(), this.num_50.ToString());
             }
+            else
+                this.interfaz.Dibujar_Fase(this.hotel_seleccionado, this.hotel_seleccionado.n_fases_construidas - 1);
+            this.DialogResult = DialogResult.OK;
         }
     }
 }

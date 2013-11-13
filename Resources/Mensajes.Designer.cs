@@ -2002,7 +2002,7 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El error producido fue:.
+        ///   Busca una cadena traducida similar a El error producido fue: .
         /// </summary>
         internal static string tituloErrorAlComprobarVersion {
             get {

@@ -3,12 +3,9 @@
 // Visual C# Kicks - http://www.vcskicks.com/ |
 //=============================================
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Juego_Hotel
@@ -50,7 +47,7 @@ namespace Juego_Hotel
 
             public override string ToString()
             {
-                return "(" + x.ToString() + ", " + y.ToString() + ", " + z.ToString() + ")";
+                return "(" + x + ", " + y + ", " + z + ")";
             }
         }
 
@@ -80,13 +77,9 @@ namespace Juego_Hotel
                 public Side CubeSide;
                 public Brush color;
 
-                public Face()
-                {
-                }
-
                 public int CompareTo(Face otherFace)
                 {
-                    return (int)(this.Center.z - otherFace.Center.z); //In order of which is closest to the screen
+                    return (int)(Center.z - otherFace.Center.z); //In order of which is closest to the screen
                 }
             }
 
@@ -94,9 +87,9 @@ namespace Juego_Hotel
             public int height = 0;
             public int depth = 0;
 
-            float xRotation = 0.0f;
-            float yRotation = 0.0f;
-            float zRotation = 0.0f;
+            float xRotation;
+            float yRotation;
+            float zRotation;
 
             bool drawWires = true;
             bool fillFront;
@@ -106,7 +99,7 @@ namespace Juego_Hotel
             bool fillTop;
             bool fillBottom;
 
-            Vector3D cubeOrigin;
+            readonly Vector3D cubeOrigin;
 
             public Face[] faces;
 
@@ -184,7 +177,7 @@ namespace Juego_Hotel
                 width = side;
                 height = side;
                 depth = side;
-                cubeOrigin = new Math3D.Vector3D(width / 2, height / 2, depth / 2);
+                cubeOrigin = new Vector3D(width / 2, height / 2, depth / 2);
                 InitializeCube();
             }
 
@@ -203,7 +196,7 @@ namespace Juego_Hotel
                 width = Width;
                 height = Height;
                 depth = Depth;
-                cubeOrigin = new Math3D.Vector3D(width / 2, height / 2, depth / 2);
+                cubeOrigin = new Vector3D(width / 2, height / 2, depth / 2);
 
                 InitializeCube();
             }
@@ -226,9 +219,7 @@ namespace Juego_Hotel
                 faces = new Face[6]; //cube has 6 faces
 
                 //Front Face --------------------------------------------
-                faces[0] = new Face();
-                faces[0].CubeSide = Face.Side.Front;
-                faces[0].Corners3D = new Vector3D[4];
+                faces[0] = new Face { CubeSide = Face.Side.Front, Corners3D = new Vector3D[4] };
                 faces[0].Corners3D[0] = new Vector3D(0, 0, 0);
                 faces[0].Corners3D[1] = new Vector3D(0, height, 0);
                 faces[0].Corners3D[2] = new Vector3D(width, height, 0);
@@ -238,9 +229,7 @@ namespace Juego_Hotel
                 // -------------------------------------------------------
 
                 //Back Face --------------------------------------------
-                faces[1] = new Face();
-                faces[1].CubeSide = Face.Side.Back;
-                faces[1].Corners3D = new Vector3D[4];
+                faces[1] = new Face { CubeSide = Face.Side.Back, Corners3D = new Vector3D[4]} ;
                 faces[1].Corners3D[0] = new Vector3D(0, 0, depth);
                 faces[1].Corners3D[1] = new Vector3D(0, height, depth);
                 faces[1].Corners3D[2] = new Vector3D(width, height, depth);
@@ -250,9 +239,7 @@ namespace Juego_Hotel
                 // -------------------------------------------------------
 
                 //Left Face --------------------------------------------
-                faces[2] = new Face();
-                faces[2].CubeSide = Face.Side.Left;
-                faces[2].Corners3D = new Vector3D[4];
+                faces[2] = new Face { CubeSide = Face.Side.Left, Corners3D = new Vector3D[4] };
                 faces[2].Corners3D[0] = new Vector3D(0, 0, 0);
                 faces[2].Corners3D[1] = new Vector3D(0, 0, depth);
                 faces[2].Corners3D[2] = new Vector3D(0, height, depth);
@@ -262,9 +249,7 @@ namespace Juego_Hotel
                 // -------------------------------------------------------
 
                 //Right Face --------------------------------------------
-                faces[3] = new Face();
-                faces[3].CubeSide = Face.Side.Right;
-                faces[3].Corners3D = new Vector3D[4];
+                faces[3] = new Face { CubeSide = Face.Side.Right, Corners3D = new Vector3D[4]} ;
                 faces[3].Corners3D[0] = new Vector3D(width, 0, 0);
                 faces[3].Corners3D[1] = new Vector3D(width, 0, depth);
                 faces[3].Corners3D[2] = new Vector3D(width, height, depth);
@@ -274,9 +259,7 @@ namespace Juego_Hotel
                 // -------------------------------------------------------
 
                 //Top Face --------------------------------------------
-                faces[4] = new Face();
-                faces[4].CubeSide = Face.Side.Top;
-                faces[4].Corners3D = new Vector3D[4];
+                faces[4] = new Face { CubeSide = Face.Side.Top, Corners3D = new Vector3D[4] };
                 faces[4].Corners3D[0] = new Vector3D(0, 0, 0);
                 faces[4].Corners3D[1] = new Vector3D(0, 0, depth);
                 faces[4].Corners3D[2] = new Vector3D(width, 0, depth);
@@ -286,9 +269,7 @@ namespace Juego_Hotel
                 // -------------------------------------------------------
 
                 //Bottom Face --------------------------------------------
-                faces[5] = new Face();
-                faces[5].CubeSide = Face.Side.Bottom;
-                faces[5].Corners3D = new Vector3D[4];
+                faces[5] = new Face { CubeSide = Face.Side.Bottom, Corners3D = new Vector3D[4] };
                 faces[5].Corners3D[0] = new Vector3D(0, height, 0);
                 faces[5].Corners3D[1] = new Vector3D(0, height, depth);
                 faces[5].Corners3D[2] = new Vector3D(width, height, depth);
@@ -311,13 +292,12 @@ namespace Juego_Hotel
             private void Update2DPoints(Point drawOrigin, int faceIndex)
             {
                 //Calculates the projected coordinates of the 3D points in a cube face
-                PointF[] point2D = new PointF[4];
+                var point2D = new PointF[4];
 
                 //Convert 3D Points to 2D
-                Math3D.Vector3D vec;
                 for (int i = 0; i < point2D.Length; i++)
                 {
-                    vec = faces[faceIndex].Corners3D[i];
+                    Vector3D vec = faces[faceIndex].Corners3D[i];
                     point2D[i] = Get2D(vec, drawOrigin);
                 }
 
@@ -329,55 +309,55 @@ namespace Juego_Hotel
 
             private void RotateCubeX(float deltaX)
             {
-                for (int i = 0; i < faces.Length; i++)
+                foreach (Face face in faces)
                 {
                     //Apply rotation
                     //------Rotate points
-                    Vector3D point0 = new Vector3D(0, 0, 0);
-                    faces[i].Corners3D = Math3D.Translate(faces[i].Corners3D, cubeOrigin, point0); //Move corner to origin
-                    faces[i].Corners3D = Math3D.RotateX(faces[i].Corners3D, deltaX);
-                    faces[i].Corners3D = Math3D.Translate(faces[i].Corners3D, point0, cubeOrigin); //Move back
+                    var point0 = new Vector3D(0, 0, 0);
+                    face.Corners3D = Translate(face.Corners3D, cubeOrigin, point0); //Move corner to origin
+                    face.Corners3D = RotateX(face.Corners3D, deltaX);
+                    face.Corners3D = Translate(face.Corners3D, point0, cubeOrigin); //Move back
 
                     //-------Rotate center
-                    faces[i].Center = Math3D.Translate(faces[i].Center, cubeOrigin, point0);
-                    faces[i].Center = Math3D.RotateX(faces[i].Center, deltaX);
-                    faces[i].Center = Math3D.Translate(faces[i].Center, point0, cubeOrigin);
+                    face.Center = Translate(face.Center, cubeOrigin, point0);
+                    face.Center = RotateX(face.Center, deltaX);
+                    face.Center = Translate(face.Center, point0, cubeOrigin);
                 }
             }
 
             private void RotateCubeY(float deltaY)
             {
-                for (int i = 0; i < faces.Length; i++)
+                foreach (Face face in faces)
                 {
                     //Apply rotation
                     //------Rotate points
-                    Vector3D point0 = new Vector3D(0, 0, 0);
-                    faces[i].Corners3D = Math3D.Translate(faces[i].Corners3D, cubeOrigin, point0); //Move corner to origin
-                    faces[i].Corners3D = Math3D.RotateY(faces[i].Corners3D, deltaY);
-                    faces[i].Corners3D = Math3D.Translate(faces[i].Corners3D, point0, cubeOrigin); //Move back
+                    var point0 = new Vector3D(0, 0, 0);
+                    face.Corners3D = Translate(face.Corners3D, cubeOrigin, point0); //Move corner to origin
+                    face.Corners3D = RotateY(face.Corners3D, deltaY);
+                    face.Corners3D = Translate(face.Corners3D, point0, cubeOrigin); //Move back
 
                     //-------Rotate center
-                    faces[i].Center = Math3D.Translate(faces[i].Center, cubeOrigin, point0);
-                    faces[i].Center = Math3D.RotateY(faces[i].Center, deltaY);
-                    faces[i].Center = Math3D.Translate(faces[i].Center, point0, cubeOrigin);
+                    face.Center = Translate(face.Center, cubeOrigin, point0);
+                    face.Center = RotateY(face.Center, deltaY);
+                    face.Center = Translate(face.Center, point0, cubeOrigin);
                 }
             }
 
             private void RotateCubeZ(float deltaZ)
             {
-                for (int i = 0; i < faces.Length; i++)
+                foreach (Face face in faces)
                 {
                     //Apply rotation
                     //------Rotate points
-                    Vector3D point0 = new Vector3D(0, 0, 0);
-                    faces[i].Corners3D = Math3D.Translate(faces[i].Corners3D, cubeOrigin, point0); //Move corner to origin
-                    faces[i].Corners3D = Math3D.RotateZ(faces[i].Corners3D, deltaZ);
-                    faces[i].Corners3D = Math3D.Translate(faces[i].Corners3D, point0, cubeOrigin); //Move back
+                    var point0 = new Vector3D(0, 0, 0);
+                    face.Corners3D = Translate(face.Corners3D, cubeOrigin, point0); //Move corner to origin
+                    face.Corners3D = RotateZ(face.Corners3D, deltaZ);
+                    face.Corners3D = Translate(face.Corners3D, point0, cubeOrigin); //Move back
 
                     //-------Rotate center
-                    faces[i].Center = Math3D.Translate(faces[i].Center, cubeOrigin, point0);
-                    faces[i].Center = Math3D.RotateZ(faces[i].Center, deltaZ);
-                    faces[i].Center = Math3D.Translate(faces[i].Center, point0, cubeOrigin);
+                    face.Center = Translate(face.Center, cubeOrigin, point0);
+                    face.Center = RotateZ(face.Center, deltaZ);
+                    face.Center = Translate(face.Center, point0, cubeOrigin);
                 }
             }
 
@@ -391,7 +371,7 @@ namespace Juego_Hotel
                 bounds.Width += drawOrigin.X;
                 bounds.Height += drawOrigin.Y;
 
-                Bitmap finalBmp = new Bitmap(bounds.Width, bounds.Height);
+                var finalBmp = new Bitmap(bounds.Width, bounds.Height);
                 Graphics g = Graphics.FromImage(finalBmp);
 
                 g.SmoothingMode = SmoothingMode.HighQuality;
@@ -427,17 +407,14 @@ namespace Juego_Hotel
                             if (fillBottom)
                                 g.FillPolygon(faces[i].color, GetBottomFace());
                             break;
-                        default:
-                            break;
                     }
 
-                    if (drawWires)
-                    {
-                        g.DrawLine(Pens.Black, faces[i].Corners2D[0], faces[i].Corners2D[1]);
-                        g.DrawLine(Pens.Black, faces[i].Corners2D[1], faces[i].Corners2D[2]);
-                        g.DrawLine(Pens.Black, faces[i].Corners2D[2], faces[i].Corners2D[3]);
-                        g.DrawLine(Pens.Black, faces[i].Corners2D[3], faces[i].Corners2D[0]);
-                    }
+                    if (!drawWires)
+                        continue;
+                    g.DrawLine(Pens.Black, faces[i].Corners2D[0], faces[i].Corners2D[1]);
+                    g.DrawLine(Pens.Black, faces[i].Corners2D[1], faces[i].Corners2D[2]);
+                    g.DrawLine(Pens.Black, faces[i].Corners2D[2], faces[i].Corners2D[3]);
+                    g.DrawLine(Pens.Black, faces[i].Corners2D[3], faces[i].Corners2D[0]);
                 }
 
                 g.Dispose();
@@ -454,14 +431,13 @@ namespace Juego_Hotel
 
             private PointF Get2D(Vector3D vec)
             {
-                PointF returnPoint = new PointF();
+                var returnPoint = new PointF();
 
-                float zoom = (float)Screen.PrimaryScreen.Bounds.Width / 1.5f;
-                Camera tempCam = new Camera();
-
-                tempCam.position.x = cubeOrigin.x;
-                tempCam.position.y = cubeOrigin.y;
-                tempCam.position.z = (cubeOrigin.x * zoom) / cubeOrigin.x;
+                float zoom = Screen.PrimaryScreen.Bounds.Width / 1.5f;
+                var tempCam = new Camera
+                {
+                    position = { x = cubeOrigin.x, y = cubeOrigin.y, z = (cubeOrigin.x*zoom)/cubeOrigin.x }
+                };
 
                 float zValue = -vec.z - tempCam.position.z;
 
@@ -508,13 +484,7 @@ namespace Juego_Hotel
                 //Find the correct side
                 //Since faces are sorted in order of closest to farthest
                 //They won't always be in the same index
-                for (int i = 0; i < faces.Length; i++)
-                {
-                    if (faces[i].CubeSide == side)
-                        return faces[i];
-                }
-
-                return null; //not found
+                return faces.FirstOrDefault(t => t.CubeSide == side);
             }
 
             private Rectangle getDrawingBounds()
@@ -525,19 +495,16 @@ namespace Juego_Hotel
                 float top = float.MaxValue;
                 float bottom = float.MinValue;
 
-                for (int i = 0; i < faces.Length; i++)
+                foreach (PointF corner in faces.SelectMany(face => face.Corners2D))
                 {
-                    for (int j = 0; j < faces[i].Corners2D.Length; j++)
-                    {
-                        if (faces[i].Corners2D[j].X < left)
-                            left = faces[i].Corners2D[j].X;
-                        if (faces[i].Corners2D[j].X > right)
-                            right = faces[i].Corners2D[j].X;
-                        if (faces[i].Corners2D[j].Y < top)
-                            top = faces[i].Corners2D[j].Y;
-                        if (faces[i].Corners2D[j].Y > bottom)
-                            bottom = faces[i].Corners2D[j].Y;
-                    }
+                    if (corner.X < left)
+                        left = corner.X;
+                    if (corner.X > right)
+                        right = corner.X;
+                    if (corner.Y < top)
+                        top = corner.Y;
+                    if (corner.Y > bottom)
+                        bottom = corner.Y;
                 }
 
                 return new Rectangle(0, 0, (int)Math.Round(right - left), (int)Math.Round(bottom - top));
@@ -598,7 +565,7 @@ namespace Juego_Hotel
 
         public static Vector3D Translate(Vector3D points3D, Vector3D oldOrigin, Vector3D newOrigin)
         {
-            Vector3D difference = new Vector3D(newOrigin.x - oldOrigin.x, newOrigin.y - oldOrigin.y, newOrigin.z - oldOrigin.z);
+            var difference = new Vector3D(newOrigin.x - oldOrigin.x, newOrigin.y - oldOrigin.y, newOrigin.z - oldOrigin.z);
             points3D.x += difference.x;
             points3D.y += difference.y;
             points3D.z += difference.z;
@@ -609,7 +576,7 @@ namespace Juego_Hotel
         {
             for (int i = 0; i < points3D.Length; i++)
             {
-                points3D[i] = RotateX((Vector3D)points3D[i], degrees);
+                points3D[i] = RotateX(points3D[i], degrees);
             }
             return points3D;
         }
@@ -618,7 +585,7 @@ namespace Juego_Hotel
         {
             for (int i = 0; i < points3D.Length; i++)
             {
-                points3D[i] = RotateY((Vector3D)points3D[i], degrees);
+                points3D[i] = RotateY(points3D[i], degrees);
             }
             return points3D;
         }
@@ -627,7 +594,7 @@ namespace Juego_Hotel
         {
             for (int i = 0; i < points3D.Length; i++)
             {
-                points3D[i] = RotateZ((Vector3D)points3D[i], degrees);
+                points3D[i] = RotateZ(points3D[i], degrees);
             }
             return points3D;
         }

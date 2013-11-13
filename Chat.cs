@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
 using Juego_Hotel.Resources;
 
 namespace Juego_Hotel
 {
     public partial class Chat : Form
     {
-        Boolean global;
-        Online frm_online;
+        readonly Boolean global;
+        readonly Online frm_online;
         public int id;
         public String creador;
         public Boolean conectado;
@@ -52,11 +45,10 @@ namespace Juego_Hotel
                 //String[] lista_jugadores = lista.Split('~');
                 int cuantos = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                 int i;
-                int long_nombre;
-                String[] lista_jugadores = new String[cuantos];
+                var lista_jugadores = new String[cuantos];
                 for (i = 0; i < cuantos; i++)
                 {
-                    long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
+                    int long_nombre = frm_online.recibir_int(frm_online.socket, ref bytes_recibidos);
                     lista_jugadores[i] = frm_online.recibir_string(frm_online.socket, long_nombre, ref bytes_recibidos);
                 }
                 this.BeginInvoke(new Action<String[]>(Actualizar_lista_jugadores) , new object[] { lista_jugadores });
@@ -121,10 +113,10 @@ namespace Juego_Hotel
         private void Chat_Shown(object sender, EventArgs e)
         {
             if (this.global)
-                this.Text += " global";
+                this.Text += @" global";
             else
-                this.Text += " " + this.id.ToString();
-            this.Text += ": " + frm_online.txtLogin.Text;
+                this.Text += @" " + this.id;
+            this.Text += @": " + frm_online.txtLogin.Text;
         }
     }
 }

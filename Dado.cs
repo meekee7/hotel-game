@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Juego_Hotel
 {
     public class Dado
     {
-        int n_caras;
-        Random rand;
+        readonly int n_caras;
+        readonly Random rand;
         public Dado(int caras)
         {
             this.n_caras = caras;

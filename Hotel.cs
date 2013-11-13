@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Juego_Hotel
 {
@@ -17,8 +15,8 @@ namespace Juego_Hotel
         public int precio_entrada;
         public int n_entradas;
         public Jugador dueño;
-        int[,] matriz_precios;
-        int[] precios_ampliaciones;
+        readonly int[,] matriz_precios;
+        readonly int[] precios_ampliaciones;
         public LinkedList<Casilla> entradas;
         public System.Drawing.Bitmap img_tarjeta;
         // Posiciones de las fases en el tablero
@@ -46,7 +44,7 @@ namespace Juego_Hotel
                     // Ahora a meter datos de precios específicos del hotel
                     this.precios_ampliaciones = new int[2] { 1800, 250 };
                     this.matriz_precios = new int[2,6] { { 400, 800, 1200, 1600, 2000, 2400 },
-                                                           { 600, 1200, 1800, 2400, 3000, 3600 } };
+                                                   { 600, 1200, 1800, 2400, 3000, 3600 } };
                     // Posiciones de las fases en el tablero (tantas como fases tenga)
                     pos = new Tipos.Posicion();
                     pos.Establecer(0, 75, 68); // Edif ppal
@@ -261,7 +259,6 @@ namespace Juego_Hotel
                     pos.Establecer(0, 300, 315); // Suelo
                     this.posiciones_fases.AddLast(pos);
                     break;
-                default: break;
             }
         }
 

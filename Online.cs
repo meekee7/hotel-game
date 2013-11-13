@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using System.Xml;
 using Juego_Hotel.Resources;
 
@@ -16,14 +14,14 @@ namespace Juego_Hotel
 {
     public partial class Online : Form
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Online));
+        readonly System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Online));
         public Socket socket;
         Chat frm_chat_global;
         public LinkedList<Chat> chats_abiertos;
         public LinkedList<PartidaOnline> lista_partidas;
         Thread thread_recepcion;
         Semaphore sem_en_comunicacion;
-        Boolean continuar_thread, conectado = false, cerrando = false;
+        Boolean continuar_thread, conectado, cerrando;
         public Tipos.Resultado_dado_cons ultimo_res_dado_cons;
         public XmlDocument configuracion_local;
 
@@ -56,23 +54,17 @@ namespace Juego_Hotel
             }
             try
             {
-                byte[] data = new byte[longitud];
+                var data = new byte[longitud];
                 bytes_recibidos = s.Receive(data);
-                String s_data;
-                if (bytes_recibidos > 0)
-                    s_data = System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos);
-                else
-                    s_data = "";
-                data = null;
+                string s_data = bytes_recibidos > 0 ? System.Text.Encoding.UTF8.GetString(data, 0, bytes_recibidos) : "";
                 return s_data;
             }
             catch (Exception e)
             {
-                if (this.continuar_thread == true)
-                {
-                    this.Pulsar_Desconectar();
-                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
-                }
+                if (!this.continuar_thread)
+                    return null;
+                this.Pulsar_Desconectar();
+                MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 return null;
             }
         }
@@ -88,7 +80,7 @@ namespace Juego_Hotel
             }
             try
             {
-                byte[] b_int = new byte[4];
+                var b_int = new byte[4];
                 bytes_recibidos = s.Receive(b_int);
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(b_int);
@@ -96,11 +88,10 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                if (this.continuar_thread == true)
-                {
-                    this.Pulsar_Desconectar();
-                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
-                }
+                if (!this.continuar_thread)
+                    return 0;
+                this.Pulsar_Desconectar();
+                MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 return 0;
             }
         }
@@ -121,11 +112,10 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                if (this.continuar_thread == true)
-                {
-                    this.Pulsar_Desconectar();
-                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
-                }
+                if (!this.continuar_thread)
+                    return 0;
+                this.Pulsar_Desconectar();
+                MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 return 0;
             }
         }
@@ -148,11 +138,10 @@ namespace Juego_Hotel
             }
             catch (Exception e)
             {
-                if (this.continuar_thread == true)
-                {
-                    this.Pulsar_Desconectar();
-                    MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
-                }
+                if (!this.continuar_thread)
+                    return 0;
+                this.Pulsar_Desconectar();
+                MessageBox.Show(Mensajes.mensajeExcepcionRecibiendoDatos + e.Message);
                 return 0;
             }
         }
@@ -173,34 +162,34 @@ namespace Juego_Hotel
                         enviar_string(this.socket, this.txtLogin.Text);
                         int bytes_recibidos = 0;
                         String res_login = recibir_string(this.socket, 8, ref bytes_recibidos);
-                        if (res_login == "login ko")
+                        switch (res_login)
                         {
-                            MessageBox.Show(Mensajes.mensajeApodoEnUso);
-                            this.bDesconectar.PerformClick();
-                            this.txtLogin.Enabled = true;
-                        }
-                        else if (res_login == "login no")
-                        {
-                            MessageBox.Show(Mensajes.mensajeErrorTamañoApodo);
-                            this.bDesconectar.PerformClick();
-                            this.txtLogin.Enabled = true;
-                        }
-                        else
-                        {
-                            this.conectado = true;
-                            this.bLogin.Enabled = false;
-                            this.bCrearPartida.Enabled = true;
-                            this.bCargarPartida.Enabled = true;
-                            this.bCrearConv.Enabled = true;
-                            this.txtLogin.Enabled = false;
-                            this.bChatGlobal.Enabled = true;
-                            this.sem_en_comunicacion = new Semaphore(1, 1);
-                            thread_recepcion = new Thread(Esperar_comandos);
-                            this.continuar_thread = true;
-                            thread_recepcion.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
-                            thread_recepcion.Start();
-                            this.Text += ": " + this.txtLogin.Text;
-                            this.enviar_comando("get_games");
+                            case "login ko":
+                                MessageBox.Show(Mensajes.mensajeApodoEnUso);
+                                this.bDesconectar.PerformClick();
+                                this.txtLogin.Enabled = true;
+                                break;
+                            case "login no":
+                                MessageBox.Show(Mensajes.mensajeErrorTamañoApodo);
+                                this.bDesconectar.PerformClick();
+                                this.txtLogin.Enabled = true;
+                                break;
+                            default:
+                                this.conectado = true;
+                                this.bLogin.Enabled = false;
+                                this.bCrearPartida.Enabled = true;
+                                this.bCargarPartida.Enabled = true;
+                                this.bCrearConv.Enabled = true;
+                                this.txtLogin.Enabled = false;
+                                this.bChatGlobal.Enabled = true;
+                                this.sem_en_comunicacion = new Semaphore(1, 1);
+                                thread_recepcion = new Thread(Esperar_comandos);
+                                this.continuar_thread = true;
+                                thread_recepcion.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+                                thread_recepcion.Start();
+                                this.Text += @": " + this.txtLogin.Text;
+                                this.enviar_comando("get_games");
+                                break;
                         }
                     }
                     catch (Exception ex)
@@ -238,12 +227,12 @@ namespace Juego_Hotel
                             MessageBox.Show(Mensajes.mensajeErrorPuertoNoNumerico);
                             return;
                         }
-                        else if (puerto > 65535)
+                        if (puerto > 65535)
                         {
                             MessageBox.Show(Mensajes.mensajeErrorPuertoAlto);
                             return;
                         }
-                        else if (puerto <= 0)
+                        if (puerto <= 0)
                         {
                             MessageBox.Show(Mensajes.mensajeErrorPuertoBajo);
                             return;
@@ -251,18 +240,17 @@ namespace Juego_Hotel
                     }
                 }
                 IPAddress dir = Dns.GetHostAddresses(servidor).First(IPAddress => IPAddress.AddressFamily == AddressFamily.InterNetwork);
-                IPEndPoint Ep = new IPEndPoint(dir, puerto);
+                var Ep = new IPEndPoint(dir, puerto);
                 this.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 this.socket.Connect(Ep);
                 this.bDesconectar.Enabled = true;
                 // Comprobar versión correcta:
-                Actualizador actualizador = new Actualizador();
+                var actualizador = new Actualizador();
                 this.enviar_int(this.socket, Encoding.UTF8.GetBytes(actualizador.version_actual).Length);
                 this.enviar_string(this.socket, actualizador.version_actual);
                 int bytes_recibidos = 0;
                 int long_res_version = this.recibir_int(this.socket, ref bytes_recibidos);
                 String res_version = this.recibir_string(this.socket, long_res_version, ref bytes_recibidos);
-                actualizador = null;
                 if (res_version != "ok")
                 {
                     MessageBox.Show(String.Format(Mensajes.mensajeVersionNoActualizada, res_version));
@@ -302,15 +290,13 @@ namespace Juego_Hotel
                 int bytes_recibidos = 0;
                 int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
                 int i;
-                int long_nombre;
-                String[] lista_jugadores = new String[cuantos];
+                var lista_jugadores = new String[cuantos];
                 for (i = 0; i < cuantos; i++)
                 {
-                    long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+                    int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
                     lista_jugadores[i] = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
                 }
                 this.BeginInvoke(new Action<String[]>(Actualizar_lista_usuarios), new object[] { lista_jugadores });
-                lista_jugadores = null;
             }
             catch (Exception ex)
             {
@@ -349,25 +335,23 @@ namespace Juego_Hotel
                     this.BeginInvoke(new Action(Borrar_lista_partidas));
                     return;
                 }
-                int i, long_nombre, capacidad, n_jugadores_dentro;
-                Boolean empezada, finalizada, cargada;
-                String nombre, estado;
-                String[] lista_partidas = new String[cuantas];
+                int i;
+                var lista_partidas_recibidas = new String[cuantas];
                 for (i = 0; i < cuantas; i++)
                 {
-                    long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
-                    nombre = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-                    capacidad = this.recibir_int(this.socket, ref bytes_recibidos);
-                    n_jugadores_dentro = this.recibir_int(this.socket, ref bytes_recibidos);
-                    empezada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
-                    finalizada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
-                    cargada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
+                    String nombre = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
+                    int capacidad = this.recibir_int(this.socket, ref bytes_recibidos);
+                    int n_jugadores_dentro = this.recibir_int(this.socket, ref bytes_recibidos);
+                    Boolean empezada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    Boolean finalizada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    Boolean cargada = Convert.ToBoolean(this.recibir_int(this.socket, ref bytes_recibidos));
+                    String estado;
                     if (!empezada && !finalizada)
                     {
-                        if (n_jugadores_dentro == capacidad)
-                            estado = Mensajes.textoEstadoLlena;
-                        else
-                            estado = Mensajes.textoEstadoDisponible;
+                        estado = n_jugadores_dentro == capacidad
+                            ? Mensajes.textoEstadoLlena
+                            : Mensajes.textoEstadoDisponible;
                     }
                     else if (empezada && !finalizada)
                         estado = Mensajes.textoEstadoEmpezada;
@@ -376,11 +360,11 @@ namespace Juego_Hotel
                     if (cargada)
                         estado += " (" + Mensajes.textoEstadoCargada + ")";
                     if (n_jugadores_dentro == 1)
-                        lista_partidas[i] = String.Format(Mensajes.textoPartidaSingular, nombre, capacidad, estado);
+                        lista_partidas_recibidas[i] = String.Format(Mensajes.textoPartidaSingular, nombre, capacidad, estado);
                     else
-                        lista_partidas[i] = String.Format(Mensajes.textoPartidaPlural, nombre, n_jugadores_dentro, capacidad, estado);
+                        lista_partidas_recibidas[i] = String.Format(Mensajes.textoPartidaPlural, nombre, n_jugadores_dentro, capacidad, estado);
                 }
-                this.BeginInvoke(new Action<String[]>(Actualizar_lista_partidas), new object[] { lista_partidas });
+                this.BeginInvoke(new Action<String[]>(Actualizar_lista_partidas), new object[] { lista_partidas_recibidas });
             }
             catch (Exception ex)
             {
@@ -389,12 +373,12 @@ namespace Juego_Hotel
             }
         }
 
-        private void Cerrar_Chat(Chat chat)
+        private static void Cerrar_Chat(Chat chat)
         {
             chat.Close();
         }
 
-        private void Cerrar_Partida(PartidaOnline partida)
+        private static void Cerrar_Partida(PartidaOnline partida)
         {
             partida.cerrando_por_desconexion = true;
             partida.Close();
@@ -479,26 +463,27 @@ namespace Juego_Hotel
             this.bCargarPartida.Enabled = false;
             this.listaUsuarios.Items.Clear();
             this.listaPartidas.Items.Clear();
-            this.Text = "Online";
+            this.Text = @"Online";
             // Desactivar el botón Enviar de cada chat
             if (this.frm_chat_global != null)
                 this.frm_chat_global.desactivar_envio();
             foreach (Chat chat in this.chats_abiertos)
                 chat.BeginInvoke(new Action(chat.desactivar_envio));
                 //chat.desactivar_envio();
-            foreach (PartidaOnline partida in this.lista_partidas)
+            foreach (PartidaOnline partida in this.lista_partidas.Where(partida => partida.interfaz != null))
             {
-                if (partida.interfaz != null)
-                    partida.interfaz.BeginInvoke(new Action(partida.interfaz.Conexion_perdida));
+                partida.interfaz.BeginInvoke(new Action(partida.interfaz.Conexion_perdida));
             }
         }
 
         public string InputBox(string prompt, string title, string defaultValue)
         {
-            InputBoxDialog ib = new InputBoxDialog();
-            ib.FormPrompt = prompt;
-            ib.FormCaption = title;
-            ib.DefaultValue = defaultValue;
+            var ib = new InputBoxDialog
+            {
+                FormPrompt = prompt,
+                FormCaption = title,
+                DefaultValue = defaultValue
+            };
             ib.ShowDialog();
             string s = ib.InputResponse;
             ib.Close();
@@ -507,16 +492,8 @@ namespace Juego_Hotel
 
         Boolean PartidaYaExiste(String nombre)
         {
-            Boolean encontrada = false;
-            foreach (String item in this.listaPartidas.Items)
-            {
-                if (item.Substring(0, item.IndexOf(" (")) == nombre)
-                {
-                    encontrada = true;
-                    break;
-                }
-            }
-            return encontrada;
+            return this.listaPartidas.Items.Cast<String>()
+                .Any(item => item.Substring(0, item.IndexOf(" (", StringComparison.Ordinal)) == nombre);
         }
 
         private void bCrearPartida_Click(object sender, EventArgs e)
@@ -534,12 +511,12 @@ namespace Juego_Hotel
                     MessageBox.Show(Mensajes.mensajeNombrePartidaLargo, Mensajes.tituloCrearPartida);
                     return;
                 }
-                else if (this.PartidaYaExiste(nombre))
+                if (this.PartidaYaExiste(nombre))
                 {
                     MessageBox.Show(Mensajes.mensajeNombrePartidaYaExiste, Mensajes.tituloCrearPartida);
                     return;
                 }
-                else if (nombre.Contains('~'))
+                if (nombre.Contains('~'))
                 {
                     MessageBox.Show(Mensajes.mensajeNombrePartidaInvalido);
                     return;
@@ -571,8 +548,6 @@ namespace Juego_Hotel
                     return;
                 }
                 this.enviar_comando("create_game", nombre, n_jugadores.ToString());
-                //this.bUnirse.Enabled = false;
-                //this.bCrearPartida.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -595,11 +570,10 @@ namespace Juego_Hotel
 
         private void txtLogin_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-                this.bLogin.PerformClick();
-            }
+            if (e.KeyCode != Keys.Enter)
+                return;
+            e.Handled = true;
+            this.bLogin.PerformClick();
         }
 
         private void bCrearConv_Click(object sender, EventArgs e)
@@ -611,7 +585,7 @@ namespace Juego_Hotel
             }
             // Este mecanismo funciona así:
             // Se envía la longitud de la lista de usuarios y luego la lista para así enviarles la petición
-            String[] parametros = new String[this.listaUsuarios.SelectedItems.Count + 1];
+            var parametros = new String[this.listaUsuarios.SelectedItems.Count + 1];
             int i = 1;
             parametros[0] = this.listaUsuarios.SelectedItems.Count.ToString();
             foreach (Object nombre in this.listaUsuarios.SelectedItems)
@@ -655,25 +629,24 @@ namespace Juego_Hotel
             String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
             if (creador != this.txtLogin.Text)
             {
-                if (MessageBox.Show(String.Format(Mensajes.mensajeUnirseAChat, creador), Mensajes.tituloNuevoChat, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(String.Format(Mensajes.mensajeUnirseAChat, creador), Mensajes.tituloNuevoChat, MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+                this.enviar_comando("join_chat", id_chat.ToString());
+                var lista_params = new List<String>(2) { id_chat.ToString(), creador };
+                var thread_chat = new Thread(Manejar_nuevo_chat)
                 {
-                    this.enviar_comando("join_chat", id_chat.ToString());
-                    List<String> lista_params = new List<String>(2);
-                    lista_params.Add(id_chat.ToString());
-                    lista_params.Add(creador);
-                    Thread thread_chat = new Thread(Manejar_nuevo_chat);
-                    thread_chat.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
-                    thread_chat.Start(lista_params);
-                }
+                    CurrentUICulture = Thread.CurrentThread.CurrentUICulture
+                };
+                thread_chat.Start(lista_params);
             }
             else
             {
                 this.enviar_comando("join_chat", id_chat.ToString());
-                List<String> lista_params = new List<String>(2);
-                lista_params.Add(id_chat.ToString());
-                lista_params.Add(creador);
-                Thread thread_chat = new Thread(Manejar_nuevo_chat);
-                thread_chat.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+                var lista_params = new List<String>(2) { id_chat.ToString(), creador };
+                var thread_chat = new Thread(Manejar_nuevo_chat)
+                {
+                    CurrentUICulture = Thread.CurrentThread.CurrentUICulture
+                };
                 thread_chat.Start(lista_params);
             }
         }
@@ -689,15 +662,12 @@ namespace Juego_Hotel
                 int long_creador = recibir_int(this.socket, ref bytes_recibidos);
                 String creador = recibir_string(this.socket, long_creador, ref bytes_recibidos);
                 int num_jugadores = recibir_int(this.socket, ref bytes_recibidos);
-                Boolean cargada = (recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
-                List<Object> lista_params = new List<Object>(5);
-                lista_params.Add(id_chat);
-                lista_params.Add(creador);
-                lista_params.Add(nombre);
-                lista_params.Add(num_jugadores);
-                lista_params.Add(cargada);
-                Thread thread_partida = new Thread(Manejar_nueva_partida);
-                thread_partida.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+                Boolean cargada = (recibir_int(this.socket, ref bytes_recibidos) == 1);
+                var lista_params = new List<Object>(5) { id_chat, creador, nombre, num_jugadores, cargada };
+                var thread_partida = new Thread(Manejar_nueva_partida)
+                {
+                    CurrentUICulture = Thread.CurrentThread.CurrentUICulture
+                };
                 thread_partida.Start(lista_params);
             }
             else
@@ -750,46 +720,36 @@ namespace Juego_Hotel
 
         private void Manejar_nuevo_chat(object parametros)
         {
-            List<String> lista_params = (List<String>) parametros;
-            Chat chat = new Chat(false, this);
-            chat.id = Convert.ToInt32(lista_params[0]);
-            chat.creador = lista_params[1];
+            var lista_params = (List<String>) parametros;
+            var chat = new Chat(false, this) { id = Convert.ToInt32(lista_params[0]), creador = lista_params[1] };
             this.chats_abiertos.AddFirst(chat);
             Application.Run(chat);
         }
 
         private void Manejar_nueva_partida(object parametros)
         {
-            List<Object> lista_params = (List<Object>)parametros;
-            PartidaOnline partida = new PartidaOnline(this);
-            partida.id = (int)lista_params[0];
-            partida.creador = lista_params[1].ToString();
-            partida.nombre = lista_params[2].ToString();
-            partida.num_jugadores = (int)lista_params[3];
-            partida.cargada = (Boolean)lista_params[4];
-            
+            var lista_params = (List<Object>)parametros;
+            var partida = new PartidaOnline(this)
+            {
+                id = (int) lista_params[0],
+                creador = lista_params[1].ToString(),
+                nombre = lista_params[2].ToString(),
+                num_jugadores = (int) lista_params[3],
+                cargada = (Boolean) lista_params[4]
+            };
+
             this.lista_partidas.AddFirst(partida);
             Application.Run(partida);
         }
 
         private Chat Buscar_chat(int id)
         {
-            foreach (Chat chat in chats_abiertos)
-            {
-                if (chat.id == id)
-                    return chat;
-            }
-            return null;
+            return chats_abiertos.FirstOrDefault(chat => chat.id == id);
         }
 
         public PartidaOnline Buscar_partida(int id)
         {
-            foreach (PartidaOnline partida in lista_partidas)
-            {
-                if (partida.id == id)
-                    return partida;
-            }
-            return null;
+            return lista_partidas.FirstOrDefault(partida => partida.id == id);
         }
 
         private void rellenar_lista_chat()
@@ -810,100 +770,133 @@ namespace Juego_Hotel
 
         private void Esperar_comandos()
         {
-            String msg = null;
             int bytes_recibidos = 0;
-            int long_msg;
             do
             {
-                long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
+                int long_msg = this.recibir_int(this.socket, ref bytes_recibidos);
                 this.sem_en_comunicacion.WaitOne(10000);
-                msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
-                if (msg == "#disconnect#")
+                String msg = this.recibir_string(this.socket, long_msg, ref bytes_recibidos);
+                switch (msg)
                 {
-                    this.continuar_thread = false;
-                    this.Pulsar_Desconectar();
+                    case "#disconnect#":
+                        this.continuar_thread = false;
+                        this.Pulsar_Desconectar();
+                        break;
+                    case "player_list":
+                        this.Rellenar_lista_usuarios();
+                        break;
+                    case "game_list":
+                        this.Rellenar_lista_partidas();
+                        break;
+                    case "global_chat_userlist":
+                        this.frm_chat_global.rellenar_lista();
+                        break;
+                    case "chat_userlist":
+                        this.rellenar_lista_chat();
+                        break;
+                    case "new_global_chat_msg":
+                        this.Nuevo_mensaje_chat_global();
+                        break;
+                    case "new_chat_msg":
+                        this.Nuevo_mensaje_chat();
+                        break;
+                    case "ask_join_chat":
+                        this.Unirse_a_chat();
+                        break;
+                    case "joined_game":
+                        this.Unirse_a_partida(true);
+                        break;
+                    case "cant_join_game_full":
+                        this.Unirse_a_partida(false);
+                        break;
+                    case "cant_join_game_started":
+                        this.Partida_empezada_o_terminada(true);
+                        break;
+                    case "cant_join_game_ended":
+                        this.Partida_empezada_o_terminada(false);
+                        break;
+                    case "cant_join_already_joined":
+                        this.No_unirse_a_partida();
+                        break;
+                    case "cant_join_not_part_of_saved_game":
+                        this.No_unirse_a_partida_cargada();
+                        break;
+                    case "game_creator_changed":
+                        this.Nuevo_creador_partida();
+                        break;
+                    case "rolled_dice":
+                        this.Dado_tirado();
+                        break;
+                    case "rolled_construction_dice":
+                        this.Dado_construccion_tirado();
+                        break;
+                    case "game_started":
+                        this.Iniciar_partida();
+                        break;
+                    case "turn_passed":
+                        this.Pasar_Turno();
+                        break;
+                    case "update_player_money":
+                        this.Actualizar_dinero_jugador();
+                        break;
+                    case "hotel_purchased":
+                        this.Hotel_comprado();
+                        break;
+                    case "hotel_expropriated":
+                        this.Hotel_expropiado();
+                        break;
+                    case "phase_built":
+                        this.Fase_construida();
+                        break;
+                    case "entrance_added":
+                        this.Entrada_añadida();
+                        break;
+                    case "player_retired":
+                        this.Jugador_retirado(false);
+                        break;
+                    case "player_kicked":
+                        this.Jugador_retirado(true);
+                        break;
+                    case "game_ended":
+                        this.Juego_terminado();
+                        break;
+                    case "ask_pay_nights":
+                        this.Pedir_noches();
+                        break;
+                    case "auction_started":
+                        this.Subasta_iniciada();
+                        break;
+                    case "auction_bid_placed":
+                        this.Nueva_puja();
+                        break;
+                    case "auction_sold":
+                        this.Subasta_vendida();
+                        break;
+                    case "auction_ended":
+                        this.Subasta_terminada();
+                        break;
+                    case "game_saved":
+                        this.Juego_salvado();
+                        break;
+                    case "error_saving_game":
+                        this.Juego_no_salvado();
+                        break;
+                    case "game_loaded":
+                        this.Cargar_Juego(true);
+                        break;
+                    case "cannot_load_game":
+                        this.Cargar_Juego(false);
+                        break;
+                    default:
+                        if (msg == "")
+                            MessageBox.Show(Mensajes.mensajeProblemaConexionConServidor);
+                        else
+                            MessageBox.Show(Mensajes.mensajeComandoDesconocido + (msg ?? ""));
+                        this.conectado = false;
+                        this.Finalizar_todas_las_partidas();
+                        this.Pulsar_Desconectar();
+                        break;
                 }
-                else if (msg == "player_list")
-                    this.Rellenar_lista_usuarios();
-                else if (msg == "game_list")
-                    this.Rellenar_lista_partidas();
-                else if (msg == "global_chat_userlist")
-                    this.frm_chat_global.rellenar_lista();
-                else if (msg == "chat_userlist")
-                    this.rellenar_lista_chat();
-                else if (msg == "new_global_chat_msg")
-                    this.Nuevo_mensaje_chat_global();
-                else if (msg == "new_chat_msg")
-                    this.Nuevo_mensaje_chat();
-                else if (msg == "ask_join_chat")
-                    this.Unirse_a_chat();
-                else if (msg == "joined_game")
-                    this.Unirse_a_partida(true);
-                else if (msg == "cant_join_game_full")
-                    this.Unirse_a_partida(false);
-                else if (msg == "cant_join_game_started")
-                    this.Partida_empezada_o_terminada(true);
-                else if (msg == "cant_join_game_ended")
-                    this.Partida_empezada_o_terminada(false);
-                else if (msg == "cant_join_already_joined")
-                    this.No_unirse_a_partida();
-                else if (msg == "cant_join_not_part_of_saved_game")
-                    this.No_unirse_a_partida_cargada();
-                else if (msg == "game_creator_changed")
-                    this.Nuevo_creador_partida();
-                else if (msg == "rolled_dice")
-                    this.Dado_tirado();
-                else if (msg == "rolled_construction_dice")
-                    this.Dado_construccion_tirado();
-                else if (msg == "game_started")
-                    this.Iniciar_partida();
-                else if (msg == "turn_passed")
-                    this.Pasar_Turno();
-                else if (msg == "update_player_money")
-                    this.Actualizar_dinero_jugador();
-                else if (msg == "hotel_purchased")
-                    this.Hotel_comprado();
-                else if (msg == "hotel_expropriated")
-                    this.Hotel_expropiado();
-                else if (msg == "phase_built")
-                    this.Fase_construida();
-                else if (msg == "entrance_added")
-                    this.Entrada_añadida();
-                else if (msg == "player_retired")
-                    this.Jugador_retirado(false);
-                else if (msg == "player_kicked")
-                    this.Jugador_retirado(true);
-                else if (msg == "game_ended")
-                    this.Juego_terminado();
-                else if (msg == "ask_pay_nights")
-                    this.Pedir_noches();
-                else if (msg == "auction_started")
-                    this.Subasta_iniciada();
-                else if (msg == "auction_bid_placed")
-                    this.Nueva_puja();
-                else if (msg == "auction_sold")
-                    this.Subasta_vendida();
-                else if (msg == "auction_ended")
-                    this.Subasta_terminada();
-                else if (msg == "game_saved")
-                    this.Juego_salvado();
-                else if (msg == "error_saving_game")
-                    this.Juego_no_salvado();
-                else if (msg == "game_loaded")
-                    this.Cargar_Juego(true);
-                else if (msg == "cannot_load_game")
-                    this.Cargar_Juego(false);
-                else
-                {
-                    if (msg == "")
-                        MessageBox.Show(Mensajes.mensajeProblemaConexionConServidor);
-                    else
-                        MessageBox.Show(Mensajes.mensajeComandoDesconocido + ((msg != null) ? msg : ""));
-                    this.conectado = false;
-                    this.Finalizar_todas_las_partidas();
-                    this.Pulsar_Desconectar();
-                }
-                msg = null;
                 this.sem_en_comunicacion.Release();
             }
             while (this.continuar_thread);
@@ -911,19 +904,19 @@ namespace Juego_Hotel
 
         public void enviar_comando(String comando, params String[] parametros)
         {
-            List<String> lista_parametros = new List<String>();
-            lista_parametros.Add(comando);
-            foreach (String parametro in parametros)
-                lista_parametros.Add(parametro);
-            Thread thread_envio_comando = new Thread(enviar_comando_t);
-            thread_envio_comando.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+            var lista_parametros = new List<String> { comando };
+            lista_parametros.AddRange(parametros);
+            var thread_envio_comando = new Thread(enviar_comando_t)
+            {
+                CurrentUICulture = Thread.CurrentThread.CurrentUICulture
+            };
             thread_envio_comando.Start(lista_parametros);
         }
 
         private void enviar_comando_t(object lista_parametros)
         {
             this.sem_en_comunicacion.WaitOne(10000);
-            List<String> lista = (List<String>)lista_parametros;
+            var lista = (List<String>)lista_parametros;
             String comando = lista[0];
             this.enviar_int(this.socket, comando.Length);
             this.enviar_string(this.socket, comando);
@@ -955,8 +948,6 @@ namespace Juego_Hotel
                 // Después se recibe el mensaje
                 String msg = this.recibir_string(this.socket, long_cadena, ref bytes_recibidos);
                 this.frm_chat_global.nuevo_mensaje(remitente, msg);
-                remitente = null;
-                msg = null;
             }
             catch (Exception ex)
             {
@@ -987,8 +978,6 @@ namespace Juego_Hotel
                     PartidaOnline partida = Buscar_partida(id);
                     partida.nuevo_mensaje(remitente, msg);
                 }
-                remitente = null;
-                msg = null;
             }
             catch (Exception ex)
             {
@@ -1003,9 +992,9 @@ namespace Juego_Hotel
             {
                 this.BeginInvoke(new Action(this.bDesconectar.PerformClick));
             }
-            catch (Exception)
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch
             {
-                // The window is already closed
             }
         }
 
@@ -1022,17 +1011,14 @@ namespace Juego_Hotel
         private void bUnirse_Click(object sender, EventArgs e)
         {
             String linea = this.listaPartidas.SelectedItem.ToString();
-            this.enviar_comando("join_game", linea.Substring(0, linea.IndexOf(" (")));
+            this.enviar_comando("join_game", linea.Substring(0, linea.IndexOf(" (", StringComparison.Ordinal)));
             //this.bUnirse.Enabled = false;
             //this.bCrearPartida.Enabled = false;
         }
 
         private void listaPartidas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.listaPartidas.SelectedIndex < 0)
-                this.bUnirse.Enabled = false;
-            else
-                this.bUnirse.Enabled = true;
+            this.bUnirse.Enabled = this.listaPartidas.SelectedIndex >= 0;
         }
 
         private void listaPartidas_DoubleClick(object sender, EventArgs e)
@@ -1049,11 +1035,13 @@ namespace Juego_Hotel
             int pos = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String nombre_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
+            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             partida.interfaz.juego.ultimo_res_dado = res_dado;
             partida.interfaz.juego.ultimo_avance_auto = auto_avance;
+            if (jugador == null)
+                return;
             jugador.posicion.ocupada = false;
             jugador.posicion = partida.interfaz.juego.casillas[pos];
             jugador.posicion.ocupada = true;
@@ -1079,7 +1067,7 @@ namespace Juego_Hotel
             String nombre = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre);
-            if (jugador.nombre_online == partida.interfaz.nombre_online)
+            if (jugador != null && jugador.nombre_online == partida.interfaz.nombre_online)
             {
                 partida.interfaz.juego.sem_dado_cons.Release();
                 Thread.Sleep(200);
@@ -1098,7 +1086,7 @@ namespace Juego_Hotel
             int jug_inicial = this.recibir_int(this.socket, ref bytes_recibidos);
             int cuantos = this.recibir_int(this.socket, ref bytes_recibidos);
             // First field for the name and second for the status in case the game is loaded
-            List<String> nombres_jugadores = new List<String>(cuantos);
+            var nombres_jugadores = new List<String>(cuantos);
             for (int i = 0; i < cuantos; i++)
             {
                 nombres_jugadores.Add(this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos));
@@ -1106,24 +1094,24 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             if (partida.cargada)
             {
-                String jugador_actual = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
+                String nombre_jugador_actual = this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos);
                 int ultimo_avance_auto = this.recibir_int(this.socket, ref bytes_recibidos);
                 int ultimo_res_dado = this.recibir_int(this.socket, ref bytes_recibidos);
-                List<Tuple<String, String>> lista_jugadores = new List<Tuple<String, String>>(cuantos);
+                var lista_jugadores = new List<Tuple<String, String>>(cuantos);
                 for (int i = 0 ; i < cuantos ; i++ )
                 {
                     lista_jugadores.Add(new Tuple<String, String>(nombres_jugadores[i], recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos)));
                 }
-                List<String> estado_hoteles = new List<String>(Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1); // Menos 1 porque el tipo tiene uno extra llamado Ninguno
+                var estado_hoteles = new List<String>(Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1); // Menos 1 porque el tipo tiene uno extra llamado Ninguno
                 for (int i = 0 ; i < Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1 ; i++)
                 {
                     estado_hoteles.Add(this.recibir_string(this.socket, this.recibir_int(this.socket, ref bytes_recibidos), ref bytes_recibidos));
-                }                
-                partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado, estado_hoteles);
+                }
+                partida.Iniciar(num_jugadores, config, jug_inicial, lista_jugadores, true, ultimo_avance_auto, ultimo_res_dado, estado_hoteles, nombre_jugador_actual);
             }
             else
             {
-                List<Tuple<String, String>> lista_jugadores = new List<Tuple<String, String>>(cuantos);
+                var lista_jugadores = new List<Tuple<String, String>>(cuantos);
                 for (int i = 0 ; i < cuantos ; i++ )
                 {
                     lista_jugadores.Add(new Tuple<String, String>(nombres_jugadores[i], String.Empty));
@@ -1138,7 +1126,7 @@ namespace Juego_Hotel
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
             int long_nombre = this.recibir_int(this.socket, ref bytes_recibidos);
             String sig_jugador = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
-            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
+            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1);
             PartidaOnline partida = this.Buscar_partida(id);
             if (partida != null)
                 partida.interfaz.BeginInvoke(new Action<String, Boolean>(partida.interfaz.Pasar_Turno), new object[] { sig_jugador, automaticamente });
@@ -1171,7 +1159,11 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            if (hotel == null)
+                return;
             hotel.dueño = jugador;
+            if (jugador == null)
+                return;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
             if (comprado_con_todo)
@@ -1193,8 +1185,12 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
+            if (hotel == null)
+                return;
             hotel.dueño.Hotel_Expropiado(ref hotel);
             hotel.dueño = jugador;
+            if (jugador == null)
+                return;
             jugador.hoteles.AddLast(hotel);
             jugador.n_hoteles++;
             partida.interfaz.BeginInvoke(new Action<Hotel>(partida.interfaz.Actualizar_Fases_Nuevo_Dueño_Hotel), hotel);
@@ -1210,10 +1206,11 @@ namespace Juego_Hotel
             String nombre_hotel = this.recibir_string(this.socket, long_nombre, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
+            if (hotel == null)
+                return;
             hotel.Ampliar();
             partida.interfaz.BeginInvoke(new Action<Hotel, int>(partida.interfaz.Dibujar_Fase), hotel, hotel.n_fases_construidas - 1);
-            partida.interfaz.BeginInvoke(new Action<Jugador, int, String>(partida.interfaz.Añadir_Fase), hotel.dueño, hotel.n_fases_construidas, hotel.nombre_txt); 
-
+            partida.interfaz.BeginInvoke(new Action<Jugador, int, String>(partida.interfaz.Añadir_Fase), hotel.dueño, hotel.n_fases_construidas, hotel.nombre_txt);
         }
 
         private void Entrada_añadida()
@@ -1225,7 +1222,7 @@ namespace Juego_Hotel
             int casilla = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Hotel hotel = partida.interfaz.juego.hoteles.FirstOrDefault(Hotel => Hotel.nombre_txt == nombre_hotel);
-            if (partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
+            if (hotel != null && partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
             {
                 partida.interfaz.juego.casillas[casilla].entrada_en_der = true;
                 partida.interfaz.BeginInvoke(new Action<Casilla, Boolean, Image>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
@@ -1235,6 +1232,8 @@ namespace Juego_Hotel
                 partida.interfaz.juego.casillas[casilla].entrada_en_izq = true;
                 partida.interfaz.BeginInvoke(new Action<Casilla, Boolean, Image>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
             }
+            if (hotel == null)
+                return;
             hotel.n_entradas++;
             hotel.entradas.AddLast(partida.interfaz.juego.casillas[casilla]);
             partida.interfaz.BeginInvoke(new Action<Jugador, int, String>(partida.interfaz.Añadir_Entrada), hotel.dueño, casilla, hotel.nombre_txt);
@@ -1250,27 +1249,26 @@ namespace Juego_Hotel
             if (partida.interfaz == null) // La partida no fue iniciada
                 return;
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
-            if (jugador.Eliminado())
+            if (jugador != null && jugador.Eliminado())
                 return;
             try
             {
                 partida.interfaz.Invoke(new Action<Jugador>(partida.interfaz.Limpiar_Fases_y_Entradas_Hoteles_Jugador),
                     jugador);
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch
             {
                 // Catch a possible exception for already closed windows
             }
                 
             partida.interfaz.juego.Eliminar_Jugador(jugador, null);
-            if (jugador.nombre_online != partida.interfaz.nombre_online)
-            {
-                String color = jugador.Nombre_color();
-                if (expulsado)
-                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorExpulsadoTrampas, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online));
-                else
-                    MessageBox.Show(String.Format(Mensajes.mensajeJugadorRetirado, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online));
-            }
+            if (jugador == null || jugador.nombre_online == partida.interfaz.nombre_online)
+                return;
+            String color = jugador.Nombre_color();
+            MessageBox.Show(expulsado
+                ? String.Format(Mensajes.mensajeJugadorExpulsadoTrampas, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online)
+                : String.Format(Mensajes.mensajeJugadorRetirado, Char.ToUpper(color[0]) + color.Substring(1), jugador.nombre_online));
         }
 
         private void Juego_terminado()
@@ -1283,9 +1281,10 @@ namespace Juego_Hotel
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             try
             {
-                if (!jugador.Eliminado())
+                if (jugador != null && !jugador.Eliminado())
                     partida.interfaz.BeginInvoke(new Action<Jugador>(partida.interfaz.Finalizar_Partida), jugador);
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception)
             {
                 // Do nothing, the exception was thrown because the window is no longer opened: the command arrived late
@@ -1307,8 +1306,10 @@ namespace Juego_Hotel
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador_dueño = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador);
             Jugador jugador_pagador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == nombre_jugador_pagador);
-            if (jugador_pagador.nombre_online == partida.interfaz.nombre_online)
+            if (jugador_pagador != null && jugador_pagador.nombre_online == partida.interfaz.nombre_online)
             {
+                if (jugador_dueño == null)
+                    return;
                 MessageBox.Show(String.Format(Mensajes.mensajePagarNoches, cantidad, noches, nombre_hotel, jugador_dueño.nombre_online, jugador_dueño.Nombre_color()));
                 partida.interfaz.BeginInvoke(new Action<Jugador, int, int, String>(partida.interfaz.Pedir_Noches_Online), jugador_dueño, cantidad, noches, nombre_hotel);
             }
@@ -1318,9 +1319,8 @@ namespace Juego_Hotel
 
         private void Finalizar_todas_las_partidas()
         {
-            foreach (PartidaOnline partida in this.lista_partidas)
-                if (partida.interfaz != null)
-                    partida.interfaz.BeginInvoke(new Action(partida.interfaz.Conexion_perdida));
+            foreach (PartidaOnline partida in this.lista_partidas.Where(partida => partida.interfaz != null))
+                partida.interfaz.BeginInvoke(new Action(partida.interfaz.Conexion_perdida));
         }
 
         private void Subasta_iniciada()
@@ -1335,16 +1335,18 @@ namespace Juego_Hotel
             partida.interfaz.precio_minimo_subasta_online = precio_minimo;
             if (partida.interfaz.juego.jugador_actual.nombre_online != partida.interfaz.nombre_online) // El jugador actual ya tiene la ventana abierta
             {
-                Thread thread_manejar_subasta = new Thread(Manejar_subasta);
-                thread_manejar_subasta.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+                var thread_manejar_subasta = new Thread(Manejar_subasta)
+                {
+                    CurrentUICulture = Thread.CurrentThread.CurrentUICulture
+                };
                 thread_manejar_subasta.Start(partida);
             }
             partida.interfaz.BeginInvoke(new Action<Jugador, String>(partida.interfaz.Subasta_Iniciada), partida.interfaz.juego.jugador_actual, nombre_hotel);
         }
 
-        private void Manejar_subasta(object parametro)
+        private static void Manejar_subasta(object parametro)
         {
-            PartidaOnline partida = (PartidaOnline)parametro;
+            var partida = (PartidaOnline)parametro;
             Juego juego = partida.interfaz.juego;
             partida.interfaz.frm_subasta_en_curso = new Subastas(ref juego, partida.interfaz, true);
             partida.interfaz.frm_subasta_en_curso.Establecer_Precio_Minimo(partida.interfaz.precio_minimo_subasta_online);
@@ -1371,10 +1373,10 @@ namespace Juego_Hotel
             int cantidad = this.recibir_int(this.socket, ref bytes_recibidos);
             PartidaOnline partida = this.Buscar_partida(id);
             Jugador jugador = partida.interfaz.juego.jugadores.FirstOrDefault(Jugador => Jugador.nombre_online == this.txtLogin.Text);
-            if (jugador.n_jugador == partida.interfaz.frm_subasta_en_curso.n_mayor_postor)
+            if (jugador != null && jugador.n_jugador == partida.interfaz.frm_subasta_en_curso.n_mayor_postor)
             {
                 Juego juego = partida.interfaz.juego;
-                PedirPago frm_pago = new PedirPago(cantidad, ref juego, true, jugador, partida.interfaz);
+                var frm_pago = new PedirPago(cantidad, ref juego, true, jugador, partida.interfaz);
                 frm_pago.ShowDialog();
                 int n_5000 = frm_pago.n_5000, n_1000 = frm_pago.n_1000, n_500 = frm_pago.n_500, n_100 = frm_pago.n_100, n_50 = frm_pago.n_50;
                 this.enviar_comando("auction_pay", id.ToString(), n_5000.ToString(), n_1000.ToString(),
@@ -1395,7 +1397,7 @@ namespace Juego_Hotel
         {
             int bytes_recibidos = 0;
             int id = this.recibir_int(this.socket, ref bytes_recibidos);
-            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1 ? true : false);
+            Boolean automaticamente = (this.recibir_int(this.socket, ref bytes_recibidos) == 1);
             PartidaOnline partida = this.Buscar_partida(id);
             if (automaticamente)
             {
@@ -1497,18 +1499,18 @@ namespace Juego_Hotel
                 this.BeginInvoke(new Action<System.Globalization.CultureInfo, System.Globalization.CultureInfo>(this.ReLocalize), new object[] { nuevoCulture, antiguoCulture });
             else
             {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = nuevoCulture;
+                Thread.CurrentThread.CurrentUICulture = nuevoCulture;
                 resources.ApplyResources(this, "$this");
                 foreach (Control c in this.Controls)
                 {
                     if (c is GroupBox)
                     {
                         c.Text = resources.GetString(c.Name + ".Text");
-                        foreach (Control o in ((GroupBox)c).Controls)
+                        foreach (Control o in c.Controls)
                         {
                             if (o is Label)
                             {
-                                String nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
+                                var nombreAntiguo = (String)resources.GetObject(o.Name + ".Text", antiguoCulture);
                                 if (nombreAntiguo != null)
                                     o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
                             }
@@ -1518,8 +1520,10 @@ namespace Juego_Hotel
                     }
                     else if (c is Label)
                     {
-                        String nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
-                        if (nombreAntiguo != null)
+                        var nombreAntiguo = (String)resources.GetObject(c.Name + ".Text", antiguoCulture);
+                        if (nombreAntiguo == null)
+                            continue;
+                        if (c.Text != null)
                             c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
                     }
                     else

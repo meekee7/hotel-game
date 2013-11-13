@@ -457,7 +457,7 @@ No permission is needed to build them. Continue?</value>
     <value>You can send a message longer than 1024 characters</value>
   </data>
   <data name="tituloErrorAlComprobarVersion" xml:space="preserve">
-    <value>The error was:</value>
+    <value>The error was: </value>
   </data>
   <data name="mensajeErrorSalvandoIdioma" xml:space="preserve">
     <value>An error ocurred when saving language to Config.xml</value>

@@ -457,7 +457,7 @@ No se necesita el permiso para construirlos. ¿Deseas continuar?</value>
     <value>No puedes enviar un mensaje de más de 1024 caracteres</value>
   </data>
   <data name="tituloErrorAlComprobarVersion" xml:space="preserve">
-    <value>El error producido fue:</value>
+    <value>El error producido fue: </value>
   </data>
   <data name="mensajeErrorSalvandoIdioma" xml:space="preserve">
     <value>Se produjo un error al salvar el idioma en Config.xml</value>

@@ -761,7 +761,6 @@
         private System.Windows.Forms.Label colorJ2;
         private System.Windows.Forms.Label colorJ3;
         private System.Windows.Forms.Label colorJ4;
-        private System.Windows.Forms.Button bNormas;
         private System.Windows.Forms.Button bRetirarseJ1;
         private System.Windows.Forms.Button bRetirarseJ2;
         private System.Windows.Forms.Button bRetirarseJ3;
@@ -783,6 +782,7 @@
         private System.Windows.Forms.PictureBox ImagenTurnoJ2;
         private System.Windows.Forms.PictureBox ImagenTurnoJ3;
         private System.Windows.Forms.PictureBox ImagenTurnoJ4;
+        public System.Windows.Forms.Button bNormas;
 
     }
 }
