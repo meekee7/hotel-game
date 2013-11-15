@@ -146,9 +146,18 @@ namespace Juego_Hotel
                 }
                 juego.jug_inicial++; // Para no comenzar en 0
             }
-            jug_ini.Text = resources.GetString("jug_ini.Text") + Environment.NewLine + Environment.NewLine + juego.jug_inicial;
+            jug_ini.Text = this.resources.GetString("jug_ini.Text") + Environment.NewLine + Environment.NewLine + juego.jug_inicial;
             colorJugIni.Text = juego.jugadores[juego.jug_inicial - 1].Nombre_color();
-            juego.jug_actual = juego.jug_inicial;
+            if (juego.nombre_jugador_actual_salvado == String.Empty)
+            {
+                juego.jug_actual = juego.jug_inicial;
+            }
+            else
+            {
+                Jugador jugadorActual = this.juego.jugadores.FirstOrDefault(j => j.nombre_online == this.juego.nombre_jugador_actual_salvado);
+                if (jugadorActual != null)
+                    this.juego.jug_actual = jugadorActual.n_jugador + 1;
+            }
             juego.Cambiar_jugador_actual();
             Establecer_Turno();
             bIniciar.Enabled = false;
@@ -234,7 +243,7 @@ namespace Juego_Hotel
                     }
                 }
             }
-            if ((!online) || (nombre_online == juego.jugadores[juego.jug_inicial - 1].nombre_online))
+            if ((!online) || (nombre_online == juego.jugadores[juego.jug_actual - 1].nombre_online))
             {
                 bDado.Enabled = true;
                 bDado.Focus();

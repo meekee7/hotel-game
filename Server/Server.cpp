@@ -15,7 +15,7 @@ using namespace std;
 Server::Server()
 {
     this->ch = new CommandHandler();
-    this->compatible_version = "2.2.1";
+    this->compatible_version = "2.2.2";
     this->closing = 0;
 }
 

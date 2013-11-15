@@ -16,6 +16,7 @@ namespace Juego_Hotel
         public int jug_inicial;
         public int jug_actual;
         public Jugador jugador_actual;
+        public string nombre_jugador_actual_salvado;
         public int ultimo_res_dado;
         public int ultimo_avance_auto;
         public Casilla[] casillas;
@@ -27,6 +28,7 @@ namespace Juego_Hotel
         {
             n_jugadores = 0;
             n_jugadores_activos = 0;
+            this.nombre_jugador_actual_salvado = String.Empty;
             n_hoteles = Enum.GetNames(typeof(Tipos.Tnombre_hotel)).Length - 1;
             hoteles = new Hotel[n_hoteles];
             Crear_Hoteles(ref hoteles);

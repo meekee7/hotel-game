@@ -183,12 +183,8 @@ namespace Juego_Hotel
                     l_parametros.RemoveAt(0);
                     this.interfaz.juego.estado_hoteles_online = l_parametros.First() as List<String>;
                     l_parametros.RemoveAt(0);
-                    var nombre_jugador_actual = l_parametros.First() as String;
+                    this.interfaz.juego.nombre_jugador_actual_salvado = l_parametros.First() as String;
                     l_parametros.RemoveAt(0);
-                    this.interfaz.juego.jugador_actual = this.interfaz.juego.jugadores.FirstOrDefault(j => j.nombre_online == nombre_jugador_actual);
-                    Jugador jugadorActual = this.interfaz.juego.jugador_actual;
-                    if (jugadorActual != null)
-                        this.interfaz.juego.jug_actual = jugadorActual.n_jugador;
                 }
                 else
                     l_parametros.Clear();
