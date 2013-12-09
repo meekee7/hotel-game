@@ -1225,12 +1225,12 @@ namespace Juego_Hotel
             if (hotel != null && partida.interfaz.juego.casillas[casilla].hotel_der == hotel.nombre)
             {
                 partida.interfaz.juego.casillas[casilla].entrada_en_der = true;
-                partida.interfaz.BeginInvoke(new Action<Casilla, Boolean, Image>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true);
+                partida.interfaz.BeginInvoke(new Action<Casilla, Boolean, Image>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], true, null);
             }
             else
             {
                 partida.interfaz.juego.casillas[casilla].entrada_en_izq = true;
-                partida.interfaz.BeginInvoke(new Action<Casilla, Boolean, Image>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false);
+                partida.interfaz.BeginInvoke(new Action<Casilla, Boolean, Image>(partida.interfaz.Dibujar_Entrada), partida.interfaz.juego.casillas[casilla], false, null);
             }
             if (hotel == null)
                 return;
