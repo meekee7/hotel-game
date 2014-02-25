@@ -616,10 +616,10 @@
             // 
             // comboBoxIdiomas
             // 
+            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxIdiomas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomas.FormattingEnabled = true;
-            resources.ApplyResources(this.comboBoxIdiomas, "comboBoxIdiomas");
             this.comboBoxIdiomas.Name = "comboBoxIdiomas";
             this.comboBoxIdiomas.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxIdiomas_DrawItem);
             this.comboBoxIdiomas.SelectionChangeCommitted += new System.EventHandler(this.IdiomaElegido);

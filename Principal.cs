@@ -146,7 +146,7 @@ namespace Juego_Hotel
                 }
                 juego.jug_inicial++; // Para no comenzar en 0
             }
-            jug_ini.Text = this.resources.GetString("jug_ini.Text") + Environment.NewLine + Environment.NewLine + juego.jug_inicial;
+            jug_ini.Text = this.resources.GetString("jug_ini.Text") + ' ' + juego.jug_inicial;
             colorJugIni.Text = juego.jugadores[juego.jug_inicial - 1].Nombre_color();
             if (juego.nombre_jugador_actual_salvado == String.Empty)
             {
@@ -2050,7 +2050,7 @@ namespace Juego_Hotel
                 else
                     posAmarillo.Location = Calcular_Posicion(jugador.posicion.pos_coche.X, jugador.posicion.pos_coche.Y);
                 posAmarillo.Size = Calcular_Tamaño(ancho_coche, alto_coche);
-            }            
+            }
         }
 
         private void Guardar_idioma(CultureInfo culture)
