@@ -592,6 +592,7 @@ void Server::Run(int port)
     setlocale(LC_ALL, "es_ES.UTF8");
 #endif
     wcout << currentDateTime() << L"Starting Hotel server on port " << port << "..." << endl;
+    wcout << currentDateTime() << L"Allowed version: " << utf8_to_utf16(this->compatible_version) << endl;
     socket_server = new Portable_socket();
     sockaddr_in server_info;
     sockaddr_in client_info;
