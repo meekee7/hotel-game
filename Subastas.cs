@@ -108,6 +108,8 @@ namespace Juego_Hotel
         {
             if (MessageBox.Show(Mensajes.mensajeConfirmacionSubasta, Mensajes.tituloConfirmacionSubasta, MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
+
+			// Si ningún jugador se puede permitir el precio mínimo calculado, establecerlo a 50
             this.Establecer_Precio_Minimo(MessageBox.Show(Mensajes.mensajePrecioMinimoEnSubasta, Mensajes.tituloSubastas, MessageBoxButtons.YesNo) == DialogResult.Yes
                 ? this.hotel_seleccionado.Calcular_precio_minimo() : 50);
             this.cantidad.Enabled = true;

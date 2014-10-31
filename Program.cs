@@ -40,7 +40,7 @@ namespace Juego_Hotel
             if (MessageBox.Show(Mensajes.mensajeActualizar, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 var actualizador = new Actualizador();
-                if (actualizador.comprobar_actualizacion())
+                if (actualizador.ComprobarActualizacion())
                 {
                     if (MessageBox.Show(String.Format(Mensajes.mensajeNuevaVersion, actualizador.ultima_version, actualizador.version_actual),
                         Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) != DialogResult.Yes)
@@ -50,6 +50,8 @@ namespace Juego_Hotel
                 }
                 if (!actualizador.error)
                     MessageBox.Show(Mensajes.mensajeNoNuevaVersion);
+
+				actualizador.MostrarNovedades();
             }
             if (MessageBox.Show(Mensajes.mensajePreguntarSiOnline, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.No)
                 Application.Run(new Principal(null, configuracion));

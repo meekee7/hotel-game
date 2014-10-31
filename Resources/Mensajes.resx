@@ -243,9 +243,6 @@
   <data name="mensajeActualizar" xml:space="preserve">
     <value>¿Quieres comprobar si existe una versión del juego más actualizada y ver las novedades del juego? (Requiere conexión a internet)</value>
   </data>
-  <data name="mensajeErrorActualizador" xml:space="preserve">
-    <value>Se produjo un error comprobando la versión. Ve a https://sourceforge.net/projects/hotels-game/ para comprobar la versión manualmente.</value>
-  </data>
   <data name="mensajeMostrarErrorActualizador" xml:space="preserve">
     <value>El error producido fue:</value>
   </data>
@@ -815,5 +812,8 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   </data>
   <data name="mensajeComprarHotelConFasesYEntradas" xml:space="preserve">
     <value>¿Quieres comprar el hotel con las fases y entradas que ya tenía?. El precio en este caso sería {0}</value>
+  </data>
+  <data name="mensajeErrorAlObtenerNovedades" xml:space="preserve">
+    <value>Se produjo un error obteniendo las novedades. Contacta con ifilgud@gmail.com por favor.</value>
   </data>
 </root>
