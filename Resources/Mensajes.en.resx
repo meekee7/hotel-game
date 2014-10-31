@@ -241,7 +241,7 @@
     <value>Hotels saved game|*.xml</value>
   </data>
   <data name="mensajeActualizar" xml:space="preserve">
-    <value>Do you want to check if there is a newer version of the game?</value>
+    <value>Do you want to check if there is a newer version of the game and read the latest news about the game? (Requires internet connection)</value>
   </data>
   <data name="mensajeErrorActualizador" xml:space="preserve">
     <value>An error ocurred while checking the version. Go to https://sourceforge.net/projects/hotels-game/ to check it manually.</value>

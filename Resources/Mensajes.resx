@@ -241,7 +241,7 @@
     <value>Partida de Hotel|*.xml</value>
   </data>
   <data name="mensajeActualizar" xml:space="preserve">
-    <value>¿Quieres comprobar si existe una versión del juego más actualizada?</value>
+    <value>¿Quieres comprobar si existe una versión del juego más actualizada y ver las novedades del juego? (Requiere conexión a internet)</value>
   </data>
   <data name="mensajeErrorActualizador" xml:space="preserve">
     <value>Se produjo un error comprobando la versión. Ve a https://sourceforge.net/projects/hotels-game/ para comprobar la versión manualmente.</value>
