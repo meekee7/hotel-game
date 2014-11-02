@@ -109,9 +109,26 @@ namespace Juego_Hotel
             if (MessageBox.Show(Mensajes.mensajeConfirmacionSubasta, Mensajes.tituloConfirmacionSubasta, MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
 
+            // Si ningún jugador tiene dinero, retirar al jugador que subasta ya que es imposible que le compren nada
+            IEnumerable<Jugador> posibles_compradores = this.juego.jugadores.Where(j => j != this.juego.jugador_actual);
+            if (posibles_compradores.All(j => j.dinero_total == 0))
+            {
+                MessageBox.Show(Mensajes.mensajeNadiePuedeComprarSubasta, Mensajes.tituloSubastas);
+                this.interfaz.Retirarse(this.juego.jug_actual - 1, false);
+                return;
+            }
 			// Si ningún jugador se puede permitir el precio mínimo calculado, establecerlo a 50
-            this.Establecer_Precio_Minimo(MessageBox.Show(Mensajes.mensajePrecioMinimoEnSubasta, Mensajes.tituloSubastas, MessageBoxButtons.YesNo) == DialogResult.Yes
-                ? this.hotel_seleccionado.Calcular_precio_minimo() : 50);
+            if (MessageBox.Show(Mensajes.mensajePrecioMinimoEnSubasta, Mensajes.tituloSubastas, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                int precio_min_calculado = this.hotel_seleccionado.Calcular_precio_minimo();
+                
+                if (posibles_compradores.Any(j => j.dinero_total >= precio_min_calculado))
+                    this.Establecer_Precio_Minimo(precio_min_calculado);
+                else
+                    this.Establecer_Precio_Minimo(50);
+            }
+            else
+                this.Establecer_Precio_Minimo(50);
             this.cantidad.Enabled = true;
             this.bVender.Enabled = true;
             this.bCerrar.Enabled = false;

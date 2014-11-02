@@ -156,7 +156,7 @@
   <data name="mensajeImposibleComprarHotelTuyo" xml:space="preserve">
     <value>You already own this hotel</value>
   </data>
-  <data name="mensajeJugadoresRetidados" xml:space="preserve">
+  <data name="mensajeJugadoresRetirados" xml:space="preserve">
     <value>The game ends because all players have retired</value>
   </data>
   <data name="mensajeNoIndicadoJugadores" xml:space="preserve">
@@ -784,7 +784,7 @@ Player {0} must pay {1}</value>
   </data>
   <data name="mensajePrecioMinimoEnSubasta" xml:space="preserve">
     <value>Do you want a minimum price in the auction?
-It will be a third of the buy value of hotel plus built phases</value>
+It will be a third of the buy value of hotel plus built phases. If none of the players have that money, it will be set to 50 to avoid blocking of the game.</value>
   </data>
   <data name="textoAbreviaturaJugador" xml:space="preserve">
     <value>P</value>
@@ -815,5 +815,8 @@ It will be a third of the buy value of hotel plus built phases</value>
   </data>
   <data name="mensajeErrorAlObtenerNovedades" xml:space="preserve">
     <value>An error occurred obtaining the latest news. Please contact ifilgud@gmail.com.</value>
+  </data>
+  <data name="mensajeNadiePuedeComprarSubasta" xml:space="preserve">
+    <value>None of the players have money to pay for any of your hotels, so will be retired from the game. :(</value>
   </data>
 </root>

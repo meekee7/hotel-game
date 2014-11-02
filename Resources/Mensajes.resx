@@ -156,7 +156,7 @@
   <data name="mensajeImposibleComprarHotelTuyo" xml:space="preserve">
     <value>Ya posees este hotel</value>
   </data>
-  <data name="mensajeJugadoresRetidados" xml:space="preserve">
+  <data name="mensajeJugadoresRetirados" xml:space="preserve">
     <value>Partida finalizada porque todos los jugadores se han retirado</value>
   </data>
   <data name="mensajeNoIndicadoJugadores" xml:space="preserve">
@@ -784,7 +784,7 @@ El jugador {0} deberá abonar {1}</value>
   </data>
   <data name="mensajePrecioMinimoEnSubasta" xml:space="preserve">
     <value>¿Quieres que haya precio mínimo en la subasta?
-Se establecerá a un tercio del valor de compra del suelo más las ampliaciones construidas</value>
+Se establecerá a un tercio del valor de compra del suelo más las ampliaciones construidas. Si ningún jugador tiene ese dinero, se establecerá a 50 para evitar un bloqueo de la partida.</value>
   </data>
   <data name="textoAbreviaturaJugador" xml:space="preserve">
     <value>J</value>
@@ -815,5 +815,8 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   </data>
   <data name="mensajeErrorAlObtenerNovedades" xml:space="preserve">
     <value>Se produjo un error obteniendo las novedades. Contacta con ifilgud@gmail.com por favor.</value>
+  </data>
+  <data name="mensajeNadiePuedeComprarSubasta" xml:space="preserve">
+    <value>Ningún jugador tiene dinero para comprar ninguno de tus hoteles, por tanto, serás retirado de la partida. :(</value>
   </data>
 </root>

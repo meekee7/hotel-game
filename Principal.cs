@@ -324,8 +324,8 @@ namespace Juego_Hotel
                     }
                 }
             }
-            // Dibujar todas las fases ya hechas
-            foreach (Hotel hotel in juego.hoteles)
+            // Dibujar todas las fases ya hechas y con dueño (para ficheros de partidas salvadas incorrectos)
+            foreach (Hotel hotel in juego.hoteles.Where(h => h.dueño != null))
             {
                 for (int pos_fase_hotel = 0; pos_fase_hotel < hotel.n_fases_construidas; pos_fase_hotel++)
                 {
@@ -473,7 +473,8 @@ namespace Juego_Hotel
             if (ganador != null)
                 MessageBox.Show(String.Format(Mensajes.mensajePartidaFinalizada, ganador.Nombre_color()), Mensajes.tituloHotel);
             else
-                MessageBox.Show(Mensajes.mensajeJugadoresRetidados);
+                MessageBox.Show(Mensajes.mensajeJugadoresRetirados);
+            this.CerrarTodasVentanas();
         }
 
         public int Sig_jugador_Activo()
@@ -552,6 +553,11 @@ namespace Juego_Hotel
             // Cerrar las ventanas que se pudieran quedar abiertas al ser un paso automático
             if (!automaticamente)
                 return;
+            this.CerrarTodasVentanas();
+        }
+
+        private void CerrarTodasVentanas()
+        {
             foreach (Form form in Application.OpenForms.Cast<Form>().ToList())
             {
                 if ((form is Principal) || (form is Online) || (form is Chat) || (form is PartidaOnline) || (form is Actividad)
@@ -1693,6 +1699,8 @@ namespace Juego_Hotel
                 control.Enabled = false;
             }
             bSalir.Enabled = true;
+            // Para forzar el cierre de las ventanas
+            this.CerrarTodasVentanas();
         }
 
         public void Limpiar_Fases_y_Entradas_Hoteles_Jugador(Jugador jugador)
@@ -1721,12 +1729,15 @@ namespace Juego_Hotel
             imgTablero.Image = nuevo_tablero;
         }
 
-        private Boolean Retirarse(int num_jugador)
+        public Boolean Retirarse(int num_jugador, Boolean preguntar = true)
         {
             if (juego.jugadores[num_jugador].Eliminado()) // Ya está eliminado
                 return true;
-            if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) != DialogResult.Yes)
-                return false;
+            if (preguntar)
+            {
+                if (MessageBox.Show(Mensajes.mensajeRetirarse, Mensajes.tituloHotel, MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return false;
+            }
             if (!online)
             {
                 Limpiar_Fases_y_Entradas_Hoteles_Jugador(juego.jugadores[num_jugador]);
