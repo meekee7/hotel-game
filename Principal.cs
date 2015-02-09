@@ -712,6 +712,8 @@ namespace Juego_Hotel
                     juego.ultimo_avance_auto++;
                 }
                 jugador.posicion.ocupada = true; // Ocupamos la casilla
+                // Nueva tirada implica poder pagar de nuevo al caer en una entrada
+                juego.jugador_actual.pago_ultimo_turno = false;
             }
             if (online && Application.OpenForms.Cast<Form>().Contains(actividad))
                 actividad.DadoTirado(jugador, juego.ultimo_res_dado, automaticamente);//Actualizando datos de la actividad

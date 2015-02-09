@@ -819,4 +819,7 @@ It will be a third of the buy value of hotel plus built phases. If none of the p
   <data name="mensajeNadiePuedeComprarSubasta" xml:space="preserve">
     <value>None of the players have money to pay for any of your hotels, so will be retired from the game. :(</value>
   </data>
+  <data name="mensajeErrorBugReportEmailInvalido" xml:space="preserve">
+    <value>Please, enter a real email address. It will not be registered anywhere, I just may need it because of two reasons: It is very likely that the report is missing information, and because I want to thank you for the time taken to report a problem. The address is written inside an email that is sent to my self from the server, and it is not used for anything else. Thanks.</value>
+  </data>
 </root>

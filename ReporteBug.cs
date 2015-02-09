@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using Juego_Hotel.Resources;
+using System.Text.RegularExpressions;
 
 namespace Juego_Hotel
 {
@@ -18,6 +19,11 @@ namespace Juego_Hotel
             if (this.textBoxEmail.Text.Trim() == "")
             {
                 MessageBox.Show(Mensajes.mensajeErrorBugReportEmailVacio);
+                return;
+            }
+            if(!Regex.IsMatch(textBoxEmail.Text, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+            {
+                MessageBox.Show(Mensajes.mensajeErrorBugReportEmailInvalido);
                 return;
             }
             if (this.TextoBug.Text.Trim() == "")
