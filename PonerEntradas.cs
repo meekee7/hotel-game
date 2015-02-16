@@ -66,7 +66,7 @@ namespace Juego_Hotel
                 MessageBox.Show(String.Format(Mensajes.mensajeNohayFasesConstruidasParaPonerEntradas,this.hotel_seleccionado.nombre_txt));
                 return;
             }
-            if (this.hotel_seleccionado.precio_entrada > this.jugador.dinero_total)
+            if (!this.entrada_gratis && (this.hotel_seleccionado.precio_entrada > this.jugador.dinero_total))
             {
                 MessageBox.Show(Mensajes.mensajeSinDineroParaComprarEntradas + this.hotel_seleccionado.nombre_txt);
                 return;
