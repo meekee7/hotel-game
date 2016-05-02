@@ -24,6 +24,8 @@ namespace Juego_Hotel
                 MessageBox.Show(Mensajes.mensajeIdiomaPorDefecto, Mensajes.tituloBienvenido);
                 if ((System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "es-ES") || (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2) == "es"))
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
+                else if ((System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "fr-FR") || (System.Threading.Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2) == "fr"))
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
                 else
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             }
@@ -34,6 +36,10 @@ namespace Juego_Hotel
             else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+            }
+            else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("French"))
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

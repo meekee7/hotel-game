@@ -273,7 +273,7 @@ namespace Juego_Hotel
                             this.cancelado = true;
                         frm_pago.Close();
                     }
-                    if ((this.total_a_pagar != -1) && (!this.interfaz.online))
+                    if ((this.total_a_pagar != -1) && !this.interfaz.online && !this.cancelado)
                         this.hotel_seleccionado.Ampliar();
                     this.Close();
                 }

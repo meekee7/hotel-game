@@ -95,6 +95,8 @@ namespace Juego_Hotel
                         Thread.CurrentThread.CurrentUICulture = new CultureInfo("es");
                     else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("English"))
                         Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+                    else if (nodo_Idioma.ChildNodes[0].FirstChild.Value.Equals("French"))
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
                 }
             }
             else
@@ -107,7 +109,16 @@ namespace Juego_Hotel
             // Rellenar combobox de idiomas
             comboBoxIdiomas.Items.Add(new ComboItemImagen(Mensajes.comboBoxIdiomas1, 0));
             comboBoxIdiomas.Items.Add(new ComboItemImagen(Mensajes.comboBoxIdiomas2, 1));
-            comboBoxIdiomas.SelectedIndex = Thread.CurrentThread.CurrentUICulture.Name.Equals("es") ? 0 : 1;
+            comboBoxIdiomas.Items.Add(new ComboItemImagen(Mensajes.comboBoxIdiomas3, 2));
+            switch (Thread.CurrentThread.CurrentUICulture.Name)
+            {
+                case "es": comboBoxIdiomas.SelectedIndex = 0;
+                    break;
+                case "en": comboBoxIdiomas.SelectedIndex = 1;
+                    break;
+                case "fr": comboBoxIdiomas.SelectedIndex = 2;
+                    break;
+            }
         }
 
         private void bIniciar_Click(object sender, EventArgs e)
@@ -2083,6 +2094,8 @@ namespace Juego_Hotel
                     break;
                 case "en": nodo_Idioma.ChildNodes[0].InnerText = "English";
                     break;
+                case "fr": nodo_Idioma.ChildNodes[0].InnerText = "French";
+                    break;
             }
             var writer = new XmlTextWriter("Config.xml", Encoding.UTF8);
             try
@@ -2115,6 +2128,11 @@ namespace Juego_Hotel
             {
                 Program.ReLocalizeAll(new CultureInfo("en"));
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+            }
+            else if (senderComboBox.SelectedIndex.Equals(2))
+            {
+                Program.ReLocalizeAll(new CultureInfo("fr"));
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
             }
             Guardar_idioma(Thread.CurrentThread.CurrentUICulture);
         }
@@ -2169,7 +2187,16 @@ namespace Juego_Hotel
                     {
                         ((ComboItemImagen)(c as ComboBox).Items[0]).Etiqueta = Mensajes.comboBoxIdiomas1;
                         ((ComboItemImagen)(c as ComboBox).Items[1]).Etiqueta = Mensajes.comboBoxIdiomas2;
-                        (c as ComboBox).SelectedIndex = antiguoCulture.Name.Equals("es") ? 1 : 0;
+                        ((ComboItemImagen)(c as ComboBox).Items[2]).Etiqueta = Mensajes.comboBoxIdiomas3;
+                        switch (nuevoCulture.Name)
+                        {
+                            case "es": (c as ComboBox).SelectedIndex = 0;
+                                break;
+                            case "en": (c as ComboBox).SelectedIndex = 1;
+                                break;
+                            case "fr": (c as ComboBox).SelectedIndex = 2;
+                                break;
+                        }
                     }
                     else if (c is Label)
                     {

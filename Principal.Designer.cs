@@ -227,8 +227,8 @@
             // 
             // ImagenTurnoJ1
             // 
-            this.ImagenTurnoJ1.Image = global::Juego_Hotel.Properties.Resources.TurnoRojo;
             resources.ApplyResources(this.ImagenTurnoJ1, "ImagenTurnoJ1");
+            this.ImagenTurnoJ1.Image = global::Juego_Hotel.Properties.Resources.TurnoRojo;
             this.ImagenTurnoJ1.Name = "ImagenTurnoJ1";
             this.ImagenTurnoJ1.TabStop = false;
             // 
@@ -304,8 +304,8 @@
             // 
             // ImagenTurnoJ2
             // 
-            this.ImagenTurnoJ2.Image = global::Juego_Hotel.Properties.Resources.TurnoAzul;
             resources.ApplyResources(this.ImagenTurnoJ2, "ImagenTurnoJ2");
+            this.ImagenTurnoJ2.Image = global::Juego_Hotel.Properties.Resources.TurnoAzul;
             this.ImagenTurnoJ2.Name = "ImagenTurnoJ2";
             this.ImagenTurnoJ2.TabStop = false;
             // 
@@ -374,8 +374,8 @@
             // 
             // ImagenTurnoJ3
             // 
-            this.ImagenTurnoJ3.Image = global::Juego_Hotel.Properties.Resources.TurnoVerde;
             resources.ApplyResources(this.ImagenTurnoJ3, "ImagenTurnoJ3");
+            this.ImagenTurnoJ3.Image = global::Juego_Hotel.Properties.Resources.TurnoVerde;
             this.ImagenTurnoJ3.Name = "ImagenTurnoJ3";
             this.ImagenTurnoJ3.TabStop = false;
             // 
@@ -444,8 +444,8 @@
             // 
             // ImagenTurnoJ4
             // 
-            this.ImagenTurnoJ4.Image = global::Juego_Hotel.Properties.Resources.TurnoAmarillo;
             resources.ApplyResources(this.ImagenTurnoJ4, "ImagenTurnoJ4");
+            this.ImagenTurnoJ4.Image = global::Juego_Hotel.Properties.Resources.TurnoAmarillo;
             this.ImagenTurnoJ4.Name = "ImagenTurnoJ4";
             this.ImagenTurnoJ4.TabStop = false;
             // 
@@ -542,33 +542,33 @@
             // 
             // posVerde
             // 
+            resources.ApplyResources(this.posVerde, "posVerde");
             this.posVerde.BackColor = System.Drawing.Color.Transparent;
             this.posVerde.Image = global::Juego_Hotel.Properties.Resources.Flecha_verde;
-            resources.ApplyResources(this.posVerde, "posVerde");
             this.posVerde.Name = "posVerde";
             this.posVerde.TabStop = false;
             // 
             // posAmarillo
             // 
+            resources.ApplyResources(this.posAmarillo, "posAmarillo");
             this.posAmarillo.BackColor = System.Drawing.Color.Transparent;
             this.posAmarillo.Image = global::Juego_Hotel.Properties.Resources.Flecha_amarilla;
-            resources.ApplyResources(this.posAmarillo, "posAmarillo");
             this.posAmarillo.Name = "posAmarillo";
             this.posAmarillo.TabStop = false;
             // 
             // posAzul
             // 
+            resources.ApplyResources(this.posAzul, "posAzul");
             this.posAzul.BackColor = System.Drawing.Color.Transparent;
             this.posAzul.Image = global::Juego_Hotel.Properties.Resources.Flecha_azul;
-            resources.ApplyResources(this.posAzul, "posAzul");
             this.posAzul.Name = "posAzul";
             this.posAzul.TabStop = false;
             // 
             // posRojo
             // 
+            resources.ApplyResources(this.posRojo, "posRojo");
             this.posRojo.BackColor = System.Drawing.Color.Transparent;
             this.posRojo.Image = global::Juego_Hotel.Properties.Resources.Flecha_roja;
-            resources.ApplyResources(this.posRojo, "posRojo");
             this.posRojo.Name = "posRojo";
             this.posRojo.TabStop = false;
             // 
@@ -595,17 +595,15 @@
             // 
             // img_Banco
             // 
-            this.img_Banco.BackColor = System.Drawing.Color.Transparent;
-            this.img_Banco.Image = global::Juego_Hotel.Properties.Resources.TickVerde;
             resources.ApplyResources(this.img_Banco, "img_Banco");
+            this.img_Banco.BackColor = System.Drawing.Color.Transparent;
             this.img_Banco.Name = "img_Banco";
             this.img_Banco.TabStop = false;
             // 
             // img_ayto
             // 
-            this.img_ayto.BackColor = System.Drawing.Color.Transparent;
-            this.img_ayto.Image = global::Juego_Hotel.Properties.Resources.TickVerde;
             resources.ApplyResources(this.img_ayto, "img_ayto");
+            this.img_ayto.BackColor = System.Drawing.Color.Transparent;
             this.img_ayto.Name = "img_ayto";
             this.img_ayto.TabStop = false;
             // 
@@ -630,6 +628,7 @@
             this.imageListIdiomas.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListIdiomas.Images.SetKeyName(0, "spanish.png");
             this.imageListIdiomas.Images.SetKeyName(1, "english.jpg");
+            this.imageListIdiomas.Images.SetKeyName(2, "french.png");
             // 
             // bReportarBug
             // 

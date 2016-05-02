@@ -822,4 +822,7 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   <data name="mensajeErrorBugReportEmailInvalido" xml:space="preserve">
     <value>Por favor, introduce un email real. No se registra en ningún lugar, simplemente lo puedo necesitar primero porque probablemente falte información en el reporte y segundo, para poder agradecerte el tiempo empleado. El reporte llega como un email en el que viene tu email escrito dentro, no se usa para nada más. Gracias</value>
   </data>
+  <data name="comboBoxIdiomas3" xml:space="preserve">
+    <value>Francés</value>
+  </data>
 </root>

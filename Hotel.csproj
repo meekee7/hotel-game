@@ -248,6 +248,7 @@
     <EmbeddedResource Include="Resources\Mensajes.en.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Mensajes.fr.resx" />
     <EmbeddedResource Include="Resources\Mensajes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Mensajes.Designer.cs</LastGenOutput>
@@ -365,10 +366,12 @@
     <None Include="Images\Entrada.tif" />
     <Content Include="Images\Billete_1000.png" />
     <Content Include="Images\Billete_5000.png" />
+    <Content Include="Images\english.jpg" />
     <Content Include="Images\Flecha_amarilla.tif" />
     <Content Include="Images\Flecha_azul.tif" />
     <Content Include="Images\Flecha_roja.tif" />
     <Content Include="Images\Flecha_verde.tif" />
+    <Content Include="Images\french.png" />
     <Content Include="Images\Letoile_tarjeta.png" />
     <Content Include="Images\Royal_tarjeta.png" />
     <Content Include="Images\Safari_tarjeta.png" />
@@ -388,6 +391,7 @@
     <None Include="Images\TurnoAzul.tif" />
     <None Include="Images\TurnoRojo.tif" />
     <None Include="Images\TurnoVerde.tif" />
+    <Content Include="Images\spanish.png" />
     <Content Include="Images\Waikiki_tarjeta.png" />
   </ItemGroup>
   <ItemGroup>

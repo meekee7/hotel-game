@@ -118,454 +118,454 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="mensajeCargarPartida" xml:space="preserve">
-    <value>The current game will be lost if you continue, whether loading is successful or not, Do you want to proceed?</value>
+    <value>La partie en cours sera perdue si vous continuez, que le chargement soit réussi ou non. Voulez-vous continuer ?</value>
   </data>
   <data name="mensajeCasillaEntradaGratis" xml:space="preserve">
-    <value>You have fallen into a position of type Free Entrance, do not miss the chance!</value>
+    <value>Vous êtes sur une case "Entrée gratuite", ne ratez pas cette chance !</value>
   </data>
   <data name="mensajeCasillaFaseGratis" xml:space="preserve">
-    <value>You have fallen into a position of type Phase Free, do not miss the chance!</value>
+    <value>Vous êtes sur une case "Construction gratuite"", ne ratez pas cette chance !</value>
   </data>
   <data name="mensajeComprarHotel" xml:space="preserve">
-    <value>You can buy the hotel. If you want to continue, you are obliged to pay. Do you want to purchase it?</value>
+    <value>Vous pouvez acheter cet hôtel. Si vous continuez, vous êtes dans l'obligation de payer. Voulez-vous l'acheter ?</value>
   </data>
   <data name="mensajeDebePagarNoches" xml:space="preserve">
-    <value>The player {0} must pay for nights to player {1}. Click OK to roll the dice.</value>
+    <value>Le joueur {0} doit payer une nuit au joueur {1}. Cliquez sur OK pour lancer le dé.</value>
   </data>
   <data name="mensajeErrorAlCargar" xml:space="preserve">
-    <value>Error loading the game: {0}</value>
+    <value>Erreur de chargement : {0}.</value>
   </data>
   <data name="mensajeErrorAlSalvar" xml:space="preserve">
-    <value>Error saving the game: {0}</value>
+    <value>Erreur de sauvegarde : {0}.</value>
   </data>
   <data name="mensajeErrorCargarConfig" xml:space="preserve">
-    <value>Unable to load the configuration file Config.xml</value>
+    <value>Impossible de charger le fichier de configuration Config.xml.</value>
   </data>
   <data name="mensajeErrorCargarConfigServidor" xml:space="preserve">
-    <value>Unable to load configuration from the server</value>
+    <value>Impossible de charger le fichier de configuration depuis le serveur.</value>
   </data>
   <data name="mensajeExpropiacionImposible" xml:space="preserve">
-    <value>The hotel already has an owner and is not expropriable</value>
+    <value>L'hôtel à déjà un propriétaire et il ne peut pas être exproprié.</value>
   </data>
   <data name="mensajeExpropiacionPosible" xml:space="preserve">
-    <value>Do you want to expropriate the hotel {0} to the player {1}?</value>
+    <value>Voulez-vous exproprier l'hôtel {0} du joueur {1} ?</value>
   </data>
   <data name="mensajeFondosInsuficientesParaComprarHotel" xml:space="preserve">
-    <value>You do not have sufficient funds to purchase the hotel {0}</value>
+    <value>Vous n'avez pas assez d'argent pour acheter cet hôtel {0}.</value>
   </data>
   <data name="mensajeImposibleComprarHotelTuyo" xml:space="preserve">
-    <value>You already own this hotel</value>
+    <value>Vous possédez déjà cet hôtel.</value>
   </data>
   <data name="mensajeJugadoresRetirados" xml:space="preserve">
-    <value>The game ends because all players have retired</value>
+    <value>Le jeu est terminé car tous les joueurs ont abandonné.</value>
   </data>
   <data name="mensajeNoIndicadoJugadores" xml:space="preserve">
-    <value>You haven't set yet the number of players</value>
+    <value>Vous n'avez pas indiqué le nombre de joueurs.</value>
   </data>
   <data name="mensajeNoPoseesHoteles" xml:space="preserve">
-    <value>You don't own any hotels</value>
+    <value>Vous ne possédez aucun hôtel.</value>
   </data>
   <data name="mensajePartidaFinalizada" xml:space="preserve">
-    <value>Game ended. Player {0} wins!</value>
+    <value>Jeu terminé. Le joueur {0} gagne !</value>
   </data>
   <data name="mensajeReiniciarPartida" xml:space="preserve">
-    <value>Are you sure you want to restart the game?</value>
+    <value>Êtes vous sûr(e) de vouloir recommencer le jeu ?</value>
   </data>
   <data name="mensajeRetirarse" xml:space="preserve">
-    <value>Are you sure you want to retire?</value>
+    <value>Êtes vous sûr de vouloir abandonner ?</value>
   </data>
   <data name="mensajeSacadoUnSeis" xml:space="preserve">
-    <value>You got a 6. You can roll again!</value>
+    <value>Vous avez fait 6. Vous pouvez relancer le dé !</value>
   </data>
   <data name="mensajeSalvarAntesDeTirar" xml:space="preserve">
-    <value>You can only save before rolling the dice</value>
+    <value>Vous ne pouvez sauvegarder seulement avant de lancer le dé.</value>
   </data>
   <data name="mensajeSelecJugadores" xml:space="preserve">
-    <value>Select the number of players</value>
+    <value>Sélectionnez le nombre de joueurs.</value>
   </data>
   <data name="mensajeSinFondosParaExpropiacion" xml:space="preserve">
-    <value>You don't have sufficient funds to carry out the expropriation</value>
+    <value>Vous n'avez pas assez d'argent pour réaliser une expropriation.</value>
   </data>
   <data name="mensajeTotalAPagar" xml:space="preserve">
-    <value>You got a {0}, so the {1} player must pay {2} to {3} player</value>
+    <value>Vous avez fait {0}, le joueur {1} doit payer {2} au joueur {3}.</value>
   </data>
   <data name="tituloCargarPartida" xml:space="preserve">
-    <value>Load game</value>
+    <value>Chargement du jeu.</value>
   </data>
   <data name="tituloComprarHotel" xml:space="preserve">
-    <value>Buy hotel</value>
+    <value>Acheter un hôtel.</value>
   </data>
   <data name="tituloDialogoCargarPartida" xml:space="preserve">
-    <value>Load a game</value>
+    <value>Charger un jeu.</value>
   </data>
   <data name="tituloDialogoGuardarPartida" xml:space="preserve">
-    <value>Save current game</value>
+    <value>Sauvegarde en cours.</value>
   </data>
   <data name="tituloError" xml:space="preserve">
-    <value>Error</value>
+    <value>Erreur</value>
   </data>
   <data name="tituloExpropiacionImposible" xml:space="preserve">
-    <value>Expropriation is not possible</value>
+    <value>L'expropriation n'est pas possible.</value>
   </data>
   <data name="tituloExpropiacionPosible" xml:space="preserve">
-    <value>Expropriation is possible</value>
+    <value>L'expropriation est possible.</value>
   </data>
   <data name="tituloHotel" xml:space="preserve">
-    <value>Hotels</value>
+    <value>Hôtels</value>
   </data>
   <data name="tituloImposibleComprarHotelTuyo" xml:space="preserve">
-    <value>Impossible to purchase</value>
+    <value>Impossible d'acheter.</value>
   </data>
   <data name="tituloNoEsPosibleMostrarTusHoteles" xml:space="preserve">
-    <value>Unable to show your hotels</value>
+    <value>Impossible d'afficher vos hôtels.</value>
   </data>
   <data name="tituloNoesPosiblePonerEntradas" xml:space="preserve">
-    <value>It is not possible to buy entrances</value>
+    <value>Il n'est pas possible d'acheter des entrées.</value>
   </data>
   <data name="tituloNoIndicadoJugadores" xml:space="preserve">
-    <value>Color selection</value>
+    <value>Choisir une couleur.</value>
   </data>
   <data name="tituloPagarNoches" xml:space="preserve">
-    <value>Pay nights</value>
+    <value>Payer la nuit.</value>
   </data>
   <data name="tituloSelecJugadores" xml:space="preserve">
-    <value>Unable to Start</value>
+    <value>Impossible de commencer.</value>
   </data>
   <data name="comboBoxIdiomas1" xml:space="preserve">
-    <value>Spanish</value>
+    <value>Espagnol</value>
   </data>
   <data name="comboBoxIdiomas2" xml:space="preserve">
-    <value>English</value>
+    <value>Anglais</value>
+  </data>
+  <data name="comboBoxIdiomas3" xml:space="preserve">
+    <value>Français</value>
   </data>
   <data name="filtroDialogoCargarGuardarPartida" xml:space="preserve">
-    <value>Hotels saved game|*.xml</value>
+    <value>Jeu sauvegardé|*.xml</value>
   </data>
   <data name="mensajeActualizar" xml:space="preserve">
-    <value>Do you want to check if there is a newer version of the game and read the latest news about the game? (Requires internet connection)</value>
+    <value>Voulez-vous vérifier les mises à jour et lire les dernières nouveautés à propos du jeu ?(Connexion internet requise)</value>
   </data>
   <data name="mensajeMostrarErrorActualizador" xml:space="preserve">
-    <value>The error was: </value>
+    <value>L'erreur est : </value>
   </data>
   <data name="mensajeNoNuevaVersion" xml:space="preserve">
-    <value>You have the latest version :)</value>
+    <value>Vous possédez la dernière version. :)</value>
   </data>
   <data name="mensajeNuevaVersion" xml:space="preserve">
-    <value>There is a different version ({0}) of the one you are using ({1}). Do you want to go to project page in SourceForge? The game will be closed.</value>
+    <value>Une nouvelle version ({0}), différente de celle-ci ({1}) est en ligne. Voule-vous aller sur la page du projet ? Le jeu se fermera.</value>
   </data>
   <data name="mensajePreguntarSiOnline" xml:space="preserve">
-    <value>Do you want to play online?</value>
+    <value>Voulez-vous jouer en ligne ?</value>
   </data>
   <data name="tituloBienvenido" xml:space="preserve">
-    <value>¡Welcome to Hotels!</value>
+    <value>Bienvenue dans "Hôtel" !</value>
   </data>
   <data name="mensajeIntentarConstruirHotelVendido" xml:space="preserve">
-    <value>The hotel being built has been sold, construction is cancelled.</value>
+    <value>L'hôtel en cours de construction a été vendu. La construction est annulée.</value>
   </data>
   <data name="mensajeNoIndicadoDineroNecesario" xml:space="preserve">
-    <value>You haven't selected the minimum necessary money</value>
+    <value>Vous n'avez pas sélectionnné suffisament d'argent.</value>
   </data>
   <data name="mensajeSinBilletesDe100" xml:space="preserve">
-    <value>You don't have enough 100 bills</value>
+    <value>Vous n'avez pas assez de billets de 100.</value>
   </data>
   <data name="mensajeSinBilletesDe1000" xml:space="preserve">
-    <value>You don't have enough 1000 bills</value>
+    <value>Vous n'avez pas assez de billets de 1000.</value>
   </data>
   <data name="mensajeSinBilletesDe50" xml:space="preserve">
-    <value>You don't have enough 50 bills</value>
+    <value>Vous n'avez pas assez de billets de 50.</value>
   </data>
   <data name="mensajeSinBilletesDe500" xml:space="preserve">
-    <value>You don't have enough 500 bills</value>
+    <value>Vous n'avez pas assez de billets de 500.</value>
   </data>
   <data name="mensajeSinBilletesDe5000" xml:space="preserve">
-    <value>You don't have enough 5000 bills</value>
+    <value>Vous n'avez pas assez de billets de 5000.</value>
   </data>
   <data name="mensajeSinPropiedadesNiFondos" xml:space="preserve">
-    <value>You have no properties to sell at auction or sufficient funds to pay. You are out of the game :(</value>
+    <value>Vous n'avez pas de propriété à vendre aux enchères ou de fonds suffisants pour payer. Vous êtes ruinés. :(</value>
   </data>
   <data name="mensajeSinPropiedadesParaSubastar" xml:space="preserve">
-    <value>You have no properties to sell at auction</value>
+    <value>Vous n'avez pas de propriété à vendre aux enchères.</value>
   </data>
   <data name="textoNecesario" xml:space="preserve">
-    <value>Necessary: </value>
+    <value>Nécessaire : </value>
   </data>
   <data name="textoTienes" xml:space="preserve">
-    <value>Have: </value>
+    <value>Vous avez : </value>
   </data>
   <data name="textoTotal" xml:space="preserve">
-    <value>Total: </value>
+    <value>Total : </value>
   </data>
   <data name="textoUsas" xml:space="preserve">
-    <value>Using: </value>
+    <value>Vous utilisez : </value>
   </data>
   <data name="tituloConstruccionCancelada" xml:space="preserve">
-    <value>Construction cancelled</value>
+    <value>Construction annulée.</value>
   </data>
   <data name="tituloDineroInsuficiente" xml:space="preserve">
-    <value>Insufficient money</value>
+    <value>Fonds insuffisants.</value>
   </data>
   <data name="tituloImposibleIncrementar" xml:space="preserve">
-    <value>Unable to increase</value>
+    <value>Impossible d'augmenter la somme.</value>
   </data>
   <data name="tituloJugadorEliminado" xml:space="preserve">
-    <value>Player eliminated</value>
+    <value>Joueur éliminé.</value>
   </data>
   <data name="tituloSubastas" xml:space="preserve">
-    <value>Auctions</value>
+    <value>Enchères</value>
   </data>
   <data name="mensajeConstruccionDenegada" xml:space="preserve">
-    <value>Construction denied</value>
+    <value>Construction refusée.</value>
   </data>
   <data name="mensajeConstruccionDobleCoste" xml:space="preserve">
-    <value>Construction will cost double</value>
+    <value>Construction deux fois plus chère.</value>
   </data>
   <data name="mensajeConstruccionGratuita" xml:space="preserve">
-    <value>Construction is free </value>
+    <value>Construction gratuite.</value>
   </data>
   <data name="mensajeConstruccionPermitida" xml:space="preserve">
-    <value>Construction allowed </value>
+    <value>Construction autorisée.</value>
   </data>
   <data name="mensajeCasillaOcupada" xml:space="preserve">
-    <value>This square is busy and can not add an entrance in it right now</value>
+    <value>Cette case est occupée, vous ne pouvez pas poser d'entrée pour le moment.</value>
   </data>
   <data name="mensajeCasillaYaPoseeEntrada" xml:space="preserve">
-    <value>This square already has a entrance purchased for the hotel </value>
+    <value>Cette case a déjà une entrée pour cet hôtel.</value>
   </data>
   <data name="mensajeComprarEntradas" xml:space="preserve">
-    <value>If you agree to buy the entrance, you are obliged to pay. Do you want to purchase it?</value>
+    <value>Si vous acceptez d'acheter une entrée, vous êtes dans l'obligation de payer. Voulez-vous continuer votre achat ?</value>
   </data>
   <data name="mensajeEstasEnCasillaTipoEntradaGratis" xml:space="preserve">
-    <value>You're in a Free Entrance type position. Enjoy it!</value>
+    <value>Entrée gratuite ! Profitez-en !</value>
   </data>
   <data name="mensajeNohayFasesConstruidasParaPonerEntradas" xml:space="preserve">
-    <value>The hotel {0} does not have any built phase, so no entrances can be added yet</value>
+    <value>Cet hôtel {0} n'ai pas encore construit, vous ne pouvez pas placer d'entrée.</value>
   </data>
   <data name="mensajePrimeraEntradaGratis" xml:space="preserve">
-    <value>The first entrance you select will be free, due to the position on which you are. The consecutive will be processed according to the normal method (one per hotel)</value>
+    <value>La première entrée sera gratuite, les suivantes s'achèteront de manière habituelle. (une par case)</value>
   </data>
   <data name="mensajeSinDineroParaComprarEntradas" xml:space="preserve">
-    <value>You do not have enough money to buy an entrance of the hotel </value>
+    <value>Vous n'avez pas assez d'argent pour acheter une entrée.</value>
   </data>
   <data name="tituloComprarEntrada" xml:space="preserve">
-    <value>Buy entrance</value>
+    <value>Acheter une entrée.</value>
   </data>
   <data name="mensajeConstruidas" xml:space="preserve">
-    <value>built: </value>
+    <value>Construction : </value>
   </data>
   <data name="mensajeDuenio" xml:space="preserve">
-    <value>Owner: </value>
+    <value>Propriétaire : </value>
   </data>
   <data name="mensajeJugador" xml:space="preserve">
-    <value>{0} player</value>
+    <value>joueur {0}</value>
   </data>
   <data name="mensajeNo" xml:space="preserve">
-    <value>No</value>
+    <value>Non</value>
   </data>
   <data name="mensajeNumAmpliaciones" xml:space="preserve">
-    <value>Number of phases</value>
+    <value>Nombre de constructions.</value>
   </data>
   <data name="mensajeNumEntradas" xml:space="preserve">
-    <value>Number of entrances: </value>
+    <value>Nombre d'entrées : </value>
   </data>
   <data name="mensajeSi" xml:space="preserve">
-    <value>Yes</value>
+    <value>Oui</value>
   </data>
   <data name="mensajeSueloComprado" xml:space="preserve">
-    <value>Ground purchased: </value>
+    <value>Ground purchased : </value>
   </data>
   <data name="mensajeJugador1SinColor" xml:space="preserve">
-    <value>Player 1 has no associated color</value>
+    <value>Joueur 1 n'a pas de couleur associée.</value>
   </data>
   <data name="mensajeJugador2SinColor" xml:space="preserve">
-    <value>Player 2 has no associated color</value>
+    <value>Joueur 2 n'a pas de couleur associée.</value>
   </data>
   <data name="mensajeJugador3SinColor" xml:space="preserve">
-    <value>Player 3 has no associated color</value>
+    <value>Joueur 3 n'a pas de couleur associée.</value>
   </data>
   <data name="mensajeJugador4SinColor" xml:space="preserve">
-    <value>Player 4 has no associated color</value>
+    <value>Joueur 4 n'a pas de couleur associée.</value>
   </data>
   <data name="mensajeHotelContruidoEntero" xml:space="preserve">
-    <value>The hotel {0} is completely constructed</value>
+    <value>Construction de l'hôtel {0} terminée.</value>
   </data>
   <data name="tituloNoEsPosibleConstruir" xml:space="preserve">
-    <value>It is not possible to build</value>
+    <value>Construction impossible.</value>
   </data>
   <data name="mensajeEstasEnCasillaTipoFaseGratis" xml:space="preserve">
-    <value>You're in a Free Phase type position. Enjoy it!</value>
+    <value>Contruction gratuite ! Profitez-en !</value>
   </data>
   <data name="mensajeHotelFasesIncompletas" xml:space="preserve">
     <value>The hotel {0} has not yet made ​​all phases</value>
   </data>
   <data name="mensajeSinDineroParaComprar" xml:space="preserve">
-    <value>You do not have enough money to buy</value>
+    <value>Vous n'avez pas assez d'argent pour cet achat.</value>
   </data>
   <data name="mensajeSuficienteDineroParaFase" xml:space="preserve">
-    <value>Have enough money to pay {0}
-If you decide to continue, given the result must necessarily be fulfilled.
-Want to roll the dice?</value>
+    <value>Vous n'avez pas assez d'argent pour payer {0}. Si vous continuez, le résultat sera obligatoirement pris en compte. Lancer le dé ?</value>
   </data>
   <data name="mensajeSufucienteDineroParaComplejos" xml:space="preserve">
-    <value>Have enough money to pay for recreational complexes.
-No permission is needed to build them. Continue?</value>
+    <value>Vous avez assez d'argent pour acheter la base de loisirs. La construction est automatiquement acceptée. Continuer ?</value>
   </data>
   <data name="textoComplejosRecreativos" xml:space="preserve">
-    <value>recreational complexes</value>
+    <value>Base de loisirs</value>
   </data>
   <data name="textoCuartaAmpliacion" xml:space="preserve">
-    <value>the fourth expansion</value>
+    <value>Annexe 4</value>
   </data>
   <data name="textoEdificioPrincipal" xml:space="preserve">
-    <value>the main building</value>
+    <value>Bâtiment principal</value>
   </data>
   <data name="textoPrimeraAmpliacion" xml:space="preserve">
-    <value>the first expansion</value>
+    <value>Annexe 1</value>
   </data>
   <data name="textoSegundaAmpliacion" xml:space="preserve">
-    <value>the second expansion</value>
+    <value>Annexe 2</value>
   </data>
   <data name="textoTerceraAmpliacion" xml:space="preserve">
-    <value>the third expansion</value>
+    <value>Annexe 3</value>
   </data>
   <data name="tituloConfirmacionDeConstruccion" xml:space="preserve">
-    <value>Confirmation of construction</value>
+    <value>Confirmation de construction</value>
   </data>
   <data name="tituloNoSePuedeComparSuelo" xml:space="preserve">
-    <value>You can't buy the ground</value>
+    <value>Vous ne pouvez pas acheter ce terrain.</value>
   </data>
   <data name="mensajeErrorActualizandoListaJugadores" xml:space="preserve">
-    <value>Error updating list of players:</value>
+    <value>Erreur de la mise à jour de la liste des joueurs :</value>
   </data>
   <data name="mensajeErrorAlComprobarVersion" xml:space="preserve">
-    <value>An error occurred checking the version. Go to {0} to check the version manually.</value>
+    <value>Une erreur s'est produite pendant la vérification de la version. Allez {0} pour vérifier la version manuellement.</value>
   </data>
   <data name="mensajeErrorCargarHotelConEntradasErroneas" xml:space="preserve">
-    <value>The the game file has been modified incorrectly: The {0} hotel has entries assigned to non hotel</value>
+    <value>Le fichier de jeu a été modifié de manière incorrecte : The {0} hotel has entries assigned to non hotel</value>
   </data>
   <data name="mensajeErrorCargarHotelConMasFases" xml:space="preserve">
     <value>The hotel {0} has constructed more phases than the maximum number of phases</value>
   </data>
   <data name="mensajeErrorCargarPartidaSinDatosJugadores" xml:space="preserve">
-    <value>The game does not contain data for all players</value>
+    <value>Le jeu ne continent pas toutes les données pour tous les joueurs.</value>
   </data>
   <data name="mensajeNoEnvMensajeVacio" xml:space="preserve">
-    <value>You can not send an empty message</value>
+    <value>Vous ne pouvez pas envoyer un message vide.</value>
   </data>
   <data name="mensajeTamMensajeMax" xml:space="preserve">
-    <value>You can send a message longer than 1024 characters</value>
+    <value>Vous pouvez envoyer un message de plus de 1024 caractères</value>
   </data>
   <data name="tituloErrorAlComprobarVersion" xml:space="preserve">
-    <value>The error was: </value>
+    <value>L'erreur était : </value>
   </data>
   <data name="mensajeErrorSalvandoIdioma" xml:space="preserve">
-    <value>An error ocurred when saving language to Config.xml</value>
+    <value>Une erreur est survenue pendant la sauvegarde de la langue dans Config.xml</value>
   </data>
   <data name="mensajeIdiomaPorDefecto" xml:space="preserve">
-    <value>There is no language selected yet, defaulting to operative system language or english if not supported. You can change it in the main window</value>
+    <value>Il n'y a pas encore de langue sélectionnée, le jeu sera dans la langue du système ou l'anglais si non supporté. Vous pouvez changer cette option dans la fenêtre principale.</value>
   </data>
   <data name="mensajeApodoDemasiadoLargo" xml:space="preserve">
-    <value>Nickname can't be longer than 20 characters</value>
+    <value>Le pseudonyme ne peut pas excéder 20 caractères.</value>
   </data>
   <data name="mensajeApodoEnUso" xml:space="preserve">
-    <value>Nickname is already in use</value>
+    <value>Pseudonyme déjà utilisé.</value>
   </data>
   <data name="mensajeApodoVacio" xml:space="preserve">
-    <value>Nickname can't be empty</value>
+    <value>Le pseudonyme ne peut pas être vide.</value>
   </data>
   <data name="mensajeCerrarChatsAbiertos" xml:space="preserve">
-    <value>Do you want to close any opened chat?</value>
+    <value>Voulez-vous fermer la fenêtre de conversation ?</value>
   </data>
   <data name="mensajeCerrarPartidasAbiertas" xml:space="preserve">
-    <value>Do you want to close any opened game?</value>
+    <value>Voulez-vous terminer la partie ?</value>
   </data>
   <data name="mensajeComandoDesconocido" xml:space="preserve">
-    <value>Unknown command: </value>
+    <value>Commande inconnue : </value>
   </data>
   <data name="mensajeDatosIncorrectos" xml:space="preserve">
-    <value>Incorrect data: </value>
+    <value>Données corrompues : </value>
   </data>
   <data name="mensajeErrorConectando" xml:space="preserve">
-    <value>Error connecting: </value>
+    <value>Erreur pendant la connexion : </value>
   </data>
   <data name="mensajeErrorConexion" xml:space="preserve">
-    <value>Connection error: </value>
+    <value>Erreur de connexion : </value>
   </data>
   <data name="mensajeErrorDesconectar" xml:space="preserve">
-    <value>Error disconnecting: </value>
+    <value>Déconnexion : </value>
   </data>
   <data name="mensajeErrorLogin" xml:space="preserve">
-    <value>Error logging in: </value>
+    <value>Erreur d'identification : </value>
   </data>
   <data name="mensajeErrorObteniendoListaPartidas" xml:space="preserve">
-    <value>Error obtaining game list:</value>
+    <value>Erreur de liste de jeux :</value>
   </data>
   <data name="mensajeErrorObteniendoListaUsuarios" xml:space="preserve">
     <value>Error obtaining user list: </value>
   </data>
   <data name="mensajeErrorPuertoAlto" xml:space="preserve">
-    <value>The port specified is too high</value>
+    <value>Le port spécifié est trop élevé.</value>
   </data>
   <data name="mensajeErrorPuertoBajo" xml:space="preserve">
-    <value>The port specified is too low</value>
+    <value>Le port spécifié est trop bas.</value>
   </data>
   <data name="mensajeErrorPuertoNoNumerico" xml:space="preserve">
-    <value>The port specified is not numeric</value>
+    <value>Le port spécifié n'est pas numérique.</value>
   </data>
   <data name="mensajeErrorRecibiendoChat" xml:space="preserve">
-    <value>Error receiving new chat message: </value>
+    <value>Erreur de réception des nouveaux messages : </value>
   </data>
   <data name="mensajeErrorRecibiendoChatGlobal" xml:space="preserve">
-    <value>Error receiving new global chat message: </value>
+    <value>Erreur de réception des nouveaux messages dansl a fenêtre principale : </value>
   </data>
   <data name="mensajeErrorTamañoApodo" xml:space="preserve">
-    <value>Nickname exceeds maximum length</value>
+    <value>Pseudonyme trop long.</value>
   </data>
   <data name="mensajeExcepcionRecibiendoDatos" xml:space="preserve">
     <value>Exception receiving data: </value>
   </data>
   <data name="mensajeHotelPagado" xml:space="preserve">
-    <value>The hotel has been paid. Auction ended</value>
+    <value>L'hôtel a été payé. Enchères terminées.</value>
   </data>
   <data name="mensajeHotelVendido" xml:space="preserve">
-    <value>Hotel sold to {0} player ({1}) for {2}</value>
+    <value>L'hôtel {0} a été vendu au joueur {1}) pour {2}</value>
   </data>
   <data name="mensajeInputNombrePartida" xml:space="preserve">
-    <value>Game name:</value>
+    <value>Nom de la partie :</value>
   </data>
   <data name="mensajeInputNumJugadoresPartida" xml:space="preserve">
-    <value>Number of players of the game</value>
+    <value>Nombre de joueurs :</value>
   </data>
   <data name="mensajeJugadorExpulsadoTrampas" xml:space="preserve">
-    <value>{0} player ({1}) has been kicked because of cheating</value>
+    <value>{0} joueur ({1}) a dégagé parce qu'il a triché.</value>
   </data>
   <data name="mensajeJugadorRetirado" xml:space="preserve">
-    <value>{0} player ({1}) has retired</value>
+    <value>{0} joueur ({1}) a abandonné.</value>
   </data>
   <data name="mensajeNoConectado" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Vous n'êtes pas connecté.</value>
   </data>
   <data name="mensajeNombrePartidaEnBlanco" xml:space="preserve">
-    <value>Game name cannot be empty</value>
+    <value>Le nom de la partie ne peut pas être vide.</value>
   </data>
   <data name="mensajeNombrePartidaInvalido" xml:space="preserve">
-    <value>Game name can't contain character '~'</value>
+    <value>Le nom de la partie ne peut pas contenir les caractères suivants : '~'</value>
   </data>
   <data name="mensajeNumJugadoresEnBlanco" xml:space="preserve">
-    <value>Player number can't be empty</value>
+    <value>Veuillez définir le nombre de joueurs.</value>
   </data>
   <data name="mensajeNumMaximoJugadores" xml:space="preserve">
-    <value>Maximum number of players is 4</value>
+    <value>Le nombre de joueurs maximum est de 4</value>
   </data>
   <data name="mensajeNumMinimoJugadores" xml:space="preserve">
-    <value>Minimum number of players is 2</value>
+    <value>Le nombre de joueurs minimum est de 2</value>
   </data>
   <data name="mensajePagarNoches" xml:space="preserve">
     <value>You must pay {0} for {1} nights in {2} to player {3} ({4})</value>
   </data>
   <data name="mensajePartidaLlena" xml:space="preserve">
-    <value>Game {0} is full</value>
+    <value>Le partie {0} n'a plus de place disponible.</value>
   </data>
   <data name="mensajeProblemaConexionConServidor" xml:space="preserve">
-    <value>A connection problem with server occurred</value>
+    <value>Problèe de connexion avec le serveur.</value>
   </data>
   <data name="mensajeSeleccionarUsuarios" xml:space="preserve">
     <value>You must select at least one user excluding yours</value>
@@ -574,37 +574,37 @@ No permission is needed to build them. Continue?</value>
     <value>Player {0} is asking you to join a private chat. Do you want to do it?</value>
   </data>
   <data name="mensajeYaDentroPartida" xml:space="preserve">
-    <value>You already joined game </value>
+    <value>Vous avez déjà rejoint le jeu.</value>
   </data>
   <data name="tituloConfirmacionDesconectar" xml:space="preserve">
-    <value>Confirmation of disconnection</value>
+    <value>Vous avez été déconnecté.</value>
   </data>
   <data name="tituloCrearPartida" xml:space="preserve">
-    <value>Create game</value>
+    <value>Créer une partie.</value>
   </data>
   <data name="tituloNuevoChat" xml:space="preserve">
-    <value>New chat</value>
+    <value>Nouvelle conversation.</value>
   </data>
   <data name="colorAmarillo" xml:space="preserve">
-    <value>yellow</value>
+    <value>jaune</value>
   </data>
   <data name="colorAzul" xml:space="preserve">
-    <value>blue</value>
+    <value>bleu</value>
   </data>
   <data name="colorRojo" xml:space="preserve">
-    <value>red</value>
+    <value>rouge</value>
   </data>
   <data name="colorVerde" xml:space="preserve">
-    <value>green</value>
+    <value>vert</value>
   </data>
   <data name="textoEstadoDisponible" xml:space="preserve">
-    <value>Available</value>
+    <value>Disponible</value>
   </data>
   <data name="textoEstadoEmpezada" xml:space="preserve">
-    <value>Started</value>
+    <value>Commencé</value>
   </data>
   <data name="textoEstadoFinalizada" xml:space="preserve">
-    <value>Finished</value>
+    <value>Terminé</value>
   </data>
   <data name="textoEstadoLlena" xml:space="preserve">
     <value>Full</value>
@@ -619,49 +619,49 @@ No permission is needed to build them. Continue?</value>
     <value>The game version you are running is not compatible with the server you are connecting to. You need version {0}</value>
   </data>
   <data name="mensajePartidaYaEmpezada" xml:space="preserve">
-    <value>Game {0} is already started</value>
+    <value>La partie {0} a déjà commencé.</value>
   </data>
   <data name="mensajePartidaYaTerminada" xml:space="preserve">
-    <value>Game {0} is already finished</value>
+    <value>La partie {0} est terminée.</value>
   </data>
   <data name="mensajeErrorBugReportEmailVacio" xml:space="preserve">
-    <value>Please, fill email field</value>
+    <value>Remplissez le champs "email".</value>
   </data>
   <data name="mensajeErrorBugReportTextoVacio" xml:space="preserve">
     <value>Please, write something as content!</value>
   </data>
   <data name="mensajeNombrePartidaYaExiste" xml:space="preserve">
-    <value>A game with that name already exists</value>
+    <value>Partie déjà existante.</value>
   </data>
   <data name="MADadoTirado" xml:space="preserve">
-    <value>Player {0} ({1}) has rolled the dice and the result is {2}.</value>
+    <value>Le joueur {0} ({1}) a lancé le dé et a obtenu un {2}.</value>
   </data>
   <data name="MAPasarTurno" xml:space="preserve">
-    <value>Player {0} ({1}) has passed the turn.</value>
+    <value>Le joueur {0} ({1}) a terminé son tour.</value>
   </data>
   <data name="MAComprarHotel" xml:space="preserve">
-    <value>Player {0} ({1}) has bought hotel {2}.</value>
+    <value>Le joueur {0} ({1}) a acheté l'hôtel {2}.</value>
   </data>
   <data name="MATirarDadoConstruccion" xml:space="preserve">
-    <value>Player  {0} ({1}) has rolled construction's dice and the result is {2}.</value>
+    <value>Le joueur {0} ({1}) a lancé le dé de construction et a obtenu "{2}".</value>
   </data>
   <data name="TipoCasillaComprar" xml:space="preserve">
-    <value>Buy</value>
+    <value>Acheter</value>
   </data>
   <data name="TipoCasillaConstruir" xml:space="preserve">
-    <value>Built</value>
+    <value>Construire</value>
   </data>
   <data name="TipoCasillaEntradaGratis" xml:space="preserve">
-    <value>Free Entrance</value>
+    <value>Entrée gratuite</value>
   </data>
   <data name="TipoCasillaFaseGratis" xml:space="preserve">
-    <value>Free Phase</value>
+    <value>Construction gratuite</value>
   </data>
   <data name="TipoCasillaSalida" xml:space="preserve">
-    <value>Start</value>
+    <value>Commencer</value>
   </data>
   <data name="MAPedirNochesOnline" xml:space="preserve">
-    <value>Player {0} ({1}) demands to player {2} ({3}) to pay {4} for {5} nights at {6}.</value>
+    <value>Le joueur {0} ({1}) réclame au joueur {2} ({3}) de payer {4} pour {5} nuits à {6}.</value>
   </data>
   <data name="mensajeNombrePartidaLargo" xml:space="preserve">
     <value>Game name cannot have more than 50 characters</value>
@@ -821,8 +821,5 @@ It will be a third of the buy value of hotel plus built phases. If none of the p
   </data>
   <data name="mensajeErrorBugReportEmailInvalido" xml:space="preserve">
     <value>Please, enter a real email address. It will not be registered anywhere, I just may need it because of two reasons: It is very likely that the report is missing information, and because I want to thank you for the time taken to report a problem. The address is written inside an email that is sent to my self from the server, and it is not used for anything else. Thanks.</value>
-  </data>
-  <data name="comboBoxIdiomas3" xml:space="preserve">
-    <value>French</value>
   </data>
 </root>
