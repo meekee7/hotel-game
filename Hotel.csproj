@@ -195,6 +195,9 @@
       <DependentUpon>Chat.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Chat.fr.resx">
+      <DependentUpon>Chat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Chat.resx">
       <DependentUpon>Chat.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -202,6 +205,9 @@
     <EmbeddedResource Include="ComprarHotel.en.resx">
       <DependentUpon>ComprarHotel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarHotel.fr.resx">
+      <DependentUpon>ComprarHotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarHotel.resx">
       <DependentUpon>ComprarHotel.cs</DependentUpon>
@@ -211,6 +217,9 @@
       <DependentUpon>Construir.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Construir.fr.resx">
+      <DependentUpon>Construir.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Construir.resx">
       <DependentUpon>Construir.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -218,6 +227,9 @@
     <EmbeddedResource Include="Dado_construccion.en.resx">
       <DependentUpon>Dado_construccion.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dado_construccion.fr.resx">
+      <DependentUpon>Dado_construccion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputBoxDialog.resx">
       <DependentUpon>InputBoxDialog.cs</DependentUpon>
@@ -227,19 +239,37 @@
       <DependentUpon>Online.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Online.fr.resx">
+      <DependentUpon>Online.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PartidaOnline.en.resx">
       <DependentUpon>PartidaOnline.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartidaOnline.fr.resx">
+      <DependentUpon>PartidaOnline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PedirPago.en.resx">
       <DependentUpon>PedirPago.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PedirPago.fr.resx">
+      <DependentUpon>PedirPago.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PonerEntradas.en.resx">
       <DependentUpon>PonerEntradas.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PonerEntradas.fr.resx">
+      <DependentUpon>PonerEntradas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Principal.fr.resx">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReporteBug.en.resx">
+      <DependentUpon>ReporteBug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReporteBug.fr.resx">
       <DependentUpon>ReporteBug.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReporteBug.resx">
@@ -282,7 +312,13 @@
       <DependentUpon>Sel_colores.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Sel_colores.fr.resx">
+      <DependentUpon>Sel_colores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subastas.en.resx">
+      <DependentUpon>Subastas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subastas.fr.resx">
       <DependentUpon>Subastas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subastas.resx">
@@ -291,6 +327,9 @@
     <EmbeddedResource Include="VerHoteles.en.resx">
       <DependentUpon>VerHoteles.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VerHoteles.fr.resx">
+      <DependentUpon>VerHoteles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VerHoteles.resx">
       <DependentUpon>VerHoteles.cs</DependentUpon>
