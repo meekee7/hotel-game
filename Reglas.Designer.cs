@@ -28,30 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reglas));
             this.img_reglas = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.img_reglas)).BeginInit();
             this.SuspendLayout();
             // 
             // img_reglas
             // 
-            this.img_reglas.Image = global::Juego_Hotel.Properties.Resources.Reglas;
-            this.img_reglas.Location = new System.Drawing.Point(0, 0);
+            this.img_reglas.Image = global::Juego_Hotel.Properties.Resources.Reglas_es;
+            resources.ApplyResources(this.img_reglas, "img_reglas");
             this.img_reglas.Name = "img_reglas";
-            this.img_reglas.Size = new System.Drawing.Size(2816, 1800);
-            this.img_reglas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.img_reglas.TabIndex = 0;
             this.img_reglas.TabStop = false;
             // 
             // Reglas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(879, 599);
             this.Controls.Add(this.img_reglas);
             this.Name = "Reglas";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Reglas del juego";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Reglas_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.img_reglas)).EndInit();
             this.ResumeLayout(false);

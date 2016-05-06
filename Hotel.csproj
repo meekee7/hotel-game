@@ -266,6 +266,9 @@
     <EmbeddedResource Include="Principal.fr.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reglas.fr.resx">
+      <DependentUpon>Reglas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReporteBug.en.resx">
       <DependentUpon>ReporteBug.cs</DependentUpon>
     </EmbeddedResource>

@@ -175,8 +175,11 @@
   <data name="Billete_1000" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_1000.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Reglas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Reglas.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Reglas_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Reglas_es.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Reglas_fr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Reglas_fr.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Billete_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Billete_100.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
