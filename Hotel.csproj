@@ -266,6 +266,9 @@
     <EmbeddedResource Include="Principal.fr.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reglas.en.resx">
+      <DependentUpon>Reglas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reglas.fr.resx">
       <DependentUpon>Reglas.cs</DependentUpon>
     </EmbeddedResource>
@@ -415,6 +418,8 @@
     <Content Include="Images\Flecha_verde.tif" />
     <Content Include="Images\french.png" />
     <Content Include="Images\Letoile_tarjeta.png" />
+    <None Include="Images\Reglas_es.jpg" />
+    <None Include="Images\Reglas_fr.jpg" />
     <Content Include="Images\Royal_tarjeta.png" />
     <Content Include="Images\Safari_tarjeta.png" />
     <None Include="Images\Suelo_Royal.tif" />
