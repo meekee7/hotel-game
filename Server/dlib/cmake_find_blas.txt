@@ -93,7 +93,32 @@ if (UNIX)
         /usr/lib
         /usr/lib/atlas-sse3
         /usr/lib/atlas-sse2
-        /usr/lib/atlas)
+        /usr/lib/atlas
+        /usr/lib/openblas-base
+        /opt/OpenBLAS/lib
+        )
+
+   INCLUDE (CheckFunctionExists)
+
+   if (NOT blas_found)
+      find_library(cblas_lib openblas PATHS ${extra_paths})
+      if (cblas_lib)
+         set(blas_libraries ${cblas_lib})
+         set(blas_found 1)
+         message(STATUS "Found OpenBLAS library")
+         set(CMAKE_REQUIRED_LIBRARIES ${blas_libraries})
+         # If you compiled OpenBLAS with LAPACK in it then it should have the
+         # sgetrf_single function in it.  So if we find that function in
+         # OpenBLAS then just use OpenBLAS's LAPACK. 
+         CHECK_FUNCTION_EXISTS(sgetrf_single OPENBLAS_HAS_LAPACK)
+         if (OPENBLAS_HAS_LAPACK)
+            message(STATUS "Using OpenBLAS's built in LAPACK")
+            set(lapack_libraries gfortran) 
+            set(lapack_found 1)
+         endif()
+      endif()
+      mark_as_advanced( cblas_lib)
+   endif()
 
 
    if (NOT lapack_found)
@@ -118,6 +143,18 @@ if (UNIX)
          message(STATUS "Found ATLAS BLAS library")
       endif()
       mark_as_advanced( atlas_lib cblas_lib)
+   endif()
+
+   # CentOS 7 atlas
+   if (NOT blas_found)
+      find_library(tatlas_lib tatlas PATHS ${extra_paths})
+      find_library(satlas_lib satlas PATHS ${extra_paths})
+      if (tatlas_lib AND satlas_lib )
+         set(blas_libraries ${tatlas_lib} ${satlas_lib})
+         set(blas_found 1)
+         message(STATUS "Found ATLAS BLAS library")
+      endif()
+      mark_as_advanced( tatlas_lib satlas_lib)
    endif()
 
 
@@ -151,7 +188,6 @@ if (UNIX)
    # we found the Intel MKL since for some reason CHECK_FUNCTION_EXISTS doesn't work
    # with it.  But it's fine since the MKL should always have cblas.
    if (blas_found AND NOT found_intel_mkl)
-      INCLUDE (CheckFunctionExists)
       set(CMAKE_REQUIRED_LIBRARIES ${blas_libraries})
       CHECK_FUNCTION_EXISTS(cblas_ddot HAVE_CBLAS)
       if (NOT HAVE_CBLAS)
@@ -165,9 +201,13 @@ if (UNIX)
    if (NOT blas_found)
       message(" *****************************************************************************")
       message(" *** No BLAS library found so using dlib's built in BLAS.  However, if you ***")
-      message(" *** install an optimized BLAS such as openblas or the Intel MKL your code ***")
-      message(" *** will run faster.  On Ubuntu you can install openblas by executing:    ***")
+      message(" *** install an optimized BLAS such as OpenBLAS or the Intel MKL your code ***")
+      message(" *** will run faster.  On Ubuntu you can install OpenBLAS by executing:    ***")
       message(" ***    sudo apt-get install libopenblas-dev liblapack-dev                 ***")
+      message(" *** Or you can easily install OpenBLAS from source by downloading the     ***")
+      message(" *** source tar file from http://www.openblas.net, extracting it, and      ***")
+      message(" *** running:                                                              ***")
+      message(" ***    make; sudo make install                                            ***")
       message(" *****************************************************************************")
    endif()
 
@@ -194,6 +234,7 @@ elseif(WIN32 AND NOT MINGW)
         find_library(mkl_intel  mkl_intel_c ${mkl_search_path})
     endif()
 
+   INCLUDE (CheckFunctionExists)
 
     # Search for the needed libraries from the MKL.  
     find_library(mkl_core mkl_core ${mkl_search_path})
@@ -209,7 +250,18 @@ elseif(WIN32 AND NOT MINGW)
         set(lapack_found 1)
         message(STATUS "Found Intel MKL BLAS/LAPACK library")
 
-        if (MSVC)
+        # Make sure the version of the Intel MKL we found is compatible with
+        # the compiler we are using.  One way to do this check is to see if we can
+        # link to it right now.
+        set(CMAKE_REQUIRED_LIBRARIES ${blas_libraries})
+        CHECK_FUNCTION_EXISTS(cblas_ddot HAVE_CBLAS)
+        if (NOT HAVE_CBLAS)
+            message(STATUS "BLAS library does not have cblas symbols, so dlib will not use BLAS or LAPACK")
+            set(blas_found 0)
+            set(lapack_found 0)
+        endif()
+
+        if (MSVC AND blas_found)
             # need to set /bigobj when statically linking with the MKL on
             # visual studio or it doesn't work right.
             if (NOT CMAKE_CXX_FLAGS MATCHES "/bigobj")
