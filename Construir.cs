@@ -81,9 +81,12 @@ namespace Juego_Hotel
             else if (this.comprando_suelo)
             {
                 if (this.hotel_seleccionado.n_fases_construidas == this.hotel_seleccionado.n_fases_max - 1)
+                {
                     this.bSuelo.Enabled = true;
+                    this.PrecioSuelo.Text = this.hotel_seleccionado.Precio_Suelo().ToString();
+                }
                 else
-                    MessageBox.Show(String.Format(Mensajes.mensajeHotelFasesIncompletas,this.hotel_seleccionado.nombre_txt, Mensajes.tituloNoSePuedeComparSuelo));
+                    MessageBox.Show(String.Format(Mensajes.mensajeHotelFasesIncompletas, this.hotel_seleccionado.nombre_txt, Mensajes.tituloNoSePuedeComparSuelo));
             }
             else
             {

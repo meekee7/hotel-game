@@ -1566,6 +1566,7 @@ namespace Juego_Hotel
         {
             // Hay que buscar si hay alguien en alguna de tus casillas con entrada
             // Reiniciar el bucle si la lista de hoteles cambia por una subasta
+            this.bTurno.Enabled = false;
             Boolean reiniciar;
             do
             {
@@ -1611,6 +1612,7 @@ namespace Juego_Hotel
             }
             while (reiniciar);
             Actualizar_Dinero_Jugadores();
+            this.bTurno.Enabled = true;
         }
 
         public void Registrar_Pagar_Noches_Online(Jugador jugador_dueño, Jugador jugador_pagador, int cantidad, int noches, String hotel)

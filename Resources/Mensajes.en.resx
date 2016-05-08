@@ -439,7 +439,7 @@ No permission is needed to build them. Continue?</value>
     <value>An error occurred checking the version. Go to {0} to check the version manually.</value>
   </data>
   <data name="mensajeErrorCargarHotelConEntradasErroneas" xml:space="preserve">
-    <value>The the game file has been modified incorrectly: The {0} hotel has entries assigned to non hotel</value>
+    <value>The game file has been modified incorrectly: The {0} hotel has entries assigned to non hotel</value>
   </data>
   <data name="mensajeErrorCargarHotelConMasFases" xml:space="preserve">
     <value>The hotel {0} has constructed more phases than the maximum number of phases</value>
