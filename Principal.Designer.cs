@@ -42,7 +42,6 @@
             this.jug_ini = new System.Windows.Forms.Label();
             this.bTurno = new System.Windows.Forms.Button();
             this.bReiniciar = new System.Windows.Forms.Button();
-            this.colorJugIni = new System.Windows.Forms.Label();
             this.controlJ1 = new System.Windows.Forms.GroupBox();
             this.ImagenTurnoJ1 = new System.Windows.Forms.PictureBox();
             this.nombreJ1 = new System.Windows.Forms.Label();
@@ -204,11 +203,6 @@
             this.bReiniciar.Name = "bReiniciar";
             this.bReiniciar.UseVisualStyleBackColor = true;
             this.bReiniciar.Click += new System.EventHandler(this.bReiniciar_Click);
-            // 
-            // colorJugIni
-            // 
-            resources.ApplyResources(this.colorJugIni, "colorJugIni");
-            this.colorJugIni.Name = "colorJugIni";
             // 
             // controlJ1
             // 
@@ -659,7 +653,6 @@
             this.Controls.Add(this.posAmarillo);
             this.Controls.Add(this.posAzul);
             this.Controls.Add(this.posRojo);
-            this.Controls.Add(this.colorJugIni);
             this.Controls.Add(this.bVerHoteles);
             this.Controls.Add(this.bConstruir);
             this.Controls.Add(this.bComprar);
@@ -721,7 +714,6 @@
         private System.Windows.Forms.Label jug_ini;
         private System.Windows.Forms.Button bTurno;
         private System.Windows.Forms.Button bReiniciar;
-        private System.Windows.Forms.Label colorJugIni;
         private System.Windows.Forms.GroupBox controlJ1;
         private System.Windows.Forms.Button bVerHotelesJ1;
         private System.Windows.Forms.Label posJ1;

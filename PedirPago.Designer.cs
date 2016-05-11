@@ -60,10 +60,10 @@
             // 
             // img100
             // 
+            resources.ApplyResources(this.img100, "img100");
             this.img100.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img100.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img100.Image = global::Juego_Hotel.Properties.Resources.Billete_100;
-            resources.ApplyResources(this.img100, "img100");
             this.img100.Name = "img100";
             this.img100.TabStop = false;
             this.img100.Click += new System.EventHandler(this.img100_Click);
@@ -71,10 +71,10 @@
             // 
             // img50
             // 
+            resources.ApplyResources(this.img50, "img50");
             this.img50.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img50.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img50.Image = global::Juego_Hotel.Properties.Resources.Billete_50;
-            resources.ApplyResources(this.img50, "img50");
             this.img50.Name = "img50";
             this.img50.TabStop = false;
             this.img50.Click += new System.EventHandler(this.img50_Click);
@@ -82,10 +82,10 @@
             // 
             // img500
             // 
+            resources.ApplyResources(this.img500, "img500");
             this.img500.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img500.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img500.Image = global::Juego_Hotel.Properties.Resources.Billete_500;
-            resources.ApplyResources(this.img500, "img500");
             this.img500.Name = "img500";
             this.img500.TabStop = false;
             this.img500.Click += new System.EventHandler(this.img500_Click);
@@ -93,10 +93,10 @@
             // 
             // img1000
             // 
+            resources.ApplyResources(this.img1000, "img1000");
             this.img1000.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img1000.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img1000.Image = global::Juego_Hotel.Properties.Resources.Billete_1000;
-            resources.ApplyResources(this.img1000, "img1000");
             this.img1000.Name = "img1000";
             this.img1000.TabStop = false;
             this.img1000.Click += new System.EventHandler(this.img1000_Click);
@@ -104,10 +104,10 @@
             // 
             // img5000
             // 
+            resources.ApplyResources(this.img5000, "img5000");
             this.img5000.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.img5000.Cursor = System.Windows.Forms.Cursors.Hand;
             this.img5000.Image = global::Juego_Hotel.Properties.Resources.Billete_5000;
-            resources.ApplyResources(this.img5000, "img5000");
             this.img5000.Name = "img5000";
             this.img5000.TabStop = false;
             this.img5000.Click += new System.EventHandler(this.img5000_Click);
@@ -122,8 +122,8 @@
             // 
             // bCancelar
             // 
-            this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.bCancelar, "bCancelar");
+            this.bCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancelar.Name = "bCancelar";
             this.bCancelar.UseVisualStyleBackColor = true;
             this.bCancelar.Click += new System.EventHandler(this.bCancelar_Click);

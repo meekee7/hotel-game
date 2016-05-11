@@ -122,7 +122,7 @@
     <value>37</value>
   </data>
   <data name="&gt;&gt;controlJ2.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>20</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="colorJ1.Location" type="System.Drawing.Point, System.Drawing">
@@ -172,9 +172,6 @@
   </data>
   <data name="bVerHotelesJ1.Text" xml:space="preserve">
     <value>Ver hoteles</value>
-  </data>
-  <data name="nombreJ2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 70</value>
   </data>
   <data name="&gt;&gt;bPedirNochesJ2.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -232,7 +229,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;grupoNJugadores.ZOrder" xml:space="preserve">
-    <value>29</value>
+    <value>28</value>
   </data>
   <data name="&gt;&gt;controlJ2.Name" xml:space="preserve">
     <value>controlJ2</value>
@@ -413,7 +410,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADy
-        EQAAAk1TRnQBSQFMAgEBAwEAAaQBAQGsAQEBEAEAARABAAT/ASEBEAj/AUIBTQE2BwABNgMAASgDAAFA
+        EQAAAk1TRnQBSQFMAgEBAwEAAbQBAQHUAQEBEAEAARABAAT/ASEBEAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABEAMAAQEBAAEgBgABEFIAA/sB/wP7Af8D+wH/A/sB/wP7Af8D+wH/A/sB/wP8Af8D/AH/A/sB/wP7
         Af8D+wH/Af0C+wH/Af0C+wH/A/sB/wP7Af+AAAMCAQMDBwQJAQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMJ
         AQwDCQEMAwkBDAMJAQwDCQEMAwkBDAMHAQkDAgEDAfoB+QH7Af8B+gH5AfsB/wH6AfkB+wH/AfkB+AH6
@@ -421,68 +418,68 @@
         AfgB+gH/AfkB+AH6Af8B+QH4AfoB/wH5AfgB+gH/AfoB+QH7Af+AAAMLAQ8DHQEqAyUBNwMlATcDJQE3
         AyUBNwMlATcDJQE3AyUBNwMlATcDJQE3AyUBNwMlATcDJQE3Ax0BKgMLAQ8C/AL/AvwC/wL7Av8C/QL/
         Av0C/wH7Af4C/wH9AfwC/wH7Af0C/wL9Av8C/QL/Av0C/wL9Av8C/QL/Av0C/wH9Af4C/wH8Af0C/wQA
-        AZUBSwEcAesBoAFIAQ4B9QGgAUYBDgH1AaABRAEOAfUBnAFHARMB9QGkAaoBrQH2A6AB9QOfAfUBqAGn
-        AZwB9gEUAScBtQH1AQ8BHQG0AfUBDwEbAbEB9QEPARsBrwH1ARcBHAGWAe5EAAMVAR0CAAGyAf8CAAGx
+        AY0BTgEnAesBmwFIARMB9QGbAUYBEwH1AZsBRAETAfUBmAFHARcB9QGeAaQBqAH2A5sB9QObAfUBogGh
+        AZcB9gEYASsBrwH1ARQBIgGuAfUBFAEgAaoB9QEUASABqAH1ASABJAGPAe5EAAMVAR0CAAGyAf8CAAGx
         Af8CAAGyAf8CAAGyAf8CAAGyAf8CAAGyAf8CAAGyAf8CAAGyAf8CAAGyAf8CAAGyAf8CAAGyAf8CAAGy
         Af8CAAGyAf8CAAGyAf8DFQEdAdUB2AHtAf8ByQHMAeEB/wHGAccB3AH/AbMBtAHJAf8BqwGsAcEB/wGh
         AaMBuwH/AZgBmQGzAf8BqAGpAcMB/wGrAawBxgH/AaoBqwHFAf8BwAG/AdkB/wHIAccB4QH/AbkBuwHT
-        Af8BpwGoAb0B/wG0AbUByQH/AtsB7QH/BAABqQFSAQ4B9QHZAXEBAAH/AdcBbwEAAf8B1QFsAQAB/wHS
-        AW8BBAH/AdgB4AHnAf8D2AH/A9cB/wHjAeAB0gH/ARQBRgL/AQsBPgL/AQsBPwL/AQkBQAL/AQwBHQG5
+        Af8BpwGoAb0B/wG0AbUByQH/AtsB7QH/BAABogFTARMB9QHZAXABAAH/AdcBbgEAAf8B1QFrAQAB/wHS
+        AW4BAwH/AdgB4AHnAf8D2AH/A9cB/wHjAeAB0gH/ARMBRQL/AQoBPQL/AQoBPgL/AQgBPwL/AREBHwG1
         AfhEAAMZASMCAAG1Af8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAHf
         Af8CAAHfAf8CAAHfAf8CAAHfAf8CAAHfAf8CAAG1Af8DGQEjAasBrgHhAf8BlAGXAcoB/wGbAZwBzwH/
-        AY4BkQHEAf8BUAFTAbAB/wFOAVABsAH/AUIBQwGlAf8BSAFKAa4B/wFUAVUBuwH/AVABVAG5Af8BkgGT
-        AdAB/wGiAaMB3wH/AY8BkAHKAf8BSQFMAakB/wKFAbMB/wGxAbIB3gH/BAABrQFWAQ4B9QHdAXUBAAH/
-        AdkBcQEAAf8B2AFwAQAB/wHWAXABBAH/AdwB5AHsAf8D3AH/A9sB/wHnAeQB2AH/AR0BSwH7Af8BFQFG
-        Av8BEwFFAv8BEQFFAv8BDwEgAbsB+EQAAxkBIwIAAbwB/wIAAeAB/wIAAd8B/wIAAd8B/wIAAd8B/wIA
+        AY4BkQHEAf8BTwFSAbAB/wFNAU8BsAH/AUEBQgGlAf8BRwFJAa4B/wFTAVQBuwH/AU8BUwG5Af8BkgGT
+        AdAB/wGiAaMB3wH/AY8BkAHKAf8BSAFLAakB/wKFAbMB/wGxAbIB3gH/BAABpgFXARMB9QHdAXQBAAH/
+        AdkBcAEAAf8B2AFvAQAB/wHWAW8BAwH/AdwB5AHsAf8D3AH/A9sB/wHnAeQB2AH/ARwBSgH7Af8BFAFF
+        Av8BEgFEAv8BEAFEAv8BFAEiAbcB+EQAAxkBIwIAAbwB/wIAAeAB/wIAAd8B/wIAAd8B/wIAAd8B/wIA
         Ad8B/wIAAd8B/wIAAd8B/wIAAd8B/wIAAd8B/wIAAd8B/wIAAd8B/wIAAeAB/wIAAbwB/wMZASMBkwGY
-        AdcB/wGCAYQBxAH/ApAB0AH/Ao4BzgH/AUkBSwG2Af8BSAFLAbkB/wFJAUoBvgH/AUIBRQG6Af8BRwFJ
-        AcEB/wE9AUEBugH/AVABUQHLAf8BhgGIAdYB/wJQAcYB/wFEAUcBtQH/AUwBTQGzAf8BogGjAdsB/wQA
-        AbABWQEOAfUB4wF7AQAB/wHfAXcBAAH/Ad4BdgEAAf8B2wF3AQQB/wHkAewB9QH/A+QB/wPhAf8B7QHq
-        Ad4B/wEkAVQB+wH/AR4BTwL/ARwBTwL/ARoBTwL/ARIBIgG/AfhEAAMZASMBAAHSAd8B/wEAAe8C/wEO
-        AeYB4QH/AQAB0QHsAf8BAQGjAeMB/wEAAb4B3wH/AQMB7gHrAf8BAAHvAv8BAAHvAv8BAAHvAv8BAAHv
-        Av8BAAHvAv8BAAHvAv8BAAHSAd8B/wMZASMBnwGiAd8B/wGGAYcBwwH/AlIBuAH/AosBxwH/AoIBwgH/
-        AT8BQAGuAf8BRgFHAbsB/wFMAU4BxgH/AVEBUwHLAf8BSAFMAcUB/wFRAVQBzwH/AZABlAHjAf8BgAGC
-        AdAB/wFAAUIBsgH/AU0BTgG1Af8BpAGmAeAB/wQAAbIBWQEOAfUB6AGCAQAB/wHlAX0BAAH/AeMBewEA
-        Af8B4QF7AQUB/wHpAfAB+QH/A+gB/wPnAf8B8wHwAeQB/wEtAVoB/QH/ASYBVwL/ASYBVQL/ASMBVgL/
-        ARMBKgHDAfhEAAMZASMBAAHaAecB/wEAAfEC/wEcAcQB8wH/AQABhAHYAf8BCAETAagB/wEhAYQB3gH/
-        AQcB0wH1Af8BAAHwAv8BAAHxAv8BAAHwAv8BAAHwAv8BAAHwAv8BAAHyAv8BAAHaAecB/wMZASMBuAGv
-        AdoB/wGyAagB0gH/AawBngHHAf8BnwGRAbsB/wGVAYgBtAH/AYQBUgGxAf8BggFVAcQB/wKGAdIB/wGR
-        AZMB4QH/AYYBigHZAf8BgQGEAdUB/wGUAZgB5wH/AYUBhwHVAf8BRwFJAboB/wFQAVMBugH/AaMBpQHf
-        Af8EAAG3AVsBDgH1Ae0BhwEAAf8B6wGFAQAB/wHoAYIBAAH/AeUBgQEEAf8B7wH3Av8D7wH/A+wB/wH2
-        AfMB6AH/ATMBYgH8Af8BLAFdAv8BKwFdAv8BKwFbAv8BFQEuAcYB+EQAAxkBIwEAAeIB7wH/AQAB8QL/
-        AQ4BxwHxAf8BAAE2AcoB/wGLAUsByQH/AYkBtwHnAf8BAAHWAfMB/wEAAfAC/wEAAfAC/wEAAfAC/wEA
-        AfAC/wEAAfAC/wEAAfEC/wEAAeIB7wH/AxkBIwGYAU8BggH/AYIBNwE+Af8BTAEnAS8B/wFOAScBLwH/
-        AUYBIQErAf8BJgEMASQB/wFDATgBmgH/AVUBUgHEAf8CigHWAf8BlgGYAeYB/wGDAYQB1AH/AYkBiwHZ
-        Af8BgAGFAdAB/wE7AT8BsAH/AT4BQAGqAf8BnAGdAdkB/wQAAbgBXwEOAfUB8gGMAQAB/wHuAYgBAAH/
-        AewBhgEAAf8B6QGFAQUB/wH0AfwC/wPzAf8D8gH/AfsB9wHtAf8BOwFoAf0B/wE1AWQC/wEzAWMC/wEx
-        AWIC/wEXATEBzgH4RAADGQEjAQUB6gH2Af8BGwHzAv8BDAHlAfUB/wEPAaQB5AH/ASABgwHZAf8BGAHG
-        AecB/wEKAesB9gH/AQsB8gL/AQsB8wL/AQsB8wL/AQsB8wL/AQsB8wL/ARsB9AL/AQUB6wH2Af8DGQEj
-        AaoBUgFLAf8BlQE9ATUB/wGYAT0BNQH/AZEBNgEuAf8BgwEoASAB/wEvAQoBFAH/AVABQwGbAf8BowGg
-        AeUB/wGVAZQB3gH/AqAB7AH/AqcB8wH/AaMBpgHwAf8BmwGeAegB/wGFAYgBzAH/AUoBSwGxAf8BngGf
-        AdcB/wQAAbsBYwEOAfUB9gGQAQAB/wH0AY4BAAH/AfABigEAAf8B7AGJAQQB/wH5A/8D+QH/A/UB/wH8
-        AfkB7wH/AUEBbwH9Af8BPAFrAv8BOQFoAv8BNQFmAv8BFwE1AdIB+EQAAxkBIwEOAe8B/AH/AS0B9AL/
-        ARsB8wL/ASAB7AH4Af8BIQHcAe4B/wEdAfIB+wH/ARsB8wL/ARsB8wL/ARsB8wL/ARsB8wL/ARsB8wL/
-        ARsB8wL/AS0B9AL/AQ4B7wH8Af8DGQEjAbIBggFUAf8BmAE+ATgB/wGjAUkBQwH/AaABRAE+Af8BkgE2
-        ATAB/wFAARgBIwH/AUMBMgGHAf8BiwGIAcYB/wGXAZgB3AH/AZoBnAHjAf8BpQGnAe0B/wGuAbEB9QH/
-        AaoBrQHxAf8BlAGXAdQB/wGLAY4BwQH/AaIBpAHUAf8EAAG/AWkBDgH1AfsBlQEAAf8B+AGSAQAB/wHz
-        AY0BAAH/Ae8BiwEEAf8B+wP/A/wB/wP3Af8B/QH5AfAB/wFGAXQB/QH/AUIBcQL/AT0BawL/ATgBaQL/
-        ARcBNwHVAfhEAAMZASMBFAEOAeUB/wE+ATkB6wH/ASsBJgHoAf8BKwEmAegB/wErASYB6AH/ASsBJgHo
-        Af8BKgElAegB/wEqASUB6AH/ASsBJgHoAf8BKwEmAegB/wErASYB6AH/ASsBJgHoAf8BPgE5AesB/wEU
-        AQ4B5QH/AxkBIwGzAYoBhwH/AY0BOgE3Af8BqQGBAVIB/wGmAVQBTwH/AZwBSAFDAf8BUAEvATYB/wFU
-        AUcBkQH/AYUBggGzAf8CkAHGAf8BlAGVAc0B/wGWAZgBzgH/AawBrwHiAf8BrQGuAeEB/wGOAZEBvgH/
-        AoEBqQH/AaMBpAHGAf8EAAHCAWwBDgH1Af8BmgEAAf8B+wGVAQAB/wH1AY8BAAH/AfABjAEEAf8B+AP/
-        A/kB/wP1Af8B/AH4Ae8B/wFIAXUB/QH/AUMBcgL/AT4BbQL/ATgBaQL/ARcBOQHZAfhEAAMXASABGQEU
-        AeYB/wFLAUcB7QH/AUsBRwHtAf8BSwFHAe0B/wFLAUcB7QH/AUsBRwHtAf8BSwFHAe0B/wFLAUcB7QH/
-        AUsBRwHtAf8BSwFHAe0B/wFLAUcB7QH/AUwBSAHtAf8BSwFHAe0B/wEZARQB5gH/AxcBIAHOAbgBswH/
+        AdcB/wGCAYQBxAH/ApAB0AH/Ao4BzgH/AUgBSgG2Af8BRwFKAbkB/wFIAUkBvgH/AUEBRAG6Af8BRgFI
+        AcEB/wE8AUABugH/AU8BUAHLAf8BhgGIAdYB/wJPAcYB/wFDAUYBtQH/AUsBTAGzAf8BogGjAdsB/wQA
+        AakBWQETAfUB4wF6AQAB/wHfAXYBAAH/Ad4BdQEAAf8B2wF2AQMB/wHkAewB9QH/A+QB/wPhAf8B7QHq
+        Ad4B/wEjAVMB+wH/AR0BTgL/ARsBTgL/ARkBTgL/ARcBJAG6AfhEAAMZASMBAAHSAd8B/wEAAe8C/wEN
+        AeYB4QH/AQAB0QHsAf8BAAGjAeMB/wEAAb4B3wH/AQIB7gHrAf8BAAHvAv8BAAHvAv8BAAHvAv8BAAHv
+        Av8BAAHvAv8BAAHvAv8BAAHSAd8B/wMZASMBnwGiAd8B/wGGAYcBwwH/AlEBuAH/AosBxwH/AoIBwgH/
+        AT4BPwGuAf8BRQFGAbsB/wFLAU0BxgH/AVABUgHLAf8BRwFLAcUB/wFQAVMBzwH/AZABlAHjAf8BgAGC
+        AdAB/wE/AUEBsgH/AUwBTQG1Af8BpAGmAeAB/wQAAasBWQETAfUB6AGCAQAB/wHlAXwBAAH/AeMBegEA
+        Af8B4QF6AQQB/wHpAfAB+QH/A+gB/wPnAf8B8wHwAeQB/wEsAVkB/QH/ASUBVgL/ASUBVAL/ASIBVQL/
+        ARcBLQG+AfhEAAMZASMBAAHaAecB/wEAAfEC/wEbAcQB8wH/AQABhAHYAf8BBwESAagB/wEgAYQB3gH/
+        AQYB0wH1Af8BAAHwAv8BAAHxAv8BAAHwAv8BAAHwAv8BAAHwAv8BAAHyAv8BAAHaAecB/wMZASMBuAGv
+        AdoB/wGyAagB0gH/AawBngHHAf8BnwGRAbsB/wGVAYgBtAH/AYQBUQGxAf8BggFUAcQB/wKGAdIB/wGR
+        AZMB4QH/AYYBigHZAf8BgQGEAdUB/wGUAZgB5wH/AYUBhwHVAf8BRgFIAboB/wFPAVIBugH/AaMBpQHf
+        Af8EAAGxAVkBEwH1Ae0BhwEAAf8B6wGFAQAB/wHoAYIBAAH/AeUBgQEDAf8B7wH3Av8D7wH/A+wB/wH2
+        AfMB6AH/ATIBYQH8Af8BKwFcAv8BKgFcAv8BKgFaAv8BGAExAcEB+EQAAxkBIwEAAeIB7wH/AQAB8QL/
+        AQ0BxwHxAf8BAAE1AcoB/wGLAUoByQH/AYkBtwHnAf8BAAHWAfMB/wEAAfAC/wEAAfAC/wEAAfAC/wEA
+        AfAC/wEAAfAC/wEAAfEC/wEAAeIB7wH/AxkBIwGYAU4BggH/AYIBNgE9Af8BSwEmAS4B/wFNASYBLgH/
+        AUUBIAEqAf8BJQELASMB/wFCATcBmgH/AVQBUQHEAf8CigHWAf8BlgGYAeYB/wGDAYQB1AH/AYkBiwHZ
+        Af8BgAGFAdAB/wE6AT4BsAH/AT0BPwGqAf8BnAGdAdkB/wQAAbIBXQETAfUB8gGMAQAB/wHuAYgBAAH/
+        AewBhgEAAf8B6QGFAQQB/wH0AfwC/wPzAf8D8gH/AfsB9wHtAf8BOgFnAf0B/wE0AWMC/wEyAWIC/wEw
+        AWEC/wEaATQBxwH4RAADGQEjAQQB6gH2Af8BGgHzAv8BCwHlAfUB/wEOAaQB5AH/AR8BgwHZAf8BFwHG
+        AecB/wEJAesB9gH/AQoB8gL/AQoB8wL/AQoB8wL/AQoB8wL/AQoB8wL/ARoB9AL/AQQB6wH2Af8DGQEj
+        AaoBUQFKAf8BlQE8ATQB/wGYATwBNAH/AZEBNQEtAf8BgwEnAR8B/wEuAQkBEwH/AU8BQgGbAf8BowGg
+        AeUB/wGVAZQB3gH/AqAB7AH/AqcB8wH/AaMBpgHwAf8BmwGeAegB/wGFAYgBzAH/AUkBSgGxAf8BngGf
+        AdcB/wQAAbQBYQETAfUB9gGQAQAB/wH0AY4BAAH/AfABigEAAf8B7AGJAQMB/wH5A/8D+QH/A/UB/wH8
+        AfkB7wH/AUABbgH9Af8BOwFqAv8BOAFnAv8BNAFlAv8BGgE4AcsB+EQAAxkBIwENAe8B/AH/ASwB9AL/
+        ARoB8wL/AR8B7AH4Af8BIAHcAe4B/wEcAfIB+wH/ARoB8wL/ARoB8wL/ARoB8wL/ARoB8wL/ARoB8wL/
+        ARoB8wL/ASwB9AL/AQ0B7wH8Af8DGQEjAbIBggFTAf8BmAE9ATcB/wGjAUgBQgH/AaABQwE9Af8BkgE1
+        AS8B/wE/ARcBIgH/AUIBMQGHAf8BiwGIAcYB/wGXAZgB3AH/AZoBnAHjAf8BpQGnAe0B/wGuAbEB9QH/
+        AaoBrQHxAf8BlAGXAdQB/wGLAY4BwQH/AaIBpAHUAf8EAAG4AWgBEwH1AfsBlQEAAf8B+AGSAQAB/wHz
+        AY0BAAH/Ae8BiwEDAf8B+wP/A/wB/wP3Af8B/QH5AfAB/wFFAXMB/QH/AUEBcAL/ATwBagL/ATcBaAL/
+        ARoBOQHOAfhEAAMZASMBEwENAeUB/wE9ATgB6wH/ASoBJQHoAf8BKgElAegB/wEqASUB6AH/ASoBJQHo
+        Af8BKQEkAegB/wEpASQB6AH/ASoBJQHoAf8BKgElAegB/wEqASUB6AH/ASoBJQHoAf8BPQE4AesB/wET
+        AQ0B5QH/AxkBIwGzAYoBhwH/AY0BOQE2Af8BqQGBAVEB/wGmAVMBTgH/AZwBRwFCAf8BTwEuATUB/wFT
+        AUYBkQH/AYUBggGzAf8CkAHGAf8BlAGVAc0B/wGWAZgBzgH/AawBrwHiAf8BrQGuAeEB/wGOAZEBvgH/
+        AoEBqQH/AaMBpAHGAf8EAAG5AWsBEwH1Af8BmgEAAf8B+wGVAQAB/wH1AY8BAAH/AfABjAEDAf8B+AP/
+        A/kB/wP1Af8B/AH4Ae8B/wFHAXQB/QH/AUIBcQL/AT0BbAL/ATcBaAL/ARoBOgHSAfhEAAMXASABGAET
+        AeYB/wFKAUYB7QH/AUoBRgHtAf8BSgFGAe0B/wFKAUYB7QH/AUoBRgHtAf8BSgFGAe0B/wFKAUYB7QH/
+        AUoBRgHtAf8BSgFGAe0B/wFKAUYB7QH/AUsBRwHtAf8BSgFGAe0B/wEYARMB5gH/AxcBIAHOAbgBswH/
         AasBlQGQAf8BuwGlAaAB/wHIAbIBrQH/AcgBrwGrAf8BtgGjAaYB/wG+AbYBxwH/AbcBtAHNAf8BuwG8
         AdYB/wHNAc4B6gH/Ac4BzwHrAf8B1gHXAfEB/wHeAd0B9wH/AcwBzQHiAf8BwwHCAdYB/wLMAdwB/wQA
-        AcMBbQEOAfUB/wGaAQAB/wH8AZYBAAH/AfcBjwEAAf8B8AGPAQYB/wH2Af4C/wP2Af8D9AH/AfwB+QHu
-        Af8BRwFyAf4B/wE/AW8C/wE8AWwC/wE4AWoC/wEXAToB3AH4RAADEAEVAR0BFwHmAf8BGgEXAeUB/wEd
-        ARcB5gH/AR0BFwHmAf8BHQEXAeYB/wEdARcB5gH/AR0BFwHmAf8BHQEXAeYB/wEdARcB5gH/AR0BFwHm
-        Af8BHQEXAeYB/wEdARcB5gH/AR0BFwHmAf8BHQEXAeYB/wMQARUB/wH9AfoC/wH7AfgC/wH4AfYC/wH8
+        AboBbAETAfUB/wGaAQAB/wH8AZYBAAH/AfcBjwEAAf8B8AGPAQUB/wH2Af4C/wP2Af8D9AH/AfwB+QHu
+        Af8BRgFxAf4B/wE+AW4C/wE7AWsC/wE3AWkC/wEaATsB1gH4RAADEAEVARwBFgHmAf8BGQEWAeUB/wEc
+        ARYB5gH/ARwBFgHmAf8BHAEWAeYB/wEcARYB5gH/ARwBFgHmAf8BHAEWAeYB/wEcARYB5gH/ARwBFgHm
+        Af8BHAEWAeYB/wEcARYB5gH/ARwBFgHmAf8BHAEWAeYB/wMQARUB/wH9AfoC/wH7AfgC/wH4AfYC/wH8
         AfoC/wH+AfwC/wL+Af8B/QH5Av8B+wH6Av8B+QH6Av8B9gH3Av8B9AH1Av8B9gH1Av8B9wH2Av8B9wH2
-        Av8C+QL/AvoC/wQAAbYBZAETAfEBzQFuAQYB+gHMAW0BBgH6AcsBaQEGAfoByQFqAQwB+gHNAdEB1wH8
-        A8sB+gPJAfoB0QHPAcUB/AEcAUcB6wH6ARQBPwHqAfoBFQE+AecB+gEUATwB5QH6ARIBNQHTAfNEAAME
+        Av8C+QL/AvoC/wQAAa0BZAEcAfEByQFtAQkB+gHHAWwBCQH6AcYBaAEJAfoBxAFpAQ8B+gHKAc4B0gH8
+        A8YB+gPEAfoBzgHMAcIB/AEdAUgB5AH6ARcBQAHjAfoBGAE/AeAB+gEXAT0B4AH6ARgBOQHIAfNEAAME
         AQYDDQQSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMSARgDEgEYAxIBGAMNARIDBAEG
         Af8B+wH6Av8B+wH6Av8B/AH7Av8B+wH6Af8B/gH6AfkB/wH8AvoB/wH7AfoB/AH/AfsB+gH8Af8B+QH7
         AfwB/wH6AfwB/QH/AfoB+wL/AfwB+wL/AfwB+wH9Af8B+wH6AfwB/wH7AfoB/AH/AfsB+gH8Af/AAAP7
@@ -508,7 +505,7 @@
     <value>1</value>
   </data>
   <data name="&gt;&gt;labelTablero.ZOrder" xml:space="preserve">
-    <value>32</value>
+    <value>31</value>
   </data>
   <data name="controlJ3.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -523,7 +520,7 @@
     <value>2</value>
   </data>
   <data name="&gt;&gt;bComprar.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>17</value>
   </data>
   <data name="&gt;&gt;posJ1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -745,7 +742,7 @@
     <value>37, 13</value>
   </data>
   <data name="&gt;&gt;bVerHoteles.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>15</value>
   </data>
   <data name="bRetirarseJ4.Text" xml:space="preserve">
     <value>Retirarse</value>
@@ -924,6 +921,9 @@
   <data name="bDado.Text" xml:space="preserve">
     <value>Tirar dado</value>
   </data>
+  <data name="&gt;&gt;tres_jugadores.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="nombreJ4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1050,9 +1050,6 @@
   <data name="&gt;&gt;nombreJ1.Name" xml:space="preserve">
     <value>nombreJ1</value>
   </data>
-  <data name="&gt;&gt;bVerHoteles.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
   <data name="&gt;&gt;posAmarillo.Name" xml:space="preserve">
     <value>posAmarillo</value>
   </data>
@@ -1066,7 +1063,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bDado.ZOrder" xml:space="preserve">
-    <value>27</value>
+    <value>26</value>
   </data>
   <data name="bReportarBug.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 23</value>
@@ -1134,8 +1131,8 @@
   <data name="imgTablero.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>StretchImage</value>
   </data>
-  <data name="&gt;&gt;tres_jugadores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;bVerHoteles.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1307,10 +1304,10 @@
     <value>70, 23</value>
   </data>
   <data name="&gt;&gt;bColores.ZOrder" xml:space="preserve">
-    <value>28</value>
+    <value>27</value>
   </data>
-  <data name="bEntradasJ4.Text" xml:space="preserve">
-    <value>Poner entradas</value>
+  <data name="nombreJ2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 70</value>
   </data>
   <data name="bPedirNochesJ4.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 47</value>
@@ -1343,7 +1340,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bIniciar.ZOrder" xml:space="preserve">
-    <value>30</value>
+    <value>29</value>
   </data>
   <data name="bColores.Text" xml:space="preserve">
     <value>Colores</value>
@@ -1412,7 +1409,7 @@
     <value>6, 18</value>
   </data>
   <data name="&gt;&gt;controlJ1.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>21</value>
   </data>
   <data name="bComprarSuelo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1421,7 +1418,7 @@
     <value>False</value>
   </data>
   <data name="&gt;&gt;bTurno.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>23</value>
   </data>
   <data name="&gt;&gt;dineroJ4.Parent" xml:space="preserve">
     <value>controlJ4</value>
@@ -1439,7 +1436,7 @@
     <value>5</value>
   </data>
   <data name="&gt;&gt;imgTablero.ZOrder" xml:space="preserve">
-    <value>31</value>
+    <value>30</value>
   </data>
   <data name="&gt;&gt;colorJugIni.ZOrder" xml:space="preserve">
     <value>15</value>
@@ -1457,7 +1454,7 @@
     <value>100, 322</value>
   </data>
   <data name="&gt;&gt;bConstruir.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>16</value>
   </data>
   <data name="dineroJ4.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1538,7 +1535,7 @@
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;controlJ4.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>18</value>
   </data>
   <data name="&gt;&gt;bComprar.Name" xml:space="preserve">
     <value>bComprar</value>
@@ -1754,10 +1751,10 @@
     <value>28</value>
   </data>
   <data name="&gt;&gt;bReiniciar.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>22</value>
   </data>
   <data name="&gt;&gt;jug_ini.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>24</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>879, 701</value>
@@ -2092,6 +2089,9 @@
   <data name="&gt;&gt;bReportarBug.Name" xml:space="preserve">
     <value>bReportarBug</value>
   </data>
+  <data name="bEntradasJ4.Text" xml:space="preserve">
+    <value>Poner entradas</value>
+  </data>
   <data name="labelIdioma.Location" type="System.Drawing.Point, System.Drawing">
     <value>476, 6</value>
   </data>
@@ -2210,7 +2210,7 @@
     <value>38</value>
   </data>
   <data name="&gt;&gt;controlJ3.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>19</value>
   </data>
   <data name="resDado.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -2288,7 +2288,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;resDado.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>25</value>
   </data>
   <data name="bDado.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 23</value>

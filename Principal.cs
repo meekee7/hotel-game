@@ -157,8 +157,7 @@ namespace Juego_Hotel
                 }
                 juego.jug_inicial++; // Para no comenzar en 0
             }
-            jug_ini.Text = this.resources.GetString("jug_ini.Text") + ' ' + juego.jug_inicial;
-            colorJugIni.Text = juego.jugadores[juego.jug_inicial - 1].Nombre_color();
+            jug_ini.Text = this.resources.GetString("jug_ini.Text") + ' ' + juego.jug_inicial + " (" + juego.jugadores[juego.jug_inicial - 1].Nombre_color() + ')';
             if (juego.nombre_jugador_actual_salvado == String.Empty)
             {
                 juego.jug_actual = juego.jug_inicial;
@@ -872,7 +871,6 @@ namespace Juego_Hotel
             bNormas.Enabled = true;
             bReportarBug.Enabled = true;
             jug_ini.Text = resources.GetString("jug_ini.Text");
-            colorJugIni.Text = "";
             posJ1.Text = resources.GetString("posJ1.Text");
             posJ2.Text = resources.GetString("posJ2.Text");
             posJ3.Text = resources.GetString("posJ3.Text");
@@ -2178,7 +2176,7 @@ namespace Juego_Hotel
                                                     if (nombreAntiguo != null)
                                                         if (o.Text != null)
                                                             o.Text = o.Text.Replace(nombreAntiguo, resources.GetString(o.Name + ".Text"));
-                                        break;
+                                                    break;
                                 }
                             }
                             else
@@ -2206,7 +2204,12 @@ namespace Juego_Hotel
                         if (nombreAntiguo == null)
                             continue;
                         if (c.Text != null)
-                            c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                        {
+                            if (c.Name == "jug_ini" && this.juego.jugadores != null)
+                                c.Text = this.resources.GetString("jug_ini.Text") + ' ' + juego.jug_inicial + " (" + juego.jugadores[juego.jug_inicial - 1].Nombre_color() + ')';
+                            else
+                                c.Text = c.Text.Replace(nombreAntiguo, resources.GetString(c.Name + ".Text"));
+                        }
                     }
                     else
                         c.Text = resources.GetString(c.Name + ".Text");

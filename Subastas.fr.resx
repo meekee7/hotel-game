@@ -122,19 +122,28 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="etiHotel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 30</value>
+    <value>7, 30</value>
   </data>
   <data name="etiHotel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 13</value>
+    <value>113, 13</value>
   </data>
   <data name="etiHotel.Text" xml:space="preserve">
     <value>Sélectionner un hôtel :</value>
+  </data>
+  <data name="listaHoteles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>120, 28</value>
   </data>
   <data name="bSubastar.Text" xml:space="preserve">
     <value>Démarrer les enchères</value>
   </data>
   <data name="grupoHotel.Text" xml:space="preserve">
     <value>Enchères</value>
+  </data>
+  <data name="etiPrecioMinimo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 64</value>
+  </data>
+  <data name="etiPrecioMinimo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 13</value>
   </data>
   <data name="etiPrecioMinimo.Text" xml:space="preserve">
     <value>Début des enchères :</value>
@@ -146,7 +155,7 @@
     <value>34, 30</value>
   </data>
   <data name="txtCantidad.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 13</value>
+    <value>36, 13</value>
   </data>
   <data name="txtCantidad.Text" xml:space="preserve">
     <value>Offre :</value>
@@ -164,13 +173,13 @@
     <value>Offre joueur 4</value>
   </data>
   <data name="txt_precio_mayor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 13</value>
+    <value>77, 13</value>
   </data>
   <data name="txt_precio_mayor.Text" xml:space="preserve">
     <value>Dernière offre :</value>
   </data>
   <data name="grupoEstado.Text" xml:space="preserve">
-    <value>Auction status</value>
+    <value>État de vente aux enchères</value>
   </data>
   <data name="bVender.Text" xml:space="preserve">
     <value>Vendre</value>
@@ -179,7 +188,7 @@
     <value>58, 141</value>
   </data>
   <data name="txt_mayor_postor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 13</value>
+    <value>112, 13</value>
   </data>
   <data name="txt_mayor_postor.Text" xml:space="preserve">
     <value>Meilleur enchérisseur :</value>

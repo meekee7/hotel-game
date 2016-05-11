@@ -165,9 +165,9 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.bCargarPartida);
             this.Controls.Add(this.labelDosPuntos);
-            this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.checkSrvOficial);
             this.Controls.Add(this.bUnirse);
             this.Controls.Add(this.bChatGlobal);

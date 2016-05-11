@@ -117,12 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="txtLogin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 44</value>
+  </data>
+  <data name="bLogin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 23</value>
+  </data>
+  <data name="bLogin.Text" xml:space="preserve">
+    <value>Entrer</value>
+  </data>
+  <data name="bConectar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 23</value>
+  </data>
   <data name="bConectar.Text" xml:space="preserve">
     <value>Se connecter</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="txtServidor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 15</value>
+  </data>
+  <data name="bDesconectar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 344</value>
+  </data>
   <data name="bDesconectar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 23</value>
+    <value>82, 46</value>
   </data>
   <data name="bDesconectar.Text" xml:space="preserve">
     <value>Se déconnecter</value>
@@ -134,16 +152,19 @@
     <value>Créer conversation</value>
   </data>
   <data name="LUsuarios.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 13</value>
+    <value>64, 13</value>
   </data>
   <data name="LUsuarios.Text" xml:space="preserve">
     <value>Connectés :</value>
   </data>
   <data name="LPartidas.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 13</value>
+    <value>45, 13</value>
   </data>
   <data name="LPartidas.Text" xml:space="preserve">
     <value>Parties :</value>
+  </data>
+  <data name="bChatGlobal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 34</value>
   </data>
   <data name="bChatGlobal.Text" xml:space="preserve">
     <value>Discussion générale</value>
@@ -154,11 +175,20 @@
   <data name="bUnirse.Text" xml:space="preserve">
     <value>Rejoindre</value>
   </data>
+  <data name="checkSrvOficial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 46</value>
+  </data>
   <data name="checkSrvOficial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 17</value>
+    <value>96, 17</value>
   </data>
   <data name="checkSrvOficial.Text" xml:space="preserve">
     <value>Serveur officiel</value>
+  </data>
+  <data name="txtPuerto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>292, 15</value>
+  </data>
+  <data name="labelDosPuntos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>283, 17</value>
   </data>
   <data name="bCargarPartida.Location" type="System.Drawing.Point, System.Drawing">
     <value>291, 315</value>

@@ -568,7 +568,7 @@
     <value>Problèe de connexion avec le serveur.</value>
   </data>
   <data name="mensajeSeleccionarUsuarios" xml:space="preserve">
-    <value>You must select at least one user excluding yours</value>
+    <value>Vous devez sélectionner au moins un utilisateur sans inclure le vôtre</value>
   </data>
   <data name="mensajeUnirseAChat" xml:space="preserve">
     <value>Player {0} is asking you to join a private chat. Do you want to do it?</value>
@@ -667,7 +667,7 @@
     <value>Game name cannot have more than 50 characters</value>
   </data>
   <data name="mensajeInputPasswordPartida" xml:space="preserve">
-    <value>Specifiy a password in order to avoid anyone from loading it</value>
+    <value>Indiquez un mot de passe afin d'éviter à quiconque de le charger</value>
   </data>
   <data name="MAExpropiarHotel" xml:space="preserve">
     <value>Player {0} ({1}) has expropiated to player {2} ({3}) the hotel {4}.</value>
@@ -694,7 +694,7 @@
     <value>Player {0} ({1}) has added a phase (number {2}) at hotel {3}.</value>
   </data>
   <data name="mensajeIDPartidaVacio" xml:space="preserve">
-    <value>The ID cannot be blank</value>
+    <value>L'ID ne peut pas être vide</value>
   </data>
   <data name="mensajeIntroduceID" xml:space="preserve">
     <value>Input the ID of the saved game</value>

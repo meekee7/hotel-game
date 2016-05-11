@@ -122,61 +122,76 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="n50.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
+    <value>95, 13</value>
   </data>
   <data name="n50.Text" xml:space="preserve">
     <value>Vous en utilisez : 0</value>
   </data>
   <data name="n100.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
+    <value>95, 13</value>
   </data>
   <data name="n100.Text" xml:space="preserve">
     <value>Vous en utilisez : 0</value>
   </data>
   <data name="n500.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
+    <value>95, 13</value>
   </data>
   <data name="n500.Text" xml:space="preserve">
     <value>Vous en utilisez : 0</value>
   </data>
   <data name="n1000.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
+    <value>95, 13</value>
   </data>
   <data name="n1000.Text" xml:space="preserve">
     <value>Vous en utilisez : 0</value>
   </data>
   <data name="n5000.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
+    <value>95, 13</value>
   </data>
   <data name="n5000.Text" xml:space="preserve">
     <value>Vous en utilisez : 0</value>
   </data>
+  <data name="n50j.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 141</value>
+  </data>
   <data name="n50j.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="n50j.Text" xml:space="preserve">
     <value>Vous avez : 0</value>
   </data>
+  <data name="n100j.Location" type="System.Drawing.Point, System.Drawing">
+    <value>394, 141</value>
+  </data>
   <data name="n100j.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="n100j.Text" xml:space="preserve">
     <value>Vous avez : 0</value>
   </data>
+  <data name="n500j.Location" type="System.Drawing.Point, System.Drawing">
+    <value>702, 141</value>
+  </data>
   <data name="n500j.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="n500j.Text" xml:space="preserve">
     <value>Vous avez : 0</value>
   </data>
+  <data name="n5000j.Location" type="System.Drawing.Point, System.Drawing">
+    <value>546, 316</value>
+  </data>
   <data name="n5000j.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="n5000j.Text" xml:space="preserve">
     <value>Vous avez : 0</value>
   </data>
+  <data name="n1000j.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 316</value>
+  </data>
   <data name="n1000j.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="n1000j.Text" xml:space="preserve">
     <value>Vous avez : 0</value>
@@ -185,7 +200,7 @@
     <value>Remise à zéro</value>
   </data>
   <data name="necesario.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+    <value>66, 13</value>
   </data>
   <data name="necesario.Text" xml:space="preserve">
     <value>Nécessaire :</value>
