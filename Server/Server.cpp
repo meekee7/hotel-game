@@ -504,6 +504,13 @@ void Server::handle_client(void* arg)
     }
     int len_name = receive_int(p, &bytes_received);
     p->name = receive_wstring(p, len_name, &bytes_received);
+    if (p->name.length() == 0)
+    {
+        wcout << currentDateTime() << L"Player " << p->name << L" rejected because the name is too short (WARNING: possible hacked client)" << endl;
+        p->socket->psend("login no", 8, 0);
+        delete p;
+        wcout << currentDateTime() << L"Disconnecting client" << endl;
+    }
     wcout << currentDateTime() << L"Handling new player. Player name: " << p->name << endl;
     if (p->name.length() > 20)
     {
