@@ -622,7 +622,7 @@ void Server::Run(int port)
             wcout << currentDateTime() << L"bind retries: " << bind_retries << endl;
         }
     }
-    char* reuse_socket = "1";
+    char reuse_socket[] = "1";
     if (setsockopt(socket_server->get_fd(), SOL_SOCKET, SO_REUSEADDR, reuse_socket, sizeof(reuse_socket)) == -1) {
         wcout << currentDateTime() << L"setsockopt error: " << socket_server->get_last_error() << endl;
         delete socket_server;
