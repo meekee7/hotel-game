@@ -19,15 +19,15 @@ do
    SERVER=`ps -el | grep hotel_server`
    $daemon $*
    if [ -z "$SERVER" ]; then
-      echo "El servidor ha caido o se ha cerrado, tienes 3 segundos para darle a Control + C"
-      sleep 3
+      echo "El servidor ha caido o se ha cerrado, tienes 5 segundos para darle a Control + C"
+      sleep 5
       gdb $daemon core --batch --eval-command="bt ful" > crash.log
       dte=`date +%F_%H-%M-%S`
       mkdir torta_$dte
       mv crash.log torta_$dte/
       rm -rf core
-      echo "Log de caida generado, tienes otros 3 segundos para darle a Control + C"
-      sleep 3
+      echo "Log de caida generado, tienes otros 5 segundos para darle a Control + C"
+      sleep 5
       killall -s 9 hotel_server
    fi
    sleep 2
