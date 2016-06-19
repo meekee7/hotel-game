@@ -310,7 +310,7 @@ bool add_player_to_player_list (Player* p, dlib::mutex* mutex_lists, list<Player
     }
     if (found)
     {
-        wcout << currentDateTime() << L"Player already connected" << endl;
+        wcout << currentDateTime() << L"Player " << p->name << L" already connected" << endl;
         mutex_lists->unlock();
         return false;
     }
