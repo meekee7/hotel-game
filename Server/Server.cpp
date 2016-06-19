@@ -494,6 +494,7 @@ void Server::handle_client(void* arg)
         w_version.assign(version.begin(), version.end());
         wcout << currentDateTime() << L"Player rejected because of incompatible versions. It is using version " << w_version << endl;
         wcout << currentDateTime() << L"Disconnecting client" << endl;
+        delete p;
     }
     else
     {
