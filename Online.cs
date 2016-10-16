@@ -150,7 +150,7 @@ namespace Juego_Hotel
         {
             if (socket.Connected)
             {
-                if (this.txtLogin.Text.Length == 0)
+                if (this.txtLogin.Text.Trim().Length == 0)
                     MessageBox.Show(Mensajes.mensajeApodoVacio);
                 else if (this.txtLogin.Text.Length > 20)
                     MessageBox.Show(Mensajes.mensajeApodoDemasiadoLargo);

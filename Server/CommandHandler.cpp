@@ -1170,18 +1170,18 @@ void CommandHandler::CheckForTurnExpirations()
                 if (game->seconds_elapsed_last_command > 300)
                 {
                     game->seconds_elapsed_last_command = 0;
-                    wcout << L"Player " << game->current_player->name << " is AFK. Passing the turn automatically for game " << game->id << endl;
+                    wcout << currentDateTime() << L"Player " << game->current_player->name << " is AFK. Passing the turn automatically for game " << game->id << endl;
                     PlayerGameState* curr_p_state = game->current_player->GetState(game->id);
                     if (!curr_p_state->rolled_last_turn)
                         this->RollDice(game->current_player, game, true);
                     // Check for auctions
                     if (game->hotel_at_auction != NULL)
                     {
-                        wcout << L"Player " << game->current_player->name << " has an auction in progress, ending it." << endl;
+                        wcout << currentDateTime() << L"Player " << game->current_player->name << " has an auction in progress, ending it." << endl;
                         // If there is a best bidder, make him pay before ending the auction
                         if (game->best_bidder != NULL)
                         {
-                            wcout << L"Player " << game->best_bidder->name << " will pay " << game->best_bid << " to player " << game->current_player->name << " automatically for the auction" << endl;
+                            wcout << currentDateTime() << L"Player " << game->best_bidder->name << " will pay " << game->best_bid << " to player " << game->current_player->name << " automatically for the auction" << endl;
                             int n_5000, n_1000, n_500, n_100, n_50;
                             game->calculate_return(game->best_bidder->GetState(game->id), game->best_bid, &n_5000, &n_1000, &n_500, &n_100, &n_50);
                             this->AuctionPay(game->best_bidder, game, n_5000, n_1000, n_500, n_100, n_50, true);
@@ -1202,9 +1202,9 @@ void CommandHandler::CheckForTurnExpirations()
                     if (curr_p_state->debt_last_turn > 0)
                     {
                         if (curr_p_state->debt_to_last_turn != NULL)
-                            wcout << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to " << curr_p_state->debt_to_last_turn->player->name << " automatically" << endl;
+                            wcout << currentDateTime() << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " to " << curr_p_state->debt_to_last_turn->player->name << " automatically" << endl;
                         else
-                            wcout << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " automatically because of pending debt to the bank" << endl;
+                            wcout << currentDateTime() << L"Player " << game->current_player->name << " will pay " << curr_p_state->debt_last_turn << " automatically because of pending debt to the bank" << endl;
                         if (curr_p_state->total_money < curr_p_state->debt_last_turn)
                         {
                             // Retire player, he cannot pay the debt. The turn is automatically passed when the current player retires
@@ -1228,7 +1228,7 @@ void CommandHandler::CheckForTurnExpirations()
                                 dest = (*j);
                                 if (curr_p_state->hotel_to_be_extended != NULL)
                                 {
-                                    wcout << L"Phase of hotel " << curr_p_state->hotel_to_be_extended->name_txt << " built automatically because of pending debt to the bank" << endl;
+                                    wcout << currentDateTime() << L"Phase of hotel " << curr_p_state->hotel_to_be_extended->name_txt << " built automatically because of pending debt to the bank" << endl;
                                     send_command("phase_built", dest);
                                     send_int(dest, game->id);
                                     send_int(dest, get_utf8_length(curr_p_state->hotel_to_be_extended->name_txt));

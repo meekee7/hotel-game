@@ -60,7 +60,7 @@ SavedgamesMgr::SavedgamesMgr(void)
     {
         this->db_loaded_ok = false;
         this->db = NULL;
-        wcout << "Error reading connection data, check DBdata.txt" << endl;
+        wcout << currentDateTime() << "Error reading connection data, check DBdata.txt" << endl;
     }
     else
     {
@@ -78,30 +78,30 @@ SavedgamesMgr::SavedgamesMgr(void)
 
 void SavedgamesMgr::CleanInconsistentData()
 {
-    wcout << "Inconsistent data cleanup in progress" << endl;
-    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM partida WHERE id NOT IN (SELECT id_partida FROM estado_hotel) OR id NOT IN (SELECT id_partida FROM estado_jugador);") << " saved games with incomplete data" << endl;
-    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_hotel WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " hotel statuses" << endl;
-    wcout << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_jugador WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " player statuses" << endl;
-    wcout << "Cleanup completed" << endl;
+    wcout << currentDateTime() << "Inconsistent data cleanup in progress" << endl;
+    wcout << currentDateTime() << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM partida WHERE id NOT IN (SELECT id_partida FROM estado_hotel) OR id NOT IN (SELECT id_partida FROM estado_jugador);") << " saved games with incomplete data" << endl;
+    wcout << currentDateTime() << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_hotel WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " hotel statuses" << endl;
+    wcout << currentDateTime() << "Deleted " << this->db->ExecuteQueryWithoutData("DELETE FROM estado_jugador WHERE id_partida IS NULL OR id_partida NOT IN (SELECT id FROM partida);") << " player statuses" << endl;
+    wcout << currentDateTime() << "Cleanup completed" << endl;
 }
 
 void SavedgamesMgr::RollBack(Game* game)
 {
     string query = str(boost::format("DELETE FROM estado_jugador WHERE id_partida = %d;") % game->bd_id);
     if (this->db->ExecuteQueryWithoutData(query) <= 0)
-        wcout << "Error deleting player data of game with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Error deleting player data of game with id " << game->bd_id << endl;
     else
-        wcout << "Deleted player data of game with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Deleted player data of game with id " << game->bd_id << endl;
     query = str(boost::format("DELETE FROM estado_hotel WHERE id_partida = %d;") % game->bd_id);
     if (this->db->ExecuteQueryWithoutData(query) <= 0)
-        wcout << "Error deleting hotel data of game with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Error deleting hotel data of game with id " << game->bd_id << endl;
     else
-        wcout << "Deleted hotel data of game with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Deleted hotel data of game with id " << game->bd_id << endl;
     query = str(boost::format("DELETE FROM partida WHERE id = %d;") % game->bd_id);
     if (this->db->ExecuteQueryWithoutData(query) <= 0)
-        wcout << "Error deleting game with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Error deleting game with id " << game->bd_id << endl;
     else
-        wcout << "Deleted game with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Deleted game with id " << game->bd_id << endl;
 }
 
 void SavedgamesMgr::KeepAlive()
@@ -132,7 +132,7 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
 {
     if (!this->db_loaded_ok)
     {
-        wcout << "Cannot save game because DB was not loaded ok" << endl;
+        wcout << currentDateTime() << "Cannot save game because DB was not loaded ok" << endl;
         return false;
     }
     this->saving_mutex.lock();
@@ -148,18 +148,18 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
         % game->starting_player % game->current_player->GetState(game->id)->num % game->last_dice_res % game->last_auto_advance);
     if (this->db->ExecuteQueryWithoutData(query) <= 0)
     {
-        wcout << "Error inserting game data, reconnecting to try again..." << endl;
+        wcout << currentDateTime() << "Error inserting game data, reconnecting to try again..." << endl;
         if (this->db->ReConnectWithLastUsedValues())
         {
             if (this->db->ExecuteQueryWithoutData(query) <= 0)
             {
-                wcout << "Error inserting game data" << endl;
+                wcout << currentDateTime() << "Error inserting game data" << endl;
                 return false;
             }
         }
         else
         {
-            wcout << "Error inserting game data" << endl;
+            wcout << currentDateTime() << "Error inserting game data" << endl;
             return false;
         }
     }
@@ -172,7 +172,7 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
                 game->bd_id = this->db->GetLastInsertId();
             else
             {
-                wcout << "Error getting last insert id" << endl;
+                wcout << currentDateTime() << "Error getting last insert id" << endl;
                 this->RollBack(game);
                 return false;
             }
@@ -183,12 +183,12 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
     query = str(boost::format("UPDATE estado_jugador SET id_partida = NULL WHERE id_partida = %d;") % game->bd_id);
     if (this->db->ExecuteQueryWithoutData(query) < 0)
     {
-        wcout << "Error inserting player data, reconnecting to try again..." << endl;
+        wcout << currentDateTime() << "Error inserting player data, reconnecting to try again..." << endl;
         if (this->db->ReConnectWithLastUsedValues())
         {
             if (this->db->ExecuteQueryWithoutData(query) < 0)
             {
-                wcout << "Error inserting player data, rolling back..." << endl;
+                wcout << currentDateTime() << "Error inserting player data, rolling back..." << endl;
                 this->RollBack(game);
                 return false;
             }
@@ -205,19 +205,19 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
             % player_state->n_1000 % player_state->n_5000);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
-            wcout << "Error inserting player data, reconnecting to try again..." << endl;
+            wcout << currentDateTime() << "Error inserting player data, reconnecting to try again..." << endl;
             if (this->db->ReConnectWithLastUsedValues())
             {
                 if (this->db->ExecuteQueryWithoutData(query) <= 0)
                 {
-                    wcout << "Error inserting player data, rolling back..." << endl;
+                    wcout << currentDateTime() << "Error inserting player data, rolling back..." << endl;
                     this->RollBack(game);
                     return false;
                 }
             }
             else
             {
-                wcout << "Error inserting player data, rolling back..." << endl;
+                wcout << currentDateTime() << "Error inserting player data, rolling back..." << endl;
                 this->RollBack(game);
                 return false;
             }
@@ -233,15 +233,15 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
                 }
                 else
                 {
-                    wcout << "Error getting last insert id" << endl;
+                    wcout << currentDateTime() << "Error getting last insert id" << endl;
                     return false;
                 }
             }
-            wcout << "Player data inserted successfully with id " << p->GetState(game->id)->bd_id << endl;
+            wcout << currentDateTime() << "Player data inserted successfully with id " << p->GetState(game->id)->bd_id << endl;
         }
         else
         {
-            wcout << "Player data with id " << p->GetState(game->id)->bd_id << " updated successfully" << endl;
+            wcout << currentDateTime() << "Player data with id " << p->GetState(game->id)->bd_id << " updated successfully" << endl;
         }
     }
     // Hotel status
@@ -266,19 +266,19 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
             % utf16_to_utf8(h->name_txt) % h->n_built_phases % h->entrance_bought_last_turn % h->ground_bought % entrance_list);
         if (this->db->ExecuteQueryWithoutData(query) <= 0)
         {
-            wcout << "Error inserting hotel data, reconnecting to try again..." << endl;
+            wcout << currentDateTime() << "Error inserting hotel data, reconnecting to try again..." << endl;
             if (this->db->ReConnectWithLastUsedValues())
             {
                 if (this->db->ExecuteQueryWithoutData(query) <= 0)
                 {
-                    wcout << "Error inserting hotel data, rolling back..." << endl;
+                    wcout << currentDateTime() << "Error inserting hotel data, rolling back..." << endl;
                     this->RollBack(game);
                     return false;
                 }
             }
             else
             {
-                wcout << "Error inserting hotel data, rolling back..." << endl;
+                wcout << currentDateTime() << "Error inserting hotel data, rolling back..." << endl;
                 this->RollBack(game);
                 return false;
             }
@@ -294,26 +294,26 @@ bool SavedgamesMgr::SaveGame(Game* game, Player* creator)
                 }
                 else
                 {
-                    wcout << "Error getting last insert id" << endl;
+                    wcout << currentDateTime() << "Error getting last insert id" << endl;
                     return false;
                 }
             }
-            wcout << "Hotel data inserted successfully with id " << h->bd_id << endl;
+            wcout << currentDateTime() << "Hotel data inserted successfully with id " << h->bd_id << endl;
         }
         else
         {
-            wcout << "Hotel data with id " << h->bd_id << " updated successfully" << endl;
+            wcout << currentDateTime() << "Hotel data with id " << h->bd_id << " updated successfully" << endl;
         }
     }
     if (overwriting == false)
     {
-        wcout << "Game data inserted successfully with id " << game->bd_id << endl;
+        wcout << currentDateTime() << "Game data inserted successfully with id " << game->bd_id << endl;
     }
     else
     {
         // Delete player statuses no longer associated with the game
         this->db->ExecuteQueryWithoutData("DELETE FROM estado_jugador WHERE id_partida IS NULL;");
-        wcout << "Game data with id " << game->bd_id << " updated successfully" << endl;
+        wcout << currentDateTime() << "Game data with id " << game->bd_id << " updated successfully" << endl;
     }
     game->n_players_last_save = game->active_plist.size();
     game->saved_current_player = game->current_player->GetState(game->id)->num;
@@ -325,7 +325,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
 {
     if (!this->db_loaded_ok)
     {
-        wcout << "Cannot load game because DB was not loaded ok" << endl;
+        wcout << currentDateTime() << "Cannot load game because DB was not loaded ok" << endl;
         (*error_code) = 3; // DB not loaded ok
         return NULL;
     }
@@ -416,7 +416,7 @@ Game* SavedgamesMgr::LoadGame(int id, wstring password, Player* creator, dlib::m
     }
     else
     {
-        wcout << "Error retrieving game from DB" << endl;
+        wcout << currentDateTime() << "Error retrieving game from DB" << endl;
         (*error_code) = 2; // Game does not exists
         return NULL;
     }
@@ -426,7 +426,7 @@ int SavedgamesMgr::LoadPlayerData(Game* game, Player* player)
 {
     if (!this->db_loaded_ok)
     {
-        wcout << "Cannot load player data because DB was not loaded ok" << endl;
+        wcout << currentDateTime() << "Cannot load player data because DB was not loaded ok" << endl;
         return 1; // DB not loaded ok
     }
     MySQLResult* res = this->db->ExecuteQueryWithData(str(boost::format("SELECT * FROM estado_jugador WHERE id_partida = %d AND BINARY nombre = \"%s\";") % game->bd_id % utf16_to_utf8(player->name)));

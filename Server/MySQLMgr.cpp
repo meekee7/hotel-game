@@ -1,4 +1,5 @@
 #include "MySQLMgr.h"
+#include "Aux_Functions.h"
 
 // Class MySQLMgr
 bool MySQLMgr::Connect (string host, int port, string username, string password, string database)
@@ -12,11 +13,11 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error connecting to database. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            wcout << currentDateTime() << "Error connecting to database. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
             this->connection->conn = NULL;
             return false;
         }
-        wcout << "Database connection succesful!" << endl;
+        wcout << currentDateTime() << "Database connection succesful!" << endl;
         this->connection->conn->setSchema(database);
         this->host = host;
         this->port = port;
@@ -28,13 +29,13 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
         this->connection->conn = mysql_init(NULL);
         if (mysql_real_connect(this->connection->conn, host.c_str(), username.c_str(), password.c_str(), database.c_str(), port, NULL, 0) == NULL)
         {
-            wcout << "Error connecting to database: " << mysql_error(this->connection->conn) << endl;
+            wcout << currentDateTime() << "Error connecting to database: " << mysql_error(this->connection->conn) << endl;
             this->connection->conn = NULL;
             return false;
         }
         else
         {
-            wcout << "Database connection succesful!" << endl;
+            wcout << currentDateTime() << "Database connection succesful!" << endl;
             return true;
         }
     #endif
@@ -42,7 +43,7 @@ bool MySQLMgr::Connect (string host, int port, string username, string password,
 
 bool MySQLMgr::ReConnectWithLastUsedValues()
 {
-    wcout << "Reconnecting to database..." << endl;
+    wcout << currentDateTime() << "Reconnecting to database..." << endl;
     return this->Connect(this->host, this->port, this->username, this->password, this->dbname);
 }
 
@@ -55,7 +56,6 @@ void MySQLMgr::KeepAlive()
             if (this->ReConnectWithLastUsedValues())
                 this->connection->ExecuteQueryWithoutData("DO 1;");
         }
-        wcout << L"MySQL keep alive" << endl;
     }
 }
 
@@ -97,7 +97,7 @@ MySQLMgr::MySQLMgr(void)
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error creating MySQL Driver. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            wcout << currentDateTime() << "Error creating MySQL Driver. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
         }
     #endif
     this->connection = new MySQLConnection();
@@ -139,7 +139,7 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            wcout << currentDateTime() << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
             return NULL;
         }
     #else
@@ -150,7 +150,7 @@ MySQLResult* MySQLConnection::ExecuteQueryWithData(string query)
         }
         else
         {
-            wcout << "Error executing query '" << query.c_str() << "'. Error: " << mysql_error(this->conn) << endl;
+            wcout << currentDateTime() << "Error executing query '" << query.c_str() << "'. Error: " << mysql_error(this->conn) << endl;
             return NULL;
         }
     #endif
@@ -169,7 +169,7 @@ int MySQLConnection::ExecuteQueryWithoutData(string query)
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            wcout << currentDateTime() << "Error executing query '" << query.c_str() << "'. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
             num_rows_modified = -1;
         }
     #else
@@ -194,7 +194,7 @@ int MySQLConnection::GetLastInsertId()
         }
         catch (sql::SQLException e)
         {
-            wcout << "Error obtanining last insert id. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
+            wcout << currentDateTime() << "Error obtanining last insert id. Error codes: " << e.getSQLStateCStr() << " (" << e.getErrorCode() << ")" << endl;
             id = -1;
         }
         if (result != NULL)
@@ -229,7 +229,7 @@ MySQLConnection::~MySQLConnection(void)
         // This function deletes the object
         mysql_close(this->conn);
     #endif
-    wcout << L"DB connnection closed" << endl;
+    wcout << currentDateTime() << L"DB connnection closed" << endl;
 }
 
 //Class MySQLResult
@@ -257,7 +257,7 @@ int MySQLResult::get_int_field(string name)
         }
         catch (sql::SQLException e)
         {
-            cout << "Error getting field \"" << name << "\", does it exist?" << endl;
+            wcout << currentDateTime() << "Error getting field \"" << utf8_to_utf16(name) << "\", does it exist?" << endl;
             return -1;
         }
     #else
@@ -288,7 +288,7 @@ int MySQLResult::get_int_field(int index)
         }
         catch (sql::SQLException e)
         {
-            cout << "Error getting field index " << index << ", does it exist?" << endl;
+            wcout << currentDateTime() << "Error getting field index " << index << ", does it exist?" << endl;
             return -1;
         }
     #else
@@ -308,7 +308,7 @@ string MySQLResult::get_string_field(string name)
         }
         catch (sql::SQLException e)
         {
-            cout << "Error getting field \"" << name << "\", does it exist?" << endl;
+            wcout << currentDateTime() << "Error getting field \"" << utf8_to_utf16(name) << "\", does it exist?" << endl;
             return "";
         }
     #else
@@ -339,7 +339,7 @@ string MySQLResult::get_string_field(int index)
         }
         catch (sql::SQLException e)
         {
-            cout << "Error getting field index " << index << ", does it exist?" << endl;
+            wcout << currentDateTime() << "Error getting field index " << index << ", does it exist?" << endl;
             return "";
         }
     #else
@@ -359,7 +359,7 @@ bool MySQLResult::get_bool_field(string name)
         }
         catch (sql::SQLException e)
         {
-            cout << "Error getting field \"" << name << "\", does it exist?" << endl;
+            wcout << currentDateTime() << "Error getting field \"" << utf8_to_utf16(name) << "\", does it exist?" << endl;
             return false;
         }
     #else
@@ -396,7 +396,7 @@ bool MySQLResult::get_bool_field(int index)
         }
         catch (sql::SQLException e)
         {
-            cout << "Error getting field index " << index << ", does it exist?" << endl;
+            wcout << currentDateTime() << "Error getting field index " << index << ", does it exist?" << endl;
             return false;
         }
     #else
