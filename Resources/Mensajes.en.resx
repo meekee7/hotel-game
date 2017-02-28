@@ -825,4 +825,9 @@ It will be a third of the buy value of hotel plus built phases. If none of the p
   <data name="comboBoxIdiomas3" xml:space="preserve">
     <value>French</value>
   </data>
+  <data name="mensajeJuegoWeb" xml:space="preserve">
+    <value>The web version of the game is available!
+You will be able to play simultáneous games and do your turns whenever you can, without having to be in front of the pc the whole time!
+Do you want to open the site?</value>
+  </data>
 </root>

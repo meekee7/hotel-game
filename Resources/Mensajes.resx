@@ -825,4 +825,9 @@ Se establecerá a un tercio del valor de compra del suelo más las ampliaciones 
   <data name="comboBoxIdiomas3" xml:space="preserve">
     <value>Francés</value>
   </data>
+  <data name="mensajeJuegoWeb" xml:space="preserve">
+    <value>¡Ya está disponible la versión web del juego!
+Podrás jugar múltiples partidas simultáneamente y hacer los turnos cuando puedas, ¡sin necesidad de estar delante del pc todo el tiempo!
+¿Quieres abrir la web?</value>
+  </data>
 </root>

@@ -1044,6 +1044,17 @@ namespace Juego_Hotel.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Ya está disponible la versión web del juego!
+        ///Podrás jugar múltiples partidas simultáneamente y hacer los turnos cuando puedas, ¡sin necesidad de estar delante del pc todo el tiempo!
+        ///¿Quieres abrir la web?.
+        /// </summary>
+        internal static string mensajeJuegoWeb {
+            get {
+                return ResourceManager.GetString("mensajeJuegoWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Jugador {0}.
         /// </summary>
         internal static string mensajeJugador {

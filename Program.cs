@@ -43,6 +43,13 @@ namespace Juego_Hotel
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            if (MessageBox.Show(Mensajes.mensajeJuegoWeb, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start("http://hotelboardgame.servegame.com");
+                return;
+            }
+
             if (MessageBox.Show(Mensajes.mensajeActualizar, Mensajes.tituloBienvenido, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 var actualizador = new Actualizador();
