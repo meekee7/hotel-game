@@ -44,7 +44,7 @@ namespace Juego_Hotel
         {
             try
             {
-                ultima_version = LeerRespuestaPeticion(CrearPeticion("http://betovserver.no-ip.org/version_hotel.txt")).Replace("\n", "").Replace("\r", "");
+                ultima_version = LeerRespuestaPeticion(CrearPeticion("http://betovserver.no-ip.org:81/version_hotel.txt")).Replace("\n", "").Replace("\r", "");
                 return ultima_version != this.version_actual;
             }
             catch (Exception e)
