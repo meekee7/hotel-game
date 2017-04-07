@@ -31,7 +31,7 @@ namespace Juego_Hotel
                 MessageBox.Show(Mensajes.mensajeErrorBugReportTextoVacio);
                 return;
             }
-            String direccion = "http://betovserver.no-ip.org/hotel_bug_report.php?email=" + this.textBoxEmail.Text + "&lang=" + System.Threading.Thread.CurrentThread.CurrentUICulture + "&text=" + this.TextoBug.Text;
+            String direccion = "http://betovserver.no-ip.org:81/hotel_bug_report.php?email=" + this.textBoxEmail.Text + "&lang=" + System.Threading.Thread.CurrentThread.CurrentUICulture + "&text=" + this.TextoBug.Text;
             Stream response = WebRequest.Create(direccion).GetResponse().GetResponseStream();
             var reader = new StreamReader(response);
             MessageBox.Show(reader.ReadToEnd());

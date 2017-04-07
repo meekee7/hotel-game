@@ -62,7 +62,7 @@ namespace Juego_Hotel
 
             try
             {
-                String novedades = LeerRespuestaPeticion(CrearPeticion("http://betovserver.no-ip.org/hotel_welcome_msg_" + cultura.Name + ".txt"));
+                String novedades = LeerRespuestaPeticion(CrearPeticion("http://betovserver.no-ip.org:81/hotel_welcome_msg_" + cultura.Name + ".txt"));
                 if (!String.IsNullOrEmpty(novedades))
                 {
                     MessageBox.Show(novedades, Mensajes.tituloBienvenido);
