@@ -209,7 +209,7 @@ string receive_string (Player* p, int length, int* bytes_received)
     }
     else
         s_data = string("");
-    delete data;
+    delete[] data;
     return s_data;
 }
 
@@ -225,7 +225,7 @@ wstring receive_wstring (Player* p, int length, int* bytes_received)
     }
     else
         s_data = wstring(L"");
-    delete data;
+    delete[] data;
     return s_data;
 }
 
