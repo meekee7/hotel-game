@@ -1,3 +1,6 @@
+Forked from SourceForge, created by ifilgud:
+https://sourceforge.net/projects/hotels-game/
+
 Español:
 
 Todos los datos del juego están contenidos en el ejecutable excepto la configuración de dinero por jugador y los ficheros de recursos para otros idiomas.
